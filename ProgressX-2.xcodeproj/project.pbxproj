@@ -8,25 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
-		832213E62BC92D8E00DF9C7A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E52BC92D8E00DF9C7A /* ContentView.swift */; };
+		832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E52BC92D8E00DF9C7A /* HomeView.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
 		832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */; };
 		832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213EC2BC92D9000DF9C7A /* Persistence.swift */; };
 		832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */; };
 		832213FA2BC92D9000DF9C7A /* ProgressX_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */; };
-		832214042BC92D9000DF9C7A /* ProgressX_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214032BC92D9000DF9C7A /* ProgressX_2UITests.swift */; };
-		832214062BC92D9000DF9C7A /* ProgressX_2UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214052BC92D9000DF9C7A /* ProgressX_2UITestsLaunchTests.swift */; };
+		832214132BC9360A00DF9C7A /* PreparedQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214122BC9360A00DF9C7A /* PreparedQueries.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		832213F62BC92D9000DF9C7A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 832213D82BC92D8E00DF9C7A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 832213DF2BC92D8E00DF9C7A;
-			remoteInfo = "ProgressX-2";
-		};
-		832214002BC92D9000DF9C7A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 832213D82BC92D8E00DF9C7A /* Project object */;
 			proxyType = 1;
@@ -38,16 +30,14 @@
 /* Begin PBXFileReference section */
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
-		832213E52BC92D8E00DF9C7A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		832213E52BC92D8E00DF9C7A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		832213E72BC92D9000DF9C7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		832213EC2BC92D9000DF9C7A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		832213EF2BC92D9000DF9C7A /* ProgressX_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProgressX_2.xcdatamodel; sourceTree = "<group>"; };
 		832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProgressX-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2Tests.swift; sourceTree = "<group>"; };
-		832213FF2BC92D9000DF9C7A /* ProgressX-2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProgressX-2UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		832214032BC92D9000DF9C7A /* ProgressX_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2UITests.swift; sourceTree = "<group>"; };
-		832214052BC92D9000DF9C7A /* ProgressX_2UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		832214122BC9360A00DF9C7A /* PreparedQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedQueries.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,13 +55,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		832213FC2BC92D9000DF9C7A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -80,7 +63,6 @@
 			children = (
 				832213E22BC92D8E00DF9C7A /* ProgressX-2 */,
 				832213F82BC92D9000DF9C7A /* ProgressX-2Tests */,
-				832214022BC92D9000DF9C7A /* ProgressX-2UITests */,
 				832213E12BC92D8E00DF9C7A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,7 +72,6 @@
 			children = (
 				832213E02BC92D8E00DF9C7A /* ProgressX-2.app */,
 				832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */,
-				832213FF2BC92D9000DF9C7A /* ProgressX-2UITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,11 +80,12 @@
 			isa = PBXGroup;
 			children = (
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
-				832213E52BC92D8E00DF9C7A /* ContentView.swift */,
+				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
 				832213EC2BC92D9000DF9C7A /* Persistence.swift */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				832213E92BC92D9000DF9C7A /* Preview Content */,
+				832214122BC9360A00DF9C7A /* PreparedQueries.swift */,
 			);
 			path = "ProgressX-2";
 			sourceTree = "<group>";
@@ -122,15 +104,6 @@
 				832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */,
 			);
 			path = "ProgressX-2Tests";
-			sourceTree = "<group>";
-		};
-		832214022BC92D9000DF9C7A /* ProgressX-2UITests */ = {
-			isa = PBXGroup;
-			children = (
-				832214032BC92D9000DF9C7A /* ProgressX_2UITests.swift */,
-				832214052BC92D9000DF9C7A /* ProgressX_2UITestsLaunchTests.swift */,
-			);
-			path = "ProgressX-2UITests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,24 +144,6 @@
 			productReference = 832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		832213FE2BC92D9000DF9C7A /* ProgressX-2UITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 8322140F2BC92D9000DF9C7A /* Build configuration list for PBXNativeTarget "ProgressX-2UITests" */;
-			buildPhases = (
-				832213FB2BC92D9000DF9C7A /* Sources */,
-				832213FC2BC92D9000DF9C7A /* Frameworks */,
-				832213FD2BC92D9000DF9C7A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				832214012BC92D9000DF9C7A /* PBXTargetDependency */,
-			);
-			name = "ProgressX-2UITests";
-			productName = "ProgressX-2UITests";
-			productReference = 832213FF2BC92D9000DF9C7A /* ProgressX-2UITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -203,10 +158,6 @@
 						CreatedOnToolsVersion = 15.2;
 					};
 					832213F42BC92D9000DF9C7A = {
-						CreatedOnToolsVersion = 15.2;
-						TestTargetID = 832213DF2BC92D8E00DF9C7A;
-					};
-					832213FE2BC92D9000DF9C7A = {
 						CreatedOnToolsVersion = 15.2;
 						TestTargetID = 832213DF2BC92D8E00DF9C7A;
 					};
@@ -227,7 +178,6 @@
 			targets = (
 				832213DF2BC92D8E00DF9C7A /* ProgressX-2 */,
 				832213F42BC92D9000DF9C7A /* ProgressX-2Tests */,
-				832213FE2BC92D9000DF9C7A /* ProgressX-2UITests */,
 			);
 		};
 /* End PBXProject section */
@@ -249,13 +199,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		832213FD2BC92D9000DF9C7A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -263,8 +206,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				832214132BC9360A00DF9C7A /* PreparedQueries.swift in Sources */,
 				832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */,
-				832213E62BC92D8E00DF9C7A /* ContentView.swift in Sources */,
+				832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 			);
@@ -278,15 +222,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		832213FB2BC92D9000DF9C7A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				832214042BC92D9000DF9C7A /* ProgressX_2UITests.swift in Sources */,
-				832214062BC92D9000DF9C7A /* ProgressX_2UITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -294,11 +229,6 @@
 			isa = PBXTargetDependency;
 			target = 832213DF2BC92D8E00DF9C7A /* ProgressX-2 */;
 			targetProxy = 832213F62BC92D9000DF9C7A /* PBXContainerItemProxy */;
-		};
-		832214012BC92D9000DF9C7A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 832213DF2BC92D8E00DF9C7A /* ProgressX-2 */;
-			targetProxy = 832214002BC92D9000DF9C7A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -516,40 +446,6 @@
 			};
 			name = Release;
 		};
-		832214102BC92D9000DF9C7A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "WilliamLucas.ProgressX-2UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "ProgressX-2";
-			};
-			name = Debug;
-		};
-		832214112BC92D9000DF9C7A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "WilliamLucas.ProgressX-2UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "ProgressX-2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -576,15 +472,6 @@
 			buildConfigurations = (
 				8322140D2BC92D9000DF9C7A /* Debug */,
 				8322140E2BC92D9000DF9C7A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8322140F2BC92D9000DF9C7A /* Build configuration list for PBXNativeTarget "ProgressX-2UITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				832214102BC92D9000DF9C7A /* Debug */,
-				832214112BC92D9000DF9C7A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
