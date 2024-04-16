@@ -14,7 +14,8 @@
 		832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213EC2BC92D9000DF9C7A /* Persistence.swift */; };
 		832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */; };
 		832213FA2BC92D9000DF9C7A /* ProgressX_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */; };
-		832214132BC9360A00DF9C7A /* PreparedQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214122BC9360A00DF9C7A /* PreparedQueries.swift */; };
+		832214152BC937F800DF9C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 832214142BC937F800DF9C7A /* README.md */; };
+		832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214162BC938C400DF9C7A /* CreateNewProfile1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +38,8 @@
 		832213EF2BC92D9000DF9C7A /* ProgressX_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProgressX_2.xcdatamodel; sourceTree = "<group>"; };
 		832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProgressX-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2Tests.swift; sourceTree = "<group>"; };
-		832214122BC9360A00DF9C7A /* PreparedQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedQueries.swift; sourceTree = "<group>"; };
+		832214142BC937F800DF9C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
+		832214162BC938C400DF9C7A /* CreateNewProfile1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		832213D72BC92D8E00DF9C7A = {
 			isa = PBXGroup;
 			children = (
+				832214142BC937F800DF9C7A /* README.md */,
 				832213E22BC92D8E00DF9C7A /* ProgressX-2 */,
 				832213F82BC92D9000DF9C7A /* ProgressX-2Tests */,
 				832213E12BC92D8E00DF9C7A /* Products */,
@@ -79,13 +82,13 @@
 		832213E22BC92D8E00DF9C7A /* ProgressX-2 */ = {
 			isa = PBXGroup;
 			children = (
+				832214182BC9398000DF9C7A /* CreateNewProfile */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
 				832213EC2BC92D9000DF9C7A /* Persistence.swift */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				832213E92BC92D9000DF9C7A /* Preview Content */,
-				832214122BC9360A00DF9C7A /* PreparedQueries.swift */,
 			);
 			path = "ProgressX-2";
 			sourceTree = "<group>";
@@ -104,6 +107,14 @@
 				832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */,
 			);
 			path = "ProgressX-2Tests";
+			sourceTree = "<group>";
+		};
+		832214182BC9398000DF9C7A /* CreateNewProfile */ = {
+			isa = PBXGroup;
+			children = (
+				832214162BC938C400DF9C7A /* CreateNewProfile1.swift */,
+			);
+			path = CreateNewProfile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +198,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				832214152BC937F800DF9C7A /* README.md in Resources */,
 				832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */,
 				832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */,
 			);
@@ -206,9 +218,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				832214132BC9360A00DF9C7A /* PreparedQueries.swift in Sources */,
 				832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */,
 				832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */,
+				832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 			);

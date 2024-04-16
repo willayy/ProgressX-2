@@ -9,12 +9,18 @@ import SwiftUI
 
 @main
 struct ProgressX_2App: App {
+    
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            if (persistenceController.doesProfileExist()) {
+                HomeView()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            } else {
+                CreateNewProfile1()
+                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            }
         }
     }
 }

@@ -10,8 +10,10 @@ import CoreData
 
 struct HomeView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    var body: some View {
-            Text("dummy")
+        var body: some View {
+            NavigationView {
+                Text("Homeview")
+            }
         }
 }
 
