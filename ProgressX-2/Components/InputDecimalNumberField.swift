@@ -1,5 +1,5 @@
 //
-//  DecimalNumberPicker.swift
+//  InputDecimalNumberField.swift
 //  ProgressX-2
 //
 //  Created by William Norland on 2024-04-22.
@@ -7,9 +7,11 @@
 
 import SwiftUI
 import Combine
-struct DecimalNumberPicker: View {
+struct InputDecimalNumberField: View {
     
-    @State private var score = 0
+    let placeHolder: String
+    @Binding var numberText: String
+    let width: CGFloat
 
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -19,11 +21,23 @@ struct DecimalNumberPicker: View {
 
     var body: some View {
         VStack {
-            TextField("Enter your score", value: $score, formatter: formatter)
+            TextField(placeHolder, text: $numberText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
-
-            Text("Your score was \(score).")
+                .frame(width: UIScreen.main.bounds.width * width)
+                .multilineTextAlignment(.center)
+                .background(
+                    RoundedRectangle(cornerRadius: 5)
+                        .foregroundColor(foreGroundColorGray)
+                        .padding(.all, -3)
+                )
+                .onReceive(Just(numberText)) { newText in
+                    // Handle text change
+                    print("Text changed to: \(newText)")
+                }
+                .onSubmit {
+                    // Handle when return key is pressed
+                    print("Submitted")
+                }
         }
     }
 }
