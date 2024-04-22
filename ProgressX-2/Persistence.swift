@@ -51,7 +51,7 @@ extension PersistenceController {
     
     /// Fetches profiles form the CoreData database as an array.
     /// - Returns:
-    ///     [Profile]: the array of profiles
+    ///   [Profile]: the array of profiles
     public func getProfileAsArray() -> [Profile] {
         let request: NSFetchRequest = NSFetchRequest<Profile>(entityName: "Profile")
         request.shouldRefreshRefetchedObjects = true
@@ -68,8 +68,8 @@ extension PersistenceController {
     
     /// Checks for instances of Profile enteties in the CoreData database.
     /// - Returns:
-    ///     True: if a single entity of Profile is found
-    ///     False: if not a single entity of Profile is found
+    ///   True: if a single entity of Profile is found
+    ///   False: if not a single entity of Profile is found
     public func doesProfileExist() -> Bool {
         let fetchedProfiles: [Profile] = getProfileAsArray()
         if (fetchedProfiles.first != nil) { return true } else { return false }
@@ -77,8 +77,8 @@ extension PersistenceController {
     
     /// Verifies that the profile state of the CoreData database is correct, meaning does the database contain a single or no Profile entity.
     /// - Returns:
-    ///     True: if a single or zero profile entities exist in the database
-    ///     False: if more than 1 Profile entity exists
+    ///   True: if a single or zero profile entities exist in the database
+    ///   False: if more than 1 Profile entity exists
     public func verifyProfileState() -> Bool {
         let fetchedProfiles: [Profile] = getProfileAsArray()
         if (fetchedProfiles.count < 2) { return true } else { return false }
@@ -86,8 +86,8 @@ extension PersistenceController {
     
     /// Fetches the Profile entity from the CoreData database.
     /// - Returns:
-    ///     Profile: if there exists a profile in the database
-    ///     nil: if no profile exists in the database
+    ///   Profile: if there exists a profile in the database
+    ///   nil: if no profile exists in the database
     public func getProfile() -> Profile? {
         let fetchedProfiles: [Profile] = getProfileAsArray()
         return fetchedProfiles.first
@@ -100,7 +100,7 @@ extension PersistenceController {
     ///   - height: The height of the profile in any unit
     ///   - isMetric: Boolean to set if the profile uses metric or imperial units
     ///   - gender: The gender of the profile as a string, must be 'female' or 'male'
-    public func createProfile(userName:String, birthDay:Date, height:Int, isMetric:Bool, gender:String) -> Void {
+    public func createProfile(userName:String, birthDay:Date, height:Double, isMetric:Bool, gender:String) -> Void {
         let profile = Profile(context: container.viewContext)
         profile.setValue(userName, forKey: "userName")
         profile.setValue(birthDay, forKey: "birthDay")
@@ -139,6 +139,33 @@ extension PersistenceController {
         bodyWeightEntry.setValue(calfCirc, forKey: "calfCirc")
         
         profile.addToBodyEntries(bodyWeightEntry)
+    }
+    
+    public func getBodyWeightEntriesAsArray() -> [BodyEntry] {
+        let request: NSFetchRequest = NSFetchRequest<BodyEntry>(entityName: "BodyEntry")
+        request.shouldRefreshRefetchedObjects = true
+        request.includesPropertyValues = true
+        let context = container.viewContext
+        
+        do {
+            let fetchedBodyEntries: [BodyEntry]  = try context.fetch(request) as [BodyEntry]
+            return fetchedBodyEntries
+        } catch let error as NSError {
+            fatalError("Error fetching Profile for doesProfileExist(): \(error), \(error.userInfo)")
+        }
+    }
+    
+    /// Deletes a seleceted object
+    /// - Parameter object: A NSManaged object that has been fetched from the database
+    public func deleteNSManagedObject(object: NSManagedObject) -> Void {
+        container.viewContext.delete(object)
+    }
+    
+    /// Deleetes all registered objects from the database
+    public func wipeCoreDataBase() -> Void {
+        for obj in container.viewContext.registeredObjects {
+            container.viewContext.delete(obj)
+        }
     }
     
 }
