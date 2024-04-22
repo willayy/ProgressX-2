@@ -15,4 +15,5 @@ struct CreateNewProfile3: View {
 
 #Preview {
     CreateNewProfile3()
+        .environmentObject(ViewRouter())
 }
