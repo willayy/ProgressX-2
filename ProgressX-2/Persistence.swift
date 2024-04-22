@@ -36,11 +36,23 @@ struct PersistenceController {
         })
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
+    public func save() {
+        do {
+           try container.viewContext.save()
+        } catch let error as NSError {
+            fatalError("Failed to save context: \(error), \(error.userInfo)")
+        }
+    }
+    
 }
 
 extension PersistenceController {
     
-    public func doesProfileExist() -> Bool {
+    /// Fetches profiles form the CoreData database as an array.
+    /// - Returns:
+    ///     [Profile]: the array of profiles
+    public func getProfileAsArray() -> [Profile] {
         let request: NSFetchRequest = NSFetchRequest<Profile>(entityName: "Profile")
         request.shouldRefreshRefetchedObjects = true
         request.includesPropertyValues = true
@@ -48,10 +60,85 @@ extension PersistenceController {
         
         do {
             let fetchedProfiles: [Profile]  = try context.fetch(request) as [Profile]
-            if (fetchedProfiles.first != nil) { return true } else { return false }
-        } catch {
-            fatalError("Error fetching Profile for doesProfileExist()")
+            return fetchedProfiles
+        } catch let error as NSError {
+            fatalError("Error fetching Profile for doesProfileExist(): \(error), \(error.userInfo)")
         }
+    }
+    
+    /// Checks for instances of Profile enteties in the CoreData database.
+    /// - Returns:
+    ///     True: if a single entity of Profile is found
+    ///     False: if not a single entity of Profile is found
+    public func doesProfileExist() -> Bool {
+        let fetchedProfiles: [Profile] = getProfileAsArray()
+        if (fetchedProfiles.first != nil) { return true } else { return false }
+    }
+    
+    /// Verifies that the profile state of the CoreData database is correct, meaning does the database contain a single or no Profile entity.
+    /// - Returns:
+    ///     True: if a single or zero profile entities exist in the database
+    ///     False: if more than 1 Profile entity exists
+    public func verifyProfileState() -> Bool {
+        let fetchedProfiles: [Profile] = getProfileAsArray()
+        if (fetchedProfiles.count < 2) { return true } else { return false }
+    }
+    
+    /// Fetches the Profile entity from the CoreData database.
+    /// - Returns:
+    ///     Profile: if there exists a profile in the database
+    ///     nil: if no profile exists in the database
+    public func getProfile() -> Profile? {
+        let fetchedProfiles: [Profile] = getProfileAsArray()
+        return fetchedProfiles.first
+    }
+    
+    /// Creates a Profile entity in the CoreData database
+    /// - Parameters:
+    ///   - userName: The username of the profile as a String
+    ///   - birthDay: The birthday of the profile as a Date
+    ///   - height: The height of the profile in any unit
+    ///   - isMetric: Boolean to set if the profile uses metric or imperial units
+    ///   - gender: The gender of the profile as a string, must be 'female' or 'male'
+    public func createProfile(userName:String, birthDay:Date, height:Int, isMetric:Bool, gender:String) -> Void {
+        let profile = Profile(context: container.viewContext)
+        profile.setValue(userName, forKey: "userName")
+        profile.setValue(birthDay, forKey: "birthDay")
+        profile.setValue(height, forKey: "height")
+        profile.setValue(isMetric, forKey: "isMetric")
+        if gender == "female" || gender == "male" {
+            profile.setValue(gender, forKey: "gender")
+        } else {
+            fatalError("gender must be either 'male' or 'female' when creating profile")
+        }
+    }
+    
+    /// Creates and adds a bodyWeight entry to the profile
+    /// - Parameters:
+    ///   - dateAchieved: The date when the entry was logged
+    ///   - weight: The logged weight
+    ///   - chestCirc: (optional) the circumference of the chest in any unit
+    ///   - waistCirc: (optional) the circumference of the waist in any unit
+    ///   - upperArmCirc: (optional) the circumference of the upper arm in any unit
+    ///   - lowerArmCirc: (optional) the circumference of the lower arm in any unit
+    ///   - thighCirc: (optional) the circumference of the thigh in any unit
+    ///   - calfCirc: (optional) the circumference of the calf in any unit
+    public func addBodyWeightEntry(dateAchieved:Date, weight:Double, chestCirc:Double?=nil, waistCirc:Double?=nil, upperArmCirc:Double?=nil, lowerArmCirc:Double?=nil, thighCirc:Double?=nil, calfCirc:Double?=nil) {
+        
+        guard let profile: Profile = getProfile() else {fatalError("A profile must be created before adding a bodyWeightEntry")}
+        
+        let bodyWeightEntry = BodyEntry(context: container.viewContext)
+        
+        bodyWeightEntry.setValue(dateAchieved, forKey: "date")
+        bodyWeightEntry.setValue(weight, forKey: "bodyWeight")
+        bodyWeightEntry.setValue(chestCirc, forKey: "chestCirc")
+        bodyWeightEntry.setValue(waistCirc, forKey: "waistCirc")
+        bodyWeightEntry.setValue(upperArmCirc, forKey: "uprArmCirc")
+        bodyWeightEntry.setValue(lowerArmCirc, forKey: "lwrArmCirc")
+        bodyWeightEntry.setValue(thighCirc, forKey: "thighCirc")
+        bodyWeightEntry.setValue(calfCirc, forKey: "calfCirc")
+        
+        profile.addToBodyEntries(bodyWeightEntry)
     }
     
 }

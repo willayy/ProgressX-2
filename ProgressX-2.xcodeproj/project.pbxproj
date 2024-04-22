@@ -16,6 +16,8 @@
 		832213FA2BC92D9000DF9C7A /* ProgressX_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */; };
 		832214152BC937F800DF9C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 832214142BC937F800DF9C7A /* README.md */; };
 		832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214162BC938C400DF9C7A /* CreateNewProfile1.swift */; };
+		832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214232BD4300B00DF9C7A /* InputTextField.swift */; };
+		832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 		832213F92BC92D9000DF9C7A /* ProgressX_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2Tests.swift; sourceTree = "<group>"; };
 		832214142BC937F800DF9C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		832214162BC938C400DF9C7A /* CreateNewProfile1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile1.swift; sourceTree = "<group>"; };
+		832214232BD4300B00DF9C7A /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
+		832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSegPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,7 @@
 		832213E22BC92D8E00DF9C7A /* ProgressX-2 */ = {
 			isa = PBXGroup;
 			children = (
+				832214222BD42FF800DF9C7A /* Components */,
 				832214182BC9398000DF9C7A /* CreateNewProfile */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
@@ -115,6 +120,15 @@
 				832214162BC938C400DF9C7A /* CreateNewProfile1.swift */,
 			);
 			path = CreateNewProfile;
+			sourceTree = "<group>";
+		};
+		832214222BD42FF800DF9C7A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				832214232BD4300B00DF9C7A /* InputTextField.swift */,
+				832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +233,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */,
+				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
+				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
 				832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
