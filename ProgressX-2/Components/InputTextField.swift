@@ -17,11 +17,6 @@ struct InputTextField: View {
         TextField(placeHolder, text: $text)
             .frame(width: UIScreen.main.bounds.width * width)
             .textFieldStyle(RoundedBorderTextFieldStyle())
-            .background(
-                RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(foreGroundColorGray)
-                    .padding(.all, -3)
-            )
             .onReceive(Just(text)) { newText in
                 // Handle text change
                 print("Text changed to: \(newText)")

@@ -22,14 +22,8 @@ struct InputDecimalNumberField: View {
     var body: some View {
         VStack {
             TextField(placeHolder, text: $numberText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: UIScreen.main.bounds.width * width)
-                .multilineTextAlignment(.center)
-                .background(
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(foreGroundColorGray)
-                        .padding(.all, -3)
-                )
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .onReceive(Just(numberText)) { newText in
                     // Handle text change
                     print("Text changed to: \(newText)")
