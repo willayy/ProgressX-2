@@ -8,3 +8,4 @@
 import SwiftUI
 
 public let foreGroundColorGray: Color = Color(red: 0.8, green: 0.8, blue: 0.8)
+public let minimumScaleFactor: CGFloat = 0.5

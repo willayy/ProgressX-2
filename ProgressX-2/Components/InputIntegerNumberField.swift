@@ -1,17 +1,18 @@
 //
-//  InputDecimalNumberField.swift
+//  InputIntegerNumberField.swift
 //  ProgressX-2
 //
-//  Created by William Norland on 2024-04-22.
+//  Created by William Norland on 2024-05-03.
 //
+
 
 import SwiftUI
 import Combine
 
-private let allowedChars = "1234567890."
+private let allowedChars = "1234567890"
 
 /// TextField used for input of decimal numbers, using the InputField component.
-struct InputDecimalNumberField: View {
+struct InputIntegerNumberField: View {
     
     let placeHolder: String
     @Binding var numberText: String
@@ -23,34 +24,15 @@ struct InputDecimalNumberField: View {
         // Filter out non allowed characters
         var filtered = new.filter { allowedChars.contains($0) }
         
-        // Ensure first char isnt a dot, last char is handled in submit
-        if filtered.first == "." {
-            filtered.removeFirst()
-        }
-        
-        // Find out of many dots there are, if more than one remove last
-        let dotAmount = filtered.filter { $0 == "." }.count
-        
-        if dotAmount > 1 {
-            let i = filtered.lastIndex(of: ".")!
-            filtered.remove(at: i)
-        }
-        
         return filtered
     }
     
     private func onSubmitFunction(curr: String) -> String {
         
         if curr.isEmpty {
-            return "0.0"
+            return "0"
         }
         
-        if curr.last == "." {
-            var mutable = curr
-            mutable += "0"
-            return mutable
-        }
-                
         return curr
     }
     
@@ -59,3 +41,4 @@ struct InputDecimalNumberField: View {
         InputField(value: $numberText, markAsWrong: markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
     }
 }
+

@@ -16,7 +16,7 @@ struct InputShortTextField: View {
     
     let placeHolder: String
     @Binding var text: String
-    @Binding var markAsWrong: Bool
+    let markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
 
@@ -29,10 +29,10 @@ struct InputShortTextField: View {
     }
     
     private func onSubmitFunction(curr: String) -> String {
-        return ""
+        return curr
     }
     
     var body: some View {
-        InputField(value: $text, markAsWrong: $markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(value: $text, markAsWrong: markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
     }
 }

@@ -36,6 +36,7 @@ final class PersistenceTests: XCTestCase {
         var profile = p.getProfile()
         XCTAssertNotNil(profile)
         XCTAssertEqual(profile!.userName, "TestProfile")
+        XCTAssertTrue(profile!.isMetric)
         p.deleteNSManagedObject(object: profile!)
         p.save()
         profile = p.getProfile()
