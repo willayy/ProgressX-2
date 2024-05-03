@@ -19,11 +19,46 @@ struct CreateNewProfile1: View {
     @State private var weight = ""
     @State private var height = ""
     
+    @State private var validated = false
+    @State private var heightIsInvalid = false
+    @State private var weightIsInvalid = false
+    @State private var userNameIsInvalid = false
+    
     let unitSegments = ["Metric (meters)", "Imperial (feet)"]
     let genderSegments = ["Male", "Female"]
     
+    // Validates input
+    private func validateInput() -> Void {
+        
+        validated = true
+        
+        // Check if username is empty
+        if userName.isEmpty {
+            userNameIsInvalid = true
+            validated = false
+        } else {
+            userNameIsInvalid = false
+        }
+        
+        // Check if weight is empty
+        if weight.isEmpty {
+            weightIsInvalid = true
+            validated = false
+        } else {
+            weightIsInvalid = false
+        }
+        
+        // Check if height is empty
+        if height.isEmpty {
+            heightIsInvalid = true
+            validated = false
+        } else {
+            heightIsInvalid = false
+        }
+    }
+    
     // Calls this method when "Continue" button is pressed
-    private func goToNextStep() -> Void {
+    private func createProfile() -> Void {
         
         let p = PersistenceController.shared
         
@@ -61,7 +96,8 @@ struct CreateNewProfile1: View {
                             .fontWeight(.light)
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal, 30.0)
+                            .padding(.leading, 10)
+                            .padding(.trailing, 10)
                             .minimumScaleFactor(0.5);
                         
                         Text("Username")
@@ -71,7 +107,7 @@ struct CreateNewProfile1: View {
                             .padding(.top, 10)
                             .minimumScaleFactor(0.5);
                         
-                        InputTextField(placeHolder: "Enter username...", text: $userName, width: 0.4)
+                        InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4)
                         
                         Text("Birthday")
                             .foregroundColor(.black)
@@ -102,7 +138,8 @@ struct CreateNewProfile1: View {
                             .minimumScaleFactor(0.5);
                         
                         let weightUnit = (selectedUnitSegment == 0) ? "kg" : "lbs"
-                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, width: 0.3)
+                        
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3)
                         
                         Text("What is your current Height")
                             .foregroundColor(.black)
@@ -112,7 +149,8 @@ struct CreateNewProfile1: View {
                             .minimumScaleFactor(0.5);
                         
                         let lengthUnit = (selectedUnitSegment == 0) ? "m" : "ft"
-                        InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, width: 0.3)
+                        
+                        InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3)
                         
                         Text("What is your (biological) gender")
                             .foregroundColor(.black)
@@ -123,10 +161,21 @@ struct CreateNewProfile1: View {
                         
                         BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments)
                         
-                        NavigationLink("Continue", destination: CreateNewProfile2().environmentObject(viewRouter))
-                            .buttonStyle(.borderedProminent)
-                            .padding(.top, 20)
-                            .onTapGesture(perform: goToNextStep)
+                        Button("Continue", action: {
+                            validateInput()
+                            if validated {
+                                createProfile()
+                            } else {
+                                return
+                            }
+                        })
+                        .background(
+                            NavigationLink("Continue", destination: CreateNewProfile2().environmentObject(viewRouter))
+                                .buttonStyle(.borderedProminent)
+                                .disabled(!validated)
+                        )
+                        .buttonStyle(.borderedProminent)
+                        .padding(.top, 20)
                     }
                 }
             }

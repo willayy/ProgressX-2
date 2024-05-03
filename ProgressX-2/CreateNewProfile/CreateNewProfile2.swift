@@ -47,7 +47,6 @@ struct CreateNewProfile2: View {
     }
 }
     
-    
 #Preview {
     CreateNewProfile2()
         .environmentObject(ViewRouter())
