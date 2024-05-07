@@ -37,6 +37,7 @@ final class PersistenceTests: XCTestCase {
         XCTAssertNotNil(profile)
         XCTAssertEqual(profile!.userName, "TestProfile")
         XCTAssertTrue(profile!.isMetric)
+        // nil values in body measurements are 0.0 apparently
         p.deleteNSManagedObject(object: profile!)
         p.save()
         profile = p.getProfile()

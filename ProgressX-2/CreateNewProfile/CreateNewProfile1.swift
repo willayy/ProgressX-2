@@ -12,12 +12,20 @@ struct CreateNewProfile1: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
     
+    // The navPath variable is passed along to all following
+    // views in this set of views.
+    @State private var navPath = [Int]()
+    
     @State private var userName = ""
     @State private var birthDay = Date()
     @State private var selectedUnitSegment = 0
     @State private var selectedGenderSegment = 0
     @State private var weight = ""
     @State private var height = ""
+    
+    @State private var userNameIsInvalid = false
+    @State private var heightIsInvalid = false
+    @State private var weightIsInvalid = false
     
     let unitSegments = ["Metric (meters)", "Imperial (feet)"]
     let genderSegments = ["Male", "Female"]
@@ -28,13 +36,28 @@ struct CreateNewProfile1: View {
         var value = true
         
         // Check if username is empty
-        if userName.isEmpty { value = false }
+        if userName.isEmpty {
+            value = false
+            userNameIsInvalid = true
+        } else {
+            userNameIsInvalid = false
+        }
         
         // Check if weight is empty
-        if weight.isEmpty { value = false }
+        if weight.isEmpty { 
+            value = false
+            weightIsInvalid = true
+        } else {
+            weightIsInvalid = false
+        }
         
         // Check if height is empty
-        if height.isEmpty { value = false }
+        if height.isEmpty {
+            value = false
+            heightIsInvalid = true
+        } else {
+            heightIsInvalid = false
+        }
         
         return value
     }
@@ -61,7 +84,9 @@ struct CreateNewProfile1: View {
     }
     
     var body: some View {
-        NavigationView {
+        // The navigation stack is the root of all following views
+        // in this set of views (CreateProfileViews
+        NavigationStack(path: $navPath) {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
@@ -87,8 +112,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    let userNameIsEmpty = (userName.isEmpty) ? true : false
-                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: userNameIsEmpty, width: 0.4)
+                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4)
                     
                     Text("Birthday")
                         .foregroundColor(.black)
@@ -119,8 +143,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let weightUnit = (selectedUnitSegment == 0) ? "kg" : "lbs"
-                    let weightIsEmpty = (weight.isEmpty) ? true : false
-                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: weightIsEmpty, width: 0.3)
+                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3)
                     
                     Text("What is your current Height")
                         .foregroundColor(.black)
@@ -130,8 +153,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let lengthUnit = (selectedUnitSegment == 0) ? "m" : "ft"
-                    let heightIsEmpty = (height.isEmpty) ? true : false
-                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: heightIsEmpty, width: 0.3)
+                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3)
                     
                     Text("What is your (biological) gender")
                         .foregroundColor(.black)
@@ -142,18 +164,36 @@ struct CreateNewProfile1: View {
                     
                     BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments)
                     
-                    NavigationLink("Continue", destination: 
-                                    CreateNewProfile2()
-                                        .environmentObject(viewRouter)
-                                        .onAppear { createProfile() })
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top, 20)
-                    .disabled(!validateInput())
+                    Button {
+                        if validateInput() {
+                            createProfile()
+                            navPath.append(2)
+                        }
+                    } label: {
+                        Text("Continue")
+                            .frame(width: 100, height: 50)
+                    }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.top, 30)
+                    
+                } 
+                .navigationDestination(for: Int.self) { selection in
+                    if selection == 2 {
+                        // Pass along the navpath so following views can add to it.
+                        CreateNewProfile2(navPath: $navPath)
+                        // Also pass the viewRouter to be able to change the rootView to homeView.
+                            .environmentObject(viewRouter)
+                    }
+                    else if selection == 3 {
+                        CreateNewProfile3()
+                            .environmentObject(viewRouter)
+                    }
                 }
             }
         }
     }
 }
+    
 
 #Preview {
     CreateNewProfile1()

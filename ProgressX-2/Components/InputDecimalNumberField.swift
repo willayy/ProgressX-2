@@ -9,15 +9,17 @@ import SwiftUI
 import Combine
 
 private let allowedChars = "1234567890."
+private let maxChars = 6
 
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputDecimalNumberField: View {
     
     let placeHolder: String
     @Binding var numberText: String
-    let markAsWrong: Bool
+    @Binding var markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
+    @State var disableMaxChars = false
 
     private func onReceiveFunction(new: String) -> String {
         // Filter out non allowed characters
@@ -28,9 +30,15 @@ struct InputDecimalNumberField: View {
             filtered.removeFirst()
         }
         
+        // Ensure that number isnt longer than max chars
+        if new.count > maxChars && !disableMaxChars {
+            filtered.removeLast()
+        }
+        
+        disableMaxChars = false
+        
         // Find out of many dots there are, if more than one remove last
         let dotAmount = filtered.filter { $0 == "." }.count
-        
         if dotAmount > 1 {
             let i = filtered.lastIndex(of: ".")!
             filtered.remove(at: i)
@@ -41,13 +49,15 @@ struct InputDecimalNumberField: View {
     
     private func onSubmitFunction(curr: String) -> String {
         
+        var mutable = curr
+        
         if curr.isEmpty {
             return "0.0"
         }
         
         if curr.last == "." {
-            var mutable = curr
             mutable += "0"
+            disableMaxChars = true
             return mutable
         }
                 
@@ -56,6 +66,6 @@ struct InputDecimalNumberField: View {
     
     var body: some View {
         
-        InputField(value: $numberText, markAsWrong: markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(value: $numberText, markAsWrong: $markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
     }
 }

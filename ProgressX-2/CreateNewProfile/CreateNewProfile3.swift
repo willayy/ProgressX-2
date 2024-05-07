@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CreateNewProfile3: View {
     
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     @State var chestCirc = ""
     @State var waistCirc = ""
     @State var thighCirc = ""
@@ -16,19 +18,78 @@ struct CreateNewProfile3: View {
     @State var upperArmCirc = ""
     @State var lowerArmCirc = ""
     
+    @State var chestCircIsInvalid = false
+    @State var waistCircIsInvalid = false
+    @State var thighCircIsInvalid = false
+    @State var calfCircIsInvalid = false
+    @State var upperArmCircIsInvalid = false
+    @State var lowerArmCircIsInvalid = false
+    
     @State var benchPress1RM = ""
     @State var squat1RM = ""
     @State var deadLift1RM = ""
     @State var shoulderPress1RM = ""
     
+    @State var benchPress1RMIsInvalid = false
+    @State var squat1RMIsInvalid = false
+    @State var deadLift1RMIsInvalid = false
+    @State var shoulderPress1RMIsInvalid = false
+    
     @State var pushupsAmrap = ""
     @State var situpsAmrap = ""
+    
+    @State var situpsAmrapIsInvalid = false
+    @State var pushupsAmrapIsInvalid = false
     
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
     
+    private func validateInput() -> Bool {
+        
+        var inputIsValid = true
+        
+        func fieldIsInvalid(_ inputfield: String) -> Bool {
+            if inputfield.isEmpty {
+                inputIsValid = false
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        chestCircIsInvalid = fieldIsInvalid(chestCirc)
+        waistCircIsInvalid = fieldIsInvalid(waistCirc)
+        thighCircIsInvalid = fieldIsInvalid(thighCirc)
+        calfCircIsInvalid = fieldIsInvalid(calfCirc)
+        upperArmCircIsInvalid = fieldIsInvalid(upperArmCirc)
+        lowerArmCircIsInvalid = fieldIsInvalid(lowerArmCirc)
+        
+        benchPress1RMIsInvalid = fieldIsInvalid(benchPress1RM)
+        squat1RMIsInvalid = fieldIsInvalid(squat1RM)
+        deadLift1RMIsInvalid = fieldIsInvalid(deadLift1RM)
+        shoulderPress1RMIsInvalid = fieldIsInvalid(shoulderPress1RM)
+        
+        situpsAmrapIsInvalid = fieldIsInvalid(situpsAmrap)
+        pushupsAmrapIsInvalid = fieldIsInvalid(pushupsAmrap)
+        
+        return inputIsValid
+    }
+    
+    private func addExtraInfo() {
+        let p = PersistenceController.shared
+        let bwEntries = p.getBodyWeightEntriesAsArray()
+        let firstEntry = bwEntries.first
+        firstEntry!.chestCirc = Double(chestCirc)!
+        firstEntry!.waistCirc = Double(waistCirc)!
+        firstEntry!.thighCirc = Double(thighCirc)!
+        firstEntry!.calfCirc = Double(calfCirc)!
+        firstEntry!.uprArmCirc = Double(upperArmCirc)!
+        firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
+        p.save()
+    }
+    
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
                 
                 Text("Extra information")
@@ -57,37 +118,37 @@ struct CreateNewProfile3: View {
                         Text("Chest circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $chestCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $chestCirc, markAsWrong: $chestCircIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Waist circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $waistCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $waistCirc, markAsWrong: $waistCircIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Thigh circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $thighCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $thighCirc, markAsWrong: $thighCircIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Calf circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $calfCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $calfCirc, markAsWrong: $calfCircIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Lower arm circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $lowerArmCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $lowerArmCirc, markAsWrong: $lowerArmCircIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Upper arm circumference")
                             .minimumScaleFactor(minScaleFactor)
                             .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $upperArmCirc, markAsWrong: false, width: inputFieldWidth)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $upperArmCirc, markAsWrong: $upperArmCircIsInvalid, width: inputFieldWidth)
                     }
                     
                 }
@@ -103,26 +164,26 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Benchpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $benchPress1RM, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $benchPress1RM, markAsWrong: $benchPress1RMIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Squats")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $squat1RM, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $squat1RM, markAsWrong: $squat1RMIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Shoulderpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $shoulderPress1RM, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $shoulderPress1RM, markAsWrong: $shoulderPress1RMIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Deadlift")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $deadLift1RM, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $deadLift1RM, markAsWrong: $deadLift1RMIsInvalid, width: inputFieldWidth)
                     }
                 }
                 .padding(.top, 40)
@@ -135,17 +196,30 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Pushups")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputIntegerNumberField(placeHolder: "reps", numberText: $pushupsAmrap, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputIntegerNumberField(placeHolder: "reps", numberText: $pushupsAmrap, markAsWrong: $pushupsAmrapIsInvalid, width: inputFieldWidth)
                     }
                     HStack() {
                         Text("Situps")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputIntegerNumberField(placeHolder: "reps", numberText: $situpsAmrap, markAsWrong: false, width: inputFieldWidth)
+                            .frame(width: 120)
+                        InputIntegerNumberField(placeHolder: "reps", numberText: $situpsAmrap, markAsWrong: $situpsAmrapIsInvalid, width: inputFieldWidth)
                     }
                 }
                 .padding(.top, 40)
+                
+                Button {
+                    if validateInput() {
+                        addExtraInfo()
+                        viewRouter.rootView = "HomeView"
+                    }
+                } label: {
+                    Text("Finish")
+                        .frame(width: 100, height: 30)
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.top, 40)
+                
             }
         }
     }

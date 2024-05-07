@@ -10,19 +10,24 @@ import SwiftUI
 import Combine
 
 private let allowedChars = "1234567890"
+private let maxChars = 5
 
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputIntegerNumberField: View {
     
     let placeHolder: String
     @Binding var numberText: String
-    let markAsWrong: Bool
+    @Binding var markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
 
     private func onReceiveFunction(new: String) -> String {
         // Filter out non allowed characters
         var filtered = new.filter { allowedChars.contains($0) }
+        
+        if new.count > maxChars {
+            filtered.removeLast()
+        }
         
         return filtered
     }
@@ -38,7 +43,7 @@ struct InputIntegerNumberField: View {
     
     var body: some View {
         
-        InputField(value: $numberText, markAsWrong: markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(value: $numberText, markAsWrong: $markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
     }
 }
 

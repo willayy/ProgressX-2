@@ -11,7 +11,7 @@ struct InputField: View {
     
     @State private var shouldShake = false
     @Binding var value: String
-    let markAsWrong: Bool
+    @Binding var markAsWrong: Bool
     
     let placeHolder: String
     let width: CGFloat

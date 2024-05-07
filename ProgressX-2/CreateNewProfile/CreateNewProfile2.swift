@@ -11,6 +11,7 @@ import SwiftUI
 struct CreateNewProfile2: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @Binding var navPath: [Int]
     
     private func goToHomeView() {
         viewRouter.rootView = "HomeView"
@@ -35,19 +36,40 @@ struct CreateNewProfile2: View {
                 .padding(.horizontal, 30.0)
                 .minimumScaleFactor(0.5);
             
-            NavigationLink("Yes, let's continue",destination: CreateNewProfile3().environmentObject(viewRouter))
-                .buttonStyle(.borderedProminent)
+            HStack(spacing: 20) {
+                
+                Button {
+                    goToHomeView()
+                } label: {
+                    Text("No, im good!")
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 100, height: 50)
+                }
+                    .buttonStyle(.borderedProminent)
+                
+                Button {
+                    navPath.append(3)
+                } label: {
+                    Text("Yes, let's continue")
+                        .frame(maxWidth: .infinity)
+                        .frame(width: 100, height: 50)
+                }
+                    .buttonStyle(.borderedProminent)
+                
+            }
                 .padding(.top, 20)
-            
-            Button("No thank you im good!", action: goToHomeView)
-                .buttonStyle(.borderedProminent)
-                .padding(.top, 10)
             
         }
     }
 }
     
 #Preview {
-    CreateNewProfile2()
-        .environmentObject(ViewRouter())
+    struct Preview: View {
+            @State var navPath = [Int]()
+            var body: some View {
+                CreateNewProfile2(navPath: $navPath)
+                    .environmentObject(ViewRouter())
+            }
+        }
+    return Preview()
 }
