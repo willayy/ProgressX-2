@@ -9,7 +9,9 @@ import SwiftUI
 import CoreData
 
 struct HomeView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    
         var body: some View {
             NavigationView {
                 Text("Homeview")

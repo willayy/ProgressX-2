@@ -9,17 +9,21 @@ import SwiftUI
 
 @main
 struct ProgressX_2App: App {
-    
-    let persistenceController = PersistenceController.shared
 
+    let persistenceController = PersistenceController.shared
+    @StateObject var viewRouter = ViewRouter()
+    
     var body: some Scene {
         WindowGroup {
-            if (persistenceController.doesProfileExist()) {
-                HomeView()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
-            } else {
-                CreateNewProfile1()
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            switch (viewRouter.rootView) {
+                case "HomeView":
+                    HomeView()
+                        .environmentObject(viewRouter)
+                case "CreateNewProfile1":
+                    CreateNewProfile1()
+                        .environmentObject(viewRouter)
+            default:
+                fatalError("View router invalid state")
             }
         }
     }
