@@ -10,9 +10,10 @@ import XCTest
 
 final class PersistenceTests: XCTestCase {
     
+    let p = PersistenceController.shared
+    
     // MARK: SETUP
     override func setUpWithError() throws {
-        let p = PersistenceController.shared
         let today = Date()
         let testHeight = 187.00
         let testIsMetric = true
@@ -25,14 +26,12 @@ final class PersistenceTests: XCTestCase {
 
     // MARK: TEAR DOWN
     override func tearDownWithError() throws {
-        let p = PersistenceController.shared
         p.wipeCoreDataBase()
         p.save()
     }
     
     // MARK: TESTS
     func testGetProfile() throws {
-        let p = PersistenceController.shared
         var profile = p.getProfile()
         XCTAssertNotNil(profile)
         XCTAssertEqual(profile!.userName, "TestProfile")
@@ -45,20 +44,17 @@ final class PersistenceTests: XCTestCase {
     }
     
     func testGetProfileAsArray() throws {
-        let p = PersistenceController.shared
         let profileArray = p.getProfileAsArray()
         XCTAssertEqual(profileArray.count, 1)
         XCTAssertEqual(profileArray.first!.userName, "TestProfile")
     }
     
     func testProfileState() throws {
-        let p = PersistenceController.shared
         let profileState = p.verifyProfileState()
         XCTAssertTrue(profileState)
     }
     
     func testDoesProfileExist() throws {
-        let p = PersistenceController.shared
         var doesTheProfileExist = p.doesProfileExist()
         XCTAssertTrue(doesTheProfileExist)
         let profile = p.getProfile()!
@@ -69,7 +65,6 @@ final class PersistenceTests: XCTestCase {
     }
     
     func testGetBodyWeightEntriesAsArray() throws {
-        let p = PersistenceController.shared
         var bodyEntries = p.getBodyWeightEntriesAsArray()
         XCTAssertTrue(bodyEntries.count == 1)
         var firstEntry = bodyEntries.first
@@ -84,6 +79,23 @@ final class PersistenceTests: XCTestCase {
         let secondEntry = bodyEntries[1]
         XCTAssertEqual(firstEntry!.bodyWeight, 80.00)
         XCTAssertEqual(secondEntry.bodyWeight, 70.00)
+    }
+    
+    func testGetExercisesAsArray() throws {
+        // Create basic exercise library
+        p.generateBasicExerciseLibrary()
+        let exercises = p.getExercisesAsArray()
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Bench-press" })
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Shoulder-press" })
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Squat" })
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Deadlift" })
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Sit-up" })
+        XCTAssertTrue(exercises.contains { $0.exerciseName == "Push-up" })
+        
+    }
+    
+    func testAddPersonalRecords() throws {
+        //TODO: Implement this test!
     }
     
 }

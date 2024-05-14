@@ -11,12 +11,40 @@
         <attribute name="waistCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
+    <entity name="Exercise" representedClassName="Exercise" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="exerciseDesc" attributeType="String"/>
+        <attribute name="exerciseName" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint/>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="MaxReps" representedClassName="MaxReps" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="repBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepBasedExercise" inverseName="maxRepPrs" inverseEntity="RepBasedExercise"/>
+    </entity>
+    <entity name="OneRepMax" representedClassName="OneRepMax" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
+        <relationship name="repBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepBasedExercise" inverseName="oneRepMaxPrs" inverseEntity="RepBasedExercise"/>
+    </entity>
+    <entity name="PersonalRecord" representedClassName="PersonalRecord" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="load" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
         <attribute name="birthDay" optional="YES" attributeType="Date" defaultDateTimeInterval="734606640" usesScalarValueType="NO"/>
-        <attribute name="gender" optional="YES" attributeType="String" defaultValueString="&quot;Not set&quot;"/>
+        <attribute name="gender" optional="YES" attributeType="String" defaultValueString="&quot;Not set&quot;" regularExpressionString="^(male|female)$"/>
         <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="isMetric" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" defaultValueString="&quot;not set&quot;"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
+    </entity>
+    <entity name="RepBasedExercise" representedClassName="RepBasedExercise" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
+        <relationship name="maxRepPrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MaxReps" inverseName="repBasedExercise" inverseEntity="MaxReps"/>
+        <relationship name="oneRepMaxPrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OneRepMax" inverseName="repBasedExercise" inverseEntity="OneRepMax"/>
+    </entity>
+    <entity name="TimeBasedExercise" representedClassName="TimeBasedExercise" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
+        <relationship name="timePrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimeMax" inverseName="timeBasedExercise" inverseEntity="TimeMax"/>
+    </entity>
+    <entity name="TimeMax" representedClassName="TimeMax" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="timeBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimeBasedExercise" inverseName="timePrs" inverseEntity="TimeBasedExercise"/>
     </entity>
 </model>

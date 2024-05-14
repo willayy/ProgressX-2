@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import UIKit
 
 struct PersistenceController {
     
@@ -102,10 +103,10 @@ extension PersistenceController {
     ///   - gender: The gender of the profile as a string, must be 'female' or 'male'
     public func createProfile(userName:String, birthDay:Date, height:Double, isMetric:Bool, gender:String) -> Void {
         let profile = Profile(context: container.viewContext)
-        profile.setValue(userName, forKey: "userName")
-        profile.setValue(birthDay, forKey: "birthDay")
-        profile.setValue(height, forKey: "height")
-        profile.setValue(isMetric, forKey: "isMetric")
+            .setValue_ch(userName, forKey: "userName")
+            .setValue_ch(birthDay, forKey: "birthDay")
+            .setValue_ch(height, forKey: "height")
+            .setValue_ch(isMetric, forKey: "isMetric")
         if gender == "female" || gender == "male" {
             profile.setValue(gender, forKey: "gender")
         } else {
@@ -123,20 +124,20 @@ extension PersistenceController {
     ///   - lowerArmCirc: (optional) the circumference of the lower arm in any unit
     ///   - thighCirc: (optional) the circumference of the thigh in any unit
     ///   - calfCirc: (optional) the circumference of the calf in any unit
-    public func addBodyWeightEntry(dateAchieved:Date, weight:Double, chestCirc:Double?=nil, waistCirc:Double?=nil, upperArmCirc:Double?=nil, lowerArmCirc:Double?=nil, thighCirc:Double?=nil, calfCirc:Double?=nil) {
+    /// - Returns: Void
+    public func addBodyWeightEntry(dateAchieved:Date, weight:Double, chestCirc:Double?=nil, waistCirc:Double?=nil, upperArmCirc:Double?=nil, lowerArmCirc:Double?=nil, thighCirc:Double?=nil, calfCirc:Double?=nil) -> Void {
         
         guard let profile: Profile = getProfile() else {fatalError("A profile must be created before adding a bodyWeightEntry")}
         
-        let bodyWeightEntry = BodyEntry(context: container.viewContext)
-        
-        bodyWeightEntry.setValue(dateAchieved, forKey: "date")
-        bodyWeightEntry.setValue(weight, forKey: "bodyWeight")
-        bodyWeightEntry.setValue(chestCirc, forKey: "chestCirc")
-        bodyWeightEntry.setValue(waistCirc, forKey: "waistCirc")
-        bodyWeightEntry.setValue(upperArmCirc, forKey: "uprArmCirc")
-        bodyWeightEntry.setValue(lowerArmCirc, forKey: "lwrArmCirc")
-        bodyWeightEntry.setValue(thighCirc, forKey: "thighCirc")
-        bodyWeightEntry.setValue(calfCirc, forKey: "calfCirc")
+        let bodyWeightEntry: BodyEntry = BodyEntry(context: container.viewContext)
+            .setValue_ch(dateAchieved, forKey: "date")
+            .setValue_ch(weight, forKey: "bodyWeight")
+            .setValue_ch(chestCirc, forKey: "chestCirc")
+            .setValue_ch(waistCirc, forKey: "waistCirc")
+            .setValue_ch(upperArmCirc, forKey: "uprArmCirc")
+            .setValue_ch(lowerArmCirc, forKey: "lwrArmCirc")
+            .setValue_ch(thighCirc, forKey: "thighCirc")
+            .setValue_ch(calfCirc, forKey: "calfCirc")
         
         profile.addToBodyEntries(bodyWeightEntry)
     }
@@ -157,15 +158,89 @@ extension PersistenceController {
     
     /// Deletes a seleceted object
     /// - Parameter object: A NSManaged object that has been fetched from the database
+    /// - Returns: Void
     public func deleteNSManagedObject(object: NSManagedObject) -> Void {
         container.viewContext.delete(object)
     }
     
     /// Deleetes all registered objects from the database
+    /// - Returns: Void
     public func wipeCoreDataBase() -> Void {
         for obj in container.viewContext.registeredObjects {
             container.viewContext.delete(obj)
         }
     }
     
+    /// Fetches all saved exercises from the CoreDatabase
+    /// - Returns: Array of Exercises
+    public func getExercisesAsArray() -> [Exercise] {
+        let request: NSFetchRequest = NSFetchRequest<Exercise>(entityName: "Exercise")
+        request.shouldRefreshRefetchedObjects = true
+        request.includesPropertyValues = true
+        let context = container.viewContext
+        
+        do {
+            let fetchedExercises: [Exercise]  = try context.fetch(request) as [Exercise]
+            return fetchedExercises
+        } catch let error as NSError {
+            fatalError("Error fetching Profile for doesProfileExist(): \(error), \(error.userInfo)")
+        }
+    }
+    
+    /// Generates a set of basic exercises as CoreDatabase entries
+    /// - Returns: Void
+    public func generateBasicExerciseLibrary() -> Void {
+        guard let asset = NSDataAsset(name: "Exercises", bundle: Bundle.main) else {
+            fatalError("Could not find exercises")
+        }
+        
+        let jsonArray = try! JSONSerialization.jsonObject(with: asset.data, options: JSONSerialization.ReadingOptions.allowFragments) as! [[String: String]]
+        
+        for json in jsonArray {
+            var exercise: Exercise? = nil
+            if json["type"] == "reps" {exercise = RepBasedExercise(context: container.viewContext)}
+            else if json["type"] == "time" {exercise = TimeBasedExercise(context: container.viewContext)}
+            exercise!
+                .setValue_ch(json["name"], forKey: "exerciseName")
+                .setValue(json["description"], forKey: "exerciseDesc")
+        }
+        
+    }
+    
+    /// Add a one rep max personal record to an exercise that is based on doing a certain amount of reps.
+    /// - Parameters:
+    ///   - load: The weight used.
+    ///   - exercise: The exercise this record was achieved on.
+    /// - Returns: Void
+    public func addPersonalRecord(load: Double, exercise: RepBasedExercise) -> Void {
+        let pr = OneRepMax(context: container.viewContext)
+        pr.load = load
+        pr.repBasedExercise = exercise
+    }
+    
+    /// Add an amrap record to an exercise that is based on doing a certain amount of reps. This is mainly used for exercises considered "body weight" exercises but works on any rep based exercise.
+    /// - Parameters:
+    ///   - load: The load used. If the exercise is done with bodyweight, input current weight from profile.
+    ///   - reps: The amount of reps finished.
+    ///   - exercise: The exercise this record was achieved on.
+    /// - Returns: Void
+    public func addPersonalRecord(load: Double, reps: Int, exercise: RepBasedExercise) -> Void {
+        let pr = MaxReps(context: container.viewContext)
+        pr.load = load
+        pr.reps = 1
+        pr.repBasedExercise = exercise
+    }
+    
+    /// Add a time based record to an exercise that is based on doing a physical movement for a certain amount time under a load. This is mainly used for exercises that are "static", will work for any time based exercise.
+    /// - Parameters:
+    ///   - load: The load used. If the exercise is done with bodyweight, input current weight from profile.
+    ///   - exercise: The exercise this record was achieved on.
+    /// - Returns: Void
+    public func addPersonalRecord(load: Double, time exercise: TimeBasedExercise) -> Void {
+        let pr = TimeMax(context: container.viewContext)
+        pr.load = load
+        pr.timeBasedExercise = exercise
+    }
+    
 }
+
