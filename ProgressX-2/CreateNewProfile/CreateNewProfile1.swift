@@ -176,7 +176,7 @@ struct CreateNewProfile1: View {
                         .buttonStyle(.borderedProminent)
                         .padding(.top, 30)
                     
-                } 
+                }
                 .navigationDestination(for: Int.self) { selection in
                     if selection == 2 {
                         // Pass along the navpath so following views can add to it.

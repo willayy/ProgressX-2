@@ -85,6 +85,44 @@ struct CreateNewProfile3: View {
         firstEntry!.calfCirc = Double(calfCirc)!
         firstEntry!.uprArmCirc = Double(upperArmCirc)!
         firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
+        
+        p.generateBasicExerciseLibrary()
+        let exercises = p.getExercisesAsArray()
+        let bodyWeight = p.getBodyWeightEntriesAsArray().last!.bodyWeight
+        
+        // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
+        for exercise in exercises {
+            switch exercise.exerciseName {
+            case "Bench-press":
+                OneRepMax(context: p.container.viewContext)
+                    .setValue_ch(Double(benchPress1RM), forKey: "load")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            case "Squat":
+                OneRepMax(context: p.container.viewContext)
+                    .setValue_ch(Double(squat1RM), forKey: "load")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            case "Deadlift":
+                OneRepMax(context: p.container.viewContext)
+                    .setValue_ch(Double(deadLift1RM), forKey: "load")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            case "Shoulder-press":
+                OneRepMax(context: p.container.viewContext)
+                    .setValue_ch(Double(shoulderPress1RM), forKey: "load")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            case "Sit-up":
+                MaxReps(context: p.container.viewContext)
+                    .setValue_ch(bodyWeight, forKey: "load")
+                    .setValue_ch(Int64(situpsAmrap), forKey: "reps")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            case "Push-up":
+                MaxReps(context: p.container.viewContext)
+                    .setValue_ch(bodyWeight, forKey: "load")
+                    .setValue_ch(Int64(pushupsAmrap), forKey: "reps")
+                    .repBasedExercise = (exercise as! RepBasedExercise)
+            default:
+                continue
+            }
+        }
         p.save()
     }
     

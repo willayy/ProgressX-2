@@ -17,7 +17,7 @@ struct ProgressX_2App: App {
         WindowGroup {
             switch (viewRouter.rootView) {
                 case "HomeView":
-                    HomeView()
+                    ExerciseLibrary()
                         .environmentObject(viewRouter)
                 case "CreateNewProfile1":
                     CreateNewProfile1()
