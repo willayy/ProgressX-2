@@ -31,20 +31,9 @@ struct ExerciseLibrary: View {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
-                    Text("Exercise library")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5);
+                    BoldTitle(text: "Exercise library")
                     
-                    Text("Here you can browse exercises you have stored in your library, you can delete, edit or add new ones.")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
-                        .minimumScaleFactor(0.5);
+                    LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
                     
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center, spacing: 10) {
@@ -69,6 +58,14 @@ struct ExerciseLibrary: View {
                                         navPath.append(3)
                                         listItemClicked = false
                                     }) { Image(systemName: "pencil") }
+                                    .frame(width: 20)
+                                    .padding(.horizontal, 10)
+                                    .buttonStyle(BorderlessButtonStyle())
+                                    
+                                    // MARK: Statistics button
+                                    Button(action: {
+                                        navPath.append(4)
+                                    }) { Image(systemName: "note") }
                                     .frame(width: 20)
                                     .padding(.horizontal, 10)
                                     .buttonStyle(BorderlessButtonStyle())
@@ -119,6 +116,8 @@ struct ExerciseLibrary: View {
                     CreateNewExercise()
                 } else if selection == 3 {
                     EditExercise(exercise: $selectedObject, currName: $selectedObjectName, currDesc: $selectedObjectDesc, refreshListView: $refreshListView)
+                } else if selection == 4 {
+                    StatisticsView()
                 }
             }
         }

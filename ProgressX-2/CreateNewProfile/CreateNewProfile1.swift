@@ -18,8 +18,8 @@ struct CreateNewProfile1: View {
     
     @State private var userName = ""
     @State private var birthDay = Date()
-    @State private var selectedUnitSegment = 0
-    @State private var selectedGenderSegment = 0
+    @State private var selectedUnitSegment = "Metric (meters)"
+    @State private var selectedGenderSegment = "Male"
     @State private var weight = ""
     @State private var height = ""
     
@@ -73,8 +73,8 @@ struct CreateNewProfile1: View {
             p.save()
         }
         
-        let isMetric = (selectedUnitSegment == 0) ? true : false
-        let gender = (selectedGenderSegment == 0) ? "male" : "female"
+        let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
+        let gender = (selectedGenderSegment == "Male") ? "male" : "female"
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
         
@@ -90,20 +90,9 @@ struct CreateNewProfile1: View {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
-                    Text("Create a profile!")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5);
+                    BoldTitle(text: "Create a profile!")
                     
-                    Text("To use ProgressX you need to create a profile, this profile and all its data will be stored locally only")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 20)
-                        .minimumScaleFactor(0.5);
+                    LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only")
                     
                     Text("Username")
                         .foregroundColor(.black)
@@ -133,7 +122,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments)
+                    BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments, frameWidth: 230, horizontalPadding: 20)
                     
                     Text("What is your current weight?")
                         .foregroundColor(.black)
@@ -142,7 +131,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    let weightUnit = (selectedUnitSegment == 0) ? "kg" : "lbs"
+                    let weightUnit = (selectedUnitSegment == "Metric (meters)") ? "kg" : "lbs"
                     InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3)
                     
                     Text("What is your current Height")
@@ -152,7 +141,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    let lengthUnit = (selectedUnitSegment == 0) ? "m" : "ft"
+                    let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "m" : "ft"
                     InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3)
                     
                     Text("What is your (biological) gender")
@@ -162,7 +151,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments)
+                    BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments, frameWidth: 230, horizontalPadding: 20)
                     
                     Button {
                         if validateInput() {

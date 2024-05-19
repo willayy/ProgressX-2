@@ -9,18 +9,19 @@ import SwiftUI
 
 struct BasicSegPicker: View {
     
-    @Binding var selectedSegment: Int
+    @Binding var selectedSegment: String
     let segments: [String]
+    let frameWidth: CGFloat
+    let horizontalPadding: CGFloat
     
     var body: some View {
-        Picker(selection: $selectedSegment, label: Text("")) {
-            ForEach(0..<segments.count) { index in
-                Text(segments[index])
-                    .tag(index)
-                }
+        Picker("Options", selection: $selectedSegment) {
+            ForEach(segments, id: \.self) { option in
+                Text(option).tag(option)
             }
-            .pickerStyle(SegmentedPickerStyle())
-            .frame(width: 230)
-            .padding(-3)
+        }
+        .pickerStyle(SegmentedPickerStyle())
+        .frame(width: frameWidth)
+        .padding(.horizontal, horizontalPadding)
     }
 }
