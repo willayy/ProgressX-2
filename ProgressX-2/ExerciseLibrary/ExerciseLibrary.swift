@@ -17,7 +17,6 @@ struct ExerciseLibrary: View {
     // The navPath variable is passed along to all following
     // views in this set of views.
     @State private var exercises: [Exercise] = p.getExercisesAsArray()
-    @State private var refreshListView = false // Dont want to add this but since SwiftUI doesnt notice / refresh view when object attribtues changes i have to.
     @State private var showDeleteAlert = false
     @State private var deletedExerciseName = ""
     @State private var navPath = [Int]()
@@ -25,6 +24,7 @@ struct ExerciseLibrary: View {
     @State private var selectedObject: Exercise? = nil
     @State private var selectedObjectName: String = ""
     @State private var selectedObjectDesc: String = ""
+    @State private var searchText: String = ""
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -35,14 +35,20 @@ struct ExerciseLibrary: View {
                     
                     LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
                     
+                    TextField("Search...", text: $searchText)
+                                        .padding(10)
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(10)
+                                        .padding(.horizontal, 20)
+                                        .onDisappear(perform: {
+                                            searchText = ""
+                                        })
+                    
                     //MARK: List view displaying all exercise objects
-                    VStack(alignment: .center, spacing: 10) {
+                    VStack(alignment: .center) {
                         List {
                             
-                            // Forcing refresh after exercise has been edited.
-                            if refreshListView {}
-                            
-                            ForEach(exercises, id: \.self) { exercise in
+                            ForEach(exercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }) { exercise in
                                 HStack {
                                     
                                     Text(exercise.exerciseName ?? "Unnamed Exercise")
@@ -94,9 +100,9 @@ struct ExerciseLibrary: View {
                             }
                         }
                         .frame(height: 600)
+                        .background(Color(.systemGray6))
                         .cornerRadius(10)
                         .padding(.horizontal, 20)
-                        .onAppear(perform: {refreshListView = false})
                     }
                     
                     // MARK: Add new exercise button
@@ -113,9 +119,9 @@ struct ExerciseLibrary: View {
             }
             .navigationDestination(for: Int.self) { selection in
                 if selection == 2 {
-                    CreateNewExercise()
+                    CreateNewExercise(exercises: $exercises)
                 } else if selection == 3 {
-                    EditExercise(exercise: $selectedObject, currName: $selectedObjectName, currDesc: $selectedObjectDesc, refreshListView: $refreshListView)
+                    EditExercise(exercise: $selectedObject, currName: $selectedObjectName, currDesc: $selectedObjectDesc, exercises: $exercises)
                 } else if selection == 4 {
                     StatisticsView()
                 }

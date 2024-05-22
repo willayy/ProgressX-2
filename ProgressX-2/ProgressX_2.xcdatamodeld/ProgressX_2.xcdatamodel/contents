@@ -37,11 +37,11 @@
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
     </entity>
     <entity name="RepBasedExercise" representedClassName="RepBasedExercise" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
-        <relationship name="maxRepPrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MaxReps" inverseName="repBasedExercise" inverseEntity="MaxReps"/>
-        <relationship name="oneRepMaxPrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="OneRepMax" inverseName="repBasedExercise" inverseEntity="OneRepMax"/>
+        <relationship name="maxRepPrs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MaxReps" inverseName="repBasedExercise" inverseEntity="MaxReps"/>
+        <relationship name="oneRepMaxPrs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OneRepMax" inverseName="repBasedExercise" inverseEntity="OneRepMax"/>
     </entity>
     <entity name="TimeBasedExercise" representedClassName="TimeBasedExercise" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
-        <relationship name="timePrs" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimeMax" inverseName="timeBasedExercise" inverseEntity="TimeMax"/>
+        <relationship name="timePrs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TimeMax" inverseName="timeBasedExercise" inverseEntity="TimeMax"/>
     </entity>
     <entity name="TimeMax" representedClassName="TimeMax" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
         <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

@@ -13,7 +13,8 @@ struct EditExercise: View {
     @Binding var exercise: Exercise?
     @Binding var currName: String
     @Binding var currDesc: String
-    @Binding var refreshListView: Bool
+    @Binding var exercises: [Exercise]
+    
     @State var newName: String = ""
     @State var newDesc: String = ""
     
@@ -23,21 +24,19 @@ struct EditExercise: View {
         VStack(alignment: .center, spacing: 10) {
             ScrollView {
                 
-                Text("Editing exercise \(currName)")
-                    .font(.title)
+                BoldTitle(text: "Editing exercise \(currName)")
+                
+                (Text("Description: ")
+                    .font(.subheadline)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                + Text("\(currDesc)")
+                    .fontWeight(.light)
+                    .foregroundColor(.black))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
                     .padding()
                 
-                Text("Description: \(currDesc)")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    .padding()
                 
                 InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newExerciseNameWrong, width: 0.6)
 
@@ -46,18 +45,29 @@ struct EditExercise: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                 
+                // MARK: Handle an edit of an exercise
                 Button(action: {
-                    if newName.isEmpty {
+                    
+                    if exercises.contains(where: { $0.exerciseName == newName }) {
                         newExerciseNameWrong = true
+                        return
                     } else {
                         newExerciseNameWrong = false
-                        exercise!
-                            .setValue_ch(newName, forKey: "exerciseName")
-                            .setValue(newDesc, forKey: "exerciseDesc")
-                        currName = newName
-                        currDesc = newDesc
-                        p.save()
                     }
+                        
+                    currName = newName.isEmpty ? currName : newName
+                    currDesc = newDesc.isEmpty ? currDesc : newDesc
+                    exercise!
+                        .setValue_ch(currName, forKey: "exerciseName")
+                        .setValue(currDesc, forKey: "exerciseDesc")
+                    p.save()
+                        
+                    for i in 0..<exercises.count {
+                        if exercises[i].exerciseName == currName {
+                            exercises[i] = exercise!
+                        }
+                    }
+                    
                 }) {
                     Text("Save changes")
                         .frame(height: 40)
@@ -66,7 +76,7 @@ struct EditExercise: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 
             }
-        }.onDisappear(perform: {refreshListView = true})
+        }
     }
 }
 
@@ -75,9 +85,9 @@ struct EditExercise: View {
         @State var ex: Exercise? = nil
         @State var nn: String = "Test"
         @State var nd: String = "Test"
-        @State var rf: Bool = false
+        @State var lst: [Exercise] = [Exercise()]
             var body: some View {
-                EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, refreshListView: $rf)
+                EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, exercises: $lst)
             }
         }
     return Preview()
