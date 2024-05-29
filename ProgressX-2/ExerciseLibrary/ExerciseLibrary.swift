@@ -8,23 +8,25 @@
 import SwiftUI
 import CoreData
 
-private let p = PersistenceController.shared
-
 struct ExerciseLibrary: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.managedObjectContext) private var viewContext
     
     // The navPath variable is passed along to all following
     // views in this set of views.
-    @State private var exercises: [Exercise] = p.getExercisesAsArray()
+    @State private var allExercises: [Exercise] = DataUtility.getExercisesAsArray()
     @State private var showDeleteAlert = false
     @State private var deletedExerciseName = ""
     @State private var navPath = [Int]()
-    @State private var listItemClicked = false
-    @State private var selectedObject: Exercise? = nil
-    @State private var selectedObjectName: String = ""
-    @State private var selectedObjectDesc: String = ""
+    @State private var selectedExercise: Exercise? = nil
+    @State private var selectedExerciseName: String = ""
+    @State private var selectedExerciseDesc: String = ""
     @State private var searchText: String = ""
+    
+    private func searchedItems() -> [Exercise] {
+        return allExercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
+    }
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -46,63 +48,66 @@ struct ExerciseLibrary: View {
                     
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center) {
-                        List {
-                            
-                            ForEach(exercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }) { exercise in
-                                HStack {
-                                    
-                                    Text(exercise.exerciseName ?? "Unnamed Exercise")
-                                    
-                                    Spacer()
-                                    
-                                    // MARK: Edit button
-                                    Button(action: {
-                                        listItemClicked = true
-                                        selectedObject = exercise
-                                        selectedObjectName = exercise.exerciseName!
-                                        selectedObjectDesc = exercise.exerciseDesc!
-                                        navPath.append(3)
-                                        listItemClicked = false
-                                    }) { Image(systemName: "pencil") }
-                                    .frame(width: 20)
-                                    .padding(.horizontal, 10)
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    
-                                    // MARK: Statistics button
-                                    Button(action: {
-                                        navPath.append(4)
-                                    }) { Image(systemName: "note") }
-                                    .frame(width: 20)
-                                    .padding(.horizontal, 10)
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    
-                                    // MARK: Delete button
-                                    Button(action: {
-                                        showDeleteAlert = true
-                                        deletedExerciseName = exercise.exerciseName!
-                                    }) { Image(systemName: "trash") }
-                                    .frame(width: 20)
-                                    .padding(.horizontal, 10)
-                                    .buttonStyle(BorderlessButtonStyle())
-                                    .alert(isPresented: $showDeleteAlert, content: {
-                                        Alert(
-                                            title: Text("Delete Item"),
-                                            message: Text("Are you sure you want to delete \(deletedExerciseName)?"),
-                                            primaryButton: .destructive(Text("Delete")) {
-                                                exercises.removeAll(where: { $0 === exercise })
-                                                p.deleteNSManagedObject(object: exercise)
-                                                p.save()
-                                            },
-                                            secondaryButton: .cancel()
-                                        )
-                                    })
+                        if allExercises.isEmpty {
+                            LightSubHeadline(text: "You currently have no exercises saved to the exercise library...")
+                        } else {
+                            List {
+                                ForEach(searchedItems()) { exercise in
+                                    HStack {
+                                        
+                                        Text(exercise.exerciseName ?? "Unnamed Exercise")
+                                        
+                                        Spacer()
+                                        
+                                        // MARK: Edit button
+                                        Button(action: {
+                                            selectedExercise = exercise
+                                            selectedExerciseName = exercise.exerciseName!
+                                            selectedExerciseDesc = exercise.exerciseDesc!
+                                            navPath.append(3)
+                                        }) { Image(systemName: "pencil") }
+                                            .frame(width: 20)
+                                            .padding(.horizontal, 10)
+                                            .buttonStyle(BorderlessButtonStyle())
+                                        
+                                        // MARK: Statistics button
+                                        Button(action: {
+                                            
+                                            selectedExercise = exercise
+                                            navPath.append(4)
+                                        }) { Image(systemName: "note") }
+                                            .frame(width: 20)
+                                            .padding(.horizontal, 10)
+                                            .buttonStyle(BorderlessButtonStyle())
+                                        
+                                        // MARK: Delete button
+                                        Button(action: {
+                                            showDeleteAlert = true
+                                            deletedExerciseName = exercise.exerciseName!
+                                        }) { Image(systemName: "trash") }
+                                            .frame(width: 20)
+                                            .padding(.horizontal, 10)
+                                            .buttonStyle(BorderlessButtonStyle())
+                                            .alert(isPresented: $showDeleteAlert, content: {
+                                                Alert(
+                                                    title: Text("Delete Item"),
+                                                    message: Text("Are you sure you want to delete \(deletedExerciseName)?"),
+                                                    primaryButton: .destructive(Text("Delete")) {
+                                                        allExercises.removeAll(where: { $0 === exercise })
+                                                        DataUtility.deleteNSManagedObject(object: exercise)
+                                                        DataUtility.save()
+                                                    },
+                                                    secondaryButton: .cancel()
+                                                )
+                                            })
+                                    }
                                 }
                             }
+                            .frame(height: 600)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 20)
                         }
-                        .frame(height: 600)
-                        .background(Color(.systemGray6))
-                        .cornerRadius(10)
-                        .padding(.horizontal, 20)
                     }
                     
                     // MARK: Add new exercise button
@@ -119,11 +124,11 @@ struct ExerciseLibrary: View {
             }
             .navigationDestination(for: Int.self) { selection in
                 if selection == 2 {
-                    CreateNewExercise(exercises: $exercises)
+                    CreateNewExercise(exercises: $allExercises)
                 } else if selection == 3 {
-                    EditExercise(exercise: $selectedObject, currName: $selectedObjectName, currDesc: $selectedObjectDesc, exercises: $exercises)
+                    EditExercise(exercise: $selectedExercise, currName: $selectedExerciseName, currDesc: $selectedExerciseDesc, exercises: $allExercises)
                 } else if selection == 4 {
-                    StatisticsView()
+                    StatisticsView(exercise: $selectedExercise)
                 }
             }
         }
@@ -133,4 +138,5 @@ struct ExerciseLibrary: View {
 #Preview {
     ExerciseLibrary()
         .environmentObject(ViewRouter())
+        .environment(\.managedObjectContext, PersistenceController.shared.previewContainer.viewContext)
 }

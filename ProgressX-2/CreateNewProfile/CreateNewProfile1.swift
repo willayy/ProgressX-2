@@ -11,6 +11,7 @@ import CoreData
 struct CreateNewProfile1: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.managedObjectContext) private var viewContext
     
     // The navPath variable is passed along to all following
     // views in this set of views.
@@ -65,12 +66,10 @@ struct CreateNewProfile1: View {
     // Calls this method when "Continue" button is pressed
     private func createProfile() -> Void {
         
-        let p = PersistenceController.shared
-        
-        if p.doesProfileExist() {
-            let profile = p.getProfile()!
-            p.deleteNSManagedObject(object: profile)
-            p.save()
+        if DataUtility.doesProfileExist() {
+            let profile = DataUtility.getProfile()!
+            DataUtility.deleteNSManagedObject(object: profile)
+            DataUtility.save()
         }
         
         let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
@@ -78,9 +77,11 @@ struct CreateNewProfile1: View {
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
         
-        p.createProfile(userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
-        p.addBodyWeightEntry(dateAchieved: Date(), weight: inputWeight)
-        p.save()
+        DataUtility.createProfile(userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
+        DataUtility.save()
+        
+        DataUtility.addBodyWeightEntry(dateAchieved: Date(), weight: inputWeight)
+        DataUtility.save()
     }
     
     var body: some View {
@@ -101,7 +102,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4)
+                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4, errorMessage: "This cant be left empty!")
                     
                     Text("Birthday")
                         .foregroundColor(.black)
@@ -132,7 +133,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let weightUnit = (selectedUnitSegment == "Metric (meters)") ? "kg" : "lbs"
-                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3)
+                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3, errorMessage: "This cant be left empty!")
                     
                     Text("What is your current Height")
                         .foregroundColor(.black)
@@ -142,7 +143,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "m" : "ft"
-                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3)
+                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: "This cant be left empty!")
                     
                     Text("What is your (biological) gender")
                         .foregroundColor(.black)
@@ -172,10 +173,12 @@ struct CreateNewProfile1: View {
                         CreateNewProfile2(navPath: $navPath)
                         // Also pass the viewRouter to be able to change the rootView to homeView.
                             .environmentObject(viewRouter)
+                            .environment(\.managedObjectContext, viewContext)
                     }
                     else if selection == 3 {
                         CreateNewProfile3()
                             .environmentObject(viewRouter)
+                            .environment(\.managedObjectContext, viewContext)
                     }
                 }
             }
@@ -185,6 +188,8 @@ struct CreateNewProfile1: View {
     
 
 #Preview {
-    CreateNewProfile1()
+    let container = PersistenceController.shared.container
+    return CreateNewProfile1()
         .environmentObject(ViewRouter())
+        .environment(\.managedObjectContext, container.viewContext)
 }

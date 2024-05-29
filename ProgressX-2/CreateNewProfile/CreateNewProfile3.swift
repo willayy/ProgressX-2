@@ -10,6 +10,7 @@ import SwiftUI
 struct CreateNewProfile3: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.managedObjectContext) private var viewContext
     
     @State var chestCirc = ""
     @State var waistCirc = ""
@@ -44,6 +45,9 @@ struct CreateNewProfile3: View {
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
     
+    @State var circumferenceUnit = DataUtility.getProfile()!.isMetric ? "cm" : "inches"
+    var weightUnit = DataUtility.getProfile()!.isMetric ? "kg" : "lbs"
+    
     private func validateInput() -> Bool {
         
         var inputIsValid = true
@@ -76,8 +80,7 @@ struct CreateNewProfile3: View {
     }
     
     private func addExtraInfo() {
-        let p = PersistenceController.shared
-        let bwEntries = p.getBodyWeightEntriesAsArray()
+        let bwEntries = DataUtility.getBodyWeightEntriesAsArray()
         let firstEntry = bwEntries.first
         firstEntry!.chestCirc = Double(chestCirc)!
         firstEntry!.waistCirc = Double(waistCirc)!
@@ -86,44 +89,50 @@ struct CreateNewProfile3: View {
         firstEntry!.uprArmCirc = Double(upperArmCirc)!
         firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
         
-        p.generateBasicExerciseLibrary()
-        let exercises = p.getExercisesAsArray()
-        let bodyWeight = p.getBodyWeightEntriesAsArray().last!.bodyWeight
+        DataUtility.generateBasicExerciseLibrary()
+        let exercises = DataUtility.getExercisesAsArray()
+        let bodyWeight = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
         for exercise in exercises {
             switch exercise.exerciseName {
             case "Bench-press":
-                OneRepMax(context: p.container.viewContext)
+                OneRepMax(context: viewContext)
                     .setValue_ch(Double(benchPress1RM), forKey: "load")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             case "Squat":
-                OneRepMax(context: p.container.viewContext)
+                OneRepMax(context: viewContext)
                     .setValue_ch(Double(squat1RM), forKey: "load")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             case "Deadlift":
-                OneRepMax(context: p.container.viewContext)
+                OneRepMax(context: viewContext)
                     .setValue_ch(Double(deadLift1RM), forKey: "load")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             case "Shoulder-press":
-                OneRepMax(context: p.container.viewContext)
+                OneRepMax(context: viewContext)
                     .setValue_ch(Double(shoulderPress1RM), forKey: "load")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             case "Sit-up":
-                MaxReps(context: p.container.viewContext)
+                MaxReps(context: viewContext)
                     .setValue_ch(bodyWeight, forKey: "load")
                     .setValue_ch(Int64(situpsAmrap), forKey: "reps")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             case "Push-up":
-                MaxReps(context: p.container.viewContext)
+                MaxReps(context: viewContext)
                     .setValue_ch(bodyWeight, forKey: "load")
                     .setValue_ch(Int64(pushupsAmrap), forKey: "reps")
+                    .setValue_ch(Date(), forKey: "achievedOnDate")
                     .repBasedExercise = (exercise as! RepBasedExercise)
             default:
                 continue
             }
         }
-        p.save()
+        DataUtility.save()
     }
     
     var body: some View {
@@ -145,8 +154,6 @@ struct CreateNewProfile3: View {
                     .padding(.horizontal, 20)
                     .minimumScaleFactor(minScaleFactor);
                 
-                let circumferenceUnit: String = (PersistenceController.shared.getProfile()!.isMetric) ? "cm" : "ft"
-                
                 VStack(alignment: .center, spacing: 10) {
                     
                     Text("Circumference metrics")
@@ -155,44 +162,42 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Chest circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $chestCirc, markAsWrong: $chestCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $chestCirc, markAsWrong: $chestCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Waist circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $waistCirc, markAsWrong: $waistCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $waistCirc, markAsWrong: $waistCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Thigh circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $thighCirc, markAsWrong: $thighCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $thighCirc, markAsWrong: $thighCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Calf circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $calfCirc, markAsWrong: $calfCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $calfCirc, markAsWrong: $calfCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Lower arm circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $lowerArmCirc, markAsWrong: $lowerArmCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $lowerArmCirc, markAsWrong: $lowerArmCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Upper arm circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 200)
-                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $upperArmCirc, markAsWrong: $upperArmCircIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $upperArmCirc, markAsWrong: $upperArmCircIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     
                 }
                 .padding(.top, 40)
-                
-                let oneRepMaxUnit: String = (PersistenceController.shared.getProfile()!.isMetric) ? "kg" : "lbs"
                 
                 VStack(alignment: .center, spacing: 10) {
                     
@@ -202,26 +207,26 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Benchpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $benchPress1RM, markAsWrong: $benchPress1RMIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $benchPress1RM, markAsWrong: $benchPress1RMIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Squats")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $squat1RM, markAsWrong: $squat1RMIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $squat1RM, markAsWrong: $squat1RMIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Shoulderpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $shoulderPress1RM, markAsWrong: $shoulderPress1RMIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $shoulderPress1RM, markAsWrong: $shoulderPress1RMIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Deadlift")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputDecimalNumberField(placeHolder: oneRepMaxUnit, numberText: $deadLift1RM, markAsWrong: $deadLift1RMIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $deadLift1RM, markAsWrong: $deadLift1RMIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                 }
                 .padding(.top, 40)
@@ -234,14 +239,14 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Pushups")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputIntegerNumberField(placeHolder: "reps", numberText: $pushupsAmrap, markAsWrong: $pushupsAmrapIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputIntegerNumberField(placeHolder: "reps", numberText: $pushupsAmrap, markAsWrong: $pushupsAmrapIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                     HStack() {
                         Text("Situps")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 120)
-                        InputIntegerNumberField(placeHolder: "reps", numberText: $situpsAmrap, markAsWrong: $situpsAmrapIsInvalid, width: inputFieldWidth)
+                            .frame(width: 150)
+                        InputIntegerNumberField(placeHolder: "reps", numberText: $situpsAmrap, markAsWrong: $situpsAmrapIsInvalid, width: inputFieldWidth, errorMessage: "This cant be left empty!")
                     }
                 }
                 .padding(.top, 40)
@@ -263,7 +268,13 @@ struct CreateNewProfile3: View {
     }
 }
 
+// MARK: Temporarily out of order :(
+// Until we figure out how to mock fetching from the coredata base
+// And yes commented out code isnt good
+//
 #Preview {
-    CreateNewProfile3()
-        .environmentObject(ViewRouter())
+    let container = PersistenceController.shared.previewContainer
+    return CreateNewProfile3()
+       .environmentObject(ViewRouter())
+       .environment(\.managedObjectContext, container.viewContext)
 }

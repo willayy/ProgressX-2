@@ -9,7 +9,8 @@ import SwiftUI
 
 struct EditExercise: View {
     
-    private let p = PersistenceController.shared
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var exercise: Exercise?
     @Binding var currName: String
     @Binding var currDesc: String
@@ -21,8 +22,8 @@ struct EditExercise: View {
     @State var newExerciseNameWrong: Bool = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
             ScrollView {
+                VStack(alignment: .center) {
                 
                 BoldTitle(text: "Editing exercise \(currName)")
                 
@@ -37,13 +38,12 @@ struct EditExercise: View {
                     .minimumScaleFactor(0.5)
                     .padding()
                 
+                InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is already taken!")
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newExerciseNameWrong, width: 0.6)
-
                 TextField("New exercise description", text: $newDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .padding(.bottom, 10)
                 
                 // MARK: Handle an edit of an exercise
                 Button(action: {
@@ -60,7 +60,7 @@ struct EditExercise: View {
                     exercise!
                         .setValue_ch(currName, forKey: "exerciseName")
                         .setValue(currDesc, forKey: "exerciseDesc")
-                    p.save()
+                    DataUtility.save()
                         
                     for i in 0..<exercises.count {
                         if exercises[i].exerciseName == currName {
@@ -81,14 +81,12 @@ struct EditExercise: View {
 }
 
 #Preview {
-    struct Preview: View {
-        @State var ex: Exercise? = nil
-        @State var nn: String = "Test"
-        @State var nd: String = "Test"
-        @State var lst: [Exercise] = [Exercise()]
-            var body: some View {
-                EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, exercises: $lst)
-            }
-        }
-    return Preview()
+    let container = PersistenceController.shared.previewContainer
+    @State var ex: Exercise? = DataUtility.getExercisesAsArray().first!
+    @State var nn: String = "testing exercise"
+    @State var nd: String = "This exercise is used for debugging purposes within the canvas preview"
+    @State var lst: [Exercise] = DataUtility.getExercisesAsArray()
+    
+    return EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, exercises: $lst)
+            .environment(\.managedObjectContext, container.viewContext)
 }

@@ -19,9 +19,11 @@ struct ProgressX_2App: App {
                 case "HomeView":
                     ExerciseLibrary()
                         .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 case "CreateNewProfile1":
                     CreateNewProfile1()
                         .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
             default:
                 fatalError("View router invalid state")
             }

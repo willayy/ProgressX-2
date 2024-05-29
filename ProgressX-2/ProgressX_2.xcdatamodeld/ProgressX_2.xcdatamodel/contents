@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BodyEntry" representedClassName="BodyEntry" syncable="YES" codeGenerationType="class">
-        <attribute name="bodyWeight" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="bodyWeight" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="calfCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="chestCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lwrArmCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="thighCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="uprArmCirc" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -15,26 +15,34 @@
         <attribute name="exerciseDesc" attributeType="String"/>
         <attribute name="exerciseName" attributeType="String"/>
         <uniquenessConstraints>
-            <uniquenessConstraint/>
+            <uniquenessConstraint>
+                <constraint value="exerciseName"/>
+            </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
     <entity name="MaxReps" representedClassName="MaxReps" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
-        <attribute name="reps" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="reps" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="repBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepBasedExercise" inverseName="maxRepPrs" inverseEntity="RepBasedExercise"/>
     </entity>
     <entity name="OneRepMax" representedClassName="OneRepMax" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
         <relationship name="repBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RepBasedExercise" inverseName="oneRepMaxPrs" inverseEntity="RepBasedExercise"/>
     </entity>
     <entity name="PersonalRecord" representedClassName="PersonalRecord" isAbstract="YES" syncable="YES" codeGenerationType="class">
-        <attribute name="load" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="achievedOnDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="load" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
-        <attribute name="birthDay" optional="YES" attributeType="Date" defaultDateTimeInterval="734606640" usesScalarValueType="NO"/>
-        <attribute name="gender" optional="YES" attributeType="String" defaultValueString="&quot;Not set&quot;" regularExpressionString="^(male|female)$"/>
-        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="isMetric" optional="YES" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" defaultValueString="&quot;not set&quot;"/>
+        <attribute name="birthDay" attributeType="Date" defaultDateTimeInterval="734606640" usesScalarValueType="NO"/>
+        <attribute name="gender" attributeType="String" defaultValueString="&quot;Not set&quot;" regularExpressionString="^(male|female)$"/>
+        <attribute name="height" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="userName" attributeType="String" defaultValueString="&quot;not set&quot;"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="userName"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="RepBasedExercise" representedClassName="RepBasedExercise" parentEntity="Exercise" syncable="YES" codeGenerationType="class">
         <relationship name="maxRepPrs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="MaxReps" inverseName="repBasedExercise" inverseEntity="MaxReps"/>
@@ -44,7 +52,7 @@
         <relationship name="timePrs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="TimeMax" inverseName="timeBasedExercise" inverseEntity="TimeMax"/>
     </entity>
     <entity name="TimeMax" representedClassName="TimeMax" parentEntity="PersonalRecord" syncable="YES" codeGenerationType="class">
-        <attribute name="time" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="time" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="timeBasedExercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TimeBasedExercise" inverseName="timePrs" inverseEntity="TimeBasedExercise"/>
     </entity>
 </model>

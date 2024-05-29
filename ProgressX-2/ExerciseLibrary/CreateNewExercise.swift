@@ -9,24 +9,30 @@ import SwiftUI
 
 struct CreateNewExercise: View {
     
-    private let p = PersistenceController.shared
-    
     // Dont want to add this but since SwiftUI doesnt notice / refresh view when object attribtues changes i have to.
+    
     @Binding var exercises: [Exercise]
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @State var currBw = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
+    @State var weightUnit = DataUtility.getProfile()!.isMetric ? "kg" : "lbs"
     
     @State private var newExerciseNameWrong: Bool = false
     @State private var selectedTypeOfExercise: String = "Reps"
     @State private var selectedTypeOfRepsPr: String = "1RM"
     @State private var addPr: String = "No"
     @State private var achieviedOnCurrBw: String = "Yes"
+    @State private var exerciseCreatedAlert: Bool = false
     
     // States for the textfields
-    @State private var newExerciseName: String = ""
-    @State private var newExerciseDesc: String = ""
+    @State private var selectedExerciseName: String = ""
+    @State private var selectedExerciseDesc: String = ""
     @State private var enteredAmrap: String = ""
     @State private var enteredOneRepMax: String = ""
     @State private var enteredTime: String = ""
     @State private var enteredLoad: String = ""
+    
+    @State private var createdExerciseName: String = ""
     
     @State private var enteredAmrapIsWrong: Bool = false
     @State private var enteredOneRepMaxIsWrong: Bool = false
@@ -44,20 +50,8 @@ struct CreateNewExercise: View {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        let currBw = p.getBodyWeightEntriesAsArray().last!.bodyWeight
+        let currBw = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
         return formatter.string(from: NSNumber(value: currBw))!
-    }
-    
-    private func getCurrBw() -> Double {
-        let currBw = p.getBodyWeightEntriesAsArray().last!.bodyWeight
-        return currBw
-    }
-    
-    /// Returns the selected unit for the profile using the app
-    /// - Returns: A "kg" for metric users and "lbs" for imperial users
-    private func getUnit() -> String {
-        let unit = p.getProfile()!.isMetric ? "kg" : "lbs"
-        return unit
     }
     
     /// Validates input, marks textfields that are filled incorrectly.
@@ -67,13 +61,13 @@ struct CreateNewExercise: View {
         // Ugly input validation with a lot of if statements, could be better but dont have time to redesign.
         
         // Checks no duplicate exercises can be created
-        if (exercises.contains { $0.exerciseName == newExerciseName }) {
+        if (exercises.contains { $0.exerciseName == selectedExerciseName }) {
             newExerciseNameWrong = true
             return false
         } else {newExerciseNameWrong=false}
         
         // Checks so the new name isnt an empty string
-        if newExerciseName.isEmpty {newExerciseNameWrong=true; return false}
+        if selectedExerciseName.isEmpty {newExerciseNameWrong=true; return false}
         else {newExerciseNameWrong=false}
         
         // Checks so, which ever pr you pressed, the value entered isnt empty.
@@ -101,39 +95,61 @@ struct CreateNewExercise: View {
     private func addPrIfWanted(exercise: Exercise) -> Void {
         if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
             if selectedTypeOfRepsPr == "1RM" {
-                let pr = OneRepMax(context: p.container.viewContext)
+                let pr = OneRepMax(context: viewContext)
                 pr.load = Double(enteredOneRepMax)!
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
+                pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToOneRepMaxPrs(pr)
-                p.save()
+                DataUtility.save()
             } else if selectedTypeOfRepsPr == "AMRAP" {
-                let pr = MaxReps(context: p.container.viewContext)
+                let pr = MaxReps(context: viewContext)
                 pr.reps = Int64(enteredAmrap)!
-                pr.load = (achieviedOnCurrBw == "Yes" ? getCurrBw() : Double(enteredLoad))!
+                pr.load = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
+                pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToMaxRepPrs(pr)
-                p.save()
+                DataUtility.save()
             }
         }
         else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            let pr = TimeMax(context: p.container.viewContext)
+            let pr = TimeMax(context: viewContext)
             pr.time = Double(enteredTime)!
-            pr.load = (achieviedOnCurrBw == "Yes" ? getCurrBw() : Double(enteredLoad))!
+            pr.load = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
             pr.timeBasedExercise = (exercise as! TimeBasedExercise)
+            pr.achievedOnDate = Date()
             (exercise as! TimeBasedExercise).addToTimePrs(pr)
-            p.save()
+            DataUtility.save()
         }
+    }
+    
+    private func showExerciseCreatedAlert() -> some View {
+        Text("Succesfully created exercise called \(createdExerciseName)")
+            .fontWeight(.light)
+            .foregroundStyle(.green)
+            .padding(.bottom, 10)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    withAnimation {
+                        exerciseCreatedAlert = false
+                        createdExerciseName = ""
+                    }
+                }
+            }
     }
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(alignment: .center) {
                 
                 BoldTitle(text: "Create new exercise")
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $newExerciseName, markAsWrong: $newExerciseNameWrong, width: 0.6)
+                if exerciseCreatedAlert {
+                    showExerciseCreatedAlert()
+                }
                 
-                TextField("New exercise description", text: $newExerciseDesc)
+                InputShortTextField(placeHolder: "New exercise name", text: $selectedExerciseName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is already taken!")
+                
+                TextField("New exercise description", text: $selectedExerciseDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.bottom)
@@ -152,9 +168,9 @@ struct CreateNewExercise: View {
                 
                 // MARK: Do you want to add a PR for a rep based exercise
                 if addPr == "Yes" && selectedTypeOfExercise == "Reps" {
-                    
+                        
                     LightSubHeadline(text: "AMRAP pr or 1RM pr?")
-                        .padding(.top, 10)
+                            .padding(.top, 10)
                     
                     BasicSegPicker(selectedSegment: $selectedTypeOfRepsPr, segments: repBasedPrOptions, frameWidth: 230, horizontalPadding: 100)
                     
@@ -163,7 +179,7 @@ struct CreateNewExercise: View {
                         (Text("Was this time record achieved at your current bodyweight of ")
                             .font(.subheadline)
                             .fontWeight(.light)
-                         + Text("\(getCurrBw()) \(getUnit())")
+                         + Text("\(getCurrBw()) \(weightUnit)")
                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.center)
@@ -180,7 +196,7 @@ struct CreateNewExercise: View {
                                 .padding(.horizontal, 30)
                                 .padding(.top, 10)
                             
-                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6)
+                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                             
                         } else if achieviedOnCurrBw == "No" {
                             
@@ -190,17 +206,18 @@ struct CreateNewExercise: View {
                                 .padding(.horizontal, 30)
                                 .padding(.top, 10)
                             
-                            InputDecimalNumberField(placeHolder: getUnit(), numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6)
+                            InputDecimalNumberField(placeHolder: weightUnit, numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                             
-                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6)
+                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                         }
                         
                     } else if selectedTypeOfRepsPr == "1RM" {
                         
                         LightSubHeadline(text: "Enter your 1RM")
-                        
-                        InputIntegerNumberField(placeHolder: "1RM", numberText: $enteredOneRepMax, markAsWrong: $enteredAmrapIsWrong, width: 0.6)
                             .padding(.top, 10)
+                        
+                        InputIntegerNumberField(placeHolder: "1RM", numberText: $enteredOneRepMax, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
+                            
                     }
                 
                 // MARK: Do you want to add a PR for a time based exercise
@@ -209,7 +226,7 @@ struct CreateNewExercise: View {
                     (Text("Was this time record achieved at your current bodyweight of ")
                         .font(.subheadline)
                         .fontWeight(.light)
-                     + Text("\(getCurrBw()) \(getUnit())")
+                     + Text("\(getCurrBw()) \(weightUnit)")
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
@@ -224,33 +241,34 @@ struct CreateNewExercise: View {
                         LightSubHeadline(text: "Enter amount of time under tension in seconds")
                             .padding(.horizontal, 30)
                         
-                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6)
+                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                         
                     } else if achieviedOnCurrBw == "No" {
                         
                         LightSubHeadline(text: "Enter the load and the amount of time under tension in seconds")
                             .padding(.horizontal, 30)
                         
-                        InputDecimalNumberField(placeHolder: getUnit(), numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6)
+                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                         
-                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6)
+                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
                     }
                 }
                 
                 Button(action: {
                     if validateInput() {
-                        let context = p.container.viewContext
                         var exercise: Exercise?
-                        if selectedTypeOfExercise == "Reps" {exercise = RepBasedExercise(context: context)}
-                        if selectedTypeOfExercise == "Time" {exercise = TimeBasedExercise(context: context)}
+                        if selectedTypeOfExercise == "Reps" {exercise = RepBasedExercise(context: viewContext)}
+                        if selectedTypeOfExercise == "Time" {exercise = TimeBasedExercise(context: viewContext)}
                         exercise!
-                            .setValue_ch(newExerciseName, forKey: "exerciseName")
-                            .setValue(newExerciseDesc, forKey: "exerciseDesc")
+                            .setValue_ch(selectedExerciseName, forKey: "exerciseName")
+                            .setValue(selectedExerciseDesc, forKey: "exerciseDesc")
                         addPrIfWanted(exercise: exercise!)
-                        p.save()
+                        DataUtility.save()
+                        createdExerciseName = selectedExerciseName
+                        exerciseCreatedAlert = true
                         exercises.append(exercise!)
-                        newExerciseName = ""
-                        newExerciseDesc = ""
+                        selectedExerciseName = ""
+                        selectedExerciseDesc = ""
                         selectedTypeOfExercise = "Reps"
                         selectedTypeOfRepsPr = "1RM"
                         addPr = "No"
@@ -268,12 +286,9 @@ struct CreateNewExercise: View {
 }
 
 #Preview {
-    struct Preview: View {
-        @State var lst: [Exercise] = [Exercise()]
-            var body: some View {
-                CreateNewExercise(exercises: $lst)
-            }
-        }
-    return Preview()
+    let container = PersistenceController.shared.previewContainer
+    @State var lst: [Exercise] = [Exercise()]
+    return CreateNewExercise(exercises: $lst)
+                .environment(\.managedObjectContext, container.viewContext)
 }
 

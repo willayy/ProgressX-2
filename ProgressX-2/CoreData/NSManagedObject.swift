@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 
 extension NSManagedObject {
+    // This extension includes functionality added to the basic NSManagedObject class.
     
     /// Original NSManagedObject setValue function but now with chaining.
     /// - Parameters:

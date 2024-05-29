@@ -19,6 +19,7 @@ struct InputShortTextField: View {
     @Binding var markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
+    let errorMessage: String
 
     private func onReceiveFunction(new: String) -> String {
         var filtered = new.filter { !nonAllowedChars.contains($0) }
@@ -33,6 +34,6 @@ struct InputShortTextField: View {
     }
     
     var body: some View {
-        InputField(value: $text, markAsWrong: $markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(value: $text, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
     }
 }

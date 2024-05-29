@@ -11,6 +11,8 @@ import SwiftUI
 struct CreateNewProfile2: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.managedObjectContext) private var viewContext
+        
     @Binding var navPath: [Int]
     
     private func goToHomeView() {
@@ -64,12 +66,9 @@ struct CreateNewProfile2: View {
 }
     
 #Preview {
-    struct Preview: View {
-            @State var navPath = [Int]()
-            var body: some View {
-                CreateNewProfile2(navPath: $navPath)
-                    .environmentObject(ViewRouter())
-            }
-        }
-    return Preview()
+    @State var navPath = [Int]()
+    let container = PersistenceController.shared.container
+    return CreateNewProfile2(navPath: $navPath)
+            .environmentObject(ViewRouter())
+            .environment(\.managedObjectContext, container.viewContext)
 }

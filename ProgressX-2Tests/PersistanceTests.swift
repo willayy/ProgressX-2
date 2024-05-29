@@ -10,70 +10,69 @@ import XCTest
 
 final class PersistenceTests: XCTestCase {
     
-    let p = PersistenceController.shared
-    
     // MARK: SETUP
     override func setUpWithError() throws {
+        DataUtility.wipeContext()
         let today = Date()
         let testHeight = 187.00
         let testIsMetric = true
         let testGender = "male"
         let testWeight = 80.00
-        p.createProfile(userName: "TestProfile", birthDay: today, height: testHeight, isMetric: testIsMetric, gender: testGender)
-        p.addBodyWeightEntry(dateAchieved: today, weight: testWeight)
-        p.save()
+        DataUtility.createProfile(userName: "TestProfile", birthDay: today, height: testHeight, isMetric: testIsMetric, gender: testGender)
+        DataUtility.addBodyWeightEntry(dateAchieved: today, weight: testWeight)
+        DataUtility.save()
     }
 
     // MARK: TEAR DOWN
     override func tearDownWithError() throws {
-        p.wipeCoreDataBase()
-        p.save()
+        DataUtility.wipeContext()
+        DataUtility.save()
     }
     
     // MARK: TESTS
     func testGetProfile() throws {
-        var profile = p.getProfile()
+        var profile = DataUtility.getProfile()
         XCTAssertNotNil(profile)
         XCTAssertEqual(profile!.userName, "TestProfile")
         XCTAssertTrue(profile!.isMetric)
         // nil values in body measurements are 0.0 apparently
-        p.deleteNSManagedObject(object: profile!)
-        p.save()
-        profile = p.getProfile()
+        DataUtility.deleteNSManagedObject(object: profile!)
+        DataUtility.save()
+        profile = DataUtility.getProfile()
         XCTAssertNil(profile)
     }
     
     func testGetProfileAsArray() throws {
-        let profileArray = p.getProfileAsArray()
+        let profileArray = DataUtility.getProfileAsArray()
         XCTAssertEqual(profileArray.count, 1)
         XCTAssertEqual(profileArray.first!.userName, "TestProfile")
     }
     
     func testProfileState() throws {
-        let profileState = p.verifyProfileState()
+        let profileState = DataUtility.verifyProfileState()
         XCTAssertTrue(profileState)
     }
     
     func testDoesProfileExist() throws {
-        var doesTheProfileExist = p.doesProfileExist()
+        var doesTheProfileExist = DataUtility.doesProfileExist()
         XCTAssertTrue(doesTheProfileExist)
-        let profile = p.getProfile()!
-        p.deleteNSManagedObject(object: profile)
-        p.save()
-        doesTheProfileExist = p.doesProfileExist()
+        let profile = DataUtility.getProfile()!
+        DataUtility.deleteNSManagedObject(object: profile)
+        DataUtility.save()
+        doesTheProfileExist = DataUtility.doesProfileExist()
         XCTAssertFalse(doesTheProfileExist)
     }
     
     func testGetBodyWeightEntriesAsArray() throws {
-        var bodyEntries = p.getBodyWeightEntriesAsArray()
+        var bodyEntries = DataUtility.getBodyWeightEntriesAsArray()
         XCTAssertTrue(bodyEntries.count == 1)
         var firstEntry = bodyEntries.first
         XCTAssertEqual(firstEntry!.bodyWeight, 80.00)
         
-        p.addBodyWeightEntry(dateAchieved: Date(), weight: 70.00)
-        p.save()
+        DataUtility.addBodyWeightEntry(dateAchieved: Date(), weight: 70.00)
+        DataUtility.save()
         
-        bodyEntries = p.getBodyWeightEntriesAsArray()
+        bodyEntries = DataUtility.getBodyWeightEntriesAsArray()
         XCTAssertTrue(bodyEntries.count == 2)
         firstEntry = bodyEntries.first
         let secondEntry = bodyEntries[1]
@@ -83,8 +82,8 @@ final class PersistenceTests: XCTestCase {
     
     func testGetExercisesAsArray() throws {
         // Create basic exercise library
-        p.generateBasicExerciseLibrary()
-        let exercises = p.getExercisesAsArray()
+        DataUtility.generateBasicExerciseLibrary()
+        let exercises = DataUtility.getExercisesAsArray()
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Bench-press" })
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Shoulder-press" })
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Squat" })
