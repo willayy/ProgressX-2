@@ -138,7 +138,7 @@ class DataUtility {
         }
     }
     
-    // MARK: Fetching
+    // MARK: Fetching / Persistance
     
     /// Fetches profiles form the CoreData database as an array.
     /// - Returns:

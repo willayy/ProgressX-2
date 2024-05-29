@@ -8,6 +8,8 @@
 import XCTest
 @testable import ProgressX_2
 
+// These functions are now in the DataUtility file but since they still deal with persistance their tests are in this file.
+
 final class PersistenceTests: XCTestCase {
     
     // MARK: SETUP
