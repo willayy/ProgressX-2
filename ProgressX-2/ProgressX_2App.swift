@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct ProgressX_2App: App {
 
-    let persistenceController = PersistenceController.shared
+    let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
     
     var body: some Scene {
@@ -19,11 +19,11 @@ struct ProgressX_2App: App {
                 case "HomeView":
                     ExerciseLibrary()
                         .environmentObject(viewRouter)
-                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case "CreateNewProfile1":
                     CreateNewProfile1()
                         .environmentObject(viewRouter)
-                        .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
             default:
                 fatalError("View router invalid state")
             }
