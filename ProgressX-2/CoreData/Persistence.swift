@@ -32,7 +32,7 @@ struct PersistenceController {
         
         container.viewContext.automaticallyMergesChangesFromParent = true
         
-        //MARK: The preview database for the application
+        //MARK: The preview / test database for the application
         
         previewContainer = NSPersistentContainer(name: "ProgressX_2")
         
@@ -48,7 +48,7 @@ struct PersistenceController {
         
         previewContainer.viewContext.automaticallyMergesChangesFromParent = true
         
-        // Initialise a database with test values for the preview
+        //MARK: Initialise a in-memory database with test values for the preview
         
         let profile: Profile = Profile(context: previewContainer.viewContext)
             .setValue_ch("TestProfile", forKey: "userName")
@@ -59,12 +59,12 @@ struct PersistenceController {
             
         let bw1 = BodyEntry(context: previewContainer.viewContext)
             .setValue_ch(100, forKey: "bodyWeight")
-            .setValue_ch(Date()-2, forKey: "date")
+            .setValue_ch(Date()-20000, forKey: "date")
             bw1.profile = profile
         
         let bw2 = BodyEntry(context: previewContainer.viewContext)
             .setValue_ch(95, forKey: "bodyWeight")
-            .setValue_ch(Date()-1, forKey: "date")
+            .setValue_ch(Date()-10000, forKey: "date")
             bw2.profile = profile
         
         let bw3 = BodyEntry(context: previewContainer.viewContext)
@@ -76,28 +76,74 @@ struct PersistenceController {
         profile.addToBodyEntries(bw2)
         profile.addToBodyEntries(bw3)
         
-        let testExercise = RepBasedExercise(context: previewContainer.viewContext)
-            .setValue_ch("testing exercise", forKey: "exerciseName")
+        let testExercise1 = RepBasedExercise(context: previewContainer.viewContext)
+            .setValue_ch("testing exercise (reps)", forKey: "exerciseName")
             .setValue_ch("This exercise is used for debugging purposes within the canvas preview", forKey: "exerciseDesc")
         
-        let pr1 = OneRepMax(context: previewContainer.viewContext)
+        let testExercise2 = TimeBasedExercise(context: previewContainer.viewContext)
+            .setValue_ch("testing exercise (time)", forKey: "exerciseName")
+            .setValue_ch("This exercise is used for debugging purposes within the canvas preview", forKey: "exerciseDesc")
+        
+        let ORMpr1 = OneRepMax(context: previewContainer.viewContext)
             .setValue_ch(75, forKey: "load")
-            .setValue_ch(Date()-2, forKey: "achievedOnDate")
-            pr1.repBasedExercise = testExercise
+            .setValue_ch(Date()-20000, forKey: "achievedOnDate")
+            ORMpr1.repBasedExercise = testExercise1
         
-        let pr2 = OneRepMax(context: previewContainer.viewContext)
+        let ORMpr2 = OneRepMax(context: previewContainer.viewContext)
             .setValue_ch(80, forKey: "load")
-            .setValue_ch(Date()-1, forKey: "achievedOnDate")
-            pr2.repBasedExercise = testExercise
+            .setValue_ch(Date()-10000, forKey: "achievedOnDate")
+            ORMpr2.repBasedExercise = testExercise1
         
-        let pr3 = OneRepMax(context: previewContainer.viewContext)
+        let ORMpr3 = OneRepMax(context: previewContainer.viewContext)
             .setValue_ch(77, forKey: "load")
             .setValue_ch(Date(), forKey: "achievedOnDate")
-            pr3.repBasedExercise = testExercise
+            ORMpr3.repBasedExercise = testExercise1
         
-        testExercise.addToOneRepMaxPrs(pr1)
-        testExercise.addToOneRepMaxPrs(pr2)
-        testExercise.addToOneRepMaxPrs(pr3)
+        let MRpr1 = MaxReps(context: previewContainer.viewContext)
+            .setValue_ch(100, forKey: "load")
+            .setValue_ch(10, forKey: "reps")
+            .setValue_ch(Date()-20000, forKey: "achievedOnDate")
+            MRpr1.repBasedExercise = testExercise1
+        
+        let MRpr2 = MaxReps(context: previewContainer.viewContext)
+            .setValue_ch(95, forKey: "load")
+            .setValue_ch(12, forKey: "reps")
+            .setValue_ch(Date()-10000, forKey: "achievedOnDate")
+            MRpr2.repBasedExercise = testExercise1
+        
+        let MRpr3 = MaxReps(context: previewContainer.viewContext)
+            .setValue_ch(97, forKey: "load")
+            .setValue_ch(16, forKey: "reps")
+            .setValue_ch(Date(), forKey: "achievedOnDate")
+            MRpr3.repBasedExercise = testExercise1
+        
+        let TIMpr1 = TimeMax(context: previewContainer.viewContext)
+            .setValue_ch(40.1, forKey: "time")
+            .setValue_ch(100, forKey: "load")
+            .setValue_ch(Date()-20000, forKey: "achievedOnDate")
+            TIMpr1.timeBasedExercise = testExercise2
+        
+        let TIMpr2 = TimeMax(context: previewContainer.viewContext)
+            .setValue_ch(45.6, forKey: "time")
+            .setValue_ch(95, forKey: "load")
+            .setValue_ch(Date()-10000, forKey: "achievedOnDate")
+            TIMpr2.timeBasedExercise = testExercise2
+        
+        let TIMpr3 = TimeMax(context: previewContainer.viewContext)
+            .setValue_ch(70.8, forKey: "time")
+            .setValue_ch(97, forKey: "load")
+            .setValue_ch(Date(), forKey: "achievedOnDate")
+            TIMpr3.timeBasedExercise = testExercise2
+        
+        testExercise1.addToOneRepMaxPrs(ORMpr1)
+        testExercise1.addToOneRepMaxPrs(ORMpr2)
+        testExercise1.addToOneRepMaxPrs(ORMpr3)
+        testExercise1.addToMaxRepPrs(MRpr1)
+        testExercise1.addToMaxRepPrs(MRpr2)
+        testExercise1.addToMaxRepPrs(MRpr3)
+        testExercise2.addToTimePrs(TIMpr1)
+        testExercise2.addToTimePrs(TIMpr2)
+        testExercise2.addToTimePrs(TIMpr3)
         
         do {
             try previewContainer.viewContext.save()

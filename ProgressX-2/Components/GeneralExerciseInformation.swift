@@ -24,7 +24,7 @@ struct GeneralExerciseInformation: View {
             if exercise is TimeBasedExercise {
                 
                 let timeBasedExercise: TimeBasedExercise = exercise as! TimeBasedExercise
-                let timePrs: [TimeMax] = DataUtility.getTimePrs(exercise: timeBasedExercise)
+                let timePrs: [TimeMax] = DataUtility.getTimePrs(exercise: timeBasedExercise) ?? []
                 
                 Rectangle()
                     .cornerRadius(10)
@@ -96,14 +96,14 @@ struct GeneralExerciseInformation: View {
                 VStack(alignment: .leading) {
                     
                     let repBasedexercise = exercise as! RepBasedExercise
-                    let oneRepMaxPrs = DataUtility.get1RmPrs(exercise: repBasedexercise)
-                    let maxRepPrs = DataUtility.getAmrapPrs(exercise: repBasedexercise)
+                    let oneRepMaxPrs = DataUtility.get1RmPrs(exercise: repBasedexercise) ?? []
+                    let maxRepPrs = DataUtility.getMaxRepPrs(exercise: repBasedexercise) ?? []
                     
                     Text("Total 1RM pr's recorded: ")
                         .font(.subheadline)
                         .fontWeight(.light)
                         .foregroundColor(.gray)
-                    + Text(String(DataUtility.get1RmPrs(exercise: repBasedexercise).count))
+                    + Text(String(oneRepMaxPrs.count))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.black)
                     
@@ -111,7 +111,7 @@ struct GeneralExerciseInformation: View {
                         .font(.subheadline)
                         .fontWeight(.light)
                         .foregroundColor(.gray)
-                    + Text(DataUtility.getFirstPrDate(prs: oneRepMaxPrs ) ?? "No pr recorded")
+                    + Text(DataUtility.getFirstPrDate(prs: oneRepMaxPrs) ?? "No pr recorded")
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.black)
                     
@@ -151,7 +151,7 @@ struct GeneralExerciseInformation: View {
                         .font(.subheadline)
                         .fontWeight(.light)
                         .foregroundColor(.gray)
-                    + Text(String(DataUtility.getAmrapPrs(exercise: repBasedexercise).count))
+                     + Text(String(maxRepPrs.count))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.black))
                     .padding(.top, 5)

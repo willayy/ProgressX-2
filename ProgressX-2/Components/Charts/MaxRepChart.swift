@@ -1,15 +1,15 @@
 //
-//  PrChart.swift
+//  MaxRepChart.swift
 //  ProgressX-2
 //
-//  Created by William Norland on 2024-05-24.
+//  Created by William Norland on 2024-05-30.
 //
 
 import SwiftUI
 import Charts
 
-struct OneRepMaxChart: View {
- 
+struct MaxRepChart: View {
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @State var overlayBodyWeight = false
@@ -17,25 +17,30 @@ struct OneRepMaxChart: View {
     
     var body: some View {
         
-        let prs: [OneRepMax] = DataUtility.get1RmPrs(exercise: exercise) ?? []
+        let prs: [MaxReps] = DataUtility.getMaxRepPrs(exercise: exercise) ?? []
         let bwEntries: [BodyEntry] = DataUtility.getBodyWeightEntriesAsArray()
-        let sortedPrs: [OneRepMax] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [OneRepMax]
+        let sortedPrs: [MaxReps] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [MaxReps]
         let sortedBwEntries: [BodyEntry] = DataUtility.sortBwEntriesByDate(bwEntries: bwEntries)
         
-        let highest1RM = DataUtility.getHighestPrValue(data: prs) ?? 0
-        let highestBw = DataUtility.getHighestBwValue(data: bwEntries) ?? 0
-        let highestOf1RmAndBw = highest1RM >= highestBw ? highest1RM : highestBw
+        let highestReps = DataUtility.getHighestPrValue(data: prs) ?? 0
+        let highestWeight = DataUtility.getHighestBwValue(data: bwEntries)
+        let highestLoad = prs.map { $0.load }.max() ?? 0
+        let highestOfLoadAndBw = highestWeight! >= highestLoad ? highestWeight! : highestLoad
         
-        (Text("1RM")
+        (Text("AMRAP")
+            .font(.subheadline)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
          + Text(" chart for ")
+            .font(.subheadline)
          + Text(exercise.exerciseName!)
+            .font(.subheadline)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/))
         .padding(.horizontal, 40)
         .padding(.top, 20)
         
         VStack(alignment: .leading) {
-            LightSubHeadline(text: "load at AMRAP set (Black)")
+            LightSubHeadline(text: "load at AMRAP set (Blue)")
+            LightSubHeadline(text: "reps at AMRAP set (Black)")
             LightSubHeadline(text: "bodyweight (Yellow)")
         }
         
@@ -44,11 +49,11 @@ struct OneRepMaxChart: View {
             Rectangle()
                 .cornerRadius(10)
                 .foregroundStyle(Color(.systemGray6))
-                .frame(height: 225)
+                .frame(height: 385)
                 .padding(.horizontal, 40)
             
             if prs.isEmpty {
-                Text("Cant genereate this chart because there are no 1RM PR's recorded for exercise: \(exercise.exerciseName!)")
+                Text("Cant genereate this chart because there are no AMRAP PR's recorded for exercise: \(exercise.exerciseName!)")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)
@@ -61,30 +66,42 @@ struct OneRepMaxChart: View {
                             LineMark (
                                 x: .value("prDate", $0.achievedOnDate!),
                                 y: .value("load", $0.load),
-                                series: .value("load", "A")
+                                series: .value("load", "B")
                             )
-                            .foregroundStyle(.black)
-                            
-                            PointMark (
-                                x: .value("prDate", $0.achievedOnDate!),
-                                y: .value("load", $0.load)
-                            )
-                            .foregroundStyle(.black)
+                            .foregroundStyle(.blue)
                         }
                         
                         if overlayBodyWeight {
                             ForEach(sortedBwEntries) {
                                 LineMark (
                                     x: .value("bwDate", $0.date!),
-                                    y: .value("bodyweight", $0.bodyWeight),
-                                    series: .value("bw", "B")
+                                    y: .value("bw", $0.bodyWeight)
                                 )
-                                .foregroundStyle(.yellow)
                             }
                         }
                     }
                     .padding(.horizontal, 50)
-                    .chartYScale(domain: 0...highestOf1RmAndBw + 20)
+                    .chartYScale(domain: 0...highestOfLoadAndBw + 20)
+                    .frame(height: 150)
+                    
+                    Chart {
+                        ForEach(sortedPrs) {
+                            LineMark (
+                                x: .value("prDate", $0.achievedOnDate!),
+                                y: .value("reps", $0.reps),
+                                series: .value("reps", "A")
+                            )
+                            .foregroundStyle(.black)
+                            
+                            PointMark (
+                                x: .value("prDate", $0.achievedOnDate!),
+                                y: .value("reps", $0.reps)
+                            )
+                            .foregroundStyle(.black)
+                        }
+                    }
+                    .padding(.horizontal, 50)
+                    .chartYScale(domain: 0...highestReps + 20)
                     .frame(height: 150)
                     
                     Toggle(isOn: $overlayBodyWeight, label: {
@@ -104,6 +121,6 @@ struct OneRepMaxChart: View {
     let exercise = DataUtility.getExercisesAsArray()
         .first(where:{$0.exerciseName == "testing exercise (reps)"}) as! RepBasedExercise
     
-    return OneRepMaxChart(exercise: exercise)
+    return MaxRepChart(exercise: exercise)
         .environment(\.managedObjectContext, container.viewContext)
 }

@@ -20,6 +20,19 @@ class DataUtility {
     }
     
     // MARK: Data handling
+    // Data handling are functions that uses object, or arrays of objects.
+    
+    public static func sortBwEntriesByDate(bwEntries: [BodyEntry]) -> [BodyEntry] {
+        let sortedBwEntries = bwEntries
+            .sorted(by: { $0.date! < $1.date! })
+        return sortedBwEntries
+    }
+    
+    public static func sortPersonralRecordsByDate(prs: [PersonalRecord]) -> [PersonalRecord] {
+        let sortedPrs = prs
+            .sorted(by: { $0.achievedOnDate! < $1.achievedOnDate! })
+        return sortedPrs
+    }
     
     public static func getHighestPrValue(data: [OneRepMax]) -> Double? {
         let highestValue: Double? = data.map { $0.load }.max() ?? nil
@@ -42,50 +55,36 @@ class DataUtility {
     }
     
     public static func getLowestPrValue(data: [OneRepMax]) -> Double? {
-        let highestValue: Double? = data.map { $0.load }.min() ?? nil
-        return highestValue
+        let lowestValue: Double? = data.map { $0.load }.min() ?? nil
+        return lowestValue
     }
     
     public static func getLowestPrValue(data: [TimeMax]) -> Double? {
-        let highestValue: Double? = data.map { $0.time }.min() ?? nil
-        return highestValue
+        let lowestValue: Double? = data.map { $0.time }.min() ?? nil
+        return lowestValue
     }
     
     public static func getLowestPrValue(data: [MaxReps]) -> Int? {
-        let highestValue: Int? = data.map { Int($0.reps) }.min() ?? nil
-        return highestValue
+        let lowestValue: Int? = data.map { Int($0.reps) }.min() ?? nil
+        return lowestValue
     }
     
     public static func getLowestBwValue(data: [BodyEntry]) -> Double? {
-        let highestValue: Double? = data.map { $0.bodyWeight }.min() ?? nil
-        return highestValue
+        let lowestValue: Double? = data.map { $0.bodyWeight }.min() ?? nil
+        return lowestValue
     }
     
-    public static func get1RmPrs(exercise: RepBasedExercise) -> [OneRepMax] {
-        let prs = exercise.oneRepMaxPrs?.array as? [OneRepMax]
-        if prs == nil {
-            return []
-        } else {
-            return prs!
-        }
+    public static func get1RmPrs(exercise: RepBasedExercise) -> [OneRepMax]? {
+        return exercise.oneRepMaxPrs?.array as? [OneRepMax]
     }
     
-    public static func getAmrapPrs(exercise: RepBasedExercise) -> [MaxReps] {
-        let prs = exercise.maxRepPrs?.array as? [MaxReps]
-        if prs == nil {
-            return []
-        } else {
-            return prs!
-        }
+    public static func getMaxRepPrs(exercise: RepBasedExercise) -> [MaxReps]? {
+        return exercise.maxRepPrs?.array as? [MaxReps]
+        
     }
     
-    public static func getTimePrs(exercise: TimeBasedExercise) -> [TimeMax] {
-        let prs = exercise.timePrs?.array as? [TimeMax]
-        if prs == nil {
-            return []
-        } else {
-            return prs!
-        }
+    public static func getTimePrs(exercise: TimeBasedExercise) -> [TimeMax]? {
+        return exercise.timePrs?.array as? [TimeMax]
     }
     
     public static func getFirstPrDate(prs: [PersonalRecord]) -> String? {
@@ -138,7 +137,8 @@ class DataUtility {
         }
     }
     
-    // MARK: Fetching / Persistance
+    // MARK: Fetching / Saving to persistance
+    // Data fetching / saving functions are functions that modify the persistant store in any way.
     
     /// Fetches profiles form the CoreData database as an array.
     /// - Returns:

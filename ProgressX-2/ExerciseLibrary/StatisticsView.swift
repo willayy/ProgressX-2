@@ -28,9 +28,11 @@ struct StatisticsView: View {
                 if exercise is RepBasedExercise {
                     OneRepMaxChart(exercise: exercise as! RepBasedExercise)
                         .environment(\.managedObjectContext, viewContext)
-                        
+                    MaxRepChart(exercise: exercise as! RepBasedExercise)
+                        .environment(\.managedObjectContext, viewContext)
                 } else if exercise is TimeBasedExercise {
-                    // Chart
+                    TimeMaxChart(exercise: exercise as! TimeBasedExercise)
+                        .environment(\.managedObjectContext, viewContext)
                 }
             }
         }

@@ -14,7 +14,7 @@ final class PersistenceTests: XCTestCase {
     
     // MARK: SETUP
     override func setUpWithError() throws {
-        DataUtility.wipeContext()
+        DataUtility.wipeContext() // Wipe the initialization that is used for the preview
         let today = Date()
         let testHeight = 187.00
         let testIsMetric = true
