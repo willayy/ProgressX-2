@@ -11,7 +11,7 @@ struct GeneralExerciseInformation: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @State var exercise: Exercise
-    let weightUnit = DataUtility.getProfile()!.isMetric ? " kg" : " lbs"
+    let weightUnit = DataFetching.getProfile()!.isMetric ? " kg" : " lbs"
     
     var body: some View {
         
@@ -203,7 +203,7 @@ struct GeneralExerciseInformation: View {
 
 #Preview {
     let container = PersistenceController.shared.previewContainer
-    let exercise: RepBasedExercise = DataUtility.getExercisesAsArray().first! as! RepBasedExercise
+    let exercise: RepBasedExercise = DataFetching.getExercisesAsArray().first! as! RepBasedExercise
     return GeneralExerciseInformation(exercise: exercise)
         .environment(\.managedObjectContext, container.viewContext)
 }

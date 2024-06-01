@@ -8,5 +8,5 @@
 import SwiftUI
 
 class ViewRouter: ObservableObject {
-    @Published var rootView: String = (DataUtility.doesProfileExist()) ? "HomeView" : "CreateNewProfile1"
+    @Published var rootView: String = (DataFetching.doesProfileExist()) ? "HomeView" : "CreateNewProfile1"
 }

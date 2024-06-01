@@ -15,7 +15,7 @@ struct ExerciseLibrary: View {
     
     // The navPath variable is passed along to all following
     // views in this set of views.
-    @State private var allExercises: [Exercise] = DataUtility.getExercisesAsArray()
+    @State private var allExercises: [Exercise] = DataFetching.getExercisesAsArray()
     @State private var showDeleteAlert = false
     @State private var deletedExerciseName = ""
     @State private var navPath = [Int]()
@@ -94,8 +94,8 @@ struct ExerciseLibrary: View {
                                                     message: Text("Are you sure you want to delete \(deletedExerciseName)?"),
                                                     primaryButton: .destructive(Text("Delete")) {
                                                         allExercises.removeAll(where: { $0 === exercise })
-                                                        DataUtility.deleteNSManagedObject(object: exercise)
-                                                        DataUtility.save()
+                                                        DataFetching.deleteNSManagedObject(object: exercise)
+                                                        DataFetching.save()
                                                     },
                                                     secondaryButton: .cancel()
                                                 )

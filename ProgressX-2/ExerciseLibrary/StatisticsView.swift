@@ -41,7 +41,7 @@ struct StatisticsView: View {
 
 #Preview {
     let container = PersistenceController.shared.previewContainer
-    @State var ex: Exercise? = DataUtility.getExercisesAsArray().first
+    @State var ex: Exercise? = DataFetching.getExercisesAsArray().first
     return StatisticsView(exercise: $ex)
         .environment(\.managedObjectContext, container.viewContext)
 }

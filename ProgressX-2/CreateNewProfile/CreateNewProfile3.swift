@@ -45,8 +45,8 @@ struct CreateNewProfile3: View {
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
     
-    @State var circumferenceUnit = DataUtility.getProfile()!.isMetric ? "cm" : "inches"
-    var weightUnit = DataUtility.getProfile()!.isMetric ? "kg" : "lbs"
+    @State var circumferenceUnit = DataFetching.getProfile()!.isMetric ? "cm" : "inches"
+    var weightUnit = DataFetching.getProfile()!.isMetric ? "kg" : "lbs"
     
     private func validateInput() -> Bool {
         
@@ -80,7 +80,7 @@ struct CreateNewProfile3: View {
     }
     
     private func addExtraInfo() {
-        let bwEntries = DataUtility.getBodyWeightEntriesAsArray()
+        let bwEntries = DataFetching.getBodyWeightEntriesAsArray()
         let firstEntry = bwEntries.first
         firstEntry!.chestCirc = Double(chestCirc)!
         firstEntry!.waistCirc = Double(waistCirc)!
@@ -89,9 +89,9 @@ struct CreateNewProfile3: View {
         firstEntry!.uprArmCirc = Double(upperArmCirc)!
         firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
         
-        DataUtility.generateBasicExerciseLibrary()
-        let exercises = DataUtility.getExercisesAsArray()
-        let bodyWeight = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
+        DataFetching.generateBasicExerciseLibrary()
+        let exercises = DataFetching.getExercisesAsArray()
+        let bodyWeight = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
         for exercise in exercises {
@@ -132,7 +132,7 @@ struct CreateNewProfile3: View {
                 continue
             }
         }
-        DataUtility.save()
+        DataFetching.save()
     }
     
     var body: some View {

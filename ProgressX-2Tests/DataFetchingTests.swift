@@ -10,71 +10,71 @@ import XCTest
 
 // These functions are now in the DataUtility file but since they still deal with persistance their tests are in this file.
 
-final class PersistenceTests: XCTestCase {
+final class DataFetchingTests: XCTestCase {
     
     // MARK: SETUP
     override func setUpWithError() throws {
-        DataUtility.wipeContext() // Wipe the initialization that is used for the preview
+        DataFetching.wipeContext() // Wipe the initialization that is used for the preview
         let today = Date()
         let testHeight = 187.00
         let testIsMetric = true
         let testGender = "male"
         let testWeight = 80.00
-        DataUtility.createProfile(userName: "TestProfile", birthDay: today, height: testHeight, isMetric: testIsMetric, gender: testGender)
-        DataUtility.addBodyWeightEntry(dateAchieved: today, weight: testWeight)
-        DataUtility.save()
+        DataFetching.createProfile(userName: "TestProfile", birthDay: today, height: testHeight, isMetric: testIsMetric, gender: testGender)
+        DataFetching.addBodyWeightEntry(dateAchieved: today, weight: testWeight)
+        DataFetching.save()
     }
 
     // MARK: TEAR DOWN
     override func tearDownWithError() throws {
-        DataUtility.wipeContext()
-        DataUtility.save()
+        DataFetching.wipeContext()
+        DataFetching.save()
     }
     
     // MARK: TESTS
     func testGetProfile() throws {
-        var profile = DataUtility.getProfile()
+        var profile = DataFetching.getProfile()
         XCTAssertNotNil(profile)
         XCTAssertEqual(profile!.userName, "TestProfile")
         XCTAssertTrue(profile!.isMetric)
         // nil values in body measurements are 0.0 apparently
-        DataUtility.deleteNSManagedObject(object: profile!)
-        DataUtility.save()
-        profile = DataUtility.getProfile()
+        DataFetching.deleteNSManagedObject(object: profile!)
+        DataFetching.save()
+        profile = DataFetching.getProfile()
         XCTAssertNil(profile)
     }
     
     func testGetProfileAsArray() throws {
-        let profileArray = DataUtility.getProfileAsArray()
+        let profileArray = DataFetching.getProfileAsArray()
         XCTAssertEqual(profileArray.count, 1)
         XCTAssertEqual(profileArray.first!.userName, "TestProfile")
     }
     
     func testProfileState() throws {
-        let profileState = DataUtility.verifyProfileState()
+        let profileState = DataFetching.verifyProfileState()
         XCTAssertTrue(profileState)
     }
     
     func testDoesProfileExist() throws {
-        var doesTheProfileExist = DataUtility.doesProfileExist()
+        var doesTheProfileExist = DataFetching.doesProfileExist()
         XCTAssertTrue(doesTheProfileExist)
-        let profile = DataUtility.getProfile()!
-        DataUtility.deleteNSManagedObject(object: profile)
-        DataUtility.save()
-        doesTheProfileExist = DataUtility.doesProfileExist()
+        let profile = DataFetching.getProfile()!
+        DataFetching.deleteNSManagedObject(object: profile)
+        DataFetching.save()
+        doesTheProfileExist = DataFetching.doesProfileExist()
         XCTAssertFalse(doesTheProfileExist)
     }
     
     func testGetBodyWeightEntriesAsArray() throws {
-        var bodyEntries = DataUtility.getBodyWeightEntriesAsArray()
+        var bodyEntries = DataFetching.getBodyWeightEntriesAsArray()
         XCTAssertTrue(bodyEntries.count == 1)
         var firstEntry = bodyEntries.first
         XCTAssertEqual(firstEntry!.bodyWeight, 80.00)
         
-        DataUtility.addBodyWeightEntry(dateAchieved: Date(), weight: 70.00)
-        DataUtility.save()
+        DataFetching.addBodyWeightEntry(dateAchieved: Date(), weight: 70.00)
+        DataFetching.save()
         
-        bodyEntries = DataUtility.getBodyWeightEntriesAsArray()
+        bodyEntries = DataFetching.getBodyWeightEntriesAsArray()
         XCTAssertTrue(bodyEntries.count == 2)
         firstEntry = bodyEntries.first
         let secondEntry = bodyEntries[1]
@@ -84,8 +84,8 @@ final class PersistenceTests: XCTestCase {
     
     func testGetExercisesAsArray() throws {
         // Create basic exercise library
-        DataUtility.generateBasicExerciseLibrary()
-        let exercises = DataUtility.getExercisesAsArray()
+        DataFetching.generateBasicExerciseLibrary()
+        let exercises = DataFetching.getExercisesAsArray()
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Bench-press" })
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Shoulder-press" })
         XCTAssertTrue(exercises.contains { $0.exerciseName == "Squat" })

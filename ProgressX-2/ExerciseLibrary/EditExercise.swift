@@ -60,7 +60,7 @@ struct EditExercise: View {
                     exercise!
                         .setValue_ch(currName, forKey: "exerciseName")
                         .setValue(currDesc, forKey: "exerciseDesc")
-                    DataUtility.save()
+                    DataFetching.save()
                         
                     for i in 0..<exercises.count {
                         if exercises[i].exerciseName == currName {
@@ -82,10 +82,10 @@ struct EditExercise: View {
 
 #Preview {
     let container = PersistenceController.shared.previewContainer
-    @State var ex: Exercise? = DataUtility.getExercisesAsArray().first!
+    @State var ex: Exercise? = DataFetching.getExercisesAsArray().first!
     @State var nn: String = "testing exercise"
     @State var nd: String = "This exercise is used for debugging purposes within the canvas preview"
-    @State var lst: [Exercise] = DataUtility.getExercisesAsArray()
+    @State var lst: [Exercise] = DataFetching.getExercisesAsArray()
     
     return EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, exercises: $lst)
             .environment(\.managedObjectContext, container.viewContext)

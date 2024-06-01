@@ -14,8 +14,8 @@ struct CreateNewExercise: View {
     @Binding var exercises: [Exercise]
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State var currBw = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
-    @State var weightUnit = DataUtility.getProfile()!.isMetric ? "kg" : "lbs"
+    @State var currBw = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
+    @State var weightUnit = DataFetching.getProfile()!.isMetric ? "kg" : "lbs"
     
     @State private var newExerciseNameWrong: Bool = false
     @State private var selectedTypeOfExercise: String = "Reps"
@@ -50,7 +50,7 @@ struct CreateNewExercise: View {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        let currBw = DataUtility.getBodyWeightEntriesAsArray().last!.bodyWeight
+        let currBw = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
         return formatter.string(from: NSNumber(value: currBw))!
     }
     
@@ -100,7 +100,7 @@ struct CreateNewExercise: View {
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
                 pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToOneRepMaxPrs(pr)
-                DataUtility.save()
+                DataFetching.save()
             } else if selectedTypeOfRepsPr == "AMRAP" {
                 let pr = MaxReps(context: viewContext)
                 pr.reps = Int64(enteredAmrap)!
@@ -108,7 +108,7 @@ struct CreateNewExercise: View {
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
                 pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToMaxRepPrs(pr)
-                DataUtility.save()
+                DataFetching.save()
             }
         }
         else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
@@ -118,7 +118,7 @@ struct CreateNewExercise: View {
             pr.timeBasedExercise = (exercise as! TimeBasedExercise)
             pr.achievedOnDate = Date()
             (exercise as! TimeBasedExercise).addToTimePrs(pr)
-            DataUtility.save()
+            DataFetching.save()
         }
     }
     
@@ -263,7 +263,7 @@ struct CreateNewExercise: View {
                             .setValue_ch(selectedExerciseName, forKey: "exerciseName")
                             .setValue(selectedExerciseDesc, forKey: "exerciseDesc")
                         addPrIfWanted(exercise: exercise!)
-                        DataUtility.save()
+                        DataFetching.save()
                         createdExerciseName = selectedExerciseName
                         exerciseCreatedAlert = true
                         exercises.append(exercise!)

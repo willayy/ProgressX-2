@@ -18,7 +18,7 @@ struct TimeMaxChart: View {
     var body: some View {
         
         let prs: [TimeMax] = DataUtility.getTimePrs(exercise: exercise) ?? []
-        let bwEntries: [BodyEntry] = DataUtility.getBodyWeightEntriesAsArray()
+        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray()
         let sortedPrs: [TimeMax] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [TimeMax]
         let sortedBwEntries: [BodyEntry] = DataUtility.sortBwEntriesByDate(bwEntries: bwEntries)
         let highestTime: Double = DataUtility.getHighestPrValue(data: prs) ?? 0
@@ -124,7 +124,7 @@ struct TimeMaxChart: View {
 #Preview {
         
     let container = PersistenceController.shared.previewContainer
-    let exercise: TimeBasedExercise = DataUtility.getExercisesAsArray()
+    let exercise: TimeBasedExercise = DataFetching.getExercisesAsArray()
         .first(where:{$0.exerciseName == "testing exercise (time)"}) as! TimeBasedExercise
     
     return TimeMaxChart(exercise: exercise)

@@ -18,7 +18,7 @@ struct MaxRepChart: View {
     var body: some View {
         
         let prs: [MaxReps] = DataUtility.getMaxRepPrs(exercise: exercise) ?? []
-        let bwEntries: [BodyEntry] = DataUtility.getBodyWeightEntriesAsArray()
+        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray()
         let sortedPrs: [MaxReps] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [MaxReps]
         let sortedBwEntries: [BodyEntry] = DataUtility.sortBwEntriesByDate(bwEntries: bwEntries)
         
@@ -118,7 +118,7 @@ struct MaxRepChart: View {
 #Preview {
         
     let container = PersistenceController.shared.previewContainer
-    let exercise = DataUtility.getExercisesAsArray()
+    let exercise = DataFetching.getExercisesAsArray()
         .first(where:{$0.exerciseName == "testing exercise (reps)"}) as! RepBasedExercise
     
     return MaxRepChart(exercise: exercise)

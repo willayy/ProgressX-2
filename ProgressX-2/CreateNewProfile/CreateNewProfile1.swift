@@ -66,10 +66,10 @@ struct CreateNewProfile1: View {
     // Calls this method when "Continue" button is pressed
     private func createProfile() -> Void {
         
-        if DataUtility.doesProfileExist() {
-            let profile = DataUtility.getProfile()!
-            DataUtility.deleteNSManagedObject(object: profile)
-            DataUtility.save()
+        if DataFetching.doesProfileExist() {
+            let profile = DataFetching.getProfile()!
+            DataFetching.deleteNSManagedObject(object: profile)
+            DataFetching.save()
         }
         
         let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
@@ -77,11 +77,11 @@ struct CreateNewProfile1: View {
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
         
-        DataUtility.createProfile(userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
-        DataUtility.save()
+        DataFetching.createProfile(userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
+        DataFetching.save()
         
-        DataUtility.addBodyWeightEntry(dateAchieved: Date(), weight: inputWeight)
-        DataUtility.save()
+        DataFetching.addBodyWeightEntry(dateAchieved: Date(), weight: inputWeight)
+        DataFetching.save()
     }
     
     var body: some View {
