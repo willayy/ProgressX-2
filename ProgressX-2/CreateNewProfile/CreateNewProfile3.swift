@@ -11,42 +11,34 @@ struct CreateNewProfile3: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
     @Environment(\.managedObjectContext) private var viewContext
-    
     @State var chestCirc = ""
     @State var waistCirc = ""
     @State var thighCirc = ""
     @State var calfCirc = ""
     @State var upperArmCirc = ""
     @State var lowerArmCirc = ""
-    
     @State var chestCircIsInvalid = false
     @State var waistCircIsInvalid = false
     @State var thighCircIsInvalid = false
     @State var calfCircIsInvalid = false
     @State var upperArmCircIsInvalid = false
     @State var lowerArmCircIsInvalid = false
-    
     @State var benchPress1RM = ""
     @State var squat1RM = ""
     @State var deadLift1RM = ""
     @State var shoulderPress1RM = ""
-    
     @State var benchPress1RMIsInvalid = false
     @State var squat1RMIsInvalid = false
     @State var deadLift1RMIsInvalid = false
     @State var shoulderPress1RMIsInvalid = false
-    
     @State var pushupsAmrap = ""
     @State var situpsAmrap = ""
-    
     @State var situpsAmrapIsInvalid = false
     @State var pushupsAmrapIsInvalid = false
-    
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
-    
-    @State var circumferenceUnit = DataFetching.getProfile()!.isMetric ? "cm" : "inches"
-    var weightUnit = DataFetching.getProfile()!.isMetric ? "kg" : "lbs"
+    @State var circumferenceUnit = ""
+    @State var weightUnit = ""
     
     private func validateInput() -> Bool {
         
@@ -61,26 +53,27 @@ struct CreateNewProfile3: View {
             }
         }
         
-        chestCircIsInvalid = fieldIsInvalid(chestCirc)
-        waistCircIsInvalid = fieldIsInvalid(waistCirc)
-        thighCircIsInvalid = fieldIsInvalid(thighCirc)
-        calfCircIsInvalid = fieldIsInvalid(calfCirc)
-        upperArmCircIsInvalid = fieldIsInvalid(upperArmCirc)
-        lowerArmCircIsInvalid = fieldIsInvalid(lowerArmCirc)
-        
-        benchPress1RMIsInvalid = fieldIsInvalid(benchPress1RM)
-        squat1RMIsInvalid = fieldIsInvalid(squat1RM)
-        deadLift1RMIsInvalid = fieldIsInvalid(deadLift1RM)
-        shoulderPress1RMIsInvalid = fieldIsInvalid(shoulderPress1RM)
-        
-        situpsAmrapIsInvalid = fieldIsInvalid(situpsAmrap)
-        pushupsAmrapIsInvalid = fieldIsInvalid(pushupsAmrap)
-        
+        withAnimation {
+            chestCircIsInvalid = fieldIsInvalid(chestCirc)
+            waistCircIsInvalid = fieldIsInvalid(waistCirc)
+            thighCircIsInvalid = fieldIsInvalid(thighCirc)
+            calfCircIsInvalid = fieldIsInvalid(calfCirc)
+            upperArmCircIsInvalid = fieldIsInvalid(upperArmCirc)
+            lowerArmCircIsInvalid = fieldIsInvalid(lowerArmCirc)
+            
+            benchPress1RMIsInvalid = fieldIsInvalid(benchPress1RM)
+            squat1RMIsInvalid = fieldIsInvalid(squat1RM)
+            deadLift1RMIsInvalid = fieldIsInvalid(deadLift1RM)
+            shoulderPress1RMIsInvalid = fieldIsInvalid(shoulderPress1RM)
+            
+            situpsAmrapIsInvalid = fieldIsInvalid(situpsAmrap)
+            pushupsAmrapIsInvalid = fieldIsInvalid(pushupsAmrap)
+        }
         return inputIsValid
     }
     
     private func addExtraInfo() {
-        let bwEntries = DataFetching.getBodyWeightEntriesAsArray()
+        let bwEntries = DataFetching.getBodyWeightEntriesAsArray(viewContext)
         let firstEntry = bwEntries.first
         firstEntry!.chestCirc = Double(chestCirc)!
         firstEntry!.waistCirc = Double(waistCirc)!
@@ -89,9 +82,9 @@ struct CreateNewProfile3: View {
         firstEntry!.uprArmCirc = Double(upperArmCirc)!
         firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
         
-        DataFetching.generateBasicExerciseLibrary()
-        let exercises = DataFetching.getExercisesAsArray()
-        let bodyWeight = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
+        DataFetching.generateBasicExerciseLibrary(viewContext)
+        let exercises = DataFetching.getExercisesAsArray(viewContext)
+        let bodyWeight = DataFetching.getBodyWeightEntriesAsArray(viewContext).last!.bodyWeight
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
         for exercise in exercises {
@@ -132,7 +125,7 @@ struct CreateNewProfile3: View {
                 continue
             }
         }
-        DataFetching.save()
+        DataFetching.save(viewContext)
     }
     
     var body: some View {
@@ -265,16 +258,16 @@ struct CreateNewProfile3: View {
                 
             }
         }
+        .onAppear(perform: {
+            circumferenceUnit = DataFetching.getProfile(viewContext)!.isMetric ? "cm" : "inches"
+            weightUnit = DataFetching.getProfile(viewContext)!.isMetric ? "kg" : "lbs"
+        })
     }
 }
 
-// MARK: Temporarily out of order :(
-// Until we figure out how to mock fetching from the coredata base
-// And yes commented out code isnt good
-//
 #Preview {
-    let container = PersistenceController.shared.previewContainer
+    let context = PersistenceController.preview.container.viewContext
     return CreateNewProfile3()
        .environmentObject(ViewRouter())
-       .environment(\.managedObjectContext, container.viewContext)
+       .environment(\.managedObjectContext, context)
 }

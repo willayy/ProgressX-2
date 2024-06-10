@@ -71,5 +71,6 @@ struct InputDecimalNumberField: View {
     var body: some View {
         
         InputField(value: $numberText, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+            .keyboardType(.decimalPad)
     }
 }

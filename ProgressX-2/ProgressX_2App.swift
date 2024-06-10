@@ -17,7 +17,7 @@ struct ProgressX_2App: App {
         WindowGroup {
             switch (viewRouter.rootView) {
                 case "HomeView":
-                    ExerciseLibrary()
+                    ExerciseLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case "CreateNewProfile1":

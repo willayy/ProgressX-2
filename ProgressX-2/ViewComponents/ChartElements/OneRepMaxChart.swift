@@ -11,18 +11,17 @@ import Charts
 struct OneRepMaxChart: View {
  
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State var overlayBodyWeight = false
+    @Binding var oneRepMaxPrs: [OneRepMax]
+    @State private var overlayBodyWeight = false
+    @State private var sortedOneRepMaxPrs: [OneRepMax] = []
     let exercise: RepBasedExercise
     
     var body: some View {
         
-        let prs: [OneRepMax] = DataUtility.get1RmPrs(exercise: exercise) ?? []
-        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray()
-        let sortedPrs: [OneRepMax] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [OneRepMax]
+        let weightUnit: String = DataFetching.getProfile(viewContext)!.isMetric ? "kg's" : "lbs"
+        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray(viewContext)
         let sortedBwEntries: [BodyEntry] = DataUtility.sortBwEntriesByDate(bwEntries: bwEntries)
-        
-        let highest1RM = DataUtility.getHighestPrValue(data: prs) ?? 0
+        let highest1RM = DataUtility.getHighestPrValue(data: oneRepMaxPrs) ?? 0
         let highestBw = DataUtility.getHighestBwValue(data: bwEntries) ?? 0
         let highestOf1RmAndBw = highest1RM >= highestBw ? highest1RM : highestBw
         
@@ -35,8 +34,8 @@ struct OneRepMaxChart: View {
         .padding(.top, 20)
         
         VStack(alignment: .leading) {
-            LightSubHeadline(text: "load at AMRAP set (Black)")
-            LightSubHeadline(text: "bodyweight (Yellow)")
+            LightSubHeadline(text: "load (\(weightUnit)) at AMRAP set (Black)")
+            LightSubHeadline(text: "bodyweight (\(weightUnit)) (Yellow)")
         }
         
         ZStack {
@@ -47,7 +46,7 @@ struct OneRepMaxChart: View {
                 .frame(height: 225)
                 .padding(.horizontal, 40)
             
-            if prs.isEmpty {
+            if oneRepMaxPrs.isEmpty {
                 Text("Cant genereate this chart because there are no 1RM PR's recorded for exercise: \(exercise.exerciseName!)")
                     .font(.subheadline)
                     .fontWeight(.light)
@@ -57,7 +56,7 @@ struct OneRepMaxChart: View {
             } else {
                 VStack {
                     Chart {
-                        ForEach(sortedPrs) {
+                        ForEach(sortedOneRepMaxPrs) {
                             LineMark (
                                 x: .value("prDate", $0.achievedOnDate!),
                                 y: .value("load", $0.load),
@@ -86,6 +85,9 @@ struct OneRepMaxChart: View {
                     .padding(.horizontal, 50)
                     .chartYScale(domain: 0...highestOf1RmAndBw + 20)
                     .frame(height: 150)
+                    .onAppear(perform: {
+                        sortedOneRepMaxPrs = DataUtility.sortPersonalRecordsByDate(prs: oneRepMaxPrs) as! [OneRepMax]
+                    })
                     
                     Toggle(isOn: $overlayBodyWeight, label: {
                         Text("Do you want to overlay bodyweight?")
@@ -100,10 +102,11 @@ struct OneRepMaxChart: View {
 
 #Preview {
         
-    let container = PersistenceController.shared.previewContainer
-    let exercise = DataFetching.getExercisesAsArray()
+    let context = PersistenceController.preview.container.viewContext
+    let exercise = DataFetching.getExercisesAsArray(context)
         .first(where:{$0.exerciseName == "testing exercise (reps)"}) as! RepBasedExercise
+    @State var oneRepMaxPrs: [OneRepMax] = exercise.oneRepMaxPrs!.array as! [OneRepMax]
     
-    return OneRepMaxChart(exercise: exercise)
-        .environment(\.managedObjectContext, container.viewContext)
+    return OneRepMaxChart(oneRepMaxPrs: $oneRepMaxPrs, exercise: exercise)
+        .environment(\.managedObjectContext, context)
 }

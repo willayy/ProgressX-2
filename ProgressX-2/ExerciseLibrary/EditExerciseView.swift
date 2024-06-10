@@ -7,25 +7,41 @@
 
 import SwiftUI
 
-struct EditExercise: View {
+struct EditExerciseView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
     @Binding var exercise: Exercise?
     @Binding var currName: String
     @Binding var currDesc: String
-    @Binding var exercises: [Exercise]
+    @Binding var allExercises: [Exercise]
+    @State private var newName: String = ""
+    @State private var newDesc: String = ""
+    @State private var newExerciseNameWrong: Bool = false
+    @State private var exerciseEditedAlert = false
     
-    @State var newName: String = ""
-    @State var newDesc: String = ""
-    
-    @State var newExerciseNameWrong: Bool = false
+    private func showExerciseEditedAlet() -> some View {
+        Text("Succesfully edited exercise")
+            .fontWeight(.light)
+            .foregroundStyle(.green)
+            .padding(.bottom, 10)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    withAnimation {
+                        exerciseEditedAlert = false
+                    }
+                }
+            }
+    }
     
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
                 
                 BoldTitle(text: "Editing exercise \(currName)")
+                    
+                if exerciseEditedAlert {
+                    showExerciseEditedAlet()
+                }
                 
                 (Text("Description: ")
                     .font(.subheadline)
@@ -48,11 +64,11 @@ struct EditExercise: View {
                 // MARK: Handle an edit of an exercise
                 Button(action: {
                     
-                    if exercises.contains(where: { $0.exerciseName == newName }) {
-                        newExerciseNameWrong = true
+                    if allExercises.contains(where: { $0.exerciseName == newName }) {
+                        withAnimation{newExerciseNameWrong = true}
                         return
                     } else {
-                        newExerciseNameWrong = false
+                        withAnimation{newExerciseNameWrong = false}
                     }
                         
                     currName = newName.isEmpty ? currName : newName
@@ -60,12 +76,16 @@ struct EditExercise: View {
                     exercise!
                         .setValue_ch(currName, forKey: "exerciseName")
                         .setValue(currDesc, forKey: "exerciseDesc")
-                    DataFetching.save()
+                    DataFetching.save(viewContext)
                         
-                    for i in 0..<exercises.count {
-                        if exercises[i].exerciseName == currName {
-                            exercises[i] = exercise!
+                    for i in 0..<allExercises.count {
+                        if allExercises[i].exerciseName == currName {
+                            allExercises[i] = exercise!
                         }
+                    }
+                    
+                    withAnimation {
+                        exerciseEditedAlert = true
                     }
                     
                 }) {
@@ -81,12 +101,12 @@ struct EditExercise: View {
 }
 
 #Preview {
-    let container = PersistenceController.shared.previewContainer
-    @State var ex: Exercise? = DataFetching.getExercisesAsArray().first!
+    let context = PersistenceController.preview.container.viewContext
+    @State var ex: Exercise? = DataFetching.getExercisesAsArray(context).first!
     @State var nn: String = "testing exercise"
     @State var nd: String = "This exercise is used for debugging purposes within the canvas preview"
-    @State var lst: [Exercise] = DataFetching.getExercisesAsArray()
+    @State var lst: [Exercise] = DataFetching.getExercisesAsArray(context)
     
-    return EditExercise(exercise: $ex, currName: $nn, currDesc: $nd, exercises: $lst)
-            .environment(\.managedObjectContext, container.viewContext)
+    return EditExerciseView(exercise: $ex, currName: $nn, currDesc: $nd, allExercises: $lst)
+            .environment(\.managedObjectContext, context)
 }

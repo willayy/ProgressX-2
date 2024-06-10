@@ -16,18 +16,15 @@ struct CreateNewProfile1: View {
     // The navPath variable is passed along to all following
     // views in this set of views.
     @State private var navPath = [Int]()
-    
     @State private var userName = ""
     @State private var birthDay = Date()
     @State private var selectedUnitSegment = "Metric (meters)"
     @State private var selectedGenderSegment = "Male"
     @State private var weight = ""
     @State private var height = ""
-    
     @State private var userNameIsInvalid = false
     @State private var heightIsInvalid = false
     @State private var weightIsInvalid = false
-    
     let unitSegments = ["Metric (meters)", "Imperial (feet)"]
     let genderSegments = ["Male", "Female"]
     
@@ -39,25 +36,25 @@ struct CreateNewProfile1: View {
         // Check if username is empty
         if userName.isEmpty {
             value = false
-            userNameIsInvalid = true
+            withAnimation{userNameIsInvalid = true}
         } else {
-            userNameIsInvalid = false
+            withAnimation{userNameIsInvalid = false}
         }
         
         // Check if weight is empty
         if weight.isEmpty { 
             value = false
-            weightIsInvalid = true
+            withAnimation{weightIsInvalid = true}
         } else {
-            weightIsInvalid = false
+            withAnimation{weightIsInvalid = false}
         }
         
         // Check if height is empty
         if height.isEmpty {
             value = false
-            heightIsInvalid = true
+            withAnimation{heightIsInvalid = true}
         } else {
-            heightIsInvalid = false
+            withAnimation{heightIsInvalid = false}
         }
         
         return value
@@ -66,10 +63,10 @@ struct CreateNewProfile1: View {
     // Calls this method when "Continue" button is pressed
     private func createProfile() -> Void {
         
-        if DataFetching.doesProfileExist() {
-            let profile = DataFetching.getProfile()!
-            DataFetching.deleteNSManagedObject(object: profile)
-            DataFetching.save()
+        if DataFetching.doesProfileExist(viewContext) {
+            let profile = DataFetching.getProfile(viewContext)!
+            DataFetching.deleteNSManagedObject(viewContext,object: profile)
+            DataFetching.save(viewContext)
         }
         
         let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
@@ -77,11 +74,11 @@ struct CreateNewProfile1: View {
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
         
-        DataFetching.createProfile(userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
-        DataFetching.save()
+        DataFetching.createProfile(viewContext, userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
+        DataFetching.save(viewContext)
         
-        DataFetching.addBodyWeightEntry(dateAchieved: Date(), weight: inputWeight)
-        DataFetching.save()
+        DataFetching.addBodyWeightEntry(viewContext, dateAchieved: Date(), weight: inputWeight)
+        DataFetching.save(viewContext)
     }
     
     var body: some View {
@@ -163,8 +160,8 @@ struct CreateNewProfile1: View {
                         Text("Continue")
                             .frame(width: 100, height: 50)
                     }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.top, 30)
+                    .buttonStyle(.borderedProminent)
+                    .padding(.top, 30)
                     
                 }
                 .navigationDestination(for: Int.self) { selection in
@@ -188,8 +185,8 @@ struct CreateNewProfile1: View {
     
 
 #Preview {
-    let container = PersistenceController.shared.container
+    let context = PersistenceController.preview.container.viewContext
     return CreateNewProfile1()
         .environmentObject(ViewRouter())
-        .environment(\.managedObjectContext, container.viewContext)
+        .environment(\.managedObjectContext, context)
 }

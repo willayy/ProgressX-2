@@ -11,20 +11,19 @@ import Charts
 struct TimeMaxChart: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State var overlayBodyWeight = false
+    @Binding var timeMaxPrs: [TimeMax]
+    @State private var overlayBodyWeight = false
+    @State private var sortedTimeMaxPrs: [TimeMax] = []
     let exercise: TimeBasedExercise
     
     var body: some View {
         
-        let prs: [TimeMax] = DataUtility.getTimePrs(exercise: exercise) ?? []
-        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray()
-        let sortedPrs: [TimeMax] = DataUtility.sortPersonralRecordsByDate(prs: prs) as! [TimeMax]
+        let weightUnit: String = DataFetching.getProfile(viewContext)!.isMetric ? "kg's" : "lbs"
+        let bwEntries: [BodyEntry] = DataFetching.getBodyWeightEntriesAsArray(viewContext)
         let sortedBwEntries: [BodyEntry] = DataUtility.sortBwEntriesByDate(bwEntries: bwEntries)
-        let highestTime: Double = DataUtility.getHighestPrValue(data: prs) ?? 0
-        
+        let highestTime: Double = DataUtility.getHighestPrValue(data: timeMaxPrs) ?? 0
         let highestWeight: Double = DataUtility.getHighestBwValue(data: bwEntries) ?? 0
-        let highestLoad: Double = prs.map({$0.load}).max() ?? 0
+        let highestLoad: Double = timeMaxPrs.map({$0.load}).max() ?? 0
         let highestOfLoadAndBw: Double = highestWeight >= highestLoad ? highestWeight : highestLoad
         
         (
@@ -41,9 +40,9 @@ struct TimeMaxChart: View {
         .padding(.top, 20)
         
         VStack(alignment: .leading) {
-            LightSubHeadline(text: "load at timed set (Blue)")
-            LightSubHeadline(text: "time at timed set (Black)")
-            LightSubHeadline(text: "bodyweight (Yellow)")
+            LightSubHeadline(text: "load (\(weightUnit)) at timed set (Blue)")
+            LightSubHeadline(text: "timed set pr in seconds (Black)")
+            LightSubHeadline(text: "bodyweight (\(weightUnit)) (Yellow)")
         }
         
         ZStack {
@@ -54,7 +53,7 @@ struct TimeMaxChart: View {
                 .frame(height: 385)
                 .padding(.horizontal, 40)
             
-            if prs.isEmpty {
+            if timeMaxPrs.isEmpty {
                 Text("Cant genereate this chart because there are no Time PR's recorded for exercise: \(exercise.exerciseName!)")
                     .font(.subheadline)
                     .fontWeight(.light)
@@ -65,7 +64,7 @@ struct TimeMaxChart: View {
             } else {
                 VStack {
                     Chart {
-                        ForEach(sortedPrs) {
+                        ForEach(sortedTimeMaxPrs) {
                             LineMark (
                                 x: .value("prDate", $0.achievedOnDate!),
                                 y: .value("load", $0.load),
@@ -78,8 +77,10 @@ struct TimeMaxChart: View {
                             ForEach(sortedBwEntries) {
                                 LineMark (
                                     x: .value("bwDate", $0.date!),
-                                    y: .value("bw", $0.bodyWeight)
+                                    y: .value("bw", $0.bodyWeight),
+                                    series: .value("bw", "C")
                                 )
+                                .foregroundStyle(.yellow)
                             }
                         }
                     }
@@ -87,26 +88,29 @@ struct TimeMaxChart: View {
                     .chartYScale(domain: 0...highestOfLoadAndBw + 20)
                     .frame(height: 150)
                     
-                Chart {
-                    ForEach(sortedPrs) {
-                        LineMark (
-                            x: .value("prDate", $0.achievedOnDate!),
-                            y: .value("time", $0.time),
-                            series: .value("reps", "B")
-                        )
-                        .foregroundStyle(.black)
-                        
-                        PointMark (
-                            x: .value("prDate", $0.achievedOnDate!),
-                            y: .value("time", $0.time)
-                        )
-                        .foregroundStyle(.black)
-                        
+                    Chart {
+                        ForEach(sortedTimeMaxPrs) {
+                            LineMark (
+                                x: .value("prDate", $0.achievedOnDate!),
+                                y: .value("time", $0.time),
+                                series: .value("reps", "B")
+                            )
+                            .foregroundStyle(.black)
+                            
+                            PointMark (
+                                x: .value("prDate", $0.achievedOnDate!),
+                                y: .value("time", $0.time)
+                            )
+                            .foregroundStyle(.black)
+                            
+                            }
                         }
-                    }
-                    .padding(.horizontal, 50)
-                    .chartYScale(domain: 0...highestTime + 20)
-                    .frame(height: 150)
+                        .padding(.horizontal, 50)
+                        .chartYScale(domain: 0...highestTime + 20)
+                        .frame(height: 150)
+                        .onAppear(perform: {
+                            sortedTimeMaxPrs = DataUtility.sortPersonalRecordsByDate(prs: timeMaxPrs) as! [TimeMax]
+                        })
                     
                     Toggle(isOn: $overlayBodyWeight, label: {
                         Text("Do you want to overlay bodyweight?")
@@ -123,10 +127,11 @@ struct TimeMaxChart: View {
 
 #Preview {
         
-    let container = PersistenceController.shared.previewContainer
-    let exercise: TimeBasedExercise = DataFetching.getExercisesAsArray()
+    let context = PersistenceController.preview.container.viewContext
+    let exercise: TimeBasedExercise = DataFetching.getExercisesAsArray(context)
         .first(where:{$0.exerciseName == "testing exercise (time)"}) as! TimeBasedExercise
+    @State var timeMaxPrs : [TimeMax] = exercise.timePrs!.array as! [TimeMax]
     
-    return TimeMaxChart(exercise: exercise)
-        .environment(\.managedObjectContext, container.viewContext)
+    return TimeMaxChart(timeMaxPrs: $timeMaxPrs, exercise: exercise)
+        .environment(\.managedObjectContext, context)
 }

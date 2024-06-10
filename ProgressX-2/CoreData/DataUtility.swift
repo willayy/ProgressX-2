@@ -11,18 +11,25 @@ import Foundation
 
 class DataUtility {
     
+    private static let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
+    
     // MARK: Data handling
     // Data handling are functions that uses object, or arrays of objects.
     
     public static func sortBwEntriesByDate(bwEntries: [BodyEntry]) -> [BodyEntry] {
         let sortedBwEntries = bwEntries
-            .sorted(by: { $0.date! < $1.date! })
+            .sorted(by: { $0.date! > $1.date! })
         return sortedBwEntries
     }
     
-    public static func sortPersonralRecordsByDate(prs: [PersonalRecord]) -> [PersonalRecord] {
-        let sortedPrs = prs
-            .sorted(by: { $0.achievedOnDate! < $1.achievedOnDate! })
+    /// Performs non-inplace sorting of an array of PersonalRecord objects.
+    /// - Parameter prs: An array of PersonalRecord objects
+    public static func sortPersonalRecordsByDate(prs: [PersonalRecord]) -> [PersonalRecord] {
+        let sortedPrs = prs.sorted(by: { $0.achievedOnDate! > $1.achievedOnDate! })
         return sortedPrs
     }
     
@@ -127,6 +134,13 @@ class DataUtility {
         } else {
             return nil
         }
+    }
+    
+    /// Formats a date according to the pattern "yyyy-MM-dd"
+    /// - Parameter date: A date
+    /// - Returns: A date string in the format "yyyy-MM-dd"
+    public static func formatDate(date: Date) -> String {
+        return dateFormatter.string(from: date)
     }
     
 }

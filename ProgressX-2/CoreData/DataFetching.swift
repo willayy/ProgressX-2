@@ -10,23 +10,15 @@ import CoreData
 import UIKit
 
 class DataFetching {
-    
-    private static func isPreviewOrTest() -> Bool {
-        let preview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-        let test = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        return preview || test
-    }
-    
+        
     // MARK: Fetching / Saving to persistance
     // Data fetching / saving functions are functions that modify the persistant store in any way.
     
     /// Fetches profiles form the CoreData database as an array.
     /// - Returns:
     ///   [Profile]: the array of profiles
-    public static func getProfileAsArray() -> [Profile] {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func getProfileAsArray(_ context: NSManagedObjectContext) -> [Profile] {
+    
         let request: NSFetchRequest = NSFetchRequest<Profile>(entityName: "Profile")
         request.shouldRefreshRefetchedObjects = true
         request.includesPropertyValues = true
@@ -43,8 +35,8 @@ class DataFetching {
     /// - Returns:
     ///   True: if a single entity of Profile is found
     ///   False: if not a single entity of Profile is found
-    public static func doesProfileExist() -> Bool {
-        let fetchedProfiles: [Profile] = getProfileAsArray()
+    public static func doesProfileExist(_ context: NSManagedObjectContext) -> Bool {
+        let fetchedProfiles: [Profile] = getProfileAsArray(context)
         if (fetchedProfiles.first != nil) { return true } else { return false }
     }
     
@@ -52,8 +44,8 @@ class DataFetching {
     /// - Returns:
     ///   True: if a single or zero profile entities exist in the database
     ///   False: if more than 1 Profile entity exists
-    public static func verifyProfileState() -> Bool {
-        let fetchedProfiles: [Profile] = DataFetching.getProfileAsArray()
+    public static func verifyProfileState(_ context: NSManagedObjectContext) -> Bool {
+        let fetchedProfiles: [Profile] = getProfileAsArray(context)
         if (fetchedProfiles.count < 2) { return true } else { return false }
     }
     
@@ -61,15 +53,13 @@ class DataFetching {
     /// - Returns:
     ///   Profile: if there exists a profile in the database
     ///   nil: if no profile exists in the database
-    public static func getProfile() -> Profile? {
-        let fetchedProfiles: [Profile] = DataFetching.getProfileAsArray()
+    public static func getProfile(_ context: NSManagedObjectContext) -> Profile? {
+        let fetchedProfiles: [Profile] = getProfileAsArray(context)
         return fetchedProfiles.first
     }
     
-    public static func getProfilePreview() -> Profile? {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func getProfilePreview(_ context: NSManagedObjectContext) -> Profile? {
+            
         let request: NSFetchRequest = NSFetchRequest<Profile>(entityName: "Profile")
         request.shouldRefreshRefetchedObjects = true
         request.includesPropertyValues = true
@@ -89,9 +79,7 @@ class DataFetching {
     ///   - height: The height of the profile in any unit
     ///   - isMetric: Boolean to set if the profile uses metric or imperial units
     ///   - gender: The gender of the profile as a string, must be 'female' or 'male'
-    public static func createProfile(userName:String, birthDay:Date, height:Double, isMetric:Bool, gender:String) -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
+    public static func createProfile(_ context: NSManagedObjectContext, userName:String, birthDay:Date, height:Double, isMetric:Bool, gender:String) -> Void {
         
         let profile = Profile(context: context)
             .setValue_ch(userName, forKey: "userName")
@@ -116,12 +104,9 @@ class DataFetching {
     ///   - thighCirc: (optional) the circumference of the thigh in any unit
     ///   - calfCirc: (optional) the circumference of the calf in any unit
     /// - Returns: Void
-    public static func addBodyWeightEntry(dateAchieved:Date, weight:Double, chestCirc:Double?=nil, waistCirc:Double?=nil, upperArmCirc:Double?=nil, lowerArmCirc:Double?=nil, thighCirc:Double?=nil, calfCirc:Double?=nil) -> Void {
+    public static func addBodyWeightEntry(_ context: NSManagedObjectContext, dateAchieved:Date, weight:Double, chestCirc:Double?=nil, waistCirc:Double?=nil, upperArmCirc:Double?=nil, lowerArmCirc:Double?=nil, thighCirc:Double?=nil, calfCirc:Double?=nil) -> Void {
         
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
-        guard let profile: Profile = DataFetching.getProfile() else {fatalError("A profile must be created before adding a bodyWeightEntry")}
+        guard let profile: Profile = getProfile(context) else {fatalError("A profile must be created before adding a bodyWeightEntry")}
         
         let bodyWeightEntry: BodyEntry = BodyEntry(context: context)
             .setValue_ch(dateAchieved, forKey: "date")
@@ -136,10 +121,7 @@ class DataFetching {
         profile.addToBodyEntries(bodyWeightEntry)
     }
     
-    public static func getBodyWeightEntriesAsArray() -> [BodyEntry] {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func getBodyWeightEntriesAsArray(_ context: NSManagedObjectContext) -> [BodyEntry] {
         let request: NSFetchRequest = NSFetchRequest<BodyEntry>(entityName: "BodyEntry")
         request.shouldRefreshRefetchedObjects = true
         request.includesPropertyValues = true
@@ -155,19 +137,13 @@ class DataFetching {
     /// Deletes a seleceted object
     /// - Parameter object: A NSManaged object that has been fetched from the database
     /// - Returns: Void
-    public static func deleteNSManagedObject(object: NSManagedObject) -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func deleteNSManagedObject(_ context: NSManagedObjectContext, object: NSManagedObject) -> Void {
         context.delete(object)
     }
     
     /// Deleetes all registered objects from the database
     /// - Returns: Void
-    public static func wipeContext() -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func wipeContext(_ context: NSManagedObjectContext) -> Void {
         for obj in context.registeredObjects {
             context.delete(obj)
         }
@@ -175,10 +151,7 @@ class DataFetching {
     
     /// Fetches all saved exercises from the CoreDatabase
     /// - Returns: Array of Exercises
-    public static func getExercisesAsArray() -> [Exercise] {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func getExercisesAsArray(_ context: NSManagedObjectContext) -> [Exercise] {
         let request: NSFetchRequest = NSFetchRequest<Exercise>(entityName: "Exercise")
         request.shouldRefreshRefetchedObjects = true
         request.includesPropertyValues = true
@@ -193,10 +166,7 @@ class DataFetching {
     
     /// Generates a set of basic exercises as CoreDatabase entries
     /// - Returns: Void
-    public static func generateBasicExerciseLibrary() -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func generateBasicExerciseLibrary(_ context: NSManagedObjectContext) -> Void {
         guard let asset = NSDataAsset(name: "Exercises", bundle: Bundle.main) else {
             fatalError("Could not find exercises")
         }
@@ -219,10 +189,7 @@ class DataFetching {
     ///   - load: The weight used.
     ///   - exercise: The exercise this record was achieved on.
     /// - Returns: Void
-    public static func addPersonalRecord(load: Double, exercise: RepBasedExercise) -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func addPersonalRecord(_ context: NSManagedObjectContext, load: Double, exercise: RepBasedExercise) -> Void {
         let pr = OneRepMax(context: context)
         pr.load = load
         pr.repBasedExercise = exercise
@@ -234,10 +201,7 @@ class DataFetching {
     ///   - reps: The amount of reps finished.
     ///   - exercise: The exercise this record was achieved on.
     /// - Returns: Void
-    public static func addPersonalRecord(load: Double, reps: Int, exercise: RepBasedExercise) -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func addPersonalRecord(_ context: NSManagedObjectContext, load: Double, reps: Int, exercise: RepBasedExercise) -> Void {
         let pr = MaxReps(context: context)
         pr.load = load
         pr.reps = 1
@@ -249,19 +213,13 @@ class DataFetching {
     ///   - load: The load used. If the exercise is done with bodyweight, input current weight from profile.
     ///   - exercise: The exercise this record was achieved on.
     /// - Returns: Void
-    public static func addPersonalRecord(load: Double, time exercise: TimeBasedExercise) -> Void {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func addPersonalRecord(_ context: NSManagedObjectContext, load: Double, time exercise: TimeBasedExercise) -> Void {
         let pr = TimeMax(context: context)
         pr.load = load
         pr.timeBasedExercise = exercise
     }
     
-    public static func save() {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = isPreviewOrTest() ? p.previewContainer.viewContext : p.container.viewContext
-        
+    public static func save(_ context: NSManagedObjectContext) {
         do {
            try context.save()
         } catch let error as NSError {

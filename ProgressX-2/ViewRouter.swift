@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import CoreData
 
 class ViewRouter: ObservableObject {
-    @Published var rootView: String = (DataFetching.doesProfileExist()) ? "HomeView" : "CreateNewProfile1"
+    static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+    @Published var rootView: String = (DataFetching.doesProfileExist(context)) ? "HomeView" : "CreateNewProfile1"
 }

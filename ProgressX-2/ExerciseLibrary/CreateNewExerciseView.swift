@@ -7,52 +7,32 @@
 
 import SwiftUI
 
-struct CreateNewExercise: View {
-    
-    // Dont want to add this but since SwiftUI doesnt notice / refresh view when object attribtues changes i have to.
+struct CreateNewExerciseView: View {
     
     @Binding var exercises: [Exercise]
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State var currBw = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
-    @State var weightUnit = DataFetching.getProfile()!.isMetric ? "kg" : "lbs"
-    
+    @State private var currBw: Double = 0
     @State private var newExerciseNameWrong: Bool = false
     @State private var selectedTypeOfExercise: String = "Reps"
     @State private var selectedTypeOfRepsPr: String = "1RM"
     @State private var addPr: String = "No"
     @State private var achieviedOnCurrBw: String = "Yes"
     @State private var exerciseCreatedAlert: Bool = false
-    
-    // States for the textfields
     @State private var selectedExerciseName: String = ""
     @State private var selectedExerciseDesc: String = ""
     @State private var enteredAmrap: String = ""
     @State private var enteredOneRepMax: String = ""
     @State private var enteredTime: String = ""
     @State private var enteredLoad: String = ""
-    
     @State private var createdExerciseName: String = ""
-    
     @State private var enteredAmrapIsWrong: Bool = false
     @State private var enteredOneRepMaxIsWrong: Bool = false
     @State private var enteredTimeIsWrong: Bool = false
     @State private var enteredLoadIsWrong: Bool = false
-        
-    let exerciseTypeOptions: [String] = ["Reps", "Time"]
-    let addPrOptions: [String] = ["Yes", "No"]
-    let achievedAtBwOptions: [String] = ["Yes", "No"]
-    let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
-    
-    /// Returns the current body weight for the profile using the app
-    /// - Returns: A double fetched from the CoreData DB
-    private func getCurrBw() -> String {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        let currBw = DataFetching.getBodyWeightEntriesAsArray().last!.bodyWeight
-        return formatter.string(from: NSNumber(value: currBw))!
-    }
+    private let exerciseTypeOptions: [String] = ["Reps", "Time"]
+    private let addPrOptions: [String] = ["Yes", "No"]
+    private let achievedAtBwOptions: [String] = ["Yes", "No"]
+    private let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
     
     /// Validates input, marks textfields that are filled incorrectly.
     /// - Returns: True if input is  valid and false if not
@@ -62,29 +42,54 @@ struct CreateNewExercise: View {
         
         // Checks no duplicate exercises can be created
         if (exercises.contains { $0.exerciseName == selectedExerciseName }) {
-            newExerciseNameWrong = true
+            withAnimation{newExerciseNameWrong = true}
             return false
-        } else {newExerciseNameWrong=false}
+        } else {
+            withAnimation{newExerciseNameWrong=false}
+        }
         
         // Checks so the new name isnt an empty string
-        if selectedExerciseName.isEmpty {newExerciseNameWrong=true; return false}
-        else {newExerciseNameWrong=false}
+        if selectedExerciseName.isEmpty {
+            withAnimation{newExerciseNameWrong=true}
+            return false}
+        else {
+            withAnimation{newExerciseNameWrong=false}
+        }
         
         // Checks so, which ever pr you pressed, the value entered isnt empty.
         if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
-            if (selectedTypeOfRepsPr == "1RM" && enteredOneRepMax.isEmpty) {enteredOneRepMaxIsWrong=true; return false}
-            else {enteredOneRepMaxIsWrong=false}
+            if (selectedTypeOfRepsPr == "1RM" && enteredOneRepMax.isEmpty) {
+                withAnimation{enteredOneRepMaxIsWrong=true}
+                return false
+            } else {
+                withAnimation{enteredOneRepMaxIsWrong=false}
+            }
             
-            if (selectedTypeOfRepsPr == "AMRAP" && enteredAmrap.isEmpty) {enteredAmrapIsWrong=true; return false}
-            else {enteredAmrapIsWrong=false}
+            if (selectedTypeOfRepsPr == "AMRAP" && enteredAmrap.isEmpty) {
+                withAnimation{enteredAmrapIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredAmrapIsWrong=false}
+            }
         }
         
         else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            if (enteredTime.isEmpty) {enteredTimeIsWrong=true; return false}
-            else {enteredTimeIsWrong=false}
+            if (enteredTime.isEmpty) {
+                withAnimation{enteredTimeIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredTimeIsWrong=false}
+            }
             
-            if (achieviedOnCurrBw == "Yes" && enteredLoad.isEmpty) {enteredLoadIsWrong=true; return false}
-            else {enteredLoadIsWrong=false}
+            if (achieviedOnCurrBw == "Yes" && enteredLoad.isEmpty) {
+                withAnimation{enteredLoadIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredLoadIsWrong=false}
+            }
         }
         
         return true
@@ -100,7 +105,7 @@ struct CreateNewExercise: View {
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
                 pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToOneRepMaxPrs(pr)
-                DataFetching.save()
+                DataFetching.save(viewContext)
             } else if selectedTypeOfRepsPr == "AMRAP" {
                 let pr = MaxReps(context: viewContext)
                 pr.reps = Int64(enteredAmrap)!
@@ -108,7 +113,7 @@ struct CreateNewExercise: View {
                 pr.repBasedExercise = (exercise as! RepBasedExercise)
                 pr.achievedOnDate = Date()
                 (exercise as! RepBasedExercise).addToMaxRepPrs(pr)
-                DataFetching.save()
+                DataFetching.save(viewContext)
             }
         }
         else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
@@ -118,10 +123,12 @@ struct CreateNewExercise: View {
             pr.timeBasedExercise = (exercise as! TimeBasedExercise)
             pr.achievedOnDate = Date()
             (exercise as! TimeBasedExercise).addToTimePrs(pr)
-            DataFetching.save()
+            DataFetching.save(viewContext)
         }
     }
     
+    /// Shows an alert that an exercise has been created
+    /// - Returns: some View
     private func showExerciseCreatedAlert() -> some View {
         Text("Succesfully created exercise called \(createdExerciseName)")
             .fontWeight(.light)
@@ -138,6 +145,9 @@ struct CreateNewExercise: View {
     }
     
     var body: some View {
+        
+        let weightUnit = DataFetching.getProfile(viewContext)!.isMetric ? "kg" : "lbs"
+        
         ScrollView {
             VStack(alignment: .center) {
                 
@@ -147,7 +157,7 @@ struct CreateNewExercise: View {
                     showExerciseCreatedAlert()
                 }
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $selectedExerciseName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is already taken!")
+                InputShortTextField(placeHolder: "New exercise name", text: $selectedExerciseName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is invalid or taken!")
                 
                 TextField("New exercise description", text: $selectedExerciseDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
@@ -156,7 +166,7 @@ struct CreateNewExercise: View {
 
                 BoldSubHeadline(text: "Exercise type?")
     
-                LightSubHeadline(text: "ProgressX divides up exercises in two broad types, exercises based on how many reps you can do (AMRAP or 1RM, ex Benchpress, Deadlift etc) and exercises based on doing something for a set amount of time (Plank, Cardio etc).")
+                LightSubHeadline(text: "Should the exercise be based on doing an amount of reps or doing an amount of time?")
                     .padding(.horizontal, 30)
                 
                 BasicSegPicker(selectedSegment: $selectedTypeOfExercise, segments: exerciseTypeOptions, frameWidth: 230, horizontalPadding: 100)
@@ -179,7 +189,7 @@ struct CreateNewExercise: View {
                         (Text("Was this time record achieved at your current bodyweight of ")
                             .font(.subheadline)
                             .fontWeight(.light)
-                         + Text("\(getCurrBw()) \(weightUnit)")
+                         + Text("\(currBw) \(weightUnit)")
                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
                             .foregroundColor(.gray)
                             .multilineTextAlignment(.center)
@@ -226,7 +236,7 @@ struct CreateNewExercise: View {
                     (Text("Was this time record achieved at your current bodyweight of ")
                         .font(.subheadline)
                         .fontWeight(.light)
-                     + Text("\(getCurrBw()) \(weightUnit)")
+                     + Text("\(currBw) \(weightUnit)")
                         .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
                         .foregroundColor(.gray)
                         .multilineTextAlignment(.center)
@@ -263,15 +273,17 @@ struct CreateNewExercise: View {
                             .setValue_ch(selectedExerciseName, forKey: "exerciseName")
                             .setValue(selectedExerciseDesc, forKey: "exerciseDesc")
                         addPrIfWanted(exercise: exercise!)
-                        DataFetching.save()
+                        DataFetching.save(viewContext)
                         createdExerciseName = selectedExerciseName
-                        exerciseCreatedAlert = true
                         exercises.append(exercise!)
                         selectedExerciseName = ""
                         selectedExerciseDesc = ""
                         selectedTypeOfExercise = "Reps"
                         selectedTypeOfRepsPr = "1RM"
                         addPr = "No"
+                        withAnimation {
+                            exerciseCreatedAlert = true
+                        }
                     }
                 }) {
                     Text("Save new exercise")
@@ -281,14 +293,16 @@ struct CreateNewExercise: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
             }
-        }
+        }.onAppear(perform: {
+            currBw = DataFetching.getBodyWeightEntriesAsArray(viewContext).last!.bodyWeight
+        })
     }
 }
 
 #Preview {
-    let container = PersistenceController.shared.previewContainer
+    let context = PersistenceController.preview.container.viewContext
     @State var lst: [Exercise] = [Exercise()]
-    return CreateNewExercise(exercises: $lst)
-                .environment(\.managedObjectContext, container.viewContext)
+    return CreateNewExerciseView(exercises: $lst)
+                .environment(\.managedObjectContext, context)
 }
 
