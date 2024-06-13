@@ -8,122 +8,229 @@
 import Foundation
 import CoreData
 
+// This extension houses a function that staticly creates NSManagedObjects for an in-memory database
 extension PersistenceController {
     
     public static func initInMemoryDb(context: NSManagedObjectContext) -> Void {
-        
+    
+        // Initialize a bunch of objects
         let profile: Profile = Profile(context: context)
-            .setValue_ch("TestProfile", forKey: "profileUserName")
-            .setValue_ch("male", forKey: "gender")
-            .setValue_ch(true, forKey: "isMetric")
-            .setValue_ch(Date(), forKey: "birthDay")
-            .setValue_ch(187, forKey: "height")
+        profile.profileUserName = "TestProfile"
+        profile.gender = "male"
+        profile.isMetric = true
+        profile.birthDay = Date()
+        profile.height = 187
         
-        let bw1 = BodyEntry(context: context)
-            .setValue_ch(100, forKey: "bodyWeight")
-            .setValue_ch(Date()-500000, forKey: "dateAchieved")
-        bw1.profile = profile
+        let bw1 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 65,
+            date: Date()
+        )
         
-        let bw2 = BodyEntry(context: context)
-            .setValue_ch(95, forKey: "bodyWeight")
-            .setValue_ch(Date()-400000, forKey: "dateAchieved")
-        bw2.profile = profile
+        let bw2 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 78,
+            date: Date()
+        )
         
-        let bw3 = BodyEntry(context: context)
-            .setValue_ch(97, forKey: "bodyWeight")
-            .setValue_ch(Date()-300000, forKey: "dateAchieved")
-        bw3.profile = profile
+        let bw3 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 82,
+            date: Date()
+        )
         
-        let bw4 = BodyEntry(context: context)
-            .setValue_ch(98, forKey: "bodyWeight")
-            .setValue_ch(Date()-200000, forKey: "dateAchieved")
-        bw4.profile = profile
+        let bw4 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 85,
+            date: Date()
+        )
         
-        let bw5 = BodyEntry(context: context)
-            .setValue_ch(89, forKey: "bodyWeight")
-            .setValue_ch(Date()-100000, forKey: "dateAchieved")
-        bw5.profile = profile
+        let bw5 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 87,
+            date: Date()
+        )
         
-        let bw6 = BodyEntry(context: context)
-            .setValue_ch(87, forKey: "bodyWeight")
-            .setValue_ch(Date(), forKey: "dateAchieved")
-        bw6.profile = profile
+        let bw6 = PersistenceController.createBodyEntry(
+            context,
+            profile: profile,
+            weight: 90,
+            date: Date()
+        )
         
+        let testExercise1 = PersistenceController.createExercise(
+            context,
+            name: "testing exercise (reps)",
+            desc: "This exercise is used for debugging purposes within the canvas preview",
+            type: "reps"
+        )
+        
+        let testExercise2 = PersistenceController.createExercise(
+            context,
+            name: "testing exercise (time)",
+            desc: "This exercise is used for debugging purposes within the canvas preview",
+            type: "time"
+        )
+        
+        let ORMpr1 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 50,
+            q: 1,
+            date: Date(),
+            type: "onerepmax"
+        )
+        
+        let ORMpr2 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 45,
+            q: 1,
+            date: Date()-100000,
+            type: "onerepmax"
+        )
+        
+        let ORMpr3 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 67,
+            q: 1,
+            date: Date()-200000,
+            type: "onerepmax"
+        )
+        
+        let ORMpr4 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 89,
+            q: 1,
+            date: Date()-300000,
+            type: "onerepmax"
+        )
+        
+        let ORMpr5 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 72,
+            q: 1,
+            date: Date()-400000,
+            type: "onerepmax"
+        )
+        
+        let MRpr1 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 50,
+            q: 31,
+            date: Date(),
+            type: "maxreps"
+        )
+        
+        let MRpr2 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 45,
+            q: 21,
+            date: Date()-100000,
+            type: "maxreps"
+        )
+        
+        let MRpr3 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 67,
+            q: 18,
+            date: Date()-200000,
+            type: "maxreps"
+        )
+        
+        let MRpr4 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 89,
+            q: 11,
+            date: Date()-300000,
+            type: "maxreps"
+        )
+        
+        let MRpr5 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise1,
+            wl: 72,
+            q: 15,
+            date: Date()-400000,
+            type: "maxreps"
+        )
+        
+        let TMpr1 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise2,
+            wl: 50,
+            q: 31,
+            date: Date(),
+            type: "timemax"
+        )
+        
+        let TMpr2 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise2,
+            wl: 45,
+            q: 21,
+            date: Date()-100000,
+            type: "timemax"
+        )
+        
+        let TMpr3 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise2,
+            wl: 67,
+            q: 18,
+            date: Date()-200000,
+            type: "timemax"
+        )
+        
+        let TMpr4 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise2,
+            wl: 89,
+            q: 11,
+            date: Date()-300000,
+            type: "timemax"
+        )
+        
+        let TMpr5 = PersistenceController.createPersonalRecord(
+            context,
+            exercise: testExercise2,
+            wl: 72,
+            q: 15,
+            date: Date()-400000,
+            type: "timemax"
+        )
+        
+        // Put objects in relationships
         profile.addToBodyEntries(bw1)
         profile.addToBodyEntries(bw2)
         profile.addToBodyEntries(bw3)
-        
-        let testExercise1 = RepBasedExercise(context: context)
-            .setValue_ch("testing exercise (reps)", forKey: "exerciseName")
-            .setValue_ch("This exercise is used for debugging purposes within the canvas preview", forKey: "exerciseDesc")
-        
-        let testExercise2 = TimeBasedExercise(context: context)
-            .setValue_ch("testing exercise (time)", forKey: "exerciseName")
-            .setValue_ch("This exercise is used for debugging purposes within the canvas preview", forKey: "exerciseDesc")
-        
-        let ORMpr1 = OneRepMax(context: context)
-            .setValue_ch(75.0, forKey: "weightLoad")
-            .setValue_ch(1.0, forKey: "prQuantity")
-            .setValue_ch(Date()-200000, forKey: "achievedOnDate")
-            ORMpr1.exercise = testExercise1
-        
-        let ORMpr2 = OneRepMax(context: context)
-            .setValue_ch(80.0, forKey: "weightLoad")
-            .setValue_ch(1.0, forKey: "prQuantity")
-            .setValue_ch(Date()-100000, forKey: "achievedOnDate")
-            ORMpr2.exercise = testExercise1
-        
-        let ORMpr3 = OneRepMax(context: context)
-            .setValue_ch(77.0, forKey: "weightLoad")
-            .setValue_ch(1.0, forKey: "prQuantity")
-            .setValue_ch(Date(), forKey: "achievedOnDate")
-            ORMpr3.exercise = testExercise1
-        
-        let MRpr1 = MaxReps(context: context)
-            .setValue_ch(100.0, forKey: "weightLoad")
-            .setValue_ch(10.0, forKey: "prQuantity")
-            .setValue_ch(Date()-200000, forKey: "achievedOnDate")
-            MRpr1.exercise = testExercise1
-        
-        let MRpr2 = MaxReps(context: context)
-            .setValue_ch(95.0, forKey: "weightLoad")
-            .setValue_ch(12.0, forKey: "prQuantity")
-            .setValue_ch(Date()-100000, forKey: "achievedOnDate")
-            MRpr2.exercise = testExercise1
-        
-        let MRpr3 = MaxReps(context: context)
-            .setValue_ch(97.0, forKey: "weightLoad")
-            .setValue_ch(16.0, forKey: "prQuantity")
-            .setValue_ch(Date(), forKey: "achievedOnDate")
-            MRpr3.exercise = testExercise1
-        
-        let TIMpr1 = TimeMax(context: context)
-            .setValue_ch(40.1, forKey: "weightLoad")
-            .setValue_ch(100.0, forKey: "prQuantity")
-            .setValue_ch(Date()-200000, forKey: "achievedOnDate")
-            TIMpr1.exercise = testExercise2
-        
-        let TIMpr2 = TimeMax(context: context)
-            .setValue_ch(45.6, forKey: "weightLoad")
-            .setValue_ch(95.0, forKey: "prQuantity")
-            .setValue_ch(Date()-100000, forKey: "achievedOnDate")
-            TIMpr2.exercise = testExercise2
-        
-        let TIMpr3 = TimeMax(context: context)
-            .setValue_ch(70.8, forKey: "weightLoad")
-            .setValue_ch(97.0, forKey: "prQuantity")
-            .setValue_ch(Date(), forKey: "achievedOnDate")
-            TIMpr3.exercise = testExercise2
-        
         testExercise1.addToPersonalRecords(ORMpr1)
         testExercise1.addToPersonalRecords(ORMpr2)
         testExercise1.addToPersonalRecords(ORMpr3)
+        testExercise1.addToPersonalRecords(ORMpr4)
+        testExercise1.addToPersonalRecords(ORMpr5)
         testExercise1.addToPersonalRecords(MRpr1)
         testExercise1.addToPersonalRecords(MRpr2)
         testExercise1.addToPersonalRecords(MRpr3)
-        testExercise2.addToPersonalRecords(TIMpr1)
-        testExercise2.addToPersonalRecords(TIMpr2)
-        testExercise2.addToPersonalRecords(TIMpr3)
+        testExercise1.addToPersonalRecords(MRpr4)
+        testExercise1.addToPersonalRecords(MRpr5)
+        testExercise2.addToPersonalRecords(TMpr1)
+        testExercise2.addToPersonalRecords(TMpr2)
+        testExercise2.addToPersonalRecords(TMpr3)
+        testExercise2.addToPersonalRecords(TMpr4)
+        testExercise2.addToPersonalRecords(TMpr5)
         
     }
     
