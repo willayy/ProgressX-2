@@ -9,7 +9,7 @@
         <attribute name="thighCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="uprArmCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="waistCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <relationship name="profile" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
+        <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
     <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
         <attribute name="exerciseDesc" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="&quot;&quot;"/>
@@ -27,7 +27,7 @@
         <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="prType" attributeType="String" minValueString="1" maxValueString="10" defaultValueString="&quot;&quot;" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
         <attribute name="weightLoad" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="personalRecords" inverseEntity="Exercise"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="personalRecords" inverseEntity="Exercise"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
         <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
