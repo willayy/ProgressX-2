@@ -14,9 +14,9 @@ class DoubleFieldValidator: InputFieldValidator {
     private let maxInputNumber: Double
     
     init(emptyAllowed: Bool = false, minInputNumber: Double = 0, maxInputNumber: Double = 1000) {
-        super.init(emptyAllowed: emptyAllowed)
         self.minInputNumber = minInputNumber
         self.maxInputNumber = maxInputNumber
+        super.init(emptyAllowed: emptyAllowed)
     }
     
     override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldValid: Binding<Bool>) -> Bool {

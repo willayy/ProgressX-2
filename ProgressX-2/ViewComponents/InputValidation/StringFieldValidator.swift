@@ -14,9 +14,9 @@ class StringFieldValidator: InputFieldValidator {
     private let maxInputCharCount: Int
     
     init(emptyAllowed: Bool = false, minInputCharCount: Int = 0, maxInputCharCount: Int = 1000) {
-        super.init(emptyAllowed: emptyAllowed)
         self.minInputCharCount = minInputCharCount
         self.maxInputCharCount = maxInputCharCount
+        super.init(emptyAllowed: emptyAllowed)
     }
     
     override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldValid: Binding<Bool>) -> Bool {
