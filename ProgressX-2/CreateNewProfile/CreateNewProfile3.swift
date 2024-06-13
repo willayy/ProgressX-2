@@ -16,8 +16,8 @@ struct CreateNewProfile3: View {
     // Fetch BodyEntries to use as weightLoad in AMRAP prs
     @FetchRequest(
         entity: BodyEntry.entity(),
-        sortDescriptors: []
-    ) private var bodyEntryResults: FetchedResults<BodyEntry>
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: true)]
+    ) private var bodyEntries: FetchedResults<BodyEntry>
     
     // Inputfield value states
     @State var chestCirc = ""
@@ -226,17 +226,16 @@ struct CreateNewProfile3: View {
     }
     
     private func addExtraInfo() {
+         
+        let firstEntry = bodyEntries.first!
+        let bodyWeight = firstEntry.bodyWeight
+        firstEntry.chestCirc = Double(chestCirc)!
+        firstEntry.waistCirc = Double(waistCirc)!
+        firstEntry.thighCirc = Double(thighCirc)!
+        firstEntry.calfCirc = Double(calfCirc)!
+        firstEntry.uprArmCirc = Double(upperArmCirc)!
+        firstEntry.lwrArmCirc = Double(lowerArmCirc)!
         
-        let firstEntry = bodyEntryResults.first
-        let bodyWeight = firstEntry!.bodyWeight
-        firstEntry!.chestCirc = Double(chestCirc)!
-        firstEntry!.waistCirc = Double(waistCirc)!
-        firstEntry!.thighCirc = Double(thighCirc)!
-        firstEntry!.calfCirc = Double(calfCirc)!
-        firstEntry!.uprArmCirc = Double(upperArmCirc)!
-        firstEntry!.lwrArmCirc = Double(lowerArmCirc)!
-        
-        PersistenceController.generateBasicExerciseLibrary(viewContext)
         PersistenceController.save(viewContext)
         
         // Fetch all the generated exerices so PR's can be added

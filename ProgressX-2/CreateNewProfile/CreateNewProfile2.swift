@@ -26,7 +26,7 @@ struct CreateNewProfile2: View {
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.5);
-            
+             
             Text("Do you wish to supply some extra data so we can set the correct PR's for some common exercises and make sure your profile body-metric's are correct? ")
                 .font(.subheadline)
                 .fontWeight(.light)
@@ -38,6 +38,7 @@ struct CreateNewProfile2: View {
             HStack(spacing: 20) {
                 
                 Button {
+                    PersistenceController.generateBasicExerciseLibrary(viewContext)
                     goToHomeView()
                 } label: {
                     Text("No, im good!")
@@ -47,6 +48,7 @@ struct CreateNewProfile2: View {
                     .buttonStyle(.borderedProminent)
                 
                 Button {
+                    PersistenceController.generateBasicExerciseLibrary(viewContext)
                     navPath.append(3)
                 } label: {
                     Text("Yes, let's continue")

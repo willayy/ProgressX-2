@@ -47,7 +47,7 @@ struct CreateNewProfile1: View {
                 VStack(alignment: .center, spacing: 10) {
                     
                     BoldTitle(text: "Create a profile!")
-                    
+                     
                     LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only")
                     
                     Text("Username")
