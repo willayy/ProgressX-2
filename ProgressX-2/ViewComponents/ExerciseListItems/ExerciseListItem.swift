@@ -10,27 +10,21 @@ import SwiftUI
 struct ExerciseListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var selectedExercise: Exercise?
-    @Binding var belongsTo: [Exercise]
-    @Binding var selectedExerciseName: String
-    @Binding var selectedExerciseDesc: String
     @Binding var navPath: [Int]
-    let listItemExercise: Exercise
+    @Binding var selectedExercise: Exercise?
     @State var showDeleteAlert: Bool = false
-    @State var deletedExerciseName: String = ""
+    @ObservedObject var exercise: Exercise
     
     var body: some View {
         HStack {
             
-            Text(listItemExercise.exerciseName ?? "Unnamed Exercise")
+            Text(exercise.exerciseName!)
             
             Spacer()
             
             // MARK: Edit button
             Button(action: {
-                selectedExercise = listItemExercise
-                selectedExerciseName = listItemExercise.exerciseName!
-                selectedExerciseDesc = listItemExercise.exerciseDesc!
+                selectedExercise = exercise
                 navPath.append(3)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
@@ -39,9 +33,9 @@ struct ExerciseListItem: View {
             
             // MARK: Statistics button
             Button(action: {
-                selectedExercise = listItemExercise
+                selectedExercise = exercise
                 navPath.append(4)
-            }) { Image(systemName: "note") }
+            }) { Image(systemName: "chart.xyaxis.line") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())
@@ -49,19 +43,18 @@ struct ExerciseListItem: View {
             // MARK: Delete button
             Button(action: {
                 showDeleteAlert = true
-                deletedExerciseName = listItemExercise.exerciseName!
             }) { Image(systemName: "trash") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())
+                // Shows an alert box
                 .alert(isPresented: $showDeleteAlert, content: {
                     Alert(
                         title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete \(deletedExerciseName)?"),
+                        message: Text("Are you sure you want to delete \(exercise.exerciseName!)?"),
                         primaryButton: .destructive(Text("Delete")) {
-                            belongsTo.removeAll(where: { $0 === listItemExercise })
-                            DataFetching.deleteNSManagedObject(viewContext, object: listItemExercise)
-                            DataFetching.save(viewContext)
+                            PersistenceController.delete(viewContext, object: exercise)
+                            PersistenceController.save(viewContext)
                         },
                         secondaryButton: .cancel()
                     )

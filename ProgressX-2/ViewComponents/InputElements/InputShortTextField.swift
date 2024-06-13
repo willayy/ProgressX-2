@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-private let nonAllowedChars = ".,;-"
+private let nonAllowedChars = ".,;´`'*^¨><"
 private let maxChars = 25
 
 /// TextField used for short text input, composed of the base InputField component
@@ -19,7 +19,7 @@ struct InputShortTextField: View {
     @Binding var markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
-    let errorMessage: String
+    @Binding var errorMessage: String
 
     private func onReceiveFunction(new: String) -> String {
         var filtered = new.filter { !nonAllowedChars.contains($0) }

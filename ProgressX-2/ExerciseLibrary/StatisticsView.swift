@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import CoreData
 
 struct StatisticsView: View {
     
@@ -14,10 +15,6 @@ struct StatisticsView: View {
     @Binding var exercise: Exercise?
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?
-    @Binding var allPrs: [PersonalRecord]
-    @Binding var oneRepMaxPrs: [OneRepMax]
-    @Binding var timeMaxPrs: [TimeMax]
-    @Binding var maxRepPrs: [MaxReps]
     
     var body: some View {
         ScrollView {
@@ -29,37 +26,57 @@ struct StatisticsView: View {
                 
                 if exercise is RepBasedExercise {
                     GeneralInfoRepsExercise(
-                        exercise: $exercise,
-                        oneRepMaxPrs: $oneRepMaxPrs,
-                        maxRepsPrs: $maxRepPrs
+                        exercise: exercise as? RepBasedExercise
                     ).environment(\.managedObjectContext, viewContext)
                 } else if exercise is TimeBasedExercise {
                     GeneralInfoTimeExercise(
-                        exercise: $exercise,
-                        timeMaxPrs: $timeMaxPrs
+                        exercise: exercise as? TimeBasedExercise
                     ).environment(\.managedObjectContext, viewContext)
                 }
                 
-                PrList(
-                    navPath: $navPath,
-                    exercise: $exercise,
-                    prs: $allPrs,
-                    editingPr: $editingPr
-                )
                 
                 if exercise is RepBasedExercise {
-                    OneRepMaxChart(
-                        oneRepMaxPrs: $oneRepMaxPrs, 
-                        exercise: exercise as! RepBasedExercise
+                    SingleChart(
+                        exercise: exercise as! RepBasedExercise,
+                        set: "1RM",
+                        entity: OneRepMax.entity()
                     ).environment(\.managedObjectContext, viewContext)
-                    MaxRepChart(
-                        maxRepPrs: $maxRepPrs, 
-                        exercise: exercise as! RepBasedExercise
+                    
+                    PrList(
+                        navPath: $navPath,
+                        editingPr: $editingPr,
+                        exercise: exercise,
+                        entity: OneRepMax.entity(),
+                        prType: "1RM"
                     ).environment(\.managedObjectContext, viewContext)
+                    
+                    DoubleChart(
+                        exercise: exercise as! RepBasedExercise,
+                        set: "AMRAP",
+                        entity: MaxReps.entity()
+                    ).environment(\.managedObjectContext, viewContext)
+                    
+                    PrList(
+                        navPath: $navPath,
+                        editingPr: $editingPr,
+                        exercise: exercise,
+                        entity: MaxReps.entity(),
+                        prType: "AMRAP"
+                    ).environment(\.managedObjectContext, viewContext)
+                    
                 } else if exercise is TimeBasedExercise {
-                    TimeMaxChart(
-                        timeMaxPrs: $timeMaxPrs, 
-                        exercise: exercise as! TimeBasedExercise
+                    DoubleChart(
+                        exercise: exercise as! TimeBasedExercise,
+                        set: "Time-max",
+                        entity: TimeMax.entity()
+                    ).environment(\.managedObjectContext, viewContext)
+                    
+                    PrList(
+                        navPath: $navPath,
+                        editingPr: $editingPr,
+                        exercise: exercise,
+                        entity: TimeMax.entity(),
+                        prType: "Time-max"
                     ).environment(\.managedObjectContext, viewContext)
                 }
             }
@@ -68,22 +85,22 @@ struct StatisticsView: View {
 }
 
 #Preview {
+    
     let context = PersistenceController.preview.container.viewContext
-    @State var exercise: Exercise? = DataFetching.getExercisesAsArray(context)
-        .first(where:{$0.exerciseName == "testing exercise (time)"})
+    
+    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    
+    let exerciseResult: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+
+    @State var exercise: Exercise? = exerciseResult.first!
+    
     @State var navPath: [Int] = [Int]()
+    
     @State var editingPr: PersonalRecord? = nil
-    @State var allPrs: [PersonalRecord] = []
-    @State var oneRepMaxPrs: [OneRepMax] = []
-    @State var timeMaxPrs: [TimeMax] = []
-    @State var maxRepPrs: [MaxReps] = []
+    
     return StatisticsView(
         exercise: $exercise,
         navPath: $navPath,
-        editingPr: $editingPr,
-        allPrs: $allPrs,
-        oneRepMaxPrs: $oneRepMaxPrs,
-        timeMaxPrs: $timeMaxPrs,
-        maxRepPrs: $maxRepPrs
+        editingPr: $editingPr
     ).environment(\.managedObjectContext, context)
 }

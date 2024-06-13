@@ -6,14 +6,47 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct GeneralInfoTimeExercise: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var exercise: Exercise?
-    @Binding var timeMaxPrs: [TimeMax]
+    
+    // Fetch the Profile to se if its metric or not
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    )private var profileResults: FetchedResults<Profile>
+    
+    @FetchRequest private var timeMaxResults: FetchedResults<TimeMax>
+    
+    private let exercise: TimeBasedExercise?
+    
+    init(exercise: TimeBasedExercise?) {
+        self.exercise = exercise
+        self._timeMaxResults = FetchRequest<TimeMax>(
+            entity: TimeMax.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \TimeMax.achievedOnDate, ascending: true)],
+            predicate: NSPredicate(format: "exercise == %@", exercise!)
+        )
+    }
     
     var body: some View {
+        
+        // Find the min value or nil if there are no values
+        // Construct the all time low from the min (if it exists) and the weight unit
+        let timeUnit = "s"
+        let fetchedMinValueTime = timeMaxResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeLowTime = fetchedMinValueTime != nil ? (fetchedMinValueTime! + " " + timeUnit) : nil
+        
+        // Same thing for the max values
+        let fetchedMaxValueTime = timeMaxResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeHighTime = fetchedMaxValueTime != nil ? (fetchedMaxValueTime! + " " + timeUnit) : nil
+        
+        // Find the latest PR weight value or nil if there are no values
+        let fetchedLatestValueTime = timeMaxResults.first?.loadString()
+        let latestValueTime = fetchedLatestValueTime != nil ? (fetchedLatestValueTime! + " " + timeUnit) : nil
+        
         
         BoldSubHeadline(text: "General information")
             .padding(.horizontal, 40)
@@ -32,7 +65,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(timeMaxPrs.count))
+                + Text(String(timeMaxResults.count))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -40,7 +73,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getFirstPrDate(prs: timeMaxPrs ) ?? "No pr recorded")
+                + Text(timeMaxResults.first?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -48,7 +81,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getLastPrDate(prs: timeMaxPrs) ?? "No pr recorded")
+                + Text(timeMaxResults.last?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -56,7 +89,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLowestPrValue(data: timeMaxPrs) ?? 0) + " s")
+                + Text(allTimeLowTime ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -64,7 +97,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getHighestPrValue(data: timeMaxPrs) ?? 0) + " s")
+                + Text(allTimeHighTime ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -72,7 +105,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLatestPrValue(data: timeMaxPrs) ?? 0) + " s")
+                + Text(latestValueTime ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
             }
@@ -82,9 +115,13 @@ struct GeneralInfoTimeExercise: View {
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    @State var exercise: Exercise? = DataFetching.getExercisesAsArray(context)
-        .first(where:{$0.exerciseName == "testing exercise (time)"}) as! TimeBasedExercise
-    @State var prs: [TimeMax] = (exercise as! TimeBasedExercise).timePrs!.array as! [TimeMax]
-    return GeneralInfoTimeExercise(exercise: $exercise, timeMaxPrs: $prs)
+    
+    let fetchRequestRepBasedExercise: NSFetchRequest<TimeBasedExercise> = TimeBasedExercise.fetchRequest()
+    
+    let exerciseResult: [TimeBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+
+    let exercise: TimeBasedExercise = exerciseResult.first!
+    
+    return GeneralInfoTimeExercise(exercise: exercise)
         .environment(\.managedObjectContext, context)
 }

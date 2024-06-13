@@ -13,6 +13,11 @@ struct CreateNewProfile1: View {
     @EnvironmentObject var viewRouter: ViewRouter
     @Environment(\.managedObjectContext) private var viewContext
     
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profileResults: FetchedResults<Profile>
+    
     // The navPath variable is passed along to all following
     // views in this set of views.
     @State private var navPath = [Int]()
@@ -22,64 +27,17 @@ struct CreateNewProfile1: View {
     @State private var selectedGenderSegment = "Male"
     @State private var weight = ""
     @State private var height = ""
+    
+    // Input field States
     @State private var userNameIsInvalid = false
     @State private var heightIsInvalid = false
     @State private var weightIsInvalid = false
+    @State private var userNameIsInvalidMsg = ""
+    @State private var heightIsInvalidMsg = ""
+    @State private var weightIsInvalidMsg = ""
+    
     let unitSegments = ["Metric (meters)", "Imperial (feet)"]
     let genderSegments = ["Male", "Female"]
-    
-    // Validates input
-    private func validateInput() -> Bool {
-        
-        var value = true
-        
-        // Check if username is empty
-        if userName.isEmpty {
-            value = false
-            withAnimation{userNameIsInvalid = true}
-        } else {
-            withAnimation{userNameIsInvalid = false}
-        }
-        
-        // Check if weight is empty
-        if weight.isEmpty { 
-            value = false
-            withAnimation{weightIsInvalid = true}
-        } else {
-            withAnimation{weightIsInvalid = false}
-        }
-        
-        // Check if height is empty
-        if height.isEmpty {
-            value = false
-            withAnimation{heightIsInvalid = true}
-        } else {
-            withAnimation{heightIsInvalid = false}
-        }
-        
-        return value
-    }
-    
-    // Calls this method when "Continue" button is pressed
-    private func createProfile() -> Void {
-        
-        if DataFetching.doesProfileExist(viewContext) {
-            let profile = DataFetching.getProfile(viewContext)!
-            DataFetching.deleteNSManagedObject(viewContext,object: profile)
-            DataFetching.save(viewContext)
-        }
-        
-        let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
-        let gender = (selectedGenderSegment == "Male") ? "male" : "female"
-        let inputWeight = Double(weight)!
-        let inputHeight = Double(height)!
-        
-        DataFetching.createProfile(viewContext, userName: userName, birthDay: birthDay, height: inputHeight, isMetric: isMetric, gender: gender)
-        DataFetching.save(viewContext)
-        
-        DataFetching.addBodyWeightEntry(viewContext, dateAchieved: Date(), weight: inputWeight)
-        DataFetching.save(viewContext)
-    }
     
     var body: some View {
         // The navigation stack is the root of all following views
@@ -99,7 +57,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4, errorMessage: "This cant be left empty!")
+                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.4, errorMessage: $userNameIsInvalidMsg)
                     
                     Text("Birthday")
                         .foregroundColor(.black)
@@ -130,7 +88,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let weightUnit = (selectedUnitSegment == "Metric (meters)") ? "kg" : "lbs"
-                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3, errorMessage: "This cant be left empty!")
+                    InputDecimalNumberField(placeHolder: weightUnit, numberText: $weight, markAsWrong: $weightIsInvalid, width: 0.3, errorMessage: $weightIsInvalidMsg)
                     
                     Text("What is your current Height")
                         .foregroundColor(.black)
@@ -140,7 +98,7 @@ struct CreateNewProfile1: View {
                         .minimumScaleFactor(0.5);
                     
                     let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "m" : "ft"
-                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: "This cant be left empty!")
+                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: $heightIsInvalidMsg)
                     
                     Text("What is your (biological) gender")
                         .foregroundColor(.black)
@@ -181,6 +139,50 @@ struct CreateNewProfile1: View {
             }
         }
     }
+    
+    // Validates input
+    private func validateInput() -> Bool {
+        var valid: Bool
+        let doubleFieldValidator = DoubleFieldValidator()
+        let stringFieldValidator = StringFieldValidator()
+        valid = doubleFieldValidator.valideField(inputVar: height, errorMessage: $heightIsInvalidMsg, fieldValid: $heightIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: weight, errorMessage: $weightIsInvalidMsg, fieldValid: $weightIsInvalid)
+        valid = stringFieldValidator.valideField(inputVar: userName, errorMessage: $userNameIsInvalidMsg, fieldValid: $userNameIsInvalid)
+        return valid
+    }
+    
+    // Calls this method when "Continue" button is pressed
+    private func createProfile() -> Void {
+        if PersistenceController.profileExists(viewContext) {
+            let profile = profileResults.first!
+            PersistenceController.delete(viewContext, object: profile)
+            PersistenceController.save(viewContext)
+        }
+        
+        let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
+        let gender = (selectedGenderSegment == "Male") ? "male" : "female"
+        let inputWeight = Double(weight)!
+        let inputHeight = Double(height)!
+        
+        let profile = Profile(context: viewContext)
+        profile.birthDay = birthDay
+        profile.profileUserName = userName
+        profile.height = inputHeight
+        profile.gender = gender
+        profile.isMetric = isMetric
+        
+        let bodyWeightEntry = PersistenceController.createBodyEntry(
+            viewContext,
+            profile: profile,
+            weight: inputWeight,
+            date: Date()
+        )
+        
+        profile.addToBodyEntries(bodyWeightEntry)
+        
+        PersistenceController.save(viewContext)
+    }
+    
 }
     
 

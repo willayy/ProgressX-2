@@ -10,26 +10,24 @@ import CoreData
 
 struct ExerciseLibraryView: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
+    @EnvironmentObject private var viewRouter: ViewRouter
     @Environment(\.managedObjectContext) private var viewContext
     
-    // The navPath variable is passed along to all following
-    // views in this set of views.
-    @State private var allExercises: [Exercise] = []
-    @State private var allPrs: [PersonalRecord] = []
-    @State private var oneRepMaxPrs: [OneRepMax] = []
-    @State private var timeMaxPrs: [TimeMax] = []
-    @State private var maxRepPrs: [MaxReps] = []
+    @FetchRequest(
+        entity: TimeBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var timeBasedExerciseResult: FetchedResults<Exercise>
+    
+    @FetchRequest(
+        entity: RepBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var repBasedExerciseResult: FetchedResults<Exercise>
+    
+    @State private var exerciseResults: [Exercise] = []
     @State private var navPath = [Int]()
     @State private var selectedExercise: Exercise? = nil
-    @State private var selectedExerciseName: String = ""
-    @State private var selectedExerciseDesc: String = ""
     @State private var searchText: String = ""
     @State private var editingPr: PersonalRecord? = nil
-    
-    private func searchedItems() -> [Exercise] {
-        return allExercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
-    }
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -51,19 +49,16 @@ struct ExerciseLibraryView: View {
                     
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center) {
-                        if allExercises.isEmpty {
+                        if exerciseResults.isEmpty {
                             LightSubHeadline(text: "You currently have no exercises saved to the exercise library...")
                         } else {
                             List {
                                 ForEach(searchedItems()) { exercise in
                                     ExerciseListItem(
-                                        selectedExercise: $selectedExercise, 
-                                        belongsTo: $allExercises,
-                                        selectedExerciseName: $selectedExerciseName,
-                                        selectedExerciseDesc: $selectedExerciseDesc,
-                                        navPath: $navPath,
-                                        listItemExercise: exercise
-                                    )
+                                        navPath: $navPath, 
+                                        selectedExercise: $selectedExercise,
+                                        exercise: exercise
+                                    ).environment(\.managedObjectContext, viewContext)
                                 }
                             }
                             .frame(height: 600)
@@ -84,60 +79,47 @@ struct ExerciseLibraryView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     
                 }
-            }.onChange(of: selectedExercise, initial: true) {
-                
-                allExercises = DataFetching.getExercisesAsArray(viewContext)
-    
-                if selectedExercise is RepBasedExercise {
-                    allPrs = []
-                    let repBasedExercise: RepBasedExercise = selectedExercise as! RepBasedExercise
-                    let oneRepMaxPrs: [OneRepMax] = DataUtility.get1RmPrs(exercise: repBasedExercise) ?? []
-                    let maxRepPrs: [MaxReps] = DataUtility.getMaxRepPrs(exercise: repBasedExercise) ?? []
-                    self.oneRepMaxPrs = oneRepMaxPrs
-                    self.maxRepPrs = maxRepPrs
-                    self.allPrs.append(contentsOf: oneRepMaxPrs)
-                    self.allPrs.append(contentsOf: maxRepPrs)
+            }.onAppear(perform: {
+                // Resetting this variable was the only thing that would stop
+                // The view from just adding element on top of it.
+                self.exerciseResults.removeAll()
+                self.exerciseResults.append(contentsOf: timeBasedExerciseResult)
+                self.exerciseResults.append(contentsOf: repBasedExerciseResult)
+                self.exerciseResults = exerciseResults.sorted { 
+                    $0.exerciseName! < $1.exerciseName!
                 }
-            
-                else if selectedExercise is TimeBasedExercise {
-                    allPrs = []
-                    let timeBasedExercise: TimeBasedExercise = selectedExercise as! TimeBasedExercise
-                    let timeMaxPrs = DataUtility.getTimePrs(exercise: timeBasedExercise) ?? []
-                    self.timeMaxPrs = timeMaxPrs
-                    self.allPrs.append(contentsOf: timeMaxPrs)
-                }
-            }
+            })
+            //MARK: Handling the navigation through the NavStack
             .navigationDestination(for: Int.self) { selection in
                 if selection == 2 {
-                    CreateNewExerciseView(exercises: $allExercises)
+                    CreateNewExerciseView()
                         .environment(\.managedObjectContext, viewContext)
                 } else if selection == 3 {
                     EditExerciseView(
-                        exercise: $selectedExercise,
-                        currName: $selectedExerciseName,
-                        currDesc: $selectedExerciseDesc,
-                        allExercises: $allExercises
+                        exercise: $selectedExercise
                     ).environment(\.managedObjectContext, viewContext)
                 } else if selection == 4 {
                     StatisticsView(
                         exercise: $selectedExercise,
                         navPath: $navPath,
-                        editingPr: $editingPr,
-                        allPrs: $allPrs,
-                        oneRepMaxPrs: $oneRepMaxPrs,
-                        timeMaxPrs: $timeMaxPrs,
-                        maxRepPrs: $maxRepPrs
+                        editingPr: $editingPr
                     ).environment(\.managedObjectContext, viewContext)
                 } else if selection == 5 {
                     EditPrView(
                         editingPr: $editingPr,
-                        exercise: $selectedExercise, 
-                        allPrs: $allPrs
+                        exercise: $selectedExercise
                     )
                 }
             }
         }
     }
+    
+    /// Returns an array of exercises that has filtered by a seach-word from the CoreData fetch result
+    /// - Returns: An array filtered by a search-word
+    private func searchedItems() -> [Exercise] {
+        return exerciseResults.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
+    }
+    
 }
 
 #Preview {

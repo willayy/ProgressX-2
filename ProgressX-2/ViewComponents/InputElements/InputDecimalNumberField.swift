@@ -20,7 +20,7 @@ struct InputDecimalNumberField: View {
     let width: CGFloat
     @State private var shouldShake = false
     @State var disableMaxChars = false
-    let errorMessage: String
+    @Binding var errorMessage: String
 
     private func onReceiveFunction(new: String) -> String {
         

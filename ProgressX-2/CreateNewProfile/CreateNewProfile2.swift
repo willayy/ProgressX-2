@@ -11,13 +11,10 @@ import SwiftUI
 struct CreateNewProfile2: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    
     @Environment(\.managedObjectContext) private var viewContext
         
     @Binding var navPath: [Int]
-    
-    private func goToHomeView() {
-        viewRouter.rootView = "HomeView"
-    }
     
     var body: some View {
  
@@ -63,6 +60,11 @@ struct CreateNewProfile2: View {
             
         }
     }
+    
+    private func goToHomeView() {
+        viewRouter.rootView = "HomeView"
+    }
+    
 }
     
 #Preview {

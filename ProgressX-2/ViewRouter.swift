@@ -10,5 +10,6 @@ import CoreData
 
 class ViewRouter: ObservableObject {
     static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    @Published var rootView: String = (DataFetching.doesProfileExist(context)) ? "HomeView" : "CreateNewProfile1"
+    static let profileExists: Bool = PersistenceController.profileExists(context)
+    @Published var rootView: String = (profileExists) ? "HomeView" : "CreateNewProfile1"
 }

@@ -10,7 +10,7 @@ import XCTest
 
 // These functions are now in the DataUtility file but since they still deal with persistance their tests are in this file.
 
-final class DataFetchingTests: XCTestCase {
+final class DataModelTests: XCTestCase {
     
     // MARK: SETUP
     override func setUpWithError() throws {

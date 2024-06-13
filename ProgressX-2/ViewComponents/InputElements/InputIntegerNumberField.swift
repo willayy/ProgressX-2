@@ -20,7 +20,7 @@ struct InputIntegerNumberField: View {
     @Binding var markAsWrong: Bool
     let width: CGFloat
     @State private var shouldShake = false
-    let errorMessage: String
+    @Binding var errorMessage: String
 
     private func onReceiveFunction(new: String) -> String {
         // Filter out non allowed characters

@@ -6,18 +6,30 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct EditExerciseView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
+    // Fetch RepBasedExercises to check if exercise name is taken
+    @FetchRequest(
+        entity: RepBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var repBasedExerciseResults: FetchedResults<Exercise>
+    
+    // Fetch TimeBasedExercises to check if exercise name is taken
+    @FetchRequest(
+        entity: TimeBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var timeBasedExerciseResults: FetchedResults<Exercise>
+    
     @Binding var exercise: Exercise?
-    @Binding var currName: String
-    @Binding var currDesc: String
-    @Binding var allExercises: [Exercise]
+    @State private var exerciseEditedAlert: Bool = false
     @State private var newName: String = ""
     @State private var newDesc: String = ""
-    @State private var newExerciseNameWrong: Bool = false
-    @State private var exerciseEditedAlert = false
+    @State private var newNameIsWrong: Bool = false
+    @State private var exerciseResults: [Exercise] = []
     
     private func showExerciseEditedAlet() -> some View {
         Text("Succesfully edited exercise")
@@ -37,7 +49,7 @@ struct EditExerciseView: View {
             ScrollView {
                 VStack(alignment: .center) {
                 
-                BoldTitle(text: "Editing exercise \(currName)")
+                    BoldTitle(text: "Editing exercise \(exercise!.exerciseName!)")
                     
                 if exerciseEditedAlert {
                     showExerciseEditedAlet()
@@ -47,15 +59,15 @@ struct EditExerciseView: View {
                     .font(.subheadline)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
-                + Text("\(currDesc)")
+                 + Text("\(exercise!.exerciseDesc!)")
                     .fontWeight(.light)
                     .foregroundColor(.black))
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
                     .padding()
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is already taken!")
-                
+                InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newNameIsWrong, width: 0.6, errorMessage: "This name is already taken!")
+                    
                 TextField("New exercise description", text: $newDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -64,25 +76,18 @@ struct EditExerciseView: View {
                 // MARK: Handle an edit of an exercise
                 Button(action: {
                     
-                    if allExercises.contains(where: { $0.exerciseName == newName }) {
-                        withAnimation{newExerciseNameWrong = true}
+                    if exerciseResults.contains(where: { $0.exerciseName == newName }) {
+                        withAnimation{newNameIsWrong = true}
                         return
                     } else {
-                        withAnimation{newExerciseNameWrong = false}
+                        withAnimation{newNameIsWrong = false}
                     }
                         
-                    currName = newName.isEmpty ? currName : newName
-                    currDesc = newDesc.isEmpty ? currDesc : newDesc
-                    exercise!
-                        .setValue_ch(currName, forKey: "exerciseName")
-                        .setValue(currDesc, forKey: "exerciseDesc")
-                    DataFetching.save(viewContext)
-                        
-                    for i in 0..<allExercises.count {
-                        if allExercises[i].exerciseName == currName {
-                            allExercises[i] = exercise!
-                        }
-                    }
+                    let inputName = newName.isEmpty ? exercise!.exerciseName! : newName
+                    let inputDesc = newDesc.isEmpty ? exercise!.exerciseDesc! : newDesc
+                    exercise!.exerciseName = inputName
+                    exercise!.exerciseDesc = inputDesc
+                    PersistenceController.save(viewContext)
                     
                     withAnimation {
                         exerciseEditedAlert = true
@@ -96,17 +101,22 @@ struct EditExerciseView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 
             }
-        }
+        }.onAppear(perform: {
+            exerciseResults.append(contentsOf: repBasedExerciseResults)
+            exerciseResults.append(contentsOf: timeBasedExerciseResults)
+        })
     }
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    @State var ex: Exercise? = DataFetching.getExercisesAsArray(context).first!
-    @State var nn: String = "testing exercise"
-    @State var nd: String = "This exercise is used for debugging purposes within the canvas preview"
-    @State var lst: [Exercise] = DataFetching.getExercisesAsArray(context)
     
-    return EditExerciseView(exercise: $ex, currName: $nn, currDesc: $nd, allExercises: $lst)
+    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    
+    let exerciseResults: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    
+    @State var ex: Exercise? = exerciseResults.first
+    
+    return EditExerciseView(exercise: $ex)
             .environment(\.managedObjectContext, context)
 }

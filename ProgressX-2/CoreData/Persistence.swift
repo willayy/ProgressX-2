@@ -16,7 +16,8 @@ struct PersistenceController {
         //MARK: Initialise a in-memory database with test values for the preview
         let result = PersistenceController(inMemory: true)
         let context = result.container.viewContext
-        initInMemoryDb(context: context)
+        PersistenceController.initInMemoryDb(context: context)
+        PersistenceController.save(context)
         return result
     }()
 
@@ -49,6 +50,7 @@ struct PersistenceController {
         
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
 }
 
 

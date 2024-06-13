@@ -9,15 +9,33 @@ import SwiftUI
 
 struct CreateNewExerciseView: View {
     
-    @Binding var exercises: [Exercise]
     @Environment(\.managedObjectContext) private var viewContext
+    
+    // Fetch the Profile to se if its metric or not
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profileResults: FetchedResults<Profile>
+    
+    // Fetch bodyEntres to get current weight
+    @FetchRequest(
+        entity: BodyEntry.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: false)]
+    ) private var bodyEntryResults: FetchedResults<BodyEntry>
+    
+    // Fetch RepBasedExercises to check if exercise name is taken
+    @FetchRequest(
+        entity: RepBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var repBasedExerciseResults: FetchedResults<Exercise>
+    
+    // Fetch TimeBasedExercises to check if exercise name is taken
+    @FetchRequest(
+        entity: TimeBasedExercise.entity(),
+        sortDescriptors: []
+    ) private var timeBasedExerciseResults: FetchedResults<Exercise>
+    
     @State private var currBw: Double = 0
-    @State private var newExerciseNameWrong: Bool = false
-    @State private var selectedTypeOfExercise: String = "Reps"
-    @State private var selectedTypeOfRepsPr: String = "1RM"
-    @State private var addPr: String = "No"
-    @State private var achieviedOnCurrBw: String = "Yes"
-    @State private var exerciseCreatedAlert: Bool = false
     @State private var selectedExerciseName: String = ""
     @State private var selectedExerciseDesc: String = ""
     @State private var enteredAmrap: String = ""
@@ -25,128 +43,25 @@ struct CreateNewExerciseView: View {
     @State private var enteredTime: String = ""
     @State private var enteredLoad: String = ""
     @State private var createdExerciseName: String = ""
+    @State private var selectedTypeOfExercise: String = "Reps"
+    @State private var selectedTypeOfRepsPr: String = "1RM"
+    @State private var addPr: String = "No"
+    @State private var achieviedOnCurrBw: String = "Yes"
+    @State private var exerciseCreatedAlert: Bool = false
+    @State private var newExerciseNameWrong: Bool = false
     @State private var enteredAmrapIsWrong: Bool = false
     @State private var enteredOneRepMaxIsWrong: Bool = false
     @State private var enteredTimeIsWrong: Bool = false
     @State private var enteredLoadIsWrong: Bool = false
+    @State private var exerciseResults: [Exercise] = []
     private let exerciseTypeOptions: [String] = ["Reps", "Time"]
     private let addPrOptions: [String] = ["Yes", "No"]
     private let achievedAtBwOptions: [String] = ["Yes", "No"]
     private let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
     
-    /// Validates input, marks textfields that are filled incorrectly.
-    /// - Returns: True if input is  valid and false if not
-    private func validateInput() -> Bool {
-        
-        // Ugly input validation with a lot of if statements, could be better but dont have time to redesign.
-        
-        // Checks no duplicate exercises can be created
-        if (exercises.contains { $0.exerciseName == selectedExerciseName }) {
-            withAnimation{newExerciseNameWrong = true}
-            return false
-        } else {
-            withAnimation{newExerciseNameWrong=false}
-        }
-        
-        // Checks so the new name isnt an empty string
-        if selectedExerciseName.isEmpty {
-            withAnimation{newExerciseNameWrong=true}
-            return false}
-        else {
-            withAnimation{newExerciseNameWrong=false}
-        }
-        
-        // Checks so, which ever pr you pressed, the value entered isnt empty.
-        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
-            if (selectedTypeOfRepsPr == "1RM" && enteredOneRepMax.isEmpty) {
-                withAnimation{enteredOneRepMaxIsWrong=true}
-                return false
-            } else {
-                withAnimation{enteredOneRepMaxIsWrong=false}
-            }
-            
-            if (selectedTypeOfRepsPr == "AMRAP" && enteredAmrap.isEmpty) {
-                withAnimation{enteredAmrapIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredAmrapIsWrong=false}
-            }
-        }
-        
-        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            if (enteredTime.isEmpty) {
-                withAnimation{enteredTimeIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredTimeIsWrong=false}
-            }
-            
-            if (achieviedOnCurrBw == "Yes" && enteredLoad.isEmpty) {
-                withAnimation{enteredLoadIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredLoadIsWrong=false}
-            }
-        }
-        
-        return true
-    }
-    
-    /// Adds a PR if the user has filled in that they want it.
-    /// - Returns: Void
-    private func addPrIfWanted(exercise: Exercise) -> Void {
-        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
-            if selectedTypeOfRepsPr == "1RM" {
-                let pr = OneRepMax(context: viewContext)
-                pr.load = Double(enteredOneRepMax)!
-                pr.repBasedExercise = (exercise as! RepBasedExercise)
-                pr.achievedOnDate = Date()
-                (exercise as! RepBasedExercise).addToOneRepMaxPrs(pr)
-                DataFetching.save(viewContext)
-            } else if selectedTypeOfRepsPr == "AMRAP" {
-                let pr = MaxReps(context: viewContext)
-                pr.reps = Int64(enteredAmrap)!
-                pr.load = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
-                pr.repBasedExercise = (exercise as! RepBasedExercise)
-                pr.achievedOnDate = Date()
-                (exercise as! RepBasedExercise).addToMaxRepPrs(pr)
-                DataFetching.save(viewContext)
-            }
-        }
-        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            let pr = TimeMax(context: viewContext)
-            pr.time = Double(enteredTime)!
-            pr.load = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
-            pr.timeBasedExercise = (exercise as! TimeBasedExercise)
-            pr.achievedOnDate = Date()
-            (exercise as! TimeBasedExercise).addToTimePrs(pr)
-            DataFetching.save(viewContext)
-        }
-    }
-    
-    /// Shows an alert that an exercise has been created
-    /// - Returns: some View
-    private func showExerciseCreatedAlert() -> some View {
-        Text("Succesfully created exercise called \(createdExerciseName)")
-            .fontWeight(.light)
-            .foregroundStyle(.green)
-            .padding(.bottom, 10)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    withAnimation {
-                        exerciseCreatedAlert = false
-                        createdExerciseName = ""
-                    }
-                }
-            }
-    }
-    
     var body: some View {
         
-        let weightUnit = DataFetching.getProfile(viewContext)!.isMetric ? "kg" : "lbs"
+        let weightUnit = profileResults.first!.isMetric ? "kg" : "lbs"
         
         ScrollView {
             VStack(alignment: .center) {
@@ -273,9 +188,8 @@ struct CreateNewExerciseView: View {
                             .setValue_ch(selectedExerciseName, forKey: "exerciseName")
                             .setValue(selectedExerciseDesc, forKey: "exerciseDesc")
                         addPrIfWanted(exercise: exercise!)
-                        DataFetching.save(viewContext)
+                        PersistenceController.save(viewContext)
                         createdExerciseName = selectedExerciseName
-                        exercises.append(exercise!)
                         selectedExerciseName = ""
                         selectedExerciseDesc = ""
                         selectedTypeOfExercise = "Reps"
@@ -294,15 +208,130 @@ struct CreateNewExerciseView: View {
                 .padding(.top, 20)
             }
         }.onAppear(perform: {
-            currBw = DataFetching.getBodyWeightEntriesAsArray(viewContext).last!.bodyWeight
+            exerciseResults.append(contentsOf: repBasedExerciseResults)
+            exerciseResults.append(contentsOf: timeBasedExerciseResults)
+            currBw = bodyEntryResults.first!.bodyWeight
         })
     }
+    
+    /// Validates input, marks textfields that are filled incorrectly.
+    /// - Returns: True if input is  valid and false if not
+    private func validateInput() -> Bool {
+        
+        // Ugly input validation with a lot of if statements, could be better but dont have time to redesign.
+        
+        // Checks no duplicate exercises can be created
+        if (exerciseResults.contains {
+            $0.exerciseName == selectedExerciseName
+        }) {
+            withAnimation{newExerciseNameWrong = true}
+            return false
+        } else {
+            withAnimation{newExerciseNameWrong=false}
+        }
+        
+        // Checks so the new name isnt an empty string
+        if selectedExerciseName.isEmpty {
+            withAnimation{newExerciseNameWrong=true}
+            return false}
+        else {
+            withAnimation{newExerciseNameWrong=false}
+        }
+        
+        // Checks so, which ever pr you pressed, the value entered isnt empty.
+        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
+            if (selectedTypeOfRepsPr == "1RM" && enteredOneRepMax.isEmpty) {
+                withAnimation{enteredOneRepMaxIsWrong=true}
+                return false
+            } else {
+                withAnimation{enteredOneRepMaxIsWrong=false}
+            }
+            
+            if (selectedTypeOfRepsPr == "AMRAP" && enteredAmrap.isEmpty) {
+                withAnimation{enteredAmrapIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredAmrapIsWrong=false}
+            }
+        }
+        
+        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
+            if (enteredTime.isEmpty) {
+                withAnimation{enteredTimeIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredTimeIsWrong=false}
+            }
+            
+            if (achieviedOnCurrBw == "Yes" && enteredLoad.isEmpty) {
+                withAnimation{enteredLoadIsWrong=true}
+                return false
+            }
+            else {
+                withAnimation{enteredLoadIsWrong=false}
+            }
+        }
+        
+        return true
+    }
+
+    /// Adds a PR if the user has filled in that they want it.
+    /// - Returns: Void
+    private func addPrIfWanted(exercise: Exercise) -> Void {
+        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
+            if selectedTypeOfRepsPr == "1RM" {
+                let pr = OneRepMax(context: viewContext)
+                pr.weightLoad = Double(enteredOneRepMax)!
+                pr.exercise = (exercise as! RepBasedExercise)
+                pr.achievedOnDate = Date()
+                (exercise as! RepBasedExercise).addToPersonalRecords(pr)
+                PersistenceController.save(viewContext)
+            } else if selectedTypeOfRepsPr == "AMRAP" {
+                let pr = MaxReps(context: viewContext)
+                pr.prQuantity = Double(enteredAmrap)!
+                pr.weightLoad = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
+                pr.exercise = (exercise as! RepBasedExercise)
+                pr.achievedOnDate = Date()
+                (exercise as! RepBasedExercise).addToPersonalRecords(pr)
+                PersistenceController.save(viewContext)
+            }
+        }
+        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
+            let pr = TimeMax(context: viewContext)
+            pr.prQuantity = Double(enteredTime)!
+            pr.weightLoad = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
+            pr.exercise = (exercise as! TimeBasedExercise)
+            pr.achievedOnDate = Date()
+            (exercise as! TimeBasedExercise).addToPersonalRecords(pr)
+            PersistenceController.save(viewContext)
+        }
+    }
+
+    /// Shows an alert that an exercise has been created
+    /// - Returns: some View
+    private func showExerciseCreatedAlert() -> some View {
+        Text("Succesfully created exercise called \(createdExerciseName)")
+            .fontWeight(.light)
+            .foregroundStyle(.green)
+            .padding(.bottom, 10)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    withAnimation {
+                        exerciseCreatedAlert = false
+                        createdExerciseName = ""
+                    }
+                }
+            }
+    }
 }
+
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     @State var lst: [Exercise] = [Exercise()]
-    return CreateNewExerciseView(exercises: $lst)
+    return CreateNewExerciseView()
                 .environment(\.managedObjectContext, context)
 }
 

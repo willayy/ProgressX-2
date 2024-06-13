@@ -7,43 +7,47 @@
 
 import SwiftUI
 
-struct OneRepMaxListItem: View {
+struct PrListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var belongsTo: [PersonalRecord]
+    
+    // Fetch the Profile to se if its metric or not
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profileResults: FetchedResults<Profile>
+    
+    // Access to the parents navigationstack.
     @Binding var navPath: [Int]
+    
     @Binding var editingPr: PersonalRecord?
-    @State var loadString = ""
-    @State var dateString = ""
-    @State var showDeleteAlert = false
-    let typeString = "1RM"
-    let pr: PersonalRecord
+    
+    @State private var showDeleteAlert: Bool = false
+    
+    public let pr: PersonalRecord
     
     var body: some View {
         
-        let weightUnit = DataFetching.getProfile(viewContext)!.isMetric ? "kg's" : "lbs"
+        let weightUnit = profileResults.first!.isMetric ? "kg's" : "lbs"
         
         HStack {
             VStack(alignment: .leading) {
                 Text("Type: ")
                     .fontWeight(.bold)
-                + Text("\(typeString)")
+                + Text("\(pr.typeString())")
                 
                 (Text("Date: ")
                     .fontWeight(.bold)
-                 + (Text("\(dateString)")))
+                 + (Text("\(pr.dateString()!)")))
                 
                 (Text("Load: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                 + (Text("\(loadString) \(weightUnit) ")))
+                 + (Text("\(pr.loadString()) \(weightUnit) ")))
                 
-                Text("Reps: ")
+                Text("Quantity: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                + Text("1")
-            }.onAppear(perform: {
-                loadString = String(format: "%.2f", pr.load)
-                dateString = DataUtility.formatDate(date: pr.achievedOnDate!)
-            })
+                + Text("\(pr.quantityString()) \(pr.quantityUnitString())")
+            }
             
             Spacer()
             
@@ -66,9 +70,7 @@ struct OneRepMaxListItem: View {
                         title: Text("Delete PR"),
                         message: Text("Are you sure you want to delete this Pr?"),
                         primaryButton: .destructive(Text("Delete")) {
-                            DataFetching.deleteNSManagedObject(viewContext, object: pr)
-                            belongsTo.removeAll(where: { $0 === pr })
-                            DataFetching.save(viewContext)
+                            PersistenceController.delete(viewContext, object: pr)
                         },
                         secondaryButton: .cancel()
                     )

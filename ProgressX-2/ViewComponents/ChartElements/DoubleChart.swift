@@ -1,0 +1,189 @@
+//
+//  MaxRepChart.swift
+//  ProgressX-2
+//
+//  Created by William Norland on 2024-05-30.
+//
+
+import SwiftUI
+import Charts
+import CoreData
+
+struct DoubleChart: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    // Fetching profile to check if its metric
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profileResults: FetchedResults<Profile>
+    
+    // Fetching BodyWeightentries
+    @FetchRequest(
+        entity: BodyEntry.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: true)]
+    ) private var bodyEntryResults: FetchedResults<BodyEntry>
+    
+    @FetchRequest private var personalRecordResults: FetchedResults<PersonalRecord>
+    
+    // State to toggle the bodyweight overlay graph off and on
+    @State private var overlayBodyWeight: Bool = false
+    
+    private var exercise: Exercise
+    
+    private var set: String
+    
+    init(exercise: Exercise, set: String, entity: NSEntityDescription) {
+        
+        self.exercise = exercise
+        
+        self.set = set
+        
+        // Fetch the prs for the exercise
+        self._personalRecordResults = FetchRequest<PersonalRecord>(
+            entity: entity,
+            sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
+            predicate: NSPredicate(format: "exercise == %@", exercise)
+        )
+    }
+    
+    var body: some View {
+        
+        // Get the profile from the fetchResults
+        let profile: Profile = profileResults.first!
+        let weightUnit: String = profile.isMetric ? "kg's" : "lbs"
+        
+        // Get the highest weightload pr recorded on the exercise
+        let highestPrByLoad: PersonalRecord? = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})
+        let highestPrLoad: Double = highestPrByLoad?.weightLoad ?? 0
+        
+        // Get the highest bodyweight recorded
+        let highestBwEntry: BodyEntry? = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})
+        let highestBw: Double = highestBwEntry?.bodyWeight ?? 0
+        
+        // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
+        let loadHigherThanBw: Bool = highestPrLoad >= highestBw
+        let highestOfLoadAndBw: Double = loadHigherThanBw ? highestPrLoad : highestBw
+        
+        // Highest quantity count
+        let highestPrByQuantity: PersonalRecord? = personalRecordResults.max(by: {$0.prQuantity < $1.prQuantity})
+        let highestPrQuantity: Double = highestPrByQuantity?.prQuantity ?? 0
+        
+        // Infer the quantity unit from the personal records
+        let quantityUnit = personalRecordResults.first!.quantityUnitString()
+        
+        (Text("AMRAP")
+            .font(.subheadline)
+            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+         + Text(" chart for ")
+            .font(.subheadline)
+         + Text(exercise.exerciseName!)
+            .font(.subheadline)
+            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/))
+        .padding(.horizontal, 40)
+        .padding(.top, 20)
+        
+        VStack(alignment: .leading) {
+            LightSubHeadline(text: "load (\(weightUnit)) at AMRAP set (Blue)")
+            LightSubHeadline(text: "\(quantityUnit) at \(set) set (Black)")
+            LightSubHeadline(text: "bodyweight (\(weightUnit)) (Yellow)")
+        }
+        
+        ZStack {
+            
+            Rectangle()
+                .cornerRadius(10)
+                .foregroundStyle(Color(.systemGray6))
+                .frame(height: 385)
+                .padding(.horizontal, 40)
+            
+            if personalRecordResults.isEmpty {
+                Text("Cant genereate this chart because there are no AMRAP PR's recorded for exercise: \(exercise.exerciseName!)")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundColor(.red)
+                    .padding(.all, 80)
+                    .multilineTextAlignment(.center)
+            } else {
+                VStack {
+                    
+                    loadChart(yscale: highestOfLoadAndBw)
+                    
+                    quantityChart(yscale: highestPrQuantity)
+                    
+                    Toggle(isOn: $overlayBodyWeight, label: {
+                        Text("Do you want to overlay bodyweight?")
+                    })
+                    .padding(.horizontal, 50)
+                    .padding(.top, 10)
+                }
+            }
+        }
+    }
+    
+    private func loadChart(yscale: Double) -> some View {
+        Chart {
+            ForEach(personalRecordResults) {
+                LineMark (
+                    x: .value("prDate", $0.achievedOnDate!),
+                    y: .value("load", $0.weightLoad),
+                    series: .value("load", "A")
+                )
+                .foregroundStyle(.blue)
+            }
+            
+            if overlayBodyWeight {
+                ForEach(bodyEntryResults) {
+                    LineMark (
+                        x: .value("bwDate", $0.dateAchieved!),
+                        y: .value("bw", $0.bodyWeight),
+                        series: .value("bw", "C")
+                    )
+                    .foregroundStyle(.yellow)
+                }
+            }
+        }
+        .padding(.horizontal, 50)
+        .chartYScale(domain: 0...yscale + 20)
+        .frame(height: 150)
+    }
+    
+    private func quantityChart(yscale: Double) -> some View {
+        Chart {
+            ForEach(personalRecordResults) {
+                LineMark (
+                    x: .value("prDate", $0.achievedOnDate!),
+                    y: .value("reps", $0.prQuantity),
+                    series: .value("reps", "B")
+                )
+                .foregroundStyle(.black)
+                
+                PointMark (
+                    x: .value("prDate", $0.achievedOnDate!),
+                    y: .value("reps", $0.prQuantity)
+                )
+                .foregroundStyle(.black)
+            }
+        }
+        .padding(.horizontal, 50)
+        .chartYScale(domain: 0...yscale + 20)
+        .frame(height: 150)
+    }
+    
+}
+
+
+#Preview {
+    let context = PersistenceController.preview.container.viewContext
+    
+    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    
+    let exerciseResult: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+
+    let exercise: RepBasedExercise = exerciseResult.first!
+    
+    return DoubleChart(exercise: exercise, set: "AMRAP", entity: MaxReps.entity())
+        .environment(\.managedObjectContext, context)
+}
+

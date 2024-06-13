@@ -6,23 +6,36 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct PrList: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    @Binding var exercise: Exercise?
-    @Binding var prs: [PersonalRecord]
-    @Binding var editingPr: PersonalRecord?
-    @State private var sortedPrs: [PersonalRecord] = []
+    @FetchRequest private var personalRecordResults: FetchedResults<PersonalRecord>
+    @Binding private var navPath: [Int]
+    @Binding private var editingPr: PersonalRecord?
+    private let exercise: Exercise?
+    private let prType: String
+    
+    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise?, entity: NSEntityDescription, prType: String) {
+        self._navPath = navPath
+        self.exercise = exercise
+        self._editingPr = editingPr
+        self.prType = prType
+        self._personalRecordResults = FetchRequest<PersonalRecord>(
+            entity: entity,
+            sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: false)],
+            predicate: NSPredicate(format: "exercise == %@", exercise!)
+        )
+    }
     
     var body: some View {
         
-        BoldSubHeadline(text: "List of all PR's achieved on \(exercise!.exerciseName!)")
+        BoldSubHeadline(text: "List of all \(prType) PR's achieved on \(exercise!.exerciseName!)")
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
-        if prs.isEmpty {
+        if personalRecordResults.isEmpty {
             Text("No PR's found for this exercise")
                 .font(.subheadline)
                 .padding(.top, 20)
@@ -31,51 +44,36 @@ struct PrList: View {
         
         else {
             List {
-                ForEach(sortedPrs) { pr in
-                    
-                    if pr is OneRepMax {
-                        OneRepMaxListItem(
-                            belongsTo: $prs,
-                            navPath: $navPath,
-                            editingPr: $editingPr,
-                            pr: pr
-                        ).environment(\.managedObjectContext, viewContext)
-                    } else if pr is MaxReps {
-                        MaxRepListItem(
-                            belongsTo: $prs,
-                            navPath: $navPath,
-                            editingPr: $editingPr,
-                            pr: pr
-                        ).environment(\.managedObjectContext, viewContext)
-                    } else if pr is TimeMax {
-                        TimeMaxListItem(
-                            belongsTo: $prs,
-                            navPath: $navPath,
-                            editingPr: $editingPr,
-                            pr: pr
-                        ).environment(\.managedObjectContext, viewContext)
-                    }
-                    
+                ForEach(personalRecordResults) { pr in
+                    PrListItem(navPath: $navPath,
+                               editingPr: $editingPr,
+                               pr: pr)
                 }
             }
             .frame(height: 300)
             .background(Color(.systemGray6))
             .cornerRadius(10)
             .padding(.horizontal, 40)
-            .onAppear(perform: {
-                sortedPrs = DataUtility.sortPersonalRecordsByDate(prs: prs)
-            })
         }
     }
 }
 
 #Preview {
+    
     let context = PersistenceController.preview.container.viewContext
-    @State var exercise: Exercise? = DataFetching.getExercisesAsArray(context)
-        .first(where:{$0.exerciseName == "testing exercise (reps)"})!
-    @State var prs: [PersonalRecord] = DataUtility.get1RmPrs(exercise: exercise as! RepBasedExercise) ?? []
+    
+    let fetchRequestTimeBasedExercise: NSFetchRequest<TimeBasedExercise> = TimeBasedExercise.fetchRequest()
+    
+    let timeBasedExercuseResults: [TimeBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestTimeBasedExercise)
+    
+    let exercise: TimeBasedExercise? = timeBasedExercuseResults.first
+    
+    let entity = TimeMax.entity()
+    
     @State var navPath: [Int] = [Int]()
+    
     @State var editingPr: PersonalRecord? = nil
-    return PrList(navPath: $navPath, exercise: $exercise, prs: $prs, editingPr: $editingPr)
+    
+    return PrList(navPath: $navPath, editingPr: $editingPr, exercise: exercise, entity: entity, prType: "Time-max")
         .environment(\.managedObjectContext, context)
 }

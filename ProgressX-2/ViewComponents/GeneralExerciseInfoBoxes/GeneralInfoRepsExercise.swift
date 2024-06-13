@@ -6,16 +6,63 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct GeneralInfoRepsExercise: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @Binding var exercise: Exercise?
-    @Binding var oneRepMaxPrs: [OneRepMax]
-    @Binding var maxRepsPrs: [MaxReps]
-    @State var weightUnit = ""
+    
+    // Fetch the Profile to se if its metric or not
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profileResults: FetchedResults<Profile>
+    
+    @FetchRequest private var maxRepResults: FetchedResults<MaxReps>
+    
+    @FetchRequest private var oneRepMaxResults: FetchedResults<OneRepMax>
+    
+    private let exercise: RepBasedExercise?
+    
+    init(exercise: RepBasedExercise?) {
+        self.exercise = exercise
+        self._maxRepResults = FetchRequest<MaxReps>(
+            entity: MaxReps.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \MaxReps.achievedOnDate, ascending: true)],
+            predicate: NSPredicate(format: "exercise == %@", exercise!)
+        )
+        self._oneRepMaxResults = FetchRequest<OneRepMax>(
+            entity: OneRepMax.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \OneRepMax.achievedOnDate, ascending: true)],
+            predicate: NSPredicate(format: "exercise == %@", exercise!)
+        )
+    }
     
     var body: some View {
+        
+        // Find the min value or nil if there are no values
+        // Construct the all time low from the min (if it exists) and the weight unit
+        let weightUnit = profileResults.first!.isMetric ? "kg's" : "lbs"
+        let fetchedMinValue1RM = oneRepMaxResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeLow1RM = fetchedMinValue1RM != nil ? (fetchedMinValue1RM! + " " + weightUnit) : nil
+        
+        // Same thing for the max values
+        let fetchedMaxValue1RM = oneRepMaxResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeHigh1RM = fetchedMaxValue1RM != nil ? (fetchedMaxValue1RM! + " " + weightUnit) : nil
+        
+        // Find the latest PR weight value or nil if there are no values
+        let fetchedLatestValue1RM = oneRepMaxResults.first?.loadString()
+        let latestValue1RM = fetchedLatestValue1RM != nil ? (fetchedLatestValue1RM! + " " + weightUnit) : nil
+        
+        // Do exactly the same thing but for AMRAP pr's
+        let fetchedMinValueMaxReps = maxRepResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeLowMaxReps = fetchedMinValueMaxReps != nil ? (fetchedMinValueMaxReps! + " " + "reps") : nil
+        
+        let fetchedMaxValueMaxReps = maxRepResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let allTimeHighMaxReps = fetchedMaxValueMaxReps != nil ? (fetchedMaxValueMaxReps! + " " + "reps") : nil
+        
+        let fetchedLatestValueMaxReps = maxRepResults.first?.loadString()
+        let latestValueMaxReps = fetchedLatestValueMaxReps != nil ? (fetchedLatestValueMaxReps! + " " + "reps") : nil
         
         BoldSubHeadline(text: "General information")
             .padding(.horizontal, 40)
@@ -35,23 +82,23 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(oneRepMaxPrs.count))
+                + Text(String(oneRepMaxResults.count))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
-                Text("First entry (1RM): ")
+                Text("First entry date (1RM): ")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getFirstPrDate(prs: oneRepMaxPrs) ?? "No pr recorded")
+                + Text(oneRepMaxResults.first?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
-                Text("Last entry (1RM): ")
+                Text("Last entry date (1RM): ")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getLastPrDate(prs: oneRepMaxPrs) ?? "No pr recorded")
+                + Text(oneRepMaxResults.last?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -59,7 +106,7 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLowestPrValue(data: oneRepMaxPrs) ?? 0) + weightUnit)
+                + Text(allTimeLow1RM ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -67,7 +114,7 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getHighestPrValue(data: oneRepMaxPrs) ?? 0) + weightUnit)
+                + Text(allTimeHigh1RM ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -75,7 +122,7 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLatestPrValue(data: oneRepMaxPrs) ?? 0) + weightUnit)
+                + Text(latestValue1RM ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -83,24 +130,24 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                 + Text(String(maxRepsPrs.count))
+                 + Text(String(maxRepResults.count))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black))
                 .padding(.top, 5)
                 
-                Text("First entry (AMRAP): ")
+                Text("First entry date (AMRAP): ")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getFirstPrDate(prs: maxRepsPrs) ?? "No pr recorded")
+                + Text(maxRepResults.first?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
-                Text("Last entry (AMRAP): ")
+                Text("Last entry date (AMRAP): ")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(DataUtility.getFirstPrDate(prs: maxRepsPrs) ?? "No pr recorded")
+                + Text(maxRepResults.last?.dateString() ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -108,7 +155,7 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLowestPrValue(data: maxRepsPrs) ?? 0) + " reps")
+                + Text(allTimeLowMaxReps ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -116,7 +163,7 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getHighestPrValue(data: maxRepsPrs) ?? 0) + " reps")
+                + Text(allTimeHighMaxReps ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
                 
@@ -124,24 +171,23 @@ struct GeneralInfoRepsExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(String(DataUtility.getLatestPrValue(data: maxRepsPrs) ?? 0) + " reps")
+                + Text(latestValueMaxReps ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
             }
-        }.onAppear {
-            weightUnit = DataFetching.getProfile(viewContext)!.isMetric ? " kg" : " lbs"
         }
     }
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    @State var exercise: Exercise? = DataFetching.getExercisesAsArray(context)
-        .first(where:{$0.exerciseName == "testing exercise (reps)"})
-    @State var oneRepMaxPrs: [OneRepMax] = (exercise as! RepBasedExercise).oneRepMaxPrs!.array as! [OneRepMax]
-    @State var maxRepPrs: [MaxReps] = (exercise as! RepBasedExercise).maxRepPrs!.array as! [MaxReps]
-    return GeneralInfoRepsExercise(exercise: $exercise,
-                                   oneRepMaxPrs: $oneRepMaxPrs,
-                                   maxRepsPrs: $maxRepPrs)
+    
+    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    
+    let exerciseResult: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+
+    let exercise: RepBasedExercise = exerciseResult.first!
+    
+    return GeneralInfoRepsExercise(exercise: exercise)
         .environment(\.managedObjectContext, context)
 }
