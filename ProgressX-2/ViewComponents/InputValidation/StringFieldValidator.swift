@@ -19,30 +19,33 @@ class StringFieldValidator: InputFieldValidator {
         super.init(emptyAllowed: emptyAllowed)
     }
     
-    override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldValid: Binding<Bool>) -> Bool {
-        var caughtError: Bool = true
-        errorMessage.wrappedValue = ""
+    override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Bool {
         
-        withAnimation {
-            if inputVar.count < minInputCharCount {
-                caughtError = false
+        if inputVar.count < minInputCharCount {
+            withAnimation(.easeIn) {
                 errorMessage.wrappedValue = "Input text too short!"
+                fieldInvalid.wrappedValue = true
             }
-            
-            else if inputVar.count > maxInputCharCount {
-                caughtError = false
-                errorMessage.wrappedValue = "Input text too long!"
-            }
-            
-            else if !emptyAllowed && inputVar.isEmpty {
-                caughtError = false
-                errorMessage.wrappedValue = "Input cant be empty!"
-            }
-    
-            fieldValid.wrappedValue = !caughtError
+            return false
         }
         
-        return caughtError
+        if inputVar.count > maxInputCharCount {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input text is too big!"
+                fieldInvalid.wrappedValue = true
+            }
+            return false
+        }
+        
+        if !emptyAllowed && inputVar.isEmpty {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input cant be empty!"
+                fieldInvalid.wrappedValue = true
+            }
+            return false
+        }
+        
+        return true
         
     }
     

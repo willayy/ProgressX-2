@@ -16,7 +16,7 @@ struct CreateNewProfile3: View {
     // Fetch BodyEntries to use as weightLoad in AMRAP prs
     @FetchRequest(
         entity: BodyEntry.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: true)]
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
     // Inputfield value states
@@ -207,21 +207,21 @@ struct CreateNewProfile3: View {
     
     // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself
     private func validateInput() -> Bool {
-        var valid: Bool
+        var valid: Bool = true
         let doubleFieldValidator = DoubleFieldValidator()
         let intFieldValidator = IntFieldValidator()
-        valid = doubleFieldValidator.valideField(inputVar: chestCirc, errorMessage: $chestCircIsInvalidMsg, fieldValid: $chestCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: waistCirc, errorMessage: $waistCircIsInvalidMsg, fieldValid: $waistCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: thighCirc, errorMessage: $thighCircIsInvalidMsg, fieldValid: $thighCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: calfCirc, errorMessage: $calfCircIsInvalidMsg, fieldValid: $calfCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: upperArmCirc, errorMessage: $upperArmCircIsInvalidMsg, fieldValid: $upperArmCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: lowerArmCirc, errorMessage: $lowerArmCircIsInvalidMsg, fieldValid: $lowerArmCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: benchPress1RM, errorMessage: $benchPress1RMIsInvalidMsg, fieldValid: $benchPress1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: squat1RM, errorMessage: $squat1RMIsInvalidMsg, fieldValid: $squat1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: deadLift1RM, errorMessage: $deadLift1RMIsInvalidMsg, fieldValid: $deadLift1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: shoulderPress1RM, errorMessage: $shoulderPress1RMIsInvalidMsg, fieldValid: $shoulderPress1RMIsInvalid)
-        valid = intFieldValidator.valideField(inputVar: pushupsAmrap, errorMessage: $pushupsAmrapIsInvalidMsg, fieldValid: $pushupsAmrapIsInvalid)
-        valid = intFieldValidator.valideField(inputVar: situpsAmrap, errorMessage: $situpsAmrapIsInvalidMsg, fieldValid: $situpsAmrapIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: chestCirc, errorMessage: $chestCircIsInvalidMsg, fieldInvalid: $chestCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: waistCirc, errorMessage: $waistCircIsInvalidMsg, fieldInvalid: $waistCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: thighCirc, errorMessage: $thighCircIsInvalidMsg, fieldInvalid: $thighCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: calfCirc, errorMessage: $calfCircIsInvalidMsg, fieldInvalid: $calfCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: upperArmCirc, errorMessage: $upperArmCircIsInvalidMsg, fieldInvalid: $upperArmCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: lowerArmCirc, errorMessage: $lowerArmCircIsInvalidMsg, fieldInvalid: $lowerArmCircIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: benchPress1RM, errorMessage: $benchPress1RMIsInvalidMsg, fieldInvalid: $benchPress1RMIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: squat1RM, errorMessage: $squat1RMIsInvalidMsg, fieldInvalid: $squat1RMIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: deadLift1RM, errorMessage: $deadLift1RMIsInvalidMsg, fieldInvalid: $deadLift1RMIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: shoulderPress1RM, errorMessage: $shoulderPress1RMIsInvalidMsg, fieldInvalid: $shoulderPress1RMIsInvalid)
+        valid = intFieldValidator.valideField(inputVar: pushupsAmrap, errorMessage: $pushupsAmrapIsInvalidMsg, fieldInvalid: $pushupsAmrapIsInvalid)
+        valid = intFieldValidator.valideField(inputVar: situpsAmrap, errorMessage: $situpsAmrapIsInvalidMsg, fieldInvalid: $situpsAmrapIsInvalid)
         return valid
     }
     
@@ -246,7 +246,7 @@ struct CreateNewProfile3: View {
             
             switch exercise.exerciseName {
             case "Bench-press":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: Double(benchPress1RM)!,
@@ -255,7 +255,7 @@ struct CreateNewProfile3: View {
                         type: "onerepmax"
                     )
             case "Squat":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: Double(squat1RM)!,
@@ -264,7 +264,7 @@ struct CreateNewProfile3: View {
                         type: "onerepmax"
                     )
             case "Deadlift":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: Double(deadLift1RM)!,
@@ -273,7 +273,7 @@ struct CreateNewProfile3: View {
                         type: "onerepmax"
                     )
             case "Shoulder-press":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: Double(shoulderPress1RM)!,
@@ -282,7 +282,7 @@ struct CreateNewProfile3: View {
                         type: "onerepmax"
                     )
             case "Sit-up":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: bodyWeight,
@@ -291,7 +291,7 @@ struct CreateNewProfile3: View {
                         type: "maxreps"
                     )
             case "Push-up":
-                let pr = PersistenceController.createPersonalRecord(
+                _ = PersistenceController.createPersonalRecord(
                         viewContext,
                         exercise: exercise,
                         wl: bodyWeight,

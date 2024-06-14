@@ -60,21 +60,6 @@ extension PersonalRecord {
         return String(format: "%.2f", self.weightLoad)
     }
     
-    /// Formatted Date from PR
-    /// - Returns: Date-string in format "yyyy-MM-dd"
-    @objc public func dateString() -> String? {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
-        
-        if self.achievedOnDate != nil {
-            return df.string(from: self.achievedOnDate!)
-        }
-        
-        else {
-            return nil
-        }
-    }
-    
     // Overriding the willSavde to make sure that prType always matches exerciseType.
     public override func willSave() {
         super.willSave()

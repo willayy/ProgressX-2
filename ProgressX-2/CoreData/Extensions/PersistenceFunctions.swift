@@ -54,12 +54,12 @@ extension PersistenceController {
         ) as! [[String: String]]
         
         for json in jsonArray {
-            var exercise: Exercise? = nil
-            if json["type"] == "Reps" {exercise = RepBasedExercise(context: context)}
-            else if json["type"] == "Time" {exercise = TimeBasedExercise(context: context)}
-            exercise!
-                .setValue_ch(json["name"], forKey: "exerciseName")
-                .setValue(json["description"], forKey: "exerciseDesc")
+            if json["type"] == "Reps" {
+                _ = createExercise(context, name: json["name"]!, desc: json["description"]!, type: "reps")
+            }
+            else if json["type"] == "Time" {
+                _ = createExercise(context, name: json["name"]!, desc: json["description"]!, type: "time")
+            }
         }
     }
     
@@ -115,7 +115,7 @@ extension PersistenceController {
     public static func createBodyEntry(_ context: NSManagedObjectContext, profile: Profile, weight: Double, date: Date) -> BodyEntry {
         let bodyEntry = BodyEntry(context: context)
         bodyEntry.bodyWeight = weight
-        bodyEntry.dateAchieved = date
+        bodyEntry.achievedOnDate = date
         bodyEntry.profile = profile
         return bodyEntry
     }

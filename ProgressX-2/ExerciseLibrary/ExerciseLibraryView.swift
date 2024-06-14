@@ -14,20 +14,15 @@ struct ExerciseLibraryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
-        entity: TimeBasedExercise.entity(),
+        entity: Exercise.entity(),
         sortDescriptors: []
-    ) private var timeBasedExerciseResult: FetchedResults<Exercise>
-    
-    @FetchRequest(
-        entity: RepBasedExercise.entity(),
-        sortDescriptors: []
-    ) private var repBasedExerciseResult: FetchedResults<Exercise>
+    ) private var exercises: FetchedResults<Exercise>
     
     @State private var exerciseResults: [Exercise] = []
     @State private var navPath = [Int]()
     @State private var selectedExercise: Exercise? = nil
     @State private var searchText: String = ""
-    @State private var editingPr: PersonalRecord? = nil
+    @State private var editingPr: PersonalRecord?
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -79,16 +74,8 @@ struct ExerciseLibraryView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     
                 }
-            }.onAppear(perform: {
-                // Resetting this variable was the only thing that would stop
-                // The view from just adding element on top of it.
-                self.exerciseResults.removeAll()
-                self.exerciseResults.append(contentsOf: timeBasedExerciseResult)
-                self.exerciseResults.append(contentsOf: repBasedExerciseResult)
-                self.exerciseResults = exerciseResults.sorted { 
-                    $0.exerciseName! < $1.exerciseName!
-                }
-            })
+            }
+            
             //MARK: Handling the navigation through the NavStack
             .navigationDestination(for: Int.self) { selection in
                 if selection == 2 {
@@ -117,7 +104,7 @@ struct ExerciseLibraryView: View {
     /// Returns an array of exercises that has filtered by a seach-word from the CoreData fetch result
     /// - Returns: An array filtered by a search-word
     private func searchedItems() -> [Exercise] {
-        return exerciseResults.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
+        return exercises.filter { exercises.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
     }
     
 }

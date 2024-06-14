@@ -11,49 +11,45 @@ struct CreateNewExerciseView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    // Fetch the Profile to se if its metric or not
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: []
-    ) private var profileResults: FetchedResults<Profile>
-    
     // Fetch bodyEntres to get current weight
     @FetchRequest(
         entity: BodyEntry.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: false)]
-    ) private var bodyEntryResults: FetchedResults<BodyEntry>
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: false)]
+    ) private var bodyEntries: FetchedResults<BodyEntry>
     
-    // Fetch RepBasedExercises to check if exercise name is taken
+    // Fetch Exercises
     @FetchRequest(
-        entity: RepBasedExercise.entity(),
+        entity: Exercise.entity(),
         sortDescriptors: []
-    ) private var repBasedExerciseResults: FetchedResults<Exercise>
-    
-    // Fetch TimeBasedExercises to check if exercise name is taken
-    @FetchRequest(
-        entity: TimeBasedExercise.entity(),
-        sortDescriptors: []
-    ) private var timeBasedExerciseResults: FetchedResults<Exercise>
+    ) private var exercises: FetchedResults<Exercise>
     
     @State private var currBw: Double = 0
-    @State private var selectedExerciseName: String = ""
-    @State private var selectedExerciseDesc: String = ""
-    @State private var enteredAmrap: String = ""
-    @State private var enteredOneRepMax: String = ""
-    @State private var enteredTime: String = ""
-    @State private var enteredLoad: String = ""
-    @State private var createdExerciseName: String = ""
+    @State private var enteredExerciseName: String = ""
+    @State private var enteredExerciseDesc: String = ""
+    @State private var enteredPrQuantity: String = ""
+    @State private var enteredPrWeigtLoad: String = ""
+    
+    // Segment picker choices
     @State private var selectedTypeOfExercise: String = "Reps"
-    @State private var selectedTypeOfRepsPr: String = "1RM"
+    @State private var selectedTypeOfPr: String = "1RM"
     @State private var addPr: String = "No"
     @State private var achieviedOnCurrBw: String = "Yes"
+    
+    // Pop-up alert
     @State private var exerciseCreatedAlert: Bool = false
-    @State private var newExerciseNameWrong: Bool = false
-    @State private var enteredAmrapIsWrong: Bool = false
-    @State private var enteredOneRepMaxIsWrong: Bool = false
-    @State private var enteredTimeIsWrong: Bool = false
-    @State private var enteredLoadIsWrong: Bool = false
-    @State private var exerciseResults: [Exercise] = []
+    
+    // Input field vars
+    @State private var enteredExerciseNameIsInvalid: Bool = false
+    @State private var enteredExerciseDescIsInvalid: Bool = false
+    @State private var enteredPrQuantityIsInvalid: Bool = false
+    @State private var enteredPrWeigtLoadIsInvalid: Bool = false
+    
+    @State private var enteredExerciseNameIsInvalidMsg: String = ""
+    @State private var enteredExerciseDescIsInvalidMsg: String = ""
+    @State private var enteredPrQuantityIsInvalidMsg: String = ""
+    @State private var enteredPrWeigtLoadIsInvalidMsg: String = ""
+    
+    // Segment picker options
     private let exerciseTypeOptions: [String] = ["Reps", "Time"]
     private let addPrOptions: [String] = ["Yes", "No"]
     private let achievedAtBwOptions: [String] = ["Yes", "No"]
@@ -61,7 +57,7 @@ struct CreateNewExerciseView: View {
     
     var body: some View {
         
-        let weightUnit = profileResults.first!.isMetric ? "kg" : "lbs"
+        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
         
         ScrollView {
             VStack(alignment: .center) {
@@ -72,15 +68,15 @@ struct CreateNewExerciseView: View {
                     showExerciseCreatedAlert()
                 }
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $selectedExerciseName, markAsWrong: $newExerciseNameWrong, width: 0.6, errorMessage: "This name is invalid or taken!")
+                InputShortTextField(placeHolder: "New exercise name", text: $enteredExerciseName, markAsWrong: $enteredExerciseNameIsInvalid, width: 0.6, errorMessage: $enteredExerciseNameIsInvalidMsg)
                 
-                TextField("New exercise description", text: $selectedExerciseDesc)
+                TextField("New exercise description", text: $enteredExerciseDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.bottom)
-
+                
                 BoldSubHeadline(text: "Exercise type?")
-    
+                
                 LightSubHeadline(text: "Should the exercise be based on doing an amount of reps or doing an amount of time?")
                     .padding(.horizontal, 30)
                 
@@ -91,111 +87,76 @@ struct CreateNewExerciseView: View {
                 
                 BasicSegPicker(selectedSegment: $addPr, segments: addPrOptions, frameWidth: 230, horizontalPadding: 100)
                 
-                // MARK: Do you want to add a PR for a rep based exercise
-                if addPr == "Yes" && selectedTypeOfExercise == "Reps" {
-                        
-                    LightSubHeadline(text: "AMRAP pr or 1RM pr?")
-                            .padding(.top, 10)
+                // MARK: Do you want to add a PR for the new exercise
+                if addPr == "Yes" {
                     
-                    BasicSegPicker(selectedSegment: $selectedTypeOfRepsPr, segments: repBasedPrOptions, frameWidth: 230, horizontalPadding: 100)
+                    // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
+                    if selectedTypeOfExercise == "Reps" {
+                        BasicSegPicker(selectedSegment: $selectedTypeOfPr, segments: repBasedPrOptions, frameWidth: 230, horizontalPadding: 100)
+                    }
                     
-                    if selectedTypeOfRepsPr == "AMRAP" {
-                        
-                        (Text("Was this time record achieved at your current bodyweight of ")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-                         + Text("\(currBw) \(weightUnit)")
-                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
-                            .foregroundColor(.gray)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 25)
-                            .minimumScaleFactor(0.5)
-                            .padding(.horizontal, 30)
-                            .padding(.top, 10)
-                        
-                        if achieviedOnCurrBw == "Yes" {
-                            
-                            BasicSegPicker(selectedSegment: $achieviedOnCurrBw, segments: achievedAtBwOptions, frameWidth: 230, horizontalPadding: 100)
-                            
-                            LightSubHeadline(text: "Enter the amount of reps performed on your AMRAP pr")
-                                .padding(.horizontal, 30)
-                                .padding(.top, 10)
-                            
-                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
-                            
-                        } else if achieviedOnCurrBw == "No" {
-                            
-                            BasicSegPicker(selectedSegment: $achieviedOnCurrBw, segments: achievedAtBwOptions, frameWidth: 230, horizontalPadding: 100)
-                            
-                            LightSubHeadline(text: "Enter the load and the amount of reps performed on your AMRAP pr")
-                                .padding(.horizontal, 30)
-                                .padding(.top, 10)
-                            
-                            InputDecimalNumberField(placeHolder: weightUnit, numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
-                            
-                            InputIntegerNumberField(placeHolder: "AMRAP", numberText: $enteredAmrap, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
+                    InputDecimalNumberField(placeHolder: "Load (\(weightUnit))", numberText: $enteredPrWeigtLoad, markAsWrong: $enteredPrWeigtLoadIsInvalid, width: 0.6, errorMessage: $enteredPrWeigtLoadIsInvalidMsg)
+                        .onAppear {
+                            if (selectedTypeOfPr == "AMRAP" || selectedTypeOfExercise == "Time") {
+                                enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
+                            }
+                            // If time exercise set selectedTypeOfPr to timemax
+                            if (selectedTypeOfExercise == "Time") {
+                                selectedTypeOfPr = "Time-Max"
+                            }
                         }
-                        
-                    } else if selectedTypeOfRepsPr == "1RM" {
-                        
-                        LightSubHeadline(text: "Enter your 1RM")
-                            .padding(.top, 10)
-                        
-                        InputIntegerNumberField(placeHolder: "1RM", numberText: $enteredOneRepMax, markAsWrong: $enteredAmrapIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
+                    
+                    if selectedTypeOfExercise == "Time" {
+                        InputDecimalNumberField(placeHolder: "Pr time in seconds", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
                             
+                    } else if selectedTypeOfExercise == "Reps" {
+                        InputIntegerNumberField(placeHolder: "Reps", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
                     }
-                
-                // MARK: Do you want to add a PR for a time based exercise
-                } else if addPr == "Yes" && selectedTypeOfExercise == "Time" {
                     
-                    (Text("Was this time record achieved at your current bodyweight of ")
-                        .font(.subheadline)
-                        .fontWeight(.light)
-                     + Text("\(currBw) \(weightUnit)")
-                        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/))
-                        .foregroundColor(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 25)
-                        .minimumScaleFactor(0.5)
-                        .padding(.top, 10)
-                    
-                    BasicSegPicker(selectedSegment: $achieviedOnCurrBw, segments: achievedAtBwOptions, frameWidth: 230, horizontalPadding: 100)
-                    
-                    if achieviedOnCurrBw == "Yes" {
-                        
-                        LightSubHeadline(text: "Enter amount of time under tension in seconds")
-                            .padding(.horizontal, 30)
-                        
-                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
-                        
-                    } else if achieviedOnCurrBw == "No" {
-                        
-                        LightSubHeadline(text: "Enter the load and the amount of time under tension in seconds")
-                            .padding(.horizontal, 30)
-                        
-                        InputDecimalNumberField(placeHolder: weightUnit, numberText: $enteredLoad, markAsWrong: $enteredLoadIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
-                        
-                        InputDecimalNumberField(placeHolder: "Seconds", numberText: $enteredTime, markAsWrong: $enteredTimeIsWrong, width: 0.6, errorMessage: "This cant be left empty!")
-                    }
                 }
                 
                 Button(action: {
                     if validateInput() {
-                        var exercise: Exercise?
-                        if selectedTypeOfExercise == "Reps" {exercise = RepBasedExercise(context: viewContext)}
-                        if selectedTypeOfExercise == "Time" {exercise = TimeBasedExercise(context: viewContext)}
-                        exercise!
-                            .setValue_ch(selectedExerciseName, forKey: "exerciseName")
-                            .setValue(selectedExerciseDesc, forKey: "exerciseDesc")
-                        addPrIfWanted(exercise: exercise!)
+                        // Create the new exercise
+                        let exercise: Exercise = Exercise(context: viewContext)
+                        exercise.exerciseType = selectedTypeOfExercise == "Reps" ? "reps" : "time"
+                        exercise.exerciseName = enteredExerciseName
+                        exercise.exerciseDesc = enteredExerciseDesc
+                        
+                        // Add pr if selected
+                        if addPr == "Yes" {
+                            // Find the pr-type from the user selected value
+                            let prType: String
+                            switch selectedTypeOfPr {
+                            case "AMRAP":
+                                prType = "maxreps"
+                            case "1RM":
+                                prType = "onerepmax"
+                            case "Time-max":
+                                prType = "timemax"
+                            default:
+                                prType = "" // This should never be the case
+                            }
+                            
+                            _ = PersistenceController.createPersonalRecord(
+                                viewContext,
+                                exercise: exercise,
+                                wl: Double(enteredPrWeigtLoad)!,
+                                q: Double(enteredPrQuantity)!,
+                                date: Date(),
+                                type: prType
+                            )
+                        }
+                        
                         PersistenceController.save(viewContext)
-                        createdExerciseName = selectedExerciseName
-                        selectedExerciseName = ""
-                        selectedExerciseDesc = ""
-                        selectedTypeOfExercise = "Reps"
-                        selectedTypeOfRepsPr = "1RM"
-                        addPr = "No"
-                        withAnimation {
+                        
+                        // Reset the selected values
+                        withAnimation(.easeOut) {
+                            enteredExerciseName = ""
+                            enteredExerciseDesc = ""
+                            selectedTypeOfExercise = "Reps"
+                            selectedTypeOfPr = "1RM"
+                            addPr = "No"
                             exerciseCreatedAlert = true
                         }
                     }
@@ -206,113 +167,42 @@ struct CreateNewExerciseView: View {
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
+                
             }
-        }.onAppear(perform: {
-            exerciseResults.append(contentsOf: repBasedExerciseResults)
-            exerciseResults.append(contentsOf: timeBasedExerciseResults)
-            currBw = bodyEntryResults.first!.bodyWeight
-        })
+        }
     }
     
     /// Validates input, marks textfields that are filled incorrectly.
     /// - Returns: True if input is  valid and false if not
     private func validateInput() -> Bool {
+        var valid: Bool = true
         
-        // Ugly input validation with a lot of if statements, could be better but dont have time to redesign.
-        
-        // Checks no duplicate exercises can be created
-        if (exerciseResults.contains {
-            $0.exerciseName == selectedExerciseName
-        }) {
-            withAnimation{newExerciseNameWrong = true}
-            return false
-        } else {
-            withAnimation{newExerciseNameWrong=false}
-        }
-        
-        // Checks so the new name isnt an empty string
-        if selectedExerciseName.isEmpty {
-            withAnimation{newExerciseNameWrong=true}
-            return false}
-        else {
-            withAnimation{newExerciseNameWrong=false}
-        }
-        
-        // Checks so, which ever pr you pressed, the value entered isnt empty.
-        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
-            if (selectedTypeOfRepsPr == "1RM" && enteredOneRepMax.isEmpty) {
-                withAnimation{enteredOneRepMaxIsWrong=true}
+        // Special case for already taken names
+        valid = {
+            if (exercises.contains { $0.exerciseName == enteredExerciseName }) {
+                enteredExerciseNameIsInvalid = true
+                enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
                 return false
             } else {
-                withAnimation{enteredOneRepMaxIsWrong=false}
+                enteredExerciseNameIsInvalid = false
+                enteredExerciseNameIsInvalidMsg = ""
+                return true
             }
-            
-            if (selectedTypeOfRepsPr == "AMRAP" && enteredAmrap.isEmpty) {
-                withAnimation{enteredAmrapIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredAmrapIsWrong=false}
-            }
-        }
+        }()
         
-        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            if (enteredTime.isEmpty) {
-                withAnimation{enteredTimeIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredTimeIsWrong=false}
-            }
-            
-            if (achieviedOnCurrBw == "Yes" && enteredLoad.isEmpty) {
-                withAnimation{enteredLoadIsWrong=true}
-                return false
-            }
-            else {
-                withAnimation{enteredLoadIsWrong=false}
-            }
-        }
-        
-        return true
+        let doubleFieldValidator = DoubleFieldValidator()
+        let stringFieldValidator = StringFieldValidator()
+        valid = stringFieldValidator.valideField(inputVar: enteredExerciseName, errorMessage: $enteredExerciseNameIsInvalidMsg ,fieldInvalid: $enteredExerciseNameIsInvalid)
+        valid = stringFieldValidator.valideField(inputVar: enteredExerciseDesc, errorMessage: $enteredExerciseDescIsInvalidMsg ,fieldInvalid: $enteredExerciseDescIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
+        valid = doubleFieldValidator.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
+        return valid
     }
-
-    /// Adds a PR if the user has filled in that they want it.
-    /// - Returns: Void
-    private func addPrIfWanted(exercise: Exercise) -> Void {
-        if (addPr == "Yes" && selectedTypeOfExercise == "Reps") {
-            if selectedTypeOfRepsPr == "1RM" {
-                let pr = OneRepMax(context: viewContext)
-                pr.weightLoad = Double(enteredOneRepMax)!
-                pr.exercise = (exercise as! RepBasedExercise)
-                pr.achievedOnDate = Date()
-                (exercise as! RepBasedExercise).addToPersonalRecords(pr)
-                PersistenceController.save(viewContext)
-            } else if selectedTypeOfRepsPr == "AMRAP" {
-                let pr = MaxReps(context: viewContext)
-                pr.prQuantity = Double(enteredAmrap)!
-                pr.weightLoad = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
-                pr.exercise = (exercise as! RepBasedExercise)
-                pr.achievedOnDate = Date()
-                (exercise as! RepBasedExercise).addToPersonalRecords(pr)
-                PersistenceController.save(viewContext)
-            }
-        }
-        else if (addPr == "Yes" && selectedTypeOfExercise == "Time") {
-            let pr = TimeMax(context: viewContext)
-            pr.prQuantity = Double(enteredTime)!
-            pr.weightLoad = (achieviedOnCurrBw == "Yes" ? currBw : Double(enteredLoad))!
-            pr.exercise = (exercise as! TimeBasedExercise)
-            pr.achievedOnDate = Date()
-            (exercise as! TimeBasedExercise).addToPersonalRecords(pr)
-            PersistenceController.save(viewContext)
-        }
-    }
-
+    
     /// Shows an alert that an exercise has been created
     /// - Returns: some View
     private func showExerciseCreatedAlert() -> some View {
-        Text("Succesfully created exercise called \(createdExerciseName)")
+        Text("Succesfully created exercise called \(enteredExerciseName)")
             .fontWeight(.light)
             .foregroundStyle(.green)
             .padding(.bottom, 10)
@@ -320,13 +210,12 @@ struct CreateNewExerciseView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                     withAnimation {
                         exerciseCreatedAlert = false
-                        createdExerciseName = ""
+                        enteredExerciseName = ""
                     }
                 }
             }
     }
 }
-
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext

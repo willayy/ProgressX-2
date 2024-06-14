@@ -212,10 +212,12 @@ extension PersistenceController {
             type: "timemax"
         )
         
-        // Put objects in relationships
         profile.addToBodyEntries(bw1)
         profile.addToBodyEntries(bw2)
         profile.addToBodyEntries(bw3)
+        profile.addToBodyEntries(bw4)
+        profile.addToBodyEntries(bw5)
+        profile.addToBodyEntries(bw6)
         testExercise1.addToPersonalRecords(ORMpr1)
         testExercise1.addToPersonalRecords(ORMpr2)
         testExercise1.addToPersonalRecords(ORMpr3)

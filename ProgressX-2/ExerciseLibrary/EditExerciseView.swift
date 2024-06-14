@@ -12,24 +12,18 @@ struct EditExerciseView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    // Fetch RepBasedExercises to check if exercise name is taken
+    // Fetch Exercises to check if exercise name is taken
     @FetchRequest(
-        entity: RepBasedExercise.entity(),
+        entity: Exercise.entity(),
         sortDescriptors: []
-    ) private var repBasedExerciseResults: FetchedResults<Exercise>
-    
-    // Fetch TimeBasedExercises to check if exercise name is taken
-    @FetchRequest(
-        entity: TimeBasedExercise.entity(),
-        sortDescriptors: []
-    ) private var timeBasedExerciseResults: FetchedResults<Exercise>
+    ) private var exercises: FetchedResults<Exercise>
     
     @Binding var exercise: Exercise?
     @State private var exerciseEditedAlert: Bool = false
     @State private var newName: String = ""
     @State private var newDesc: String = ""
-    @State private var newNameIsWrong: Bool = false
-    @State private var exerciseResults: [Exercise] = []
+    @State private var newNameIsInvalid: Bool = false
+    @State private var newNameIsInvalidMsg: String = ""
     
     private func showExerciseEditedAlet() -> some View {
         Text("Succesfully edited exercise")
@@ -49,7 +43,9 @@ struct EditExerciseView: View {
             ScrollView {
                 VStack(alignment: .center) {
                 
-                    BoldTitle(text: "Editing exercise \(exercise!.exerciseName!)")
+                BoldTitle(
+                    text: "Editing exercise \(exercise!.exerciseName!)"
+                )
                     
                 if exerciseEditedAlert {
                     showExerciseEditedAlet()
@@ -66,7 +62,13 @@ struct EditExerciseView: View {
                     .minimumScaleFactor(0.5)
                     .padding()
                 
-                InputShortTextField(placeHolder: "New exercise name", text: $newName, markAsWrong: $newNameIsWrong, width: 0.6, errorMessage: "This name is already taken!")
+                InputShortTextField(
+                    placeHolder: "New exercise name",
+                    text: $newName,
+                    markAsWrong: $newNameIsInvalid,
+                    width: 0.6,
+                    errorMessage: $newNameIsInvalidMsg
+                )
                     
                 TextField("New exercise description", text: $newDesc)
                     .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
@@ -75,24 +77,14 @@ struct EditExerciseView: View {
                 
                 // MARK: Handle an edit of an exercise
                 Button(action: {
-                    
-                    if exerciseResults.contains(where: { $0.exerciseName == newName }) {
-                        withAnimation{newNameIsWrong = true}
-                        return
-                    } else {
-                        withAnimation{newNameIsWrong = false}
+                    if validateInput() {
+                        let inputName = newName.isEmpty ? exercise!.exerciseName! : newName
+                        let inputDesc = newDesc.isEmpty ? exercise!.exerciseDesc! : newDesc
+                        exercise!.exerciseName = inputName
+                        exercise!.exerciseDesc = inputDesc
+                        PersistenceController.save(viewContext)
+                        withAnimation {exerciseEditedAlert = true}
                     }
-                        
-                    let inputName = newName.isEmpty ? exercise!.exerciseName! : newName
-                    let inputDesc = newDesc.isEmpty ? exercise!.exerciseDesc! : newDesc
-                    exercise!.exerciseName = inputName
-                    exercise!.exerciseDesc = inputDesc
-                    PersistenceController.save(viewContext)
-                    
-                    withAnimation {
-                        exerciseEditedAlert = true
-                    }
-                    
                 }) {
                     Text("Save changes")
                         .frame(height: 40)
@@ -101,19 +93,38 @@ struct EditExerciseView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 
             }
-        }.onAppear(perform: {
-            exerciseResults.append(contentsOf: repBasedExerciseResults)
-            exerciseResults.append(contentsOf: timeBasedExerciseResults)
-        })
+        }
+    }
+    
+    private func validateInput() -> Bool {
+        var valid: Bool
+        
+        // Special case for already taken names
+        valid = {
+            if (exercises.contains { $0.exerciseName == newName }) {
+                newNameIsInvalid = true
+                newNameIsInvalidMsg = "This Exercise name is already taken!"
+                return false
+            } else {
+                newNameIsInvalid = false
+                newNameIsInvalidMsg = ""
+                return true
+            }
+        }()
+        
+        let stringFieldValidator = StringFieldValidator(emptyAllowed: true)
+        valid = stringFieldValidator.valideField(inputVar: newName, errorMessage: $newNameIsInvalidMsg, fieldInvalid: $newNameIsInvalid)
+        
+        return valid
     }
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResults: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
     
     @State var ex: Exercise? = exerciseResults.first
     

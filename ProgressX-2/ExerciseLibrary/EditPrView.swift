@@ -11,26 +11,26 @@ import CoreData
 struct EditPrView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    // Fetch the Profile to se if its metric or not
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: []
-    ) private var profileResults: FetchedResults<Profile>
     
     @Binding var editingPr: PersonalRecord?
     @Binding var exercise: Exercise?
-    @State private var newLoad: String = ""
-    @State private var newReps: String = ""
-    @State private var newTime: String = ""
+
+    // Input field vars
     @State private var newDate: Date = Date()
-    @State private var markNewLoadAsWrong: Bool = false
-    @State private var markNewRepsAsWrong: Bool = false
-    @State private var markNewTimeAsWrong: Bool = false
+    @State private var newQuantity: String = ""
+    @State private var newWeightLoad: String = ""
+    @State private var newQuantityInvalid: Bool = false
+    @State private var newWeightLoadInvalid: Bool = false
+    @State private var newQuantityInvalidMsg: String = ""
+    @State private var newWeightLoadInvalidMsg: String = ""
+    
+    
+    // Alert vars
     @State private var prEditedAlert: Bool = false
     
     var body: some View {
         
-        let weightUnit = profileResults.first!.isMetric ? "kg's" : "lbs"
+        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
         
         ScrollView {
             VStack(alignment: .center) {
@@ -97,57 +97,37 @@ struct EditPrView: View {
                 
                 InputDecimalNumberField(
                     placeHolder: "New load...",
-                    numberText: $newLoad,
-                    markAsWrong: $markNewLoadAsWrong,
+                    numberText: $newWeightLoad,
+                    markAsWrong: $newWeightLoadInvalid,
                     width: 0.7,
-                    errorMessage: "Invalid input"
+                    errorMessage: $newWeightLoadInvalidMsg
                 )
                 
-                if editingPr! is MaxReps {
+                if editingPr!.prType == "maxreps" {
                     InputIntegerNumberField(
                         placeHolder: "New reps...",
-                        numberText: $newReps,
-                        markAsWrong: $markNewRepsAsWrong,
+                        numberText: $newQuantity,
+                        markAsWrong: $newQuantityInvalid,
                         width: 0.7,
-                        errorMessage: "Invalid input"
+                        errorMessage: $newQuantityInvalidMsg
                     )
-                } else if editingPr! is TimeMax {
+                } else if editingPr!.prType == "timemax" {
                     InputDecimalNumberField(
-                        placeHolder: "new time",
-                        numberText: $newTime,
-                        markAsWrong: $markNewTimeAsWrong,
+                        placeHolder: "New time...",
+                        numberText: $newQuantity,
+                        markAsWrong: $newQuantityInvalid,
                         width: 0.7,
-                        errorMessage: "Invalid input"
+                        errorMessage: $newQuantityInvalidMsg
                     )
                 }
                 
                 Button(action: {
                     if validateInput() {
-                        
                         editingPr!.achievedOnDate = newDate
-                        
-                        // Handle all load since all PR's have load
-                        editingPr!.weightLoad = newLoad != "" ? Double(newLoad)! : editingPr!.weightLoad
-                        newLoad = ""
-                        
-                        // Handle special case for MaxRep PR's
-                        if editingPr is  MaxReps {
-                            editingPr!.prQuantity = Double(newReps)!
-                            newReps = ""
-                        }
-                        
-                        // Handle special case fpr TimeMax PR's
-                        if editingPr is TimeMax {
-                            editingPr!.prQuantity = Double(newTime)!
-                            newTime = ""
-                        }
-                        
+                        editingPr!.weightLoad = newWeightLoad != "" ? Double(newWeightLoad)! : editingPr!.weightLoad
+                        editingPr!.prQuantity = newQuantity != "" ? Double(newQuantity)! : editingPr!.prQuantity
                         PersistenceController.save(viewContext)
-                        
-                        withAnimation {
-                            prEditedAlert = true
-                        }
-                        
+                        withAnimation {prEditedAlert = true}
                     }
                 }) {
                     Text("Save changes")
@@ -176,51 +156,29 @@ struct EditPrView: View {
     }
     
     private func validateInput() -> Bool {
-        
         var valid: Bool = true
+        let loadFieldValidator = DoubleFieldValidator()
+        let quantityFieldValidator: InputFieldValidator = {
+            return (editingPr!.prType == "timemax" ? DoubleFieldValidator() : IntFieldValidator())
+        }()
         
-        if newLoad != "" {
-            if let _ = Double(newLoad) {} else {
-                valid = false
-                withAnimation {
-                    markNewLoadAsWrong = true
-                }
-            }
-        }
-        
-        if editingPr! is MaxReps && newReps != "" {
-            if let _ = Int(newReps) {} else {
-                valid = false
-                withAnimation {
-                    markNewRepsAsWrong = true
-                }
-            }
-        }
-        
-        if editingPr! is TimeMax && newTime != "" {
-            if let _ = Double(newTime) {} else {
-                valid = false
-                withAnimation {
-                    markNewTimeAsWrong = true
-                }
-            }
-        }
+        valid = loadFieldValidator.valideField(inputVar: newWeightLoad, errorMessage: $newWeightLoadInvalidMsg, fieldInvalid: $newWeightLoadInvalid)
+        valid = quantityFieldValidator.valideField(inputVar: newQuantity, errorMessage: $newQuantityInvalidMsg, fieldInvalid: $newQuantityInvalid)
         
         return valid
     }
-    
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResults: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
     @State var exercise: Exercise? = exerciseResults.first
     
-    @State var pr: PersonalRecord? = exercise?.personalRecords?.array.first as? PersonalRecord 
+    @State var pr: PersonalRecord? = exercise?.personalRecords?.array.first as? PersonalRecord
     
     return EditPrView(editingPr: $pr, exercise: $exercise)
     .environment(\.managedObjectContext, context)

@@ -14,24 +14,28 @@ struct PrList: View {
     @FetchRequest private var personalRecordResults: FetchedResults<PersonalRecord>
     @Binding private var navPath: [Int]
     @Binding private var editingPr: PersonalRecord?
-    private let exercise: Exercise?
+    private let exercise: Exercise
     private let prType: String
     
-    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise?, entity: NSEntityDescription, prType: String) {
+    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise, prType: String) {
         self._navPath = navPath
         self.exercise = exercise
         self._editingPr = editingPr
         self.prType = prType
         self._personalRecordResults = FetchRequest<PersonalRecord>(
-            entity: entity,
+            entity: PersonalRecord.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: false)],
-            predicate: NSPredicate(format: "exercise == %@", exercise!)
+            predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "exercise == %@", exercise),
+                NSPredicate(format: "prType == %@", prType)
+            ])
+        
         )
     }
     
     var body: some View {
         
-        BoldSubHeadline(text: "List of all \(prType) PR's achieved on \(exercise!.exerciseName!)")
+        BoldSubHeadline(text: "List of all \(prType) PR's achieved on \(exercise.exerciseName!)")
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
@@ -62,18 +66,16 @@ struct PrList: View {
     
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestTimeBasedExercise: NSFetchRequest<TimeBasedExercise> = TimeBasedExercise.fetchRequest()
+    let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let timeBasedExercuseResults: [TimeBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestTimeBasedExercise)
+    let timeBasedExerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
-    let exercise: TimeBasedExercise? = timeBasedExercuseResults.first
-    
-    let entity = TimeMax.entity()
+    let exercise: Exercise? = timeBasedExerciseResults.first
     
     @State var navPath: [Int] = [Int]()
     
     @State var editingPr: PersonalRecord? = nil
     
-    return PrList(navPath: $navPath, editingPr: $editingPr, exercise: exercise, entity: entity, prType: "Time-max")
+    return PrList(navPath: $navPath, editingPr: $editingPr, exercise: exercise!, prType: "Time-max")
         .environment(\.managedObjectContext, context)
 }

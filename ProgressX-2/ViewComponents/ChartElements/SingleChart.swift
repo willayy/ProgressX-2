@@ -13,16 +13,10 @@ struct SingleChart: View {
  
     @Environment(\.managedObjectContext) private var viewContext
     
-    // Fetching profile to check if its metric
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: []
-    ) private var profileResults: FetchedResults<Profile>
-    
     // Fetching BodyWeightentries
     @FetchRequest(
         entity: BodyEntry.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.dateAchieved, ascending: true)]
+        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntryResults: FetchedResults<BodyEntry>
     
     @FetchRequest private var personalRecordResults: FetchedResults<PersonalRecord>
@@ -34,27 +28,28 @@ struct SingleChart: View {
     
     private let set: String
     
-    init(exercise: Exercise, set: String, entity: NSEntityDescription) {
+    init(exercise: Exercise, set: String, prType: String) {
         
         self.exercise = exercise
         
         self.set = set
         
-        // For the fetched prs for the exercise
+        // Fetch the correct prs according to the prType and Exercise
         self._personalRecordResults = FetchRequest<PersonalRecord>(
-            entity: entity,
+            entity: PersonalRecord.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
-            predicate: NSPredicate(format: "exercise == %@", exercise)
+            predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "exercise == %@", exercise),
+                NSPredicate(format: "prType == %@", prType)
+            ])
         )
         
     }
     
     var body: some View {
         
-        // Get the profile
-        let profile: Profile = profileResults.first!
         // Get the weightUnit
-        let weightUnit: String = profile.isMetric ? "kg's" : "lbs"
+        let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
         // Get the pr with the highest load recorded on the exercise
         let highestLoad = personalRecordResults.max(by: {$0.weightLoad > $1.weightLoad})?.weightLoad ?? 0
         // Get the highest bodyweight recorded on this profile
@@ -111,7 +106,7 @@ struct SingleChart: View {
                         if overlayBodyWeight {
                             ForEach(bodyEntryResults) {
                                 LineMark (
-                                    x: .value("bwDate", $0.dateAchieved!),
+                                    x: .value("bwDate", $0.achievedOnDate!),
                                     y: .value("bodyweight", $0.bodyWeight),
                                     series: .value("bw", "B")
                                 )
@@ -138,12 +133,13 @@ struct SingleChart: View {
         
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == reps")
     
-    let exerciseResult: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
 
-    let exercise: RepBasedExercise = exerciseResult.first!
+    let exercise: Exercise = exerciseResult.first!
     
-    return SingleChart(exercise: exercise, set: "1RM", entity: OneRepMax.entity())
+    return SingleChart(exercise: exercise, set: "1RM", prType: "onerepmax")
         .environment(\.managedObjectContext, context)
 }

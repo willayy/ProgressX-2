@@ -24,58 +24,55 @@ struct StatisticsView: View {
                 
                 LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
                 
-                if exercise is RepBasedExercise {
+                if exercise!.exerciseType == "reps" {
                     GeneralInfoRepsExercise(
-                        exercise: exercise as? RepBasedExercise
+                        exercise: exercise
                     ).environment(\.managedObjectContext, viewContext)
-                } else if exercise is TimeBasedExercise {
+                } else if exercise!.exerciseType == "time" {
                     GeneralInfoTimeExercise(
-                        exercise: exercise as? TimeBasedExercise
+                        exercise: exercise
                     ).environment(\.managedObjectContext, viewContext)
                 }
                 
                 
-                if exercise is RepBasedExercise {
+                if exercise!.exerciseType == "reps" {
                     SingleChart(
-                        exercise: exercise as! RepBasedExercise,
+                        exercise: exercise!,
                         set: "1RM",
-                        entity: OneRepMax.entity()
+                        prType: "onerepmax"
                     ).environment(\.managedObjectContext, viewContext)
                     
                     PrList(
                         navPath: $navPath,
                         editingPr: $editingPr,
-                        exercise: exercise,
-                        entity: OneRepMax.entity(),
+                        exercise: exercise!,
                         prType: "1RM"
                     ).environment(\.managedObjectContext, viewContext)
                     
                     DoubleChart(
-                        exercise: exercise as! RepBasedExercise,
+                        exercise: exercise!,
                         set: "AMRAP",
-                        entity: MaxReps.entity()
+                        prType: "maxreps"
                     ).environment(\.managedObjectContext, viewContext)
                     
                     PrList(
                         navPath: $navPath,
                         editingPr: $editingPr,
-                        exercise: exercise,
-                        entity: MaxReps.entity(),
+                        exercise: exercise!,
                         prType: "AMRAP"
                     ).environment(\.managedObjectContext, viewContext)
                     
-                } else if exercise is TimeBasedExercise {
+                } else if exercise!.exerciseType == "time" {
                     DoubleChart(
-                        exercise: exercise as! TimeBasedExercise,
+                        exercise: exercise!,
                         set: "Time-max",
-                        entity: TimeMax.entity()
+                        prType: "timemax"
                     ).environment(\.managedObjectContext, viewContext)
                     
                     PrList(
                         navPath: $navPath,
                         editingPr: $editingPr,
-                        exercise: exercise,
-                        entity: TimeMax.entity(),
+                        exercise: exercise!,
                         prType: "Time-max"
                     ).environment(\.managedObjectContext, viewContext)
                 }
@@ -88,9 +85,9 @@ struct StatisticsView: View {
     
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestRepBasedExercise: NSFetchRequest<RepBasedExercise> = RepBasedExercise.fetchRequest()
+    let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResult: [RepBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
 
     @State var exercise: Exercise? = exerciseResult.first!
     

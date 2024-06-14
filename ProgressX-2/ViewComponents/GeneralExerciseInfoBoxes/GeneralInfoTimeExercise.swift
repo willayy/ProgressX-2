@@ -12,22 +12,19 @@ struct GeneralInfoTimeExercise: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    // Fetch the Profile to se if its metric or not
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: []
-    )private var profileResults: FetchedResults<Profile>
+    @FetchRequest private var timeMaxResults: FetchedResults<PersonalRecord>
     
-    @FetchRequest private var timeMaxResults: FetchedResults<TimeMax>
+    private let exercise: Exercise?
     
-    private let exercise: TimeBasedExercise?
-    
-    init(exercise: TimeBasedExercise?) {
+    init(exercise: Exercise?) {
         self.exercise = exercise
-        self._timeMaxResults = FetchRequest<TimeMax>(
-            entity: TimeMax.entity(),
-            sortDescriptors: [NSSortDescriptor(keyPath: \TimeMax.achievedOnDate, ascending: true)],
-            predicate: NSPredicate(format: "exercise == %@", exercise!)
+        self._timeMaxResults = FetchRequest<PersonalRecord>(
+            entity: PersonalRecord.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
+            predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSPredicate(format: "exercise == %@", exercise!),
+                NSPredicate(format: "prType == timemax")
+            ])
         )
     }
     
@@ -116,11 +113,12 @@ struct GeneralInfoTimeExercise: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     
-    let fetchRequestRepBasedExercise: NSFetchRequest<TimeBasedExercise> = TimeBasedExercise.fetchRequest()
+    let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == time")
     
-    let exerciseResult: [TimeBasedExercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
 
-    let exercise: TimeBasedExercise = exerciseResult.first!
+    let exercise: Exercise = exerciseResult.first!
     
     return GeneralInfoTimeExercise(exercise: exercise)
         .environment(\.managedObjectContext, context)

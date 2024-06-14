@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="BodyEntry" representedClassName="BodyEntry" syncable="YES" codeGenerationType="class">
+    <entity name="Achievement" representedClassName="Achievement" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="BodyEntry" representedClassName="BodyEntry" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
         <attribute name="bodyWeight" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="calfCirc" optional="YES" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="chestCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="dateAchieved" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <attribute name="lwrArmCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="thighCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="uprArmCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
@@ -22,8 +24,7 @@
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
-    <entity name="PersonalRecord" representedClassName="PersonalRecord" syncable="YES" codeGenerationType="class">
-        <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-33526860" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
+    <entity name="PersonalRecord" representedClassName="PersonalRecord" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
         <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="prType" attributeType="String" minValueString="1" maxValueString="10" defaultValueString="&quot;&quot;" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
         <attribute name="weightLoad" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>

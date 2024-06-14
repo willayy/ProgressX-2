@@ -19,35 +19,41 @@ class IntFieldValidator: InputFieldValidator {
         super.init(emptyAllowed: emptyAllowed)
     }
     
-    override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldValid: Binding<Bool>) -> Bool {
-        var caughtError: Bool = true
-        errorMessage.wrappedValue = ""
-        
-        withAnimation {
-            if let intValue = Int(inputVar) {} else {
-                caughtError = false
-                errorMessage.wrappedValue = "Input is not a valid number!"
-            }
-            
-            if Int(inputVar)! < minInputNumber {
-                caughtError = false
-                errorMessage.wrappedValue = "Input number is too small!"
-            }
-            
-            else if Int(inputVar)! > maxInputNumber {
-                caughtError = false
-                errorMessage.wrappedValue = "Input number is too big!"
-            }
-            
-            else if !emptyAllowed && inputVar.isEmpty {
-                caughtError = false
+    override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Bool {
+  
+        if !emptyAllowed && inputVar.isEmpty {
+            withAnimation(.easeIn) {
                 errorMessage.wrappedValue = "Input cant be empty!"
+                fieldInvalid.wrappedValue = true
             }
-            
-            fieldValid.wrappedValue = !caughtError
+            return false
         }
         
-        return caughtError
+        if Int(inputVar) != nil {} else {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input is not a valid number!"
+                fieldInvalid.wrappedValue = true
+            }
+            return false
+        }
+        
+        if Int(inputVar)! < minInputNumber {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input number is too small!"
+                fieldInvalid.wrappedValue = true
+            }
+            return false
+        }
+        
+        if Int(inputVar)! > maxInputNumber {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input number is too big!"
+                fieldInvalid.wrappedValue = true
+            }
+            return false
+        }
+        
+        return true
     }
     
 }
