@@ -238,16 +238,16 @@
 		832213E22BC92D8E00DF9C7A /* ProgressX-2 */ = {
 			isa = PBXGroup;
 			children = (
-				83AD4A902BF4133600A2E180 /* ExerciseLibrary */,
-				83AD4A8F2BF40E8800A2E180 /* CoreData */,
+				83AD4A902BF4133600A2E180 /* ExerciseLibraryViews */,
+				832214182BC9398000DF9C7A /* CreateNewProfileViews */,
 				832214222BD42FF800DF9C7A /* ViewComponents */,
-				832214182BC9398000DF9C7A /* CreateNewProfile */,
-				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
+				83AD4A8F2BF40E8800A2E180 /* CoreData */,
+				832213E92BC92D9000DF9C7A /* Preview Content */,
 				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
+				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
+				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
-				832213E92BC92D9000DF9C7A /* Preview Content */,
-				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
 			);
 			path = "ProgressX-2";
 			sourceTree = "<group>";
@@ -269,14 +269,14 @@
 			path = "ProgressX-2Tests";
 			sourceTree = "<group>";
 		};
-		832214182BC9398000DF9C7A /* CreateNewProfile */ = {
+		832214182BC9398000DF9C7A /* CreateNewProfileViews */ = {
 			isa = PBXGroup;
 			children = (
 				832214162BC938C400DF9C7A /* CreateNewProfile1.swift */,
 				8322142B2BD669C000DF9C7A /* CreateNewProfile2.swift */,
 				8322142D2BD6BF7200DF9C7A /* CreateNewProfile3.swift */,
 			);
-			path = CreateNewProfile;
+			path = CreateNewProfileViews;
 			sourceTree = "<group>";
 		};
 		832214222BD42FF800DF9C7A /* ViewComponents */ = {
@@ -316,7 +316,7 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		83AD4A902BF4133600A2E180 /* ExerciseLibrary */ = {
+		83AD4A902BF4133600A2E180 /* ExerciseLibraryViews */ = {
 			isa = PBXGroup;
 			children = (
 				83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */,
@@ -325,7 +325,7 @@
 				8310D90A2BFA2139004A5A3D /* StatisticsView.swift */,
 				8310D9312C0E0617004A5A3D /* EditPrView.swift */,
 			);
-			path = ExerciseLibrary;
+			path = ExerciseLibraryViews;
 			sourceTree = "<group>";
 		};
 		83FBF1932C14564E004D0E2A /* GeneralExerciseInfoBoxes */ = {
