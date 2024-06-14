@@ -38,7 +38,6 @@ struct CreateNewProfile2: View {
             HStack(spacing: 20) {
                 
                 Button {
-                    PersistenceController.generateBasicExerciseLibrary(viewContext)
                     goToHomeView()
                 } label: {
                     Text("No, im good!")
@@ -48,7 +47,6 @@ struct CreateNewProfile2: View {
                     .buttonStyle(.borderedProminent)
                 
                 Button {
-                    PersistenceController.generateBasicExerciseLibrary(viewContext)
                     navPath.append(3)
                 } label: {
                     Text("Yes, let's continue")

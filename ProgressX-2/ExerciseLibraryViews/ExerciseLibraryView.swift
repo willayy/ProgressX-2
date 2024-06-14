@@ -33,19 +33,23 @@ struct ExerciseLibraryView: View {
                     
                     LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
                     
-                    TextField("Search...", text: $searchText)
-                                        .padding(10)
-                                        .background(Color(.systemGray6))
-                                        .cornerRadius(10)
-                                        .padding(.horizontal, 20)
-                                        .onDisappear(perform: {
-                                            searchText = ""
-                                        })
+                    TextField("Search...",
+                              text: $searchText)
+                            .padding(10)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .padding(.horizontal, 20)
+                            .onDisappear(perform: {
+                                searchText = ""
+                            })
+                            .padding(.top, 20)
                     
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center) {
                         if exerciseResults.isEmpty {
                             LightSubHeadline(text: "You currently have no exercises saved to the exercise library...")
+                                .padding(.bottom, 20)
+                                .padding(.top, 20)
                         } else {
                             List {
                                 ForEach(searchedItems()) { exercise in
@@ -111,6 +115,7 @@ struct ExerciseLibraryView: View {
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
+    
     return ExerciseLibraryView()
         .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)

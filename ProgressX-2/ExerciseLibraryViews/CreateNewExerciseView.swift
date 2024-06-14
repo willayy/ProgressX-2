@@ -86,6 +86,7 @@ struct CreateNewExerciseView: View {
                     .padding(.top, 20)
                 
                 BasicSegPicker(selectedSegment: $addPr, segments: addPrOptions, frameWidth: 230, horizontalPadding: 100)
+                    .padding(.bottom)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if addPr == "Yes" {
@@ -93,18 +94,10 @@ struct CreateNewExerciseView: View {
                     // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
                     if selectedTypeOfExercise == "Reps" {
                         BasicSegPicker(selectedSegment: $selectedTypeOfPr, segments: repBasedPrOptions, frameWidth: 230, horizontalPadding: 100)
+                            .padding(.bottom)
                     }
                     
                     InputDecimalNumberField(placeHolder: "Load (\(weightUnit))", numberText: $enteredPrWeigtLoad, markAsWrong: $enteredPrWeigtLoadIsInvalid, width: 0.6, errorMessage: $enteredPrWeigtLoadIsInvalidMsg)
-                        .onAppear {
-                            if (selectedTypeOfPr == "AMRAP" || selectedTypeOfExercise == "Time") {
-                                enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
-                            }
-                            // If time exercise set selectedTypeOfPr to timemax
-                            if (selectedTypeOfExercise == "Time") {
-                                selectedTypeOfPr = "Time-Max"
-                            }
-                        }
                     
                     if selectedTypeOfExercise == "Time" {
                         InputDecimalNumberField(placeHolder: "Pr time in seconds", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
@@ -127,6 +120,10 @@ struct CreateNewExerciseView: View {
                         if addPr == "Yes" {
                             // Find the pr-type from the user selected value
                             let prType: String
+                            // Set the Pr to time if not 1RM or AMRAP
+                            if selectedTypeOfExercise == "Time" {
+                                selectedTypeOfPr = "Time-Max"
+                            }
                             switch selectedTypeOfPr {
                             case "AMRAP":
                                 prType = "maxreps"
@@ -169,7 +166,22 @@ struct CreateNewExerciseView: View {
                 .padding(.top, 20)
                 
             }
-        }
+        }.onChange(of: selectedTypeOfPr, initial: true, { oldValue, newValue in
+            if selectedTypeOfPr == "AMRAP" {
+                enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
+            } else {
+                enteredPrWeigtLoad = ""
+            }
+        })
+        .onChange(of: selectedTypeOfExercise, initial: true, { oldValue, newValue in
+            if selectedTypeOfExercise == "Time" {
+                // Resetting the pr selector
+                selectedTypeOfPr = "1RM"
+                enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
+            } else {
+                enteredPrWeigtLoad = ""
+            }
+        })
     }
     
     /// Validates input, marks textfields that are filled incorrectly.

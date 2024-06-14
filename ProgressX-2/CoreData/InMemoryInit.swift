@@ -32,35 +32,35 @@ extension PersistenceController {
             context,
             profile: profile,
             weight: 78,
-            date: Date()
+            date: Date()-100000
         )
         
         let bw3 = PersistenceController.createBodyEntry(
             context,
             profile: profile,
             weight: 82,
-            date: Date()
+            date: Date()-200000
         )
         
         let bw4 = PersistenceController.createBodyEntry(
             context,
             profile: profile,
             weight: 85,
-            date: Date()
+            date: Date()-300000
         )
         
         let bw5 = PersistenceController.createBodyEntry(
             context,
             profile: profile,
             weight: 87,
-            date: Date()
+            date: Date()-400000
         )
         
         let bw6 = PersistenceController.createBodyEntry(
             context,
             profile: profile,
             weight: 90,
-            date: Date()
+            date: Date()-500000
         )
         
         let testExercise1 = PersistenceController.createExercise(

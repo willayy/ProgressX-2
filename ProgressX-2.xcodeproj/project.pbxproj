@@ -36,7 +36,7 @@
 		8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142B2BD669C000DF9C7A /* CreateNewProfile2.swift */; };
 		8322142E2BD6BF7200DF9C7A /* CreateNewProfile3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142D2BD6BF7200DF9C7A /* CreateNewProfile3.swift */; };
 		832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */; };
-		8359F9712C1AE779004BA421 /* PersistenceFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9702C1AE779004BA421 /* PersistenceFunctions.swift */; };
+		8359F9712C1AE779004BA421 /* Persistence-ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9702C1AE779004BA421 /* Persistence-ext.swift */; };
 		8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */; };
 		8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */; };
 		8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */; };
@@ -51,6 +51,7 @@
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
+		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,7 +105,7 @@
 		8322142B2BD669C000DF9C7A /* CreateNewProfile2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile2.swift; sourceTree = "<group>"; };
 		8322142D2BD6BF7200DF9C7A /* CreateNewProfile3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile3.swift; sourceTree = "<group>"; };
 		8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
-		8359F9702C1AE779004BA421 /* PersistenceFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceFunctions.swift; sourceTree = "<group>"; };
+		8359F9702C1AE779004BA421 /* Persistence-ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence-ext.swift"; sourceTree = "<group>"; };
 		8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFieldValidator.swift; sourceTree = "<group>"; };
@@ -119,6 +120,7 @@
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
+		83F110B82C1CC9600068953B /* CreateNewProfile4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +154,7 @@
 			children = (
 				83AD4A8D2BF3BC3C00A2E180 /* NSManagedObject.swift */,
 				83C76F812C17020F0051D8FB /* PersonalRecord.swift */,
-				8359F9702C1AE779004BA421 /* PersistenceFunctions.swift */,
+				8359F9702C1AE779004BA421 /* Persistence-ext.swift */,
 				8359F97C2C1C63F5004BA421 /* BodyEntry.swift */,
 				8359F97E2C1C64BE004BA421 /* Achievement.swift */,
 			);
@@ -275,6 +277,7 @@
 				832214162BC938C400DF9C7A /* CreateNewProfile1.swift */,
 				8322142B2BD669C000DF9C7A /* CreateNewProfile2.swift */,
 				8322142D2BD6BF7200DF9C7A /* CreateNewProfile3.swift */,
+				83F110B82C1CC9600068953B /* CreateNewProfile4.swift */,
 			);
 			path = CreateNewProfileViews;
 			sourceTree = "<group>";
@@ -500,8 +503,9 @@
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
-				8359F9712C1AE779004BA421 /* PersistenceFunctions.swift in Sources */,
+				8359F9712C1AE779004BA421 /* Persistence-ext.swift in Sources */,
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
+				83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */,
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,

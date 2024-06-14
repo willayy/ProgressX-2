@@ -174,7 +174,7 @@ struct DoubleChart: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == reps")
+    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
     let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
 

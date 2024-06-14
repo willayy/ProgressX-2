@@ -63,11 +63,20 @@ extension PersistenceController {
         }
     }
     
-    /// Staticly check if a Profile exists.
+    /// Staticly check if a Profile exists. That is, is there more than 0 Profiles saved to the persistent store.
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
     /// - Returns: Yes if profile exists, No if it doesnt.
     public static func profileExists(_ context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
+        let fetchResult = fetch(context, fetchRequest: fetchRequest)
+        return fetchResult.count > 0
+    }
+    
+    /// Staticly checks if there is more than 0 exercies stored in the persistent store, because this is only intended for use during the profile creation state this is validating enough.
+    /// - Parameter context: A NSManagedObjectContext from a peristent container.
+    /// - Returns: Yes if there exists basic exercises, No if it doesnt.
+    public static func basicExercisesExist(_ context: NSManagedObjectContext) -> Bool {
+        let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count > 0
     }

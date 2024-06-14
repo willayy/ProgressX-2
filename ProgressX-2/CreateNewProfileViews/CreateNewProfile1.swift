@@ -48,7 +48,7 @@ struct CreateNewProfile1: View {
                     
                     BoldTitle(text: "Create a profile!")
                      
-                    LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only")
+                    LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only.")
                     
                     Text("Username")
                         .foregroundColor(.black)
@@ -131,7 +131,11 @@ struct CreateNewProfile1: View {
                             .environment(\.managedObjectContext, viewContext)
                     }
                     else if selection == 3 {
-                        CreateNewProfile3()
+                        CreateNewProfile3(navPath: $navPath)
+                            .environment(\.managedObjectContext, viewContext)
+                    }
+                    else if selection == 4 {
+                        CreateNewProfile4(navPath: $navPath)
                             .environmentObject(viewRouter)
                             .environment(\.managedObjectContext, viewContext)
                     }
@@ -159,11 +163,13 @@ struct CreateNewProfile1: View {
             PersistenceController.save(viewContext)
         }
         
+        // Transform input values into values that can be used in the datamodel.
         let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
         let gender = (selectedGenderSegment == "Male") ? "male" : "female"
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
         
+        // Create Profile
         let profile = Profile(context: viewContext)
         profile.birthDay = birthDay
         profile.profileUserName = userName
@@ -171,6 +177,7 @@ struct CreateNewProfile1: View {
         profile.gender = gender
         profile.isMetric = isMetric
         
+        // Create BodyEntry
         let bodyWeightEntry = PersistenceController.createBodyEntry(
             viewContext,
             profile: profile,
@@ -178,7 +185,13 @@ struct CreateNewProfile1: View {
             date: Date()
         )
         
+        // Add BodyEntry to the profile
         profile.addToBodyEntries(bodyWeightEntry)
+        
+        // Create basic exercies if they dont exist
+        if !PersistenceController.basicExercisesExist(viewContext) {
+            PersistenceController.generateBasicExerciseLibrary(viewContext)
+        }
         
         PersistenceController.save(viewContext)
     }

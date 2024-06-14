@@ -51,9 +51,9 @@ struct SingleChart: View {
         // Get the weightUnit
         let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
         // Get the pr with the highest load recorded on the exercise
-        let highestLoad = personalRecordResults.max(by: {$0.weightLoad > $1.weightLoad})?.weightLoad ?? 0
+        let highestLoad = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})?.weightLoad ?? 0
         // Get the highest bodyweight recorded on this profile
-        let highestBw = bodyEntryResults.max(by: {$0.bodyWeight > $1.bodyWeight})?.bodyWeight ?? 0
+        let highestBw = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})?.bodyWeight ?? 0
         // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
         let highestOfLoadAndBw = highestLoad >= highestBw ? highestLoad : highestBw
         
@@ -134,7 +134,7 @@ struct SingleChart: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == reps")
+    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
     let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
 
