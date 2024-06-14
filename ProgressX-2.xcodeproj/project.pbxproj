@@ -27,7 +27,7 @@
 		832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */; };
 		832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213EC2BC92D9000DF9C7A /* Persistence.swift */; };
 		832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */; };
-		832213FA2BC92D9000DF9C7A /* DataModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213F92BC92D9000DF9C7A /* DataModelTest.swift */; };
+		832213FA2BC92D9000DF9C7A /* PersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213F92BC92D9000DF9C7A /* PersistenceTests.swift */; };
 		832214152BC937F800DF9C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 832214142BC937F800DF9C7A /* README.md */; };
 		832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214162BC938C400DF9C7A /* CreateNewProfile1.swift */; };
 		832214242BD4300B00DF9C7A /* InputShortTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214232BD4300B00DF9C7A /* InputShortTextField.swift */; };
@@ -96,7 +96,7 @@
 		832213EC2BC92D9000DF9C7A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		832213EF2BC92D9000DF9C7A /* ProgressX_2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProgressX_2.xcdatamodel; sourceTree = "<group>"; };
 		832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProgressX-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		832213F92BC92D9000DF9C7A /* DataModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelTest.swift; sourceTree = "<group>"; };
+		832213F92BC92D9000DF9C7A /* PersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceTests.swift; sourceTree = "<group>"; };
 		832214142BC937F800DF9C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		832214162BC938C400DF9C7A /* CreateNewProfile1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile1.swift; sourceTree = "<group>"; };
 		832214232BD4300B00DF9C7A /* InputShortTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputShortTextField.swift; sourceTree = "<group>"; };
@@ -265,7 +265,7 @@
 		832213F82BC92D9000DF9C7A /* ProgressX-2Tests */ = {
 			isa = PBXGroup;
 			children = (
-				832213F92BC92D9000DF9C7A /* DataModelTest.swift */,
+				832213F92BC92D9000DF9C7A /* PersistenceTests.swift */,
 				8310D91B2C051951004A5A3D /* JsonValidtionTests.swift */,
 			);
 			path = "ProgressX-2Tests";
@@ -527,7 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8310D91C2C051951004A5A3D /* JsonValidtionTests.swift in Sources */,
-				832213FA2BC92D9000DF9C7A /* DataModelTest.swift in Sources */,
+				832213FA2BC92D9000DF9C7A /* PersistenceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

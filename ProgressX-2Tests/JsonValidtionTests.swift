@@ -20,8 +20,8 @@ final class JsonValidtionTests: XCTestCase {
     }
 
     func testExample() throws {
-        let p = PersistenceController.shared
-        let context: NSManagedObjectContext = p.previewContainer.viewContext
+        let p = PersistenceController.preview
+        let context: NSManagedObjectContext = p.container.viewContext
         
         guard let asset = NSDataAsset(name: "Exercises", bundle: Bundle.main) else {
             fatalError("Could not find exercises")
