@@ -20,102 +20,114 @@ struct EditExerciseView: View {
     
     @Binding var exercise: Exercise?
     @State private var exerciseEditedAlert: Bool = false
+    @State private var noChangeAlert: Bool = false
     @State private var newName: String = ""
     @State private var newDesc: String = ""
     @State private var newNameIsInvalid: Bool = false
     @State private var newNameIsInvalidMsg: String = ""
-    
-    private func showExerciseEditedAlet() -> some View {
-        Text("Succesfully edited exercise")
-            .fontWeight(.light)
-            .foregroundStyle(.green)
-            .padding(.bottom, 10)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    withAnimation {
-                        exerciseEditedAlert = false
-                    }
-                }
-            }
-    }
+    @State private var newDescIsInvalid: Bool = false
+    @State private var newDescIsInvalidMsg: String = ""
     
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
-                
-                BoldTitle(
-                    text: "Editing exercise \(exercise!.exerciseName!)"
-                )
-                    
-                if exerciseEditedAlert {
-                    showExerciseEditedAlet()
-                }
-                
-                (Text("Description: ")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                 + Text("\(exercise!.exerciseDesc!)")
-                    .fontWeight(.light)
-                    .foregroundColor(.black))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    .padding()
-                
-                InputShortTextField(
-                    placeHolder: "New exercise name",
-                    text: $newName,
-                    markAsWrong: $newNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $newNameIsInvalidMsg
-                )
-                    
-                TextField("New exercise description", text: $newDesc)
-                    .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.bottom, 10)
-                
-                // MARK: Handle an edit of an exercise
-                Button(action: {
-                    if validateInput() {
-                        let inputName = newName.isEmpty ? exercise!.exerciseName! : newName
-                        let inputDesc = newDesc.isEmpty ? exercise!.exerciseDesc! : newDesc
-                        exercise!.exerciseName = inputName
-                        exercise!.exerciseDesc = inputDesc
-                        PersistenceController.save(viewContext)
-                        withAnimation {exerciseEditedAlert = true}
+                    BoldTitle(
+                        text: "Editing exercise \(exercise!.exerciseName!)"
+                    )
+                        
+                    if exerciseEditedAlert {
+                        SubmitAlert(message: "Succesfully edited Exercise!", color: .green, showAlertState: $exerciseEditedAlert)
                     }
-                }) {
-                    Text("Save changes")
-                        .frame(height: 40)
-                    Image(systemName: "square.and.arrow.down")
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                
+                    
+                    if noChangeAlert {
+                        SubmitAlert(message: "No changes to Exercise", color: .blue, showAlertState: $noChangeAlert)
+                    }
+                    
+                    (Text("Description: ")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                     + Text("\(exercise!.exerciseDesc!)")
+                        .fontWeight(.light)
+                        .foregroundColor(.black))
+                    .padding(.horizontal, 25)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
+                        .padding(.bottom, 20)
+                    
+                    InputShortTextField(
+                        placeHolder: "New exercise name",
+                        text: $newName,
+                        markAsWrong: $newNameIsInvalid,
+                        width: 0.6,
+                        errorMessage: $newNameIsInvalidMsg
+                    )
+                    .padding(.bottom, 10)
+                        
+                    InputShortTextField(
+                        placeHolder: "new exercise description",
+                        text: $newDesc,
+                        markAsWrong: $newDescIsInvalid,
+                        width: 0.6,
+                        errorMessage: $newDescIsInvalidMsg
+                    )
+                    .padding(.bottom, 20)
+                    
+                    // MARK: Handle an edit of an exercise
+                    Button(action: {
+                        if validateInput() {
+                            let inputName = newName.isEmpty ? exercise!.exerciseName! : newName
+                            let inputDesc = newDesc.isEmpty ? exercise!.exerciseDesc! : newDesc
+                            exercise!.exerciseName = inputName
+                            exercise!.exerciseDesc = inputDesc
+                            
+                            PersistenceController.save(viewContext)
+                            
+                            if newName.isEmpty && newDesc.isEmpty {
+                                withAnimation {
+                                    noChangeAlert = true
+                                    newName = ""
+                                    newDesc = ""
+                                }
+                            } else {
+                                withAnimation {
+                                    exerciseEditedAlert = true
+                                    newName = ""
+                                    newDesc = ""
+                                }
+                            }
+                        }
+                    }) {
+                        Text("Save changes")
+                            .frame(height: 40)
+                        Image(systemName: "square.and.arrow.down")
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
             }
         }
     }
-    
+        
     private func validateInput() -> Bool {
-        var valid: Bool
+        var valid: Int = 0
         
         // Special case for already taken names
-        valid = {
+        valid += {
             if (exercises.contains { $0.exerciseName == newName }) {
                 newNameIsInvalid = true
                 newNameIsInvalidMsg = "This Exercise name is already taken!"
-                return false
+                return 1
             } else {
                 newNameIsInvalid = false
                 newNameIsInvalidMsg = ""
-                return true
+                return 0
             }
         }()
         
         let stringFieldValidator = StringFieldValidator(emptyAllowed: true)
-        valid = stringFieldValidator.valideField(inputVar: newName, errorMessage: $newNameIsInvalidMsg, fieldInvalid: $newNameIsInvalid)
+        valid += stringFieldValidator.valideField(inputVar: newName, errorMessage: $newNameIsInvalidMsg, fieldInvalid: $newNameIsInvalid)
+        valid += stringFieldValidator.valideField(inputVar: newDesc, errorMessage: $newDescIsInvalidMsg, fieldInvalid: $newDescIsInvalid)
         
-        return valid
+        return valid == 0
     }
 }
 

@@ -48,27 +48,10 @@ struct DoubleChart: View {
     var body: some View {
         
         let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
+        // Infer the quantity unit from the personal records, if not possible set to unknown.
+        let quantityUnit = personalRecordResults.first?.quantityUnitString() ?? "unknown"
         
-        // Get the highest weightload pr recorded on the exercise
-        let highestPrByLoad: PersonalRecord? = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})
-        let highestPrLoad: Double = highestPrByLoad?.weightLoad ?? 0
-        
-        // Get the highest bodyweight recorded
-        let highestBwEntry: BodyEntry? = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})
-        let highestBw: Double = highestBwEntry?.bodyWeight ?? 0
-        
-        // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
-        let loadHigherThanBw: Bool = highestPrLoad >= highestBw
-        let highestOfLoadAndBw: Double = loadHigherThanBw ? highestPrLoad : highestBw
-        
-        // Highest quantity count
-        let highestPrByQuantity: PersonalRecord? = personalRecordResults.max(by: {$0.prQuantity < $1.prQuantity})
-        let highestPrQuantity: Double = highestPrByQuantity?.prQuantity ?? 0
-        
-        // Infer the quantity unit from the personal records
-        let quantityUnit = personalRecordResults.first!.quantityUnitString()
-        
-        (Text("AMRAP")
+        (Text(set)
             .font(.subheadline)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
          + Text(" chart for ")
@@ -101,6 +84,23 @@ struct DoubleChart: View {
                     .padding(.all, 80)
                     .multilineTextAlignment(.center)
             } else {
+                
+                // Get the highest weightload pr recorded on the exercise
+                let highestPrByLoad: PersonalRecord? = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})
+                let highestPrLoad: Double = highestPrByLoad?.weightLoad ?? 0
+                
+                // Get the highest bodyweight recorded
+                let highestBwEntry: BodyEntry? = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})
+                let highestBw: Double = highestBwEntry?.bodyWeight ?? 0
+                
+                // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
+                let loadHigherThanBw: Bool = highestPrLoad >= highestBw
+                let highestOfLoadAndBw: Double = loadHigherThanBw ? highestPrLoad : highestBw
+                
+                // Highest quantity count
+                let highestPrByQuantity: PersonalRecord? = personalRecordResults.max(by: {$0.prQuantity < $1.prQuantity})
+                let highestPrQuantity: Double = highestPrByQuantity?.prQuantity ?? 0
+                
                 VStack {
                     
                     loadChart(yscale: highestOfLoadAndBw)

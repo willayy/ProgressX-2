@@ -8,7 +8,7 @@
 import SwiftUI
 import Combine
 
-private let nonAllowedChars = ".,;´`'*^¨><"
+private let nonAllowedChars = ".,;´`'*^¨><()"
 private let maxChars = 25
 
 /// TextField used for short text input, composed of the base InputField component

@@ -52,6 +52,7 @@
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
 		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
+		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
 /* End PBXBuildFile section */
 
@@ -121,6 +122,7 @@
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
 		83F110B82C1CC9600068953B /* CreateNewProfile4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4.swift; sourceTree = "<group>"; };
+		83F110BB2C1F26040068953B /* SubmitAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlert.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -285,6 +287,7 @@
 		832214222BD42FF800DF9C7A /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				83F110BA2C1F25E50068953B /* SubmitAlerts */,
 				8359F97B2C1B2489004BA421 /* InputValidation */,
 				83FBF1932C14564E004D0E2A /* GeneralExerciseInfoBoxes */,
 				8310D92E2C0CAB03004A5A3D /* ExerciseListItems */,
@@ -329,6 +332,14 @@
 				8310D9312C0E0617004A5A3D /* EditPrView.swift */,
 			);
 			path = ExerciseLibraryViews;
+			sourceTree = "<group>";
+		};
+		83F110BA2C1F25E50068953B /* SubmitAlerts */ = {
+			isa = PBXGroup;
+			children = (
+				83F110BB2C1F26040068953B /* SubmitAlert.swift */,
+			);
+			path = SubmitAlerts;
 			sourceTree = "<group>";
 		};
 		83FBF1932C14564E004D0E2A /* GeneralExerciseInfoBoxes */ = {
@@ -486,6 +497,7 @@
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
+				83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,

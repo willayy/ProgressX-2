@@ -27,6 +27,7 @@ struct EditPrView: View {
     
     // Alert vars
     @State private var prEditedAlert: Bool = false
+    @State private var noChangeAlert: Bool = false
     
     var body: some View {
         
@@ -38,7 +39,11 @@ struct EditPrView: View {
                 BoldTitle(text: "Editing PR for \(exercise!.exerciseName!)")
                 
                 if prEditedAlert {
-                    showPrEditedAlert()
+                    SubmitAlert(message: "Succesfully edited PR!", color: .green, showAlertState: $prEditedAlert)
+                }
+                
+                if noChangeAlert {
+                    SubmitAlert(message: "No changes to PR", color: .blue, showAlertState: $noChangeAlert)
                 }
                 
                 VStack(alignment: .leading) {
@@ -83,7 +88,8 @@ struct EditPrView: View {
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(0.5)
                 
-                }.padding(.bottom, 20)
+                }
+                .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Change date")
                 
@@ -102,6 +108,8 @@ struct EditPrView: View {
                     width: 0.7,
                     errorMessage: $newWeightLoadInvalidMsg
                 )
+                .padding(.top, 10)
+                .padding(.bottom, 10)
                 
                 if editingPr!.prType == "maxreps" {
                     InputIntegerNumberField(
@@ -111,6 +119,7 @@ struct EditPrView: View {
                         width: 0.7,
                         errorMessage: $newQuantityInvalidMsg
                     )
+                    .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
                     InputDecimalNumberField(
                         placeHolder: "New time...",
@@ -119,15 +128,32 @@ struct EditPrView: View {
                         width: 0.7,
                         errorMessage: $newQuantityInvalidMsg
                     )
+                    .padding(.bottom, 10)
                 }
                 
                 Button(action: {
                     if validateInput() {
-                        editingPr!.achievedOnDate = newDate
-                        editingPr!.weightLoad = newWeightLoad != "" ? Double(newWeightLoad)! : editingPr!.weightLoad
-                        editingPr!.prQuantity = newQuantity != "" ? Double(newQuantity)! : editingPr!.prQuantity
+                        
+                        editingPr!.weightLoad = newWeightLoad.isEmpty ? editingPr!.weightLoad : Double(newWeightLoad)!
+                        editingPr!.prQuantity = newQuantity.isEmpty ? editingPr!.prQuantity : Double(newQuantity)!
+                        
                         PersistenceController.save(viewContext)
-                        withAnimation {prEditedAlert = true}
+                        
+                        if newWeightLoad.isEmpty && newQuantity.isEmpty && newDate == editingPr!.achievedOnDate {
+                            editingPr!.achievedOnDate = newDate
+                            withAnimation {
+                                noChangeAlert = true
+                                newWeightLoad = ""
+                                newQuantity = ""
+                            }
+                        } else {
+                            editingPr!.achievedOnDate = newDate
+                            withAnimation {
+                                prEditedAlert = true
+                                newWeightLoad = ""
+                                newQuantity = ""
+                            }
+                        }
                     }
                 }) {
                     Text("Save changes")
@@ -141,31 +167,17 @@ struct EditPrView: View {
         }
     }
     
-    private func showPrEditedAlert() -> some View {
-        Text("Succesfully edited PR")
-            .fontWeight(.light)
-            .foregroundStyle(.green)
-            .padding(.bottom, 10)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    withAnimation {
-                        prEditedAlert = false
-                    }
-                }
-            }
-    }
-    
     private func validateInput() -> Bool {
-        var valid: Bool = true
-        let loadFieldValidator = DoubleFieldValidator()
+        var valid: Int = 0
+        let loadFieldValidator = DoubleFieldValidator(emptyAllowed: true)
         let quantityFieldValidator: InputFieldValidator = {
-            return (editingPr!.prType == "timemax" ? DoubleFieldValidator() : IntFieldValidator())
+            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(emptyAllowed: true) : IntFieldValidator(emptyAllowed: true))
         }()
         
-        valid = loadFieldValidator.valideField(inputVar: newWeightLoad, errorMessage: $newWeightLoadInvalidMsg, fieldInvalid: $newWeightLoadInvalid)
-        valid = quantityFieldValidator.valideField(inputVar: newQuantity, errorMessage: $newQuantityInvalidMsg, fieldInvalid: $newQuantityInvalid)
+        valid += loadFieldValidator.valideField(inputVar: newWeightLoad, errorMessage: $newWeightLoadInvalidMsg, fieldInvalid: $newWeightLoadInvalid)
+        valid += quantityFieldValidator.valideField(inputVar: newQuantity, errorMessage: $newQuantityInvalidMsg, fieldInvalid: $newQuantityInvalid)
         
-        return valid
+        return valid == 0
     }
 }
 

@@ -18,7 +18,13 @@ class InputFieldValidator {
     }
     
     // Replace with protocol in the future
-    public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Bool {
+    /// Returns 1 if invalid 0 otherwise
+    /// - Parameters:
+    ///   - inputVar: The input value of the field
+    ///   - errorMessage: The error message state
+    ///   - fieldInvalid: The field invalid state
+    /// - Returns: 1 or 0 (Int)
+    public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
         fatalError("This must be overrided in InputFieldValidator subclasses")
     }
     

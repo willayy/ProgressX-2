@@ -146,13 +146,13 @@ struct CreateNewProfile1: View {
     
     // Validates input
     private func validateInput() -> Bool {
-        var valid: Bool = true
+        var valid: Int = 0
         let doubleFieldValidator = DoubleFieldValidator()
         let stringFieldValidator = StringFieldValidator()
-        valid = doubleFieldValidator.valideField(inputVar: height, errorMessage: $heightIsInvalidMsg, fieldInvalid: $heightIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: weight, errorMessage: $weightIsInvalidMsg, fieldInvalid: $weightIsInvalid)
-        valid = stringFieldValidator.valideField(inputVar: userName, errorMessage: $userNameIsInvalidMsg, fieldInvalid: $userNameIsInvalid)
-        return valid
+        valid += doubleFieldValidator.valideField(inputVar: height, errorMessage: $heightIsInvalidMsg, fieldInvalid: $heightIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: weight, errorMessage: $weightIsInvalidMsg, fieldInvalid: $weightIsInvalid)
+        valid += stringFieldValidator.valideField(inputVar: userName, errorMessage: $userNameIsInvalidMsg, fieldInvalid: $userNameIsInvalid)
+        return valid == 0
     }
     
     // Calls this method when "Continue" button is pressed

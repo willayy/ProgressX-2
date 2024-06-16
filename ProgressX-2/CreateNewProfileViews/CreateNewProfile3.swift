@@ -48,6 +48,7 @@ struct CreateNewProfile3: View {
     // Constants specific to elements in this view
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
+    let textWidth: Double = 200
     
     var body: some View {
         
@@ -82,37 +83,37 @@ struct CreateNewProfile3: View {
                     HStack() {
                         Text("Chest circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $chestCirc, markAsWrong: $chestCircIsInvalid, width: inputFieldWidth, errorMessage: $chestCircIsInvalidMsg)
                     }
                     HStack() {
                         Text("Waist circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $waistCirc, markAsWrong: $waistCircIsInvalid, width: inputFieldWidth, errorMessage: $waistCircIsInvalidMsg)
                     }
                     HStack() {
                         Text("Thigh circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $thighCirc, markAsWrong: $thighCircIsInvalid, width: inputFieldWidth, errorMessage: $thighCircIsInvalidMsg)
                     }
                     HStack() {
                         Text("Calf circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $calfCirc, markAsWrong: $calfCircIsInvalid, width: inputFieldWidth, errorMessage: $calfCircIsInvalidMsg)
                     }
                     HStack() {
                         Text("Lower arm circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $lowerArmCirc, markAsWrong: $lowerArmCircIsInvalid, width: inputFieldWidth, errorMessage: $lowerArmCircIsInvalidMsg)
                     }
                     HStack() {
                         Text("Upper arm circumference")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: circumferenceUnit, numberText: $upperArmCirc, markAsWrong: $upperArmCircIsInvalid, width: inputFieldWidth, errorMessage: $upperArmCircIsInvalidMsg)
                     }
                     
@@ -137,15 +138,15 @@ struct CreateNewProfile3: View {
     
     // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself
     private func validateInput() -> Bool {
-        var valid: Bool = true
+        var valid: Int = 0
         let doubleFieldValidator = DoubleFieldValidator()
-        valid = doubleFieldValidator.valideField(inputVar: chestCirc, errorMessage: $chestCircIsInvalidMsg, fieldInvalid: $chestCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: waistCirc, errorMessage: $waistCircIsInvalidMsg, fieldInvalid: $waistCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: thighCirc, errorMessage: $thighCircIsInvalidMsg, fieldInvalid: $thighCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: calfCirc, errorMessage: $calfCircIsInvalidMsg, fieldInvalid: $calfCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: upperArmCirc, errorMessage: $upperArmCircIsInvalidMsg, fieldInvalid: $upperArmCircIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: lowerArmCirc, errorMessage: $lowerArmCircIsInvalidMsg, fieldInvalid: $lowerArmCircIsInvalid)
-        return valid
+        valid += doubleFieldValidator.valideField(inputVar: chestCirc, errorMessage: $chestCircIsInvalidMsg, fieldInvalid: $chestCircIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: waistCirc, errorMessage: $waistCircIsInvalidMsg, fieldInvalid: $waistCircIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: thighCirc, errorMessage: $thighCircIsInvalidMsg, fieldInvalid: $thighCircIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: calfCirc, errorMessage: $calfCircIsInvalidMsg, fieldInvalid: $calfCircIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: upperArmCirc, errorMessage: $upperArmCircIsInvalidMsg, fieldInvalid: $upperArmCircIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: lowerArmCirc, errorMessage: $lowerArmCircIsInvalidMsg, fieldInvalid: $lowerArmCircIsInvalid)
+        return valid == 0
     }
     
     private func addExtraInfo() {

@@ -65,15 +65,15 @@ struct CreateNewExerciseView: View {
                 BoldTitle(text: "Create new exercise")
                 
                 if exerciseCreatedAlert {
-                    showExerciseCreatedAlert()
+                    SubmitAlert(message: "Successfully created new Exercise!", color: .green, showAlertState: $exerciseCreatedAlert)
                 }
                 
                 InputShortTextField(placeHolder: "New exercise name", text: $enteredExerciseName, markAsWrong: $enteredExerciseNameIsInvalid, width: 0.6, errorMessage: $enteredExerciseNameIsInvalidMsg)
+                    .padding(.bottom, 10)
                 
-                TextField("New exercise description", text: $enteredExerciseDesc)
-                    .frame(width: UIScreen.main.bounds.width * 0.6, height: 50)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.bottom)
+                
+                InputShortTextField(placeHolder: "New exercise description", text: $enteredExerciseDesc, markAsWrong: $enteredExerciseDescIsInvalid, width: 0.6, errorMessage: $enteredExerciseDescIsInvalidMsg)
+                    .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Exercise type?")
                 
@@ -100,7 +100,7 @@ struct CreateNewExerciseView: View {
                     InputDecimalNumberField(placeHolder: "Load (\(weightUnit))", numberText: $enteredPrWeigtLoad, markAsWrong: $enteredPrWeigtLoadIsInvalid, width: 0.6, errorMessage: $enteredPrWeigtLoadIsInvalidMsg)
                     
                     if selectedTypeOfExercise == "Time" {
-                        InputDecimalNumberField(placeHolder: "Pr time in seconds", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
+                        InputDecimalNumberField(placeHolder: "PR time in seconds", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
                             
                     } else if selectedTypeOfExercise == "Reps" {
                         InputIntegerNumberField(placeHolder: "Reps", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
@@ -135,7 +135,7 @@ struct CreateNewExerciseView: View {
                                 prType = "" // This should never be the case
                             }
                             
-                            _ = PersistenceController.createPersonalRecord(
+                            let pr = PersistenceController.createPersonalRecord(
                                 viewContext,
                                 exercise: exercise,
                                 wl: Double(enteredPrWeigtLoad)!,
@@ -143,6 +143,8 @@ struct CreateNewExerciseView: View {
                                 date: Date(),
                                 type: prType
                             )
+                            
+                            exercise.addToPersonalRecords(pr)
                         }
                         
                         PersistenceController.save(viewContext)
@@ -187,45 +189,31 @@ struct CreateNewExerciseView: View {
     /// Validates input, marks textfields that are filled incorrectly.
     /// - Returns: True if input is  valid and false if not
     private func validateInput() -> Bool {
-        var valid: Bool = true
+        var valid: Int = 0
         
         // Special case for already taken names
-        valid = {
+        valid += {
             if (exercises.contains { $0.exerciseName == enteredExerciseName }) {
                 enteredExerciseNameIsInvalid = true
                 enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
-                return false
+                return 1
             } else {
                 enteredExerciseNameIsInvalid = false
                 enteredExerciseNameIsInvalidMsg = ""
-                return true
+                return 0
             }
         }()
         
         let doubleFieldValidator = DoubleFieldValidator()
-        let stringFieldValidator = StringFieldValidator()
-        valid = stringFieldValidator.valideField(inputVar: enteredExerciseName, errorMessage: $enteredExerciseNameIsInvalidMsg ,fieldInvalid: $enteredExerciseNameIsInvalid)
-        valid = stringFieldValidator.valideField(inputVar: enteredExerciseDesc, errorMessage: $enteredExerciseDescIsInvalidMsg ,fieldInvalid: $enteredExerciseDescIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
-        return valid
-    }
-    
-    /// Shows an alert that an exercise has been created
-    /// - Returns: some View
-    private func showExerciseCreatedAlert() -> some View {
-        Text("Succesfully created exercise called \(enteredExerciseName)")
-            .fontWeight(.light)
-            .foregroundStyle(.green)
-            .padding(.bottom, 10)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                    withAnimation {
-                        exerciseCreatedAlert = false
-                        enteredExerciseName = ""
-                    }
-                }
-            }
+        let nameFieldValidator = StringFieldValidator()
+        let descFieldValidator = StringFieldValidator(emptyAllowed: true)
+        valid += nameFieldValidator.valideField(inputVar: enteredExerciseName, errorMessage: $enteredExerciseNameIsInvalidMsg ,fieldInvalid: $enteredExerciseNameIsInvalid)
+        valid += descFieldValidator.valideField(inputVar: enteredExerciseDesc, errorMessage: $enteredExerciseDescIsInvalidMsg ,fieldInvalid: $enteredExerciseDescIsInvalid)
+        if addPr == "Yes" {
+            valid += doubleFieldValidator.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
+            valid += doubleFieldValidator.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
+        }
+        return valid == 0
     }
 }
 

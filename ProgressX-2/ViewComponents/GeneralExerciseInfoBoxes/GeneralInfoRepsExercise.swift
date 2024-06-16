@@ -25,7 +25,7 @@ struct GeneralInfoRepsExercise: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSPredicate(format: "exercise == %@", exercise!),
-                NSPredicate(format: "prType == maxreps")
+                NSPredicate(format: "prType == %@", "maxreps")
             ])
         )
         self._oneRepMaxPersonalRecords = FetchRequest<PersonalRecord>(
@@ -33,7 +33,7 @@ struct GeneralInfoRepsExercise: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSPredicate(format: "exercise == %@", exercise!),
-                NSPredicate(format: "prType == onerepmax")
+                NSPredicate(format: "prType == %@", "onerepmax")
             ])
         )
     }

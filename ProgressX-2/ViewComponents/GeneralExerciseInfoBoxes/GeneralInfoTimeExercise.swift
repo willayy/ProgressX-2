@@ -23,7 +23,7 @@ struct GeneralInfoTimeExercise: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSPredicate(format: "exercise == %@", exercise!),
-                NSPredicate(format: "prType == timemax")
+                NSPredicate(format: "prType == %@", "timemax")
             ])
         )
     }

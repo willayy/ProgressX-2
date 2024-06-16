@@ -58,8 +58,9 @@ struct CreateNewProfile4: View {
     @State var pushupsAmrapIsInvalidMsg = ""
     
     // Constants specific to elements in this view
-    let inputFieldWidth = 0.2
-    let minScaleFactor = 0.05
+    let inputFieldWidth: Double = 0.2
+    let minScaleFactor: Double = 0.05
+    let textWidth: Double = 150
     
     var body: some View {
         
@@ -91,25 +92,25 @@ struct CreateNewProfile4: View {
                     HStack() {
                         Text("Benchpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: weightUnit, numberText: $benchPress1RM, markAsWrong: $benchPress1RMIsInvalid, width: inputFieldWidth, errorMessage: $benchPress1RMIsInvalidMsg)
                     }
                     HStack() {
                         Text("Squats")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: weightUnit, numberText: $squat1RM, markAsWrong: $squat1RMIsInvalid, width: inputFieldWidth, errorMessage: $squat1RMIsInvalidMsg)
                     }
                     HStack() {
                         Text("Shoulderpress")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: weightUnit, numberText: $shoulderPress1RM, markAsWrong: $shoulderPress1RMIsInvalid, width: inputFieldWidth, errorMessage: $shoulderPress1RMIsInvalidMsg)
                     }
                     HStack() {
                         Text("Deadlift")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputDecimalNumberField(placeHolder: weightUnit, numberText: $deadLift1RM, markAsWrong: $deadLift1RMIsInvalid, width: inputFieldWidth, errorMessage: $deadLift1RMIsInvalidMsg)
                     }
                 }
@@ -123,13 +124,13 @@ struct CreateNewProfile4: View {
                     HStack() {
                         Text("Pushups")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputIntegerNumberField(placeHolder: "reps", numberText: $pushupsAmrap, markAsWrong: $pushupsAmrapIsInvalid, width: inputFieldWidth, errorMessage: $pushupsAmrapIsInvalidMsg)
                     }
                     HStack() {
                         Text("Situps")
                             .minimumScaleFactor(minScaleFactor)
-                            .frame(width: 150)
+                            .frame(width: textWidth)
                         InputIntegerNumberField(placeHolder: "reps", numberText: $situpsAmrap, markAsWrong: $situpsAmrapIsInvalid, width: inputFieldWidth, errorMessage: $situpsAmrapIsInvalidMsg)
                     }
                 }
@@ -152,16 +153,16 @@ struct CreateNewProfile4: View {
     }
     
     private func validateInput() -> Bool {
-        var valid: Bool = true
+        var valid: Int = 0
         let doubleFieldValidator = DoubleFieldValidator()
         let intFieldValidator = IntFieldValidator()
-        valid = doubleFieldValidator.valideField(inputVar: benchPress1RM, errorMessage: $benchPress1RMIsInvalidMsg, fieldInvalid: $benchPress1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: squat1RM, errorMessage: $squat1RMIsInvalidMsg, fieldInvalid: $squat1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: deadLift1RM, errorMessage: $deadLift1RMIsInvalidMsg, fieldInvalid: $deadLift1RMIsInvalid)
-        valid = doubleFieldValidator.valideField(inputVar: shoulderPress1RM, errorMessage: $shoulderPress1RMIsInvalidMsg, fieldInvalid: $shoulderPress1RMIsInvalid)
-        valid = intFieldValidator.valideField(inputVar: pushupsAmrap, errorMessage: $pushupsAmrapIsInvalidMsg, fieldInvalid: $pushupsAmrapIsInvalid)
-        valid = intFieldValidator.valideField(inputVar: situpsAmrap, errorMessage: $situpsAmrapIsInvalidMsg, fieldInvalid: $situpsAmrapIsInvalid)
-        return valid
+        valid += doubleFieldValidator.valideField(inputVar: benchPress1RM, errorMessage: $benchPress1RMIsInvalidMsg, fieldInvalid: $benchPress1RMIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: squat1RM, errorMessage: $squat1RMIsInvalidMsg, fieldInvalid: $squat1RMIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: deadLift1RM, errorMessage: $deadLift1RMIsInvalidMsg, fieldInvalid: $deadLift1RMIsInvalid)
+        valid += doubleFieldValidator.valideField(inputVar: shoulderPress1RM, errorMessage: $shoulderPress1RMIsInvalidMsg, fieldInvalid: $shoulderPress1RMIsInvalid)
+        valid += intFieldValidator.valideField(inputVar: pushupsAmrap, errorMessage: $pushupsAmrapIsInvalidMsg, fieldInvalid: $pushupsAmrapIsInvalid)
+        valid += intFieldValidator.valideField(inputVar: situpsAmrap, errorMessage: $situpsAmrapIsInvalidMsg, fieldInvalid: $situpsAmrapIsInvalid)
+        return valid == 0
     }
     
     private func addExtraInfo() {

@@ -50,14 +50,8 @@ struct SingleChart: View {
         
         // Get the weightUnit
         let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
-        // Get the pr with the highest load recorded on the exercise
-        let highestLoad = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})?.weightLoad ?? 0
-        // Get the highest bodyweight recorded on this profile
-        let highestBw = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})?.bodyWeight ?? 0
-        // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
-        let highestOfLoadAndBw = highestLoad >= highestBw ? highestLoad : highestBw
         
-        (Text("1RM")
+        (Text(set)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
          + Text(" chart for ")
          + Text(exercise.exerciseName!)
@@ -86,6 +80,14 @@ struct SingleChart: View {
                     .padding(.all, 80)
                     .multilineTextAlignment(.center)
             } else {
+                
+                // Get the pr with the highest load recorded on the exercise
+                let highestLoad = personalRecordResults.max(by: {$0.weightLoad < $1.weightLoad})?.weightLoad ?? 0
+                // Get the highest bodyweight recorded on this profile
+                let highestBw = bodyEntryResults.max(by: {$0.bodyWeight < $1.bodyWeight})?.bodyWeight ?? 0
+                // Compare and chose the one who has the biggest value, this is later used to scale the y axis correctly
+                let highestOfLoadAndBw = highestLoad >= highestBw ? highestLoad : highestBw
+                
                 VStack {
                     Chart {
                         ForEach(personalRecordResults) {

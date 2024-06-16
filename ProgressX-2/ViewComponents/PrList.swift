@@ -11,7 +11,7 @@ import CoreData
 struct PrList: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest private var personalRecordResults: FetchedResults<PersonalRecord>
+    @FetchRequest private var personalRecords: FetchedResults<PersonalRecord>
     @Binding private var navPath: [Int]
     @Binding private var editingPr: PersonalRecord?
     private let exercise: Exercise
@@ -22,7 +22,7 @@ struct PrList: View {
         self.exercise = exercise
         self._editingPr = editingPr
         self.prType = prType
-        self._personalRecordResults = FetchRequest<PersonalRecord>(
+        self._personalRecords = FetchRequest<PersonalRecord>(
             entity: PersonalRecord.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: false)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
@@ -35,11 +35,11 @@ struct PrList: View {
     
     var body: some View {
         
-        BoldSubHeadline(text: "List of all \(prType) PR's achieved on \(exercise.exerciseName!)")
+        BoldSubHeadline(text: "List of all \(personalRecords.first?.typeString() ?? "") PR's achieved on \(exercise.exerciseName!)")
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
-        if personalRecordResults.isEmpty {
+        if personalRecords.isEmpty {
             Text("No PR's found for this exercise")
                 .font(.subheadline)
                 .padding(.top, 20)
@@ -48,7 +48,7 @@ struct PrList: View {
         
         else {
             List {
-                ForEach(personalRecordResults) { pr in
+                ForEach(personalRecords) { pr in
                     PrListItem(navPath: $navPath,
                                editingPr: $editingPr,
                                pr: pr)

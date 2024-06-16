@@ -18,7 +18,7 @@ extension PersonalRecord {
             case "onerepmax":
                 return "reps"
             case "timemax":
-                return "s"
+                return "seconds"
             default:
                 return ""
         }

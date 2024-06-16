@@ -46,7 +46,7 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "1RM"
+                        prType: "onerepmax"
                     ).environment(\.managedObjectContext, viewContext)
                     
                     DoubleChart(
@@ -59,7 +59,7 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "AMRAP"
+                        prType: "maxreps"
                     ).environment(\.managedObjectContext, viewContext)
                     
                 } else if exercise!.exerciseType == "time" {
@@ -73,7 +73,7 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "Time-max"
+                        prType: "timemax"
                     ).environment(\.managedObjectContext, viewContext)
                 }
             }

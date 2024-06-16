@@ -11,14 +11,14 @@ import CoreData
 struct ExerciseLibraryView: View {
     
     @EnvironmentObject private var viewRouter: ViewRouter
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
         entity: Exercise.entity(),
-        sortDescriptors: []
+        sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
     ) private var exercises: FetchedResults<Exercise>
     
-    @State private var exerciseResults: [Exercise] = []
     @State private var navPath = [Int]()
     @State private var selectedExercise: Exercise? = nil
     @State private var searchText: String = ""
@@ -46,7 +46,7 @@ struct ExerciseLibraryView: View {
                     
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center) {
-                        if exerciseResults.isEmpty {
+                        if exercises.isEmpty {
                             LightSubHeadline(text: "You currently have no exercises saved to the exercise library...")
                                 .padding(.bottom, 20)
                                 .padding(.top, 20)
@@ -108,7 +108,7 @@ struct ExerciseLibraryView: View {
     /// Returns an array of exercises that has filtered by a seach-word from the CoreData fetch result
     /// - Returns: An array filtered by a search-word
     private func searchedItems() -> [Exercise] {
-        return exercises.filter { exercises.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
+        return exercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
     }
     
 }
