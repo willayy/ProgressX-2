@@ -9,7 +9,23 @@ import SwiftUI
 
 struct MockLaunchScreen: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            
+            Text("ProgressX-2")
+                .font(.largeTitle)
+                .bold()
+                .animation(.smooth)
+            
+            Text("Linear progression, planning and statistics")
+                .font(.subheadline)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 62)
+            
+            ProgressView()
+                .scaleEffect(CGSize(width: 3.0, height: 3.0))
+                .padding(.top, 25)
+            
+        }
     }
 }
 

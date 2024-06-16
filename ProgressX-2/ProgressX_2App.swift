@@ -12,10 +12,24 @@ struct ProgressX_2App: App {
 
     let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
+    @State var isLoading: Bool = true
     
     var body: some Scene {
         WindowGroup {
-            switch (viewRouter.rootView) {
+            
+            if isLoading {
+                MockLaunchScreen()
+                    .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                isLoading = false
+                            }
+                        }
+                    })
+            }
+            
+            else {
+                switch (viewRouter.rootView) {
                 case "HomeView":
                     ExerciseLibraryView()
                         .environmentObject(viewRouter)
@@ -28,8 +42,9 @@ struct ProgressX_2App: App {
                     ExerciseLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-            default:
-                fatalError("View router is in an invalid state")
+                default:
+                    fatalError("View router is in an invalid state")
+                }
             }
         }
     }
