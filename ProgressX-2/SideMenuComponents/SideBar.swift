@@ -135,6 +135,6 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView().environmentObject(ViewRouter())
 }
 
