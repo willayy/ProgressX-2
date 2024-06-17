@@ -11,11 +11,10 @@ import SwiftUI
 struct CreateNewProfile2: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
-    @Binding var navPath: [Int]
     
-    private func goToHomeView() {
-        viewRouter.rootView = "HomeView"
-    }
+    @Environment(\.managedObjectContext) private var viewContext
+        
+    @Binding var navPath: [Int]
     
     var body: some View {
  
@@ -27,7 +26,7 @@ struct CreateNewProfile2: View {
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.5);
-            
+             
             Text("Do you wish to supply some extra data so we can set the correct PR's for some common exercises and make sure your profile body-metric's are correct? ")
                 .font(.subheadline)
                 .fontWeight(.light)
@@ -61,15 +60,17 @@ struct CreateNewProfile2: View {
             
         }
     }
+    
+    private func goToHomeView() {
+        viewRouter.rootView = "HomeView"
+    }
+    
 }
     
 #Preview {
-    struct Preview: View {
-            @State var navPath = [Int]()
-            var body: some View {
-                CreateNewProfile2(navPath: $navPath)
-                    .environmentObject(ViewRouter())
-            }
-        }
-    return Preview()
+    @State var navPath = [Int]()
+    let context = PersistenceController.preview.container.viewContext
+    return CreateNewProfile2(navPath: $navPath)
+            .environmentObject(ViewRouter())
+            .environment(\.managedObjectContext, context)
 }

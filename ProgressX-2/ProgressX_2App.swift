@@ -10,26 +10,36 @@ import SwiftUI
 @main
 struct ProgressX_2App: App {
 
-    let persistenceController = PersistenceController.shared
+    let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
+    @State var isLoading: Bool = true
     
     var body: some Scene {
-        WindowGroup {
-            switch (viewRouter.rootView) {
-            case "CreateNewProfile1":
-                CreateNewProfile1()
-                    .environmentObject(viewRouter)
-                
-            case "HomeView":
-                HomeView()
-                    .environmentObject(viewRouter)
-                
-            case "Statistics":
-                Statistics()
-                    .environmentObject(viewRouter)
-                
-            default:
-                fatalError("View router invalid state")
+        WindowGroup {            
+            if isLoading {
+                MockLaunchScreen()
+                    .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                isLoading = false
+                            }
+                        }
+                    })
+            }
+            
+            else {
+                switch (viewRouter.rootView) {
+                case "HomeView":
+                    HomeView()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                case "CreateNewProfile1":
+                    CreateNewProfile1()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                default:
+                    fatalError("View router is in an invalid state")
+                }
             }
         }
     }
