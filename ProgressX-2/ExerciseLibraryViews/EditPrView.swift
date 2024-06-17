@@ -24,7 +24,6 @@ struct EditPrView: View {
     @State private var newQuantityInvalidMsg: String = ""
     @State private var newWeightLoadInvalidMsg: String = ""
     
-    
     // Alert vars
     @State private var prEditedAlert: Bool = false
     @State private var noChangeAlert: Bool = false
@@ -36,7 +35,7 @@ struct EditPrView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Editing PR for \(exercise!.exerciseName!)")
+                BoldTitle(text: "Editing PR for: \(exercise!.exerciseName!)")
                 
                 if prEditedAlert {
                     SubmitAlert(message: "Succesfully edited PR!", color: .green, showAlertState: $prEditedAlert)
@@ -141,14 +140,14 @@ struct EditPrView: View {
                         
                         if newWeightLoad.isEmpty && newQuantity.isEmpty && newDate == editingPr!.achievedOnDate {
                             editingPr!.achievedOnDate = newDate
-                            withAnimation {
+                            withAnimation(.easeOut) {
                                 noChangeAlert = true
                                 newWeightLoad = ""
                                 newQuantity = ""
                             }
                         } else {
                             editingPr!.achievedOnDate = newDate
-                            withAnimation {
+                            withAnimation(.easeOut) {
                                 prEditedAlert = true
                                 newWeightLoad = ""
                                 newQuantity = ""

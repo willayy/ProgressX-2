@@ -11,12 +11,6 @@ struct PrListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    // Fetch the Profile to se if its metric or not
-    @FetchRequest(
-        entity: Profile.entity(),
-        sortDescriptors: []
-    ) private var profileResults: FetchedResults<Profile>
-    
     // Access to the parents navigationstack.
     @Binding var navPath: [Int]
     
@@ -28,7 +22,7 @@ struct PrListItem: View {
     
     var body: some View {
         
-        let weightUnit = profileResults.first!.isMetric ? "kg's" : "lbs"
+        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
         
         HStack {
             VStack(alignment: .leading) {
@@ -38,7 +32,7 @@ struct PrListItem: View {
                 
                 (Text("Date: ")
                     .fontWeight(.bold)
-                 + (Text("\(pr.dateString()!)")))
+                 + (Text("\(pr.dateString() ?? "")")))
                 
                 (Text("Load: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
@@ -71,6 +65,7 @@ struct PrListItem: View {
                         message: Text("Are you sure you want to delete this Pr?"),
                         primaryButton: .destructive(Text("Delete")) {
                             PersistenceController.delete(viewContext, object: pr)
+                            PersistenceController.save(viewContext)
                         },
                         secondaryButton: .cancel()
                     )

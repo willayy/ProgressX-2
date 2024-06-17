@@ -52,7 +52,7 @@ struct GeneralInfoRepsExercise: View {
         let allTimeHigh1RM = fetchedMaxValue1RM != nil ? (fetchedMaxValue1RM! + " " + weightUnit) : nil
         
         // Find the latest PR weight value or nil if there are no values
-        let fetchedLatestValue1RM = oneRepMaxPersonalRecords.first?.loadString()
+        let fetchedLatestValue1RM = oneRepMaxPersonalRecords.last?.loadString()
         let latestValue1RM = fetchedLatestValue1RM != nil ? (fetchedLatestValue1RM! + " " + weightUnit) : nil
         
         // Do exactly the same thing but for AMRAP pr's
@@ -62,7 +62,7 @@ struct GeneralInfoRepsExercise: View {
         let fetchedMaxValueMaxReps = maxRepPersonalRecords.max(by: {$0.weightLoad < $1.weightLoad})?.loadString()
         let allTimeHighMaxReps = fetchedMaxValueMaxReps != nil ? (fetchedMaxValueMaxReps! + " " + "reps") : nil
         
-        let fetchedLatestValueMaxReps = maxRepPersonalRecords.first?.loadString()
+        let fetchedLatestValueMaxReps = maxRepPersonalRecords.last?.quantityString()
         let latestValueMaxReps = fetchedLatestValueMaxReps != nil ? (fetchedLatestValueMaxReps! + " " + "reps") : nil
         
         BoldSubHeadline(text: "General information")
@@ -184,7 +184,7 @@ struct GeneralInfoRepsExercise: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "exerciseType == reps")
+    fetchRequest.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
     let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
 

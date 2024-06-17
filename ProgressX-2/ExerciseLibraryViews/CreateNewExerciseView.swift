@@ -102,10 +102,9 @@ struct CreateNewExerciseView: View {
                     if selectedTypeOfExercise == "Time" {
                         InputDecimalNumberField(placeHolder: "PR time in seconds", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
                             
-                    } else if selectedTypeOfExercise == "Reps" {
+                    } else if selectedTypeOfExercise == "Reps" && selectedTypeOfPr == "AMRAP" {
                         InputIntegerNumberField(placeHolder: "Reps", numberText: $enteredPrQuantity, markAsWrong: $enteredPrQuantityIsInvalid, width: 0.6, errorMessage: $enteredPrQuantityIsInvalidMsg)
                     }
-                    
                 }
                 
                 Button(action: {
@@ -120,19 +119,16 @@ struct CreateNewExerciseView: View {
                         if addPr == "Yes" {
                             // Find the pr-type from the user selected value
                             let prType: String
-                            // Set the Pr to time if not 1RM or AMRAP
-                            if selectedTypeOfExercise == "Time" {
-                                selectedTypeOfPr = "Time-Max"
-                            }
+                            
                             switch selectedTypeOfPr {
-                            case "AMRAP":
-                                prType = "maxreps"
-                            case "1RM":
-                                prType = "onerepmax"
-                            case "Time-max":
-                                prType = "timemax"
-                            default:
-                                prType = "" // This should never be the case
+                                case "AMRAP":
+                                    prType = "maxreps"
+                                case "1RM":
+                                    prType = "onerepmax"
+                                case "Time-max":
+                                    prType = "timemax"
+                                default:
+                                    prType = "" // This should never be the case
                             }
                             
                             let pr = PersistenceController.createPersonalRecord(
@@ -170,17 +166,23 @@ struct CreateNewExerciseView: View {
             }
         }.onChange(of: selectedTypeOfPr, initial: true, { oldValue, newValue in
             if selectedTypeOfPr == "AMRAP" {
+                // set default load to bodyweight
                 enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
-            } else {
+                enteredPrQuantity = ""
+            } else if selectedTypeOfPr == "1RM" {
+                // else if "1RM" set to reps 1 and load to nothing
+                enteredPrQuantity = "1"
                 enteredPrWeigtLoad = ""
             }
         })
         .onChange(of: selectedTypeOfExercise, initial: true, { oldValue, newValue in
             if selectedTypeOfExercise == "Time" {
-                // Resetting the pr selector
-                selectedTypeOfPr = "1RM"
+                // Set the PR selector and set default load to bodyweight
+                selectedTypeOfPr = "Time-max"
+                enteredPrQuantity = ""
                 enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
             } else {
+                // else set no default
                 enteredPrWeigtLoad = ""
             }
         })
@@ -194,24 +196,42 @@ struct CreateNewExerciseView: View {
         // Special case for already taken names
         valid += {
             if (exercises.contains { $0.exerciseName == enteredExerciseName }) {
-                enteredExerciseNameIsInvalid = true
-                enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
+                withAnimation {
+                    enteredExerciseNameIsInvalid = true
+                    enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
+                }
                 return 1
             } else {
-                enteredExerciseNameIsInvalid = false
-                enteredExerciseNameIsInvalidMsg = ""
+                withAnimation {
+                    enteredExerciseNameIsInvalid = false
+                    enteredExerciseNameIsInvalidMsg = ""
+                }
                 return 0
             }
         }()
         
-        let doubleFieldValidator = DoubleFieldValidator()
+        // Quantity can be either Double or Int
+        let quantityFieldValidtor: InputFieldValidator
+        
+        // Depemnding on the the exercise
+        if selectedTypeOfExercise == "Reps" {
+            quantityFieldValidtor = IntFieldValidator()
+        } else {
+            // This is the case when exercise is Time
+            quantityFieldValidtor = DoubleFieldValidator()
+        }
+
+        // Load is a always Double
+        let loadFieldValidtor = DoubleFieldValidator()
         let nameFieldValidator = StringFieldValidator()
         let descFieldValidator = StringFieldValidator(emptyAllowed: true)
+        
         valid += nameFieldValidator.valideField(inputVar: enteredExerciseName, errorMessage: $enteredExerciseNameIsInvalidMsg ,fieldInvalid: $enteredExerciseNameIsInvalid)
         valid += descFieldValidator.valideField(inputVar: enteredExerciseDesc, errorMessage: $enteredExerciseDescIsInvalidMsg ,fieldInvalid: $enteredExerciseDescIsInvalid)
+        
         if addPr == "Yes" {
-            valid += doubleFieldValidator.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
-            valid += doubleFieldValidator.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
+            valid += loadFieldValidtor.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
+            valid += quantityFieldValidtor.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
         }
         return valid == 0
     }

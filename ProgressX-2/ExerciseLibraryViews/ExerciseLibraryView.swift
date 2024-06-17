@@ -23,6 +23,7 @@ struct ExerciseLibraryView: View {
     @State private var selectedExercise: Exercise? = nil
     @State private var searchText: String = ""
     @State private var editingPr: PersonalRecord?
+    @State private var newPrType: String? = nil
     
     var body: some View {
         NavigationStack(path: $navPath) {
@@ -47,14 +48,17 @@ struct ExerciseLibraryView: View {
                     //MARK: List view displaying all exercise objects
                     VStack(alignment: .center) {
                         if exercises.isEmpty {
-                            LightSubHeadline(text: "You currently have no exercises saved to the exercise library...")
+                            Text("You currently have no exercises saved to the exercise library...")
+                                .font(.subheadline)
+                                .fontWeight(.light)
                                 .padding(.bottom, 20)
                                 .padding(.top, 20)
+                                .foregroundStyle(.red)
                         } else {
                             List {
                                 ForEach(searchedItems()) { exercise in
                                     ExerciseListItem(
-                                        navPath: $navPath, 
+                                        navPath: $navPath,
                                         selectedExercise: $selectedExercise,
                                         exercise: exercise
                                     ).environment(\.managedObjectContext, viewContext)
@@ -81,6 +85,8 @@ struct ExerciseLibraryView: View {
             }
             
             //MARK: Handling the navigation through the NavStack
+            // This is the root view of this whole view-hierarchy.
+            // If you want to add more viewas add to this group of if statements.
             .navigationDestination(for: Int.self) { selection in
                 if selection == 2 {
                     CreateNewExerciseView()
@@ -93,13 +99,19 @@ struct ExerciseLibraryView: View {
                     StatisticsView(
                         exercise: $selectedExercise,
                         navPath: $navPath,
-                        editingPr: $editingPr
+                        editingPr: $editingPr, 
+                        newPrType: $newPrType
                     ).environment(\.managedObjectContext, viewContext)
                 } else if selection == 5 {
                     EditPrView(
                         editingPr: $editingPr,
                         exercise: $selectedExercise
-                    )
+                    ).environment(\.managedObjectContext, viewContext)
+                } else if selection == 6 {
+                    CreateNewPersonalRecord(
+                        prType: $newPrType, 
+                        exercise: $selectedExercise
+                    ).environment(\.managedObjectContext, viewContext)
                 }
             }
         }

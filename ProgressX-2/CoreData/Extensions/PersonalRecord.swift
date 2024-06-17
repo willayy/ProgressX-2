@@ -69,15 +69,16 @@ extension PersonalRecord {
             "timemax" : "time"
         ]
         
-        if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            let error = NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9999,
-                userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match exercise type string."]
-            )
-            self.setPrimitiveValue(error, forKey: "validationError")
+        if self.exercise != nil {
+            if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
+                let error = NSError(
+                    domain: "CoreDataErrorDomain",
+                    code: 9999,
+                    userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match exercise type string."]
+                )
+                self.setPrimitiveValue(error, forKey: "validationError")
+            }
         }
-        
     }
     
 }

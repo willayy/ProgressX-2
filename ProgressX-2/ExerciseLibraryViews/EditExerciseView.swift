@@ -32,7 +32,7 @@ struct EditExerciseView: View {
             ScrollView {
                 VStack(alignment: .center) {
                     BoldTitle(
-                        text: "Editing exercise \(exercise!.exerciseName!)"
+                        text: "Editing exercise: \(exercise!.exerciseName!)"
                     )
                         
                     if exerciseEditedAlert {
@@ -84,13 +84,13 @@ struct EditExerciseView: View {
                             PersistenceController.save(viewContext)
                             
                             if newName.isEmpty && newDesc.isEmpty {
-                                withAnimation {
+                                withAnimation(.easeOut) {
                                     noChangeAlert = true
                                     newName = ""
                                     newDesc = ""
                                 }
                             } else {
-                                withAnimation {
+                                withAnimation(.easeOut) {
                                     exerciseEditedAlert = true
                                     newName = ""
                                     newDesc = ""
@@ -113,8 +113,10 @@ struct EditExerciseView: View {
         // Special case for already taken names
         valid += {
             if (exercises.contains { $0.exerciseName == newName }) {
-                newNameIsInvalid = true
-                newNameIsInvalidMsg = "This Exercise name is already taken!"
+                withAnimation {
+                    newNameIsInvalid = true
+                    newNameIsInvalidMsg = "This Exercise name is already taken!"
+                }
                 return 1
             } else {
                 newNameIsInvalid = false

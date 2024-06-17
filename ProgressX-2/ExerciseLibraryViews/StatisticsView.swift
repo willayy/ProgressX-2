@@ -15,6 +15,7 @@ struct StatisticsView: View {
     @Binding var exercise: Exercise?
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?
+    @Binding var newPrType: String?
     
     var body: some View {
         ScrollView {
@@ -46,9 +47,10 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "onerepmax"
+                        prType: "onerepmax", 
+                        newPrType: $newPrType
                     ).environment(\.managedObjectContext, viewContext)
-                    
+                        
                     DoubleChart(
                         exercise: exercise!,
                         set: "AMRAP",
@@ -59,7 +61,8 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "maxreps"
+                        prType: "maxreps", 
+                        newPrType: $newPrType
                     ).environment(\.managedObjectContext, viewContext)
                     
                 } else if exercise!.exerciseType == "time" {
@@ -73,7 +76,8 @@ struct StatisticsView: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,
-                        prType: "timemax"
+                        prType: "timemax", 
+                        newPrType: $newPrType
                     ).environment(\.managedObjectContext, viewContext)
                 }
             }
@@ -95,9 +99,12 @@ struct StatisticsView: View {
     
     @State var editingPr: PersonalRecord? = nil
     
+    @State var newPrType: String? = nil
+    
     return StatisticsView(
         exercise: $exercise,
         navPath: $navPath,
-        editingPr: $editingPr
+        editingPr: $editingPr, 
+        newPrType: $newPrType
     ).environment(\.managedObjectContext, context)
 }

@@ -18,7 +18,7 @@ struct ExerciseListItem: View {
     var body: some View {
         HStack {
             
-            Text(exercise.exerciseName!)
+            Text(exercise.exerciseName ?? "")
             
             Spacer()
             

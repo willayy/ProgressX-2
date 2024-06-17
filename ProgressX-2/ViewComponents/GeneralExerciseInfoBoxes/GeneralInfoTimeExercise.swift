@@ -41,7 +41,7 @@ struct GeneralInfoTimeExercise: View {
         let allTimeHighTime = fetchedMaxValueTime != nil ? (fetchedMaxValueTime! + " " + timeUnit) : nil
         
         // Find the latest PR weight value or nil if there are no values
-        let fetchedLatestValueTime = timeMaxResults.first?.loadString()
+        let fetchedLatestValueTime = timeMaxResults.last?.quantityString()
         let latestValueTime = fetchedLatestValueTime != nil ? (fetchedLatestValueTime! + " " + timeUnit) : nil
         
         
@@ -114,7 +114,7 @@ struct GeneralInfoTimeExercise: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == time")
+    fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "time")
     
     let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
 

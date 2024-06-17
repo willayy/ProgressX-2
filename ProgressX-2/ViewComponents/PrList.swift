@@ -16,12 +16,14 @@ struct PrList: View {
     @Binding private var editingPr: PersonalRecord?
     private let exercise: Exercise
     private let prType: String
+    @Binding private var newPrType: String?
     
-    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise, prType: String) {
+    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise, prType: String, newPrType: Binding<String?>) {
         self._navPath = navPath
         self.exercise = exercise
         self._editingPr = editingPr
         self.prType = prType
+        self._newPrType = newPrType
         self._personalRecords = FetchRequest<PersonalRecord>(
             entity: PersonalRecord.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: false)],
@@ -51,7 +53,8 @@ struct PrList: View {
                 ForEach(personalRecords) { pr in
                     PrListItem(navPath: $navPath,
                                editingPr: $editingPr,
-                               pr: pr)
+                               pr: pr
+                    )
                 }
             }
             .frame(height: 300)
@@ -59,6 +62,17 @@ struct PrList: View {
             .cornerRadius(10)
             .padding(.horizontal, 40)
         }
+        
+        Button(action: {
+            newPrType = prType
+            navPath.append(6)
+        }) {
+            Text("Add new PR")
+                .frame(height: 25)
+            Image(systemName: "plus")
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.top, 10)
     }
 }
 
@@ -76,6 +90,13 @@ struct PrList: View {
     
     @State var editingPr: PersonalRecord? = nil
     
-    return PrList(navPath: $navPath, editingPr: $editingPr, exercise: exercise!, prType: "Time-max")
-        .environment(\.managedObjectContext, context)
+    @State var newPrType: String? = nil
+    
+    return PrList(
+        navPath: $navPath,
+        editingPr: $editingPr,
+        exercise: exercise!,
+        prType: "timemax",
+        newPrType: $newPrType
+    ).environment(\.managedObjectContext, context)
 }

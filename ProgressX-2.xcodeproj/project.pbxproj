@@ -21,6 +21,7 @@
 		8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9282C0CA170004A5A3D /* PrListItem.swift */; };
 		8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */; };
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
+		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
 		832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E52BC92D8E00DF9C7A /* HomeView.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 		8310D9282C0CA170004A5A3D /* PrListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrListItem.swift; sourceTree = "<group>"; };
 		8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListItem.swift; sourceTree = "<group>"; };
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
+		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
 		832213E52BC92D8E00DF9C7A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */,
+				831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */,
 				83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */,
 				83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */,
 				8310D90A2BFA2139004A5A3D /* StatisticsView.swift */,
@@ -531,6 +534,7 @@
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
 				83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
+				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
