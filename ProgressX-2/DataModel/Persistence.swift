@@ -6,21 +6,24 @@
 //
 
 import CoreData
-import UIKit
 
 struct PersistenceController {
     
+    // The persistence controller intended for the app during run-time testing and production
     static let shared = PersistenceController(inMemory: false)
     
+    // The persistence ontroller intended for the app during developement with the canvas view
+    // and when running tests.
     static let preview = {
-        //MARK: Initialise a in-memory database with test values for the preview
+        // Initialize as in-memory
         let result = PersistenceController(inMemory: true)
         let context = result.container.viewContext
+        // Populate with in-memory data
         PersistenceController.initInMemoryDb(context: context)
         PersistenceController.save(context)
         return result
     }()
-
+    
     let container: NSPersistentContainer
 
     init(inMemory: Bool) {
@@ -29,14 +32,14 @@ struct PersistenceController {
         
         let description = container.persistentStoreDescriptions.first!
         
-        // Automatic migration for live database
+        // Automatic migration for app production database
         if !inMemory {
             description.shouldMigrateStoreAutomatically = true
             description.shouldInferMappingModelAutomatically = true
         }
         
-        // Make the container a in-memory database if the application is run as a test or as preview
         if inMemory {
+            // This creates an in-memory database
             description.url = URL(fileURLWithPath: "/dev/null")
         }
         

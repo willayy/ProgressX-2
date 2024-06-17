@@ -39,8 +39,8 @@ extension PersonalRecord {
         }
     }
     
-    /// A prettier string to the the type of the PR
-    /// - Returns: A pretty String
+    /// A prettier string than the raw one stored in the CoreData entities.
+    /// - Returns: A pretty-fied String
     @objc public func typeString() -> String {
         switch self.prType {
             case "maxreps":
@@ -60,25 +60,38 @@ extension PersonalRecord {
         return String(format: "%.2f", self.weightLoad)
     }
     
-    // Overriding the willSavde to make sure that prType always matches exerciseType.
-    public override func willSave() {
-        super.willSave()
+    // Overriding update for special constraints
+    public override func validateForUpdate() throws {
+        try super.validateForUpdate()
+        try validateSpecialProperties()
+    }
+    
+    // Oberriding insert for special constraints
+    public override func validateForInsert() throws {
+        try super.validateForInsert()
+        try validateSpecialProperties()
+    }
+    
+    /* Function that validates a relationship between the prType property and the
+    related Exercises object (exercise relationship) */
+    private func validateSpecialProperties() throws {
         let prToExerciseTypeMap = [
             "onerepmax" : "reps",
             "maxreps" : "reps",
             "timemax" : "time"
         ]
         
+        /* If a PersonalRecord has a relationship to an exercise that does not have
+        the a matching type throw an Error*/
         if self.exercise != nil {
             if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-                let error = NSError(
+                throw NSError(
                     domain: "CoreDataErrorDomain",
                     code: 9999,
                     userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match exercise type string."]
                 )
-                self.setPrimitiveValue(error, forKey: "validationError")
             }
         }
     }
-    
+        
 }
