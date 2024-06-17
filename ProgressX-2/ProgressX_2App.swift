@@ -16,12 +16,18 @@ struct ProgressX_2App: App {
     var body: some Scene {
         WindowGroup {
             switch (viewRouter.rootView) {
-                case "HomeView":
-                    HomeView()
-                        .environmentObject(viewRouter)
-                case "CreateNewProfile1":
-                    CreateNewProfile1()
-                        .environmentObject(viewRouter)
+            case "CreateNewProfile1":
+                CreateNewProfile1()
+                    .environmentObject(viewRouter)
+                
+            case "HomeView":
+                HomeView()
+                    .environmentObject(viewRouter)
+                
+            case "Statistics":
+                Statistics()
+                    .environmentObject(viewRouter)
+                
             default:
                 fatalError("View router invalid state")
             }
