@@ -57,6 +57,7 @@
 		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
 		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -360,6 +361,16 @@
 			path = GeneralExerciseInfoBoxes;
 			sourceTree = "<group>";
 		};
+		8F54931F2C1AF3300049AE7F /* SideMenuComponents */ = {
+			isa = PBXGroup;
+			children = (
+				8FC6CA962C170F5B00432594 /* SideBar.swift */,
+				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
+				8F4CCD442C1B110900F21301 /* Statistics.swift */,
+			);
+			path = SideMenuComponents;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -509,6 +520,7 @@
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
 				83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
+
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
@@ -539,6 +551,7 @@
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
+
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,

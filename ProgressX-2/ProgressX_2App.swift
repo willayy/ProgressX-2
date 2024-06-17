@@ -15,8 +15,7 @@ struct ProgressX_2App: App {
     @State var isLoading: Bool = true
     
     var body: some Scene {
-        WindowGroup {
-            
+        WindowGroup {            
             if isLoading {
                 MockLaunchScreen()
                     .onAppear(perform: {
@@ -31,7 +30,7 @@ struct ProgressX_2App: App {
             else {
                 switch (viewRouter.rootView) {
                 case "HomeView":
-                    ExerciseLibraryView()
+                    HomeView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case "CreateNewProfile1":
