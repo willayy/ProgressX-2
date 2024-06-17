@@ -9,6 +9,34 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ProgressX-2Tests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>ProgressX-2UITests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>830E26872C18665B00815936</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>832213DF2BC92D8E00DF9C7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>832213F42BC92D9000DF9C7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>
