@@ -143,17 +143,21 @@ struct HomeView: View {
                     }.tag(3)
                     
                     NavigationStack{
-                        ScrollView{
                             VStack{
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
+                                List{
+                                    
+                                    Text("Change Username").bold()
+                                    
+                                    Text("Change birthday").bold()
+                                    
+                                    Text("Change standard rest-time").bold()
+                                    
+                                    Text("Change weight units").bold()
+                                    
+                                    Text("Change length units").bold()
+                                }
                             }
+                            .multilineTextAlignment(.leading)
                             .toolbar(.hidden, for: .tabBar)
                             .foregroundColor(Color(UIColor.lightGray))
                             .navigationTitle("Profile")
@@ -166,8 +170,9 @@ struct HomeView: View {
                                     })
                                 }
                             }
-                        }
+                        
                     }.tag(4)
+                        
                     
                     
                     
