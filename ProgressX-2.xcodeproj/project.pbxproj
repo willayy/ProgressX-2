@@ -22,8 +22,10 @@
 		8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */; };
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
+		831F2BEC2C208DB6007A7A8A /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BE92C208DB6007A7A8A /* SideBar.swift */; };
+		831F2BED2C208DB6007A7A8A /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BEA2C208DB6007A7A8A /* Statistics.swift */; };
+		831F2BEE2C208DB6007A7A8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BEB2C208DB6007A7A8A /* HomeView.swift */; };
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
-		832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E52BC92D8E00DF9C7A /* HomeView.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
 		832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */; };
 		832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213EC2BC92D9000DF9C7A /* Persistence.swift */; };
@@ -57,7 +59,6 @@
 		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
 		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,9 +95,11 @@
 		8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListItem.swift; sourceTree = "<group>"; };
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
+		831F2BE92C208DB6007A7A8A /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		831F2BEA2C208DB6007A7A8A /* Statistics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
+		831F2BEB2C208DB6007A7A8A /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
-		832213E52BC92D8E00DF9C7A /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		832213E72BC92D9000DF9C7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		832213EC2BC92D9000DF9C7A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -225,6 +228,16 @@
 			path = ExerciseListItems;
 			sourceTree = "<group>";
 		};
+		831F2BE82C208D77007A7A8A /* SideMenuComponents */ = {
+			isa = PBXGroup;
+			children = (
+				831F2BEA2C208DB6007A7A8A /* Statistics.swift */,
+				831F2BE92C208DB6007A7A8A /* SideBar.swift */,
+				831F2BEB2C208DB6007A7A8A /* HomeView.swift */,
+			);
+			path = SideMenuComponents;
+			sourceTree = "<group>";
+		};
 		832213D72BC92D8E00DF9C7A = {
 			isa = PBXGroup;
 			children = (
@@ -254,7 +267,7 @@
 				832214222BD42FF800DF9C7A /* ViewComponents */,
 				83AD4A8F2BF40E8800A2E180 /* CoreData */,
 				832213E92BC92D9000DF9C7A /* Preview Content */,
-				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
+				831F2BE82C208D77007A7A8A /* SideMenuComponents */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
 				83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */,
@@ -359,16 +372,6 @@
 				8310D91D2C076745004A5A3D /* GeneralInfoTimeExercise.swift */,
 			);
 			path = GeneralExerciseInfoBoxes;
-			sourceTree = "<group>";
-		};
-		8F54931F2C1AF3300049AE7F /* SideMenuComponents */ = {
-			isa = PBXGroup;
-			children = (
-				8FC6CA962C170F5B00432594 /* SideBar.swift */,
-				832213E52BC92D8E00DF9C7A /* HomeView.swift */,
-				8F4CCD442C1B110900F21301 /* Statistics.swift */,
-			);
-			path = SideMenuComponents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -517,10 +520,10 @@
 				8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */,
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
+				831F2BEE2C208DB6007A7A8A /* HomeView.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
 				83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
-
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
@@ -529,8 +532,8 @@
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
+				831F2BEC2C208DB6007A7A8A /* SideBar.swift in Sources */,
 				83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */,
-				832213E62BC92D8E00DF9C7A /* HomeView.swift in Sources */,
 				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */,
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
@@ -545,13 +548,13 @@
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
 				83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */,
+				831F2BED2C208DB6007A7A8A /* Statistics.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
-
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,

@@ -12,7 +12,10 @@ struct HomeView: View {
     @State var showView = false
     @State var selectedTab = 0
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @EnvironmentObject var viewRouter: ViewRouter
+
     // View propperties
     @State private var showMenu: Bool = false
     var BackgroundHeight: CGFloat = 650
