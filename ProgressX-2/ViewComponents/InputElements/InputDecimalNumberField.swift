@@ -20,10 +20,14 @@ struct InputDecimalNumberField: View {
     let width: CGFloat
     @State private var shouldShake = false
     @State var disableMaxChars = false
+    @Binding var errorMessage: String
 
     private func onReceiveFunction(new: String) -> String {
+        
         // Filter out non allowed characters
-        var filtered = new.filter { allowedChars.contains($0) }
+        var filtered = new.filter {
+            allowedChars.contains($0)
+        }
         
         // Ensure first char isnt a dot, last char is handled in submit
         if filtered.first == "." {
@@ -66,6 +70,7 @@ struct InputDecimalNumberField: View {
     
     var body: some View {
         
-        InputField(value: $numberText, markAsWrong: $markAsWrong, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(value: $numberText, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+            .keyboardType(.decimalPad)
     }
 }

@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
+import CoreData
 
 class ViewRouter: ObservableObject {
-    @Published var rootView: String = (PersistenceController.shared.doesProfileExist()) ? "HomeView" : "CreateNewProfile1"
+    static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
+    static let profileExists: Bool = PersistenceController.profileExists(context)
+    // Set the basic rootView on app start, if a profile doesnt exist always rout to CreateNewProfile view
+    @Published var rootView: String = (profileExists) ? "HomeView" : "CreateNewProfile1"
 }

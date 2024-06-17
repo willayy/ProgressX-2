@@ -12,6 +12,7 @@ struct InputField: View {
     @State private var shouldShake = false
     @Binding var value: String
     @Binding var markAsWrong: Bool
+    let errorMessage: String
     
     let placeHolder: String
     let width: CGFloat
@@ -40,6 +41,15 @@ struct InputField: View {
                 .modifier(ShakeEffect(shakes: self.shouldShake ? 2 : 0))
                 // The animation, or the smoothness of the moving
                 .animation(Animation.default.repeatCount(1).speed(2), value: self.shouldShake)
+                
+            if markAsWrong {
+                Text(errorMessage)
+                    .frame(width: UIScreen.main.bounds.width * width)
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundColor(.red)
+            }
+            
         }
     }
 }
