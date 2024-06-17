@@ -143,21 +143,24 @@ struct HomeView: View {
                     }.tag(3)
                     
                     NavigationStack{
-                            VStack{
-                                List{
-                                    
-                                    Text("Change Username").bold()
-                                    
+                        VStack(alignment:.leading){
+                                    Text("Change Username")
+                                    .bold()
+
                                     Text("Change birthday").bold()
+                                    
                                     
                                     Text("Change standard rest-time").bold()
                                     
+                                    
                                     Text("Change weight units").bold()
                                     
+                                    
                                     Text("Change length units").bold()
-                                }
-                            }
-                            .multilineTextAlignment(.leading)
+                                    
+                                
+                        }.padding()
+                        .frame(width: 390, height: 650, alignment: .topLeading)
                             .toolbar(.hidden, for: .tabBar)
                             .foregroundColor(Color(UIColor.lightGray))
                             .navigationTitle("Profile")
@@ -171,7 +174,8 @@ struct HomeView: View {
                                 }
                             }
                         
-                    }.tag(4)
+                    }
+                    .tag(4)
                         
                     
                     
