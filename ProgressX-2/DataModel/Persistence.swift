@@ -9,21 +9,6 @@ import CoreData
 
 struct PersistenceController {
     
-    // The persistence controller intended for the app during run-time testing and production
-    static let shared = PersistenceController(inMemory: false)
-    
-    // The persistence ontroller intended for the app during developement with the canvas view
-    // and when running tests.
-    static let preview = {
-        // Initialize as in-memory
-        let result = PersistenceController(inMemory: true)
-        let context = result.container.viewContext
-        // Populate with in-memory data
-        PersistenceController.initInMemoryDb(context: context)
-        PersistenceController.save(context)
-        return result
-    }()
-    
     let container: NSPersistentContainer
 
     init(inMemory: Bool) {
@@ -53,6 +38,34 @@ struct PersistenceController {
         
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
+    
+    // Flag to check if unitTests are being run
+    static var TESTING : Bool {
+        return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+    }
+    
+    /* The persistence controller intended for the app during run-time and production.
+     To make this work during testing without throwing warnings the shared Persistence controller
+     is aliased to the preview one during testing. If this isnt done two identical DataModels will
+     be created during testing which throws warnings since all entities will be duplicated */
+    static let shared = {
+        if !TESTING {
+          return PersistenceController(inMemory: false)
+        } else {
+          return preview
+        }
+    }()
+    
+    // The persistence ontroller intended for the app during developement with the canvas view and testing
+    static let preview = {
+        // Initialize as in-memory
+        let result = PersistenceController(inMemory: true)
+        let context = result.container.viewContext
+        // Populate with in-memory data
+        PersistenceController.initInMemoryDb(context: context)
+        PersistenceController.save(context)
+        return result
+    }()
     
 }
 

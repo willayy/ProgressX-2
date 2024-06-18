@@ -17,6 +17,8 @@ final class JsonValidtionTests: XCTestCase {
     override func setUpWithError() throws {
         container = PersistenceController.preview.container
         context = container!.viewContext
+        PersistenceController.generateBasicExerciseLibrary(context!)
+        PersistenceController.save(context!)
     }
 
     override func tearDownWithError() throws {

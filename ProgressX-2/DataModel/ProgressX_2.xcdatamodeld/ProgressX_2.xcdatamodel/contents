@@ -13,20 +13,21 @@
         <attribute name="waistCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
         <relationship name="profile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
-    <entity name="Completeable" representedClassName="Completeable" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
+    <entity name="Completeable" representedClassName="Completeable" isAbstract="YES" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
         <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="positionIndex" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Cycle" representedClassName="Cycle" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="cycles" inverseEntity="Routine"/>
-        <relationship name="weeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" ordered="YES" destinationEntity="Week" inverseName="cycle" inverseEntity="Week"/>
+        <relationship name="weeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="cycle" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
         <attribute name="exerciseDesc" attributeType="String" minValueString="0" maxValueString="500" defaultValueString="&quot;&quot;"/>
         <attribute name="exerciseName" attributeType="String" minValueString="1" maxValueString="50" defaultValueString="&quot;&quot;"/>
         <attribute name="exerciseType" attributeType="String" minValueString="1" maxValueString="10" defaultValueString="&quot;&quot;" regularExpressionString="^(time|reps)$"/>
-        <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
-        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Set" inverseName="exercise" inverseEntity="Set"/>
+        <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
+        <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="exercise" inverseEntity="TrainingSet"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="exerciseName"/>
@@ -35,18 +36,17 @@
     </entity>
     <entity name="PersonalRecord" representedClassName="PersonalRecord" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
         <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="prType" attributeType="String" minValueString="1" maxValueString="10" defaultValueString="&quot;&quot;" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
+        <attribute name="prType" attributeType="String" defaultValueString="&quot;&quot;" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
         <attribute name="weightLoad" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="achievedOnSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Set" inverseName="prsAcheived" inverseEntity="Set"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="personalRecords" inverseEntity="Exercise"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
         <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
-        <attribute name="gender" attributeType="String" minValueString="1" maxValueString="10" defaultValueString="&quot;&quot;" regularExpressionString="^(male|female)$"/>
+        <attribute name="gender" attributeType="String" defaultValueString="&quot;&quot;" regularExpressionString="^(male|female)$"/>
         <attribute name="height" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="1" maxValueString="50" defaultValueString="&quot;&quot;"/>
-        <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
+        <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="profileUserName"/>
@@ -58,26 +58,26 @@
         <relationship name="cycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Cycle" inverseName="routine" inverseEntity="Cycle"/>
     </entity>
     <entity name="Session" representedClassName="Session" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <relationship name="sets" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" ordered="YES" destinationEntity="Set" inverseName="session" inverseEntity="Set"/>
-        <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="Week" inverseName="sessions" inverseEntity="Week"/>
-    </entity>
-    <entity name="Set" representedClassName="Set" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <attribute name="loadDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="prGeneratingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="progressingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="quantityDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
-        <relationship name="prsAcheived" toMany="YES" deletionRule="Nullify" destinationEntity="PersonalRecord" inverseName="achievedOnSet" inverseEntity="PersonalRecord"/>
-        <relationship name="session" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="sets" inverseEntity="Session"/>
+        <relationship name="sets" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="trainingSession" inverseEntity="TrainingSet"/>
+        <relationship name="trainingWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="sessions" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="TimePeriods" representedClassName="TimePeriods" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="timePeriodDescription" attributeType="String" defaultValueString="&quot;&quot;"/>
         <attribute name="timePeriodName" attributeType="String" defaultValueString=""/>
     </entity>
-    <entity name="Week" representedClassName="Week" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
+    <entity name="TrainingSet" representedClassName="TrainingSet" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
+        <attribute name="loadDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="prGeneratingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="progressingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="prType" attributeType="String" defaultValueString="&quot;&quot;" regularExpressionString="^(onerepmax|maxreps|timemax)$"/>
+        <attribute name="quantityDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
+        <relationship name="trainingSession" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="sets" inverseEntity="Session"/>
+    </entity>
+    <entity name="TrainingWeek" representedClassName="TrainingWeek" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
         <relationship name="cycle" maxCount="1" deletionRule="Nullify" destinationEntity="Cycle" inverseName="weeks" inverseEntity="Cycle"/>
-        <relationship name="sessions" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" ordered="YES" destinationEntity="Session" inverseName="week" inverseEntity="Session"/>
+        <relationship name="sessions" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="Session" inverseName="trainingWeek" inverseEntity="Session"/>
     </entity>
 </model>

@@ -22,4 +22,24 @@ extension Completeable {
         }
     }
     
+    public override func validateForInsert() throws {
+        try super.validateForInsert()
+        try validateIsComplete()
+    }
+    
+    public override func validateForUpdate() throws {
+        try super.validateForUpdate()
+        try validateIsComplete()
+    }
+    
+    private func validateIsComplete() throws {
+        if self.isComplete && self.completedOnDate == nil {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9988,
+                userInfo: [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate"]
+            )
+        }
+    }
+    
 }

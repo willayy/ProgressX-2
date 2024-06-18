@@ -63,18 +63,31 @@ extension PersonalRecord {
     // Overriding update for special constraints
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateSpecialProperties()
+        try validateExercise()
+        try validatePrType()
     }
     
     // Oberriding insert for special constraints
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateSpecialProperties()
+        try validateExercise()
+        try validatePrType()
+    }
+    
+    /* Func that validates the exericse relationship in a PersonalRecord entity */
+    private func validateExercise() throws {
+        if self.exercise == nil {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9998,
+                userInfo: [NSLocalizedDescriptionKey: "Pr cant have relationship .exercise set to nil"]
+            )
+        }
     }
     
     /* Function that validates a relationship between the prType property and the
     related Exercises object (exercise relationship) */
-    private func validateSpecialProperties() throws {
+    private func validatePrType() throws {
         let prToExerciseTypeMap = [
             "onerepmax" : "reps",
             "maxreps" : "reps",
@@ -83,14 +96,12 @@ extension PersonalRecord {
         
         /* If a PersonalRecord has a relationship to an exercise that does not have
         the a matching type throw an Error*/
-        if self.exercise != nil {
-            if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-                throw NSError(
-                    domain: "CoreDataErrorDomain",
-                    code: 9999,
-                    userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match exercise type string."]
-                )
-            }
+        if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9999,
+                userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
+            )
         }
     }
         

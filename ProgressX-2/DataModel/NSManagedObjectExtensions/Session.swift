@@ -11,27 +11,27 @@ extension Session {
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateSpecialProperties()
+        try validateIsComplete()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateSpecialProperties()
+        try validateIsComplete()
     }
     
-    private func validateSpecialProperties() throws {
+    private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error
         if self.isComplete && self.sets == nil {
             throw NSError(
                 domain: "CoreDataErrorDomain",
-                code: 9998,
+                code: 9996,
                 userInfo: [NSLocalizedDescriptionKey: "Session can't be complete without any sets"]
             )
         }
         
         // If session is complete but it's sets arent throw an error
         var completedSets: Int = 0
-        let sets = self.sets!.array as! [Set]
+        let sets = self.sets!.allObjects as! [TrainingSet]
         
         // Count completed sets
         for set in sets {
