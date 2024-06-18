@@ -20,7 +20,12 @@ class IntFieldValidator: InputFieldValidator {
     }
     
     override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
-  
+        
+        withAnimation {
+            errorMessage.wrappedValue = ""
+            fieldInvalid.wrappedValue = false
+        }
+        
         if !emptyAllowed && inputVar.isEmpty {
             withAnimation(.easeIn) {
                 errorMessage.wrappedValue = "Input cant be empty!"

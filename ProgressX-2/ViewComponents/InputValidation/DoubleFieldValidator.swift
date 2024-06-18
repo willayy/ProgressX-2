@@ -21,41 +21,45 @@ class DoubleFieldValidator: InputFieldValidator {
     
     override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
         
+        withAnimation {
+            errorMessage.wrappedValue = ""
+            fieldInvalid.wrappedValue = false
+        }
         
-            if !emptyAllowed && inputVar.isEmpty {
+        if !emptyAllowed && inputVar.isEmpty {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input cant be empty!"
+                fieldInvalid.wrappedValue = true
+            }
+            return 1
+        }
+        
+        // Run if empty is allowed and the there is something entered in the field, or when empty isnt allowed
+        if (emptyAllowed && !inputVar.isEmpty) || !emptyAllowed {
+            if Double(inputVar) != nil {} else {
                 withAnimation(.easeIn) {
-                    errorMessage.wrappedValue = "Input cant be empty!"
+                    errorMessage.wrappedValue = "Input is not a valid number!"
+                    fieldInvalid.wrappedValue = true
+                }
+                return 1
+            }
+        
+            if Double(inputVar)! < minInputNumber {
+                withAnimation(.easeIn) {
+                    errorMessage.wrappedValue = "Input number is too small!"
                     fieldInvalid.wrappedValue = true
                 }
                 return 1
             }
             
-            // Run if empty is allowed and the there is something entered in the field, or when empty isnt allowed
-            if (emptyAllowed && !inputVar.isEmpty) || !emptyAllowed {
-                if Double(inputVar) != nil {} else {
-                    withAnimation(.easeIn) {
-                        errorMessage.wrappedValue = "Input is not a valid number!"
-                        fieldInvalid.wrappedValue = true
-                    }
-                    return 1
+            if Double(inputVar)! > maxInputNumber {
+                withAnimation(.easeIn) {
+                    errorMessage.wrappedValue = "Input number is too big!"
+                    fieldInvalid.wrappedValue = true
                 }
-            
-                if Double(inputVar)! < minInputNumber {
-                    withAnimation(.easeIn) {
-                        errorMessage.wrappedValue = "Input number is too small!"
-                        fieldInvalid.wrappedValue = true
-                    }
-                    return 1
-                }
-                
-                if Double(inputVar)! > maxInputNumber {
-                    withAnimation(.easeIn) {
-                        errorMessage.wrappedValue = "Input number is too big!"
-                        fieldInvalid.wrappedValue = true
-                    }
-                    return 1
-                }
+                return 1
             }
+        }
         
         return 0
         

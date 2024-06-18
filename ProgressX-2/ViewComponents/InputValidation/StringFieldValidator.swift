@@ -21,6 +21,11 @@ class StringFieldValidator: InputFieldValidator {
     
     override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
         
+        withAnimation {
+            errorMessage.wrappedValue = ""
+            fieldInvalid.wrappedValue = false
+        }
+        
         if inputVar.count < minInputCharCount {
             withAnimation(.easeIn) {
                 errorMessage.wrappedValue = "Input text too short!"
