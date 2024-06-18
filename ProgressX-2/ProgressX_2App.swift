@@ -13,6 +13,7 @@ struct ProgressX_2App: App {
     let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
     @State var isLoading: Bool = true
+    @State var showMenu: Bool = false
     
     var body: some Scene {
         WindowGroup {            
@@ -35,6 +36,18 @@ struct ProgressX_2App: App {
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case "CreateNewProfile1":
                     CreateNewProfile1()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                case "ExerciseLibraryView":
+                    ExerciseLibraryView()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                case "ProfileView":
+                    ProfileView()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                case "SideBarButton":
+                    SideBarButton(showMenu: $showMenu)
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 default:
