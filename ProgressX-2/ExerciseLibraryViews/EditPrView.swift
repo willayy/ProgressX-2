@@ -189,7 +189,7 @@ struct EditPrView: View {
     
     @State var exercise: Exercise? = exerciseResults.first
     
-    @State var pr: PersonalRecord? = exercise?.personalRecords?.array.first as? PersonalRecord
+    @State var pr: PersonalRecord? = exercise?.personalRecords?.allObjects.first as? PersonalRecord
     
     return EditPrView(editingPr: $pr, exercise: $exercise)
     .environment(\.managedObjectContext, context)
