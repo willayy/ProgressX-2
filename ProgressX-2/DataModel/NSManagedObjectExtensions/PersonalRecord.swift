@@ -65,13 +65,29 @@ extension PersonalRecord {
         try super.validateForUpdate()
         try validateExercise()
         try validatePrType()
+        try validateQuantity()
     }
     
-    // Oberriding insert for special constraints
+    // Overriding insert for special constraints
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateExercise()
         try validatePrType()
+        try validateQuantity()
+    }
+    
+    // Func that validates that the quantity of a PersonalRecord needs to be a valid Integer if the PersonalRecord is repbased.
+    private func validateQuantity() throws {
+        let isQuantityInteger = (floor(self.prQuantity) == self.prQuantity)
+        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
+
+        if !isQuantityInteger && isPrRepBased {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9987,
+                userInfo: [NSLocalizedDescriptionKey: "Property .prQuantity on PersonalRecord cant be set to a double value that isnt a valid integer"]
+            )
+        }
     }
     
     /* Func that validates the exericse relationship in a PersonalRecord entity */

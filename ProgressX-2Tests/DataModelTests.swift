@@ -29,11 +29,15 @@ final class DataModelTests: XCTestCase {
 
     // MARK: TEAR DOWN
     override func tearDownWithError() throws {
+        // Roll back all Entities inserted into the context but not saved.
         context!.rollback()
     }
     
-    // MARK: TESTS
-    func testCreatePersonalRecordWithMismatchingTypes() {
+    // MARK: CONSTRAINT TESTING
+    // These tests check if Cosntraints set in the DataModel works.
+    // Yes these should be camel-case according to convention but it becomes too hard to read.
+  
+    func test_Create_PersonalRecord_With_Mismatching_Types() {
         // Creating a Personal record with the wrong type for the exercise its using.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -47,7 +51,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithNoExercise() {
+    func test_Create_PersonalRecord_With_No_Exercise() {
         // Create a PersonalRecord with no exercise set.
         let pr = PersonalRecord(context: context!)
         pr.exercise = nil
@@ -59,7 +63,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithInvalidType() {
+    func test_Create_PersonalRecord_With_Invalid_Type() {
         // Create a PersonalRecord with a type that is not valid.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -73,7 +77,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithInvalidQuantity1() {
+    func test_Create_PersonalRecord_With_Invalid_Quantity_1() {
         // Create a PersonalRecord with a quantity that is too low.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -87,7 +91,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithInvalidWeightLoad1() {
+    func test_Create_PersonalRecord_With_Invalid_Weight_Load_1() {
         // Create a PersonalRecord with a weightLoad that is too low.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -101,7 +105,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithInvalidQuantity2() {
+    func test_Create_PersonalRecord_With_Invalid_Quantity_2() {
         // Create a PersonalRecord with a quantity that is too high.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -115,7 +119,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreatePersonalRecordWithInvalidWeightLoad2() {
+    func test_Create_PersonalRecord_With_Invalid_WeightLoad_2() {
         // Create a PersonalRecord with a weightLoad that is too high.
         _ = PersistenceController.createPersonalRecord(
             context!,
@@ -129,7 +133,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateExerciseWithInvalidType() {
+    func test_Create_Exercise_With_Invalid_Type() {
         // Create an Exercise with an invalid type string
         _ = PersistenceController.createExercise(
             context!,
@@ -141,7 +145,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateExerciseWithInvalidName() {
+    func test_Create_Exercise_With_Invalid_Name() {
         // Create an exercise name that is too long
         let invalidExerciseName: String = String(repeating: "a", count: 51)
         
@@ -156,7 +160,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateExerciseWithInvalidDesc() {
+    func test_Create_Exercise_With_Invalid_Desc() {
         // Create an exercise desc that is too long
         let invalidExerciseDesc: String = String(repeating: "a", count: 501)
         
@@ -171,7 +175,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateExerciseWithNonUniqueName() {
+    func test_Create_Exercise_With_Non_Unique_Name() {
         // Create an exercise with a name that is already taken
         _ = PersistenceController.createExercise(
             context!,
@@ -183,7 +187,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateProfileWithInvalidGender() {
+    func test_Create_Profile_With_Invalid_Gender() {
         // Create a profile with a gender string that is not valid against constraints
         let profile = Profile(context: context!)
         profile.profileUserName = "some username"
@@ -194,7 +198,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCreateBodyEntryWithNoProfile() {
+    func test_Create_BodyEntry_With_No_Profile() {
         // Try to create a BodyEntry with no profile
         let bodyEntry = BodyEntry(context: context!)
         bodyEntry.bodyWeight = 100
@@ -204,7 +208,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func testCompleteSessionWithIncoompleteSets() {
+    func test_Complete_Session_With_Incoomplete_Sets() {
         let routine = Routine(context: context!)
         let cycle = Cycle(context: context!)
         let week = TrainingWeek(context: context!)
@@ -230,6 +234,74 @@ final class DataModelTests: XCTestCase {
         session.isComplete = true
         
         // Should throw because session is complete but it's only set isn't
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_Set_Quantity_To_Double_On_PersonalRecord() {
+        // Create a onerepmax PR with a quantity thats not an integer
+        _ = PersistenceController.createPersonalRecord(
+            context!,
+            exercise: exercise!,
+            wl: 100,
+            q: 1.2321312,
+            date: Date(),
+            type: "onerepmax"
+        )
+        
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_Set_QuantityTodo_To_Double_On_TrainingSet() {
+        let routine = Routine(context: context!)
+        let cycle = Cycle(context: context!)
+        let week = TrainingWeek(context: context!)
+        let session = Session(context: context!)
+        let set = TrainingSet(context: context!)
+        
+        // one-to-many relationships
+        routine.addToCycles(cycle)
+        cycle.addToWeeks(week)
+        week.addToSessions(session)
+        session.addToSets(set)
+        
+        // one-to-one relationship
+        cycle.routine = routine
+        week.cycle = cycle
+        session.trainingWeek = week
+        set.trainingSession = session
+        
+        set.exercise = exercise
+        set.isComplete = false
+        set.prType = "onerepmax"
+        set.quantityTodo = 1.2321312
+        
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_Set_QuantityDone_To_Double_On_TrainingSet() {
+        let routine = Routine(context: context!)
+        let cycle = Cycle(context: context!)
+        let week = TrainingWeek(context: context!)
+        let session = Session(context: context!)
+        let set = TrainingSet(context: context!)
+        
+        // one-to-many relationships
+        routine.addToCycles(cycle)
+        cycle.addToWeeks(week)
+        week.addToSessions(session)
+        session.addToSets(set)
+        
+        // one-to-one relationship
+        cycle.routine = routine
+        week.cycle = cycle
+        session.trainingWeek = week
+        set.trainingSession = session
+        
+        set.exercise = exercise
+        set.isComplete = false
+        set.prType = "onerepmax"
+        set.quantityDone = 1.2321312
+        
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     

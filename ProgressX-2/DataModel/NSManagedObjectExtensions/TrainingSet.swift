@@ -73,6 +73,8 @@ extension TrainingSet {
         try super.validateForUpdate()
         try validateExercise()
         try validatePrType()
+        try validateQuantityTodo()
+        try validateQuantityDone()
     }
     
     // Override validation
@@ -80,6 +82,8 @@ extension TrainingSet {
         try super.validateForInsert()
         try validateExercise()
         try validatePrType()
+        try validateQuantityTodo()
+        try validateQuantityDone()
     }
     
     // Makes sure that the Set has an Exercise assigned to it.
@@ -110,4 +114,30 @@ extension TrainingSet {
         }
     }
 
+    private func validateQuantityTodo() throws {
+        let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
+        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
+
+        if !isQuantityTodoInteger && isPrRepBased {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9986,
+                userInfo: [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
+            )
+        }
+    }
+    
+    private func validateQuantityDone() throws {
+        let isQuantityDoneInteger = (floor(self.quantityDone) == self.quantityDone)
+        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
+        
+        if !isQuantityDoneInteger && isPrRepBased {
+            throw NSError(
+                domain: "CoreDataErrorDomain",
+                code: 9985,
+                userInfo: [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
+            )
+        }
+    }
+    
 }

@@ -66,12 +66,12 @@
         <attribute name="timePeriodName" attributeType="String" defaultValueString=""/>
     </entity>
     <entity name="TrainingSet" representedClassName="TrainingSet" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <attribute name="loadDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="loadDone" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="prGeneratingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="progressingSet" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="prType" attributeType="String" defaultValueString="&quot;&quot;" regularExpressionString="^(onerepmax|maxreps|timemax)$"/>
-        <attribute name="quantityDone" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="quantityDone" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
         <relationship name="trainingSession" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="sets" inverseEntity="Session"/>
