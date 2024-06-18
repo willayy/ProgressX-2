@@ -132,7 +132,27 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     func calculateProgress(){
         progress = max(min(offsetX / sideMenuWidth, 1), 0)
     }
+    
+    enum Tab: String, CaseIterable {
+        case home = "house.fill"
+        case Statistics = "chart.xyaxis.line"
+        case Routines = "rectangle.stack"
+        case Exercises = "dumbbell"
+        case Profile = "person.crop.circle"
+        
+        var title: String {
+            switch self {
+            case .home: return "Home"
+            case .Statistics: return "Statistics"
+            case .Routines: return "Routines"
+            case .Exercises: return "Exercises"
+            case .Profile: return "Profile"
+            }
+        }
+    }
 }
+
+
 
 #Preview {
     HomeView().environmentObject(ViewRouter())

@@ -19,6 +19,7 @@ struct ExerciseLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
     ) private var exercises: FetchedResults<Exercise>
     
+    @State private var showMenu: Bool = false
     @State private var navPath = [Int]()
     @State private var selectedExercise: Exercise? = nil
     @State private var searchText: String = ""
@@ -26,6 +27,13 @@ struct ExerciseLibraryView: View {
     @State private var newPrType: String? = nil
     
     var body: some View {
+        SideBar(
+            rotateWhenExpands: true, // true
+            disableInteractions: true, // true
+            sideMenuWidth: 200,
+            cornerRadius: 25, // 25
+            showMenu: $showMenu
+        ) { safeArea in
         NavigationStack(path: $navPath) {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
@@ -80,7 +88,12 @@ struct ExerciseLibraryView: View {
                         Image(systemName: "plus")
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
-                    
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    SideBarButton(showMenu: $showMenu)
+                        .environmentObject(viewRouter)
                 }
             }
             
@@ -115,6 +128,12 @@ struct ExerciseLibraryView: View {
                 }
             }
         }
+        } menuView: { safeArea in
+            SideBarMenuView(safeArea)
+        } Background: {
+            // propperty of the background in side menu
+            Rectangle()
+        }
     }
     
     /// Returns an array of exercises that has filtered by a seach-word from the CoreData fetch result
@@ -122,6 +141,13 @@ struct ExerciseLibraryView: View {
     private func searchedItems() -> [Exercise] {
         return exercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
     }
+    
+    @ViewBuilder
+    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
+        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
+            .environmentObject(viewRouter)
+    }
+    
     
 }
 
