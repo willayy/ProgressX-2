@@ -72,7 +72,7 @@ struct ExerciseLibraryView: View {
                                         ).environment(\.managedObjectContext, viewContext)
                                     }
                                 }
-                                .frame(height: 600)
+                                .frame(height: 400)
                                 .background(Color(.systemGray6))
                                 .cornerRadius(10)
                                 .padding(.horizontal, 20)
@@ -81,13 +81,15 @@ struct ExerciseLibraryView: View {
                         
                         // MARK: Add new exercise button
                         Button {
-                            navPath.append(2)
+                            navPath.append(1)
                         } label: {
                             Text("Add new exercise")
                                 .frame(height: 40)
                             Image(systemName: "plus")
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
+                        .padding(.top, 10)
+                        
                     }
                 }
                 .toolbar {
@@ -100,26 +102,26 @@ struct ExerciseLibraryView: View {
                 // This is the root view of this whole view-hierarchy.
                 // If you want to add more viewas add to this group of if statements.
                 .navigationDestination(for: Int.self) { selection in
-                    if selection == 2 {
+                    if selection == 1 {
                         CreateNewExerciseView()
                             .environment(\.managedObjectContext, viewContext)
-                    } else if selection == 3 {
+                    } else if selection == 2 {
                         EditExerciseView(
                             exercise: $selectedExercise
                         ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 4 {
+                    } else if selection == 3 {
                         StatisticsView(
                             exercise: $selectedExercise,
                             navPath: $navPath,
                             editingPr: $editingPr,
                             newPrType: $newPrType
                         ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 5 {
+                    } else if selection == 4 {
                         EditPrView(
                             editingPr: $editingPr,
                             exercise: $selectedExercise
                         ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 6 {
+                    } else if selection == 5 {
                         CreateNewPersonalRecord(
                             prType: $newPrType,
                             exercise: $selectedExercise
