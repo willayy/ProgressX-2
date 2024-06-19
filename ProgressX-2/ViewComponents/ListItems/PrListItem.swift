@@ -47,7 +47,7 @@ struct PrListItem: View {
             
             Button(action: {
                 editingPr = pr
-                navPath.append(5)
+                navPath.append(4)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
