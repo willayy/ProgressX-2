@@ -27,11 +27,7 @@ extension BodyEntry {
     
     private func validateProfile() throws {
         if self.profile == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9993,
-                userInfo: [NSLocalizedDescriptionKey: "BodyEntry cant have relationshiå .profile set to nil"]
-            )
+            throw ProgressXNSErrors.bodyEntryProfileIsNil.toNSError()
         }
     }
     

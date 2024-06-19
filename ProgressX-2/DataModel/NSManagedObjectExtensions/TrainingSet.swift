@@ -89,11 +89,7 @@ extension TrainingSet {
     // Makes sure that the Set has an Exercise assigned to it.
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9995,
-                userInfo: [NSLocalizedDescriptionKey: "Set cant have relationship .exercise set to nil"]
-            )
+            throw ProgressXNSErrors.setExerciseIsNil.toNSError()
         }
     }
     
@@ -106,11 +102,7 @@ extension TrainingSet {
         ]
         
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9994,
-                userInfo: [NSLocalizedDescriptionKey: "Set.exercise.exerciseType and set.prType have mismatching values"]
-            )
+            throw ProgressXNSErrors.setAndExerciseTypeMismatch.toNSError()
         }
     }
 
@@ -119,11 +111,7 @@ extension TrainingSet {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityTodoInteger && isPrRepBased {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9986,
-                userInfo: [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
-            )
+            throw ProgressXNSErrors.quantityTodoInvalid.toNSError()
         }
     }
     
@@ -132,11 +120,7 @@ extension TrainingSet {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
         
         if !isQuantityDoneInteger && isPrRepBased {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9985,
-                userInfo: [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
-            )
+            throw ProgressXNSErrors.quantityDoneInvalid.toNSError()
         }
     }
     

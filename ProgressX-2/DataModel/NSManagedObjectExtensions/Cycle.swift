@@ -21,11 +21,7 @@ extension Cycle {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.weeks == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9990,
-                userInfo: [NSLocalizedDescriptionKey: "Cycle can't be complete without any weeks"]
-            )
+            throw ProgressXNSErrors.cycleCompleteWithNoWeeks.toNSError()
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
@@ -41,11 +37,7 @@ extension Cycle {
         
         // Throw if true.
         if self.isComplete && completedWeeks != weeks.count {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9989,
-                userInfo: [NSLocalizedDescriptionKey: "Cycle can't be complete when its weeks aren't"]
-            )
+            throw ProgressXNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
     }
 }

@@ -21,11 +21,7 @@ extension TrainingWeek {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.sessions == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9991,
-                userInfo: [NSLocalizedDescriptionKey: "Week can't be complete without any sessions"]
-            )
+            throw ProgressXNSErrors.weekCompleteWithNoSessions.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error.
@@ -41,11 +37,7 @@ extension TrainingWeek {
         
         // Throw if true.
         if self.isComplete && completedSessions != sessions.count {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9992,
-                userInfo: [NSLocalizedDescriptionKey: "Week can't be complete when its sessions aren't"]
-            )
+            throw ProgressXNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
     }
 }

@@ -22,11 +22,7 @@ extension Session {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error
         if self.isComplete && self.sets == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9996,
-                userInfo: [NSLocalizedDescriptionKey: "Session can't be complete without any sets"]
-            )
+            throw ProgressXNSErrors.sessionCompleteWithNoSets.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error
@@ -42,11 +38,7 @@ extension Session {
         
         // Throw if true
         if self.isComplete && completedSets != sets.count {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9997,
-                userInfo: [NSLocalizedDescriptionKey: "Session can't be complete when its sets aren't"]
-            )
+            throw ProgressXNSErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
     }
 }

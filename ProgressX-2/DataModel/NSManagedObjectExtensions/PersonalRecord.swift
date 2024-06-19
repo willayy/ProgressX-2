@@ -82,22 +82,14 @@ extension PersonalRecord {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityInteger && isPrRepBased {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9987,
-                userInfo: [NSLocalizedDescriptionKey: "Property .prQuantity on PersonalRecord cant be set to a double value that isnt a valid integer"]
-            )
+            throw ProgressXNSErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
     
     /* Func that validates the exericse relationship in a PersonalRecord entity */
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9998,
-                userInfo: [NSLocalizedDescriptionKey: "Pr cant have relationship .exercise set to nil"]
-            )
+            throw ProgressXNSErrors.prExerciseIsNil.toNSError()
         }
     }
     
@@ -113,11 +105,7 @@ extension PersonalRecord {
         /* If a PersonalRecord has a relationship to an exercise that does not have
         the a matching type throw an Error*/
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9999,
-                userInfo: [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
-            )
+            throw ProgressXNSErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
         

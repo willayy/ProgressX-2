@@ -34,11 +34,7 @@ extension Completeable {
     
     private func validateIsComplete() throws {
         if self.isComplete && self.completedOnDate == nil {
-            throw NSError(
-                domain: "CoreDataErrorDomain",
-                code: 9988,
-                userInfo: [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate"]
-            )
+            throw ProgressXNSErrors.completeWithoutCompletionDate.toNSError()
         }
     }
     
