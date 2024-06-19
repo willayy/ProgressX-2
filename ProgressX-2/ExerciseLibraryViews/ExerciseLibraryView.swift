@@ -28,106 +28,105 @@ struct ExerciseLibraryView: View {
     
     var body: some View {
         SideBar(
-            rotateWhenExpands: true, // true
-            disableInteractions: true, // true
+            rotateWhenExpands: true,
+            disableInteractions: true,
             sideMenuWidth: 200,
-            cornerRadius: 25, // 25
+            cornerRadius: 25,
             showMenu: $showMenu
         ) { safeArea in
-        NavigationStack(path: $navPath) {
-            ScrollView {
-                VStack(alignment: .center, spacing: 10) {
-                    
-                    BoldTitle(text: "Exercise library")
-                    
-                    LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
-                    
-                    TextField("Search...",
-                              text: $searchText)
-                            .padding(10)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                            .padding(.horizontal, 20)
-                            .onDisappear(perform: {
-                                searchText = ""
-                            })
-                            .padding(.top, 20)
-                    
-                    //MARK: List view displaying all exercise objects
-                    VStack(alignment: .center) {
-                        if exercises.isEmpty {
-                            Text("You currently have no exercises saved to the exercise library...")
-                                .font(.subheadline)
-                                .fontWeight(.light)
-                                .padding(.bottom, 20)
+            NavigationStack(path: $navPath) {
+                ScrollView {
+                    VStack(alignment: .center, spacing: 10) {
+                        
+                        BoldTitle(text: "Exercise library")
+                        
+                        LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
+                        
+                        TextField("Search...",
+                                  text: $searchText)
+                                .padding(10)
+                                .background(Color(.systemGray6))
+                                .cornerRadius(10)
+                                .padding(.horizontal, 20)
+                                .onDisappear(perform: {
+                                    searchText = ""
+                                })
                                 .padding(.top, 20)
-                                .foregroundStyle(.red)
-                        } else {
-                            List {
-                                ForEach(searchedItems()) { exercise in
-                                    ExerciseListItem(
-                                        navPath: $navPath,
-                                        selectedExercise: $selectedExercise,
-                                        exercise: exercise
-                                    ).environment(\.managedObjectContext, viewContext)
+                        
+                        //MARK: List view displaying all exercise objects
+                        VStack(alignment: .center) {
+                            if exercises.isEmpty {
+                                Text("You currently have no exercises saved to the exercise library...")
+                                    .font(.subheadline)
+                                    .fontWeight(.light)
+                                    .padding(.bottom, 20)
+                                    .padding(.top, 20)
+                                    .foregroundStyle(.red)
+                            } else {
+                                List {
+                                    ForEach(searchedItems()) { exercise in
+                                        ExerciseListItem(
+                                            navPath: $navPath,
+                                            selectedExercise: $selectedExercise,
+                                            exercise: exercise
+                                        ).environment(\.managedObjectContext, viewContext)
+                                    }
                                 }
+                                .frame(height: 600)
+                                .background(Color(.systemGray6))
+                                .cornerRadius(10)
+                                .padding(.horizontal, 20)
                             }
-                            .frame(height: 600)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                            .padding(.horizontal, 20)
                         }
+                        
+                        // MARK: Add new exercise button
+                        Button {
+                            navPath.append(2)
+                        } label: {
+                            Text("Add new exercise")
+                                .frame(height: 40)
+                            Image(systemName: "plus")
+                        }
+                        .buttonStyle(BorderedProminentButtonStyle())
                     }
-                    
-                    // MARK: Add new exercise button
-                    Button {
-                        navPath.append(2)
-                    } label: {
-                        Text("Add new exercise")
-                            .frame(height: 40)
-                        Image(systemName: "plus")
+                }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        SideBarButton(showMenu: $showMenu)
+                            .environmentObject(viewRouter)
                     }
-                    .buttonStyle(BorderedProminentButtonStyle())
+                }
+                //MARK: Handling the navigation through the NavStack
+                // This is the root view of this whole view-hierarchy.
+                // If you want to add more viewas add to this group of if statements.
+                .navigationDestination(for: Int.self) { selection in
+                    if selection == 2 {
+                        CreateNewExerciseView()
+                            .environment(\.managedObjectContext, viewContext)
+                    } else if selection == 3 {
+                        EditExerciseView(
+                            exercise: $selectedExercise
+                        ).environment(\.managedObjectContext, viewContext)
+                    } else if selection == 4 {
+                        StatisticsView(
+                            exercise: $selectedExercise,
+                            navPath: $navPath,
+                            editingPr: $editingPr,
+                            newPrType: $newPrType
+                        ).environment(\.managedObjectContext, viewContext)
+                    } else if selection == 5 {
+                        EditPrView(
+                            editingPr: $editingPr,
+                            exercise: $selectedExercise
+                        ).environment(\.managedObjectContext, viewContext)
+                    } else if selection == 6 {
+                        CreateNewPersonalRecord(
+                            prType: $newPrType,
+                            exercise: $selectedExercise
+                        ).environment(\.managedObjectContext, viewContext)
+                    }
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    SideBarButton(showMenu: $showMenu)
-                        .environmentObject(viewRouter)
-                }
-            }
-            
-            //MARK: Handling the navigation through the NavStack
-            // This is the root view of this whole view-hierarchy.
-            // If you want to add more viewas add to this group of if statements.
-            .navigationDestination(for: Int.self) { selection in
-                if selection == 2 {
-                    CreateNewExerciseView()
-                        .environment(\.managedObjectContext, viewContext)
-                } else if selection == 3 {
-                    EditExerciseView(
-                        exercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
-                } else if selection == 4 {
-                    StatisticsView(
-                        exercise: $selectedExercise,
-                        navPath: $navPath,
-                        editingPr: $editingPr, 
-                        newPrType: $newPrType
-                    ).environment(\.managedObjectContext, viewContext)
-                } else if selection == 5 {
-                    EditPrView(
-                        editingPr: $editingPr,
-                        exercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
-                } else if selection == 6 {
-                    CreateNewPersonalRecord(
-                        prType: $newPrType, 
-                        exercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
-                }
-            }
-        }
         } menuView: { safeArea in
             SideBarMenuView(safeArea)
         } Background: {
