@@ -25,7 +25,7 @@ struct ExerciseListItem: View {
             // MARK: Edit button
             Button(action: {
                 selectedExercise = exercise
-                navPath.append(3)
+                navPath.append(2)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
@@ -34,7 +34,7 @@ struct ExerciseListItem: View {
             // MARK: Statistics button
             Button(action: {
                 selectedExercise = exercise
-                navPath.append(4)
+                navPath.append(3)
             }) { Image(systemName: "chart.xyaxis.line") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
