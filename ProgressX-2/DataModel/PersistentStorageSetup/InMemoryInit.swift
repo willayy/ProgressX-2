@@ -248,5 +248,9 @@ extension PersistenceController {
         let routine = Routine(context: context)
         routine.timePeriodName = "test routine 1"
         routine.timePeriodDescription = "routine used for in-memory debugging"
+        let firstCycle = Cycle(context: context)
+        firstCycle.routine = routine
+        routine.addToCycles(firstCycle)
+        
     }
 }

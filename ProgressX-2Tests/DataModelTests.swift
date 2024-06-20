@@ -150,14 +150,20 @@ final class DataModelTests: XCTestCase {
         let invalidExerciseName: String = String(repeating: "a", count: 51)
         
         // Put invalid name into Exercise
-        _ = PersistenceController.createExercise(
+        let exercise = PersistenceController.createExercise(
             context!,
             name: invalidExerciseName,
             desc: "some description",
             type: "reps"
         )
         
+        // Should throw
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        exercise.exerciseName = String(repeating: "a", count: 50)
+        
+        // Should not throw since name is now within valid range
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Create_Exercise_With_Invalid_Desc() {
@@ -165,26 +171,39 @@ final class DataModelTests: XCTestCase {
         let invalidExerciseDesc: String = String(repeating: "a", count: 501)
         
         // Put invalid desc into Exercise
-        _ = PersistenceController.createExercise(
+        let exercise = PersistenceController.createExercise(
             context!,
             name: "some name",
             desc: invalidExerciseDesc,
             type: "reps"
         )
         
+        // Should throw
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        // String within allowed range
+        exercise.exerciseDesc = String(repeating: "a", count: 500)
+        
+        // Should not throw as exercise has valid description
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Create_Exercise_With_Non_Unique_Name() {
         // Create an exercise with a name that is already taken
-        _ = PersistenceController.createExercise(
+        let exercise = PersistenceController.createExercise(
             context!,
             name: "testing exercise (reps)",
             desc: "some desc",
             type: "reps"
         )
         
+        // Should throw
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        exercise.exerciseName = "abc123"
+        
+        // Should not throw since name is changed
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Create_Profile_With_Invalid_Gender() {
@@ -195,7 +214,13 @@ final class DataModelTests: XCTestCase {
         profile.height = 180
         profile.gender = "This is not a valid gender"
         
+        // Should throw
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        profile.gender = "male"
+        
+        // Should not throw since gender is now a valid string
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Create_BodyEntry_With_No_Profile() {
@@ -205,7 +230,14 @@ final class DataModelTests: XCTestCase {
         bodyEntry.achievedOnDate = Date()
         bodyEntry.profile = nil
         
+        // Should throw
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        bodyEntry.profile = Profile(context: context!)
+        bodyEntry.profile!.gender = "male"
+        
+        // Should not throw since a profile has been assigned
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Complete_Session_With_Incoomplete_Sets() {
@@ -235,11 +267,16 @@ final class DataModelTests: XCTestCase {
         
         // Should throw because session is complete but it's only set isn't
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        set.isComplete = true
+        
+        // Should not throw because set is now completed
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Set_Quantity_To_Double_On_PersonalRecord() {
         // Create a onerepmax PR with a quantity thats not an integer
-        _ = PersistenceController.createPersonalRecord(
+        let pr = PersistenceController.createPersonalRecord(
             context!,
             exercise: exercise!,
             wl: 100,
@@ -248,7 +285,13 @@ final class DataModelTests: XCTestCase {
             type: "onerepmax"
         )
         
+        // Should throw quantity is double
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        pr.prQuantity = 1
+        
+        // Should not throw quantity is integer
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
     func test_Set_QuantityTodo_To_Double_On_TrainingSet() {
@@ -273,6 +316,11 @@ final class DataModelTests: XCTestCase {
         set.exercise = exercise
         set.isComplete = false
         set.prType = "onerepmax"
+        
+        set.quantityTodo = 1
+        
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+        
         set.quantityTodo = 1.2321312
         
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
@@ -300,6 +348,11 @@ final class DataModelTests: XCTestCase {
         set.exercise = exercise
         set.isComplete = false
         set.prType = "onerepmax"
+        
+        set.quantityDone = 1
+        
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+        
         set.quantityDone = 1.2321312
         
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
