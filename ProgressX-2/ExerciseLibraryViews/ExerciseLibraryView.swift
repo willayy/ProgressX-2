@@ -17,7 +17,12 @@ struct ExerciseLibraryView: View {
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
-    ) private var exercises: FetchedResults<Exercise>
+    ) private var allExercises: FetchedResults<Exercise>
+    
+    @FetchRequest(
+        entity: Exercise.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
+    ) private var searchedExercises: FetchedResults<Exercise>
     
     @State private var showMenu: Bool = false
     @State private var navPath = [Int]()
@@ -42,34 +47,34 @@ struct ExerciseLibraryView: View {
                         
                         LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
                         
-                        TextField("Search...",
-                                  text: $searchText)
-                                .padding(10)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                                .padding(.horizontal, 20)
-                                .onDisappear(perform: {
-                                    searchText = ""
-                                })
-                                .padding(.top, 20)
+                        SearchBar(
+                            searchAttribute: "exerciseName",
+                            searchText: $searchText,
+                            fetchRequest: _searchedExercises
+                        )
+                            .padding(.top, 20)
                         
                         //MARK: List view displaying all exercise objects
                         VStack(alignment: .center) {
-                            if exercises.isEmpty {
+                            if allExercises.isEmpty {
                                 Text("You currently have no exercises saved to the exercise library...")
                                     .font(.subheadline)
                                     .fontWeight(.light)
                                     .padding(.bottom, 20)
                                     .padding(.top, 20)
                                     .foregroundStyle(.red)
+                            } else if searchedExercises.isEmpty {
+                                LightSubHeadline(text: "No Exercises matched your search...")
+                                    .padding(.vertical, 20)
                             } else {
                                 List {
-                                    ForEach(searchedItems()) { exercise in
+                                    ForEach(searchedExercises) { exercise in
                                         ExerciseListItem(
                                             navPath: $navPath,
                                             selectedExercise: $selectedExercise,
                                             exercise: exercise
-                                        ).environment(\.managedObjectContext, viewContext)
+                                        )
+                                        .environment(\.managedObjectContext, viewContext)
                                     }
                                 }
                                 .frame(height: 400)
@@ -135,12 +140,6 @@ struct ExerciseLibraryView: View {
             // propperty of the background in side menu
             Rectangle()
         }
-    }
-    
-    /// Returns an array of exercises that has filtered by a seach-word from the CoreData fetch result
-    /// - Returns: An array filtered by a search-word
-    private func searchedItems() -> [Exercise] {
-        return exercises.filter { searchText.isEmpty ? true : $0.exerciseName!.localizedCaseInsensitiveContains(searchText) }
     }
     
     @ViewBuilder
