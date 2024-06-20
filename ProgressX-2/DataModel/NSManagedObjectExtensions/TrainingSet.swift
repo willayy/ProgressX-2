@@ -9,9 +9,11 @@ import Foundation
 
 extension TrainingSet {
     
+    // MARK: Extra properties
+    
     /// Convience method for getting the name of the Exercise.
     /// - Returns: The name of the sets exercise as a String.
-    @objc public func exerciseString() -> String? {
+    var exerciseString: String? {
         guard let name = self.exercise!.exerciseName else {
             // Since CoreData does not allow me to make this relationship non-optional
             fatalError("No exercise set on this Set")
@@ -22,13 +24,13 @@ extension TrainingSet {
     
     /// Convenience method for getting the load todo on a Set.
     /// - Returns: The load todo as a formatted String.
-    @objc public func loadTodoString() -> String {
+    var loadTodoString: String {
         return String(format: "%.2f", self.loadTodo)
     }
     
     /// Convenience method for getting the quantity todo on a Set.
     /// - Returns: The quantity todo as a formatted String.
-    @objc public func quantityTodoString() -> String {
+    var quantityTodoString: String {
         guard let type = self.exercise!.exerciseType else {
             // Since CoreData does not allow me to make this relationship non-optional
             fatalError("No exercise set on this Set")
@@ -46,13 +48,13 @@ extension TrainingSet {
     
     /// Convenience method for getting the load done on a Set.
     /// - Returns: The load done as a formatted String.
-    @objc public func loadDoneString() -> String {
+    var loadDoneString: String {
         return String(format: "%.2f", self.loadDone)
     }
     
     /// Convenience method for getting the quantity done on a Set.
     /// - Returns: The quantity done as a formatted String.
-    @objc public func quantityDoneString() -> String {
+    var quantityDoneString: String {
         guard let type = self.exercise!.exerciseType else {
             // Since CoreData does not allow me to make this relationship non-optional
             fatalError("No exercise set on this Set")
@@ -67,6 +69,8 @@ extension TrainingSet {
                 return ""
         }
     }
+    
+    // MARK: Validation
     
     // Override validation
     override public func validateForUpdate() throws {
@@ -89,7 +93,7 @@ extension TrainingSet {
     // Makes sure that the Set has an Exercise assigned to it.
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw ProgressXNSErrors.setExerciseIsNil.toNSError()
+            throw NSValidationErrors.setExerciseIsNil.toNSError()
         }
     }
     
@@ -102,7 +106,7 @@ extension TrainingSet {
         ]
         
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw ProgressXNSErrors.setAndExerciseTypeMismatch.toNSError()
+            throw NSValidationErrors.setAndExerciseTypeMismatch.toNSError()
         }
     }
 
@@ -111,7 +115,7 @@ extension TrainingSet {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityTodoInteger && isPrRepBased {
-            throw ProgressXNSErrors.quantityTodoInvalid.toNSError()
+            throw NSValidationErrors.quantityTodoInvalid.toNSError()
         }
     }
     
@@ -120,7 +124,7 @@ extension TrainingSet {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
         
         if !isQuantityDoneInteger && isPrRepBased {
-            throw ProgressXNSErrors.quantityDoneInvalid.toNSError()
+            throw NSValidationErrors.quantityDoneInvalid.toNSError()
         }
     }
     

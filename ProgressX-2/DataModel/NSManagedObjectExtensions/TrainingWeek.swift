@@ -8,6 +8,9 @@
 import Foundation
 
 extension TrainingWeek {
+    
+    // MARK: Validation
+    
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
@@ -21,7 +24,7 @@ extension TrainingWeek {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.sessions == nil {
-            throw ProgressXNSErrors.weekCompleteWithNoSessions.toNSError()
+            throw NSValidationErrors.weekCompleteWithNoSessions.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error.
@@ -37,7 +40,7 @@ extension TrainingWeek {
         
         // Throw if true.
         if self.isComplete && completedSessions != sessions.count {
-            throw ProgressXNSErrors.weekCompleteWithUncompleteSessions.toNSError()
+            throw NSValidationErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
     }
 }

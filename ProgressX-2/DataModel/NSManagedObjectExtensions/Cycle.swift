@@ -8,6 +8,9 @@
 import Foundation
 
 extension Cycle {
+    
+    // MARK: Validation
+    
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
@@ -21,7 +24,7 @@ extension Cycle {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.weeks == nil {
-            throw ProgressXNSErrors.cycleCompleteWithNoWeeks.toNSError()
+            throw NSValidationErrors.cycleCompleteWithNoWeeks.toNSError()
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
@@ -37,7 +40,7 @@ extension Cycle {
         
         // Throw if true.
         if self.isComplete && completedWeeks != weeks.count {
-            throw ProgressXNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
+            throw NSValidationErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
     }
 }

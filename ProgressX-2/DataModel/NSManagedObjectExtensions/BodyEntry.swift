@@ -9,11 +9,14 @@ import Foundation
 
 extension BodyEntry {
     
-    /// Formatted weightLoad String from PR
-    /// - Returns: String(Double) formatted to two decimal points.
-    @objc public func bodyWeightString() -> String {
+    //MARK: Extra properties
+    
+    // Computed property for bodyWeightString formatted nicely
+    var bodyWeightString: String {
         return String(format: "%.2f", self.bodyWeight)
     }
+        
+    //MARK: Validation
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
@@ -27,7 +30,7 @@ extension BodyEntry {
     
     private func validateProfile() throws {
         if self.profile == nil {
-            throw ProgressXNSErrors.bodyEntryProfileIsNil.toNSError()
+            throw NSValidationErrors.bodyEntryProfileIsNil.toNSError()
         }
     }
     

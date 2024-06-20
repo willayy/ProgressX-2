@@ -9,6 +9,8 @@ import Foundation
 
 extension Session {
     
+    // MARK: Validation
+    
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
@@ -22,7 +24,7 @@ extension Session {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error
         if self.isComplete && self.sets == nil {
-            throw ProgressXNSErrors.sessionCompleteWithNoSets.toNSError()
+            throw NSValidationErrors.sessionCompleteWithNoSets.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error
@@ -38,7 +40,7 @@ extension Session {
         
         // Throw if true
         if self.isComplete && completedSets != sets.count {
-            throw ProgressXNSErrors.sessionCompleteWithUncompleteSets.toNSError()
+            throw NSValidationErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
     }
 }

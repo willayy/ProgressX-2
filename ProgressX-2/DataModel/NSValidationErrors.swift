@@ -7,23 +7,25 @@
 
 import Foundation
 
-enum ProgressXNSErrors: Int {
+enum NSValidationErrors: Int {
     
-    case prAndExerciseTypeMismatch =            9999
-    case prExerciseIsNil =                      9998
-    case quantityInvalid =                      9997
-    case bodyEntryProfileIsNil =                9996
-    case completeWithoutCompletionDate =        9995
-    case cycleCompleteWithUncompleteWeeks =     9994
-    case cycleCompleteWithNoWeeks =             9993
-    case weekCompleteWithUncompleteSessions =   9992
-    case weekCompleteWithNoSessions =           9991
-    case sessionCompleteWithUncompleteSets =    9990
-    case sessionCompleteWithNoSets =            9989
-    case setExerciseIsNil =                     9988
-    case setAndExerciseTypeMismatch =           9987
-    case quantityTodoInvalid =                  9986
-    case quantityDoneInvalid =                  9985
+    case prAndExerciseTypeMismatch = 9999
+    case prExerciseIsNil = 9998
+    case quantityInvalid = 9997
+    case bodyEntryProfileIsNil = 9996
+    case completeWithoutCompletionDate = 9995
+    case cycleCompleteWithUncompleteWeeks = 9994
+    case cycleCompleteWithNoWeeks = 9993
+    case weekCompleteWithUncompleteSessions = 9992
+    case weekCompleteWithNoSessions = 9991
+    case sessionCompleteWithUncompleteSets = 9990
+    case sessionCompleteWithNoSets = 9989
+    case setExerciseIsNil = 9988
+    case setAndExerciseTypeMismatch = 9987
+    case quantityTodoInvalid = 9986
+    case quantityDoneInvalid = 9985
+    case routineHasMultipleIncompleteCycles = 9984
+    case invalidPostionIndex = 9983
     
     var domain: String {
         return "CoreDataErrorDomain"
@@ -75,6 +77,12 @@ enum ProgressXNSErrors: Int {
             
         case .prAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
+            
+        case .routineHasMultipleIncompleteCycles:
+            return [NSLocalizedDescriptionKey: "Routine has multiple incomplete cycles"]
+            
+        case .invalidPostionIndex:
+            return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent"]
         }
     }
     

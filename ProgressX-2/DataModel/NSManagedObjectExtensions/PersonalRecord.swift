@@ -9,9 +9,9 @@ import Foundation
 
 extension PersonalRecord {
     
-    /// The unit supposed to be used when describing the quantity of the PR
-    /// - Returns: A String
-    @objc public func quantityUnitString() -> String {
+    //MARK: Extra properties
+    
+    var quantityUnitString: String {
         switch self.prType {
             case "maxreps":
                 return "reps"
@@ -24,9 +24,7 @@ extension PersonalRecord {
         }
     }
     
-    /// Formatted prQuantity String  from the PR
-    /// - Returns: String(Double) formatted into 0 or 2 decimal points depending on PR-type
-    @objc public func quantityString() -> String {
+    var quantityString: String {
         switch self.prType {
             case "maxreps":
                 return String(format: "%.0f", self.prQuantity)
@@ -38,10 +36,8 @@ extension PersonalRecord {
                 return ""
         }
     }
-    
-    /// A prettier string than the raw one stored in the CoreData entities.
-    /// - Returns: A pretty-fied String
-    @objc public func typeString() -> String {
+   
+    var typeString: String {
         switch self.prType {
             case "maxreps":
                 return "AMRAP"
@@ -53,12 +49,12 @@ extension PersonalRecord {
                 return ""
         }
     }
-    
-    /// Formatted weightLoad String from PR
-    /// - Returns: String(Double) formatted to two decimal points.
-    @objc public func loadString() -> String {
+   
+    var loadString: String {
         return String(format: "%.2f", self.weightLoad)
     }
+    
+    //MARK: Validation
     
     // Overriding update for special constraints
     public override func validateForUpdate() throws {
@@ -82,14 +78,14 @@ extension PersonalRecord {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityInteger && isPrRepBased {
-            throw ProgressXNSErrors.prAndExerciseTypeMismatch.toNSError()
+            throw NSValidationErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
     
     /* Func that validates the exericse relationship in a PersonalRecord entity */
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw ProgressXNSErrors.prExerciseIsNil.toNSError()
+            throw NSValidationErrors.prExerciseIsNil.toNSError()
         }
     }
     
@@ -105,7 +101,7 @@ extension PersonalRecord {
         /* If a PersonalRecord has a relationship to an exercise that does not have
         the a matching type throw an Error*/
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw ProgressXNSErrors.prAndExerciseTypeMismatch.toNSError()
+            throw NSValidationErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
         

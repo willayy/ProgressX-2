@@ -9,9 +9,11 @@ import Foundation
 
 extension Achievement {
     
+    //MARK: Extra properties
+    
     /// Formatted Date from PR
     /// - Returns: Date-string in format "yyyy-MM-dd"
-    @objc public func dateString() -> String? {
+    var dateString: String? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         

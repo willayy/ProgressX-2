@@ -305,4 +305,45 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
+    func test_Completable_Has_Invalid_positionIndex() {
+        let routine = Routine(context: context!)
+        let cycle1 = Cycle(context: context!)
+        let cycle2 = Cycle(context: context!)
+        cycle1.isComplete = true
+        cycle1.routine = routine
+        cycle2.routine = routine
+        cycle2.positionIndex = 2
+        
+        routine.addToCycles(cycle1)
+        routine.addToCycles(cycle2)
+        
+        // Try with valid postionIndexes
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+        
+        cycle2.positionIndex = 1
+        
+        // try with invalid (positionIndexes are the same) positionIndexes
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_Routine_Has_Multiple_Incomplete_Cycles() {
+        let routine = Routine(context: context!)
+        let cycle1 = Cycle(context: context!)
+        let cycle2 = Cycle(context: context!)
+        cycle1.routine = routine
+        cycle2.routine = routine
+        cycle2.positionIndex = 2
+        
+        routine.addToCycles(cycle1)
+        routine.addToCycles(cycle2)
+        
+        // Should throw because both are incomplete
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        cycle1.isComplete = true
+        
+        // Should not throw because only one is incomplete
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+    }
+    
 }
