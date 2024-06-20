@@ -7,18 +7,16 @@
 
 import SwiftUI
 
+// PersonalRecord list item inteded to be used combined with a dynamic list that fetches the correct PR's for a given exercise.
 struct PrListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
     // Access to the parents navigationstack.
     @Binding var navPath: [Int]
-    
     @Binding var editingPr: PersonalRecord?
-    
     @State private var showDeleteAlert: Bool = false
-    
-    public let pr: PersonalRecord
+    @ObservedObject var pr: PersonalRecord
     
     var body: some View {
         
@@ -26,22 +24,28 @@ struct PrListItem: View {
         
         HStack {
             VStack(alignment: .leading) {
-                Text("Type: ")
+                (Text("Type: ")
                     .fontWeight(.bold)
-                + Text("\(pr.typeString())")
+                + Text("\(pr.typeString())"))
+                .minimumScaleFactor(0.6)
                 
                 (Text("Date: ")
                     .fontWeight(.bold)
                  + (Text("\(pr.dateString() ?? "")")))
+                .minimumScaleFactor(0.6)
                 
                 (Text("Load: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                  + (Text("\(pr.loadString()) \(weightUnit) ")))
+                .minimumScaleFactor(0.6)
                 
-                Text("Quantity: ")
+                (Text("Quantity: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                + Text("\(pr.quantityString()) \(pr.quantityUnitString())")
+                + Text("\(pr.quantityString()) \(pr.quantityUnitString())"))
+                .minimumScaleFactor(0.6)
             }
+            .frame(width: 135, height: 20)
+            .padding(.vertical, 10)
             
             Spacer()
             

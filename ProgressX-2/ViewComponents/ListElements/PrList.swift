@@ -81,6 +81,7 @@ struct PrList: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "exerciseType == %@","time")
     
     let timeBasedExerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
