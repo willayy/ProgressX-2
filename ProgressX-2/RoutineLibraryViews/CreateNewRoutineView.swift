@@ -7,10 +7,16 @@
 
 import SwiftUI
 
-struct CreateNewRoutine: View {
+struct CreateNewRoutineView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
+    @Binding var selectedRoutine: Routine?
+    
+    @FetchRequest(
+        entity: Routine.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
+    ) var allRoutines: FetchedResults<Routine>
     
     @State private var newRoutineName: String = ""
     @State private var newRoutineNameIsInvalid: Bool = false
@@ -48,17 +54,70 @@ struct CreateNewRoutine: View {
                 )
                 .padding(.bottom, 20)
                 
-                
+                Button {
+                    if validateInput() {
+                        // Create a Routine
+                        let newRoutine = Routine(context: viewContext)
+                        newRoutine.timePeriodName = newRoutineName
+                        newRoutine.timePeriodDescription = newRoutineDesc
+                        
+                        // reset fields
+                        withAnimation {
+                            newRoutineName = ""
+                            newRoutineDesc = ""
+                        }
+                        
+                        // Save and continue
+                        PersistenceController.save(viewContext)
+                        selectedRoutine = newRoutine
+                        navPath.append(2)
+                    }
+                } label: {
+                    Text("Save and continue")
+                        .frame(height: 40)
+                    Image(systemName: "arrow.right")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
                 
                 
             }
         }
     }
+    
+    private func validateInput() -> Bool {
+        var valid: Int = 0
+        let nameValidator = StringFieldValidator()
+        let descValidator = StringFieldValidator(emptyAllowed: true)
+        valid += nameValidator.valideField(inputVar: newRoutineName, errorMessage: $newRoutineNameIsInvalidMsg, fieldInvalid: $newRoutineNameIsInvalid)
+        valid += descValidator.valideField(inputVar: newRoutineDesc, errorMessage: $newRoutineDescIsInvalidMsg, fieldInvalid: $newRoutineDescIsInvalid)
+        
+        // Special case for already taken names
+        valid += {
+            if (allRoutines.contains { $0.timePeriodName == newRoutineName }) {
+                withAnimation {
+                    newRoutineNameIsInvalid = true
+                    newRoutineNameIsInvalidMsg = "This Routine name is already taken!"
+                }
+                return 1
+            } else {
+                withAnimation {
+                    newRoutineNameIsInvalid = false
+                    newRoutineNameIsInvalidMsg = ""
+                }
+                return 0
+            }
+        }()
+        
+        return valid == 0
+    }
+    
 }
 
 #Preview {
-    
     @State var navPath: [Int] = [Int]()
+    @State var selectedRoutine: Routine? = nil
     
-    return CreateNewRoutine(navPath: $navPath)
+    return CreateNewRoutineView(
+        navPath: $navPath,
+        selectedRoutine: $selectedRoutine)
 }

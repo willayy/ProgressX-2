@@ -193,23 +193,6 @@ struct CreateNewExerciseView: View {
     private func validateInput() -> Bool {
         var valid: Int = 0
         
-        // Special case for already taken names
-        valid += {
-            if (exercises.contains { $0.exerciseName == enteredExerciseName }) {
-                withAnimation {
-                    enteredExerciseNameIsInvalid = true
-                    enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
-                }
-                return 1
-            } else {
-                withAnimation {
-                    enteredExerciseNameIsInvalid = false
-                    enteredExerciseNameIsInvalidMsg = ""
-                }
-                return 0
-            }
-        }()
-        
         // Quantity can be either Double or Int
         let quantityFieldValidtor: InputFieldValidator
         
@@ -233,6 +216,24 @@ struct CreateNewExerciseView: View {
             valid += loadFieldValidtor.valideField(inputVar: enteredPrWeigtLoad, errorMessage: $enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $enteredPrWeigtLoadIsInvalid)
             valid += quantityFieldValidtor.valideField(inputVar: enteredPrQuantity, errorMessage: $enteredPrQuantityIsInvalidMsg ,fieldInvalid: $enteredPrQuantityIsInvalid)
         }
+        
+        // Special case for already taken names
+        valid += {
+            if (exercises.contains { $0.exerciseName == enteredExerciseName }) {
+                withAnimation {
+                    enteredExerciseNameIsInvalid = true
+                    enteredExerciseNameIsInvalidMsg = "This Exercise name is already taken!"
+                }
+                return 1
+            } else {
+                withAnimation {
+                    enteredExerciseNameIsInvalid = false
+                    enteredExerciseNameIsInvalidMsg = ""
+                }
+                return 0
+            }
+        }()
+        
         return valid == 0
     }
 }
