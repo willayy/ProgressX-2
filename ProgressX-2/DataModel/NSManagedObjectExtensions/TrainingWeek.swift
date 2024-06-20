@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import CoreData
 
 extension TrainingWeek {
+    
+    // MARK: Extra properties
     
     // MARK: Validation
     
@@ -24,7 +27,7 @@ extension TrainingWeek {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.sessions == nil {
-            throw NSValidationErrors.weekCompleteWithNoSessions.toNSError()
+            throw ValidationNSErrors.weekCompleteWithNoSessions.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error.
@@ -40,7 +43,7 @@ extension TrainingWeek {
         
         // Throw if true.
         if self.isComplete && completedSessions != sessions.count {
-            throw NSValidationErrors.weekCompleteWithUncompleteSessions.toNSError()
+            throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
     }
 }

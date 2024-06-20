@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum NSValidationErrors: Int {
+enum ValidationNSErrors: Int {
     
     case prAndExerciseTypeMismatch = 9999
     case prExerciseIsNil = 9998

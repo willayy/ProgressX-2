@@ -30,7 +30,7 @@ extension BodyEntry {
     
     private func validateProfile() throws {
         if self.profile == nil {
-            throw NSValidationErrors.bodyEntryProfileIsNil.toNSError()
+            throw ValidationNSErrors.bodyEntryProfileIsNil.toNSError()
         }
     }
     

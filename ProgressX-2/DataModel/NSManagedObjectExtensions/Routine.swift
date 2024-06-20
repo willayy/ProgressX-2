@@ -39,7 +39,7 @@ extension Routine {
         let completeCycles = self.completedCycles
         
         // If there are no cycles just return
-        if  self.cycles?.count ?? 0 == 0 {
+        if self.cycles?.count ?? 0 == 0 {
             return
         }
         
@@ -47,7 +47,7 @@ extension Routine {
         
         // If there are cycles they should all be completed or there should be only one incomplete
         if !(completeCycles.count == allCycles.count || completeCycles.count == allCycles.count - 1) {
-            throw NSValidationErrors.routineHasMultipleIncompleteCycles.toNSError()
+            throw ValidationNSErrors.routineHasMultipleIncompleteCycles.toNSError()
         }
     }
     

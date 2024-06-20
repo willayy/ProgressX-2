@@ -12,41 +12,41 @@ extension PersonalRecord {
     //MARK: Extra properties
     
     var quantityUnitString: String {
-        switch self.prType {
-            case "maxreps":
-                return "reps"
-            case "onerepmax":
-                return "reps"
-            case "timemax":
-                return "seconds"
-            default:
-                return ""
+        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
+        
+        switch type {
+        case .MaxReps:
+            return "reps"
+        case .OneRepMax:
+            return "reps"
+        case .TimeMax:
+            return "seconds"
         }
     }
     
     var quantityString: String {
-        switch self.prType {
-            case "maxreps":
-                return String(format: "%.0f", self.prQuantity)
-            case "onerepmax":
-                return String(format: "%.0f", self.prQuantity)
-            case "timemax":
-                return String(format: "%.2f", self.prQuantity)
-            default:
-                return ""
+        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
+        
+        switch type {
+        case .MaxReps:
+            return String(format: "%.0f", self.prQuantity)
+        case .OneRepMax:
+            return String(format: "%.0f", self.prQuantity)
+        case .TimeMax:
+            return String(format: "%.2f", self.prQuantity)
         }
     }
    
     var typeString: String {
-        switch self.prType {
-            case "maxreps":
-                return "AMRAP"
-            case "onerepmax":
-                return "1RM"
-            case "timemax":
-                return "Time-max"
-            default:
-                return ""
+        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
+        
+        switch type {
+        case .MaxReps:
+            return "AMRAP"
+        case .OneRepMax:
+            return "1RM"
+        case .TimeMax:
+            return "Time-max"
         }
     }
    
@@ -78,14 +78,14 @@ extension PersonalRecord {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityInteger && isPrRepBased {
-            throw NSValidationErrors.prAndExerciseTypeMismatch.toNSError()
+            throw ValidationNSErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
     
     /* Func that validates the exericse relationship in a PersonalRecord entity */
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw NSValidationErrors.prExerciseIsNil.toNSError()
+            throw ValidationNSErrors.prExerciseIsNil.toNSError()
         }
     }
     
@@ -101,7 +101,7 @@ extension PersonalRecord {
         /* If a PersonalRecord has a relationship to an exercise that does not have
         the a matching type throw an Error*/
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw NSValidationErrors.prAndExerciseTypeMismatch.toNSError()
+            throw ValidationNSErrors.prAndExerciseTypeMismatch.toNSError()
         }
     }
         

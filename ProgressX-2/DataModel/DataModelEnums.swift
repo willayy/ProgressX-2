@@ -1,0 +1,19 @@
+//
+//  DataModelEnums.swift
+//  ProgressX-2
+//
+//  Created by William Norland on 2024-06-21.
+//
+
+import Foundation
+
+enum ExerciseType: String {
+    case Reps = "reps"
+    case Time = "time"
+}
+
+enum PersonalRecordType: String {
+    case OneRepMax = "onerepmax"
+    case TimeMax = "timemax"
+    case MaxReps = "maxreps"
+}

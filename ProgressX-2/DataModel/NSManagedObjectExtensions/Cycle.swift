@@ -31,7 +31,7 @@ extension Cycle {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.weeks == nil {
-            throw NSValidationErrors.cycleCompleteWithNoWeeks.toNSError()
+            throw ValidationNSErrors.cycleCompleteWithNoWeeks.toNSError()
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
@@ -47,7 +47,7 @@ extension Cycle {
         
         // Throw if true.
         if self.isComplete && completedWeeks != weeks.count {
-            throw NSValidationErrors.cycleCompleteWithUncompleteWeeks.toNSError()
+            throw ValidationNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
     }
 }

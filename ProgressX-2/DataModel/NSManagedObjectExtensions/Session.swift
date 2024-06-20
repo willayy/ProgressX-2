@@ -24,7 +24,7 @@ extension Session {
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error
         if self.isComplete && self.sets == nil {
-            throw NSValidationErrors.sessionCompleteWithNoSets.toNSError()
+            throw ValidationNSErrors.sessionCompleteWithNoSets.toNSError()
         }
         
         // If session is complete but it's sets arent throw an error
@@ -40,7 +40,7 @@ extension Session {
         
         // Throw if true
         if self.isComplete && completedSets != sets.count {
-            throw NSValidationErrors.sessionCompleteWithUncompleteSets.toNSError()
+            throw ValidationNSErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
     }
 }

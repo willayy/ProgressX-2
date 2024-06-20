@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 // This extension houses a function that staticly creates NSManagedObjects for an in-memory database
-extension PersistenceController {
+class InMemory {
     
-    public static func initInMemoryDb(context: NSManagedObjectContext) -> Void {
+    public static func initialize(context: NSManagedObjectContext) -> Void {
         initProfile(context)
         initExercisesAndPrs(context)
         initRoutines(context)

@@ -13,13 +13,8 @@ extension TrainingSet {
     
     /// Convience method for getting the name of the Exercise.
     /// - Returns: The name of the sets exercise as a String.
-    var exerciseString: String? {
-        guard let name = self.exercise!.exerciseName else {
-            // Since CoreData does not allow me to make this relationship non-optional
-            fatalError("No exercise set on this Set")
-        }
-        
-        return name
+    var setExerciseName: String? {
+        return self.exercise!.exerciseName
     }
     
     /// Convenience method for getting the load todo on a Set.
@@ -31,18 +26,13 @@ extension TrainingSet {
     /// Convenience method for getting the quantity todo on a Set.
     /// - Returns: The quantity todo as a formatted String.
     var quantityTodoString: String {
-        guard let type = self.exercise!.exerciseType else {
-            // Since CoreData does not allow me to make this relationship non-optional
-            fatalError("No exercise set on this Set")
-        }
+        let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
         
         switch type {
-            case "reps":
-                return String(format: "%.0f", self.quantityTodo)
-            case "time":
-                return String(format: "%.2f", self.quantityTodo)
-            default:
-                return ""
+        case .Reps:
+            return String(format: "%.0f", self.quantityTodo)
+        case .Time:
+            return String(format: "%.2f", self.quantityTodo)
         }
     }
     
@@ -55,18 +45,25 @@ extension TrainingSet {
     /// Convenience method for getting the quantity done on a Set.
     /// - Returns: The quantity done as a formatted String.
     var quantityDoneString: String {
-        guard let type = self.exercise!.exerciseType else {
-            // Since CoreData does not allow me to make this relationship non-optional
-            fatalError("No exercise set on this Set")
-        }
+        let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
         
         switch type {
-            case "reps":
+            case .Reps:
                 return String(format: "%.0f", self.quantityDone)
-            case "time":
+            case .Time:
                 return String(format: "%.2f", self.quantityDone)
-            default:
-                return ""
+        }
+    }
+    
+    // Returns the quantity unit of the set
+    var quantityUnit: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return "reps"
+            case .Time:
+                return "seconds"
         }
     }
     
@@ -93,7 +90,7 @@ extension TrainingSet {
     // Makes sure that the Set has an Exercise assigned to it.
     private func validateExercise() throws {
         if self.exercise == nil {
-            throw NSValidationErrors.setExerciseIsNil.toNSError()
+            throw ValidationNSErrors.setExerciseIsNil.toNSError()
         }
     }
     
@@ -106,25 +103,23 @@ extension TrainingSet {
         ]
         
         if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw NSValidationErrors.setAndExerciseTypeMismatch.toNSError()
+            throw ValidationNSErrors.setAndExerciseTypeMismatch.toNSError()
         }
     }
 
     private func validateQuantityTodo() throws {
         let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
-        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
-
+        let isPrRepBased = (self.exercise!.exerciseType == "reps")
         if !isQuantityTodoInteger && isPrRepBased {
-            throw NSValidationErrors.quantityTodoInvalid.toNSError()
+            throw ValidationNSErrors.quantityTodoInvalid.toNSError()
         }
     }
     
     private func validateQuantityDone() throws {
         let isQuantityDoneInteger = (floor(self.quantityDone) == self.quantityDone)
-        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
-        
+        let isPrRepBased = (self.exercise!.exerciseType == "reps")
         if !isQuantityDoneInteger && isPrRepBased {
-            throw NSValidationErrors.quantityDoneInvalid.toNSError()
+            throw ValidationNSErrors.quantityDoneInvalid.toNSError()
         }
     }
     

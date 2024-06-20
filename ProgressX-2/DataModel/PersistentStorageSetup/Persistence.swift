@@ -40,7 +40,7 @@ struct PersistenceController {
     }
     
     // Flag to check if unitTests are being run
-    static var TESTING : Bool {
+    private static var TESTING : Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
     
@@ -62,7 +62,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let context = result.container.viewContext
         // Populate with in-memory data
-        PersistenceController.initInMemoryDb(context: context)
+        InMemory.initialize(context: context)
         PersistenceController.save(context)
         return result
     }()

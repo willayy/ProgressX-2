@@ -41,7 +41,7 @@ extension Completeable {
     
     private func validateIsComplete() throws {
         if self.isComplete && self.completedOnDate == nil {
-            throw NSValidationErrors.completeWithoutCompletionDate.toNSError()
+            throw ValidationNSErrors.completeWithoutCompletionDate.toNSError()
         }
     }
     
@@ -56,7 +56,7 @@ extension Completeable {
             results.removeAll { $0 === self }
             // Check if the results have a instance with the same positionIndex
             if results.contains(where: { $0.positionIndex == self.positionIndex }) {
-                throw NSValidationErrors.invalidPostionIndex.toNSError()
+                throw ValidationNSErrors.invalidPostionIndex.toNSError()
             }
         }
         
