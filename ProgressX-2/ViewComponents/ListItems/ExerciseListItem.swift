@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Exercise list item inteded to be used combined with a search bar and a list
 struct ExerciseListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
