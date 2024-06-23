@@ -45,3 +45,12 @@ extension Cycle {
         }
     }
 }
+
+import Foundation
+
+extension TemplateCycle {
+    
+    // MARK: Validation
+    
+    // Nothing here
+}

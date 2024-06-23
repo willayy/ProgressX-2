@@ -10,8 +10,6 @@ import CoreData
 
 extension TrainingWeek {
     
-    // MARK: Extra properties
-    
     // MARK: Validation
     
     public override func validateForInsert() throws {
@@ -46,4 +44,11 @@ extension TrainingWeek {
             throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
     }
+}
+
+extension TemplateWeek {
+    
+    // MARK: Validation
+    
+    // Nothing here
 }

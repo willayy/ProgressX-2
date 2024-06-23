@@ -23,11 +23,11 @@
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		831F2BF12C209FB1007A7A8A /* Completable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* Completable.swift */; };
-		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
-		831F2BF52C20A74C007A7A8A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF42C20A74C007A7A8A /* Session.swift */; };
+		831F2BF32C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift */; };
+		831F2BF52C20A74C007A7A8A /* Session+TemplateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF42C20A74C007A7A8A /* Session+TemplateSession.swift */; };
 		831F2BFA2C20E38D007A7A8A /* DataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF82C20E38D007A7A8A /* DataModelTests.swift */; };
-		831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C072C21938E007A7A8A /* TrainingWeek.swift */; };
-		831F2C0A2C2195D8007A7A8A /* Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C092C2195D8007A7A8A /* Cycle.swift */; };
+		831F2C082C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C072C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift */; };
+		831F2C0A2C2195D8007A7A8A /* Cycle+TemplateCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C092C2195D8007A7A8A /* Cycle+TemplateCycle.swift */; };
 		831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0B2C21D043007A7A8A /* SideBar.swift */; };
 		831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0D2C21D066007A7A8A /* HomeView.swift */; };
 		831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */; };
@@ -119,11 +119,11 @@
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		831F2BF02C209FB1007A7A8A /* Completable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Completable.swift; sourceTree = "<group>"; };
-		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
-		831F2BF42C20A74C007A7A8A /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		831F2BF22C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingSet+TemplateSet.swift"; sourceTree = "<group>"; };
+		831F2BF42C20A74C007A7A8A /* Session+TemplateSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Session+TemplateSession.swift"; sourceTree = "<group>"; };
 		831F2BF82C20E38D007A7A8A /* DataModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTests.swift; sourceTree = "<group>"; };
-		831F2C072C21938E007A7A8A /* TrainingWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWeek.swift; sourceTree = "<group>"; };
-		831F2C092C2195D8007A7A8A /* Cycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cycle.swift; sourceTree = "<group>"; };
+		831F2C072C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TrainingWeek+TemplateWeek.swift"; sourceTree = "<group>"; };
+		831F2C092C2195D8007A7A8A /* Cycle+TemplateCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cycle+TemplateCycle.swift"; sourceTree = "<group>"; };
 		831F2C0B2C21D043007A7A8A /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		831F2C0D2C21D066007A7A8A /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineLibraryView.swift; sourceTree = "<group>"; };
@@ -215,10 +215,10 @@
 				83C76F812C17020F0051D8FB /* PersonalRecord.swift */,
 				8359F97C2C1C63F5004BA421 /* BodyEntry.swift */,
 				831F2BF02C209FB1007A7A8A /* Completable.swift */,
-				831F2C092C2195D8007A7A8A /* Cycle.swift */,
-				831F2C072C21938E007A7A8A /* TrainingWeek.swift */,
-				831F2BF42C20A74C007A7A8A /* Session.swift */,
-				831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */,
+				831F2C092C2195D8007A7A8A /* Cycle+TemplateCycle.swift */,
+				831F2C072C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift */,
+				831F2BF42C20A74C007A7A8A /* Session+TemplateSession.swift */,
+				831F2BF22C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift */,
 				831F2C282C247B40007A7A8A /* Routine.swift */,
 			);
 			path = NSManagedObjectExtensions;
@@ -636,7 +636,7 @@
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
-				831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */,
+				831F2C082C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift in Sources */,
 				83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */,
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
 				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
@@ -644,7 +644,7 @@
 				831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */,
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
-				831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */,
+				831F2BF32C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift in Sources */,
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
@@ -656,7 +656,7 @@
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */,
 				831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
-				831F2C0A2C2195D8007A7A8A /* Cycle.swift in Sources */,
+				831F2C0A2C2195D8007A7A8A /* Cycle+TemplateCycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
 				831F2C362C288D38007A7A8A /* EditCycleView.swift in Sources */,
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
@@ -674,7 +674,7 @@
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
 				831F2C292C247B40007A7A8A /* Routine.swift in Sources */,
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3.swift in Sources */,
-				831F2BF52C20A74C007A7A8A /* Session.swift in Sources */,
+				831F2BF52C20A74C007A7A8A /* Session+TemplateSession.swift in Sources */,
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,
