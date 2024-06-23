@@ -33,15 +33,15 @@ struct GeneralInfoTimeExercise: View {
         // Find the min value or nil if there are no values
         // Construct the all time low from the min (if it exists) and the weight unit
         let timeUnit = "s"
-        let fetchedMinValueTime = timeMaxResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let fetchedMinValueTime = timeMaxResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString
         let allTimeLowTime = fetchedMinValueTime != nil ? (fetchedMinValueTime! + " " + timeUnit) : nil
         
         // Same thing for the max values
-        let fetchedMaxValueTime = timeMaxResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString()
+        let fetchedMaxValueTime = timeMaxResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString
         let allTimeHighTime = fetchedMaxValueTime != nil ? (fetchedMaxValueTime! + " " + timeUnit) : nil
         
         // Find the latest PR weight value or nil if there are no values
-        let fetchedLatestValueTime = timeMaxResults.last?.quantityString()
+        let fetchedLatestValueTime = timeMaxResults.last?.quantityString
         let latestValueTime = fetchedLatestValueTime != nil ? (fetchedLatestValueTime! + " " + timeUnit) : nil
         
         
@@ -70,7 +70,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(timeMaxResults.first?.dateString() ?? "No pr recorded")
+                + Text(timeMaxResults.first?.dateString ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
@@ -78,7 +78,7 @@ struct GeneralInfoTimeExercise: View {
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
-                + Text(timeMaxResults.last?.dateString() ?? "No pr recorded")
+                + Text(timeMaxResults.last?.dateString ?? "No pr recorded")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.black)
                 
