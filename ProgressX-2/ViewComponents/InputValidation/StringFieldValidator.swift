@@ -12,10 +12,14 @@ class StringFieldValidator: InputFieldValidator {
     
     private let minInputCharCount: Int 
     private let maxInputCharCount: Int
+    private let duplicatesAllowed: Bool
+    private let checkStrings: any Collection<String>
     
-    init(emptyAllowed: Bool = false, minInputCharCount: Int = 0, maxInputCharCount: Int = 1000) {
+    init(emptyAllowed: Bool = false, duplicatesAllowed: Bool = true, checkStrings: any Collection<String> = [], minInputCharCount: Int = 0, maxInputCharCount: Int = 1000) {
         self.minInputCharCount = minInputCharCount
         self.maxInputCharCount = maxInputCharCount
+        self.duplicatesAllowed = duplicatesAllowed
+        self.checkStrings = checkStrings
         super.init(emptyAllowed: emptyAllowed)
     }
     
@@ -45,6 +49,14 @@ class StringFieldValidator: InputFieldValidator {
         if !emptyAllowed && inputVar.isEmpty {
             withAnimation(.easeIn) {
                 errorMessage.wrappedValue = "Input cant be empty!"
+                fieldInvalid.wrappedValue = true
+            }
+            return 1
+        }
+        
+        if !duplicatesAllowed && !inputVar.isEmpty && checkStrings.contains(where: { $0 == inputVar}) {
+            withAnimation(.easeIn) {
+                errorMessage.wrappedValue = "Input is already taken!"
                 fieldInvalid.wrappedValue = true
             }
             return 1
