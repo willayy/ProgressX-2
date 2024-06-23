@@ -13,12 +13,18 @@ extension Session {
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateIsComplete()
+        // Run if not template
+        if !self.isTemplate {
+            try validateIsComplete()
+        }
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateIsComplete()
+        // Run if not template
+        if !self.isTemplate {
+            try validateIsComplete()
+        }
     }
     
     private func validateIsComplete() throws {

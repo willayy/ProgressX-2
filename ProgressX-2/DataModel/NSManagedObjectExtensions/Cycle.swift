@@ -20,15 +20,22 @@ extension Cycle {
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateIsComplete()
+        // Run if not template
+        if !self.isTemplate {
+            try validateIsComplete()
+        }
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateIsComplete()
+        // Run ig not template
+        if !self.isTemplate {
+            try validateIsComplete()
+        }
     }
     
     private func validateIsComplete() throws {
+        
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.weeks == nil {
             throw ValidationNSErrors.cycleCompleteWithNoWeeks.toNSError()
