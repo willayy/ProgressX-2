@@ -242,7 +242,9 @@ final class DataModelTests: XCTestCase {
     
     func test_Complete_Session_With_Incoomplete_Sets() {
         let routine = Routine(context: context!)
+        routine.timePeriodName = "some named routine"
         let cycle = Cycle(context: context!)
+        cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
@@ -296,7 +298,9 @@ final class DataModelTests: XCTestCase {
     
     func test_Set_QuantityTodo_To_Double_On_TrainingSet() {
         let routine = Routine(context: context!)
+        routine.timePeriodName = "some named routine 2"
         let cycle = Cycle(context: context!)
+        cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
@@ -328,7 +332,9 @@ final class DataModelTests: XCTestCase {
     
     func test_Set_QuantityDone_To_Double_On_TrainingSet() {
         let routine = Routine(context: context!)
+        routine.timePeriodName = "some named routine 3"
         let cycle = Cycle(context: context!)
+        cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
@@ -364,8 +370,9 @@ final class DataModelTests: XCTestCase {
         let cycle2 = Cycle(context: context!)
         cycle1.isComplete = true
         cycle1.routine = routine
+        cycle1.positionIndex = 2
         cycle2.routine = routine
-        cycle2.positionIndex = 2
+        cycle2.positionIndex = 3
         
         routine.addToCycles(cycle1)
         routine.addToCycles(cycle2)
@@ -373,7 +380,7 @@ final class DataModelTests: XCTestCase {
         // Try with valid postionIndexes
         XCTAssertNoThrow(try PersistenceController.save_throws(context!))
         
-        cycle2.positionIndex = 1
+        cycle2.positionIndex = 2
         
         // try with invalid (positionIndexes are the same) positionIndexes
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
@@ -381,6 +388,7 @@ final class DataModelTests: XCTestCase {
     
     func test_Routine_Has_Multiple_Incomplete_Cycles() {
         let routine = Routine(context: context!)
+        routine.timePeriodName = "some named routine 4"
         let cycle1 = Cycle(context: context!)
         let cycle2 = Cycle(context: context!)
         cycle1.routine = routine
@@ -399,4 +407,19 @@ final class DataModelTests: XCTestCase {
         XCTAssertNoThrow(try PersistenceController.save_throws(context!))
     }
     
+    func test_Routine_Has_Non_Unique_Name() {
+        let routine1 = Routine(context: context!)
+        let routine2 = Routine(context: context!)
+        routine1.timePeriodName = "A"
+        routine2.timePeriodName = "A"
+        
+        // SHould throw, non unique name
+        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
+        routine2.timePeriodName = "B"
+        
+        // SHould not throw because the names are now uniqure
+        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+    }
+        
 }
