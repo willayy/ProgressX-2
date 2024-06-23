@@ -52,7 +52,7 @@ extension Completeable {
         func checkForDuplicateIndexes<T: Completeable>(fetchRequest: NSFetchRequest<T>, format: String, arg: CVarArg) throws {
             fetchRequest.predicate = NSPredicate(format: "\(format) == %@", arg)
             var results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-            // Remove the instance from the results
+            // Remove the instance from the results, also remove templates
             results.removeAll { $0 === self }
             // Check if the results have a instance with the same positionIndex
             if results.contains(where: { $0.positionIndex == self.positionIndex }) {

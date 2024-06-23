@@ -16,18 +16,12 @@ extension TrainingWeek {
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        // Run if not template
-        if !self.isTemplate {
-            try validateIsComplete()
-        }
+        try validateIsComplete()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        // Run if not template
-        if !self.isTemplate {
-            try validateIsComplete()
-        }
+        try validateIsComplete()
     }
     
     private func validateIsComplete() throws {

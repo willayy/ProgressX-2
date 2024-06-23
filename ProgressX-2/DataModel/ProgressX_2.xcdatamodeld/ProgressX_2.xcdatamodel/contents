@@ -16,7 +16,6 @@
     <entity name="Completeable" representedClassName="Completeable" isAbstract="YES" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
         <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="isTemplate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
     </entity>
     <entity name="Cycle" representedClassName="Cycle" parentEntity="Completeable" syncable="YES" codeGenerationType="class">

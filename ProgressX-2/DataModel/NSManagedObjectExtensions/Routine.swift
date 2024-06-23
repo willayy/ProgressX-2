@@ -41,28 +41,19 @@ extension Routine {
     private func validateRoutineName() throws {
         let context = self.managedObjectContext!
         let fetchrequest: NSFetchRequest<Routine> = Routine.fetchRequest()
-        // Fetch all routines that is not this one.
-        fetchrequest.predicate = NSPredicate(format: "timePeriodName != %@", self.timePeriodName!)
-        let results: [Routine] = PersistenceController.fetch(context, fetchRequest: fetchrequest)
+        var results: [Routine] = PersistenceController.fetch(context, fetchRequest: fetchrequest)
+        results.removeAll { $0 === self } // remove self
         if results.contains(where: {$0.timePeriodName == self.timePeriodName }) {
             throw ValidationNSErrors.routineNameIsInvalid.toNSError()
         }
-        
     }
     
     // Checks that there arent two active cycles at the same time
     private func validateCycles() throws {
         let completeCycles = self.completedCycles
-        
-        // If there are no cycles just return
-        if self.cycles?.count ?? 0 == 0 {
-            return
-        }
-        
-        let allCycles = self.cycles!
-        
+        let incompleteCycles = self.cycles?.filtered(using: NSPredicate(format: "isComplete == %@", NSNumber(value: false))) ?? []
         // If there are cycles they should all be completed or there should be only one incomplete
-        if !(completeCycles.count == allCycles.count || completeCycles.count == allCycles.count - 1) {
+        if !(incompleteCycles.count == 0 || incompleteCycles.count == 1) {
             throw ValidationNSErrors.routineHasMultipleIncompleteCycles.toNSError()
         }
     }

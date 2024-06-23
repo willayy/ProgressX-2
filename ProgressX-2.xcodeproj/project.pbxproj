@@ -31,7 +31,7 @@
 		831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0B2C21D043007A7A8A /* SideBar.swift */; };
 		831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0D2C21D066007A7A8A /* HomeView.swift */; };
 		831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */; };
-		831F2C142C22FB7A007A7A8A /* NSValidationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C132C22FB7A007A7A8A /* NSValidationErrors.swift */; };
+		831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */; };
 		831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C172C2305F9007A7A8A /* RoutineListItem.swift */; };
 		831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */; };
 		831F2C1C2C23132F007A7A8A /* EditRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C1B2C23132F007A7A8A /* EditRoutineView.swift */; };
@@ -40,6 +40,9 @@
 		831F2C272C243381007A7A8A /* BasicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C262C243381007A7A8A /* BasicList.swift */; };
 		831F2C292C247B40007A7A8A /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C282C247B40007A7A8A /* Routine.swift */; };
 		831F2C2B2C24A2F4007A7A8A /* WeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */; };
+		831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2D2C24E532007A7A8A /* SessionListItem.swift */; };
+		831F2C302C24E54B007A7A8A /* SetListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2F2C24E54B007A7A8A /* SetListItem.swift */; };
+		831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */; };
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
 		832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */; };
@@ -121,7 +124,7 @@
 		831F2C0B2C21D043007A7A8A /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		831F2C0D2C21D066007A7A8A /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineLibraryView.swift; sourceTree = "<group>"; };
-		831F2C132C22FB7A007A7A8A /* NSValidationErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSValidationErrors.swift; sourceTree = "<group>"; };
+		831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationNSErrors.swift; sourceTree = "<group>"; };
 		831F2C172C2305F9007A7A8A /* RoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineListItem.swift; sourceTree = "<group>"; };
 		831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewRoutineView.swift; sourceTree = "<group>"; };
 		831F2C1B2C23132F007A7A8A /* EditRoutineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRoutineView.swift; sourceTree = "<group>"; };
@@ -130,6 +133,9 @@
 		831F2C262C243381007A7A8A /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		831F2C282C247B40007A7A8A /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekListItem.swift; sourceTree = "<group>"; };
+		831F2C2D2C24E532007A7A8A /* SessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListItem.swift; sourceTree = "<group>"; };
+		831F2C2F2C24E54B007A7A8A /* SetListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListItem.swift; sourceTree = "<group>"; };
+		831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelEnums.swift; sourceTree = "<group>"; };
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
 		832213E72BC92D9000DF9C7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -258,6 +264,8 @@
 				8310D9282C0CA170004A5A3D /* PrListItem.swift */,
 				831F2C172C2305F9007A7A8A /* RoutineListItem.swift */,
 				831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */,
+				831F2C2D2C24E532007A7A8A /* SessionListItem.swift */,
+				831F2C2F2C24E54B007A7A8A /* SetListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -322,13 +330,12 @@
 				831F2BEF2C209F5F007A7A8A /* RoutineLibraryViews */,
 				832214182BC9398000DF9C7A /* CreateNewProfileViews */,
 				832214222BD42FF800DF9C7A /* ViewComponents */,
-				832213E92BC92D9000DF9C7A /* Preview Content */,
 				83AD4A8F2BF40E8800A2E180 /* DataModel */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
 				83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */,
-				83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
+				832213E92BC92D9000DF9C7A /* Preview Content */,
 			);
 			path = "ProgressX-2";
 			sourceTree = "<group>";
@@ -393,10 +400,12 @@
 		83AD4A8F2BF40E8800A2E180 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */,
+				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
+				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
+				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
 				831F2C2C2C24A3EC007A7A8A /* PersistentStorageSetup */,
 				830E26802C1753EF00815936 /* NSManagedObjectExtensions */,
-				831F2C132C22FB7A007A7A8A /* NSValidationErrors.swift */,
-				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -630,9 +639,12 @@
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				8359F9712C1AE779004BA421 /* Persistence+Convenience-functions.swift in Sources */,
+				831F2C302C24E54B007A7A8A /* SetListItem.swift in Sources */,
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
+				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */,
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */,
+				831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				831F2C0A2C2195D8007A7A8A /* Cycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
@@ -642,7 +654,7 @@
 				831F2BF12C209FB1007A7A8A /* Completable.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
-				831F2C142C22FB7A007A7A8A /* NSValidationErrors.swift in Sources */,
+				831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */,
 				8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */,
 				8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,

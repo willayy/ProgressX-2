@@ -27,6 +27,7 @@ enum ValidationNSErrors: Int {
     case routineHasMultipleIncompleteCycles = 9984
     case invalidPostionIndex = 9983
     case routineNameIsInvalid = 9982
+    case routineHasInvalidTemplateCycleAmount = 9981
     
     var domain: String {
         return "CoreDataErrorDomain"
@@ -35,58 +36,61 @@ enum ValidationNSErrors: Int {
     var userInfo: [String: Any] {
         switch self {
         case .weekCompleteWithNoSessions:
-            return [NSLocalizedDescriptionKey: "Week can't be complete without any sessions"]
+            return [NSLocalizedDescriptionKey: "Week can't be complete without any sessions."]
             
         case .weekCompleteWithUncompleteSessions:
-            return [NSLocalizedDescriptionKey: "Week can't be complete when its sessions aren't"]
+            return [NSLocalizedDescriptionKey: "Week can't be complete when its sessions aren't."]
             
         case .sessionCompleteWithUncompleteSets:
-            return [NSLocalizedDescriptionKey: "Session can't be complete when its sets aren't"]
+            return [NSLocalizedDescriptionKey: "Session can't be complete when its sets aren't."]
             
         case .sessionCompleteWithNoSets:
-            return [NSLocalizedDescriptionKey: "Session can't be complete without any sets"]
+            return [NSLocalizedDescriptionKey: "Session can't be complete without any sets."]
             
         case .setExerciseIsNil:
-            return [NSLocalizedDescriptionKey: "Set cant have relationship .exercise set to nil"]
+            return [NSLocalizedDescriptionKey: "Set cant have relationship .exercise set to nil."]
             
         case .setAndExerciseTypeMismatch:
-            return [NSLocalizedDescriptionKey: "Set.exercise.exerciseType and set.prType have mismatching values"]
+            return [NSLocalizedDescriptionKey: "Set.exercise.exerciseType and set.prType have mismatching values."]
             
         case .cycleCompleteWithUncompleteWeeks:
-            return [NSLocalizedDescriptionKey: "Cycle can't be complete when its weeks aren't"]
+            return [NSLocalizedDescriptionKey: "Cycle can't be complete when its weeks aren't."]
             
         case .quantityDoneInvalid:
-            return [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
+            return [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
             
         case .quantityTodoInvalid:
-            return [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'"]
+            return [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
             
         case .completeWithoutCompletionDate:
-            return [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate"]
+            return [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate."]
             
         case .cycleCompleteWithNoWeeks:
-            return [NSLocalizedDescriptionKey: "Cycle cant be complete when it has no weeks"]
+            return [NSLocalizedDescriptionKey: "Cycle cant be complete when it has no weeks."]
             
         case .bodyEntryProfileIsNil:
-            return [NSLocalizedDescriptionKey: "BodyEntry cant have relationship .profile set to nil"]
+            return [NSLocalizedDescriptionKey: "BodyEntry cant have relationship .profile set to nil."]
             
         case .quantityInvalid:
-            return [NSLocalizedDescriptionKey: "Property .prQuantity on PersonalRecord cant be set to a double value that isnt a valid integer"]
+            return [NSLocalizedDescriptionKey: "Property .prQuantity on PersonalRecord cant be set to a double value that isnt a valid integer."]
             
         case .prExerciseIsNil:
-            return [NSLocalizedDescriptionKey: "Pr cant have relationship .exercise set to nil"]
+            return [NSLocalizedDescriptionKey: "Pr cant have relationship .exercise set to nil."]
             
         case .prAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
             
         case .routineHasMultipleIncompleteCycles:
-            return [NSLocalizedDescriptionKey: "Routine has multiple incomplete cycles"]
+            return [NSLocalizedDescriptionKey: "Routine has multiple incomplete cycles."]
             
         case .invalidPostionIndex:
-            return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent"]
+            return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent."]
             
         case .routineNameIsInvalid:
-            return [NSLocalizedDescriptionKey: "This routine has a non unique name"]
+            return [NSLocalizedDescriptionKey: "This routine has a non unique name."]
+            
+        case .routineHasInvalidTemplateCycleAmount:
+            return [NSLocalizedDescriptionKey: "This routine has an invalid amount of template cycles, it needs to have only one."]
         }
     }
     

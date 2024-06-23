@@ -20,18 +20,12 @@ extension Cycle {
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        // Run if not template
-        if !self.isTemplate {
-            try validateIsComplete()
-        }
+        try validateIsComplete()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        // Run ig not template
-        if !self.isTemplate {
-            try validateIsComplete()
-        }
+        try validateIsComplete()
     }
     
     private func validateIsComplete() throws {

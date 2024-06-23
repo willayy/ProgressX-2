@@ -50,6 +50,14 @@ extension PersistenceController {
        context.delete(object)
     }
     
+    /// Deletes all saved Objects from the context
+    /// - Parameter context: A NSManagedObjectContext
+    public static func deleteEverything(_ context: NSManagedObjectContext) {
+        for obj in context.registeredObjects {
+            delete(context, object: obj)
+        }
+    }
+    
     /// Generates a set of basic exercises as CoreDatabase entries
     /// - Returns: Void
     public static func generateBasicExerciseLibrary(_ context: NSManagedObjectContext) -> Void {
