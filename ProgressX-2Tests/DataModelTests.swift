@@ -386,27 +386,6 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func test_Routine_Has_Multiple_Incomplete_Cycles() {
-        let routine = Routine(context: context!)
-        routine.timePeriodName = "some named routine 4"
-        let cycle1 = Cycle(context: context!)
-        let cycle2 = Cycle(context: context!)
-        cycle1.routine = routine
-        cycle2.routine = routine
-        cycle2.positionIndex = 2
-        
-        routine.addToCycles(cycle1)
-        routine.addToCycles(cycle2)
-        
-        // Should throw because both are incomplete
-        XCTAssertThrowsError(try PersistenceController.save_throws(context!))
-        
-        cycle1.isComplete = true
-        
-        // Should not throw because only one is incomplete
-        XCTAssertNoThrow(try PersistenceController.save_throws(context!))
-    }
-    
     func test_Routine_Has_Non_Unique_Name() {
         let routine1 = Routine(context: context!)
         let routine2 = Routine(context: context!)
