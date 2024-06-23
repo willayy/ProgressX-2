@@ -27,7 +27,6 @@ enum ValidationNSErrors: Int {
     case routineHasMultipleIncompleteCycles = 9984
     case invalidPostionIndex = 9983
     case routineNameIsInvalid = 9982
-    case routineHasInvalidTemplateCycleAmount = 9981
     
     var domain: String {
         return "CoreDataErrorDomain"
@@ -88,9 +87,6 @@ enum ValidationNSErrors: Int {
             
         case .routineNameIsInvalid:
             return [NSLocalizedDescriptionKey: "This routine has a non unique name."]
-            
-        case .routineHasInvalidTemplateCycleAmount:
-            return [NSLocalizedDescriptionKey: "This routine has an invalid amount of template cycles, it needs to have only one."]
         }
     }
     
