@@ -333,6 +333,7 @@
 				83AD4A8F2BF40E8800A2E180 /* DataModel */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
+				83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */,
 				83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
 				832213E92BC92D9000DF9C7A /* Preview Content */,
@@ -400,7 +401,6 @@
 		83AD4A8F2BF40E8800A2E180 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
 				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
