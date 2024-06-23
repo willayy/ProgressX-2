@@ -9,21 +9,26 @@ import SwiftUI
 import CoreData
 
 // This is a list that takes a randomAccessCollection as an argument
-struct SearchableRACList<T: NSManagedObject, Content: View>: View where T: Identifiable {
+struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifiable {
     
+    let containerName: String
+    let elementName: String
     @FetchRequest var allData: FetchedResults<T>
     @FetchRequest var searchedData: FetchedResults<T>
     let content: (FetchedResults<T>.Element) -> Content
 
     var body: some View {
         if allData.isEmpty {
-            Text("You currently have no routines saved to the routine library...")
+            Text("You currently have no \(elementName) saved to the \(containerName)...")
                 .font(.subheadline)
                 .fontWeight(.light)
+                .padding(.horizontal, 10)
                 .padding(.vertical, 20)
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
                 .foregroundStyle(.red)
         } else if searchedData.isEmpty {
-            LightSubHeadline(text: "No Routines matched your search...")
+            LightSubHeadline(text: "No \(elementName) matched your search...")
                 .padding(.vertical, 20)
         } else {
             List{
@@ -39,4 +44,34 @@ struct SearchableRACList<T: NSManagedObject, Content: View>: View where T: Ident
     }
 }
 
-
+#Preview {
+    
+    @Environment(\.managedObjectContext) var viewContext
+    
+    @FetchRequest(
+        entity: Exercise.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
+    ) var allExercises: FetchedResults<Exercise>
+    
+    @FetchRequest(
+        entity: Exercise.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
+    ) var searchedExercises: FetchedResults<Exercise>
+    
+    @State var navPath: [Int] = [Int]()
+    
+    @State var selectedExercise: Exercise? = nil
+    
+    return SearchableList(
+        containerName: "Exercise Library",
+        elementName: "Exercises",
+        allData: _allExercises,
+        searchedData: _searchedExercises) { exercise in
+            ExerciseListItem(
+                navPath: $navPath,
+                selectedExercise: $selectedExercise,
+                exercise: exercise
+            )
+            .environment(\.managedObjectContext, viewContext)
+        }
+}

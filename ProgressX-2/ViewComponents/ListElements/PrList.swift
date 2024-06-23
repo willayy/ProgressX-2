@@ -37,7 +37,7 @@ struct PrList: View {
     
     var body: some View {
         
-        BoldSubHeadline(text: "List of all \(personalRecords.first?.typeString() ?? "") PR's achieved on \(exercise.exerciseName!)")
+        BoldSubHeadline(text: "List of all \(personalRecords.first?.typeString ?? "") PR's achieved on \(exercise.exerciseName!)")
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
