@@ -27,14 +27,30 @@ extension Routine {
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
+        try validateRoutineName()
         try validateCycles()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
+        try validateRoutineName()
         try validateCycles()
     }
     
+    // Checks that the routine name is unique
+    private func validateRoutineName() throws {
+        let context = self.managedObjectContext!
+        let fetchrequest: NSFetchRequest<Routine> = Routine.fetchRequest()
+        // Fetch all routines that is not this one.
+        fetchrequest.predicate = NSPredicate(format: "timePeriodName != %@", self.timePeriodName!)
+        let results: [Routine] = PersistenceController.fetch(context, fetchRequest: fetchrequest)
+        if results.contains(where: {$0.timePeriodName == self.timePeriodName }) {
+            throw ValidationNSErrors.routineNameIsInvalid.toNSError()
+        }
+        
+    }
+    
+    // Checks that there arent two active cycles at the same time
     private func validateCycles() throws {
         let completeCycles = self.completedCycles
         

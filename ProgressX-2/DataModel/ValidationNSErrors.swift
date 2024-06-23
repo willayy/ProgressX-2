@@ -26,6 +26,7 @@ enum ValidationNSErrors: Int {
     case quantityDoneInvalid = 9985
     case routineHasMultipleIncompleteCycles = 9984
     case invalidPostionIndex = 9983
+    case routineNameIsInvalid = 9982
     
     var domain: String {
         return "CoreDataErrorDomain"
@@ -83,6 +84,9 @@ enum ValidationNSErrors: Int {
             
         case .invalidPostionIndex:
             return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent"]
+            
+        case .routineNameIsInvalid:
+            return [NSLocalizedDescriptionKey: "This routine has a non unique name"]
         }
     }
     
