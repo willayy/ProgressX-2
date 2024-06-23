@@ -26,22 +26,22 @@ struct PrListItem: View {
             VStack(alignment: .leading) {
                 (Text("Type: ")
                     .fontWeight(.bold)
-                + Text("\(pr.typeString())"))
+                + Text("\(pr.typeString)"))
                 .minimumScaleFactor(0.6)
                 
                 (Text("Date: ")
                     .fontWeight(.bold)
-                 + (Text("\(pr.dateString() ?? "")")))
+                 + (Text("\(pr.dateString ?? "")")))
                 .minimumScaleFactor(0.6)
                 
                 (Text("Load: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                 + (Text("\(pr.loadString()) \(weightUnit) ")))
+                 + (Text("\(pr.loadString) \(weightUnit) ")))
                 .minimumScaleFactor(0.6)
                 
                 (Text("Quantity: ")
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                + Text("\(pr.quantityString()) \(pr.quantityUnitString())"))
+                + Text("\(pr.quantityString) \(pr.quantityUnitString)"))
                 .minimumScaleFactor(0.6)
             }
             .frame(width: 135, height: 20)

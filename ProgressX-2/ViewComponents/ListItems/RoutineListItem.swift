@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Exercise list item inteded to be used combined with a search bar and a list
 struct RoutineListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
@@ -16,16 +17,22 @@ struct RoutineListItem: View {
     @ObservedObject var routine: Routine
     
     var body: some View {
+        
         HStack {
             
-            VStack {
+            VStack(alignment: .leading) {
+                
                 Text(routine.timePeriodName ?? "")
+                
                 (Text("Completed cycles: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.finishedCycles)"))
+                 + Text("\(routine.completedCycles.count)"))
                 .lineLimit(1)
-                .minimumScaleFactor(0.01)
+                .minimumScaleFactor(0.6)
+        
             }
+            .frame(width: 135, height: 20)
+            .padding(.vertical, 10)
             
             Spacer()
             
