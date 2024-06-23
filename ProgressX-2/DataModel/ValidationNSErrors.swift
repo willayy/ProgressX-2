@@ -24,7 +24,6 @@ enum ValidationNSErrors: Int {
     case setAndExerciseTypeMismatch = 9987
     case quantityTodoInvalid = 9986
     case quantityDoneInvalid = 9985
-    case routineHasMultipleIncompleteCycles = 9984
     case invalidPostionIndex = 9983
     case routineNameIsInvalid = 9982
     
@@ -78,9 +77,6 @@ enum ValidationNSErrors: Int {
             
         case .prAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
-            
-        case .routineHasMultipleIncompleteCycles:
-            return [NSLocalizedDescriptionKey: "Routine has multiple incomplete cycles."]
             
         case .invalidPostionIndex:
             return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent."]

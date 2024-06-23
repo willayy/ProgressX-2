@@ -23,18 +23,24 @@ extension Routine {
         return results
     }
     
+    func getNextPositionIndex() -> Int {
+        let fetchRequest: NSFetchRequest<Cycle> = Cycle.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "coutine == %@", self)
+        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
+        let max = results.max {$0.positionIndex > $1.positionIndex}
+        return Int(max!.positionIndex + 1)
+    }
+    
     // MARK: Validation
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
         try validateRoutineName()
-        try validateCycles()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateRoutineName()
-        try validateCycles()
     }
     
     // Checks that the routine name is unique
@@ -47,15 +53,5 @@ extension Routine {
             throw ValidationNSErrors.routineNameIsInvalid.toNSError()
         }
     }
-    
-    // Checks that there arent two active cycles at the same time
-    private func validateCycles() throws {
-        let completeCycles = self.completedCycles
-        let incompleteCycles = self.cycles?.filtered(using: NSPredicate(format: "isComplete == %@", NSNumber(value: false))) ?? []
-        // If there are cycles they should all be completed or there should be only one incomplete
-        if !(incompleteCycles.count == 0 || incompleteCycles.count == 1) {
-            throw ValidationNSErrors.routineHasMultipleIncompleteCycles.toNSError()
-        }
-    }
-    
+        
 }

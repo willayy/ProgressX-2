@@ -9,13 +9,6 @@ import Foundation
 
 extension Cycle {
     
-    // MARK: Extra properties
-    
-    var cycleName: String {
-        return "Cycle \(self.positionIndex)"
-    }
-    
-    
     // MARK: Validation
     
     public override func validateForInsert() throws {

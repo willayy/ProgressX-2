@@ -249,6 +249,8 @@ class InMemory {
         routine.timePeriodName = "test routine 1"
         routine.timePeriodDescription = "routine used for in-memory debugging"
         let firstCycle = Cycle(context: context)
+        firstCycle.createdOnDate = Date()
+        firstCycle.timePeriodName = "Cycle 1"
         firstCycle.routine = routine
         routine.addToCycles(firstCycle)
         

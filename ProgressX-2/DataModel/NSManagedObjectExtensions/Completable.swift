@@ -25,6 +25,30 @@ extension Completeable {
         }
     }
     
+    func getNextPositionIndex() -> Int? {
+        // Helper method
+        func getNextIndex<T: Completeable>(fetchRequest: NSFetchRequest<T>, format: String, arg: CVarArg) -> Int {
+            fetchRequest.predicate = NSPredicate(format: "\(format) == %@", arg)
+            let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
+            let max = results.max {$0.positionIndex > $1.positionIndex}
+            return Int(max!.positionIndex + 1)
+        }
+        
+        switch self {
+        case is Cycle:
+            let instance = self as! Cycle
+            return getNextIndex(fetchRequest: TrainingWeek.fetchRequest(), format: "cycle", arg: instance)
+        case is TrainingWeek:
+            let instance = self as! TrainingWeek
+            return getNextIndex(fetchRequest: Session.fetchRequest(), format: "week", arg: instance)
+        case is Session:
+            let instance = self as! Session
+            return getNextIndex(fetchRequest: TrainingSet.fetchRequest(), format: "session", arg: instance)
+        default:
+            return nil
+        }
+    }
+    
     //MARK: Validation
     
     public override func validateForInsert() throws {

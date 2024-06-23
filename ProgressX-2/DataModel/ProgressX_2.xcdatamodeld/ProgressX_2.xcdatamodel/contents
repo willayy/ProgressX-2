@@ -19,6 +19,7 @@
         <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
     </entity>
     <entity name="Cycle" representedClassName="Cycle" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
+        <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="cycles" inverseEntity="Routine"/>
         <relationship name="weeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="cycle" inverseEntity="TrainingWeek"/>
     </entity>
