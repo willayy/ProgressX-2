@@ -55,33 +55,18 @@ struct ExerciseLibraryView: View {
                             .padding(.top, 20)
                         
                         //MARK: List view displaying all exercise objects
-                        VStack(alignment: .center) {
-                            if allExercises.isEmpty {
-                                Text("You currently have no exercises saved to the exercise library...")
-                                    .font(.subheadline)
-                                    .fontWeight(.light)
-                                    .padding(.bottom, 20)
-                                    .padding(.top, 20)
-                                    .foregroundStyle(.red)
-                            } else if searchedExercises.isEmpty {
-                                LightSubHeadline(text: "No Exercises matched your search...")
-                                    .padding(.vertical, 20)
-                            } else {
-                                List {
-                                    ForEach(searchedExercises) { exercise in
-                                        ExerciseListItem(
-                                            navPath: $navPath,
-                                            selectedExercise: $selectedExercise,
-                                            exercise: exercise
-                                        )
-                                        .environment(\.managedObjectContext, viewContext)
-                                    }
-                                }
-                                .frame(height: 400)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                                .padding(.horizontal, 20)
-                            }
+                        SearchableList(
+                            containerName: "Exercise Library",
+                            elementName: "Exercises",
+                            allData: _allExercises,
+                            searchedData: _searchedExercises
+                        ) { exercise in
+                            ExerciseListItem(
+                                navPath: $navPath,
+                                selectedExercise: $selectedExercise,
+                                exercise: exercise
+                            )
+                            .environment(\.managedObjectContext, viewContext)
                         }
                         
                         // MARK: Add new exercise button
