@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Achievement" representedClassName="Achievement" isAbstract="YES" syncable="YES" codeGenerationType="class">
-        <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
+        <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
     <entity name="BodyEntry" representedClassName="BodyEntry" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
         <attribute name="bodyWeight" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -16,6 +16,7 @@
     <entity name="Completeable" representedClassName="Completeable" isAbstract="YES" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
         <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="startedOnDate" optional="YES" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
     <entity name="Cycle" representedClassName="Cycle" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="cycles" inverseEntity="Routine"/>
@@ -57,7 +58,7 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
-        <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
+        <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <relationship name="cycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Cycle" inverseName="routine" inverseEntity="Cycle"/>
         <relationship name="template" maxCount="1" deletionRule="Cascade" destinationEntity="TemplateCycle" inverseName="routine" inverseEntity="TemplateCycle"/>
     </entity>
@@ -66,7 +67,6 @@
         <relationship name="trainingWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="sessions" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="TemplateCycle" representedClassName="TemplateCycle" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
-        <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="template" inverseEntity="Routine"/>
         <relationship name="weeks" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateWeek" inverseName="cycle" inverseEntity="TemplateWeek"/>
     </entity>
