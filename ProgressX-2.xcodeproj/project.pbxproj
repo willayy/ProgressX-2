@@ -39,12 +39,12 @@
 		831F2C252C242777007A7A8A /* SearchableList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C242C242777007A7A8A /* SearchableList.swift */; };
 		831F2C272C243381007A7A8A /* BasicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C262C243381007A7A8A /* BasicList.swift */; };
 		831F2C292C247B40007A7A8A /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C282C247B40007A7A8A /* Routine.swift */; };
-		831F2C2B2C24A2F4007A7A8A /* WeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */; };
+		831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */; };
 		831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2D2C24E532007A7A8A /* SessionListItem.swift */; };
 		831F2C302C24E54B007A7A8A /* SetListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2F2C24E54B007A7A8A /* SetListItem.swift */; };
 		831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */; };
 		831F2C342C287124007A7A8A /* CycleListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C332C287124007A7A8A /* CycleListItem.swift */; };
-		831F2C362C288D38007A7A8A /* EditCycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C352C288D38007A7A8A /* EditCycleView.swift */; };
+		831F2C362C288D38007A7A8A /* EditWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C352C288D38007A7A8A /* EditWeekView.swift */; };
 		831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */; };
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
@@ -135,12 +135,12 @@
 		831F2C242C242777007A7A8A /* SearchableList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableList.swift; sourceTree = "<group>"; };
 		831F2C262C243381007A7A8A /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		831F2C282C247B40007A7A8A /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
-		831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekListItem.swift; sourceTree = "<group>"; };
+		831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWeekListItem.swift; sourceTree = "<group>"; };
 		831F2C2D2C24E532007A7A8A /* SessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListItem.swift; sourceTree = "<group>"; };
 		831F2C2F2C24E54B007A7A8A /* SetListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListItem.swift; sourceTree = "<group>"; };
 		831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelEnums.swift; sourceTree = "<group>"; };
 		831F2C332C287124007A7A8A /* CycleListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleListItem.swift; sourceTree = "<group>"; };
-		831F2C352C288D38007A7A8A /* EditCycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCycleView.swift; sourceTree = "<group>"; };
+		831F2C352C288D38007A7A8A /* EditWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeekView.swift; sourceTree = "<group>"; };
 		831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStatisticsView.swift; sourceTree = "<group>"; };
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 				8310D9282C0CA170004A5A3D /* PrListItem.swift */,
 				831F2C172C2305F9007A7A8A /* RoutineListItem.swift */,
 				831F2C332C287124007A7A8A /* CycleListItem.swift */,
-				831F2C2A2C24A2F4007A7A8A /* WeekListItem.swift */,
+				831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */,
 				831F2C2D2C24E532007A7A8A /* SessionListItem.swift */,
 				831F2C2F2C24E54B007A7A8A /* SetListItem.swift */,
 			);
@@ -283,7 +283,7 @@
 				831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */,
 				831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */,
 				831F2C1B2C23132F007A7A8A /* EditRoutineView.swift */,
-				831F2C352C288D38007A7A8A /* EditCycleView.swift */,
+				831F2C352C288D38007A7A8A /* EditWeekView.swift */,
 				831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */,
 			);
 			path = RoutineLibraryViews;
@@ -627,7 +627,7 @@
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
-				831F2C2B2C24A2F4007A7A8A /* WeekListItem.swift in Sources */,
+				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
 				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
@@ -658,7 +658,7 @@
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				831F2C0A2C2195D8007A7A8A /* Cycle+TemplateCycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
-				831F2C362C288D38007A7A8A /* EditCycleView.swift in Sources */,
+				831F2C362C288D38007A7A8A /* EditWeekView.swift in Sources */,
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
 				83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
