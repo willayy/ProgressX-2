@@ -30,6 +30,9 @@ struct ProfileView: View {
     @State private var heightIsInvalidMsg = ""
     @State private var weightIsInvalidMsg = ""
     
+    let unitSegments = ["Metric (meters)", "Imperial (feet)"]
+    let genderSegments = ["Male", "Female"]
+    
     var body: some View {
         SideBar(
             rotateWhenExpands: true, // true
@@ -40,20 +43,32 @@ struct ProfileView: View {
         ) { safeArea in
             NavigationStack{
                 ScrollView{
-                VStack(alignment:.leading){
+                    VStack(alignment:.center){
                     BoldSubHeadline(text: "Change Username")
                     InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.5, errorMessage: $userNameIsInvalidMsg).padding(.bottom)
                     
-                    Text("Change birthday").bold()
+                    BoldSubHeadline(text: "Birth date")
+                    DatePicker("", selection: $birthDay, displayedComponents: .date)
+                        .datePickerStyle(DefaultDatePickerStyle())
+                        .labelsHidden()
+                        .padding(-3)
                     
-                    Text("Change standard rest-time").bold()
+                    Text("Change default rest-time").bold()
+                        
                     
-                    Text("Change weight units").bold()
+                    BoldSubHeadline(text: "Change Units")
+                    BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments, frameWidth: 230, horizontalPadding: 20)
                     
-                    Text("Change length units").bold()
+                    BoldSubHeadline(text: "Change height")
+                    let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "m" : "ft"
+                    InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: $heightIsInvalidMsg)
+                    
+                    BoldSubHeadline(text: "Gender")
+                    BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments, frameWidth: 230, horizontalPadding: 20)
+                    
                     
                 }.padding()
-                    .frame(width: 390, height: 650, alignment: .topLeading)
+                    .frame(width: 390, height: 650, alignment: .top)
                     .toolbar(.hidden, for: .tabBar)
                     .foregroundColor(Color(UIColor.lightGray))
                     .navigationTitle("Profile")
