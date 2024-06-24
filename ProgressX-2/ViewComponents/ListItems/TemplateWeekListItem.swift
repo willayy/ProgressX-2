@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct WeekListItem: View {
+struct TemplateWeekListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedWeek: TrainingWeek
+    @Binding var selectedWeek: TrainingWeek?
     @State var showDeleteAlert: Bool = false
     @ObservedObject var week: TrainingWeek
     
