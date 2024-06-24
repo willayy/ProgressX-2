@@ -364,7 +364,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func test_Completable_Has_Invalid_positionIndex() {
+    func test_Orderable_Has_Invalid_positionIndex() {
         let routine = Routine(context: context!)
         let cycle1 = Cycle(context: context!)
         let cycle2 = Cycle(context: context!)
