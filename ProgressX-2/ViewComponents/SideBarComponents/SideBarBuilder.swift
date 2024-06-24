@@ -39,13 +39,13 @@ struct SideBarBuilder: View {
                 
                 SideBarButton(.Exercises){
                     showMenu.toggle()
-                    viewRouter.rootView = "ExerciseLibraryView"
+                    viewRouter.rootView = .ExerciseLibraryView
                 }
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
                 
                 SideBarButton(.Profile){
                     showMenu.toggle()
-                    viewRouter.rootView = "ProfileView"
+                    viewRouter.rootView = .ProfileView
                     
                 }
                 

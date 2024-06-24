@@ -139,7 +139,7 @@ struct CreateNewProfile4: View {
                 Button {
                     if validateInput() {
                         addExtraInfo()
-                        viewRouter.rootView = "HomeView"
+                        viewRouter.rootView = .HomeView
                     }
                 } label: {
                     Text("Finish")

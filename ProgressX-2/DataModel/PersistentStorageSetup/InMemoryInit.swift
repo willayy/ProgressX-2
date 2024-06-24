@@ -9,11 +9,16 @@ import Foundation
 import CoreData
 
 // This extension houses a function that staticly creates NSManagedObjects for an in-memory database
-extension PersistenceController {
+class InMemory {
     
-    public static func initInMemoryDb(context: NSManagedObjectContext) -> Void {
+    public static func initialize(context: NSManagedObjectContext) -> Void {
+        initProfile(context)
+        initExercisesAndPrs(context)
+        initRoutines(context)
+    }
     
-        // Initialize a bunch of objects
+    private static func initProfile(_ context: NSManagedObjectContext) {
+        
         let profile: Profile = Profile(context: context)
         profile.profileUserName = "TestProfile"
         profile.gender = "male"
@@ -63,6 +68,15 @@ extension PersistenceController {
             date: Date()-500000
         )
         
+        profile.addToBodyEntries(bw1)
+        profile.addToBodyEntries(bw2)
+        profile.addToBodyEntries(bw3)
+        profile.addToBodyEntries(bw4)
+        profile.addToBodyEntries(bw5)
+        profile.addToBodyEntries(bw6)
+    }
+    
+    private static func initExercisesAndPrs(_ context: NSManagedObjectContext) {
         let testExercise1 = PersistenceController.createExercise(
             context,
             name: "testing exercise (reps)",
@@ -212,12 +226,7 @@ extension PersistenceController {
             type: "timemax"
         )
         
-        profile.addToBodyEntries(bw1)
-        profile.addToBodyEntries(bw2)
-        profile.addToBodyEntries(bw3)
-        profile.addToBodyEntries(bw4)
-        profile.addToBodyEntries(bw5)
-        profile.addToBodyEntries(bw6)
+        
         testExercise1.addToPersonalRecords(ORMpr1)
         testExercise1.addToPersonalRecords(ORMpr2)
         testExercise1.addToPersonalRecords(ORMpr3)
@@ -233,7 +242,17 @@ extension PersistenceController {
         testExercise2.addToPersonalRecords(TMpr3)
         testExercise2.addToPersonalRecords(TMpr4)
         testExercise2.addToPersonalRecords(TMpr5)
-        
     }
     
+    private static func initRoutines(_ context: NSManagedObjectContext) {
+        let routine = Routine(context: context)
+        routine.timePeriodName = "test routine 1"
+        routine.timePeriodDescription = "routine used for in-memory debugging"
+        let firstCycle = Cycle(context: context)
+        firstCycle.createdOnDate = Date()
+        firstCycle.timePeriodName = "Cycle 1"
+        firstCycle.routine = routine
+        routine.addToCycles(firstCycle)
+        
+    }
 }

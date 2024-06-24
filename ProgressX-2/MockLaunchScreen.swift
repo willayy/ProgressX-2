@@ -16,7 +16,7 @@ struct MockLaunchScreen: View {
                 .bold()
                 .animation(.smooth)
             
-            Text("Linear progression, planning and statistics")
+            Text("Linear progression, routine building and statistics")
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 62)

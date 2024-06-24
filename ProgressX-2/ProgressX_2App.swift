@@ -30,28 +30,30 @@ struct ProgressX_2App: App {
             
             else {
                 switch (viewRouter.rootView) {
-                case "HomeView":
+                case .HomeView:
                     HomeView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-                case "CreateNewProfile1":
+                case .CreateNewProfileView:
                     CreateNewProfile1()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-                case "ExerciseLibraryView":
+                case .ExerciseLibraryView:
                     ExerciseLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-                case "ProfileView":
+                case .ProfileView:
                     ProfileView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-                case "SideBarButton":
+                case .SideBarButton:
                     SideBarButton(showMenu: $showMenu)
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
-                default:
-                    fatalError("View router is in an invalid state")
+                case .RoutineLibraryView:
+                    RoutineLibraryView()
+                        .environmentObject(viewRouter)
+                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 }
             }
         }

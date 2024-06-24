@@ -1,70 +1,71 @@
 //
-//  OneRepMaxListItem.swift
+//  CycleListItem.swift
 //  ProgressX-2
 //
-//  Created by William Norland on 2024-06-02.
+//  Created by William Norland on 2024-06-23.
 //
 
 import SwiftUI
 
-struct PrListItem: View {
-    
+struct CycleListItem: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
-    // Access to the parents navigationstack.
     @Binding var navPath: [Int]
-    
-    @Binding var editingPr: PersonalRecord?
-    
-    @State private var showDeleteAlert: Bool = false
-    
-    public let pr: PersonalRecord
+    @Binding var selectedCycle: Cycle?
+    @State var showDeleteAlert: Bool = false
+    @ObservedObject var cycle: Cycle
     
     var body: some View {
         
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
+        let completetionColor = cycle.isComplete ? Color.green : Color.red
         
         HStack {
             VStack(alignment: .leading) {
-                Text("Type: ")
+                
+                Text(cycle.timePeriodName ?? "")
+                
+                (Text("Weeks: ")
                     .fontWeight(.bold)
-                + Text("\(pr.typeString())")
+                 + Text("\(cycle.weeks?.count ?? 0)"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
                 
-                (Text("Date: ")
+                (Text("Complete: ")
                     .fontWeight(.bold)
-                 + (Text("\(pr.dateString() ?? "")")))
+                 + Text("\(cycle.isComplete ? "true" : "false")")
+                    .foregroundStyle(completetionColor))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
                 
-                (Text("Load: ")
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                 + (Text("\(pr.loadString()) \(weightUnit) ")))
                 
-                Text("Quantity: ")
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                + Text("\(pr.quantityString()) \(pr.quantityUnitString())")
             }
+            .frame(width: 135, height: 20)
+            .padding(.vertical, 10)
             
             Spacer()
             
+            // MARK: Edit button
             Button(action: {
-                editingPr = pr
-                navPath.append(5)
+                selectedCycle = cycle
+                navPath.append(4)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())
             
+            // MARK: Delete button
             Button(action: {
                 showDeleteAlert = true
             }) { Image(systemName: "trash") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())
+            // Shows an alert box
                 .alert(isPresented: $showDeleteAlert, content: {
                     Alert(
-                        title: Text("Delete PR"),
-                        message: Text("Are you sure you want to delete this Pr?"),
+                        title: Text("Delete Item"),
+                        message: Text("Are you sure you want to delete \(cycle.timePeriodName!)?"),
                         primaryButton: .destructive(Text("Delete")) {
-                            PersistenceController.delete(viewContext, object: pr)
+                            PersistenceController.delete(viewContext, object: cycle)
                             PersistenceController.save(viewContext)
                         },
                         secondaryButton: .cancel()

@@ -37,7 +37,7 @@ struct PrList: View {
     
     var body: some View {
         
-        BoldSubHeadline(text: "List of all \(personalRecords.first?.typeString() ?? "") PR's achieved on \(exercise.exerciseName!)")
+        BoldSubHeadline(text: "List of all \(personalRecords.first?.typeString ?? "") PR's achieved on \(exercise.exerciseName!)")
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
@@ -81,6 +81,7 @@ struct PrList: View {
     let context = PersistenceController.preview.container.viewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
+    fetchRequest.predicate = NSPredicate(format: "exerciseType == %@","time")
     
     let timeBasedExerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
