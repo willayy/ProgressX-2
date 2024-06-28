@@ -15,7 +15,7 @@ extension Session: HasOrderable {
     public func getNextPositionIndex() -> Int64 {
         let sets: [TrainingSet] = self.sets?.allObjects as! [TrainingSet]
         let max = sets.max {$0.positionIndex > $1.positionIndex}
-        return Int64(max?.positionIndex ?? 0 + 1)
+        return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // MARK: Validation
@@ -71,7 +71,7 @@ extension TemplateSession: HasOrderable {
     public func getNextPositionIndex() -> Int64 {
         let sets: [TemplateSet] = self.sets?.allObjects as! [TemplateSet]
         let max = sets.max {$0.positionIndex > $1.positionIndex}
-        return Int64(max?.positionIndex ?? 0 + 1)
+        return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // MARK: Validation

@@ -31,7 +31,7 @@
         <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="Orderable" representedClassName="Orderable" isAbstract="YES" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
-        <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" usesScalarValueType="YES"/>
     </entity>
     <entity name="PersonalRecord" representedClassName="PersonalRecord" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
         <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>

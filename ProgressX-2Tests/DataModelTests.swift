@@ -11,8 +11,6 @@ import CoreData
 
 // These functions are now in the DataUtility file but since they still deal with persistance their tests are in this file.
 
-#warning("Rerun tests with datamodel changes and delete ones that are now invalid")
-
 final class DataModelTests: XCTestCase {
     
     var container: NSPersistentContainer?
@@ -428,6 +426,23 @@ final class DataModelTests: XCTestCase {
         
         // SHould not throw because the names are now uniqure
         XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_getPositionIndex() {
+        let routine = Routine(context: context!)
+        routine.timePeriodName = "A"
+        routine.createdOnDate = Date()
+        let template = TemplateCycle(context: context!)
+        routine.template = template
+        
+        XCTAssertEqual(routine.template!.getNextPositionIndex(), 1)
+        
+        let week = TemplateWeek(context: context!)
+        template.addToWeeks(week)
+        week.positionIndex = routine.template!.getNextPositionIndex()
+        
+        XCTAssertEqual(routine.template!.getNextPositionIndex(), 2)
+        
     }
         
 }
