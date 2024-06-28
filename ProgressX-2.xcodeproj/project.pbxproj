@@ -46,7 +46,6 @@
 		831F2C342C287124007A7A8A /* CycleListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C332C287124007A7A8A /* CycleListItem.swift */; };
 		831F2C362C288D38007A7A8A /* EditWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C352C288D38007A7A8A /* EditWeekView.swift */; };
 		831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */; };
-		831F2C3A2C29960E007A7A8A /* Orderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C392C29960E007A7A8A /* Orderable.swift */; };
 		832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */; };
 		832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213E72BC92D9000DF9C7A /* Assets.xcassets */; };
 		832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 832213EA2BC92D9000DF9C7A /* Preview Assets.xcassets */; };
@@ -75,6 +74,10 @@
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
+		83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */; };
+		83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F12C2E04E900FA78C6 /* Exercise.swift */; };
+		83D684F62C2E064500FA78C6 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F52C2E064500FA78C6 /* Profile.swift */; };
+		83D684F92C2EC74900FA78C6 /* Orderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F82C2EC74900FA78C6 /* Orderable.swift */; };
 		83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */; };
 		83EE6EE62C1F351500FF17C1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */; };
 		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
@@ -143,7 +146,6 @@
 		831F2C332C287124007A7A8A /* CycleListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleListItem.swift; sourceTree = "<group>"; };
 		831F2C352C288D38007A7A8A /* EditWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeekView.swift; sourceTree = "<group>"; };
 		831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStatisticsView.swift; sourceTree = "<group>"; };
-		831F2C392C29960E007A7A8A /* Orderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orderable.swift; sourceTree = "<group>"; };
 		832213E02BC92D8E00DF9C7A /* ProgressX-2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ProgressX-2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressX_2App.swift; sourceTree = "<group>"; };
 		832213E72BC92D9000DF9C7A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -174,6 +176,10 @@
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
+		83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasOrderable.swift; sourceTree = "<group>"; };
+		83D684F12C2E04E900FA78C6 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		83D684F52C2E064500FA78C6 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		83D684F82C2EC74900FA78C6 /* Orderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orderable.swift; sourceTree = "<group>"; };
 		83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLaunchScreen.swift; sourceTree = "<group>"; };
 		83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		83F110B82C1CC9600068953B /* CreateNewProfile4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4.swift; sourceTree = "<group>"; };
@@ -222,7 +228,9 @@
 				831F2BF42C20A74C007A7A8A /* Session+TemplateSession.swift */,
 				831F2BF22C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift */,
 				831F2C282C247B40007A7A8A /* Routine.swift */,
-				831F2C392C29960E007A7A8A /* Orderable.swift */,
+				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
+				83D684F52C2E064500FA78C6 /* Profile.swift */,
+				83D684F82C2EC74900FA78C6 /* Orderable.swift */,
 			);
 			path = NSManagedObjectExtensions;
 			sourceTree = "<group>";
@@ -415,6 +423,7 @@
 			children = (
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
+				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
 				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
 				831F2C2C2C24A3EC007A7A8A /* PersistentStorageSetup */,
 				830E26802C1753EF00815936 /* NSManagedObjectExtensions */,
@@ -644,11 +653,13 @@
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
 				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
+				83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */,
 				831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1.swift in Sources */,
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
 				831F2BF32C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift in Sources */,
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
+				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				8359F9712C1AE779004BA421 /* Persistence+Convenience-functions.swift in Sources */,
@@ -656,6 +667,7 @@
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
 				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */,
+				83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */,
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */,
 				831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
@@ -669,7 +681,6 @@
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */,
-				831F2C3A2C29960E007A7A8A /* Orderable.swift in Sources */,
 				8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */,
 				8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
@@ -679,6 +690,7 @@
 				831F2C292C247B40007A7A8A /* Routine.swift in Sources */,
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3.swift in Sources */,
 				831F2BF52C20A74C007A7A8A /* Session+TemplateSession.swift in Sources */,
+				83D684F92C2EC74900FA78C6 /* Orderable.swift in Sources */,
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,

@@ -11,6 +11,8 @@ import CoreData
 
 // These functions are now in the DataUtility file but since they still deal with persistance their tests are in this file.
 
+#warning("Rerun tests with datamodel changes and delete ones that are now invalid")
+
 final class DataModelTests: XCTestCase {
     
     var container: NSPersistentContainer?
@@ -248,6 +250,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -258,8 +266,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -304,6 +312,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -314,8 +328,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -338,6 +352,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -348,8 +368,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -373,7 +393,11 @@ final class DataModelTests: XCTestCase {
         cycle1.positionIndex = 2
         cycle2.routine = routine
         cycle2.positionIndex = 3
-        
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle1.startedOnDate = Date()
+        cycle2.startedOnDate = Date()
+
         routine.addToCycles(cycle1)
         routine.addToCycles(cycle2)
         
@@ -384,6 +408,7 @@ final class DataModelTests: XCTestCase {
         
         // try with invalid (positionIndexes are the same) positionIndexes
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
     }
     
     func test_Routine_Has_Non_Unique_Name() {
@@ -391,6 +416,10 @@ final class DataModelTests: XCTestCase {
         let routine2 = Routine(context: context!)
         routine1.timePeriodName = "A"
         routine2.timePeriodName = "A"
+        routine1.createdOnDate = Date()
+        routine2.createdOnDate = Date()
+        routine1.template = TemplateCycle(context: context!)
+        routine2.template = TemplateCycle(context: context!)
         
         // SHould throw, non unique name
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))

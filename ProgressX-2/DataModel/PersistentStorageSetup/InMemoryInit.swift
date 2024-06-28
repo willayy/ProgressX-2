@@ -245,12 +245,22 @@ class InMemory {
     }
     
     private static func initRoutines(_ context: NSManagedObjectContext) {
+        
+        // Creating a Routine
         let routine = Routine(context: context)
         routine.createdOnDate = Date()
         routine.timePeriodName = "test routine 1"
         routine.timePeriodDescription = "routine used for in-memory debugging"
+        
+        // Adding a template cycle to that routine
         let templateCycle = TemplateCycle(context: context)
         templateCycle.timePeriodName = "test routine 1"
         routine.template = templateCycle
+        templateCycle.routine = routine
+        
+        let templateWeek1 = TemplateWeek(context: context)
+        templateWeek1.timePeriodName = "Week 1"
+        templateWeek1.positionIndex = templateCycle.getNextPositionIndex()
+        templateWeek1.cycle = templateCycle
     }
 }

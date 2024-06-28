@@ -8,9 +8,22 @@
 import Foundation
 import CoreData
 
-extension Routine {
+extension Routine: HasOrderable {
     
     // MARK: Extra properties
+    
+    var creationDateString: String? {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        
+        if self.createdOnDate != nil {
+            return df.string(from: self.createdOnDate!)
+        }
+        
+        else {
+            return nil
+        }
+    }
     
     var completedCycles: [Cycle] {
         let context = self.managedObjectContext!
@@ -23,12 +36,15 @@ extension Routine {
         return results
     }
     
-    func getNextPositionIndex() -> Int {
+    
+    /// Gets the next available
+    /// - Returns: An Int64 that is a valid positionIndex
+    func getNextPositionIndex() -> Int64 {
         let fetchRequest: NSFetchRequest<Cycle> = Cycle.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "coutine == %@", self)
+        fetchRequest.predicate = NSPredicate(format: "routine == %@", self)
         let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
         let max = results.max {$0.positionIndex > $1.positionIndex}
-        return Int(max!.positionIndex + 1)
+        return Int64(max?.positionIndex ?? 0 + 1)
     }
     
     // MARK: Validation
@@ -36,11 +52,13 @@ extension Routine {
     override public func validateForInsert() throws {
         try super.validateForInsert()
         try validateRoutineName()
+        try validatePositionIndexes()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateRoutineName()
+        try validatePositionIndexes()
     }
     
     // Checks that the routine name is unique
@@ -52,6 +70,16 @@ extension Routine {
         if results.contains(where: {$0.timePeriodName == self.timePeriodName }) {
             throw ValidationNSErrors.routineNameIsInvalid.toNSError()
         }
+    }
+    
+    // Validate that children has valid positionIndexes (No duplicates)
+    private func validatePositionIndexes() throws {
+        let fetchRequest: NSFetchRequest<Cycle> = Cycle.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "routine == %@", self)
+        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
+        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let duplicates = groupedBy.filter { $1.count > 1 }
+        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
         
 }
