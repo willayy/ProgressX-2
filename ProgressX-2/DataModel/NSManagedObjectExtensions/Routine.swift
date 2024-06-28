@@ -40,10 +40,8 @@ extension Routine: HasOrderable {
     /// Gets the next available
     /// - Returns: An Int64 that is a valid positionIndex
     func getNextPositionIndex() -> Int64 {
-        let fetchRequest: NSFetchRequest<Cycle> = Cycle.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "routine == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let max = results.max {$0.positionIndex > $1.positionIndex}
+        let cycles: [Cycle] = self.cycles?.allObjects as! [Cycle]
+        let max = cycles.max {$0.positionIndex > $1.positionIndex}
         return Int64(max?.positionIndex ?? 0 + 1)
     }
     
@@ -74,10 +72,8 @@ extension Routine: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let fetchRequest: NSFetchRequest<Cycle> = Cycle.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "routine == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let cycles: [Cycle] = self.cycles?.allObjects as! [Cycle]
+        let groupedBy = Dictionary(grouping: cycles, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }

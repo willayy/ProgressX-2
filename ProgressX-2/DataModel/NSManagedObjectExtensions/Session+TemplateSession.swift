@@ -13,10 +13,8 @@ extension Session: HasOrderable {
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
-        let fetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "session == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let max = results.max {$0.positionIndex > $1.positionIndex}
+        let sets: [TrainingSet] = self.sets?.allObjects as! [TrainingSet]
+        let max = sets.max {$0.positionIndex > $1.positionIndex}
         return Int64(max?.positionIndex ?? 0 + 1)
     }
     
@@ -36,10 +34,8 @@ extension Session: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let fetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "session == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let sets: [TrainingSet] = self.sets?.allObjects as! [TrainingSet]
+        let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
@@ -73,10 +69,8 @@ extension TemplateSession: HasOrderable {
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
-        let fetchRequest: NSFetchRequest<TemplateSession> = TemplateSession.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "session == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let max = results.max {$0.positionIndex > $1.positionIndex}
+        let sets: [TemplateSet] = self.sets?.allObjects as! [TemplateSet]
+        let max = sets.max {$0.positionIndex > $1.positionIndex}
         return Int64(max?.positionIndex ?? 0 + 1)
     }
     
@@ -94,10 +88,8 @@ extension TemplateSession: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let fetchRequest: NSFetchRequest<TemplateSet> = TemplateSet.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "session == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let sets: [TemplateSet] = self.sets?.allObjects as! [TemplateSet]
+        let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }

@@ -6,16 +6,15 @@
 //
 
 import Foundation
+import CoreData
 
 extension Cycle: HasOrderable {
     
     // MARK: Extra properties
     
     func getNextPositionIndex() -> Int64 {
-        let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cycle == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let max = results.max {$0.positionIndex > $1.positionIndex}
+        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let max = weeks.max {$0.positionIndex > $1.positionIndex}
         return Int64(max?.positionIndex ?? 0 + 1)
     }
     
@@ -35,10 +34,8 @@ extension Cycle: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cycle == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
@@ -68,18 +65,13 @@ extension Cycle: HasOrderable {
     }
 }
 
-import Foundation
-import CoreData
-
 extension TemplateCycle: HasOrderable {
     
     // MARK: Extra properties
     
     func getNextPositionIndex() -> Int64 {
-        let fetchRequest: NSFetchRequest<TemplateWeek> = TemplateWeek.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cycle == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let max = results.max {$0.positionIndex > $1.positionIndex}
+        let weeks: [TemplateWeek] = self.weeks?.allObjects as! [TemplateWeek]
+        let max = weeks.max {$0.positionIndex > $1.positionIndex}
         return Int64(max?.positionIndex ?? 0 + 1)
     }
     
@@ -98,10 +90,8 @@ extension TemplateCycle: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let fetchRequest: NSFetchRequest<TemplateWeek> = TemplateWeek.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "cycle == %@", self)
-        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        let groupedBy = Dictionary(grouping: results, by: {$0.positionIndex})
+        let weeks: [TemplateWeek] = self.weeks?.allObjects as! [TemplateWeek]
+        let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }

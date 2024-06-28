@@ -223,14 +223,14 @@
 				83C76F812C17020F0051D8FB /* PersonalRecord.swift */,
 				8359F97C2C1C63F5004BA421 /* BodyEntry.swift */,
 				831F2BF02C209FB1007A7A8A /* Completable.swift */,
+				83D684F52C2E064500FA78C6 /* Profile.swift */,
+				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
+				83D684F82C2EC74900FA78C6 /* Orderable.swift */,
+				831F2C282C247B40007A7A8A /* Routine.swift */,
 				831F2C092C2195D8007A7A8A /* Cycle+TemplateCycle.swift */,
 				831F2C072C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift */,
 				831F2BF42C20A74C007A7A8A /* Session+TemplateSession.swift */,
 				831F2BF22C20A0CA007A7A8A /* TrainingSet+TemplateSet.swift */,
-				831F2C282C247B40007A7A8A /* Routine.swift */,
-				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
-				83D684F52C2E064500FA78C6 /* Profile.swift */,
-				83D684F82C2EC74900FA78C6 /* Orderable.swift */,
 			);
 			path = NSManagedObjectExtensions;
 			sourceTree = "<group>";
@@ -293,9 +293,9 @@
 			children = (
 				831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */,
 				831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */,
+				831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */,
 				831F2C1B2C23132F007A7A8A /* EditRoutineView.swift */,
 				831F2C352C288D38007A7A8A /* EditWeekView.swift */,
-				831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */,
 			);
 			path = RoutineLibraryViews;
 			sourceTree = "<group>";
