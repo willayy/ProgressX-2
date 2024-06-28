@@ -14,7 +14,7 @@ extension Cycle: HasOrderable {
     
     func getNextPositionIndex() -> Int64 {
         let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
-        let max = weeks.max {$0.positionIndex > $1.positionIndex}
+        let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
@@ -71,7 +71,7 @@ extension TemplateCycle: HasOrderable {
     
     func getNextPositionIndex() -> Int64 {
         let weeks: [TemplateWeek] = self.weeks?.allObjects as! [TemplateWeek]
-        let max = weeks.max {$0.positionIndex > $1.positionIndex}
+        let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     

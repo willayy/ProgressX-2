@@ -41,7 +41,7 @@ extension Routine: HasOrderable {
     /// - Returns: An Int64 that is a valid positionIndex
     func getNextPositionIndex() -> Int64 {
         let cycles: [Cycle] = self.cycles?.allObjects as! [Cycle]
-        let max = cycles.max {$0.positionIndex > $1.positionIndex}
+        let max = cycles.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
