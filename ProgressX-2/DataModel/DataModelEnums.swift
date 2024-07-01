@@ -17,3 +17,9 @@ enum PersonalRecordType: String {
     case TimeMax = "timemax"
     case MaxReps = "maxreps"
 }
+
+enum LoadType: String {
+    case maxPercentage = "maxperc"
+    case bodyWeightPercentage = "bwperc"
+    case numerical = "numerical"
+}

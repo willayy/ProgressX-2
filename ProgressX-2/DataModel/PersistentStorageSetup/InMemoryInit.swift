@@ -258,9 +258,16 @@ class InMemory {
         routine.template = templateCycle
         templateCycle.routine = routine
         
+        // Adding a template week to the template cycle
         let templateWeek1 = TemplateWeek(context: context)
         templateWeek1.timePeriodName = "Week 1"
         templateWeek1.positionIndex = templateCycle.getNextPositionIndex()
         templateWeek1.cycle = templateCycle
+        
+        // Adding a template session tot the template week
+        let templateSession1 = TemplateSession(context: context)
+        templateSession1.timePeriodName = "Session 1"
+        templateSession1.positionIndex = templateWeek1.getNextPositionIndex()
+        templateSession1.week = templateWeek1
     }
 }

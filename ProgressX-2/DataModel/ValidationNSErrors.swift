@@ -46,6 +46,10 @@ enum ValidationNSErrors: Int {
     
     // Routine
     case routineNameIsInvalid = 9982
+    
+    // Threshold
+    case triggerQuantityIsInvalid = 9981
+    
     /* -------------------------------------------------------- */
     
     // The Error domain
@@ -69,7 +73,7 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey: "Session can't be complete without any sets."]
             
         case .setAndExerciseTypeMismatch:
-            return [NSLocalizedDescriptionKey: "Set.exercise.exerciseType and set.prType have mismatching values."]
+            return [NSLocalizedDescriptionKey: "This sets exercise and its thresholds prTypes have mismatching values."]
             
         case .cycleCompleteWithUncompleteWeeks:
             return [NSLocalizedDescriptionKey: "Cycle can't be complete when its weeks aren't."]
@@ -103,6 +107,9 @@ enum ValidationNSErrors: Int {
             
         case .exerciseNameIsInvalid:
             return [NSLocalizedDescriptionKey: "This Exercise has a name that is not unique"]
+            
+        case .triggerQuantityIsInvalid:
+            return [NSLocalizedDescriptionKey: "The triggerQuantity of this threshold has to be a valid integer if exercise is of type"]
         }
     }
     

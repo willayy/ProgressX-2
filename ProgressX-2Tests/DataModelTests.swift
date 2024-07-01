@@ -437,12 +437,17 @@ final class DataModelTests: XCTestCase {
         
         XCTAssertEqual(routine.template!.getNextPositionIndex(), 1)
         
-        let week = TemplateWeek(context: context!)
-        template.addToWeeks(week)
-        week.positionIndex = routine.template!.getNextPositionIndex()
+        let week1 = TemplateWeek(context: context!)
+        template.addToWeeks(week1)
+        week1.positionIndex = routine.template!.getNextPositionIndex()
         
         XCTAssertEqual(routine.template!.getNextPositionIndex(), 2)
         
+        let week2 = TemplateWeek(context: context!)
+        template.addToWeeks(week2)
+        week2.positionIndex = routine.template!.getNextPositionIndex()
+        
+        XCTAssertEqual(routine.template!.getNextPositionIndex(), 3)
     }
         
 }

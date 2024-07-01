@@ -72,7 +72,6 @@ extension TrainingSet {
     // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validatePrType()
         try validateQuantityTodo()
         try validateQuantityDone()
     }
@@ -80,22 +79,8 @@ extension TrainingSet {
     // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
-        try validatePrType()
         try validateQuantityTodo()
         try validateQuantityDone()
-    }
-    
-    // Makes sure that the Set has an Exercise that matches it's own type.
-    private func validatePrType() throws {
-        let prToExerciseTypeMap = [
-            "onerepmax" : "reps",
-            "maxreps" : "reps",
-            "timemax" : "time"
-        ]
-        
-        if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw ValidationNSErrors.setAndExerciseTypeMismatch.toNSError()
-        }
     }
 
     private func validateQuantityTodo() throws {
@@ -136,11 +121,16 @@ extension TemplateSet {
     var quantityTodoString: String {
         let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
         
-        switch type {
-        case .Reps:
-            return String(format: "%.0f", self.quantityTodo)
-        case .Time:
-            return String(format: "%.2f", self.quantityTodo)
+        if self.quantityType == "numerical" {
+            switch type {
+            case .Reps:
+                return String(format: "%.0f", self.quantityTodo)
+            case .Time:
+                return String(format: "%.2f", self.quantityTodo)
+            }
+        } else {
+            // if quantity is percentage on template set
+            return String(format: "%.2f")
         }
     }
     
@@ -148,11 +138,28 @@ extension TemplateSet {
     var quantityUnit: String {
         let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
         
-        switch type {
+        if self.quantityType == "numerical" {
+            switch type {
             case .Reps:
                 return "reps"
             case .Time:
                 return "seconds"
+            }
+        } else {
+            return "% of Max"
+        }
+    }
+    
+    var loadUnit: String {
+        let type: LoadType = LoadType(rawValue: self.loadType!)!
+
+        switch type {
+        case .bodyWeightPercentage:
+            return "% of Bodyweight"
+        case .maxPercentage:
+            return "% of Max"
+        case .numerical:
+            return PersistenceController.getWeightUnit(self.managedObjectContext!)!
         }
     }
     
@@ -161,30 +168,15 @@ extension TemplateSet {
     // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validatePrType()
         try validateQuantityTodo()
     }
     
     // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
-        try validatePrType()
         try validateQuantityTodo()
     }
     
-    // Makes sure that the Set has an Exercise that matches it's own type.
-    private func validatePrType() throws {
-        let prToExerciseTypeMap = [
-            "onerepmax" : "reps",
-            "maxreps" : "reps",
-            "timemax" : "time"
-        ]
-        
-        if prToExerciseTypeMap[self.prType!] != self.exercise!.exerciseType {
-            throw ValidationNSErrors.setAndExerciseTypeMismatch.toNSError()
-        }
-    }
-
     private func validateQuantityTodo() throws {
         let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
         let isPrRepBased = (self.exercise!.exerciseType == "reps")
