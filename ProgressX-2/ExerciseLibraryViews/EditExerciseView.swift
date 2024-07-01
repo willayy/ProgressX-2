@@ -42,12 +42,21 @@ struct EditExerciseView: View {
                     if noChangeAlert {
                         SubmitAlert(message: "No changes to Exercise", color: .blue, showAlertState: $noChangeAlert)
                     }
-                    
+    
                     BoldSubHeadline(text: "Description: ")
                         .padding(.top, 10)
                     
-                    LightSubHeadline(text: exercise!.exerciseDesc!)
-                        .padding(.bottom, 20)
+                    // if description is empty show a red label instead
+                    if exercise!.exerciseDesc!.isEmpty {
+                        Text("No description.")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                            .foregroundStyle(.red)
+                            .padding(.bottom, 20)
+                    } else {
+                        LightSubHeadline(text: exercise!.exerciseDesc!)
+                            .padding(.bottom, 20)
+                    }
                     
                     InputShortTextField(
                         placeHolder: "New exercise name",

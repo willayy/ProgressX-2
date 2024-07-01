@@ -29,18 +29,6 @@ struct StatisticsView: View {
                 LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
                 
                 if exercise!.exerciseType == "reps" {
-                    GeneralInfoRepsExercise(
-                        exercise: exercise
-                    ).environment(\.managedObjectContext, viewContext)
-                } else if exercise!.exerciseType == "time" {
-                    GeneralInfoTimeExercise(
-                        exercise: exercise
-                    ).environment(\.managedObjectContext, viewContext)
-                }
-                
-                
-                if exercise!.exerciseType == "reps" {
-                    
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
                         .padding(.top, 20)
                     BasicSegPicker(
@@ -49,6 +37,20 @@ struct StatisticsView: View {
                         frameWidth: 250,
                         horizontalPadding: 20
                     )
+                }
+                
+                if exercise!.exerciseType == "reps" {
+                    GeneralInfoRepsExercise(
+                        exercise: exercise, 
+                        selection: displayedPrType
+                    ).environment(\.managedObjectContext, viewContext)
+                } else if exercise!.exerciseType == "time" {
+                    GeneralInfoTimeExercise(
+                        exercise: exercise
+                    ).environment(\.managedObjectContext, viewContext)
+                }
+                
+                if exercise!.exerciseType == "reps" {
                     
                     if displayedPrType == "1RM" {
                         SingleChart(
