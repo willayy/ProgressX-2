@@ -38,59 +38,81 @@ struct CreateNewTemplateSetView: View {
     @State var searchWord: String = ""
     
     // Selection of load types
-    private let loadTypeSegments: [String] = ["Numerical", "Percentage"]
-    @State var selectedLoadTypeSegment: String = "Numerical"
-    
-    // Sub-selection of load types
-    private let percentageTypeSegments: [String] = ["Current PR load", "Body weight"]
-    @State var selectedPercentageTypeSegment: String = "Current 1RM PR"
+    @State var selectedLoadType: String = "Select exercise first!"
     
     // Selection of quantity types
-    private let quantityTypeSegments: [String] = ["Numerical", "Percentage"]
-    @State var selectedQuantityTypeSegment: String = "Numerical"
+    @State var selectedQuantityType: String = "Select exercise first!"
     
     @Binding var selectedTemplateSession: TemplateSession?
     
     var body: some View {
         
+        // Computed constants for load type selections
+        let loadTypeSelections: [String] = {
+            switch selectedExercise?.exerciseType {
+            case "reps":
+                return ["Numerical",
+                        "Percentage of current 1RM PR",
+                        "Percentage of current body weight"]
+            case "time":
+                return ["Numerical",
+                        "Percentage of current TimeMax PR",
+                        "Percentage of current body weight"]
+            default:
+                return []
+            }
+        }()
+        
+        // Computed constants for quantity type selections
+        let quantityTypeSelections: [String] = {
+            switch selectedExercise?.exerciseType {
+            case "reps":
+                return ["Numerical",
+                        "Percentage of current AMRAP PR"]
+            case "time":
+                return ["Numerical",
+                        "Percentage of current TimeMax PR"]
+            default:
+                return []
+            }
+        }()
+        
         // Computed variable for the load placeholder
-        // Looks horrible i know
         var loadPlaceholder: String {
-            if selectedLoadTypeSegment == "Numerical" {
+            switch selectedLoadType {
+            case "Numerical":
                 let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-                return "Load (\(weightUnit))"
-            } else {
-                if selectedPercentageTypeSegment == "Body weight" {
-                    return "Percentage of current body weight"
-                } else if selectedExercise?.exerciseType == "reps" {
-                    return "Percentage of current 1RM"
-                } else {
-                    return "Percentage of current TimeMax load"
-                }
+                return "Load \(weightUnit)"
+            case "Percentage of current 1RM PR":
+                return "Percentage"
+            case "Percentage of current TimeMax PR":
+                return "Percentage"
+            case "Percentage of current body weight":
+                return "Percentage"
+            default:
+                return "Select exercise first!"
             }
         }
         
         // Computed variable for the quantity placeholder
-        // Looks horrible i know
         var quantityPlaceholder: String {
-            if selectedQuantityTypeSegment == "Numerical" {
-                if selectedExercise?.exerciseType == "reps" {
-                    return "Quantity (reps)"
-                } else {
-                    return "Quantity (seconds)"
-                }
-            } else {
-                if selectedExercise?.exerciseType == "reps" {
-                    return "Percentage of current AMRAP"
-                } else {
-                    return "Percentage of current TimeMax time"
-                }
+            switch selectedQuantityType {
+            case "Numerical":
+                let exerciseType = selectedExercise?.exerciseType
+                if exerciseType == nil {return "Select exercise first!"}
+                return exerciseType == "reps" ? "Reps" : "Seconds"
+            case "Percentage of current AMRAP PR":
+                return "Percentage"
+            case "Percentage of current TimeMax PR":
+                return "Percentage"
+            default:
+                return "Select exercise first!"
             }
         }
         
         ScrollView {
             VStack {
-    
+                
                 BoldTitle(text: "Create new set")
                     .padding(.bottom, 10)
                 
@@ -104,11 +126,11 @@ struct CreateNewTemplateSetView: View {
                     width: 0.6,
                     errorMessage: $newSetNameIsInvalidMsg
                 )
-                    .onAppear(perform: {
+                .onAppear(perform: {
                     let nextPositionIndex = selectedTemplateSession!.getNextPositionIndex()
                     newSetName = newSetName + String(nextPositionIndex)
                 })
-                    .padding(.bottom, 5)
+                .padding(.bottom, 5)
                 
                 InputShortTextField(
                     placeHolder: "Set description",
@@ -117,7 +139,7 @@ struct CreateNewTemplateSetView: View {
                     width: 0.6,
                     errorMessage: $newSetDescIsInvalidMsg
                 )
-                    .padding(.bottom, 20)
+                .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Choose an exercise for the set")
                     .padding(.bottom, 5)
@@ -126,12 +148,20 @@ struct CreateNewTemplateSetView: View {
                     selectedExercise: $selectedExercise,
                     searchWord: $searchWord
                 )
+                .onChange(
+                    of: selectedExercise,
+                    initial: false
+                ) { oldValue, newValue in
+                    // Set types to some inital value when exercise is selected
+                    selectedLoadType = "Numerical"
+                    selectedQuantityType = "Numerical"
+                }
                 
                 BoldSubHeadline(text: "Choose load type")
                     .padding(.top, 20)
                     .padding(.bottom, 5)
                 
-                if selectedLoadTypeSegment == "Numerical" {
+                if selectedLoadType == "Numerical" {
                     LightSubHeadline(text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs")
                         .padding(.horizontal, 20)
                 } else {
@@ -139,28 +169,26 @@ struct CreateNewTemplateSetView: View {
                         .padding(.horizontal, 20)
                 }
                 
-                BasicSegPicker(
-                    selectedSegment: $selectedLoadTypeSegment,
-                    segments: loadTypeSegments,
-                    frameWidth: 300,
-                    horizontalPadding: 30
-                )
-                
-                if selectedLoadTypeSegment == "Percentage" {
-                    BasicSegPicker(
-                        selectedSegment: $selectedPercentageTypeSegment,
-                        segments: percentageTypeSegments,
-                        frameWidth: 300,
-                        horizontalPadding: 30
-                    )
-                    .padding(.top, 5)
+                // MARK: Menu for selecting load type
+                GroupBox {
+                    DisclosureGroup(selectedLoadType) {
+                        ForEach(loadTypeSelections, id: \.self) { loadType in
+                            Button {
+                                selectedLoadType = loadType
+                            } label: {
+                                Text(loadType)
+                            }
+                        }
+                    }
                 }
+                .padding(.horizontal, 40)
+        
                 
                 BoldSubHeadline(text: "Choose quantity type")
                     .padding(.top, 20)
                     .padding(.bottom, 5)
                 
-                if selectedQuantityTypeSegment == "Numerical" {
+                if selectedQuantityType == "Numerical" {
                     LightSubHeadline(text: "Numerical quantity type means that the quantity will be a numerical value like 10 seconds or 5 reps.")
                         .padding(.horizontal, 20)
                 } else {
@@ -168,18 +196,25 @@ struct CreateNewTemplateSetView: View {
                         .padding(.horizontal, 20)
                 }
                 
-                BasicSegPicker(
-                    selectedSegment: $selectedQuantityTypeSegment,
-                    segments: quantityTypeSegments,
-                    frameWidth: 300,
-                    horizontalPadding: 30
-                )
+                // MARK: Menu for selecting quantity type
+                GroupBox {
+                    DisclosureGroup(selectedQuantityType) {
+                        ForEach(quantityTypeSelections, id: \.self) { quantityType in
+                            Button {
+                                selectedLoadType = quantityType
+                            } label: {
+                                Text(quantityType)
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 40)
                 
                 BoldSubHeadline(text: "Choose quantity and load")
                     .padding(.top, 20)
                     .padding(.bottom, 5)
                 
-                // MARK: Load
+                // MARK: Load inputfield
                 HStack {
                     InputDecimalNumberField(
                         placeHolder: loadPlaceholder,
@@ -189,7 +224,7 @@ struct CreateNewTemplateSetView: View {
                         errorMessage: $setLoadIsInvalidMsg
                     )
                     
-                    if selectedLoadTypeSegment == "Percentage" {
+                    if loadPlaceholder == "Percentage" {
                         Text("%")
                     }
                 }
@@ -207,7 +242,7 @@ struct CreateNewTemplateSetView: View {
                             errorMessage: $setQuantityIsInvalidMsg
                         )
                         .padding(.top, 5)
-                        if selectedQuantityTypeSegment == "Percentage" {
+                        if selectedQuantityType == "Percentage" {
                             Text("%")
                         }
                     }
@@ -221,25 +256,32 @@ struct CreateNewTemplateSetView: View {
                             errorMessage: $setQuantityIsInvalidMsg
                         )
                         .padding(.top, 5)
-                        if selectedQuantityTypeSegment == "Percentage" {
+                        if selectedQuantityType == "Percentage" {
                             Text("%")
                         }
                     }
                 }
                 
                 Button {
-                    navPath.append(9)
+                    if validateInput() {
+                        navPath.append(8)
+                    }
                 } label: {
-                    Text("Add new set")
+                    Text("Create set")
                         .frame(height: 40)
                     Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
-                
+                .padding(.top, 20)
+                    
+                }
             }
         }
     }
+
+    private func validateInput() -> Bool {
+        return false
+        //let loadFieldValidator = Dec
 }
 
 #Preview {
@@ -250,8 +292,10 @@ struct CreateNewTemplateSetView: View {
     let templateSessions = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
     
     @State var selectedTemplateSession: TemplateSession? = templateSessions.first
+    @State var navPath: [Int] = [Int]()
     
     return CreateNewTemplateSetView(
+        navPath: $navPath,
         selectedTemplateSession: $selectedTemplateSession
     ).environment(\.managedObjectContext, context)
 }

@@ -43,6 +43,8 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
     
     let context = PersistenceController.preview.container.viewContext
     
+    // Does not really work as intended here because @FetchRequest wrapper does not work in Preview context.
+    
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]

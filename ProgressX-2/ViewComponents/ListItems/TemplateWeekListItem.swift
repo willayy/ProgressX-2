@@ -11,9 +11,9 @@ struct TemplateWeekListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedWeek: TrainingWeek?
-    @State var showDeleteAlert: Bool = false
-    @ObservedObject var week: TrainingWeek
+    @Binding var selectedTemplateWeek: TemplateWeek?
+    @State private var showDeleteAlert: Bool = false
+    @ObservedObject var week: TemplateWeek
     
     var body: some View {
         
@@ -36,8 +36,8 @@ struct TemplateWeekListItem: View {
             
             // MARK: Edit button
             Button(action: {
-                selectedWeek = week
-                navPath.append(5)
+                selectedTemplateWeek = week
+                navPath.append(4)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
@@ -54,7 +54,7 @@ struct TemplateWeekListItem: View {
                 .alert(isPresented: $showDeleteAlert, content: {
                     Alert(
                         title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete \(week.timePeriodName!)?"),
+                        message: Text("Are you sure you want to delete \(week.timePeriodName ?? "")?"),
                         primaryButton: .destructive(Text("Delete")) {
                             PersistenceController.delete(viewContext, object: week)
                             PersistenceController.save(viewContext)

@@ -22,6 +22,7 @@ struct InputField: View {
     var body: some View {
         VStack {
             TextField(placeHolder, text: $value)
+                .minimumScaleFactor(0.5)
                 .frame(width: UIScreen.main.bounds.width * width)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .onReceive(Just(value)) { newValue in

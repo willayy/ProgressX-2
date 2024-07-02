@@ -11,9 +11,9 @@ struct TemplateSessionListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedSession: Session
-    @State var showDeleteAlert: Bool = false
-    @ObservedObject var session: Session
+    @Binding var selectedTemplateSession: TemplateSession?
+    @State private var showDeleteAlert: Bool = false
+    @ObservedObject var session: TemplateSession
     
     var body: some View {
         
@@ -36,8 +36,8 @@ struct TemplateSessionListItem: View {
             
             // MARK: Edit button
             Button(action: {
-                selectedSession = session
-                navPath.append(4)
+                selectedTemplateSession = session
+                navPath.append(5)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
