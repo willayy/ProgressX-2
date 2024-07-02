@@ -14,6 +14,7 @@ struct BoldSubHeadline: View {
     
     var body: some View {
         Text(text)
+            .foregroundColor(Color("textColor"))
             .font(.subheadline)
             .fontWeight(.bold)
             .foregroundColor(.black)

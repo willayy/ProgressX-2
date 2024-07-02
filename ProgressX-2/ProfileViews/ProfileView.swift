@@ -14,6 +14,11 @@ struct ProfileView: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
     
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profiles: FetchedResults<Profile>
+    
     @State private var userName = ""
     @State private var birthDay = Date()
     @State private var selectedUnitSegment = "Metric (meters)"
@@ -30,6 +35,9 @@ struct ProfileView: View {
     @State private var heightIsInvalidMsg = ""
     @State private var weightIsInvalidMsg = ""
     
+    let unitSegments = ["Metric (meters)", "Imperial (feet)"]
+    let genderSegments = ["Male", "Female"]
+    
     var body: some View {
         SideBar(
             rotateWhenExpands: true, // true
@@ -40,23 +48,98 @@ struct ProfileView: View {
         ) { safeArea in
             NavigationStack{
                 ScrollView{
-                VStack(alignment:.leading){
-                    BoldSubHeadline(text: "Change Username")
-                    InputShortTextField(placeHolder: "Enter username...", text: $userName, markAsWrong: $userNameIsInvalid, width: 0.5, errorMessage: $userNameIsInvalidMsg).padding(.bottom)
                     
-                    Text("Change birthday").bold()
+                    BoldTitle(text: "Profile")
                     
-                    Text("Change standard rest-time").bold()
+                    LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                     
-                    Text("Change weight units").bold()
+                    VStack(alignment:.center){
+                        BoldSubHeadline(text: "Change username")
                     
-                    Text("Change length units").bold()
+                        
+                        InputShortTextField(placeHolder: profiles.first!.profileUserName!, text: $userName, markAsWrong: $userNameIsInvalid, width: 0.5, errorMessage: $userNameIsInvalidMsg).padding(.bottom)
+                    
+                    BoldSubHeadline(text: "Change birth date")
+                        DatePicker("", selection: $birthDay , displayedComponents: .date)
+                        .datePickerStyle(DefaultDatePickerStyle())
+                        .labelsHidden()
+                        .padding(.bottom)
+                        .onAppear(perform: {
+                            birthDay = profiles.first!.birthDay!
+                        })
+                    
+                        BoldSubHeadline(text: "Change default rest-time").padding(.bottom)
+                        
+                        
+                    
+                        
+                    BoldSubHeadline(text: "Change Units")
+                    BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments, frameWidth: 230, horizontalPadding: 20)
+                            .onAppear(perform: {
+                                if profiles.first!.isMetric == true {
+                                    selectedUnitSegment = "Metric (meters)"
+                                }
+                                else {
+                                    selectedUnitSegment = "Imperial (feet)"
+                                }
+                            })
+                            .padding(.bottom)
+                    
+                    BoldSubHeadline(text: "Change height")
+                    
+                        InputDecimalNumberField(placeHolder: String(format: "%1.f", profiles.first!.height), numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: $heightIsInvalidMsg).padding(.bottom)
+                    
+                    BoldSubHeadline(text: "Gender")
+                        BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments, frameWidth: 230, horizontalPadding: 20).onAppear(perform: {
+                            selectedGenderSegment = profiles.first!.gender!.capitalized
+                        })
+                        
+                        Button(action: {
+                            
+                            // action for saving
+                            if userName != "" {
+                                profiles.first?.profileUserName = userName
+                            }
+                            
+                            profiles.first?.birthDay = birthDay
+                            
+                            if selectedUnitSegment == "Metric (meters)" {
+                                profiles.first?.isMetric = true
+                            } else {
+                                profiles.first?.isMetric = false
+                            }
+
+                            if height != "" {
+                                profiles.first?.height = Double(height)!
+                            }
+
+                            profiles.first?.gender = selectedGenderSegment
+                            
+                            PersistenceController.save(viewContext)
+                            
+                        
+                            
+                        })
+                        {
+                            Text("Save changes")
+                                .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
+                            Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
+                        }
+                        .padding(.top, 20)
+                        .buttonStyle(BorderedProminentButtonStyle())
+                        .foregroundColor(.white)
+                        
+                        
+                        
+                    
                     
                 }.padding()
-                    .frame(width: 390, height: 650, alignment: .topLeading)
+                    .frame(width: 390, height: 650, alignment: .top)
                     .toolbar(.hidden, for: .tabBar)
                     .foregroundColor(Color(UIColor.lightGray))
-                    .navigationTitle("Profile")
+                    
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
@@ -83,5 +166,9 @@ struct ProfileView: View {
 }
 
 #Preview {
-    ProfileView().environmentObject(ViewRouter())
+    let context = PersistenceController.preview.container.viewContext
+    
+    return ProfileView()
+        .environmentObject(ViewRouter())
+        .environment(\.managedObjectContext, context)
 }
