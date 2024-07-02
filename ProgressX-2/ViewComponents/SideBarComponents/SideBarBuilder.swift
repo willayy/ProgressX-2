@@ -23,6 +23,7 @@ struct SideBarBuilder: View {
         NavigationView{
             VStack(alignment: .leading, spacing: 12) {
                 Text("ProgressX")
+                    .foregroundColor(.white)
                     .font(.largeTitle.bold())
                     .padding(.bottom, 10)
                 

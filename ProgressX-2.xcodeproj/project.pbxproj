@@ -40,8 +40,6 @@
 		831F2C272C243381007A7A8A /* BasicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C262C243381007A7A8A /* BasicList.swift */; };
 		831F2C292C247B40007A7A8A /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C282C247B40007A7A8A /* Routine.swift */; };
 		831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */; };
-		831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2D2C24E532007A7A8A /* SessionListItem.swift */; };
-		831F2C302C24E54B007A7A8A /* SetListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C2F2C24E54B007A7A8A /* SetListItem.swift */; };
 		831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */; };
 		831F2C342C287124007A7A8A /* CycleListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C332C287124007A7A8A /* CycleListItem.swift */; };
 		831F2C362C288D38007A7A8A /* EditWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C352C288D38007A7A8A /* EditWeekView.swift */; };
@@ -140,8 +138,6 @@
 		831F2C262C243381007A7A8A /* BasicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicList.swift; sourceTree = "<group>"; };
 		831F2C282C247B40007A7A8A /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateWeekListItem.swift; sourceTree = "<group>"; };
-		831F2C2D2C24E532007A7A8A /* SessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionListItem.swift; sourceTree = "<group>"; };
-		831F2C2F2C24E54B007A7A8A /* SetListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetListItem.swift; sourceTree = "<group>"; };
 		831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModelEnums.swift; sourceTree = "<group>"; };
 		831F2C332C287124007A7A8A /* CycleListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleListItem.swift; sourceTree = "<group>"; };
 		831F2C352C288D38007A7A8A /* EditWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeekView.swift; sourceTree = "<group>"; };
@@ -282,8 +278,6 @@
 				831F2C172C2305F9007A7A8A /* RoutineListItem.swift */,
 				831F2C332C287124007A7A8A /* CycleListItem.swift */,
 				831F2C2A2C24A2F4007A7A8A /* TemplateWeekListItem.swift */,
-				831F2C2D2C24E532007A7A8A /* SessionListItem.swift */,
-				831F2C2F2C24E54B007A7A8A /* SetListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -663,13 +657,11 @@
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				8359F9712C1AE779004BA421 /* Persistence+Convenience-functions.swift in Sources */,
-				831F2C302C24E54B007A7A8A /* SetListItem.swift in Sources */,
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
 				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */,
 				83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */,
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2.swift in Sources */,
-				831F2C2E2C24E532007A7A8A /* SessionListItem.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				831F2C0A2C2195D8007A7A8A /* Cycle+TemplateCycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
