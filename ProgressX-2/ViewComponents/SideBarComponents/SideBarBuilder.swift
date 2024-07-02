@@ -28,6 +28,7 @@ struct SideBarBuilder: View {
                 
                 SideBarButton(.home){
                     showMenu.toggle()
+                    viewRouter.rootView = .HomeView
                 }
                 SideBarButton(.Statistics){
                     showMenu.toggle()
