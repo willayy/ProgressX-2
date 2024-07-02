@@ -18,20 +18,5 @@ extension BodyEntry {
         
     //MARK: Validation
     
-    override public func validateForInsert() throws {
-        try super.validateForInsert()
-        try self.validateProfile()
-    }
-    
-    override public func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try self.validateProfile()
-    }
-    
-    private func validateProfile() throws {
-        if self.profile == nil {
-            throw ValidationNSErrors.bodyEntryProfileIsNil.toNSError()
-        }
-    }
-    
+    // Nothing here
 }

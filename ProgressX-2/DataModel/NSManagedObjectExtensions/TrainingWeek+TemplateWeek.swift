@@ -8,18 +8,36 @@
 import Foundation
 import CoreData
 
-extension TrainingWeek {
+extension TrainingWeek: HasOrderable {
+    
+    // MARK: Extra Properties
+    
+    public func getNextPositionIndex() -> Int64 {
+        let sessions: [Session] = self.sessions?.allObjects as! [Session]
+        let max = sessions.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
     
     // MARK: Validation
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
+        try validatePositionIndexes()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
+        try validatePositionIndexes()
+    }
+    
+    // Validate that children has valid positionIndexes (No duplicates)
+    private func validatePositionIndexes() throws {
+        let sessions: [Session] = self.sessions?.allObjects as! [Session]
+        let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
+        let duplicates = groupedBy.filter { $1.count > 1 }
+        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
     
     private func validateIsComplete() throws {
@@ -46,9 +64,33 @@ extension TrainingWeek {
     }
 }
 
-extension TemplateWeek {
+extension TemplateWeek: HasOrderable {
+    
+    // MARK: Extra Properties
+    
+    public func getNextPositionIndex() -> Int64 {
+        let sessions: [TemplateSet] = self.sessions?.allObjects as! [TemplateSet]
+        let max = sessions.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
     
     // MARK: Validation
     
-    // Nothing here
+    public override func validateForInsert() throws {
+        try super.validateForInsert()
+        try validatePositionIndexes()
+    }
+    
+    public override func validateForUpdate() throws {
+        try super.validateForUpdate()
+        try validatePositionIndexes()
+    }
+    
+    // Validate that children has valid positionIndexes (No duplicates)
+    private func validatePositionIndexes() throws {
+        let sessions: [TemplateSession] = self.sessions?.allObjects as! [TemplateSession]
+        let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
+        let duplicates = groupedBy.filter { $1.count > 1 }
+        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
+    }
 }

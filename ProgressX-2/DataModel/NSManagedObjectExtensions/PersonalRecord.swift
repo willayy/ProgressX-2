@@ -59,7 +59,6 @@ extension PersonalRecord {
     // Overriding update for special constraints
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateExercise()
         try validatePrType()
         try validateQuantity()
     }
@@ -67,7 +66,6 @@ extension PersonalRecord {
     // Overriding insert for special constraints
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateExercise()
         try validatePrType()
         try validateQuantity()
     }
@@ -79,13 +77,6 @@ extension PersonalRecord {
 
         if !isQuantityInteger && isPrRepBased {
             throw ValidationNSErrors.prAndExerciseTypeMismatch.toNSError()
-        }
-    }
-    
-    /* Func that validates the exericse relationship in a PersonalRecord entity */
-    private func validateExercise() throws {
-        if self.exercise == nil {
-            throw ValidationNSErrors.prExerciseIsNil.toNSError()
         }
     }
     

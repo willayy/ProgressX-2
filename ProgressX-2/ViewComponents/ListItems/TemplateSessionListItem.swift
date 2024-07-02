@@ -1,5 +1,5 @@
 //
-//  SetListItem.swift
+//  SessionListItem.swift
 //  ProgressX-2
 //
 //  Created by William Norland on 2024-06-21.
@@ -7,63 +7,37 @@
 
 import SwiftUI
 
-struct SetListItem: View {
+struct TemplateSessionListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedSet: TrainingSet
+    @Binding var selectedSession: Session
     @State var showDeleteAlert: Bool = false
-    @ObservedObject var set: TrainingSet
+    @ObservedObject var session: Session
     
     var body: some View {
-        
-        let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
         
         HStack {
             VStack(alignment: .leading) {
                 
-                Text(set.timePeriodName ?? "")
+                Text(session.timePeriodName ?? "")
                 
-                (Text("Exercise: ")
+                (Text("Sets: ")
                     .fontWeight(.bold)
-                 + Text("\(set.setExerciseName!)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                
-                (Text("Quantity: ")
-                    .fontWeight(.bold)
-                 + Text("\(set.quantityTodoString) \(set.quantityUnit)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                
-                (Text("Load: ")
-                    .fontWeight(.bold)
-                 + Text("\(set.loadTodoString) \(weightUnit)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                
-                (Text("PR set?: ")
-                    .fontWeight(.bold)
-                 + Text("\(String(set.prGeneratingSet))"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                
-                (Text("Progression set?: ")
-                    .fontWeight(.bold)
-                 + Text("\(String(set.progressingSet))"))
+                 + Text("\(session.sets?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         
             }
-            .frame(width: 135, height: 35)
+            .frame(width: 135, height: 20)
             .padding(.vertical, 10)
             
             Spacer()
             
             // MARK: Edit button
             Button(action: {
-                selectedSet = set
-                navPath.append(7)
+                selectedSession = session
+                navPath.append(4)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
@@ -80,9 +54,9 @@ struct SetListItem: View {
                 .alert(isPresented: $showDeleteAlert, content: {
                     Alert(
                         title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete \(set.timePeriodName!)?"),
+                        message: Text("Are you sure you want to delete \(session.timePeriodName!)?"),
                         primaryButton: .destructive(Text("Delete")) {
-                            PersistenceController.delete(viewContext, object: set)
+                            PersistenceController.delete(viewContext, object: session)
                             PersistenceController.save(viewContext)
                         },
                         secondaryButton: .cancel()

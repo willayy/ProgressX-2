@@ -9,29 +9,52 @@ import Foundation
 
 enum ValidationNSErrors: Int {
     
+    // MARK: Custom errors
+    /* -------------------------------------------------------- */
+    // PersonalRecord
     case prAndExerciseTypeMismatch = 9999
-    case prExerciseIsNil = 9998
     case quantityInvalid = 9997
-    case bodyEntryProfileIsNil = 9996
+    
+    // Profile
+    case profileNameIsInvalid = 9998
+    
+    // Exercise
+    case exerciseNameIsInvalid = 9996
+    
+    // Completeable
     case completeWithoutCompletionDate = 9995
+    
+    // Cycle
     case cycleCompleteWithUncompleteWeeks = 9994
     case cycleCompleteWithNoWeeks = 9993
+    
+    // Week
     case weekCompleteWithUncompleteSessions = 9992
     case weekCompleteWithNoSessions = 9991
+    
+    // Session
     case sessionCompleteWithUncompleteSets = 9990
     case sessionCompleteWithNoSets = 9989
-    case setExerciseIsNil = 9988
+    
+    // Set
     case setAndExerciseTypeMismatch = 9987
     case quantityTodoInvalid = 9986
     case quantityDoneInvalid = 9985
-    case invalidPostionIndex = 9983
-    case routineNameIsInvalid = 9982
     
-    var domain: String {
+    // Orderable
+    case invalidPositionIndex = 9983
+    
+    // Routine
+    case routineNameIsInvalid = 9982
+    /* -------------------------------------------------------- */
+    
+    // The Error domain
+    private var domain: String {
         return "CoreDataErrorDomain"
     }
     
-    var userInfo: [String: Any] {
+    // A computed variable that gives a NSError with the correct information
+    private var userInfo: [String: Any] {
         switch self {
         case .weekCompleteWithNoSessions:
             return [NSLocalizedDescriptionKey: "Week can't be complete without any sessions."]
@@ -44,9 +67,6 @@ enum ValidationNSErrors: Int {
             
         case .sessionCompleteWithNoSets:
             return [NSLocalizedDescriptionKey: "Session can't be complete without any sets."]
-            
-        case .setExerciseIsNil:
-            return [NSLocalizedDescriptionKey: "Set cant have relationship .exercise set to nil."]
             
         case .setAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey: "Set.exercise.exerciseType and set.prType have mismatching values."]
@@ -66,23 +86,23 @@ enum ValidationNSErrors: Int {
         case .cycleCompleteWithNoWeeks:
             return [NSLocalizedDescriptionKey: "Cycle cant be complete when it has no weeks."]
             
-        case .bodyEntryProfileIsNil:
-            return [NSLocalizedDescriptionKey: "BodyEntry cant have relationship .profile set to nil."]
-            
         case .quantityInvalid:
             return [NSLocalizedDescriptionKey: "Property .prQuantity on PersonalRecord cant be set to a double value that isnt a valid integer."]
-            
-        case .prExerciseIsNil:
-            return [NSLocalizedDescriptionKey: "Pr cant have relationship .exercise set to nil."]
             
         case .prAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey: "Pr type string does not match .exercise type string."]
             
-        case .invalidPostionIndex:
-            return [NSLocalizedDescriptionKey: "This Completable object contains a positionIndex which is not unique among the children of its parent."]
+        case .invalidPositionIndex:
+            return [NSLocalizedDescriptionKey: "This object contains children with duplicate positionIndexes."]
             
         case .routineNameIsInvalid:
-            return [NSLocalizedDescriptionKey: "This routine has a non unique name."]
+            return [NSLocalizedDescriptionKey: "This Routine has a name that is not unique"]
+            
+        case .profileNameIsInvalid:
+            return [NSLocalizedDescriptionKey: "This Profile has a username that is not unique"]
+            
+        case .exerciseNameIsInvalid:
+            return [NSLocalizedDescriptionKey: "This Exercise has a name that is not unique"]
         }
     }
     

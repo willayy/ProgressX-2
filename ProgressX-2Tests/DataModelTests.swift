@@ -248,6 +248,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -258,8 +264,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -304,6 +310,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -314,8 +326,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -338,6 +350,12 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle.startedOnDate = Date()
+        week.startedOnDate = Date()
+        session.startedOnDate = Date()
+        set.startedOnDate = Date()
         
         // one-to-many relationships
         routine.addToCycles(cycle)
@@ -348,8 +366,8 @@ final class DataModelTests: XCTestCase {
         // one-to-one relationship
         cycle.routine = routine
         week.cycle = cycle
-        session.trainingWeek = week
-        set.trainingSession = session
+        session.week = week
+        set.session = session
         
         set.exercise = exercise
         set.isComplete = false
@@ -364,7 +382,7 @@ final class DataModelTests: XCTestCase {
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
     }
     
-    func test_Completable_Has_Invalid_positionIndex() {
+    func test_Orderable_Has_Invalid_positionIndex() {
         let routine = Routine(context: context!)
         let cycle1 = Cycle(context: context!)
         let cycle2 = Cycle(context: context!)
@@ -373,7 +391,11 @@ final class DataModelTests: XCTestCase {
         cycle1.positionIndex = 2
         cycle2.routine = routine
         cycle2.positionIndex = 3
-        
+        routine.template = TemplateCycle(context: context!)
+        routine.createdOnDate = Date()
+        cycle1.startedOnDate = Date()
+        cycle2.startedOnDate = Date()
+
         routine.addToCycles(cycle1)
         routine.addToCycles(cycle2)
         
@@ -384,6 +406,7 @@ final class DataModelTests: XCTestCase {
         
         // try with invalid (positionIndexes are the same) positionIndexes
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
+        
     }
     
     func test_Routine_Has_Non_Unique_Name() {
@@ -391,6 +414,10 @@ final class DataModelTests: XCTestCase {
         let routine2 = Routine(context: context!)
         routine1.timePeriodName = "A"
         routine2.timePeriodName = "A"
+        routine1.createdOnDate = Date()
+        routine2.createdOnDate = Date()
+        routine1.template = TemplateCycle(context: context!)
+        routine2.template = TemplateCycle(context: context!)
         
         // SHould throw, non unique name
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
@@ -399,6 +426,23 @@ final class DataModelTests: XCTestCase {
         
         // SHould not throw because the names are now uniqure
         XCTAssertNoThrow(try PersistenceController.save_throws(context!))
+    }
+    
+    func test_getPositionIndex() {
+        let routine = Routine(context: context!)
+        routine.timePeriodName = "A"
+        routine.createdOnDate = Date()
+        let template = TemplateCycle(context: context!)
+        routine.template = template
+        
+        XCTAssertEqual(routine.template!.getNextPositionIndex(), 1)
+        
+        let week = TemplateWeek(context: context!)
+        template.addToWeeks(week)
+        week.positionIndex = routine.template!.getNextPositionIndex()
+        
+        XCTAssertEqual(routine.template!.getNextPositionIndex(), 2)
+        
     }
         
 }

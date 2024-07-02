@@ -72,7 +72,6 @@ extension TrainingSet {
     // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateExercise()
         try validatePrType()
         try validateQuantityTodo()
         try validateQuantityDone()
@@ -81,17 +80,9 @@ extension TrainingSet {
     // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
-        try validateExercise()
         try validatePrType()
         try validateQuantityTodo()
         try validateQuantityDone()
-    }
-    
-    // Makes sure that the Set has an Exercise assigned to it.
-    private func validateExercise() throws {
-        if self.exercise == nil {
-            throw ValidationNSErrors.setExerciseIsNil.toNSError()
-        }
     }
     
     // Makes sure that the Set has an Exercise that matches it's own type.
@@ -122,10 +113,10 @@ extension TrainingSet {
             throw ValidationNSErrors.quantityDoneInvalid.toNSError()
         }
     }
-    
 }
 
 extension TemplateSet {
+    
     // MARK: Extra properties
     
     /// Convience method for getting the name of the Exercise.
@@ -170,7 +161,6 @@ extension TemplateSet {
     // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validateExercise()
         try validatePrType()
         try validateQuantityTodo()
     }
@@ -178,16 +168,8 @@ extension TemplateSet {
     // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
-        try validateExercise()
         try validatePrType()
         try validateQuantityTodo()
-    }
-    
-    // Makes sure that the Set has an Exercise assigned to it.
-    private func validateExercise() throws {
-        if self.exercise == nil {
-            throw ValidationNSErrors.setExerciseIsNil.toNSError()
-        }
     }
     
     // Makes sure that the Set has an Exercise that matches it's own type.
@@ -210,5 +192,4 @@ extension TemplateSet {
             throw ValidationNSErrors.quantityTodoInvalid.toNSError()
         }
     }
-    
 }

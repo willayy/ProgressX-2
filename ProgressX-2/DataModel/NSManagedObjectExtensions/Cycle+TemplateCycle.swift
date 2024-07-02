@@ -6,19 +6,38 @@
 //
 
 import Foundation
+import CoreData
 
-extension Cycle {
+extension Cycle: HasOrderable {
+    
+    // MARK: Extra properties
+    
+    func getNextPositionIndex() -> Int64 {
+        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let max = weeks.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
     
     // MARK: Validation
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
+        try validatePositionIndexes()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
+        try validatePositionIndexes()
+    }
+    
+    // Validate that children has valid positionIndexes (No duplicates)
+    private func validatePositionIndexes() throws {
+        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
+        let duplicates = groupedBy.filter { $1.count > 1 }
+        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
     
     private func validateIsComplete() throws {
@@ -46,11 +65,34 @@ extension Cycle {
     }
 }
 
-import Foundation
-
-extension TemplateCycle {
+extension TemplateCycle: HasOrderable {
+    
+    // MARK: Extra properties
+    
+    func getNextPositionIndex() -> Int64 {
+        let weeks: [TemplateWeek] = self.weeks?.allObjects as! [TemplateWeek]
+        let max = weeks.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
     
     // MARK: Validation
     
-    // Nothing here
+    public override func validateForInsert() throws {
+        try super.validateForInsert()
+        try validatePositionIndexes()
+        
+    }
+    
+    public override func validateForUpdate() throws {
+        try super.validateForUpdate()
+        try validatePositionIndexes()
+    }
+    
+    // Validate that children has valid positionIndexes (No duplicates)
+    private func validatePositionIndexes() throws {
+        let weeks: [TemplateWeek] = self.weeks?.allObjects as! [TemplateWeek]
+        let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
+        let duplicates = groupedBy.filter { $1.count > 1 }
+        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
+    }
 }

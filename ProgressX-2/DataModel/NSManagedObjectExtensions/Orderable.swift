@@ -1,0 +1,43 @@
+//
+//  Orderable.swift
+//  ProgressX-2
+//
+//  Created by William Norland on 2024-06-28.
+//
+
+import Foundation
+
+extension Orderable {
+    
+    // MARK: Extra Properties
+    
+    // Nothing here
+    
+    // MARK: Validaiton
+    
+    override public func validateForUpdate() throws {
+        try super.validateForUpdate()
+        // If the positionIndex is changed tell a related object to revalidate
+        let changedValues = changedValues()
+        if changedValues.keys.contains("positionIndex") {
+            try revalidateRelationShip()
+        }
+    }
+    
+    // Revalidates "parent" relationship
+    private func revalidateRelationShip() throws {
+        switch self {
+        case is Cycle:
+            try (self as! Cycle).routine!.validateForUpdate()
+        case is TrainingWeek:
+            try (self as! TrainingWeek).cycle!.validateForUpdate()
+        case is Session:
+            try (self as! Session).week!.validateForUpdate()
+        case is TrainingSet:
+            try (self as! TrainingSet).session!.validateForUpdate()
+        default:
+            break
+        }
+    }
+
+}
