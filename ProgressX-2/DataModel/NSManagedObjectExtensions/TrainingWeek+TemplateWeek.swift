@@ -69,7 +69,7 @@ extension TemplateWeek: HasOrderable {
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
-        let sessions: [TemplateSet] = self.sessions?.allObjects as! [TemplateSet]
+        let sessions: [TemplateSession] = self.sessions?.allObjects as! [TemplateSession]
         let max = sessions.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
