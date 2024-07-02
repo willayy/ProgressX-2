@@ -14,38 +14,48 @@ struct CreateNewTemplateSetView: View {
     @Binding var navPath: [Int]
     
     // The Name of the set (good default is provided)
-    @State var newSetName: String = "Set "
-    @State var newSetNameIsInvalid: Bool = false
-    @State var newSetNameIsInvalidMsg: String = ""
+    @State private var newSetName: String = "Set "
+    @State private var newSetNameIsInvalid: Bool = false
+    @State private var newSetNameIsInvalidMsg: String = ""
     
     // The Description of the set (Optional)
-    @State var newSetDesc: String = ""
-    @State var newSetDescIsInvalid: Bool = false
-    @State var newSetDescIsInvalidMsg: String = ""
+    @State private var newSetDesc: String = ""
+    @State private var newSetDescIsInvalid: Bool = false
+    @State private var newSetDescIsInvalidMsg: String = ""
     
     // The Load of the set
-    @State var setLoad: String = ""
-    @State var setLoadIsInvalid: Bool = false
-    @State var setLoadIsInvalidMsg: String = ""
+    @State private var newSetLoad: String = ""
+    @State private var newSetLoadIsInvalid: Bool = false
+    @State private var newSetLoadIsInvalidMsg: String = ""
     
     // The Quantity of the set
-    @State var setQuantity: String = ""
-    @State var setQuantityIsInvalid: Bool = false
-    @State var setQuantityIsInvalidMsg: String = ""
+    @State private var newSetQuantity: String = ""
+    @State private var newSetQuantityIsInvalid: Bool = false
+    @State private var newSetQuantityIsInvalidMsg: String = ""
     
     // The exercise of the set
-    @State var selectedExercise: Exercise? = nil
-    @State var searchWord: String = ""
+    @State private var selectedExercise: Exercise? = nil
+    @State private var searchWord: String = ""
     
     // Selection of load types
-    @State var selectedLoadType: String = "Select exercise first!"
+    @State private var selectedLoadType: String = "Select exercise first!"
     
     // Selection of quantity types
-    @State var selectedQuantityType: String = "Select exercise first!"
+    @State private var selectedQuantityType: String = "Select exercise first!"
+    
+    // State that tracks if an exercises has been selected
+    @State private var exerciseHasBeenSelected: Bool = false
+    
+    // State that decides if the view should navigate to the add thresholds view
+    @State private var showAddThresholds: Bool = false
     
     @Binding var selectedTemplateSession: TemplateSession?
     
     var body: some View {
+        
+        let nextPositionIndex: Int64 = {
+            return selectedTemplateSession!.getNextPositionIndex()
+        }()
         
         // Computed constants for load type selections
         let loadTypeSelections: [String] = {
@@ -127,7 +137,6 @@ struct CreateNewTemplateSetView: View {
                     errorMessage: $newSetNameIsInvalidMsg
                 )
                 .onAppear(perform: {
-                    let nextPositionIndex = selectedTemplateSession!.getNextPositionIndex()
                     newSetName = newSetName + String(nextPositionIndex)
                 })
                 .padding(.bottom, 5)
@@ -155,139 +164,297 @@ struct CreateNewTemplateSetView: View {
                     // Set types to some inital value when exercise is selected
                     selectedLoadType = "Numerical"
                     selectedQuantityType = "Numerical"
-                }
-                
-                BoldSubHeadline(text: "Choose load type")
-                    .padding(.top, 20)
-                    .padding(.bottom, 5)
-                
-                if selectedLoadType == "Numerical" {
-                    LightSubHeadline(text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs")
-                        .padding(.horizontal, 20)
-                } else {
-                    LightSubHeadline(text: "Percentage load type means that the load will be a percentage value like, 90% of my current 1RM PR on this exercise or 110% of my current bodyweight")
-                        .padding(.horizontal, 20)
-                }
-                
-                // MARK: Menu for selecting load type
-                GroupBox {
-                    DisclosureGroup(selectedLoadType) {
-                        ForEach(loadTypeSelections, id: \.self) { loadType in
-                            Button {
-                                selectedLoadType = loadType
-                            } label: {
-                                Text(loadType)
-                            }
-                        }
+                    withAnimation {
+                        exerciseHasBeenSelected = true
                     }
                 }
-                .padding(.horizontal, 40)
-        
-                
-                BoldSubHeadline(text: "Choose quantity type")
-                    .padding(.top, 20)
-                    .padding(.bottom, 5)
-                
-                if selectedQuantityType == "Numerical" {
-                    LightSubHeadline(text: "Numerical quantity type means that the quantity will be a numerical value like 10 seconds or 5 reps.")
-                        .padding(.horizontal, 20)
-                } else {
-                    LightSubHeadline(text: "Percentage quantity type means that the quantity will be a percentage of the current AMRAP/TimeMax PR")
-                        .padding(.horizontal, 20)
-                }
-                
-                // MARK: Menu for selecting quantity type
-                GroupBox {
-                    DisclosureGroup(selectedQuantityType) {
-                        ForEach(quantityTypeSelections, id: \.self) { quantityType in
-                            Button {
-                                selectedLoadType = quantityType
-                            } label: {
-                                Text(quantityType)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 40)
-                
-                BoldSubHeadline(text: "Choose quantity and load")
-                    .padding(.top, 20)
-                    .padding(.bottom, 5)
-                
-                // MARK: Load inputfield
-                HStack {
-                    InputDecimalNumberField(
-                        placeHolder: loadPlaceholder,
-                        numberText: $setLoad,
-                        markAsWrong: $setLoadIsInvalid,
-                        width: 0.6,
-                        errorMessage: $setLoadIsInvalidMsg
-                    )
+            
+                if exerciseHasBeenSelected {
                     
-                    if loadPlaceholder == "Percentage" {
-                        Text("%")
+                    BoldSubHeadline(text: "Choose load type")
+                        .padding(.top, 20)
+                        .padding(.bottom, 5)
+                    
+                    if selectedLoadType == "Numerical" {
+                        LightSubHeadline(text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs")
+                            .padding(.horizontal, 20)
+                    } else {
+                        LightSubHeadline(text: "Percentage load type means that the load will be a percentage value like, 90% of my current 1RM PR on this exercise or 110% of my current bodyweight")
+                            .padding(.horizontal, 20)
                     }
-                }
-                
-                // MARK: Quantity
-                /* Shared quantity input field variable but with different
-                 InputFields depending on the exercise type*/
-                if selectedExercise?.exerciseType == "reps" {
-                    HStack {
-                        InputIntegerNumberField(
-                            placeHolder: quantityPlaceholder,
-                            numberText: $setQuantity,
-                            markAsWrong: $setQuantityIsInvalid,
-                            width: 0.6,
-                            errorMessage: $setQuantityIsInvalidMsg
-                        )
-                        .padding(.top, 5)
-                        if selectedQuantityType == "Percentage" {
-                            Text("%")
+                    
+                    // MARK: Menu for selecting load type
+                    GroupBox {
+                        DisclosureGroup(selectedLoadType) {
+                            ForEach(loadTypeSelections, id: \.self) { loadType in
+                                Button {
+                                    selectedLoadType = loadType
+                                } label: {
+                                    Text(loadType)
+                                }
+                                .padding(2)
+                            }
                         }
                     }
-                } else {
+                    .padding(.horizontal, 40)
+                    
+                    BoldSubHeadline(text: "Choose quantity type")
+                        .padding(.top, 20)
+                        .padding(.bottom, 5)
+                    
+                    if selectedQuantityType == "Numerical" {
+                        LightSubHeadline(text: "Numerical quantity type means that the quantity will be a numerical value like 10 seconds or 5 reps.")
+                            .padding(.horizontal, 20)
+                    } else {
+                        LightSubHeadline(text: "Percentage quantity type means that the quantity will be a percentage of the current AMRAP/TimeMax PR")
+                            .padding(.horizontal, 20)
+                    }
+                    
+                    // MARK: Menu for selecting quantity type
+                    GroupBox {
+                        DisclosureGroup(selectedQuantityType) {
+                            ForEach(quantityTypeSelections, id: \.self) { quantityType in
+                                Button {
+                                    selectedLoadType = quantityType
+                                } label: {
+                                    Text(quantityType)
+                                }
+                                .padding(2)
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 40)
+                    
+                    BoldSubHeadline(text: "Choose quantity and load")
+                        .padding(.top, 20)
+                        .padding(.bottom, 5)
+                    
+                    // MARK: Load inputfield
                     HStack {
                         InputDecimalNumberField(
-                            placeHolder: quantityPlaceholder,
-                            numberText: $setQuantity,
-                            markAsWrong: $setQuantityIsInvalid,
+                            placeHolder: loadPlaceholder,
+                            numberText: $newSetLoad,
+                            markAsWrong: $newSetLoadIsInvalid,
                             width: 0.6,
-                            errorMessage: $setQuantityIsInvalidMsg
+                            errorMessage: $newSetLoadIsInvalidMsg
                         )
-                        .padding(.top, 5)
-                        if selectedQuantityType == "Percentage" {
+                        
+                        if loadPlaceholder == "Percentage" {
                             Text("%")
                         }
                     }
-                }
-                
-                Button {
-                    if validateInput() {
-                        navPath.append(8)
-                    }
-                } label: {
-                    Text("Create set")
-                        .frame(height: 40)
-                    Image(systemName: "plus")
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
                     
+                    // MARK: Quantity
+                    /* Shared quantity input field variable but with different
+                     InputFields depending on the exercise type*/
+                    if selectedExercise?.exerciseType == "reps" {
+                        HStack {
+                            InputIntegerNumberField(
+                                placeHolder: quantityPlaceholder,
+                                numberText: $newSetQuantity,
+                                markAsWrong: $newSetQuantityIsInvalid,
+                                width: 0.6,
+                                errorMessage: $newSetQuantityIsInvalidMsg
+                            )
+                            .padding(.top, 5)
+                            if selectedQuantityType == "Percentage" {
+                                Text("%")
+                            }
+                        }
+                    } else {
+                        HStack {
+                            InputDecimalNumberField(
+                                placeHolder: quantityPlaceholder,
+                                numberText: $newSetQuantity,
+                                markAsWrong: $newSetQuantityIsInvalid,
+                                width: 0.6,
+                                errorMessage: $newSetQuantityIsInvalidMsg
+                            )
+                            .padding(.top, 5)
+                            if selectedQuantityType == "Percentage" {
+                                Text("%")
+                            }
+                        }
+                    }
+                    
+                    Button {
+                        if validateInput() {
+                            
+                            /* Insane computed constant for the input load to the NSManagedObject entity
+                             very ugly and i dont want to see it again */
+                            let inputLoad: Double = {
+                                if selectedLoadType != "Numerical" {
+                                    let lastLoad: Double?
+                                    
+                                    switch selectedLoadType {
+                                        
+                                    case "Percentage of current 1RM PR":
+                                        let latestPr = PersistenceController.getLatestPersonalRecord(
+                                            viewContext,
+                                            exercise: selectedExercise!,
+                                            prType: "onerepmax"
+                                        )
+                                        lastLoad = latestPr?.weightLoad
+                                        
+                                    case "Percentage of current TimeMax PR":
+                                        let latestPr = PersistenceController.getLatestPersonalRecord(
+                                            viewContext,
+                                            exercise: selectedExercise!,
+                                            prType: "timemax"
+                                        )
+                                        lastLoad = latestPr?.weightLoad
+                                        
+                                    case "Percentage of current AMRAP PR":
+                                        let latestPr = PersistenceController.getLatestPersonalRecord(
+                                            viewContext,
+                                            exercise: selectedExercise!,
+                                            prType: "maxreps"
+                                        )
+                                        lastLoad = latestPr?.weightLoad
+                                        
+                                    case "Percentage of current body weight":
+                                        let latestBw = PersistenceController.getLatestBodyEntry(viewContext)
+                                        lastLoad = latestBw?.bodyWeight
+                                        
+                                    default:
+                                        lastLoad = 0
+                                    }
+                                    
+                                    let fraction = Double(newSetLoad)! / 100
+                                    return fraction * (lastLoad ?? 0)
+                                } else {
+                                    return Double(newSetLoad)!
+                                }
+                            }()
+                            
+                            /* Insane computed constant for the input quantity to the NSManagedObject entity
+                             very ugly and i dont want to see it again */
+                            let inputQuantity: Double = {
+                                if selectedQuantityType != "Numerical" {
+                                    let lastQuantity: Double?
+                                    
+                                    switch selectedQuantityType {
+                                        
+                                    case "Percentage of current TimeMax PR":
+                                        let latestPr = PersistenceController.getLatestPersonalRecord(
+                                            viewContext,
+                                            exercise: selectedExercise!,
+                                            prType: "timemax"
+                                        )
+                                        lastQuantity = latestPr?.prQuantity
+                                        
+                                    case "Percentage of current AMRAP PR":
+                                        let latestPr = PersistenceController.getLatestPersonalRecord(
+                                            viewContext,
+                                            exercise: selectedExercise!,
+                                            prType: "maxreps"
+                                        )
+                                        lastQuantity = latestPr?.prQuantity
+                                        
+                                    default:
+                                        lastQuantity = 0
+                                    }
+                                    
+                                    let fraction = Double(newSetQuantity)! / 100
+                                    return fraction * (lastQuantity ?? 0)
+                                } else {
+                                    return Double(newSetQuantity)!
+                                }
+                            }()
+                            
+                            _ = PersistenceController.createTemplateSet(
+                                viewContext,
+                                name: newSetName,
+                                templateSession: selectedTemplateSession!,
+                                positionIndex: nextPositionIndex,
+                                exercise: selectedExercise!,
+                                loadType: typeMap[selectedLoadType]!,
+                                load: inputLoad,
+                                quantityType: typeMap[selectedQuantityType]!,
+                                quantity: inputQuantity
+                            )
+                            
+                            #warning("TODO: Try if this shit even works")
+                            
+                            PersistenceController.save(viewContext)
+                            showAddThresholds = true
+                            
+                            navPath.append(8)
+                        }
+                    } label: {
+                        Text("Create set")
+                            .frame(height: 40)
+                        Image(systemName: "plus")
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.top, 20)
+                    .alert(isPresented: $showAddThresholds, content: {
+                        Alert(
+                            title: Text("Add Thresholds?"),
+                            message: Text("Do you want to add some thresholds to this set?"),
+                            primaryButton: .default(Text("Yes"), action: {
+                                navPath.append(8)
+                            }),
+                            secondaryButton: .cancel(Text("No"))
+                        )
+                    })
                 }
             }
         }
     }
-
+    
     private func validateInput() -> Bool {
-        return false
-        //let loadFieldValidator = Dec
+        let exerciseType = selectedExercise!.exerciseType
+        let quantityValidator: InputFieldValidator
+        if exerciseType == "reps" { quantityValidator = IntFieldValidator()}
+        else { quantityValidator = DoubleFieldValidator()}
+        let loadValidator = DoubleFieldValidator()
+        let nameValidator = StringFieldValidator()
+        let descValidtor = StringFieldValidator(emptyAllowed: true)
+        
+        var valid = 0
+        
+        valid += loadValidator.valideField(
+            inputVar: newSetLoad,
+            errorMessage: $newSetLoadIsInvalidMsg,
+            fieldInvalid: $newSetLoadIsInvalid
+        )
+        
+        valid += quantityValidator.valideField(
+            inputVar: newSetQuantity,
+            errorMessage: $newSetQuantityIsInvalidMsg,
+            fieldInvalid: $newSetQuantityIsInvalid
+        )
+        
+        valid += nameValidator.valideField(
+            inputVar: newSetName,
+            errorMessage: $newSetNameIsInvalidMsg,
+            fieldInvalid: $newSetNameIsInvalid
+        )
+        
+        valid += descValidtor.valideField(
+            inputVar: newSetDesc,
+            errorMessage: $newSetDescIsInvalidMsg,
+            fieldInvalid: $newSetDescIsInvalid
+        )
+        
+        return valid == 0
+    }
+    
+    /* This dictionary maps the entered value from the view to the correct core data property value */
+    let typeMap: [String : String] = [
+        "Numerical" : "numerical",
+        "Percentage of current 1RM PR" : "maxperc",
+        "Percentage of current TimeMax PR" : "maxperc",
+        "Percentage of current AMRAP PR" : "maxperc",
+        "Percentage of current body weight" : "bwperc"
+    ]
+    
 }
 
 #Preview {
     
     let context = PersistenceController.preview.container.viewContext
-    
     let fetchReqeust: NSFetchRequest = TemplateSession.fetchRequest()
     let templateSessions = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
     

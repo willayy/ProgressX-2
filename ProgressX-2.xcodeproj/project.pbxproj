@@ -83,6 +83,7 @@
 		83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D685052C32DDF700FA78C6 /* SetExerciseSelectionList.swift */; };
 		83D685082C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D685072C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift */; };
 		83D6850B2C33309800FA78C6 /* ThresholdListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */; };
+		83D6850D2C3436B200FA78C6 /* AddThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6850C2C3436B200FA78C6 /* AddThresholdsView.swift */; };
 		83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */; };
 		83EE6EE62C1F351500FF17C1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */; };
 		83F110B92C1CC9600068953B /* CreateNewProfile4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4.swift */; };
@@ -190,6 +191,7 @@
 		83D685052C32DDF700FA78C6 /* SetExerciseSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetExerciseSelectionList.swift; sourceTree = "<group>"; };
 		83D685072C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedTemplateSetView.swift; sourceTree = "<group>"; };
 		83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdListItem.swift; sourceTree = "<group>"; };
+		83D6850C2C3436B200FA78C6 /* AddThresholdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddThresholdsView.swift; sourceTree = "<group>"; };
 		83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLaunchScreen.swift; sourceTree = "<group>"; };
 		83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		83F110B82C1CC9600068953B /* CreateNewProfile4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4.swift; sourceTree = "<group>"; };
@@ -304,12 +306,13 @@
 			isa = PBXGroup;
 			children = (
 				831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */,
-				831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */,
 				831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */,
+				831F2C192C230C07007A7A8A /* CreateNewRoutineView.swift */,
 				831F2C1B2C23132F007A7A8A /* EditRoutineView.swift */,
 				831F2C352C288D38007A7A8A /* EditWeekView.swift */,
 				83D684FF2C32A24E00FA78C6 /* EditSessionView.swift */,
 				83D685032C32AEA900FA78C6 /* CreateNewTemplateSetView.swift */,
+				83D6850C2C3436B200FA78C6 /* AddThresholdsView.swift */,
 			);
 			path = RoutineLibraryViews;
 			sourceTree = "<group>";
@@ -672,6 +675,7 @@
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
+				83D6850D2C3436B200FA78C6 /* AddThresholdsView.swift in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
 				831F2C082C21938E007A7A8A /* TrainingWeek+TemplateWeek.swift in Sources */,
 				83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */,

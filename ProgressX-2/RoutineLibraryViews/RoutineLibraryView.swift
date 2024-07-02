@@ -10,6 +10,7 @@ import SwiftUI
 struct RoutineLibraryView: View {
     
     @EnvironmentObject private var viewRouter: ViewRouter
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
@@ -98,48 +99,72 @@ struct RoutineLibraryView: View {
                 // If you want to add more viewas add to this group of if statements.
                 .navigationDestination(for: Int.self) { selection in
                     if selection == 1 {
+                        
                         // MARK: Create new routine
                         CreateNewRoutineView(
                             navPath: $navPath,
                             selectedRoutine: $selectedRoutine
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     } else if selection == 2 {
+                        
                         // MARK: Edit routine
                         EditRoutineView(
                             navPath: $navPath,
                             selectedRoutine: $selectedRoutine,
                             selectedTemplateCycle: $selectedTemplateCycle,
                             selectedTemplateWeek: $selectedTemplateWeek
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     } else if selection == 3 {
+                        
                         // MARK: Routine statistic
                         RoutineStatisticsView()
+                        
                     } else if selection == 4 {
+                        
                         // MARK: Edit week
                         EditWeekView(
                             navPath: $navPath,
                             selectedTemplateWeek: $selectedTemplateWeek,
                             selectedTemplateSession: $selectedTemplateSession
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     } else if selection == 5 {
+                        
                         // MARK: Edit session
                         EditSessionView(
                             navPath: $navPath,
                             selectedTemplateSet: $selectedTemplateSet,
                             selectedTemplateSession: $selectedTemplateSession
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     } else if selection == 6 {
+                        
                         // MARK: Edit set
                         #warning("TODO: Implemented edit set")
+                        
                     } else if selection == 7 {
+                        
                         // MARK: Create new set
                         CreateNewTemplateSetView(
                             navPath: $navPath, 
                             selectedTemplateSession: $selectedTemplateSession
                         )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     } else if selection == 8 {
+                        
                         // MARK: Add Thresholds
-                        #warning("TODO: Implement add threhsholds")
+                        AddThresholdsView(
+                            selectedTemplateSet: $selectedTemplateSet
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        
                     }
                 }
             }

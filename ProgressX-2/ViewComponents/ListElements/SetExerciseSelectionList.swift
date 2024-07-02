@@ -50,19 +50,17 @@ struct SetExerciseSelectionList: View {
                         .cornerRadius(20)
                         .frame(height: 2)
                 }
-                DisclosureGroup("Exercises") {
+                DisclosureGroup(selectedExercise?.exerciseName ?? "Not selected") {
                     ForEach(searchedCollection) { exercise in
                         Button {
                             selectedExercise = exercise
                         } label: {
                             Text(exercise.exerciseName!)
                                 .frame(width: 250)
-                        }       
+                        }
                         .padding(2)
-                        .foregroundStyle(.gray)
                     }
                 }
-                .foregroundStyle(.blue)
             }
             .padding(.horizontal, 40)
         }

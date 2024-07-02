@@ -18,8 +18,6 @@ struct TemplateSetListItem: View {
     
     var body: some View {
         
-        let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
-        
         HStack {
             VStack(alignment: .leading) {
                 
@@ -39,7 +37,7 @@ struct TemplateSetListItem: View {
                 
                 (Text("Load: ")
                     .fontWeight(.bold)
-                 + Text("\(set.loadTodoString) \(weightUnit)"))
+                 + Text("\(set.loadTodoString) \(set.loadUnit)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 

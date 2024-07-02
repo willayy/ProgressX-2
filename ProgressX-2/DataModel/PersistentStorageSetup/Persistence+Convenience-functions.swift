@@ -119,6 +119,34 @@ extension PersistenceController {
         else {return profile!.isMetric ? "cm" : "ft"}
     }
     
+    /// Staticly get the latest PR of a given exercise.
+    /// - Parameters:
+    ///   - context: A NSManagedObjectContext from a peristent container.
+    ///   - exercise: An NSManagedObject subclass Exercise object.
+    /// - Returns: The latest achieved PR of an Exercise.
+    public static func getLatestPersonalRecord(_ context: NSManagedObjectContext, exercise: Exercise, prType: String) -> PersonalRecord? {
+        let fetchRequest: NSFetchRequest<PersonalRecord> = PersonalRecord.fetchRequest()
+        fetchRequest.predicate = NSCompoundPredicate(
+            andPredicateWithSubpredicates: [
+                NSPredicate(format: "exercise == %@", exercise),
+                NSPredicate(format: "prType == %@", prType)
+            ]
+        )
+        let fetchResult = fetch(context, fetchRequest: fetchRequest)
+        let latest = fetchResult.max(by: { $0.achievedOnDate! < $1.achievedOnDate! })
+        return latest
+    }
+    
+    /// Staticly get the latest BodyEntry.
+    /// - Parameter context: A NSManagedObjectContext from a peristent container.
+    /// - Returns: The latest achieved BodyEntry
+    public static func getLatestBodyEntry(_ context: NSManagedObjectContext) -> BodyEntry? {
+        let fetchRequest: NSFetchRequest<BodyEntry> = BodyEntry.fetchRequest()
+        let fetchResult = fetch(context, fetchRequest: fetchRequest)
+        let latest = fetchResult.max(by: { $0.achievedOnDate! < $1.achievedOnDate! })
+        return latest
+    }
+    
     public static func createExercise(_ context: NSManagedObjectContext, name: String, desc: String, type: String) -> Exercise {
         let exercise: Exercise = Exercise(context: context)
         exercise.exerciseName = name
@@ -161,11 +189,16 @@ extension PersistenceController {
         return session
     }
     
-    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise) -> TemplateSet {
+    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise, loadType: String, load: Double, quantityType: String, quantity: Double) -> TemplateSet {
         let set = TemplateSet(context: context)
         set.positionIndex = positionIndex
         set.timePeriodName = name
         set.session = templateSession
+        set.exercise = exercise
+        set.quantityType = quantityType
+        set.quantityTodo = quantity
+        set.loadType = loadType
+        set.loadTodo = load
         return set
     }
     
