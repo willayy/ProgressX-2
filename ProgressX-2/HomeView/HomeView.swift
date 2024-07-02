@@ -61,61 +61,6 @@ struct HomeView: View {
                         }
                     }.tag(0)
                     
-                    NavigationStack{
-                        ScrollView{
-                            VStack{
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                            }
-                            .toolbar(.hidden, for: .tabBar)
-                            .foregroundColor(Color(UIColor.lightGray))
-                            .navigationTitle("Routines")
-                            .toolbar {
-                                ToolbarItem(placement: .topBarLeading) {
-                                    Button(action: { showMenu.toggle()}, label: {
-                                        Image(systemName: showMenu ? "xmark" : "line.3.horizontal")
-                                            .foregroundColor(Color.primary)
-                                            .contentTransition(.symbolEffect)
-                                    })
-                                }
-                            }
-                        }
-                    }.tag(2)
-                    
-                    NavigationStack{
-                        ScrollView{
-                            VStack{
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                            }
-                            .toolbar(.hidden, for: .tabBar)
-                            .foregroundColor(Color(UIColor.lightGray))
-                            .navigationTitle("Exercises")
-                            .toolbar {
-                                ToolbarItem(placement: .topBarLeading) {
-                                    Button(action: { showMenu.toggle()}, label: {
-                                        Image(systemName: showMenu ? "xmark" : "line.3.horizontal")
-                                            .foregroundColor(Color.primary)
-                                            .contentTransition(.symbolEffect)
-                                    })
-                                }
-                            }
-                        }
-                    }.tag(3)
-                
-                    
                 }
             } menuView: { safeArea in
                 SideBarMenuView(safeArea)

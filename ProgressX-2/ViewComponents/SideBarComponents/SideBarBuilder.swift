@@ -31,7 +31,8 @@ struct SideBarBuilder: View {
                     showMenu.toggle()
                     viewRouter.rootView = .HomeView
                 }
-                SideBarButton(.Statistics){
+                
+                SideBarButton(.Start_workout){
                     showMenu.toggle()
                 }
                 
@@ -89,7 +90,7 @@ struct SideBarBuilder: View {
         //Customise the buttons in the bar button menu
         enum Tab: String, CaseIterable {
             case home = "house.fill"
-            case Statistics = "chart.xyaxis.line"
+            case Start_workout = "figure.run"
             case Routines = "rectangle.stack"
             case Exercises = "dumbbell"
             case Profile = "person.crop.circle"
@@ -97,7 +98,7 @@ struct SideBarBuilder: View {
             var title: String {
                 switch self {
                 case .home: return "Home"
-                case .Statistics: return "Statistics"
+                case .Start_workout: return "Start workout"
                 case .Routines: return "Routines"
                 case .Exercises: return "Exercises"
                 case .Profile: return "Profile"
