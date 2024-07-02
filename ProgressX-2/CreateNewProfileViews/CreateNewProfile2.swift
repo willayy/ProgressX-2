@@ -62,7 +62,7 @@ struct CreateNewProfile2: View {
     }
     
     private func goToHomeView() {
-        viewRouter.rootView = "HomeView"
+        viewRouter.rootView = .HomeView
     }
     
 }

@@ -49,7 +49,7 @@ struct DoubleChart: View {
         
         let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
         // Infer the quantity unit from the personal records, if not possible set to unknown.
-        let quantityUnit = personalRecordResults.first?.quantityUnitString() ?? "unknown"
+        let quantityUnit = personalRecordResults.first?.quantityUnitString ?? "unknown"
         
         (Text(set)
             .font(.subheadline)

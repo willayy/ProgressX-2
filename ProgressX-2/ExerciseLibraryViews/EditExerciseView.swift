@@ -42,18 +42,21 @@ struct EditExerciseView: View {
                     if noChangeAlert {
                         SubmitAlert(message: "No changes to Exercise", color: .blue, showAlertState: $noChangeAlert)
                     }
+    
+                    BoldSubHeadline(text: "Description: ")
+                        .padding(.top, 10)
                     
-                    (Text("Description: ")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                     + Text("\(exercise!.exerciseDesc!)")
-                        .fontWeight(.light)
-                        .foregroundColor(.black))
-                    .padding(.horizontal, 25)
-                        .multilineTextAlignment(.center)
-                        .minimumScaleFactor(0.5)
-                        .padding(.bottom, 20)
+                    // if description is empty show a red label instead
+                    if exercise!.exerciseDesc!.isEmpty {
+                        Text("No description.")
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                            .foregroundStyle(.red)
+                            .padding(.bottom, 20)
+                    } else {
+                        LightSubHeadline(text: exercise!.exerciseDesc!)
+                            .padding(.bottom, 20)
+                    }
                     
                     InputShortTextField(
                         placeHolder: "New exercise name",
@@ -109,25 +112,10 @@ struct EditExerciseView: View {
         
     private func validateInput() -> Bool {
         var valid: Int = 0
-        
-        // Special case for already taken names
-        valid += {
-            if (exercises.contains { $0.exerciseName == newName }) {
-                withAnimation {
-                    newNameIsInvalid = true
-                    newNameIsInvalidMsg = "This Exercise name is already taken!"
-                }
-                return 1
-            } else {
-                newNameIsInvalid = false
-                newNameIsInvalidMsg = ""
-                return 0
-            }
-        }()
-        
-        let stringFieldValidator = StringFieldValidator(emptyAllowed: true)
-        valid += stringFieldValidator.valideField(inputVar: newName, errorMessage: $newNameIsInvalidMsg, fieldInvalid: $newNameIsInvalid)
-        valid += stringFieldValidator.valideField(inputVar: newDesc, errorMessage: $newDescIsInvalidMsg, fieldInvalid: $newDescIsInvalid)
+        let exerciseNameValidator = StringFieldValidator(emptyAllowed: true, duplicatesAllowed: false, checkStrings: exercises.map { $0.exerciseName! })
+        let exerciseDescValidator = StringFieldValidator(emptyAllowed: true)
+        valid += exerciseNameValidator.valideField(inputVar: newName, errorMessage: $newNameIsInvalidMsg, fieldInvalid: $newNameIsInvalid)
+        valid += exerciseDescValidator.valideField(inputVar: newDesc, errorMessage: $newDescIsInvalidMsg, fieldInvalid: $newDescIsInvalid)
         
         return valid == 0
     }

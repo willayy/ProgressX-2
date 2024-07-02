@@ -14,12 +14,13 @@ struct BoldTitle: View {
     
     var body: some View {
         Text(text)
+            .foregroundColor(Color("textColor"))
             .font(.title)
             .fontWeight(.bold)
             .foregroundColor(.black)
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.5)
-            .padding()
+            
     }
 }
 

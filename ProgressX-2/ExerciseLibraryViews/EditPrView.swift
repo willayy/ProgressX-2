@@ -51,7 +51,7 @@ struct EditPrView: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                     + Text(editingPr!.typeString())
+                     + Text(editingPr!.typeString)
                         .fontWeight(.light)
                         .foregroundColor(.black))
                     .multilineTextAlignment(.center)
@@ -61,7 +61,7 @@ struct EditPrView: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                     + Text("\(editingPr!.dateString()!)")
+                     + Text("\(editingPr!.dateString!)")
                         .fontWeight(.light)
                         .foregroundColor(.black))
                     .multilineTextAlignment(.center)
@@ -71,7 +71,7 @@ struct EditPrView: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                     + Text("\(editingPr!.loadString()) \(weightUnit)")
+                     + Text("\(editingPr!.loadString) \(weightUnit)")
                         .fontWeight(.light)
                         .foregroundColor(.black))
                     .multilineTextAlignment(.center)
@@ -81,7 +81,7 @@ struct EditPrView: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                     + Text("\(editingPr!.quantityString()) \(editingPr!.quantityUnitString())")
+                     + Text("\(editingPr!.quantityString) \(editingPr!.quantityUnitString)")
                         .fontWeight(.light)
                         .foregroundColor(.black))
                     .multilineTextAlignment(.center)
@@ -189,7 +189,7 @@ struct EditPrView: View {
     
     @State var exercise: Exercise? = exerciseResults.first
     
-    @State var pr: PersonalRecord? = exercise?.personalRecords?.array.first as? PersonalRecord
+    @State var pr: PersonalRecord? = exercise?.personalRecords?.allObjects.first as? PersonalRecord
     
     return EditPrView(editingPr: $pr, exercise: $exercise)
     .environment(\.managedObjectContext, context)
