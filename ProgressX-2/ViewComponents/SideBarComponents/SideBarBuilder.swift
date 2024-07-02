@@ -36,8 +36,10 @@ struct SideBarBuilder: View {
                 }
                 
                 SideBarButton(.Routines){
+                    viewRouter.rootView = .RoutineLibraryView
                     showMenu.toggle()
                 }
+                
                 
                 SideBarButton(.Exercises){
                     showMenu.toggle()

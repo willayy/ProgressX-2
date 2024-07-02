@@ -13,6 +13,7 @@ struct RoutineListItem: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
+    @Binding var selectedTemplateCycle: TemplateCycle?
     @State private var showDeleteAlert: Bool = false
     @ObservedObject var routine: Routine
     
@@ -23,6 +24,12 @@ struct RoutineListItem: View {
             VStack(alignment: .leading) {
                 
                 Text(routine.timePeriodName ?? "")
+                
+                (Text("Created: ")
+                    .fontWeight(.bold)
+                 + Text("\(routine.creationDateString!)"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
                 
                 (Text("Completed cycles: ")
                     .fontWeight(.bold)
@@ -39,6 +46,7 @@ struct RoutineListItem: View {
             // MARK: Edit button
             Button(action: {
                 selectedRoutine = routine
+                selectedTemplateCycle = routine.template
                 navPath.append(2)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
@@ -48,6 +56,7 @@ struct RoutineListItem: View {
             // MARK: Statistics button
             Button(action: {
                 selectedRoutine = routine
+                selectedTemplateCycle = routine.template
                 navPath.append(3)
             }) { Image(systemName: "chart.xyaxis.line") }
                 .frame(width: 20)

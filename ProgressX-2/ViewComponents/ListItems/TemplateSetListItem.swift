@@ -11,9 +11,10 @@ struct TemplateSetListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedSet: TrainingSet
-    @State var showDeleteAlert: Bool = false
-    @ObservedObject var set: TrainingSet
+    @Binding var selectedTemplateSet: TemplateSet?
+    @State private var showDeleteAlert: Bool = false
+    @State private var showMagnifiedView: Bool = false
+    @ObservedObject var set: TemplateSet
     
     var body: some View {
         
@@ -42,28 +43,35 @@ struct TemplateSetListItem: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("PR set?: ")
+                (Text("Thresholds: ")
                     .fontWeight(.bold)
-                 + Text("\(String(set.prGeneratingSet))"))
+                 + Text("\(set.thresholds?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Progression set?: ")
-                    .fontWeight(.bold)
-                 + Text("\(String(set.progressingSet))"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-        
             }
-            .frame(width: 135, height: 35)
+            .frame(width: 155, height: 45)
             .padding(.vertical, 10)
+            .sheet(isPresented: $showMagnifiedView) {
+                MagnifiedTemplateSetView(set: set)
+                    .presentationDetents([.fraction(0.3)])
+                    .environment(\.managedObjectContext, viewContext)
+            }
             
             Spacer()
             
+            // MARK: Magnify button
+            Button(action: {
+                showMagnifiedView = true
+            }) { Image(systemName: "plus.magnifyingglass") }
+                .frame(width: 20)
+                .padding(.horizontal, 10)
+                .buttonStyle(BorderlessButtonStyle())
+            
             // MARK: Edit button
             Button(action: {
-                selectedSet = set
-                navPath.append(7)
+                selectedTemplateSet = set
+                navPath.append(6)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)

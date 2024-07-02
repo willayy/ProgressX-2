@@ -46,7 +46,9 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
 
 #Preview {
     
-    @Environment(\.managedObjectContext) var viewContext
+    let context = PersistenceController.preview.container.viewContext
+    
+    // Does not really work as intended here because @FetchRequest wrapper does not work in Preview context.
     
     @FetchRequest(
         entity: Exercise.entity(),
@@ -72,6 +74,6 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
                 selectedExercise: $selectedExercise,
                 exercise: exercise
             )
-            .environment(\.managedObjectContext, viewContext)
+            .environment(\.managedObjectContext, context)
         }
 }

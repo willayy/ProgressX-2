@@ -15,8 +15,8 @@ struct CreateNewRoutineView: View {
     
     @FetchRequest(
         entity: Routine.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
-    ) var allRoutines: FetchedResults<Routine>
+        sortDescriptors: []
+    ) var routines: FetchedResults<Routine>
     
     @State private var newRoutineName: String = ""
     @State private var newRoutineNameIsInvalid: Bool = false
@@ -30,7 +30,7 @@ struct CreateNewRoutineView: View {
         ScrollView {
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                 
-                BoldTitle(text: "Create new Routine")
+                BoldTitle(text: "Create new routine")
                     .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Start by giving your new routine a name and optionally a description.")
@@ -60,6 +60,11 @@ struct CreateNewRoutineView: View {
                         let newRoutine = Routine(context: viewContext)
                         newRoutine.timePeriodName = newRoutineName
                         newRoutine.timePeriodDescription = newRoutineDesc
+                        newRoutine.createdOnDate = Date()
+                        let templateCycle = TemplateCycle(context: viewContext)
+                        templateCycle.timePeriodName = newRoutineName
+                        templateCycle.routine = newRoutine
+                        newRoutine.template = templateCycle
                         
                         // reset fields
                         withAnimation {
@@ -86,28 +91,10 @@ struct CreateNewRoutineView: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let nameValidator = StringFieldValidator()
+        let nameValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: routines.map { $0.timePeriodName! })
         let descValidator = StringFieldValidator(emptyAllowed: true)
         valid += nameValidator.valideField(inputVar: newRoutineName, errorMessage: $newRoutineNameIsInvalidMsg, fieldInvalid: $newRoutineNameIsInvalid)
         valid += descValidator.valideField(inputVar: newRoutineDesc, errorMessage: $newRoutineDescIsInvalidMsg, fieldInvalid: $newRoutineDescIsInvalid)
-        
-        // Special case for already taken names
-        valid += {
-            if (allRoutines.contains { $0.timePeriodName == newRoutineName }) {
-                withAnimation {
-                    newRoutineNameIsInvalid = true
-                    newRoutineNameIsInvalidMsg = "This Routine name is already taken!"
-                }
-                return 1
-            } else {
-                withAnimation {
-                    newRoutineNameIsInvalid = false
-                    newRoutineNameIsInvalidMsg = ""
-                }
-                return 0
-            }
-        }()
-        
         return valid == 0
     }
     
