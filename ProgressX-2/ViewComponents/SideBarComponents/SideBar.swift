@@ -72,6 +72,7 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
             .simultaneousGesture(dragGesture)
         }
         .background(Background)
+        .foregroundColor(.black)
         .ignoresSafeArea()
         .onChange(of: showMenu, initial: true) { oldValue, newValue in
             withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {

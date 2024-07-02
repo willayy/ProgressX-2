@@ -23,11 +23,13 @@ struct SideBarBuilder: View {
         NavigationView{
             VStack(alignment: .leading, spacing: 12) {
                 Text("ProgressX")
+                    .foregroundColor(.white)
                     .font(.largeTitle.bold())
                     .padding(.bottom, 10)
                 
                 SideBarButton(.home){
                     showMenu.toggle()
+                    viewRouter.rootView = .HomeView
                 }
                 SideBarButton(.Statistics){
                     showMenu.toggle()

@@ -14,9 +14,9 @@ struct LightSubHeadline: View {
     
     var body: some View {
         Text(text)
+            .foregroundColor(Color("lightTextColor"))
             .font(.subheadline)
             .fontWeight(.light)
-            .foregroundColor(.gray)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 25)
             .minimumScaleFactor(0.5);
