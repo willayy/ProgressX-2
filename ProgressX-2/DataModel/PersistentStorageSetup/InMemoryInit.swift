@@ -264,10 +264,21 @@ class InMemory {
         templateWeek1.positionIndex = templateCycle.getNextPositionIndex()
         templateWeek1.cycle = templateCycle
         
-        // Adding a template session tot the template week
+        // Adding a template session to the template week
         let templateSession1 = TemplateSession(context: context)
         templateSession1.timePeriodName = "Session 1"
         templateSession1.positionIndex = templateWeek1.getNextPositionIndex()
         templateSession1.week = templateWeek1
+        
+        // Adding a template set to the template session
+        let templateSet1 = TemplateSet(context: context)
+        templateSet1.timePeriodName = "Set 1"
+        templateSet1.positionIndex = templateSession1.getNextPositionIndex()
+        templateSet1.session = templateSession1
+        // Fetch exercises for the set
+        let exerciseFetchRequest = Exercise.fetchRequest()
+        exerciseFetchRequest.predicate = NSPredicate(format: "exerciseName == %@", "testing exercise (reps)")
+        let exercises = PersistenceController.fetch(context, fetchRequest: exerciseFetchRequest)
+        templateSet1.exercise = exercises.first
     }
 }

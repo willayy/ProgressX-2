@@ -145,4 +145,28 @@ extension PersistenceController {
         return bodyEntry
     }
     
+    public static func createTemplateWeek(_ context: NSManagedObjectContext, name: String, templateCycle: TemplateCycle, positionIndex: Int64) -> TemplateWeek {
+        let week = TemplateWeek(context: context)
+        week.positionIndex = positionIndex
+        week.timePeriodName = name
+        week.cycle = templateCycle
+        return week
+    }
+    
+    public static func createTemplateSession(_ context: NSManagedObjectContext, name: String, templateWeek: TemplateWeek, positionIndex: Int64) -> TemplateSession {
+        let session = TemplateSession(context: context)
+        session.positionIndex = positionIndex
+        session.timePeriodName = name
+        session.week = templateWeek
+        return session
+    }
+    
+    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise) -> TemplateSet {
+        let set = TemplateSet(context: context)
+        set.positionIndex = positionIndex
+        set.timePeriodName = name
+        set.session = templateSession
+        return set
+    }
+    
 }

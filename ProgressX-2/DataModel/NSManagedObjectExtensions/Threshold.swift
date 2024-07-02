@@ -12,7 +12,7 @@ extension Threshold {
     // MARK: Extra Properties
     
     // Gives a correctly formatted string from the quantity value
-    public var triggerQuantityString: String {
+    public var formattedTriggerQuantity: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
         switch type {
@@ -20,6 +20,17 @@ extension Threshold {
                 return String(format: "%.0f", self.triggerQuantity)
             case .Time:
                 return String(format: "%.2f", self.triggerQuantity)
+        }
+    }
+    
+    public var triggerQuantityUnit: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return "reps"
+            case .Time:
+                return "seconds"
         }
     }
     

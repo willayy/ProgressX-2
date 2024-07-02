@@ -269,7 +269,6 @@ final class DataModelTests: XCTestCase {
         
         set.exercise = exercise
         set.isComplete = false
-        set.prType = "onerepmax"
         
         session.isComplete = true
         
@@ -331,7 +330,6 @@ final class DataModelTests: XCTestCase {
         
         set.exercise = exercise
         set.isComplete = false
-        set.prType = "onerepmax"
         
         set.quantityTodo = 1
         
@@ -371,7 +369,6 @@ final class DataModelTests: XCTestCase {
         
         set.exercise = exercise
         set.isComplete = false
-        set.prType = "onerepmax"
         
         set.quantityDone = 1
         
