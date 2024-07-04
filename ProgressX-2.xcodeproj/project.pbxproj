@@ -102,6 +102,9 @@
 		8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */; };
 		8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F092C21A0C30072A39D /* ProfileView.swift */; };
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
+		8F8B9F102C36B06E0072A39D /* ThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0E2C36B06E0072A39D /* ThresholdsView.swift */; };
+		8F8B9F112C36B06E0072A39D /* EditTemplateSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0F2C36B06E0072A39D /* EditTemplateSetView.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -541,6 +544,15 @@
 			path = HomeView;
 			sourceTree = "<group>";
 		};
+
+		8F8B9F122C36B9560072A39D /* Training */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Training;
+			sourceTree = "<group>";
+		};
+    
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
