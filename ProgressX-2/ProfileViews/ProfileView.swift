@@ -25,15 +25,18 @@ struct ProfileView: View {
     @State private var selectedGenderSegment = "Male"
     @State private var weight = ""
     @State private var height = ""
+    @State private var standardRestTime = ""
     
     @State private var showMenu: Bool = false
     @State private var userNameIsInvalid = false
     @State private var heightIsInvalid = false
     @State private var weightIsInvalid = false
+    @State private var standardRestTimeIsInvalid = false
     
     @State private var userNameIsInvalidMsg = ""
     @State private var heightIsInvalidMsg = ""
-    @State private var weightIsInvalidMsg = ""
+    
+    @State private var standardRestTimeIsInvalidMsg = ""
     
     let unitSegments = ["Metric (meters)", "Imperial (feet)"]
     let genderSegments = ["Male", "Female"]
@@ -70,7 +73,7 @@ struct ProfileView: View {
                     
                         BoldSubHeadline(text: "Change default rest-time").padding(.bottom)
                         
-                        
+                        InputDecimalNumberField(placeHolder: String(format: "%1.f", profiles.first!.standardRestTime), numberText: $standardRestTime, markAsWrong: $standardRestTimeIsInvalid, width: 0.3, errorMessage: $standardRestTimeIsInvalidMsg).padding(.bottom)
                     
                         
                     BoldSubHeadline(text: "Change Units")
@@ -102,6 +105,10 @@ struct ProfileView: View {
                             }
                             
                             profiles.first?.birthDay = birthDay
+                            
+                            if standardRestTime != "" {
+                                profiles.first?.standardRestTime = Double(standardRestTime)!
+                            }
                             
                             if selectedUnitSegment == "Metric (meters)" {
                                 profiles.first?.isMetric = true

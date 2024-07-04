@@ -96,7 +96,6 @@
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
 		8F8B9F102C36B06E0072A39D /* ThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0E2C36B06E0072A39D /* ThresholdsView.swift */; };
 		8F8B9F112C36B06E0072A39D /* EditTemplateSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0F2C36B06E0072A39D /* EditTemplateSetView.swift */; };
-		8F8B9F142C36B9AF0072A39D /* TemplateFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F132C36B9AF0072A39D /* TemplateFetching.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,7 +208,6 @@
 		8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarButton.swift; sourceTree = "<group>"; };
 		8F8B9F0E2C36B06E0072A39D /* ThresholdsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdsView.swift; sourceTree = "<group>"; };
 		8F8B9F0F2C36B06E0072A39D /* EditTemplateSetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTemplateSetView.swift; sourceTree = "<group>"; };
-		8F8B9F132C36B9AF0072A39D /* TemplateFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateFetching.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,7 +529,6 @@
 		8F8B9F122C36B9560072A39D /* Training */ = {
 			isa = PBXGroup;
 			children = (
-				8F8B9F132C36B9AF0072A39D /* TemplateFetching.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -734,7 +731,6 @@
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */,
 				831F2BF12C209FB1007A7A8A /* Completable.swift in Sources */,
-				8F8B9F142C36B9AF0072A39D /* TemplateFetching.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */,
