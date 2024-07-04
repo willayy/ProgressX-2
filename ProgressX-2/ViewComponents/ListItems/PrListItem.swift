@@ -22,6 +22,8 @@ struct PrListItem: View {
         
         let weightUnit = PersistenceController.getWeightUnit(viewContext)!
         
+        #warning("TODO: Add magnified view")
+        
         HStack {
             VStack(alignment: .leading) {
                 (Text("Type: ")

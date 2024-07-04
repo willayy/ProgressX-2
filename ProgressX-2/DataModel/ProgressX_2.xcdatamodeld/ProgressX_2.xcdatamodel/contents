@@ -58,8 +58,8 @@
         <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="sessions" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
-        <attribute name="flatLoadAdd" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="flatQuantityAdd" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="flatLoadAdd" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0" usesScalarValueType="NO"/>
+        <attribute name="flatQuantityAdd" optional="YES" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="NO"/>
         <attribute name="generatePr" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="prType" optional="YES" attributeType="String" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
         <attribute name="triggerQuantity" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>

@@ -123,7 +123,7 @@ struct CreateNewProfile3: View {
                 Button {
                     if validateInput() {
                         addExtraInfo()
-                        navPath.append(4)
+                        navPath.append(3)
                     }
                 } label: {
                     Text("Continue")

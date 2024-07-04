@@ -11,14 +11,18 @@ extension SetThreshold {
     
     // MARK: Extra Properties
     
+    public var formattedFlatLoadAdd: String {
+        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0)
+    }
+    
     public var formattedFlatQuantityAdd: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
         switch type {
             case .Reps:
-                return String(format: "%.0f", self.flatQuantityAdd)
+                return String(format: "%.0f", self.flatQuantityAdd?.doubleValue ?? 0)
             case .Time:
-                return String(format: "%.2f", self.flatQuantityAdd)
+                return String(format: "%.2f", self.flatQuantityAdd?.doubleValue ?? 0)
         }
     }
     
@@ -62,12 +66,16 @@ extension SetThreshold {
         try super.validateForInsert()
         try validatePrType()
         try validateTriggerQuantity()
+        try validateFlatLoadAdd()
+        try validateFlatQuantityAdd()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validatePrType()
         try validateTriggerQuantity()
+        try validateFlatLoadAdd()
+        try validateFlatQuantityAdd()
     }
     
     // Validates that the trigger quantity matches the exercise of the set
@@ -94,14 +102,14 @@ extension SetThreshold {
     
     private func validateFlatLoadAdd() throws {
         let set = self.templateSet!
-        if set.loadType == "numerical" && self.flatLoadAdd != nil {
+        if set.loadType != "numerical" && self.flatLoadAdd != nil {
             throw ValidationNSErrors.flatLoadAddIsInvalid.toNSError()
         }
     }
     
     private func validateFlatQuantityAdd() throws {
         let set = self.templateSet!
-        if set.quantityType == "numerical" && self.flatQuantityAdd != nil {
+        if set.quantityType != "numerical" && self.flatQuantityAdd != nil {
             throw ValidationNSErrors.flatQuantityAddIsInvalid.toNSError()
         }
     }

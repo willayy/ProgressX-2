@@ -190,6 +190,9 @@ struct EditTemplateSetView: View {
                     errorMessage: $editedSetNameIsInvalidMsg
                 )
                 .padding(.bottom, 5)
+                .onAppear(perform: {
+                    editedSetName = selectedTemplateSet!.timePeriodName!
+                })
                 
                 InputShortTextField(
                     placeHolder: "New set description",
@@ -199,8 +202,17 @@ struct EditTemplateSetView: View {
                     errorMessage: $editedSetDescIsInvalidMsg
                 )
                 .padding(.bottom, 20)
+                .onAppear(perform: {
+                    editedSetDesc = selectedTemplateSet!.timePeriodDescription!
+                })
                 
-                #warning("TODO: Implement navigation to ThresholdView")
+                Button {
+                    navPath.append(8)
+                } label: {
+                    Text("View thresholds for this set")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.bottom, 20)
                 
                 LightSubHeadline(text: "Change position of the set in it's session")
                 
@@ -256,6 +268,9 @@ struct EditTemplateSetView: View {
                         width: 0.6,
                         errorMessage: $editedSetLoadIsInvalidMsg
                     )
+                    .onAppear(perform: {
+                        editedSetLoad = String(selectedTemplateSet!.loadTodo)
+                    })
                     
                     if loadPlaceholder == "Percentage" {
                         Text("%")
@@ -272,6 +287,9 @@ struct EditTemplateSetView: View {
                             errorMessage: $editedSetQuantityIsInvalidMsg
                         )
                         .padding(.top, 5)
+                        .onAppear(perform: {
+                            editedSetLoad = String(selectedTemplateSet!.quantityTodo)
+                        })
                         
                         if quantityPlaceholder == "Percentage" {
                             Text("%")
@@ -287,6 +305,10 @@ struct EditTemplateSetView: View {
                             errorMessage: $editedSetQuantityIsInvalidMsg
                         )
                         .padding(.top, 5)
+                        .onAppear(perform: {
+                            editedSetLoad = String(selectedTemplateSet!.quantityTodo)
+                        })
+                        
                         if quantityPlaceholder == "Percentage" {
                             Text("%")
                         }
@@ -295,16 +317,6 @@ struct EditTemplateSetView: View {
                 
                 Button {
                     if validateInput() {
-                        
-                        func resetView() {
-                            withAnimation {
-                                editedSetName = ""
-                                editedSetDesc = ""
-                                editedSetLoad = ""
-                                editedSetQuantity = ""
-                                showSetChangedAlert = true
-                            }
-                        }
                         
                         let nameHasChanged = (editedSetName != selectedTemplateSet!.timePeriodName)
                         let descHasChanged = (editedSetDesc != selectedTemplateSet!.timePeriodDescription)
@@ -315,54 +327,54 @@ struct EditTemplateSetView: View {
                         let quantityTypeHasChanged = (typeMap[editedQuantityType] != selectedTemplateSet!.quantityType)
                         let positionIndexHasChanged = (editedSetPositionIndex != selectedTemplateSet!.positionIndex)
                         
+                        let changes = !nameHasChanged && !descHasChanged && !exerciseHasChanged && !loadTypeHasChanged && !quantityTypeHasChanged && !positionIndexHasChanged && !loadHasChanged && !quantityHasChanged
                         
-                        if !nameHasChanged && !descHasChanged && !exerciseHasChanged && !loadTypeHasChanged && !quantityTypeHasChanged && !positionIndexHasChanged {
+                        if changes {
                             withAnimation {
                                 showNoChangeAlert = true
                                 return
                             }
+                        } else {
+                            
+                            if nameHasChanged {
+                                selectedTemplateSet!.timePeriodName = editedSetName
+                            }
+                            
+                            if descHasChanged {
+                                selectedTemplateSet!.timePeriodDescription = editedSetDesc
+                            }
+                            
+                            if loadHasChanged {
+                                selectedTemplateSet!.setLoad = Double(editedSetLoad)!
+                            }
+                            
+                            if quantityHasChanged {
+                                selectedTemplateSet!.setQuantity = Double(editedSetQuantity)!
+                            }
+                            
+                            if exerciseHasChanged {
+                                selectedTemplateSet!.exercise = selectedExercise
+                            }
+                            
+                            if loadTypeHasChanged {
+                                selectedTemplateSet!.loadType = typeMap[editedLoadType]!
+                            }
+                            
+                            if quantityTypeHasChanged {
+                                selectedTemplateSet!.quantityType = typeMap[editedQuantityType]!
+                            }
+                            
+                            if positionIndexHasChanged {
+                                selectedTemplateSet!.positionIndex = editedSetPositionIndex
+                            }
+                            
+                            PersistenceController.save(viewContext)
+                            
+                            withAnimation {
+                                showSetChangedAlert = true
+                            }
+                            
                         }
-                        
-                        if nameHasChanged {
-                            selectedTemplateSet!.timePeriodName = editedSetName
-                            resetView()
-                        }
-                        
-                        if descHasChanged {
-                            selectedTemplateSet!.timePeriodDescription = editedSetDesc
-                            resetView()
-                        }
-                        
-                        if loadHasChanged {
-                            selectedTemplateSet!.setLoad = Double(editedSetLoad)!
-                            resetView()
-                        }
-                        
-                        if quantityHasChanged {
-                            selectedTemplateSet!.setQuantity = Double(editedSetQuantity)!
-                            resetView()
-                        }
-                        
-                        if exerciseHasChanged {
-                            selectedTemplateSet!.exercise = selectedExercise
-                            resetView()
-                        }
-                        
-                        if loadTypeHasChanged {
-                            selectedTemplateSet!.loadType = typeMap[editedLoadType]!
-                            resetView()
-                        }
-                        
-                        if quantityTypeHasChanged {
-                            selectedTemplateSet!.quantityType = typeMap[editedQuantityType]!
-                            resetView()
-                        }
-                        
-                        if positionIndexHasChanged {
-                            selectedTemplateSet!.positionIndex = editedSetPositionIndex
-                            resetView()
-                        }
-                        
                     }
                 } label: {
                     Text("Save changes")

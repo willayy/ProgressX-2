@@ -47,7 +47,7 @@ struct CreateNewProfile2: View {
                     .buttonStyle(.borderedProminent)
                 
                 Button {
-                    navPath.append(3)
+                    navPath.append(2)
                 } label: {
                     Text("Yes, let's continue")
                         .frame(maxWidth: .infinity)

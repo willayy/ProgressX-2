@@ -11,6 +11,7 @@ import CoreData
 struct CreateNewProfile1: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
@@ -42,7 +43,7 @@ struct CreateNewProfile1: View {
     var body: some View {
         // The navigation stack is the root of all following views
         // in this set of views (CreateProfileViews
-        NavigationStack(path: $navPath) {
+        CreateNewProfileNavigationController(content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
@@ -112,7 +113,7 @@ struct CreateNewProfile1: View {
                     Button {
                         if validateInput() {
                             createProfile()
-                            navPath.append(2)
+                            navPath.append(1)
                         }
                     } label: {
                         Text("Continue")
@@ -121,27 +122,11 @@ struct CreateNewProfile1: View {
                     .buttonStyle(.borderedProminent)
                     .padding(.top, 30)
                     
-                }
-                .navigationDestination(for: Int.self) { selection in
-                    if selection == 2 {
-                        // Pass along the navpath so following views can add to it.
-                        CreateNewProfile2(navPath: $navPath)
-                        // Also pass the viewRouter to be able to change the rootView to homeView.
-                            .environmentObject(viewRouter)
-                            .environment(\.managedObjectContext, viewContext)
-                    }
-                    else if selection == 3 {
-                        CreateNewProfile3(navPath: $navPath)
-                            .environment(\.managedObjectContext, viewContext)
-                    }
-                    else if selection == 4 {
-                        CreateNewProfile4(navPath: $navPath)
-                            .environmentObject(viewRouter)
-                            .environment(\.managedObjectContext, viewContext)
                     }
                 }
-            }
-        }
+        }, navPath: $navPath)
+        .environmentObject(viewRouter)
+        .environment(\.managedObjectContext, viewContext)
     }
     
     // Validates input

@@ -72,4 +72,5 @@ struct ThresholdsView: View {
         navPath: $navPath,
         selectedTemplateSet: $templateSet, 
         selectedThreshold: $selectedThreshold)
+    .environment(\.managedObjectContext, context)
 }

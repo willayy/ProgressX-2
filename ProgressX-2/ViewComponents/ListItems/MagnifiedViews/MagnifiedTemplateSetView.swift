@@ -11,7 +11,7 @@ struct MagnifiedTemplateSetView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    let set: TemplateSet
+    @ObservedObject var set: TemplateSet
     
     var body: some View {
         
