@@ -177,7 +177,7 @@ extension PersistenceController {
         let week = TemplateWeek(context: context)
         week.positionIndex = positionIndex
         week.timePeriodName = name
-        week.cycle = templateCycle
+        week.templateCycle = templateCycle
         return week
     }
     
@@ -185,7 +185,7 @@ extension PersistenceController {
         let session = TemplateSession(context: context)
         session.positionIndex = positionIndex
         session.timePeriodName = name
-        session.week = templateWeek
+        session.templateWeek = templateWeek
         return session
     }
     
@@ -193,12 +193,12 @@ extension PersistenceController {
         let set = TemplateSet(context: context)
         set.positionIndex = positionIndex
         set.timePeriodName = name
-        set.session = templateSession
+        set.templateSession = templateSession
         set.exercise = exercise
         set.quantityType = quantityType
-        set.quantityTodo = quantity
+        set.setQuantity = quantity
         set.loadType = loadType
-        set.loadTodo = load
+        set.setLoad = load
         return set
     }
     

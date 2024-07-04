@@ -82,7 +82,7 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
             
         case .quantityTodoInvalid:
-            return [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
+            return [NSLocalizedDescriptionKey: "Property .quantity on TrainingSet must be a valid integer if the quantityType is numerical and the exercise type is reps. If quantityType is percent"]
             
         case .completeWithoutCompletionDate:
             return [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate."]

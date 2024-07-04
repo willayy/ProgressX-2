@@ -7,9 +7,31 @@
 
 import Foundation
 
-extension Threshold {
+extension SetThreshold {
     
     // MARK: Extra Properties
+    
+    public var formattedFlatQuantityAdd: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return String(format: "%.0f", self.flatQuantityAdd)
+            case .Time:
+                return String(format: "%.2f", self.flatQuantityAdd)
+        }
+    }
+    
+    public var flatQuantityUnit: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return "reps"
+            case .Time:
+                return "seconds"
+        }
+    }
     
     // Gives a correctly formatted string from the quantity value
     public var formattedTriggerQuantity: String {
