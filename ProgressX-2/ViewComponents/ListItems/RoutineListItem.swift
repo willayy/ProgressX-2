@@ -46,7 +46,7 @@ struct RoutineListItem: View {
             // MARK: Edit button
             Button(action: {
                 selectedRoutine = routine
-                selectedTemplateCycle = routine.template
+                selectedTemplateCycle = routine.templateCycle
                 navPath.append(2)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
@@ -56,7 +56,7 @@ struct RoutineListItem: View {
             // MARK: Statistics button
             Button(action: {
                 selectedRoutine = routine
-                selectedTemplateCycle = routine.template
+                selectedTemplateCycle = routine.templateCycle
                 navPath.append(3)
             }) { Image(systemName: "chart.xyaxis.line") }
                 .frame(width: 20)

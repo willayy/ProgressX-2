@@ -12,6 +12,7 @@ struct CreateNewRoutineView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
+    @Binding var selectedTemplateCycle: TemplateCycle?
     
     @FetchRequest(
         entity: Routine.entity(),
@@ -64,7 +65,7 @@ struct CreateNewRoutineView: View {
                         let templateCycle = TemplateCycle(context: viewContext)
                         templateCycle.timePeriodName = newRoutineName
                         templateCycle.routine = newRoutine
-                        newRoutine.template = templateCycle
+                        newRoutine.templateCycle = templateCycle
                         
                         // reset fields
                         withAnimation {
@@ -75,6 +76,7 @@ struct CreateNewRoutineView: View {
                         // Save and continue
                         PersistenceController.save(viewContext)
                         selectedRoutine = newRoutine
+                        selectedTemplateCycle = templateCycle
                         navPath.append(2)
                     }
                 } label: {
@@ -103,8 +105,11 @@ struct CreateNewRoutineView: View {
 #Preview {
     @State var navPath: [Int] = [Int]()
     @State var selectedRoutine: Routine? = nil
+    @State var selectedTemplateCycle: TemplateCycle? = nil
     
     return CreateNewRoutineView(
         navPath: $navPath,
-        selectedRoutine: $selectedRoutine)
+        selectedRoutine: $selectedRoutine,
+        selectedTemplateCycle: $selectedTemplateCycle
+    )
 }

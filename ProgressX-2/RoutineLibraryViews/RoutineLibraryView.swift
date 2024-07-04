@@ -29,6 +29,7 @@ struct RoutineLibraryView: View {
     @State private var selectedTemplateWeek: TemplateWeek? = nil
     @State private var selectedTemplateSession: TemplateSession? = nil
     @State private var selectedTemplateSet: TemplateSet? = nil
+    @State private var selectedThreshold: SetThreshold? = nil
     
     @State private var showMenu: Bool = false
     @State private var navPath: [Int] = [Int]()
@@ -103,7 +104,8 @@ struct RoutineLibraryView: View {
                         // MARK: Create new routine
                         CreateNewRoutineView(
                             navPath: $navPath,
-                            selectedRoutine: $selectedRoutine
+                            selectedRoutine: $selectedRoutine,
+                            selectedTemplateCycle: $selectedTemplateCycle
                         )
                         .environment(\.managedObjectContext, viewContext)
                         
@@ -146,7 +148,11 @@ struct RoutineLibraryView: View {
                     } else if selection == 6 {
                         
                         // MARK: Edit set
-                        #warning("TODO: Implemented edit set")
+                        EditTemplateSetView(
+                            navPath: $navPath,
+                            selectedTemplateSet: $selectedTemplateSet
+                        )
+                        .environment(\.managedObjectContext, viewContext)
                         
                     } else if selection == 7 {
                         
@@ -159,11 +165,19 @@ struct RoutineLibraryView: View {
                         
                     } else if selection == 8 {
                         
-                        // MARK: Add Thresholds
-                        AddThresholdsView(
-                            selectedTemplateSet: $selectedTemplateSet
+                        // MARK: Thresholds view
+                        ThresholdsView(
+                            navPath: $navPath,
+                            selectedTemplateSet: $selectedTemplateSet,
+                            selectedThreshold: $selectedThreshold
                         )
                         .environment(\.managedObjectContext, viewContext)
+                        
+                    } else if selection == 9 {
+                        // MARK: Create Threshold view
+                        
+                    } else if selection == 10 {
+                        // MARK: Edit Threshold view
                         
                     }
                 }

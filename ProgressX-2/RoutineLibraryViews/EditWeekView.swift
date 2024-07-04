@@ -24,9 +24,7 @@ struct EditWeekView: View {
     @State private var editedWeekDescIsInvalid: Bool = false
     @State private var editedWeekDescIsInvalidMsg: String = ""
     
-    @State private var editedPositionIndex: String = ""
-    @State private var editedPositionIndexIsInvalid: Bool = false
-    @State private var editedPositionIndexIsInvalidMsg: String = ""
+    @State private var editedPositionIndex: Int64 = 0
     
     @Binding var navPath: [Int]
     @Binding var selectedTemplateWeek: TemplateWeek?
@@ -35,12 +33,21 @@ struct EditWeekView: View {
     var body: some View {
 
         // Get the templateSessions for this week.
-
         @FetchRequest(
             entity: TemplateSession.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TemplateSession.positionIndex, ascending: true)],
-            predicate: NSPredicate(format: "week == %@", selectedTemplateWeek!)
+            predicate: NSPredicate(format: "templateWeek == %@", selectedTemplateWeek!)
         ) var templateSessions: FetchedResults<TemplateSession>
+        
+        // Get the positionIndexes for all weeks in this Routine
+        let positionIndexes: [Int64] = {
+            let cycle = selectedTemplateWeek!.templateCycle!
+            let weeks = cycle.templateWeeks!.allObjects as! [TemplateWeek]
+            let positionIndexes = weeks.map { week in
+                week.positionIndex
+            }
+            return positionIndexes.sorted()
+        }()
         
         ScrollView {
             VStack {
@@ -97,49 +104,53 @@ struct EditWeekView: View {
                             errorMessage: $editedWeekDescIsInvalidMsg
                         )
                         
-                        InputShortTextField(
-                            placeHolder: "New position in routine",
-                            text: $editedPositionIndex,
-                            markAsWrong: $editedPositionIndexIsInvalid,
-                            width: 0.6,
-                            errorMessage: $editedPositionIndexIsInvalidMsg
+                        LightSubHeadline(text: "Change the weeks position in the routine")
+                            .padding(.top, 10)
+                        
+                        IntSelectionList(
+                            selected: $editedPositionIndex,
+                            selections: positionIndexes
                         )
+                        .onAppear(perform: {
+                            editedPositionIndex = selectedTemplateWeek!.positionIndex
+                        })
                         
                         Button {
                             if validateInput() {
                                 
-                                let inputPosition = editedPositionIndex.isEmpty ? selectedTemplateWeek!.positionIndex : Int64(editedPositionIndex)
                                 let inputName = editedWeekName.isEmpty ? selectedTemplateWeek!.timePeriodName! : editedWeekName
                                 let inputDesc = editedWeekDescription.isEmpty ? selectedTemplateWeek!.timePeriodDescription! : editedWeekDescription
                                 
                                 // Find the week with the same position index in the parent routine
-                                let oldPositionIndex = selectedTemplateWeek!.positionIndex
-                                let weeksInParentRoutine: [TemplateWeek] = selectedTemplateWeek!.cycle!.weeks?.allObjects as! [TemplateWeek]
-                                let switchWithWeek = weeksInParentRoutine.first(where: { $0.positionIndex == inputPosition })
-                                // Switch position index with the week
-                                switchWithWeek?.positionIndex = oldPositionIndex
+                                let weeksInParentRoutine = selectedTemplateWeek!.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
+                                let switchWithWeek = weeksInParentRoutine.first(
+                                    where: {
+                                        ($0 as AnyObject).positionIndex == editedPositionIndex
+                                    }
+                                )
                                 
-                                selectedTemplateWeek!.positionIndex = inputPosition!
+                                let positionIndexDidChange: Bool = (editedPositionIndex != selectedTemplateWeek!.positionIndex)
+                                
+                                // Switch position index with the week
+                                switchWithWeek!.positionIndex = selectedTemplateWeek!.positionIndex
+                                
+                                selectedTemplateWeek!.positionIndex = editedPositionIndex
                                 selectedTemplateWeek!.timePeriodName = inputName
                                 selectedTemplateWeek!.timePeriodDescription = inputDesc
                                 
                                 PersistenceController.save(viewContext)
                                 
-                                if editedWeekName.isEmpty && editedWeekDescription.isEmpty && editedPositionIndex.isEmpty {
-                                    withAnimation(.easeOut) {
+                                // Show alert if stuff changes
+                                withAnimation(.easeOut) {
+                                    if editedWeekName.isEmpty && editedWeekDescription.isEmpty && !positionIndexDidChange {
                                         showNoChangeAlert = true
-                                        editedWeekName = ""
-                                        editedWeekDescription = ""
-                                        editedPositionIndex = ""
-                                    }
-                                } else {
-                                    withAnimation(.easeOut) {
+                                    } else {
                                         showWeekChangedAlert = true
-                                        editedWeekName = ""
-                                        editedWeekDescription = ""
-                                        editedPositionIndex = ""
                                     }
+                                    editedWeekName = ""
+                                    editedWeekDescription = ""
                                 }
+                                
                             }
                         } label: {
                             Text("Save change")
@@ -191,26 +202,17 @@ struct EditWeekView: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let weeksInParentRoutine: [TemplateWeek] = selectedTemplateWeek!.cycle!.weeks?.allObjects as! [TemplateWeek]
-        let maxPositionIndex: Int = Int(weeksInParentRoutine.max {$0.positionIndex > $1.positionIndex}!.positionIndex)
         
-        let routineNameValidator = StringFieldValidator(emptyAllowed: true)
-        let routineDescValidator = StringFieldValidator(emptyAllowed: true)
-        let positionIndexValidator = IntFieldValidator(emptyAllowed: true, minInputNumber: 1, maxInputNumber: maxPositionIndex)
+        let weekNameValidator = StringFieldValidator(emptyAllowed: true)
+        let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += positionIndexValidator.valideField(
-            inputVar: editedPositionIndex,
-            errorMessage: $editedPositionIndexIsInvalidMsg,
-            fieldInvalid: $editedPositionIndexIsInvalid
-        )
-        
-        valid += routineNameValidator.valideField(
+        valid += weekNameValidator.valideField(
             inputVar: editedWeekName,
             errorMessage: $editedWeekNameIsInvalidMsg,
             fieldInvalid: $editedWeekIsInvalid
         )
         
-        valid += routineDescValidator.valideField(
+        valid += weekDescValidator.valideField(
             inputVar: editedWeekDescription,
             errorMessage: $editedWeekDescIsInvalidMsg,
             fieldInvalid: $editedWeekDescIsInvalid

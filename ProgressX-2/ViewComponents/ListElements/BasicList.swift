@@ -21,7 +21,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
                 .font(.subheadline)
                 .fontWeight(.light)
                 .padding(.vertical, 20)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
                 .foregroundStyle(.red)

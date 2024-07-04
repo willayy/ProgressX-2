@@ -92,4 +92,18 @@ extension SetThreshold {
         }
     }
     
+    private func validateFlatLoadAdd() throws {
+        let set = self.templateSet!
+        if set.loadType == "numerical" && self.flatLoadAdd != nil {
+            throw ValidationNSErrors.flatLoadAddIsInvalid.toNSError()
+        }
+    }
+    
+    private func validateFlatQuantityAdd() throws {
+        let set = self.templateSet!
+        if set.quantityType == "numerical" && self.flatQuantityAdd != nil {
+            throw ValidationNSErrors.flatQuantityAddIsInvalid.toNSError()
+        }
+    }
+    
 }
