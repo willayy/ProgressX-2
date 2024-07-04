@@ -69,7 +69,7 @@ extension TemplateSession: HasOrderable {
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
-        let sets: [TemplateSet] = self.sets?.allObjects as! [TemplateSet]
+        let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
@@ -88,7 +88,7 @@ extension TemplateSession: HasOrderable {
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let sets: [TemplateSet] = self.sets?.allObjects as! [TemplateSet]
+        let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
         let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}

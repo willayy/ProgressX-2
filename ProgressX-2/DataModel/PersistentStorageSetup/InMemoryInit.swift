@@ -255,30 +255,38 @@ class InMemory {
         // Adding a template cycle to that routine
         let templateCycle = TemplateCycle(context: context)
         templateCycle.timePeriodName = "test routine 1"
-        routine.template = templateCycle
+        routine.templateCycle = templateCycle
         templateCycle.routine = routine
         
         // Adding a template week to the template cycle
         let templateWeek1 = TemplateWeek(context: context)
         templateWeek1.timePeriodName = "Week 1"
         templateWeek1.positionIndex = templateCycle.getNextPositionIndex()
-        templateWeek1.cycle = templateCycle
+        templateWeek1.templateCycle = templateCycle
         
         // Adding a template session to the template week
         let templateSession1 = TemplateSession(context: context)
         templateSession1.timePeriodName = "Session 1"
         templateSession1.positionIndex = templateWeek1.getNextPositionIndex()
-        templateSession1.week = templateWeek1
+        templateSession1.templateWeek = templateWeek1
         
         // Adding a template set to the template session
         let templateSet1 = TemplateSet(context: context)
         templateSet1.timePeriodName = "Set 1"
         templateSet1.positionIndex = templateSession1.getNextPositionIndex()
-        templateSet1.session = templateSession1
+        templateSet1.templateSession = templateSession1
         // Fetch exercises for the set
         let exerciseFetchRequest = Exercise.fetchRequest()
         exerciseFetchRequest.predicate = NSPredicate(format: "exerciseName == %@", "testing exercise (reps)")
         let exercises = PersistenceController.fetch(context, fetchRequest: exerciseFetchRequest)
         templateSet1.exercise = exercises.first
+        
+        // Adding thresholds to Set 1
+        let threshold1 = SetThreshold(context: context)
+        threshold1.triggerQuantity = 5
+        threshold1.generatePr = true
+        threshold1.prType = "onerepmax"
+        threshold1.templateSet = templateSet1
+        threshold1.positionIndex = templateSet1.getNextPositionIndex()
     }
 }

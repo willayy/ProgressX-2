@@ -248,7 +248,7 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
-        routine.template = TemplateCycle(context: context!)
+        routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
         cycle.startedOnDate = Date()
         week.startedOnDate = Date()
@@ -309,7 +309,7 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
-        routine.template = TemplateCycle(context: context!)
+        routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
         cycle.startedOnDate = Date()
         week.startedOnDate = Date()
@@ -348,7 +348,7 @@ final class DataModelTests: XCTestCase {
         let week = TrainingWeek(context: context!)
         let session = Session(context: context!)
         let set = TrainingSet(context: context!)
-        routine.template = TemplateCycle(context: context!)
+        routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
         cycle.startedOnDate = Date()
         week.startedOnDate = Date()
@@ -388,7 +388,7 @@ final class DataModelTests: XCTestCase {
         cycle1.positionIndex = 2
         cycle2.routine = routine
         cycle2.positionIndex = 3
-        routine.template = TemplateCycle(context: context!)
+        routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
         cycle1.startedOnDate = Date()
         cycle2.startedOnDate = Date()
@@ -413,8 +413,8 @@ final class DataModelTests: XCTestCase {
         routine2.timePeriodName = "A"
         routine1.createdOnDate = Date()
         routine2.createdOnDate = Date()
-        routine1.template = TemplateCycle(context: context!)
-        routine2.template = TemplateCycle(context: context!)
+        routine1.templateCycle = TemplateCycle(context: context!)
+        routine2.templateCycle = TemplateCycle(context: context!)
         
         // SHould throw, non unique name
         XCTAssertThrowsError(try PersistenceController.save_throws(context!))
@@ -430,21 +430,21 @@ final class DataModelTests: XCTestCase {
         routine.timePeriodName = "A"
         routine.createdOnDate = Date()
         let template = TemplateCycle(context: context!)
-        routine.template = template
+        routine.templateCycle = template
         
-        XCTAssertEqual(routine.template!.getNextPositionIndex(), 1)
+        XCTAssertEqual(routine.templateCycle!.getNextPositionIndex(), 1)
         
         let week1 = TemplateWeek(context: context!)
         template.addToWeeks(week1)
-        week1.positionIndex = routine.template!.getNextPositionIndex()
+        week1.positionIndex = routine.templateCycle!.getNextPositionIndex()
         
-        XCTAssertEqual(routine.template!.getNextPositionIndex(), 2)
+        XCTAssertEqual(routine.templateCycle!.getNextPositionIndex(), 2)
         
         let week2 = TemplateWeek(context: context!)
         template.addToWeeks(week2)
-        week2.positionIndex = routine.template!.getNextPositionIndex()
+        week2.positionIndex = routine.templateCycle!.getNextPositionIndex()
         
-        XCTAssertEqual(routine.template!.getNextPositionIndex(), 3)
+        XCTAssertEqual(routine.templateCycle!.getNextPositionIndex(), 3)
     }
         
 }
