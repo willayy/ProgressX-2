@@ -276,7 +276,8 @@ struct CreateNewTemplateSetView: View {
             
                             _ = PersistenceController.createTemplateSet(
                                 viewContext,
-                                name: newSetName,
+                                name: newSetName, 
+                                description: newSetDesc,
                                 templateSession: selectedTemplateSession!,
                                 positionIndex: nextPositionIndex,
                                 exercise: selectedExercise!,
@@ -305,7 +306,7 @@ struct CreateNewTemplateSetView: View {
                                 navPath.append(8)
                             }),
                             secondaryButton: .cancel(Text("No"), action: {
-                                navPath.append(7)
+                                navPath.removeLast()
                             })
                         )
                     })

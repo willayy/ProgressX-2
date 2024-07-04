@@ -36,7 +36,6 @@ extension Routine: HasOrderable {
         return results
     }
     
-    
     /// Gets the next available
     /// - Returns: An Int64 that is a valid positionIndex
     func getNextPositionIndex() -> Int64 {

@@ -174,7 +174,12 @@ struct RoutineLibraryView: View {
                         .environment(\.managedObjectContext, viewContext)
                         
                     } else if selection == 9 {
+                        
                         // MARK: Create Threshold view
+                        CreateNewThresholdView(
+                            navPath: $navPath,
+                            selectedTemplateSet: $selectedTemplateSet
+                        )
                         
                     } else if selection == 10 {
                         // MARK: Edit Threshold view
