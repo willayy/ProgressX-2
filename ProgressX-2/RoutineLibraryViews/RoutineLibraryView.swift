@@ -44,7 +44,7 @@ struct RoutineLibraryView: View {
             cornerRadius: 25,
             showMenu: $showMenu
         ) { safeArea in
-            NavigationStack(path: $navPath) {
+            RoutineLibraryNavigationController(content: {
                 ScrollView {
                     VStack(alignment: .center) {
                         //MARK: View header text
@@ -62,7 +62,7 @@ struct RoutineLibraryView: View {
                         
                         // MARK: List
                         SearchableList(
-                            containerName: "Routine Library", 
+                            containerName: "Routine Library",
                             elementName: "Routines",
                             allData: _allRoutines,
                             searchedData: _searchedRoutines
@@ -95,98 +95,14 @@ struct RoutineLibraryView: View {
                             .environmentObject(viewRouter)
                     }
                 }
-                //MARK: Handling the navigation through the NavStack
-                // This is the root view of this whole view-hierarchy.
-                // If you want to add more viewas add to this group of if statements.
-                .navigationDestination(for: Int.self) { selection in
-                    if selection == 1 {
-                        
-                        // MARK: Create new routine
-                        CreateNewRoutineView(
-                            navPath: $navPath,
-                            selectedRoutine: $selectedRoutine,
-                            selectedTemplateCycle: $selectedTemplateCycle
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 2 {
-                        
-                        // MARK: Edit routine
-                        EditRoutineView(
-                            navPath: $navPath,
-                            selectedRoutine: $selectedRoutine,
-                            selectedTemplateCycle: $selectedTemplateCycle,
-                            selectedTemplateWeek: $selectedTemplateWeek
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 3 {
-                        
-                        // MARK: Routine statistic
-                        RoutineStatisticsView()
-                        
-                    } else if selection == 4 {
-                        
-                        // MARK: Edit week
-                        EditWeekView(
-                            navPath: $navPath,
-                            selectedTemplateWeek: $selectedTemplateWeek,
-                            selectedTemplateSession: $selectedTemplateSession
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 5 {
-                        
-                        // MARK: Edit session
-                        EditSessionView(
-                            navPath: $navPath,
-                            selectedTemplateSet: $selectedTemplateSet,
-                            selectedTemplateSession: $selectedTemplateSession
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 6 {
-                        
-                        // MARK: Edit set
-                        EditTemplateSetView(
-                            navPath: $navPath,
-                            selectedTemplateSet: $selectedTemplateSet
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 7 {
-                        
-                        // MARK: Create new set
-                        CreateNewTemplateSetView(
-                            navPath: $navPath, 
-                            selectedTemplateSession: $selectedTemplateSession
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 8 {
-                        
-                        // MARK: Thresholds view
-                        ThresholdsView(
-                            navPath: $navPath,
-                            selectedTemplateSet: $selectedTemplateSet,
-                            selectedThreshold: $selectedThreshold
-                        )
-                        .environment(\.managedObjectContext, viewContext)
-                        
-                    } else if selection == 9 {
-                        
-                        // MARK: Create Threshold view
-                        CreateNewThresholdView(
-                            navPath: $navPath,
-                            selectedTemplateSet: $selectedTemplateSet
-                        )
-                        
-                    } else if selection == 10 {
-                        // MARK: Edit Threshold view
-                        
-                    }
-                }
-            }
+            },
+           navPath: $navPath,
+           selectedRoutine: $selectedRoutine,
+           selectedTemplateCycle: $selectedTemplateCycle,
+           selectedTemplateWeek: $selectedTemplateWeek,
+           selectedTemplateSession: $selectedTemplateSession,
+           selectedTemplateSet: $selectedTemplateSet,
+           selectedThreshold: $selectedThreshold)
         } menuView: { safeArea in
             SideBarMenuView(safeArea)
         } Background: {

@@ -39,7 +39,7 @@ struct ExerciseLibraryView: View {
             cornerRadius: 25,
             showMenu: $showMenu
         ) { safeArea in
-            NavigationStack(path: $navPath) {
+            ExerciseLibraryNavigationController(content: {
                 ScrollView {
                     VStack(alignment: .center, spacing: 10) {
                         
@@ -88,37 +88,12 @@ struct ExerciseLibraryView: View {
                             .environmentObject(viewRouter)
                     }
                 }
-                //MARK: Handling the navigation through the NavStack
-                // This is the root view of this whole view-hierarchy.
-                // If you want to add more viewas add to this group of if statements.
-                .navigationDestination(for: Int.self) { selection in
-                    if selection == 1 {
-                        CreateNewExerciseView()
-                            .environment(\.managedObjectContext, viewContext)
-                    } else if selection == 2 {
-                        EditExerciseView(
-                            exercise: $selectedExercise
-                        ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 3 {
-                        StatisticsView(
-                            exercise: $selectedExercise,
-                            navPath: $navPath,
-                            editingPr: $editingPr,
-                            newPrType: $newPrType
-                        ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 4 {
-                        EditPrView(
-                            editingPr: $editingPr,
-                            exercise: $selectedExercise
-                        ).environment(\.managedObjectContext, viewContext)
-                    } else if selection == 5 {
-                        CreateNewPersonalRecord(
-                            prType: $newPrType,
-                            exercise: $selectedExercise
-                        ).environment(\.managedObjectContext, viewContext)
-                    }
-                }
-            }
+            },
+            navPath: $navPath,
+            selectedExercise: $selectedExercise,
+            editingPr: $editingPr,
+            newPrType: $newPrType)
+            
         } menuView: { safeArea in
             SideBarMenuView(safeArea)
         } Background: {

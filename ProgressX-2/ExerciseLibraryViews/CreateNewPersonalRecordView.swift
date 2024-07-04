@@ -21,7 +21,7 @@ struct CreateNewPersonalRecord: View {
     // Date picker value
     @State var prDate: Date = Date()
     
-    // The selection of the segmentex picker
+    // The selection of the segmented picker
     @Binding var prType: String?
     
     // Exercise for the PR
