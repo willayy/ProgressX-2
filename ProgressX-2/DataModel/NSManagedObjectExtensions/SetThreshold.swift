@@ -7,9 +7,31 @@
 
 import Foundation
 
-extension Threshold {
+extension SetThreshold {
     
     // MARK: Extra Properties
+    
+    public var formattedFlatQuantityAdd: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return String(format: "%.0f", self.flatQuantityAdd)
+            case .Time:
+                return String(format: "%.2f", self.flatQuantityAdd)
+        }
+    }
+    
+    public var flatQuantityUnit: String {
+        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        switch type {
+            case .Reps:
+                return "reps"
+            case .Time:
+                return "seconds"
+        }
+    }
     
     // Gives a correctly formatted string from the quantity value
     public var formattedTriggerQuantity: String {
@@ -67,6 +89,20 @@ extension Threshold {
         
         if prToExerciseTypeMap[self.prType!] != self.templateSet!.exercise!.exerciseType {
             throw ValidationNSErrors.setAndExerciseTypeMismatch.toNSError()
+        }
+    }
+    
+    private func validateFlatLoadAdd() throws {
+        let set = self.templateSet!
+        if set.loadType == "numerical" && self.flatLoadAdd != nil {
+            throw ValidationNSErrors.flatLoadAddIsInvalid.toNSError()
+        }
+    }
+    
+    private func validateFlatQuantityAdd() throws {
+        let set = self.templateSet!
+        if set.quantityType == "numerical" && self.flatQuantityAdd != nil {
+            throw ValidationNSErrors.flatQuantityAddIsInvalid.toNSError()
         }
     }
     

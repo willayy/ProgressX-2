@@ -12,7 +12,7 @@ struct EditSessionView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @State private var selectedThreshold: Threshold? = nil
+    @State private var selectedThreshold: SetThreshold? = nil
     
     @State private var showSessionChangedAlert: Bool = false
     @State private var showNoChangeAlert: Bool = false
@@ -26,9 +26,7 @@ struct EditSessionView: View {
     @State private var editedSessionDescIsInvalid: Bool = false
     @State private var editedSessionDescIsInvalidMsg: String = ""
     
-    @State private var editedPositionIndex: String = ""
-    @State private var editedPositionIndexIsInvalid: Bool = false
-    @State private var editedPositionIndexIsInvalidMsg: String = ""
+    @State private var editedPositionIndex: Int64 = 0
     
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
@@ -40,8 +38,18 @@ struct EditSessionView: View {
         @FetchRequest(
             entity: TemplateSet.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TemplateSet.positionIndex, ascending: true)],
-            predicate: NSPredicate(format: "session == %@", selectedTemplateSession!)
+            predicate: NSPredicate(format: "templateSession == %@", selectedTemplateSession!)
         ) var templateSets: FetchedResults<TemplateSet>
+        
+        // Get the positionIndexes for all Sessions in this Week
+        let positionIndexes: [Int64] = {
+            let week = selectedTemplateSession!.templateWeek!
+            let sessions = week.templateSessions!.allObjects as! [TemplateSession]
+            let positionIndexes = sessions.map { session in
+                session.positionIndex
+            }
+            return positionIndexes.sorted()
+        }()
         
         ScrollView {
             VStack {
@@ -89,6 +97,7 @@ struct EditSessionView: View {
                             width: 0.6,
                             errorMessage: $editedSessionNameIsInvalidMsg
                         )
+                        .padding(.top, 10)
                         
                         InputShortTextField(
                             placeHolder: "New session description",
@@ -98,49 +107,52 @@ struct EditSessionView: View {
                             errorMessage: $editedSessionDescIsInvalidMsg
                         )
                         
-                        InputShortTextField(
-                            placeHolder: "New position in week",
-                            text: $editedPositionIndex,
-                            markAsWrong: $editedPositionIndexIsInvalid,
-                            width: 0.6,
-                            errorMessage: $editedPositionIndexIsInvalidMsg
+                        LightSubHeadline(text: "Change the sessions position in the week")
+                            .padding(.top, 10)
+                        
+                        IntSelectionList(
+                            selected: $editedPositionIndex,
+                            selections: positionIndexes
                         )
+                        .onAppear(perform: {
+                            editedPositionIndex = selectedTemplateSession!.positionIndex
+                        })
                         
                         Button {
                             if validateInput() {
                                 
-                                let inputPosition = editedPositionIndex.isEmpty ? selectedTemplateSession!.positionIndex : Int64(editedPositionIndex)
                                 let inputName = editedSessionName.isEmpty ? selectedTemplateSession!.timePeriodName! : editedSessionName
                                 let inputDesc = editedSessionDescription.isEmpty ? selectedTemplateSession!.timePeriodDescription! : editedSessionDescription
                                 
-                                // Find the week with the same position index in the parent routine
-                                let oldPositionIndex = selectedTemplateSession!.positionIndex
-                                let weeksInParentRoutine: [TemplateSession] = selectedTemplateSession!.week!.sessions?.allObjects as! [TemplateSession]
-                                let switchWithSession = weeksInParentRoutine.first(where: { $0.positionIndex == inputPosition })
-                                // Switch position index with the week
-                                switchWithSession?.positionIndex = oldPositionIndex
+                                // Find the session with the same position index in the parent week
+                                let sessionsInParentWeek = selectedTemplateSession!.templateWeek!.templateSessions?.allObjects as! [TemplateSession]
+                                let switchWithSession = sessionsInParentWeek.first(
+                                    where: {
+                                        ($0 as AnyObject).positionIndex == editedPositionIndex
+                                    }
+                                )
                                 
-                                selectedTemplateSession!.positionIndex = inputPosition!
+                                let positionIndexDidChange: Bool = (editedPositionIndex != selectedTemplateSession!.positionIndex)
+                                
+                                // Switch position index with the week
+                                switchWithSession?.positionIndex = selectedTemplateSession!.positionIndex
+                                
+                                selectedTemplateSession!.positionIndex = editedPositionIndex
                                 selectedTemplateSession!.timePeriodName = inputName
                                 selectedTemplateSession!.timePeriodDescription = inputDesc
                                 
                                 PersistenceController.save(viewContext)
                                 
-                                if editedSessionName.isEmpty && editedSessionDescription.isEmpty && editedPositionIndex.isEmpty {
-                                    withAnimation(.easeOut) {
+                                withAnimation(.easeOut) {
+                                    if editedSessionName.isEmpty && editedSessionDescription.isEmpty && !positionIndexDidChange {
                                         showNoChangeAlert = true
-                                        editedSessionName = ""
-                                        editedSessionDescription = ""
-                                        editedPositionIndex = ""
-                                    }
-                                } else {
-                                    withAnimation(.easeOut) {
+                                    } else {
                                         showSessionChangedAlert = true
-                                        editedSessionName = ""
-                                        editedSessionDescription = ""
-                                        editedPositionIndex = ""
                                     }
+                                    editedSessionName = ""
+                                    editedSessionDescription = ""
                                 }
+                            
                             }
                         } label: {
                             Text("Save change")
@@ -186,26 +198,17 @@ struct EditSessionView: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let sessionsInParentRoutine: [TemplateSession] = selectedTemplateSession!.week!.sessions?.allObjects as! [TemplateSession]
-        let maxPositionIndex: Int = Int(sessionsInParentRoutine.max {$0.positionIndex > $1.positionIndex}!.positionIndex)
         
-        let routineNameValidator = StringFieldValidator(emptyAllowed: true)
-        let routineDescValidator = StringFieldValidator(emptyAllowed: true)
-        let positionIndexValidator = IntFieldValidator(emptyAllowed: true, minInputNumber: 1, maxInputNumber: maxPositionIndex)
+        let sessionNameValidator = StringFieldValidator(emptyAllowed: true)
+        let sessionDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += positionIndexValidator.valideField(
-            inputVar: editedPositionIndex,
-            errorMessage: $editedPositionIndexIsInvalidMsg,
-            fieldInvalid: $editedPositionIndexIsInvalid
-        )
-        
-        valid += routineNameValidator.valideField(
+        valid += sessionNameValidator.valideField(
             inputVar: editedSessionName,
             errorMessage: $editedSessionNameIsInvalidMsg,
             fieldInvalid: $editedSessionIsInvalid
         )
         
-        valid += routineDescValidator.valideField(
+        valid += sessionDescValidator.valideField(
             inputVar: editedSessionDescription,
             errorMessage: $editedSessionDescIsInvalidMsg,
             fieldInvalid: $editedSessionDescIsInvalid

@@ -97,7 +97,7 @@ struct CreateNewProfile1: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "m" : "ft"
+                    let lengthUnit = (selectedUnitSegment == "Metric (meters)") ? "cm" : "ft"
                     InputDecimalNumberField(placeHolder: lengthUnit, numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: $heightIsInvalidMsg)
                     
                     Text("What is your (biological) gender")

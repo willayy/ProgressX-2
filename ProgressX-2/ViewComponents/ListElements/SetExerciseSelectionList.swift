@@ -10,6 +10,8 @@ import CoreData
 
 struct SetExerciseSelectionList: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
+    
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
@@ -20,13 +22,12 @@ struct SetExerciseSelectionList: View {
     
     var body: some View {
         
-        // Computed variable
+        // Computed variable that returns a subset matching the searchword
         var searchedCollection: [Exercise] {
             if searchWord.isEmpty {
-                exercises.filter { _ in true }
+                return exercises.filter { Exercise in true }
             } else {
-                exercises.filter { $0.exerciseName!.localizedCaseInsensitiveContains(searchWord)
-                }
+                return exercises.filter { $0.exerciseName!.localizedCaseInsensitiveContains(searchWord) }
             }
         }
         
@@ -50,19 +51,17 @@ struct SetExerciseSelectionList: View {
                         .cornerRadius(20)
                         .frame(height: 2)
                 }
-                DisclosureGroup("Exercises") {
+                DisclosureGroup(selectedExercise?.exerciseName ?? "Not selected") {
                     ForEach(searchedCollection) { exercise in
                         Button {
                             selectedExercise = exercise
                         } label: {
                             Text(exercise.exerciseName!)
                                 .frame(width: 250)
-                        }       
+                        }
                         .padding(2)
-                        .foregroundStyle(.gray)
                     }
                 }
-                .foregroundStyle(.blue)
             }
             .padding(.horizontal, 40)
         }
@@ -71,6 +70,7 @@ struct SetExerciseSelectionList: View {
 
 #Preview {
     
+    let context = PersistenceController.preview.container.viewContext
     @State var selectedExercise: Exercise? = nil
     @State var searchWord: String = ""
     
@@ -78,4 +78,5 @@ struct SetExerciseSelectionList: View {
         selectedExercise: $selectedExercise,
         searchWord: $searchWord
     )
+    .environment(\.managedObjectContext, context)
 }

@@ -49,6 +49,8 @@ enum ValidationNSErrors: Int {
     
     // Threshold
     case triggerQuantityIsInvalid = 9981
+    case flatLoadAddIsInvalid = 9980
+    case flatQuantityAddIsInvalid = 9979
     
     /* -------------------------------------------------------- */
     
@@ -82,7 +84,7 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey: "Property .quantityDone on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
             
         case .quantityTodoInvalid:
-            return [NSLocalizedDescriptionKey: "Property .quantityTodo on TrainingSet must be a valid integer if the prType is one of 'onerepmax' or 'maxreps'."]
+            return [NSLocalizedDescriptionKey: "Property .quantity on TrainingSet must be a valid integer if the quantityType is numerical and the exercise type is reps. If quantityType is percent"]
             
         case .completeWithoutCompletionDate:
             return [NSLocalizedDescriptionKey: "A Completable object can't be complete without a completionDate."]
@@ -110,6 +112,12 @@ enum ValidationNSErrors: Int {
             
         case .triggerQuantityIsInvalid:
             return [NSLocalizedDescriptionKey: "The triggerQuantity of this threshold has to be a valid integer if exercise is of type"]
+            
+        case .flatLoadAddIsInvalid:
+            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is Numerical flatLoadAdd must be nil"]
+            
+        case .flatQuantityAddIsInvalid:
+            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is Numerical flatLoadQuantity must be nil"]
         }
     }
     

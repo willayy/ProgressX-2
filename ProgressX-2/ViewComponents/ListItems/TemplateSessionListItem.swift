@@ -24,7 +24,7 @@ struct TemplateSessionListItem: View {
                 
                 (Text("Sets: ")
                     .fontWeight(.bold)
-                 + Text("\(session.sets?.count ?? 0)"))
+                 + Text("\(session.templateSets?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         
