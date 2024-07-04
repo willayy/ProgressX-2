@@ -6,13 +6,33 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct CreateNewThresholdView: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @Binding var navPath: [Int]
+    @Binding var selectedTemplateSet: TemplateSet?
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        #warning("TODO: Implement")
     }
 }
 
 #Preview {
-    CreateNewThresholdView()
+    
+    let context = PersistenceController.preview.container.viewContext
+    let fetchReqeust: NSFetchRequest = TemplateSet.fetchRequest()
+    let templateSets = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
+    
+    @State var selectedTemplateSet: TemplateSet? = templateSets.first
+    
+    @State var navPath: [Int] = [Int]()
+    
+    return CreateNewThresholdView(
+        navPath: $navPath, 
+        selectedTemplateSet: $selectedTemplateSet
+    )
+    .environment(\.managedObjectContext, context)
 }

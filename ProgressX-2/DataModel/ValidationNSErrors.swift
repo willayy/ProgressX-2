@@ -114,10 +114,10 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey: "The triggerQuantity of this threshold has to be a valid integer if exercise is of type"]
             
         case .flatLoadAddIsInvalid:
-            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is Numerical flatLoadAdd must be nil"]
+            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is not Numerical flatLoadAdd must be nil"]
             
         case .flatQuantityAddIsInvalid:
-            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is Numerical flatLoadQuantity must be nil"]
+            return [NSLocalizedDescriptionKey: "If the set this threshold is attached to is not Numerical flatLoadQuantity must be nil"]
         }
     }
     

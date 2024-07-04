@@ -189,10 +189,11 @@ extension PersistenceController {
         return session
     }
     
-    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise, loadType: String, load: Double, quantityType: String, quantity: Double) -> TemplateSet {
+    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, description: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise, loadType: String, load: Double, quantityType: String, quantity: Double) -> TemplateSet {
         let set = TemplateSet(context: context)
         set.positionIndex = positionIndex
         set.timePeriodName = name
+        set.timePeriodDescription = description
         set.templateSession = templateSession
         set.exercise = exercise
         set.quantityType = quantityType

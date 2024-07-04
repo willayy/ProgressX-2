@@ -11,7 +11,7 @@ struct MagnifiedThresholdView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    let threshold: SetThreshold
+    @ObservedObject var threshold: SetThreshold
     
     var body: some View {
         VStack(alignment: .leading, content: {
@@ -36,7 +36,7 @@ struct MagnifiedThresholdView: View {
             
             Text("Flat load add: ")
                 .fontWeight(.bold) +
-            Text(String(threshold.flatLoadAdd) + weightUnit!)
+            Text(String(threshold.formattedFlatLoadAdd) + weightUnit!)
             
             Text("Flat quantity add: ")
                 .fontWeight(.bold) +
