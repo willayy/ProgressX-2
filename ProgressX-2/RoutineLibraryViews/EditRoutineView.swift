@@ -42,7 +42,7 @@ struct EditRoutineView: View {
         @FetchRequest(
             entity: TemplateWeek.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TemplateWeek.positionIndex, ascending: true)],
-            predicate: NSPredicate(format: "cycle == %@", selectedTemplateCycle!)
+            predicate: NSPredicate(format: "templateCycle == %@", selectedTemplateCycle!)
         ) var templateWeeks: FetchedResults<TemplateWeek>
         
         ScrollView {
@@ -205,7 +205,7 @@ struct EditRoutineView: View {
     
     @State var navPath: [Int] = [Int]()
     @State var selectedRoutine: Routine? = routine
-    @State var selectedTemplateCycle: TemplateCycle? = routine.template
+    @State var selectedTemplateCycle: TemplateCycle? = routine.templateCycle
     @State var selectedTemplateWeek: TemplateWeek? = nil
     
     return EditRoutineView(

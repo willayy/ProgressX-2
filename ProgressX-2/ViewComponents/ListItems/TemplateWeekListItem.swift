@@ -24,7 +24,7 @@ struct TemplateWeekListItem: View {
                 
                 (Text("Sessions: ")
                     .fontWeight(.bold)
-                 + Text("\(week.sessions?.count ?? 0)"))
+                 + Text("\(week.templateSessions?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         

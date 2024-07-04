@@ -15,11 +15,18 @@ struct MagnifiedTemplateSetView: View {
     
     var body: some View {
         
-        let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
-        
         VStack(alignment: .leading, content: {
             
-            Text(set.timePeriodName ?? "")
+            Text("Name: ").fontWeight(.bold) + Text(set.timePeriodName ?? "")
+            
+            (
+                Text("Description: ")
+                .fontWeight(.bold)
+                .font(.subheadline) +
+                Text(set.timePeriodDescription ?? "")
+                .font(.subheadline)
+            )
+                .padding(.bottom, 10)
             
             (Text("Exercise: ")
                 .fontWeight(.bold)
@@ -29,13 +36,13 @@ struct MagnifiedTemplateSetView: View {
             
             (Text("Quantity: ")
                 .fontWeight(.bold)
-             + Text("\(set.quantityTodoString) \(set.quantityUnit)"))
+             + Text("\(set.quantityTodoString)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
             (Text("Load: ")
                 .fontWeight(.bold)
-             + Text("\(set.loadTodoString) \(weightUnit)"))
+             + Text("\(set.loadTodoString)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
@@ -44,6 +51,8 @@ struct MagnifiedTemplateSetView: View {
              + Text("\(set.thresholds?.count ?? 0)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
+            
+            #warning("TODO: Add Threshold information here aswell")
             
         })
     }

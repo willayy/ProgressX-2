@@ -120,6 +120,16 @@ struct CreateNewTemplateSetView: View {
             }
         }
         
+        /* This dictionary maps the entered value from 
+         the view to the correct core data property value */
+        let typeMap: [String : String] = [
+            "Numerical" : "numerical",
+            "Percentage of current 1RM PR" : "maxperc",
+            "Percentage of current TimeMax PR" : "maxperc",
+            "Percentage of current AMRAP PR" : "maxperc",
+            "Percentage of current body weight" : "bwperc"
+        ]
+        
         ScrollView {
             VStack {
                 
@@ -184,19 +194,10 @@ struct CreateNewTemplateSetView: View {
                     }
                     
                     // MARK: Menu for selecting load type
-                    GroupBox {
-                        DisclosureGroup(selectedLoadType) {
-                            ForEach(loadTypeSelections, id: \.self) { loadType in
-                                Button {
-                                    selectedLoadType = loadType
-                                } label: {
-                                    Text(loadType)
-                                }
-                                .padding(2)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 40)
+                    StringSelectionList(
+                        selected: $selectedLoadType,
+                        selections: loadTypeSelections
+                    )
                     
                     BoldSubHeadline(text: "Choose quantity type")
                         .padding(.top, 20)
@@ -211,19 +212,10 @@ struct CreateNewTemplateSetView: View {
                     }
                     
                     // MARK: Menu for selecting quantity type
-                    GroupBox {
-                        DisclosureGroup(selectedQuantityType) {
-                            ForEach(quantityTypeSelections, id: \.self) { quantityType in
-                                Button {
-                                    selectedLoadType = quantityType
-                                } label: {
-                                    Text(quantityType)
-                                }
-                                .padding(2)
-                            }
-                        }
-                    }
-                    .padding(.horizontal, 40)
+                    StringSelectionList(
+                        selected: $selectedQuantityType,
+                        selections: quantityTypeSelections
+                    )
                     
                     BoldSubHeadline(text: "Choose quantity and load")
                         .padding(.top, 20)
@@ -257,7 +249,8 @@ struct CreateNewTemplateSetView: View {
                                 errorMessage: $newSetQuantityIsInvalidMsg
                             )
                             .padding(.top, 5)
-                            if selectedQuantityType == "Percentage" {
+                            
+                            if quantityPlaceholder == "Percentage" {
                                 Text("%")
                             }
                         }
@@ -271,7 +264,8 @@ struct CreateNewTemplateSetView: View {
                                 errorMessage: $newSetQuantityIsInvalidMsg
                             )
                             .padding(.top, 5)
-                            if selectedQuantityType == "Percentage" {
+                            
+                            if quantityPlaceholder == "Percentage" {
                                 Text("%")
                             }
                         }
@@ -279,89 +273,7 @@ struct CreateNewTemplateSetView: View {
                     
                     Button {
                         if validateInput() {
-                            
-                            /* Insane computed constant for the input load to the NSManagedObject entity
-                             very ugly and i dont want to see it again */
-                            let inputLoad: Double = {
-                                if selectedLoadType != "Numerical" {
-                                    let lastLoad: Double?
-                                    
-                                    switch selectedLoadType {
-                                        
-                                    case "Percentage of current 1RM PR":
-                                        let latestPr = PersistenceController.getLatestPersonalRecord(
-                                            viewContext,
-                                            exercise: selectedExercise!,
-                                            prType: "onerepmax"
-                                        )
-                                        lastLoad = latestPr?.weightLoad
-                                        
-                                    case "Percentage of current TimeMax PR":
-                                        let latestPr = PersistenceController.getLatestPersonalRecord(
-                                            viewContext,
-                                            exercise: selectedExercise!,
-                                            prType: "timemax"
-                                        )
-                                        lastLoad = latestPr?.weightLoad
-                                        
-                                    case "Percentage of current AMRAP PR":
-                                        let latestPr = PersistenceController.getLatestPersonalRecord(
-                                            viewContext,
-                                            exercise: selectedExercise!,
-                                            prType: "maxreps"
-                                        )
-                                        lastLoad = latestPr?.weightLoad
-                                        
-                                    case "Percentage of current body weight":
-                                        let latestBw = PersistenceController.getLatestBodyEntry(viewContext)
-                                        lastLoad = latestBw?.bodyWeight
-                                        
-                                    default:
-                                        lastLoad = 0
-                                    }
-                                    
-                                    let fraction = Double(newSetLoad)! / 100
-                                    return fraction * (lastLoad ?? 0)
-                                } else {
-                                    return Double(newSetLoad)!
-                                }
-                            }()
-                            
-                            /* Insane computed constant for the input quantity to the NSManagedObject entity
-                             very ugly and i dont want to see it again */
-                            let inputQuantity: Double = {
-                                if selectedQuantityType != "Numerical" {
-                                    let lastQuantity: Double?
-                                    
-                                    switch selectedQuantityType {
-                                        
-                                    case "Percentage of current TimeMax PR":
-                                        let latestPr = PersistenceController.getLatestPersonalRecord(
-                                            viewContext,
-                                            exercise: selectedExercise!,
-                                            prType: "timemax"
-                                        )
-                                        lastQuantity = latestPr?.prQuantity
-                                        
-                                    case "Percentage of current AMRAP PR":
-                                        let latestPr = PersistenceController.getLatestPersonalRecord(
-                                            viewContext,
-                                            exercise: selectedExercise!,
-                                            prType: "maxreps"
-                                        )
-                                        lastQuantity = latestPr?.prQuantity
-                                        
-                                    default:
-                                        lastQuantity = 0
-                                    }
-                                    
-                                    let fraction = Double(newSetQuantity)! / 100
-                                    return fraction * (lastQuantity ?? 0)
-                                } else {
-                                    return Double(newSetQuantity)!
-                                }
-                            }()
-                            
+            
                             _ = PersistenceController.createTemplateSet(
                                 viewContext,
                                 name: newSetName,
@@ -369,17 +281,14 @@ struct CreateNewTemplateSetView: View {
                                 positionIndex: nextPositionIndex,
                                 exercise: selectedExercise!,
                                 loadType: typeMap[selectedLoadType]!,
-                                load: inputLoad,
+                                load: Double(newSetLoad)!,
                                 quantityType: typeMap[selectedQuantityType]!,
-                                quantity: inputQuantity
+                                quantity: Double(newSetQuantity)!
                             )
-                            
-                            #warning("TODO: Try if this shit even works")
-                            
+        
                             PersistenceController.save(viewContext)
                             showAddThresholds = true
-                            
-                            navPath.append(8)
+
                         }
                     } label: {
                         Text("Create set")
@@ -395,7 +304,9 @@ struct CreateNewTemplateSetView: View {
                             primaryButton: .default(Text("Yes"), action: {
                                 navPath.append(8)
                             }),
-                            secondaryButton: .cancel(Text("No"))
+                            secondaryButton: .cancel(Text("No"), action: {
+                                navPath.append(7)
+                            })
                         )
                     })
                 }
@@ -440,16 +351,6 @@ struct CreateNewTemplateSetView: View {
         
         return valid == 0
     }
-    
-    /* This dictionary maps the entered value from the view to the correct core data property value */
-    let typeMap: [String : String] = [
-        "Numerical" : "numerical",
-        "Percentage of current 1RM PR" : "maxperc",
-        "Percentage of current TimeMax PR" : "maxperc",
-        "Percentage of current AMRAP PR" : "maxperc",
-        "Percentage of current body weight" : "bwperc"
-    ]
-    
 }
 
 #Preview {

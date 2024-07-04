@@ -11,16 +11,16 @@ struct ThresholdListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedThreshold: Threshold?
+    @Binding var selectedThreshold: SetThreshold?
     @State private var showDeleteAlert: Bool = false
     @State private var showMagnifiedView: Bool = false
-    let threshold: Threshold
+    let threshold: SetThreshold
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
                 
-                Text("Threshold \(threshold.thresholdNumber)")
+                Text("Threshold \(threshold.positionIndex)")
                 
                 (Text("Triggered at: ")
                     .fontWeight(.bold)
@@ -38,7 +38,8 @@ struct ThresholdListItem: View {
             .frame(width: 155, height: 45)
             .padding(.vertical, 10)
             .sheet(isPresented: $showMagnifiedView) {
-                #warning("TODO: Implement magnified trigger view")
+                MagnifiedThresholdView(threshold: threshold)
+                    .environment(\.managedObjectContext, viewContext)
             }
             
             Spacer()
@@ -54,7 +55,7 @@ struct ThresholdListItem: View {
             // MARK: Edit button
             Button(action: {
                 selectedThreshold = threshold
-                navPath.append(8)
+                navPath.append(10)
             }) { Image(systemName: "pencil") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
@@ -71,7 +72,7 @@ struct ThresholdListItem: View {
                 .alert(isPresented: $showDeleteAlert, content: {
                     Alert(
                         title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete Threshold \(threshold.thresholdNumber)?"),
+                        message: Text("Are you sure you want to delete Threshold \(threshold.positionIndex)?"),
                         primaryButton: .destructive(Text("Delete")) {
                             PersistenceController.delete(viewContext, object: threshold)
                             PersistenceController.save(viewContext)
