@@ -26,16 +26,14 @@ struct ProgressX_2App: App {
                             }
                         }
                     })
-            }
-            
-            else {
+            }else {
                 switch (viewRouter.rootView) {
                 case .HomeView:
                     HomeView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case .CreateNewProfileView:
-                    CreateNewProfile1()
+                    CreateNewProfile1View()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case .ExerciseLibraryView:

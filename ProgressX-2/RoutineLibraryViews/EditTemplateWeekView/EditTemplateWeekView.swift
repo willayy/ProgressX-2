@@ -8,27 +8,13 @@
 import SwiftUI
 import CoreData
 
-struct EditWeekView: View {
+struct EditTemplateWeekView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State private var showWeekChangedAlert: Bool = false
-    @State private var showNoChangeAlert: Bool = false
-    @State private var showChangeInfo: Bool = false
-    
-    @State private var editedWeekName: String = ""
-    @State private var editedWeekIsInvalid: Bool = false
-    @State private var editedWeekNameIsInvalidMsg: String = ""
-    
-    @State private var editedWeekDescription: String = ""
-    @State private var editedWeekDescIsInvalid: Bool = false
-    @State private var editedWeekDescIsInvalidMsg: String = ""
-    
-    @State private var editedPositionIndex: Int64 = 0
-    
     @Binding var navPath: [Int]
     @Binding var selectedTemplateWeek: TemplateWeek?
     @Binding var selectedTemplateSession: TemplateSession?
+    @StateObject private var viewModel = EditTemplateWeekViewModel()
     
     var body: some View {
 
@@ -38,16 +24,6 @@ struct EditWeekView: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \TemplateSession.positionIndex, ascending: true)],
             predicate: NSPredicate(format: "templateWeek == %@", selectedTemplateWeek!)
         ) var templateSessions: FetchedResults<TemplateSession>
-        
-        // Get the positionIndexes for all weeks in this Routine
-        let positionIndexes: [Int64] = {
-            let cycle = selectedTemplateWeek!.templateCycle!
-            let weeks = cycle.templateWeeks!.allObjects as! [TemplateWeek]
-            let positionIndexes = weeks.map { week in
-                week.positionIndex
-            }
-            return positionIndexes.sorted()
-        }()
         
         ScrollView {
             VStack {
@@ -72,7 +48,7 @@ struct EditWeekView: View {
                 // Button that toggles showChangeInfo.
                 Button {
                     withAnimation {
-                        showChangeInfo.toggle()
+                        viewModel.showChangeInfo.toggle()
                     }
                 } label: {
                     BoldSubHeadline(text: "Change week informaton")
@@ -80,77 +56,52 @@ struct EditWeekView: View {
                 }.buttonStyle(BorderedButtonStyle())
                 
                 // Expandable hidden view that has functionality for changing name and description.
-                if showChangeInfo {
+                if viewModel.showChangeInfo {
                     VStack {
-                        if showWeekChangedAlert {
-                            SubmitAlert(message: "Successfully edited week!", color: .green, showAlertState: $showWeekChangedAlert)
-                        } else if showNoChangeAlert {
-                            SubmitAlert(message: "No change!", color: .blue, showAlertState: $showNoChangeAlert)
+                        if viewModel.showWeekChangedAlert {
+                            SubmitAlert(
+                                message: "Successfully edited week!",
+                                color: .green,
+                                showAlertState: $viewModel.showWeekChangedAlert
+                            )
+                        } else if viewModel.showNoChangeAlert {
+                            SubmitAlert(
+                                message: "No change!",
+                                color: .blue,
+                                showAlertState: $viewModel.showNoChangeAlert
+                            )
                         }
                         
                         InputShortTextField(
                             placeHolder: "New week name",
-                            text: $editedWeekName,
-                            markAsWrong: $editedWeekIsInvalid,
+                            text: $viewModel.editedWeekName,
+                            markAsWrong: $viewModel.editedWeekIsInvalid,
                             width: 0.6,
-                            errorMessage: $editedWeekNameIsInvalidMsg
+                            errorMessage: $viewModel.editedWeekNameIsInvalidMsg
                         )
                         
                         InputShortTextField(
                             placeHolder: "New week description",
-                            text: $editedWeekDescription,
-                            markAsWrong: $editedWeekDescIsInvalid,
+                            text: $viewModel.editedWeekDescription,
+                            markAsWrong: $viewModel.editedWeekDescIsInvalid,
                             width: 0.6,
-                            errorMessage: $editedWeekDescIsInvalidMsg
+                            errorMessage: $viewModel.editedWeekDescIsInvalidMsg
                         )
                         
                         LightSubHeadline(text: "Change the weeks position in the routine")
                             .padding(.top, 10)
                         
                         IntSelectionList(
-                            selected: $editedPositionIndex,
-                            selections: positionIndexes
+                            selected: $viewModel.editedPositionIndex,
+                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek)
                         )
                         .onAppear(perform: {
-                            editedPositionIndex = selectedTemplateWeek!.positionIndex
+                            viewModel.editedPositionIndex = selectedTemplateWeek!.positionIndex
                         })
                         
                         Button {
                             if validateInput() {
-                                
-                                let inputName = editedWeekName.isEmpty ? selectedTemplateWeek!.timePeriodName! : editedWeekName
-                                let inputDesc = editedWeekDescription.isEmpty ? selectedTemplateWeek!.timePeriodDescription! : editedWeekDescription
-                                
-                                // Find the week with the same position index in the parent routine
-                                let weeksInParentRoutine = selectedTemplateWeek!.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
-                                let switchWithWeek = weeksInParentRoutine.first(
-                                    where: {
-                                        ($0 as AnyObject).positionIndex == editedPositionIndex
-                                    }
-                                )
-                                
-                                let positionIndexDidChange: Bool = (editedPositionIndex != selectedTemplateWeek!.positionIndex)
-                                
-                                // Switch position index with the week
-                                switchWithWeek!.positionIndex = selectedTemplateWeek!.positionIndex
-                                
-                                selectedTemplateWeek!.positionIndex = editedPositionIndex
-                                selectedTemplateWeek!.timePeriodName = inputName
-                                selectedTemplateWeek!.timePeriodDescription = inputDesc
-                                
-                                PersistenceController.save(viewContext)
-                                
-                                // Show alert if stuff changes
-                                withAnimation(.easeOut) {
-                                    if editedWeekName.isEmpty && editedWeekDescription.isEmpty && !positionIndexDidChange {
-                                        showNoChangeAlert = true
-                                    } else {
-                                        showWeekChangedAlert = true
-                                    }
-                                    editedWeekName = ""
-                                    editedWeekDescription = ""
-                                }
-                                
+                                viewModel.changeTemplateWeekInfo(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
                             }
                         } label: {
                             Text("Save change")
@@ -167,6 +118,7 @@ struct EditWeekView: View {
                     .padding(.top, 20)
                 
                 BasicList(
+                    height: 400,
                     containerName: "this week",
                     elementName: "session",
                     data: _templateSessions
@@ -180,14 +132,7 @@ struct EditWeekView: View {
                 }
                 
                 Button {
-                    let positionIndex = selectedTemplateWeek!.getNextPositionIndex()
-                    _ = PersistenceController.createTemplateSession(
-                        viewContext,
-                        name: "Session \(positionIndex)",
-                        templateWeek: selectedTemplateWeek!,
-                        positionIndex: positionIndex
-                    )
-                    PersistenceController.save(viewContext)
+                    viewModel.addSession(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)
@@ -207,15 +152,15 @@ struct EditWeekView: View {
         let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += weekNameValidator.valideField(
-            inputVar: editedWeekName,
-            errorMessage: $editedWeekNameIsInvalidMsg,
-            fieldInvalid: $editedWeekIsInvalid
+            inputVar: viewModel.editedWeekName,
+            errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
+            fieldInvalid: $viewModel.editedWeekIsInvalid
         )
         
         valid += weekDescValidator.valideField(
-            inputVar: editedWeekDescription,
-            errorMessage: $editedWeekDescIsInvalidMsg,
-            fieldInvalid: $editedWeekDescIsInvalid
+            inputVar: viewModel.editedWeekDescription,
+            errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
+            fieldInvalid: $viewModel.editedWeekDescIsInvalid
         )
 
         return valid == 0
@@ -234,7 +179,7 @@ struct EditWeekView: View {
     @State var selectedTemplateWeek: TemplateWeek? = week
     @State var selectedTemplateSession: TemplateSession? = nil
     
-    return EditWeekView(
+    return EditTemplateWeekView(
         navPath: $navPath,
         selectedTemplateWeek: $selectedTemplateWeek, 
         selectedTemplateSession: $selectedTemplateSession

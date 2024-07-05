@@ -10,7 +10,7 @@ import SwiftUI
 struct RoutineLibraryView: View {
     
     @EnvironmentObject private var viewRouter: ViewRouter
-    
+    @StateObject private var viewModel = RoutineLibraryViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
@@ -23,27 +23,9 @@ struct RoutineLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
     ) var searchedRoutines: FetchedResults<Routine>
     
-    // TimePeriod selections
-    @State private var selectedRoutine: Routine? = nil
-    @State private var selectedTemplateCycle: TemplateCycle? = nil
-    @State private var selectedTemplateWeek: TemplateWeek? = nil
-    @State private var selectedTemplateSession: TemplateSession? = nil
-    @State private var selectedTemplateSet: TemplateSet? = nil
-    @State private var selectedThreshold: SetThreshold? = nil
-    
-    @State private var showMenu: Bool = false
-    @State private var navPath: [Int] = [Int]()
-    @State private var searchText: String = ""
-    
     var body: some View {
         
-        SideBar(
-            rotateWhenExpands: true,
-            disableInteractions: true,
-            sideMenuWidth: 200,
-            cornerRadius: 25,
-            showMenu: $showMenu
-        ) { safeArea in
+        SideBarView(content: {
             RoutineLibraryNavigationController(content: {
                 ScrollView {
                     VStack(alignment: .center) {
@@ -55,7 +37,7 @@ struct RoutineLibraryView: View {
                         // MARK: Search bar
                         SearchBar(
                             searchAttribute: "timePeriodName",
-                            searchText: $searchText,
+                            searchText: $viewModel.searchText,
                             fetchRequest: _searchedRoutines
                         )
                         .padding(.top, 20)
@@ -68,9 +50,9 @@ struct RoutineLibraryView: View {
                             searchedData: _searchedRoutines
                         ) { routine in
                             RoutineListItem(
-                                navPath: $navPath,
-                                selectedRoutine: $selectedRoutine,
-                                selectedTemplateCycle: $selectedTemplateCycle,
+                                navPath: $viewModel.navPath,
+                                selectedRoutine: $viewModel.selectedRoutine,
+                                selectedTemplateCycle: $viewModel.selectedTemplateCycle,
                                 routine: routine
                             )
                             .environment(\.managedObjectContext, viewContext)
@@ -78,7 +60,7 @@ struct RoutineLibraryView: View {
                         
                         // MARK: Add new Routine button
                         Button {
-                            navPath.append(1)
+                            viewModel.navPath.append(1)
                         } label: {
                             Text("Add new Routine")
                                 .frame(height: 40)
@@ -91,31 +73,19 @@ struct RoutineLibraryView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        SideBarButton(showMenu: $showMenu)
+                        SideBarButton(showMenu: $viewModel.showMenu)
                             .environmentObject(viewRouter)
                     }
                 }
-            },
-           navPath: $navPath,
-           selectedRoutine: $selectedRoutine,
-           selectedTemplateCycle: $selectedTemplateCycle,
-           selectedTemplateWeek: $selectedTemplateWeek,
-           selectedTemplateSession: $selectedTemplateSession,
-           selectedTemplateSet: $selectedTemplateSet,
-           selectedThreshold: $selectedThreshold)
-        } menuView: { safeArea in
-            SideBarMenuView(safeArea)
-        } Background: {
-            Rectangle()
-        }
+            }, navPath: $viewModel.navPath,
+               selectedRoutine: $viewModel.selectedRoutine,
+               selectedTemplateCycle: $viewModel.selectedTemplateCycle,
+               selectedTemplateWeek: $viewModel.selectedTemplateWeek,
+               selectedTemplateSession: $viewModel.selectedTemplateSession,
+               selectedTemplateSet: $viewModel.selectedTemplateSet,
+               selectedThreshold: $viewModel.selectedThreshold)
+        }, showMenu: $viewModel.showMenu)
     }
-    
-    @ViewBuilder
-    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
-    }
-    
 }
 
 #Preview {

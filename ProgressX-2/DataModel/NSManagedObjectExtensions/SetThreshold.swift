@@ -12,7 +12,8 @@ extension SetThreshold {
     // MARK: Extra Properties
     
     public var formattedFlatLoadAdd: String {
-        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0)
+        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
+        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + weightUnit
     }
     
     public var formattedFlatQuantityAdd: String {
@@ -20,46 +21,24 @@ extension SetThreshold {
         
         switch type {
             case .Reps:
-                return String(format: "%.0f", self.flatQuantityAdd?.doubleValue ?? 0)
+                return String(format: "%.0f", self.flatQuantityAdd?.doubleValue ?? 0) + " reps"
             case .Time:
-                return String(format: "%.2f", self.flatQuantityAdd?.doubleValue ?? 0)
+                return String(format: "%.2f", self.flatQuantityAdd?.doubleValue ?? 0) + " seconds"
         }
     }
     
-    public var flatQuantityUnit: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
-        
-        switch type {
-            case .Reps:
-                return "reps"
-            case .Time:
-                return "seconds"
-        }
-    }
-    
-    // Gives a correctly formatted string from the quantity value
+    /// Use this property to get a correctly formatted string from the quantity value
     public var formattedTriggerQuantity: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
         switch type {
             case .Reps:
-                return String(format: "%.0f", self.triggerQuantity)
+                return String(format: "%.0f", self.triggerQuantity) + " reps"
             case .Time:
-                return String(format: "%.2f", self.triggerQuantity)
+                return String(format: "%.2f", self.triggerQuantity) + " seconds"
         }
     }
-    
-    public var triggerQuantityUnit: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
-        switch type {
-            case .Reps:
-                return "reps"
-            case .Time:
-                return "seconds"
-        }
-    }
-    
     // MARK: Validation
     
     override public func validateForInsert() throws {

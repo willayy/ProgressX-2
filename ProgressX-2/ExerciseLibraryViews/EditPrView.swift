@@ -81,7 +81,7 @@ struct EditPrView: View {
                         .font(.subheadline)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                     + Text("\(editingPr!.quantityString) \(editingPr!.quantityUnitString)")
+                     + Text("\(editingPr!.quantityString)")
                         .fontWeight(.light)
                         .foregroundColor(.black))
                     .multilineTextAlignment(.center)

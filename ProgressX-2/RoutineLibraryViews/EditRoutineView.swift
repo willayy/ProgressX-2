@@ -137,6 +137,7 @@ struct EditRoutineView: View {
                     .padding(.top, 20)
                 
                 BasicList(
+                    height: 400,
                     containerName: "this Routine",
                     elementName: "week",
                     data: _templateWeeks

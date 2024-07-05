@@ -32,13 +32,7 @@ struct ExerciseLibraryView: View {
     @State private var newPrType: String? = nil
     
     var body: some View {
-        SideBar(
-            rotateWhenExpands: true,
-            disableInteractions: true,
-            sideMenuWidth: 200,
-            cornerRadius: 25,
-            showMenu: $showMenu
-        ) { safeArea in
+        SideBarView(content: {
             ExerciseLibraryNavigationController(content: {
                 ScrollView {
                     VStack(alignment: .center, spacing: 10) {
@@ -52,7 +46,7 @@ struct ExerciseLibraryView: View {
                             searchText: $searchText,
                             fetchRequest: _searchedExercises
                         )
-                            .padding(.top, 20)
+                        .padding(.top, 20)
                         
                         //MARK: List view displaying all exercise objects
                         SearchableList(
@@ -81,34 +75,20 @@ struct ExerciseLibraryView: View {
                         .padding(.top, 10)
                         
                     }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        SideBarButton(showMenu: $showMenu)
-                            .environmentObject(viewRouter)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            SideBarButton(showMenu: $showMenu)
+                                .environmentObject(viewRouter)
+                        }
                     }
                 }
-            },
-            navPath: $navPath,
+            },navPath: $navPath,
             selectedExercise: $selectedExercise,
             editingPr: $editingPr,
             newPrType: $newPrType)
-            
-        } menuView: { safeArea in
-            SideBarMenuView(safeArea)
-        } Background: {
-            // propperty of the background in side menu
-            Rectangle()
-        }
+        }, showMenu: $showMenu)
+        .environmentObject(viewRouter)
     }
-    
-    @ViewBuilder
-    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
-    }
-    
-    
 }
 
 #Preview {

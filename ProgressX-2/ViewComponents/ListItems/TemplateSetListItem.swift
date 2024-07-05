@@ -12,6 +12,7 @@ struct TemplateSetListItem: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
+    @Binding var selectedThreshold: SetThreshold?
     @State private var showDeleteAlert: Bool = false
     @State private var showMagnifiedView: Bool = false
     @ObservedObject var set: TemplateSet
@@ -51,8 +52,12 @@ struct TemplateSetListItem: View {
             .frame(width: 155, height: 45)
             .padding(.vertical, 10)
             .sheet(isPresented: $showMagnifiedView) {
-                MagnifiedTemplateSetView(set: set)
-                    .presentationDetents([.fraction(0.3)])
+                MagnifiedTemplateSetView(
+                    set: set,
+                    navPath: $navPath,
+                    selectedThreshold: $selectedThreshold
+                )
+                    .presentationDetents([.fraction(0.5)])
                     .environment(\.managedObjectContext, viewContext)
             }
             

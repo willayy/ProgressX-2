@@ -10,6 +10,7 @@ import CoreData
 
 struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable {
     
+    let height: CGFloat?
     let containerName: String
     let elementName: String
     @FetchRequest var data: FetchedResults<T>
@@ -31,7 +32,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
                     content(item)
                 }
             }
-            .frame(height: 400)
+            .frame(height: height)
             .background(Color(.systemGray6))
             .cornerRadius(10)
             .padding(.horizontal, 20)
@@ -55,6 +56,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
     @State var selectedExercise: Exercise? = nil
     
     return BasicList(
+        height: 400,
         containerName: "Exercise Library",
         elementName: "Exercises",
         data: _allExercises) { exercise in

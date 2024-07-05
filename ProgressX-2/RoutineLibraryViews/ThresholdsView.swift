@@ -33,6 +33,7 @@ struct ThresholdsView: View {
                     .padding(.top, 20)
                 
                 BasicList(
+                    height: 400,
                     containerName: "this set",
                     elementName: "threshold",
                     data: _thresholds) { threshold in

@@ -78,7 +78,7 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                 } else if selection == 4 {
                     
                     // MARK: Edit week
-                    EditWeekView(
+                    EditTemplateWeekView(
                         navPath: $navPath,
                         selectedTemplateWeek: $selectedTemplateWeek,
                         selectedTemplateSession: $selectedTemplateSession

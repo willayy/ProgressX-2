@@ -135,16 +135,16 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     }
     
     enum Tab: String, CaseIterable {
-        case home = "house.fill"
-        case Statistics = "chart.xyaxis.line"
+        case Home = "house.fill"
+        case StartWorkout = "figure.run"
         case Routines = "rectangle.stack"
         case Exercises = "dumbbell"
         case Profile = "person.crop.circle"
         
         var title: String {
             switch self {
-            case .home: return "Home"
-            case .Statistics: return "Statistics"
+            case .Home: return "Home"
+            case .StartWorkout: return "Start workout"
             case .Routines: return "Routines"
             case .Exercises: return "Exercises"
             case .Profile: return "Profile"
@@ -157,6 +157,6 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
 
 #Preview {
     HomeView()
-        .environmentObject(ViewRouter())
+       .environmentObject(ViewRouter())
 }
 

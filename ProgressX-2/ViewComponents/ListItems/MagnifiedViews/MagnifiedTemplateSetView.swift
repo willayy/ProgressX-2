@@ -10,10 +10,17 @@ import SwiftUI
 struct MagnifiedTemplateSetView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
     @ObservedObject var set: TemplateSet
+    @Binding var navPath: [Int]
+    @Binding var selectedThreshold: SetThreshold?
     
     var body: some View {
+        
+        @FetchRequest(
+            entity: SetThreshold.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \SetThreshold.triggerQuantity, ascending: true)],
+            predicate: NSPredicate(format: "templateSet == %@", set)
+        ) var thresholds: FetchedResults<SetThreshold>
         
         VStack(alignment: .leading, content: {
             
@@ -21,12 +28,11 @@ struct MagnifiedTemplateSetView: View {
             
             (
                 Text("Description: ")
-                .fontWeight(.bold)
-                .font(.subheadline) +
+                    .fontWeight(.bold)
+                    .font(.subheadline) +
                 Text(set.timePeriodDescription ?? "")
-                .font(.subheadline)
+                    .font(.subheadline)
             )
-                .padding(.bottom, 10)
             
             (Text("Exercise: ")
                 .fontWeight(.bold)
@@ -51,9 +57,19 @@ struct MagnifiedTemplateSetView: View {
              + Text("\(set.thresholds?.count ?? 0)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
-            
-            #warning("TODO: Add Threshold information here aswell")
-            
         })
+        
+        BasicList(
+            height: 200,
+            containerName: "thresholds",
+            elementName: "threshold",
+            data: _thresholds) { 
+                threshold in
+                ThresholdListItem(
+                    navPath: $navPath,
+                    selectedThreshold: $selectedThreshold,
+                    threshold: threshold
+                )
+            }
     }
 }

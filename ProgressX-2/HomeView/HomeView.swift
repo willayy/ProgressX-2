@@ -9,77 +9,76 @@ import SwiftUI
 import CoreData
 
 struct HomeView: View {
-    @State var showView = false
-    @State var selectedTab = 0
-    
+        
     @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var viewRouter: ViewRouter
-
+    
     // View propperties
     @State private var showMenu: Bool = false
-    var BackgroundHeight: CGFloat = 650
-    var FirstBubbleHeigh: CGFloat = 200
-    var FirstBubbleWidth: CGFloat = 350
+    var FirstBubbleHeight: CGFloat = 200
+    var FirstBubbleWidth: CGFloat = 300
     var CornerRadius: CGFloat = 15
     
-        var body: some View {
-            SideBar(
-                rotateWhenExpands: true, // true
-                disableInteractions: true, // true
-                sideMenuWidth: 200,
-                cornerRadius: 25, // 25
-                showMenu: $showMenu
-            ) { safeArea in
-                TabView(selection: $selectedTab) {
-                    
-                    // HomeTab
-                    NavigationStack{
-                        ScrollView{
-                            VStack{
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                                Rectangle().frame(width: FirstBubbleWidth, height: FirstBubbleHeigh, alignment: .top)
-                                    .cornerRadius(CornerRadius)
-                            }
-                            .toolbar(.hidden, for: .tabBar)
-                            .foregroundColor(Color(UIColor.lightGray))
-                            .navigationTitle("Home")
-                            .toolbar {
-                                ToolbarItem(placement: .topBarLeading) {
-                                    Button(action: { showMenu.toggle()}, label: {
-                                        Image(systemName: showMenu ? "xmark" : "line.3.horizontal")
-                                            .foregroundColor(Color.primary)
-                                            .contentTransition(.symbolEffect)
-                                    })
-                                }
-                            }
+    var body: some View {
+        SideBarView(content: {
+            NavigationStack {
+                ScrollView {
+                    VStack(alignment: .center) {
+                        
+                        BoldTitle(text: "Home")
+                        
+                        Rectangle()
+                            .frame(
+                                width: FirstBubbleWidth,
+                                height: FirstBubbleHeight,
+                                alignment: .top
+                            )
+                            .cornerRadius(CornerRadius)
+                            .foregroundStyle(.gray)
+                        
+                        Rectangle()
+                            .frame(
+                                width: FirstBubbleWidth,
+                                height: FirstBubbleHeight,
+                                alignment: .top
+                            )
+                            .cornerRadius(CornerRadius)
+                            .foregroundStyle(.gray)
+                        
+                        Rectangle()
+                            .frame(
+                                width: FirstBubbleWidth,
+                                height: FirstBubbleHeight,
+                                alignment: .top
+                            )
+                            .cornerRadius(CornerRadius)
+                            .foregroundStyle(.gray)
+                        
+                        Rectangle()
+                            .frame(
+                                width: FirstBubbleWidth,
+                                height: FirstBubbleHeight,
+                                alignment: .top
+                            )
+                            .cornerRadius(CornerRadius)
+                            .foregroundStyle(.gray)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            SideBarButton(showMenu: $showMenu)
+                                .environmentObject(viewRouter)
                         }
-                    }.tag(0)
-                    
+                    }
                 }
-            } menuView: { safeArea in
-                SideBarMenuView(safeArea)
-            } Background: {
-                // propperty of the background in side menu
-                Rectangle()
-                
             }
-
-        }
-        
-    @ViewBuilder
-    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
+        }, showMenu: $showMenu)
+        .environmentObject(viewRouter)
     }
 }
 
-
 #Preview {
-    HomeView().environmentObject(ViewRouter())
+    HomeView()
+        .environmentObject(ViewRouter())
 }

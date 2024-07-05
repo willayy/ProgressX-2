@@ -23,3 +23,8 @@ enum LoadType: String {
     case bodyWeightPercentage = "bwperc"
     case numerical = "numerical"
 }
+
+enum QuantityType: String {
+    case maxPercentage = "maxperc"
+    case numerical = "numerical"
+}

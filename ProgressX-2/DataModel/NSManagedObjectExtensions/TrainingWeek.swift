@@ -46,7 +46,7 @@ extension TrainingWeek: HasOrderable {
             throw ValidationNSErrors.weekCompleteWithNoSessions.toNSError()
         }
         
-        // If session is complete but it's sets arent throw an error.
+        // If week is complete but it's sets arent throw an error.
         var completedSessions: Int = 0
         let sessions = self.sessions!.allObjects as! [Session]
         
@@ -61,36 +61,5 @@ extension TrainingWeek: HasOrderable {
         if self.isComplete && completedSessions != sessions.count {
             throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
-    }
-}
-
-extension TemplateWeek: HasOrderable {
-    
-    // MARK: Extra Properties
-    
-    public func getNextPositionIndex() -> Int64 {
-        let sessions: [TemplateSession] = self.templateSessions?.allObjects as! [TemplateSession]
-        let max = sessions.max {$0.positionIndex < $1.positionIndex}
-        return Int64((max?.positionIndex ?? 0) + 1)
-    }
-    
-    // MARK: Validation
-    
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validatePositionIndexes()
-    }
-    
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validatePositionIndexes()
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sessions: [TemplateSession] = self.templateSessions?.allObjects as! [TemplateSession]
-        let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
     }
 }

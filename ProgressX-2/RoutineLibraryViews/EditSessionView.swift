@@ -170,6 +170,7 @@ struct EditSessionView: View {
                 
                 // MARK: List of sets
                 BasicList(
+                    height: 400,
                     containerName: "this session",
                     elementName: "sets",
                     data: _templateSets
@@ -177,6 +178,7 @@ struct EditSessionView: View {
                     TemplateSetListItem(
                         navPath: $navPath,
                         selectedTemplateSet: $selectedTemplateSet,
+                        selectedThreshold: $selectedThreshold,
                         set: set
                     )
                     .environment(\.managedObjectContext, viewContext)

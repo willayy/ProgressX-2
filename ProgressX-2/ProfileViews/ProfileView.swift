@@ -42,42 +42,37 @@ struct ProfileView: View {
     let genderSegments = ["Male", "Female"]
     
     var body: some View {
-        SideBar(
-            rotateWhenExpands: true, // true
-            disableInteractions: true, // true
-            sideMenuWidth: 200,
-            cornerRadius: 25, // 25
-            showMenu: $showMenu
-        ) { safeArea in
+        SideBarView(content: {
             NavigationStack{
                 ScrollView{
                     
                     BoldTitle(text: "Profile")
                     
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
+                        .padding(.horizontal, 20)
                     
                     VStack(alignment:.center){
                         BoldSubHeadline(text: "Change username")
-                    
+                        
                         
                         InputShortTextField(placeHolder: profiles.first!.profileUserName!, text: $userName, markAsWrong: $userNameIsInvalid, width: 0.5, errorMessage: $userNameIsInvalidMsg).padding(.bottom)
-                    
-                    BoldSubHeadline(text: "Change birth date")
+                        
+                        BoldSubHeadline(text: "Change birth date")
                         DatePicker("", selection: $birthDay , displayedComponents: .date)
-                        .datePickerStyle(DefaultDatePickerStyle())
-                        .labelsHidden()
-                        .padding(.bottom)
-                        .onAppear(perform: {
-                            birthDay = profiles.first!.birthDay!
-                        })
-                    
+                            .datePickerStyle(DefaultDatePickerStyle())
+                            .labelsHidden()
+                            .padding(.bottom)
+                            .onAppear(perform: {
+                                birthDay = profiles.first!.birthDay!
+                            })
+                        
                         BoldSubHeadline(text: "Change default rest-time").padding(.bottom)
                         
                         InputDecimalNumberField(placeHolder: String(format: "%1.f", profiles.first!.standardRestTime), numberText: $standardRestTime, markAsWrong: $standardRestTimeIsInvalid, width: 0.3, errorMessage: $standardRestTimeIsInvalidMsg).padding(.bottom)
-                    
                         
-                    BoldSubHeadline(text: "Change Units")
-                    BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments, frameWidth: 230, horizontalPadding: 20)
+                        
+                        BoldSubHeadline(text: "Change Units")
+                        BasicSegPicker(selectedSegment: $selectedUnitSegment, segments: unitSegments, frameWidth: 230, horizontalPadding: 20)
                             .onAppear(perform: {
                                 if profiles.first!.isMetric == true {
                                     selectedUnitSegment = "Metric (meters)"
@@ -87,12 +82,12 @@ struct ProfileView: View {
                                 }
                             })
                             .padding(.bottom)
-                    
-                    BoldSubHeadline(text: "Change height")
-                    
+                        
+                        BoldSubHeadline(text: "Change height")
+                        
                         InputDecimalNumberField(placeHolder: String(format: "%1.f", profiles.first!.height), numberText: $height, markAsWrong: $heightIsInvalid, width: 0.3, errorMessage: $heightIsInvalidMsg).padding(.bottom)
-                    
-                    BoldSubHeadline(text: "Gender")
+                        
+                        BoldSubHeadline(text: "Gender")
                         BasicSegPicker(selectedSegment: $selectedGenderSegment, segments: genderSegments, frameWidth: 230, horizontalPadding: 20).onAppear(perform: {
                             selectedGenderSegment = profiles.first!.gender!.capitalized
                         })
@@ -115,16 +110,16 @@ struct ProfileView: View {
                             } else {
                                 profiles.first?.isMetric = false
                             }
-
+                            
                             if height != "" {
                                 profiles.first?.height = Double(height)!
                             }
-
+                            
                             profiles.first?.gender = selectedGenderSegment
                             
                             PersistenceController.save(viewContext)
                             
-                        
+                            
                             
                         })
                         {
@@ -140,36 +135,22 @@ struct ProfileView: View {
                         
                         
                         
+                        
+                        
+                    }.padding()
+                        .frame(width: 390, height: 650, alignment: .top)
+                        .toolbar(.hidden, for: .tabBar)
+                        .foregroundColor(Color(UIColor.lightGray))
                     
-                    
-                }.padding()
-                    .frame(width: 390, height: 650, alignment: .top)
-                    .toolbar(.hidden, for: .tabBar)
-                    .foregroundColor(Color(UIColor.lightGray))
-                    
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
+                            }
                         }
-                    }
-                
+                }
             }
-        }
-        }menuView: { safeArea in
-            SideBarMenuView(safeArea)
-        } Background: {
-            // propperty of the background in side menu
-            Rectangle()
-        }
-        
-    }    
-    @ViewBuilder
-    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
+        }, showMenu: $showMenu)
     }
-    
-
 }
 
 #Preview {
