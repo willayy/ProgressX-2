@@ -88,10 +88,11 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                 } else if selection == 5 {
                     
                     // MARK: Edit session
-                    EditSessionView(
+                    EditTemplateSessionView(
                         navPath: $navPath,
                         selectedTemplateSet: $selectedTemplateSet,
-                        selectedTemplateSession: $selectedTemplateSession
+                        selectedTemplateSession: $selectedTemplateSession,
+                        selectedThreshold: $selectedThreshold
                     )
                     .environment(\.managedObjectContext, viewContext)
                     

@@ -18,18 +18,7 @@ struct EditRoutineView: View {
         sortDescriptors: []
     ) private var routines: FetchedResults<Routine>
     
-    @State private var showRoutineChangedAlert: Bool = false
-    @State private var showNoChangeAlert: Bool = false
-    @State private var showChangeInfo: Bool = false
-    
-    @State private var editedRoutineName: String = ""
-    @State private var editedRoutineNameIsInvalid: Bool = false
-    @State private var editedRoutineNameIsInvalidMsg: String = ""
-    
-    @State private var editiedRoutineDescription: String = ""
-    @State private var editedRoutineDescIsInvalid: Bool = false
-    @State private var editedRoutineDescIsInvalidMsg: String = ""
-    
+    @StateObject private var viewModel = EditRoutineViewModel()
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTemplateCycle: TemplateCycle?
@@ -38,7 +27,6 @@ struct EditRoutineView: View {
     var body: some View {
 
         // Get the templateWeeks for this routine.
-
         @FetchRequest(
             entity: TemplateWeek.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TemplateWeek.positionIndex, ascending: true)],
@@ -67,60 +55,45 @@ struct EditRoutineView: View {
                 
                 Button {
                     withAnimation {
-                        showChangeInfo.toggle()
+                        viewModel.showChangeInfo.toggle()
                     }
                 } label: {
                     BoldSubHeadline(text: "Change routine informaton")
                         .frame(width: 240)
                 }.buttonStyle(BorderedButtonStyle())
                 
-                if showChangeInfo {
+                if viewModel.showChangeInfo {
                     VStack {
-                        if showRoutineChangedAlert {
-                            SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $showRoutineChangedAlert)
-                        } else if showNoChangeAlert {
-                            SubmitAlert(message: "No change!", color: .blue, showAlertState: $showNoChangeAlert)
+                        if viewModel.showRoutineChangedAlert {
+                            SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $viewModel.showRoutineChangedAlert)
+                        } else if viewModel.showNoChangeAlert {
+                            SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
                         }
                         
-                        InputShortTextField(
+                        InputTextField(
                             placeHolder: "New routine name",
-                            text: $editedRoutineName,
-                            markAsWrong: $editedRoutineNameIsInvalid,
+                            text: $viewModel.editedRoutineName, 
+                            maxChars: 25,
+                            markAsWrong: $viewModel.editedRoutineNameIsInvalid,
                             width: 0.6,
-                            errorMessage: $editedRoutineNameIsInvalidMsg
+                            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg
                         )
                         
-                        InputShortTextField(
+                        InputTextField(
                             placeHolder: "New routine description",
-                            text: $editiedRoutineDescription,
-                            markAsWrong: $editedRoutineDescIsInvalid,
+                            text: $viewModel.editiedRoutineDescription, 
+                            maxChars: 200,
+                            markAsWrong: $viewModel.editedRoutineDescIsInvalid,
                             width: 0.6,
-                            errorMessage: $editedRoutineDescIsInvalidMsg
+                            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg
                         )
                         
                         Button {
                             if validateInput() {
-                                let inputName = editedRoutineName.isEmpty ? selectedRoutine!.timePeriodName! : editedRoutineName
-                                let inputDesc = editiedRoutineDescription.isEmpty ? selectedRoutine!.timePeriodDescription! : editiedRoutineDescription
-                                
-                                selectedRoutine!.timePeriodName = inputName
-                                selectedRoutine!.timePeriodDescription = inputDesc
-                                
-                                PersistenceController.save(viewContext)
-                                
-                                if editedRoutineName.isEmpty && editiedRoutineDescription.isEmpty {
-                                    withAnimation(.easeOut) {
-                                        showNoChangeAlert = true
-                                        editedRoutineName = ""
-                                        editiedRoutineDescription = ""
-                                    }
-                                } else {
-                                    withAnimation(.easeOut) {
-                                        showRoutineChangedAlert = true
-                                        editedRoutineName = ""
-                                        editiedRoutineDescription = ""
-                                    }
-                                }
+                                viewModel.saveRoutineChanges(
+                                    viewContext: viewContext,
+                                    selectedRoutine: selectedRoutine
+                                )
                             }
                         } label: {
                             Text("Save change")
@@ -151,14 +124,10 @@ struct EditRoutineView: View {
                 }
                 
                 Button {
-                    let positionIndex = selectedTemplateCycle!.getNextPositionIndex()
-                    _ = PersistenceController.createTemplateWeek(
-                        viewContext,
-                        name: "Week \(positionIndex)",
-                        templateCycle: selectedTemplateCycle!, 
-                        positionIndex: positionIndex
+                    viewModel.addWeek(
+                        viewContext: viewContext,
+                        selectedTemplateCycle: selectedTemplateCycle
                     )
-                    PersistenceController.save(viewContext)
                 } label: {
                     Text("Add new Week")
                         .frame(height: 40)
@@ -169,27 +138,35 @@ struct EditRoutineView: View {
             
             }
         }
+        .onAppear(perform: {
+            viewModel.setViewStartValues(selectedRoutine: selectedRoutine)
+        })
     }
     
     private func validateInput() -> Bool {
         var valid: Int = 0
+        
+        // Get all routine names and remove the selected routines name
+        var checkStrings = routines.map {$0.timePeriodName!}
+        checkStrings.removeAll(where: {$0 == selectedRoutine!.timePeriodName})
+        
         let routineNameValidator = StringFieldValidator(
-            emptyAllowed: true,
             duplicatesAllowed: false,
-            checkStrings: routines.map {$0.timePeriodName!}
+            checkStrings: checkStrings
         )
+        
         let routineDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += routineNameValidator.valideField(
-            inputVar: editedRoutineName,
-            errorMessage: $editedRoutineNameIsInvalidMsg,
-            fieldInvalid: $editedRoutineNameIsInvalid
+            inputVar: viewModel.editedRoutineName,
+            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
+            fieldInvalid: $viewModel.editedRoutineNameIsInvalid
         )
         
         valid += routineDescValidator.valideField(
-            inputVar: editiedRoutineDescription,
-            errorMessage: $editedRoutineDescIsInvalidMsg,
-            fieldInvalid: $editedRoutineDescIsInvalid
+            inputVar: viewModel.editiedRoutineDescription,
+            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
+            fieldInvalid: $viewModel.editedRoutineDescIsInvalid
         )
 
         return valid == 0

@@ -32,17 +32,16 @@ struct GeneralInfoTimeExercise: View {
         
         // Find the min value or nil if there are no values
         // Construct the all time low from the min (if it exists) and the weight unit
-        let timeUnit = "s"
-        let fetchedMinValueTime = timeMaxResults.min(by: {$0.weightLoad < $1.weightLoad})?.loadString
-        let allTimeLowTime = fetchedMinValueTime != nil ? (fetchedMinValueTime! + " " + timeUnit) : nil
+        let fetchedMinValueTime = timeMaxResults.min(by: {$0.prQuantity < $1.prQuantity})?.quantityString
+        let allTimeLowTime = fetchedMinValueTime != nil ? (fetchedMinValueTime!) : nil
         
         // Same thing for the max values
-        let fetchedMaxValueTime = timeMaxResults.max(by: {$0.weightLoad < $1.weightLoad})?.loadString
-        let allTimeHighTime = fetchedMaxValueTime != nil ? (fetchedMaxValueTime! + " " + timeUnit) : nil
+        let fetchedMaxValueTime = timeMaxResults.max(by: {$0.prQuantity < $1.prQuantity})?.quantityString
+        let allTimeHighTime = fetchedMaxValueTime != nil ? (fetchedMaxValueTime!) : nil
         
         // Find the latest PR weight value or nil if there are no values
         let fetchedLatestValueTime = timeMaxResults.last?.quantityString
-        let latestValueTime = fetchedLatestValueTime != nil ? (fetchedLatestValueTime! + " " + timeUnit) : nil
+        let latestValueTime = fetchedLatestValueTime != nil ? (fetchedLatestValueTime!) : nil
         
         
         BoldSubHeadline(text: "General information")

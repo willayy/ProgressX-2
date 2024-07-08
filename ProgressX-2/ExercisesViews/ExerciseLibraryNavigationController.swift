@@ -48,7 +48,7 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                 } else if selection == 2 {
                     
                     EditExerciseView(
-                        exercise: $selectedExercise
+                        selectedExercise: $selectedExercise
                     ).environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
@@ -71,7 +71,7 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                     
                     CreateNewPersonalRecord(
                         prType: $newPrType,
-                        exercise: $selectedExercise
+                        selectedExercise: $selectedExercise
                     ).environment(\.managedObjectContext, viewContext)
                     
                 }

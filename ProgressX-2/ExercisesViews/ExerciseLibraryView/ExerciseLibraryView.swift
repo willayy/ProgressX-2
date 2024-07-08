@@ -11,7 +11,6 @@ import CoreData
 struct ExerciseLibraryView: View {
     
     @EnvironmentObject private var viewRouter: ViewRouter
-    
     @Environment(\.managedObjectContext) private var viewContext
     
     @FetchRequest(
@@ -24,12 +23,7 @@ struct ExerciseLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
     ) private var searchedExercises: FetchedResults<Exercise>
     
-    @State private var showMenu: Bool = false
-    @State private var navPath = [Int]()
-    @State private var selectedExercise: Exercise? = nil
-    @State private var searchText: String = ""
-    @State private var editingPr: PersonalRecord?
-    @State private var newPrType: String? = nil
+    @StateObject private var viewModel = ExerciseLibraryViewModel()
     
     var body: some View {
         SideBarView(content: {
@@ -43,7 +37,7 @@ struct ExerciseLibraryView: View {
                         
                         SearchBar(
                             searchAttribute: "exerciseName",
-                            searchText: $searchText,
+                            searchText: $viewModel.searchText,
                             fetchRequest: _searchedExercises
                         )
                         .padding(.top, 20)
@@ -56,8 +50,8 @@ struct ExerciseLibraryView: View {
                             searchedData: _searchedExercises
                         ) { exercise in
                             ExerciseListItem(
-                                navPath: $navPath,
-                                selectedExercise: $selectedExercise,
+                                navPath: $viewModel.navPath,
+                                selectedExercise: $viewModel.selectedExercise,
                                 exercise: exercise
                             )
                             .environment(\.managedObjectContext, viewContext)
@@ -65,7 +59,7 @@ struct ExerciseLibraryView: View {
                         
                         // MARK: Add new exercise button
                         Button {
-                            navPath.append(1)
+                            viewModel.navPath.append(1)
                         } label: {
                             Text("Add new exercise")
                                 .frame(height: 40)
@@ -77,16 +71,16 @@ struct ExerciseLibraryView: View {
                     }
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
-                            SideBarButton(showMenu: $showMenu)
+                            SideBarButton(showMenu: $viewModel.showMenu)
                                 .environmentObject(viewRouter)
                         }
                     }
                 }
-            },navPath: $navPath,
-            selectedExercise: $selectedExercise,
-            editingPr: $editingPr,
-            newPrType: $newPrType)
-        }, showMenu: $showMenu)
+            },  navPath: $viewModel.navPath,
+                selectedExercise: $viewModel.selectedExercise,
+                editingPr: $viewModel.editingPr,
+                newPrType: $viewModel.newPrType)
+        }, showMenu: $viewModel.showMenu)
         .environmentObject(viewRouter)
     }
 }

@@ -53,7 +53,8 @@ struct EditTemplateWeekView: View {
                 } label: {
                     BoldSubHeadline(text: "Change week informaton")
                         .frame(width: 240)
-                }.buttonStyle(BorderedButtonStyle())
+                }
+                .buttonStyle(BorderedButtonStyle())
                 
                 // Expandable hidden view that has functionality for changing name and description.
                 if viewModel.showChangeInfo {
@@ -72,17 +73,19 @@ struct EditTemplateWeekView: View {
                             )
                         }
                         
-                        InputShortTextField(
+                        InputTextField(
                             placeHolder: "New week name",
-                            text: $viewModel.editedWeekName,
+                            text: $viewModel.editedWeekName, 
+                            maxChars: 25,
                             markAsWrong: $viewModel.editedWeekIsInvalid,
                             width: 0.6,
                             errorMessage: $viewModel.editedWeekNameIsInvalidMsg
                         )
                         
-                        InputShortTextField(
+                        InputTextField(
                             placeHolder: "New week description",
-                            text: $viewModel.editedWeekDescription,
+                            text: $viewModel.editedWeekDescription, 
+                            maxChars: 25,
                             markAsWrong: $viewModel.editedWeekDescIsInvalid,
                             width: 0.6,
                             errorMessage: $viewModel.editedWeekDescIsInvalidMsg
@@ -95,13 +98,10 @@ struct EditTemplateWeekView: View {
                             selected: $viewModel.editedPositionIndex,
                             selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek)
                         )
-                        .onAppear(perform: {
-                            viewModel.editedPositionIndex = selectedTemplateWeek!.positionIndex
-                        })
                         
                         Button {
                             if validateInput() {
-                                viewModel.changeTemplateWeekInfo(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
+                                viewModel.saveTemplateWeekChanges(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
                             }
                         } label: {
                             Text("Save change")
@@ -132,7 +132,10 @@ struct EditTemplateWeekView: View {
                 }
                 
                 Button {
-                    viewModel.addSession(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
+                    viewModel.addSession(
+                        viewContext: viewContext,
+                        selectedTemplateWeek: selectedTemplateWeek
+                    )
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)
@@ -142,13 +145,15 @@ struct EditTemplateWeekView: View {
                 .padding(.top, 10)
             
             }
-        }
+        }.onAppear(perform: {
+            viewModel.setViewStartValues(week: selectedTemplateWeek!)
+        })
     }
     
     private func validateInput() -> Bool {
         var valid: Int = 0
         
-        let weekNameValidator = StringFieldValidator(emptyAllowed: true)
+        let weekNameValidator = StringFieldValidator()
         let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += weekNameValidator.valideField(

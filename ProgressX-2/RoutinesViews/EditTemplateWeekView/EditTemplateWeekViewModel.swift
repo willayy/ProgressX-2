@@ -32,38 +32,44 @@ class EditTemplateWeekViewModel: ObservableObject {
         return positionIndexes.sorted()
     }
     
-    public func changeTemplateWeekInfo(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek?) -> Void {
-        let inputName = editedWeekName.isEmpty ? selectedTemplateWeek!.timePeriodName! : editedWeekName
-        let inputDesc = editedWeekDescription.isEmpty ? selectedTemplateWeek!.timePeriodDescription! : editedWeekDescription
+    public func setViewStartValues(week: TemplateWeek) {
+        editedWeekName = week.timePeriodName!
+        editedWeekDescription = week.timePeriodDescription!
+        editedPositionIndex = week.positionIndex
+    }
+    
+    public func saveTemplateWeekChanges(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek?) -> Void {
         
-        // Find the week with the same position index in the parent routine
-        let weeksInParentRoutine = selectedTemplateWeek!.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
-        let switchWithWeek = weeksInParentRoutine.first(
-            where: {
-                ($0 as AnyObject).positionIndex == editedPositionIndex
-            }
-        )
+        if selectedTemplateWeek!.timePeriodName != editedWeekName {
+            selectedTemplateWeek!.timePeriodName = editedWeekName
+        }
         
-        let positionIndexDidChange: Bool = (editedPositionIndex != selectedTemplateWeek!.positionIndex)
+        if selectedTemplateWeek!.timePeriodDescription != editedWeekDescription {
+            selectedTemplateWeek!.timePeriodDescription = editedWeekDescription
+        }
         
-        // Switch position index with the week
-        switchWithWeek!.positionIndex = selectedTemplateWeek!.positionIndex
+        if selectedTemplateWeek!.positionIndex != editedPositionIndex {
+            // Find the week with the same position index in the parent routine
+            let weeksInParentRoutine = selectedTemplateWeek!.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
+            let switchWithWeek = weeksInParentRoutine.first(
+                where: {
+                    ($0 as AnyObject).positionIndex == editedPositionIndex
+                }
+            )
+            // Switch position index with the week
+            switchWithWeek!.positionIndex = selectedTemplateWeek!.positionIndex
+            selectedTemplateWeek!.positionIndex = editedPositionIndex
+        }
         
-        selectedTemplateWeek!.positionIndex = editedPositionIndex
-        selectedTemplateWeek!.timePeriodName = inputName
-        selectedTemplateWeek!.timePeriodDescription = inputDesc
-        
-        PersistenceController.save(viewContext)
-        
-        // Show alert if stuff changes
-        withAnimation(.easeOut) {
-            if editedWeekName.isEmpty && editedWeekDescription.isEmpty && !positionIndexDidChange {
-                showNoChangeAlert = true
-            } else {
+        if selectedTemplateWeek!.hasChanges {
+            withAnimation {
                 showWeekChangedAlert = true
+                PersistenceController.save(viewContext)
             }
-            editedWeekName = ""
-            editedWeekDescription = ""
+        } else {
+            withAnimation {
+                showNoChangeAlert = true
+            }
         }
     }
     

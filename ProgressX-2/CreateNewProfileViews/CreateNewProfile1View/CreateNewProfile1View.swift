@@ -35,9 +35,10 @@ struct CreateNewProfile1View: View {
                         .padding(.top, 10)
                         .minimumScaleFactor(0.5);
                     
-                    InputShortTextField(
+                    InputTextField(
                         placeHolder: "Enter username...",
-                        text: $viewModel.userName,
+                        text: $viewModel.userName, 
+                        maxChars: 25,
                         markAsWrong: $viewModel.userNameIsInvalid,
                         width: 0.4,
                         errorMessage: $viewModel.userNameIsInvalidMsg

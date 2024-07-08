@@ -39,7 +39,7 @@ extension PersonalRecord {
    
     var loadString: String {
         let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
-        return String(format: "%.2f", self.weightLoad) + weightUnit
+        return String(format: "%.2f", self.weightLoad) + " \(weightUnit)"
     }
     
     //MARK: Validation
