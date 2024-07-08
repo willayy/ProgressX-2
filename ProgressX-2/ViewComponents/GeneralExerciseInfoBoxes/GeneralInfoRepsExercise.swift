@@ -43,30 +43,28 @@ struct GeneralInfoRepsExercise: View {
     
     var body: some View {
         
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-        
         // Find the min value or nil if there are no values
         // Construct the all time low from the min (if it exists) and the weight unit
         let fetchedMinValue1RM = oneRepMaxPersonalRecords.min(by: {$0.weightLoad < $1.weightLoad})?.loadString
-        let allTimeLow1RM = fetchedMinValue1RM != nil ? (fetchedMinValue1RM! + " " + weightUnit) : nil
+        let allTimeLow1RM = fetchedMinValue1RM != nil ? (fetchedMinValue1RM!) : nil
         
         // Same thing for the max values
         let fetchedMaxValue1RM = oneRepMaxPersonalRecords.max(by: {$0.weightLoad < $1.weightLoad})?.loadString
-        let allTimeHigh1RM = fetchedMaxValue1RM != nil ? (fetchedMaxValue1RM! + " " + weightUnit) : nil
+        let allTimeHigh1RM = fetchedMaxValue1RM != nil ? (fetchedMaxValue1RM!) : nil
         
         // Find the latest PR weight value or nil if there are no values
         let fetchedLatestValue1RM = oneRepMaxPersonalRecords.last?.loadString
-        let latestValue1RM = fetchedLatestValue1RM != nil ? (fetchedLatestValue1RM! + " " + weightUnit) : nil
+        let latestValue1RM = fetchedLatestValue1RM != nil ? (fetchedLatestValue1RM!) : nil
         
         // Do exactly the same thing but for AMRAP pr's
         let fetchedMinValueMaxReps = maxRepPersonalRecords.min(by: {$0.prQuantity < $1.prQuantity})?.quantityString
-        let allTimeLowMaxReps = fetchedMinValueMaxReps != nil ? (fetchedMinValueMaxReps! + " " + "reps") : nil
+        let allTimeLowMaxReps = fetchedMinValueMaxReps != nil ? (fetchedMinValueMaxReps!) : nil
         
         let fetchedMaxValueMaxReps = maxRepPersonalRecords.max(by: {$0.prQuantity < $1.prQuantity})?.quantityString
-        let allTimeHighMaxReps = fetchedMaxValueMaxReps != nil ? (fetchedMaxValueMaxReps! + " " + "reps") : nil
+        let allTimeHighMaxReps = fetchedMaxValueMaxReps != nil ? (fetchedMaxValueMaxReps!) : nil
         
         let fetchedLatestValueMaxReps = maxRepPersonalRecords.last?.quantityString
-        let latestValueMaxReps = fetchedLatestValueMaxReps != nil ? (fetchedLatestValueMaxReps! + " " + "reps") : nil
+        let latestValueMaxReps = fetchedLatestValueMaxReps != nil ? (fetchedLatestValueMaxReps!) : nil
         
         BoldSubHeadline(text: "General information")
             .padding(.horizontal, 40)

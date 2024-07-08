@@ -13,7 +13,8 @@ extension BodyEntry {
     
     // Computed property for bodyWeightString formatted nicely
     var bodyWeightString: String {
-        return String(format: "%.2f", self.bodyWeight)
+        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
+        return String(format: "%.2f", self.bodyWeight) + weightUnit
     }
         
     //MARK: Validation

@@ -11,29 +11,16 @@ extension PersonalRecord {
     
     //MARK: Extra properties
     
-    var quantityUnitString: String {
-        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
-        
-        switch type {
-        case .MaxReps:
-            return "reps"
-        case .OneRepMax:
-            return "reps"
-        case .TimeMax:
-            return "seconds"
-        }
-    }
-    
     var quantityString: String {
         let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
         
         switch type {
         case .MaxReps:
-            return String(format: "%.0f", self.prQuantity)
+            return String(format: "%.0f", self.prQuantity) + " reps"
         case .OneRepMax:
-            return String(format: "%.0f", self.prQuantity)
+            return String(format: "%.0f", self.prQuantity) + " reps"
         case .TimeMax:
-            return String(format: "%.2f", self.prQuantity)
+            return String(format: "%.2f", self.prQuantity) + " seconds"
         }
     }
    
@@ -51,7 +38,8 @@ extension PersonalRecord {
     }
    
     var loadString: String {
-        return String(format: "%.2f", self.weightLoad)
+        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
+        return String(format: "%.2f", self.weightLoad) + " \(weightUnit)"
     }
     
     //MARK: Validation

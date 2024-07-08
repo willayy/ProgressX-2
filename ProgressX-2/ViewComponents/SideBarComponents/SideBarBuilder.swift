@@ -19,20 +19,20 @@ struct SideBarBuilder: View {
     
     @Binding var showMenu: Bool
     
-    var body: some View{
-        NavigationView{
+    var body: some View {
+        NavigationView {
             VStack(alignment: .leading, spacing: 12) {
                 Text("ProgressX")
                     .foregroundColor(.white)
                     .font(.largeTitle.bold())
                     .padding(.bottom, 10)
                 
-                SideBarButton(.home){
+                SideBarButton(.Home){
                     showMenu.toggle()
                     viewRouter.rootView = .HomeView
                 }
                 
-                SideBarButton(.Start_workout){
+                SideBarButton(.StartWorkout){
                     showMenu.toggle()
                 }
                 
@@ -41,11 +41,11 @@ struct SideBarBuilder: View {
                     showMenu.toggle()
                 }
                 
-                
                 SideBarButton(.Exercises){
                     showMenu.toggle()
                     viewRouter.rootView = .ExerciseLibraryView
                 }
+                
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
                 
                 SideBarButton(.Profile){
@@ -89,16 +89,16 @@ struct SideBarBuilder: View {
         
         //Customise the buttons in the bar button menu
         enum Tab: String, CaseIterable {
-            case home = "house.fill"
-            case Start_workout = "figure.run"
+            case Home = "house.fill"
+            case StartWorkout = "figure.run"
             case Routines = "rectangle.stack"
             case Exercises = "dumbbell"
             case Profile = "person.crop.circle"
             
             var title: String {
                 switch self {
-                case .home: return "Home"
-                case .Start_workout: return "Start workout"
+                case .Home: return "Home"
+                case .StartWorkout: return "Start workout"
                 case .Routines: return "Routines"
                 case .Exercises: return "Exercises"
                 case .Profile: return "Profile"

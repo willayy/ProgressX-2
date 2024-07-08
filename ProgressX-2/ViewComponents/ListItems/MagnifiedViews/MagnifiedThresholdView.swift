@@ -16,15 +16,13 @@ struct MagnifiedThresholdView: View {
     var body: some View {
         VStack(alignment: .leading, content: {
             
-            let weightUnit = PersistenceController.getWeightUnit(viewContext)
-            
             Text("Threshold number: ")
                 .fontWeight(.bold) +
             Text(String(threshold.positionIndex))
             
             Text("trigger quantity: ")
                 .fontWeight(.bold) +
-            Text(threshold.formattedTriggerQuantity + threshold.triggerQuantityUnit)
+            Text(threshold.formattedTriggerQuantity)
             
             Text("Generates PR?: ")
                 .fontWeight(.bold) +
@@ -36,11 +34,11 @@ struct MagnifiedThresholdView: View {
             
             Text("Flat load add: ")
                 .fontWeight(.bold) +
-            Text(String(threshold.formattedFlatLoadAdd) + weightUnit!)
+            Text(String(threshold.formattedFlatLoadAdd))
             
             Text("Flat quantity add: ")
                 .fontWeight(.bold) +
-            Text(threshold.formattedFlatQuantityAdd + threshold.flatQuantityUnit)
+            Text(threshold.formattedFlatQuantityAdd)
             
         })
     }

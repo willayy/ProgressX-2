@@ -24,7 +24,7 @@ struct ThresholdListItem: View {
                 
                 (Text("Triggered at: ")
                     .fontWeight(.bold)
-                 + Text("\(threshold.formattedTriggerQuantity) \(threshold.triggerQuantityUnit)"))
+                 + Text("\(threshold.formattedTriggerQuantity)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
@@ -39,6 +39,7 @@ struct ThresholdListItem: View {
             .padding(.vertical, 10)
             .sheet(isPresented: $showMagnifiedView) {
                 MagnifiedThresholdView(threshold: threshold)
+                    .presentationDetents([.fraction(0.3)])
                     .environment(\.managedObjectContext, viewContext)
             }
             

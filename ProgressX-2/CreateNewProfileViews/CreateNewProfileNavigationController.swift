@@ -30,18 +30,18 @@ struct CreateNewProfileNavigationController<Content: View>: View {
             .navigationDestination(for: Int.self) { selection in
                 if selection == 1 {
                     
-                    CreateNewProfile2(navPath: $navPath)
+                    CreateNewProfile2View(navPath: $navPath)
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
-                    CreateNewProfile3(navPath: $navPath)
+                    CreateNewProfile3View(navPath: $navPath)
                         .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
-                    CreateNewProfile4(navPath: $navPath)
+                    CreateNewProfile4View(navPath: $navPath)
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, viewContext)
                 }

@@ -1,0 +1,44 @@
+//
+//  SideBarView.swift
+//  ProgressX-2
+//
+//  Created by William Norland on 2024-07-05.
+//
+
+import SwiftUI
+
+struct SideBarView<Content: View>: View {
+    
+    var content: Content
+    @EnvironmentObject private var viewRouter: ViewRouter
+    @Binding var showMenu: Bool
+    
+    init(@ViewBuilder content: () -> Content, showMenu: Binding<Bool>) {
+        self._showMenu = showMenu
+        self.content = content()
+    }
+    
+    var body: some View {
+        SideBar(
+            rotateWhenExpands: true,
+            disableInteractions: true,
+            sideMenuWidth: 200,
+            cornerRadius: 25,
+            showMenu: $showMenu
+        ) { safeArea in
+                content
+        } menuView: { safeArea in
+            SideBarMenuView(safeArea)
+        } Background: {
+            // propperty of the background in side menu
+            Rectangle()
+        }
+    }
+    
+    @ViewBuilder
+    func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
+        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
+            .environmentObject(viewRouter)
+    }
+    
+}
