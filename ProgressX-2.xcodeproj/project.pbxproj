@@ -408,7 +408,7 @@
 		832213E22BC92D8E00DF9C7A /* ProgressX-2 */ = {
 			isa = PBXGroup;
 			children = (
-				8F8B9F0D2C21BE030072A39D /* HomeView */,
+				8F8B9F0D2C21BE030072A39D /* HomeViews */,
 				8F8B9F082C21A0A10072A39D /* ProfileViews */,
 				83AD4A902BF4133600A2E180 /* ExercisesViews */,
 				831F2BEF2C209F5F007A7A8A /* RoutinesViews */,
@@ -732,12 +732,12 @@
 			path = ProfileViews;
 			sourceTree = "<group>";
 		};
-		8F8B9F0D2C21BE030072A39D /* HomeView */ = {
+		8F8B9F0D2C21BE030072A39D /* HomeViews */ = {
 			isa = PBXGroup;
 			children = (
 				83266E872C3C1BFB00F5F6CB /* HomeView */,
 			);
-			path = HomeView;
+			path = HomeViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
