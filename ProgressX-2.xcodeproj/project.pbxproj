@@ -587,6 +587,14 @@
 			path = ProfileView;
 			sourceTree = "<group>";
 		};
+		83266E872C3C1BFB00F5F6CB /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				831F2C0D2C21D066007A7A8A /* HomeView.swift */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
 		8359F97B2C1B2489004BA421 /* InputValidation */ = {
 			isa = PBXGroup;
 			children = (
@@ -727,7 +735,7 @@
 		8F8B9F0D2C21BE030072A39D /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				831F2C0D2C21D066007A7A8A /* HomeView.swift */,
+				83266E872C3C1BFB00F5F6CB /* HomeView */,
 			);
 			path = HomeView;
 			sourceTree = "<group>";
