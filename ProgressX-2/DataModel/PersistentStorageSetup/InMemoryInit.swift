@@ -283,6 +283,7 @@ class InMemory {
         
         // Adding thresholds to Set 1
         let threshold1 = SetThreshold(context: context)
+        threshold1.timePeriodName = "Threshold 1"
         threshold1.triggerQuantity = 5
         threshold1.generatePr = true
         threshold1.prType = "onerepmax"

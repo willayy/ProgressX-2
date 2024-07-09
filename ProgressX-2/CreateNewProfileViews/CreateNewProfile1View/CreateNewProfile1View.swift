@@ -78,7 +78,8 @@ struct CreateNewProfile1View: View {
                         .minimumScaleFactor(0.5);
                     
                     InputDecimalNumberField(
-                        placeHolder: viewModel.weightUnit,
+                        placeHolder: viewModel.weightUnit, 
+                        allowNegatives: false,
                         numberText: $viewModel.weight,
                         markAsWrong: $viewModel.weightIsInvalid,
                         width: 0.3,
@@ -94,7 +95,8 @@ struct CreateNewProfile1View: View {
                     
                     
                     InputDecimalNumberField(
-                        placeHolder: viewModel.lengthUnit,
+                        placeHolder: viewModel.lengthUnit, 
+                        allowNegatives: false,
                         numberText: $viewModel.height,
                         markAsWrong: $viewModel.heightIsInvalid,
                         width: 0.3,

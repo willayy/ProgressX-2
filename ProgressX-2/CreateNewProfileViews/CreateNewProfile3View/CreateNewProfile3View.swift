@@ -56,7 +56,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.chestCirc,
                             markAsWrong: $viewModel.chestCircIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -68,7 +69,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.waistCirc,
                             markAsWrong: $viewModel.waistCircIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -80,7 +82,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.thighCirc,
                             markAsWrong: $viewModel.thighCircIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -92,7 +95,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.calfCirc,
                             markAsWrong: $viewModel.calfCircIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -104,7 +108,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.lowerArmCirc,
                             markAsWrong: $viewModel.lowerArmCircIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -116,7 +121,8 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: circumferenceUnit,
+                            placeHolder: circumferenceUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.upperArmCirc,
                             markAsWrong: $viewModel.upperArmCircIsInvalid,
                             width: viewModel.inputFieldWidth,

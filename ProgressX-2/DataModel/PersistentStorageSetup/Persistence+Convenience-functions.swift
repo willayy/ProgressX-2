@@ -203,4 +203,17 @@ extension PersistenceController {
         return set
     }
     
+    public static func createThreshold(_ context: NSManagedObjectContext, templateSet: TemplateSet, name: String, triggerQuantity: Double, prType: String?, generatePr: Bool, flatLoadAdd: NSNumber?, flatQuantityAdd: NSNumber?) -> SetThreshold {
+        let threshold = SetThreshold(context: context)
+        threshold.positionIndex = templateSet.getNextPositionIndex()
+        threshold.timePeriodName = name
+        threshold.triggerQuantity = triggerQuantity
+        threshold.flatLoadAdd = flatLoadAdd
+        threshold.flatQuantityAdd = flatQuantityAdd
+        threshold.generatePr = generatePr
+        threshold.prType = prType
+        threshold.templateSet = templateSet
+        return threshold
+    }
+    
 }

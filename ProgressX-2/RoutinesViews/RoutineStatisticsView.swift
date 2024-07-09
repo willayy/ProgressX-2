@@ -10,6 +10,9 @@ import SwiftUI
 struct RoutineStatisticsView: View {
     var body: some View {
         Text("RoutineStatisticsView coming soon!")
+        
+        #warning("TODO: Implement this after adding categories")
+        
     }
 }
 

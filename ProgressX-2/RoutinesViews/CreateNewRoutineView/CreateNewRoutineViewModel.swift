@@ -41,7 +41,6 @@ class CreateNewRoutineViewModel: ObservableObject {
         
         selectedRoutine.wrappedValue = newRoutine
         selectedTemplateCycle.wrappedValue = templateCycle
-        
-        navPath.wrappedValue.append(2)
+        navPath.wrappedValue.removeLast()
     }
 }

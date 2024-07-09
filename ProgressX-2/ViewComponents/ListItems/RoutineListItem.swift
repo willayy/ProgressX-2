@@ -36,6 +36,12 @@ struct RoutineListItem: View {
                  + Text("\(routine.completedCycles.count)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
+                
+                (Text("Weeks: ")
+                    .fontWeight(.bold)
+                 + Text("\(routine.templateCycle!.templateWeeks!.count)"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
         
             }
             .frame(width: 135, height: 20)

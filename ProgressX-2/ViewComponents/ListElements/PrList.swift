@@ -42,11 +42,13 @@ struct PrList: View {
             .padding(.top, 20)
         
         if personalRecords.isEmpty {
-            Text("No PR's found for this exercise")
-                .font(.subheadline)
-                .padding(.top, 20)
-                .foregroundStyle(.red)
-        } 
+            GroupBox {
+                Text("No PR's found for this exercise")
+                    .font(.subheadline)
+                    .padding(.horizontal, 40)
+                    .foregroundStyle(.red)
+            }
+        }
         
         else {
             List {
