@@ -71,7 +71,8 @@ struct ProfileView: View {
                         BoldSubHeadline(text: "Change default rest-time (seconds)")
                         
                         InputDecimalNumberField(
-                            placeHolder: "Change default rest-time",
+                            placeHolder: "Change default rest-time", 
+                            allowNegatives: false,
                             numberText: $viewModel.standardRestTime,
                             markAsWrong: $viewModel.standardRestTimeIsInvalid,
                             width: 0.3,
@@ -91,7 +92,8 @@ struct ProfileView: View {
                         BoldSubHeadline(text: "Change height")
                         
                         InputDecimalNumberField(
-                            placeHolder: "Change height",
+                            placeHolder: "Change height", 
+                            allowNegatives: false,
                             numberText: $viewModel.height,
                             markAsWrong: $viewModel.heightIsInvalid,
                             width: 0.3,

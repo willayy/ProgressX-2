@@ -90,7 +90,8 @@ struct EditPrView: View {
                     .padding(.bottom, 10)
                 
                 InputDecimalNumberField(
-                    placeHolder: "New load...",
+                    placeHolder: "New load",
+                    allowNegatives: false,
                     numberText: $viewModel.newWeightLoad,
                     markAsWrong: $viewModel.newWeightLoadInvalid,
                     width: 0.7,
@@ -101,7 +102,8 @@ struct EditPrView: View {
                 
                 if editingPr!.prType == "maxreps" {
                     InputIntegerNumberField(
-                        placeHolder: "New reps...",
+                        placeHolder: "New reps",
+                        allowNegatives: false,
                         numberText: $viewModel.newQuantity,
                         markAsWrong: $viewModel.newQuantityInvalid,
                         width: 0.7,
@@ -110,7 +112,8 @@ struct EditPrView: View {
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
                     InputDecimalNumberField(
-                        placeHolder: "New time...",
+                        placeHolder: "New time...", 
+                        allowNegatives: false,
                         numberText: $viewModel.newQuantity,
                         markAsWrong: $viewModel.newQuantityInvalid,
                         width: 0.7,

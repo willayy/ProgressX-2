@@ -61,8 +61,8 @@ struct MagnifiedTemplateSetView: View {
         
         BasicList(
             height: 200,
-            containerName: "thresholds",
-            elementName: "threshold",
+            containerName: "this set",
+            elementName: "thresholds",
             data: _thresholds) { 
                 threshold in
                 ThresholdListItem(

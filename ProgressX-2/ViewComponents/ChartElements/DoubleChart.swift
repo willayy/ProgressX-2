@@ -50,15 +50,10 @@ struct DoubleChart: View {
         let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
         // Infer the quantity unit from the personal records, if not possible set to unknown.
         let quantityUnit: String = {
-            let firstPr = personalRecordResults.first
-            if let prType = firstPr!.prType {
-                if (prType == "onerepmax" || prType == "maxreps") {
-                    return "reps"
-                } else {
-                    return "seconds"
-                }
+            if exercise.exerciseType == "reps" {
+                return "reps"
             } else {
-                return ""
+                return "seconds"
             }
         }()
         

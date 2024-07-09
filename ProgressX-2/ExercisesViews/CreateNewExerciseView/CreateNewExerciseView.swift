@@ -101,7 +101,8 @@ struct CreateNewExerciseView: View {
                     }
                     
                     InputDecimalNumberField(
-                        placeHolder: "Load (\(weightUnit))",
+                        placeHolder: "Load (\(weightUnit))", 
+                        allowNegatives: false,
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
                         width: 0.6,
@@ -110,7 +111,8 @@ struct CreateNewExerciseView: View {
                     
                     if viewModel.selectedTypeOfExercise == "Time" {
                         InputDecimalNumberField(
-                            placeHolder: "PR time in seconds",
+                            placeHolder: "PR time in seconds", 
+                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
                             width: 0.6,
@@ -119,7 +121,8 @@ struct CreateNewExerciseView: View {
                             
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
                         InputIntegerNumberField(
-                            placeHolder: "Reps",
+                            placeHolder: "Reps", 
+                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
                             width: 0.6,

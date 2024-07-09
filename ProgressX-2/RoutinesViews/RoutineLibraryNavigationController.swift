@@ -133,8 +133,12 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                     )
                     
                 } else if selection == 10 {
-                    // MARK: Edit Threshold view
                     
+                    // MARK: Edit Threshold view
+                    EditThresholdsView(
+                        navPath: $navPath,
+                        selectedThreshold: $selectedThreshold
+                    )
                 }
             }
         }

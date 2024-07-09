@@ -109,7 +109,8 @@ struct EditTemplateSetView: View {
                     InputDecimalNumberField(
                         placeHolder: viewModel.loadPlaceholder(
                             viewContext: viewContext
-                        ),
+                        ), 
+                        allowNegatives: false,
                         numberText: $viewModel.editedSetLoad,
                         markAsWrong: $viewModel.editedSetLoadIsInvalid,
                         width: 0.6,
@@ -125,6 +126,7 @@ struct EditTemplateSetView: View {
                     HStack {
                         InputIntegerNumberField(
                             placeHolder: viewModel.quantityPlaceholder(),
+                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
                             width: 0.6,
@@ -139,7 +141,8 @@ struct EditTemplateSetView: View {
                 } else {
                     HStack {
                         InputDecimalNumberField(
-                            placeHolder: viewModel.quantityPlaceholder(),
+                            placeHolder: viewModel.quantityPlaceholder(), 
+                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
                             width: 0.6,

@@ -48,7 +48,8 @@ struct CreateNewPersonalRecord: View {
                     .padding(.bottom, 20)
                 
                 InputDecimalNumberField(
-                    placeHolder: "Load",
+                    placeHolder: "Load", 
+                    allowNegatives: false,
                     numberText: $viewModel.prLoad,
                     markAsWrong: $viewModel.prLoadIsInvalid,
                     width: 0.6,
@@ -63,7 +64,8 @@ struct CreateNewPersonalRecord: View {
                     
                 if prType == "maxreps" {
                     InputIntegerNumberField(
-                        placeHolder: "Reps",
+                        placeHolder: "Reps", 
+                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
                         width: 0.6,
@@ -73,7 +75,8 @@ struct CreateNewPersonalRecord: View {
                 
                 else if prType == "timemax" {
                     InputDecimalNumberField(
-                        placeHolder: "Seconds",
+                        placeHolder: "Seconds", 
+                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
                         width: 0.6,

@@ -12,12 +12,15 @@ extension SetThreshold {
     // MARK: Extra Properties
     
     public var formattedFlatLoadAdd: String {
+        if self.flatQuantityAdd == nil { return ""}
         let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
-        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + weightUnit
+        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + " \(weightUnit)"
     }
     
     public var formattedFlatQuantityAdd: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+        
+        if self.flatQuantityAdd == nil { return ""}
         
         switch type {
             case .Reps:
@@ -27,7 +30,7 @@ extension SetThreshold {
         }
     }
     
-    /// Use this property to get a correctly formatted string from the quantity value
+    /// Use this property to get a correctly formatted string from the  triggerQuantity value
     public var formattedTriggerQuantity: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
@@ -43,18 +46,20 @@ extension SetThreshold {
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
-        try validatePrType()
+        try validatePrTypeMatch()
         try validateTriggerQuantity()
         try validateFlatLoadAdd()
         try validateFlatQuantityAdd()
+        try validatePrTypeValue()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try validatePrType()
+        try validatePrTypeMatch()
         try validateTriggerQuantity()
         try validateFlatLoadAdd()
         try validateFlatQuantityAdd()
+        try validatePrTypeValue()
     }
     
     // Validates that the trigger quantity matches the exercise of the set
@@ -67,15 +72,30 @@ extension SetThreshold {
     }
     
     // Makes sure that the thresholds sets exercise matches its pr type.
-    private func validatePrType() throws {
+    private func validatePrTypeMatch() throws {
         let prToExerciseTypeMap = [
             "onerepmax" : "reps",
             "maxreps" : "reps",
             "timemax" : "time"
         ]
         
-        if prToExerciseTypeMap[self.prType!] != self.templateSet!.exercise!.exerciseType {
+        if self.prType == nil {
+            return
+        }
+        
+        let mappedPrType = prToExerciseTypeMap[self.prType!]
+        let exerciseType = self.templateSet!.exercise!.exerciseType
+        
+        if mappedPrType != exerciseType {
             throw ValidationNSErrors.setAndExerciseTypeMismatch.toNSError()
+        }
+    }
+    
+    private func validatePrTypeValue() throws {
+        if self.generatePr && self.prType == nil {
+            throw ValidationNSErrors.prTypeValueIsInvalid.toNSError()
+        } else if !self.generatePr && self.prType != nil {
+            throw ValidationNSErrors.prTypeValueIsInvalid.toNSError()
         }
     }
     

@@ -64,7 +64,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: weightUnit,
+                            placeHolder: weightUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.benchPress1RM,
                             markAsWrong: $viewModel.benchPress1RMIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -76,7 +77,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: weightUnit,
+                            placeHolder: weightUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.squat1RM,
                             markAsWrong: $viewModel.squat1RMIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -88,7 +90,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: weightUnit,
+                            placeHolder: weightUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.shoulderPress1RM,
                             markAsWrong: $viewModel.shoulderPress1RMIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -100,7 +103,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputDecimalNumberField(
-                            placeHolder: weightUnit,
+                            placeHolder: weightUnit, 
+                            allowNegatives: false,
                             numberText: $viewModel.deadLift1RM,
                             markAsWrong: $viewModel.deadLift1RMIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -120,7 +124,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputIntegerNumberField(
-                            placeHolder: "reps",
+                            placeHolder: "reps", 
+                            allowNegatives: false,
                             numberText: $viewModel.pushupsAmrap,
                             markAsWrong: $viewModel.pushupsAmrapIsInvalid,
                             width: viewModel.inputFieldWidth,
@@ -132,7 +137,8 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         InputIntegerNumberField(
-                            placeHolder: "reps",
+                            placeHolder: "reps", 
+                            allowNegatives: false,
                             numberText: $viewModel.situpsAmrap,
                             markAsWrong: $viewModel.situpsAmrapIsInvalid,
                             width: viewModel.inputFieldWidth,
