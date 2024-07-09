@@ -20,12 +20,12 @@
 		8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */; };
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
-		831F2BF12C209FB1007A7A8A /* Completable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* Completable.swift */; };
+		831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */; };
 		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
-		831F2BF52C20A74C007A7A8A /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF42C20A74C007A7A8A /* Session.swift */; };
+		831F2BF52C20A74C007A7A8A /* TrainingSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF42C20A74C007A7A8A /* TrainingSession.swift */; };
 		831F2BFA2C20E38D007A7A8A /* DataModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF82C20E38D007A7A8A /* DataModelTests.swift */; };
 		831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C072C21938E007A7A8A /* TrainingWeek.swift */; };
-		831F2C0A2C2195D8007A7A8A /* Cycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C092C2195D8007A7A8A /* Cycle.swift */; };
+		831F2C0A2C2195D8007A7A8A /* TrainingCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C092C2195D8007A7A8A /* TrainingCycle.swift */; };
 		831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0B2C21D043007A7A8A /* SideBar.swift */; };
 		831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0D2C21D066007A7A8A /* HomeView.swift */; };
 		831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */; };
@@ -108,7 +108,7 @@
 		83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */; };
 		83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F12C2E04E900FA78C6 /* Exercise.swift */; };
 		83D684F62C2E064500FA78C6 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F52C2E064500FA78C6 /* Profile.swift */; };
-		83D684F92C2EC74900FA78C6 /* Orderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F82C2EC74900FA78C6 /* Orderable.swift */; };
+		83D684F92C2EC74900FA78C6 /* OrderableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */; };
 		83D684FE2C327FBB00FA78C6 /* SetThreshold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684FD2C327FBB00FA78C6 /* SetThreshold.swift */; };
 		83D685002C32A24E00FA78C6 /* EditTemplateSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684FF2C32A24E00FA78C6 /* EditTemplateSessionView.swift */; };
 		83D685042C32AEA900FA78C6 /* CreateNewTemplateSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D685032C32AEA900FA78C6 /* CreateNewTemplateSetView.swift */; };
@@ -151,12 +151,12 @@
 		8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListItem.swift; sourceTree = "<group>"; };
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
-		831F2BF02C209FB1007A7A8A /* Completable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Completable.swift; sourceTree = "<group>"; };
+		831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTimePeriod.swift; sourceTree = "<group>"; };
 		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
-		831F2BF42C20A74C007A7A8A /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		831F2BF42C20A74C007A7A8A /* TrainingSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSession.swift; sourceTree = "<group>"; };
 		831F2BF82C20E38D007A7A8A /* DataModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataModelTests.swift; sourceTree = "<group>"; };
 		831F2C072C21938E007A7A8A /* TrainingWeek.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWeek.swift; sourceTree = "<group>"; };
-		831F2C092C2195D8007A7A8A /* Cycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cycle.swift; sourceTree = "<group>"; };
+		831F2C092C2195D8007A7A8A /* TrainingCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCycle.swift; sourceTree = "<group>"; };
 		831F2C0B2C21D043007A7A8A /* SideBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		831F2C0D2C21D066007A7A8A /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		831F2C0F2C22F029007A7A8A /* RoutineLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineLibraryView.swift; sourceTree = "<group>"; };
@@ -239,7 +239,7 @@
 		83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasOrderable.swift; sourceTree = "<group>"; };
 		83D684F12C2E04E900FA78C6 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		83D684F52C2E064500FA78C6 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		83D684F82C2EC74900FA78C6 /* Orderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orderable.swift; sourceTree = "<group>"; };
+		83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderableTimePeriod.swift; sourceTree = "<group>"; };
 		83D684FD2C327FBB00FA78C6 /* SetThreshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetThreshold.swift; sourceTree = "<group>"; };
 		83D684FF2C32A24E00FA78C6 /* EditTemplateSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTemplateSessionView.swift; sourceTree = "<group>"; };
 		83D685032C32AEA900FA78C6 /* CreateNewTemplateSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTemplateSetView.swift; sourceTree = "<group>"; };
@@ -281,8 +281,8 @@
 			isa = PBXGroup;
 			children = (
 				83AD4A8D2BF3BC3C00A2E180 /* NSManagedObject.swift */,
-				831F2BF02C209FB1007A7A8A /* Completable.swift */,
-				83D684F82C2EC74900FA78C6 /* Orderable.swift */,
+				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
+				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
 				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
@@ -623,9 +623,9 @@
 		833CCD562C3D6ABE00B53C97 /* TimePeriods */ = {
 			isa = PBXGroup;
 			children = (
-				831F2C092C2195D8007A7A8A /* Cycle.swift */,
+				831F2C092C2195D8007A7A8A /* TrainingCycle.swift */,
 				831F2C072C21938E007A7A8A /* TrainingWeek.swift */,
-				831F2BF42C20A74C007A7A8A /* Session.swift */,
+				831F2BF42C20A74C007A7A8A /* TrainingSession.swift */,
 				831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */,
 			);
 			path = TimePeriods;
@@ -959,7 +959,7 @@
 				836485F92C36D78D006EB0C0 /* CreateNewProfile1ViewModel.swift in Sources */,
 				83266E6B2C38214C00F5F6CB /* CreateNewRoutineViewModel.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
-				831F2C0A2C2195D8007A7A8A /* Cycle.swift in Sources */,
+				831F2C0A2C2195D8007A7A8A /* TrainingCycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
 				831F2C362C288D38007A7A8A /* EditTemplateWeekView.swift in Sources */,
 				8364860B2C372513006EB0C0 /* TemplateWeek.swift in Sources */,
@@ -968,7 +968,7 @@
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */,
 				836485F12C36CBCD006EB0C0 /* ExerciseLibraryNavigationController.swift in Sources */,
-				831F2BF12C209FB1007A7A8A /* Completable.swift in Sources */,
+				831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				836486072C36F306006EB0C0 /* EditTemplateWeekViewModel.swift in Sources */,
@@ -989,8 +989,8 @@
 				83266E5F2C37E9C900F5F6CB /* MagnifiedPrView.swift in Sources */,
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3View.swift in Sources */,
 				83D6850B2C33309800FA78C6 /* ThresholdListItem.swift in Sources */,
-				831F2BF52C20A74C007A7A8A /* Session.swift in Sources */,
-				83D684F92C2EC74900FA78C6 /* Orderable.swift in Sources */,
+				831F2BF52C20A74C007A7A8A /* TrainingSession.swift in Sources */,
+				83D684F92C2EC74900FA78C6 /* OrderableTimePeriod.swift in Sources */,
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,

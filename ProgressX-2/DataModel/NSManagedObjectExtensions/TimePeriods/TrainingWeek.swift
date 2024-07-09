@@ -13,7 +13,7 @@ extension TrainingWeek: HasOrderable {
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
-        let sessions: [Session] = self.sessions?.allObjects as! [Session]
+        let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
         let max = sessions.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
@@ -24,17 +24,19 @@ extension TrainingWeek: HasOrderable {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
+        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
+        try validateCompleteables()
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let sessions: [Session] = self.sessions?.allObjects as! [Session]
+        let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
         let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
@@ -42,13 +44,13 @@ extension TrainingWeek: HasOrderable {
     
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
-        if self.isComplete && self.sessions == nil {
+        if self.isComplete && self.trainingSessions == nil {
             throw ValidationNSErrors.weekCompleteWithNoSessions.toNSError()
         }
         
         // If week is complete but it's sets arent throw an error.
         var completedSessions: Int = 0
-        let sessions = self.sessions!.allObjects as! [Session]
+        let sessions = self.trainingSessions!.allObjects as! [TrainingSession]
         
         // Count completed sessions.
         for session in sessions {
@@ -62,4 +64,12 @@ extension TrainingWeek: HasOrderable {
             throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
     }
+    
+    
+    private func validateCompleteables() throws {
+        #warning("TODO: Implement with weekIncompleWithCompleteSessions")
+        #warning("DONT FORGET TO IMPLEMENT VALIDATION ERROR")
+    }
+    
+    
 }

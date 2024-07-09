@@ -243,10 +243,10 @@ final class DataModelTests: XCTestCase {
     func test_Complete_Session_With_Incoomplete_Sets() {
         let routine = Routine(context: context!)
         routine.timePeriodName = "some named routine"
-        let cycle = Cycle(context: context!)
+        let cycle = TrainingCycle(context: context!)
         cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
-        let session = Session(context: context!)
+        let session = TrainingSession(context: context!)
         let set = TrainingSet(context: context!)
         routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
@@ -304,10 +304,10 @@ final class DataModelTests: XCTestCase {
     func test_Set_QuantityTodo_To_Double_On_TrainingSet() {
         let routine = Routine(context: context!)
         routine.timePeriodName = "some named routine 2"
-        let cycle = Cycle(context: context!)
+        let cycle = TrainingCycle(context: context!)
         cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
-        let session = Session(context: context!)
+        let session = TrainingSession(context: context!)
         let set = TrainingSet(context: context!)
         routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
@@ -343,10 +343,10 @@ final class DataModelTests: XCTestCase {
     func test_Set_QuantityDone_To_Double_On_TrainingSet() {
         let routine = Routine(context: context!)
         routine.timePeriodName = "some named routine 3"
-        let cycle = Cycle(context: context!)
+        let cycle = TrainingCycle(context: context!)
         cycle.positionIndex = 2
         let week = TrainingWeek(context: context!)
-        let session = Session(context: context!)
+        let session = TrainingSession(context: context!)
         let set = TrainingSet(context: context!)
         routine.templateCycle = TemplateCycle(context: context!)
         routine.createdOnDate = Date()
@@ -381,8 +381,8 @@ final class DataModelTests: XCTestCase {
     
     func test_Orderable_Has_Invalid_positionIndex() {
         let routine = Routine(context: context!)
-        let cycle1 = Cycle(context: context!)
-        let cycle2 = Cycle(context: context!)
+        let cycle1 = TrainingCycle(context: context!)
+        let cycle2 = TrainingCycle(context: context!)
         cycle1.isComplete = true
         cycle1.routine = routine
         cycle1.positionIndex = 2

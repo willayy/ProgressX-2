@@ -22,7 +22,7 @@ struct MagnifiedThresholdView: View {
             
             Text("trigger quantity: ")
                 .fontWeight(.bold) +
-            Text(threshold.formattedTriggerQuantity)
+            Text(threshold.triggerQuantityString)
             
             Text("Generates PR?: ")
                 .fontWeight(.bold) +
@@ -34,11 +34,11 @@ struct MagnifiedThresholdView: View {
             
             Text("Flat load add: ")
                 .fontWeight(.bold) +
-            Text(String(threshold.formattedFlatLoadAdd))
+            Text(String(threshold.flatLoadAddString))
             
             Text("Flat quantity add: ")
                 .fontWeight(.bold) +
-            Text(threshold.formattedFlatQuantityAdd)
+            Text(threshold.flatQuantityAddString)
             
         })
     }

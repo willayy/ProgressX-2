@@ -8,12 +8,12 @@
 import Foundation
 import CoreData
 
-extension Cycle: HasOrderable {
+extension TrainingCycle: HasOrderable {
     
     // MARK: Extra properties
     
     func getNextPositionIndex() -> Int64 {
-        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let weeks: [TrainingWeek] = self.trainingWeeks?.allObjects as! [TrainingWeek]
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
@@ -24,17 +24,19 @@ extension Cycle: HasOrderable {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
+        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
+        try validateCompleteables()
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
-        let weeks: [TrainingWeek] = self.weeks?.allObjects as! [TrainingWeek]
+        let weeks: [TrainingWeek] = self.trainingWeeks?.allObjects as! [TrainingWeek]
         let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
@@ -43,13 +45,13 @@ extension Cycle: HasOrderable {
     private func validateIsComplete() throws {
         
         // if session is complete and its relationship sets is empty throw an error.
-        if self.isComplete && self.weeks == nil {
+        if self.isComplete && self.trainingWeeks == nil {
             throw ValidationNSErrors.cycleCompleteWithNoWeeks.toNSError()
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
         var completedWeeks: Int = 0
-        let weeks = self.weeks!.allObjects as! [TrainingWeek]
+        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
         
         // Count completed weeks.
         for week in weeks {
@@ -63,4 +65,10 @@ extension Cycle: HasOrderable {
             throw ValidationNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
     }
+    
+    private func validateCompleteables() throws {
+        #warning("TODO: Implement with cycleIncompleWithCompleteWeeks")
+        #warning("DONT FORGET TO IMPLEMENT VALIDATION ERROR")
+    }
+    
 }

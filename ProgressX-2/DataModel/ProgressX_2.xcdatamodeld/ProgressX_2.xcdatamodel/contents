@@ -4,60 +4,52 @@
         <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
     <entity name="BodyEntry" representedClassName="BodyEntry" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
-        <attribute name="bodyWeight" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="calfCirc" optional="YES" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="chestCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="lwrArmCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="thighCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="uprArmCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="waistCirc" attributeType="Double" minValueString="-1" maxValueString="1000" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="bodyWeight" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
+        <attribute name="calfCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
+        <attribute name="chestCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
+        <attribute name="lwrArmCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="thighCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
+        <attribute name="uprArmCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
+        <attribute name="waistCirc" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" usesScalarValueType="YES"/>
         <relationship name="profile" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
-    <entity name="Completeable" representedClassName="Completeable" isAbstract="YES" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
-        <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
+    <entity name="CompleteableTimePeriod" representedClassName="CompleteableTimePeriod" isAbstract="YES" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
+        <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="startedOnDate" optional="YES" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
-    </entity>
-    <entity name="Cycle" representedClassName="Cycle" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="cycles" inverseEntity="Routine"/>
-        <relationship name="weeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="cycle" inverseEntity="TrainingWeek"/>
+        <attribute name="startedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
     <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
         <attribute name="exerciseDesc" attributeType="String" minValueString="0" maxValueString="500" defaultValueString=""/>
         <attribute name="exerciseName" attributeType="String" minValueString="0" maxValueString="50"/>
-        <attribute name="exerciseType" attributeType="String" minValueString="0" maxValueString="10" defaultValueString="" regularExpressionString="^(time|reps)$"/>
+        <attribute name="exerciseType" attributeType="String" minValueString="0" maxValueString="10" regularExpressionString="^(time|reps)$"/>
         <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="exercise" inverseEntity="TrainingSet"/>
         <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
-    <entity name="Orderable" representedClassName="Orderable" isAbstract="YES" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
+    <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" usesScalarValueType="YES"/>
     </entity>
     <entity name="PersonalRecord" representedClassName="PersonalRecord" parentEntity="Achievement" syncable="YES" codeGenerationType="class">
-        <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="prQuantity" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <attribute name="prType" attributeType="String" defaultValueString="" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
-        <attribute name="weightLoad" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="weightLoad" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="personalRecords" inverseEntity="Exercise"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
-        <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-31626060" defaultDateTimeInterval="-31626000" usesScalarValueType="NO"/>
-        <attribute name="gender" attributeType="String" defaultValueString="&quot;&quot;" regularExpressionString="^(male|female)$"/>
-        <attribute name="height" optional="YES" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
+        <attribute name="gender" attributeType="String" regularExpressionString="^(male|female)$"/>
+        <attribute name="height" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>
         <attribute name="standardRestTime" attributeType="Double" minValueString="0" defaultValueString="240" usesScalarValueType="YES"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
     </entity>
-    <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
+    <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
-        <relationship name="cycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Cycle" inverseName="routine" inverseEntity="Cycle"/>
+        <relationship name="cycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
         <relationship name="templateCycle" maxCount="1" deletionRule="Cascade" destinationEntity="TemplateCycle" inverseName="routine" inverseEntity="TemplateCycle"/>
     </entity>
-    <entity name="Session" representedClassName="Session" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <relationship name="sets" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="session" inverseEntity="TrainingSet"/>
-        <relationship name="week" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="sessions" inverseEntity="TrainingWeek"/>
-    </entity>
-    <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
+    <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="flatLoadAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="flatQuantityAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="generatePr" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -65,43 +57,51 @@
         <attribute name="triggerQuantity" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="templateSet" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="thresholds" inverseEntity="TemplateSet"/>
     </entity>
-    <entity name="TemplateCycle" representedClassName="TemplateCycle" parentEntity="TimePeriods" syncable="YES" codeGenerationType="class">
+    <entity name="TemplateCycle" representedClassName="TemplateCycle" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="templateCycle" inverseEntity="Routine"/>
-        <relationship name="templateWeeks" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateWeek" inverseName="templateCycle" inverseEntity="TemplateWeek"/>
+        <relationship name="templateWeeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateWeek" inverseName="templateCycle" inverseEntity="TemplateWeek"/>
     </entity>
-    <entity name="TemplateSession" representedClassName="TemplateSession" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
+    <entity name="TemplateSession" representedClassName="TemplateSession" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateSets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="templateSession" inverseEntity="TemplateSet"/>
         <relationship name="templateWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateWeek" inverseName="templateSessions" inverseEntity="TemplateWeek"/>
     </entity>
-    <entity name="TemplateSet" representedClassName="TemplateSet" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
-        <attribute name="loadType" attributeType="String" defaultValueString="numerical" regularExpressionString="^(numerical|maxperc|bwperc)$"/>
-        <attribute name="quantityType" attributeType="String" defaultValueString="numerical" regularExpressionString="^(numerical|maxperc)$"/>
-        <attribute name="setLoad" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="setQuantity" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
+    <entity name="TemplateSet" representedClassName="TemplateSet" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
+        <attribute name="loadType" attributeType="String" regularExpressionString="^(numerical|maxperc|bwperc)$"/>
+        <attribute name="quantityType" attributeType="String" regularExpressionString="^(numerical|maxperc)$"/>
+        <attribute name="setLoad" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
+        <attribute name="setQuantity" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="templateSets" inverseEntity="Exercise"/>
         <relationship name="templateSession" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSession" inverseName="templateSets" inverseEntity="TemplateSession"/>
         <relationship name="thresholds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SetThreshold" inverseName="templateSet" inverseEntity="SetThreshold"/>
         <relationship name="trainingSets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingSet" inverseName="templateSet" inverseEntity="TrainingSet"/>
     </entity>
-    <entity name="TemplateWeek" representedClassName="TemplateWeek" parentEntity="Orderable" syncable="YES" codeGenerationType="class">
+    <entity name="TemplateWeek" representedClassName="TemplateWeek" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateCycle" inverseName="templateWeeks" inverseEntity="TemplateCycle"/>
-        <relationship name="templateSessions" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSession" inverseName="templateWeek" inverseEntity="TemplateSession"/>
+        <relationship name="templateSessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSession" inverseName="templateWeek" inverseEntity="TemplateSession"/>
     </entity>
-    <entity name="TimePeriods" representedClassName="TimePeriods" isAbstract="YES" syncable="YES" codeGenerationType="class">
+    <entity name="TimePeriod" representedClassName="TimePeriod" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="timePeriodDescription" attributeType="String" defaultValueString=""/>
-        <attribute name="timePeriodName" attributeType="String" defaultValueString=""/>
+        <attribute name="timePeriodName" attributeType="String"/>
     </entity>
-    <entity name="TrainingSet" representedClassName="TrainingSet" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
+    <entity name="TrainingCycle" representedClassName="TrainingCycle" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
+        <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="cycles" inverseEntity="Routine"/>
+        <relationship name="trainingWeeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="trainingCycle" inverseEntity="TrainingWeek"/>
+    </entity>
+    <entity name="TrainingSession" representedClassName="TrainingSession" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
+        <relationship name="trainingSets" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="trainingSession" inverseEntity="TrainingSet"/>
+        <relationship name="trainingWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="trainingSessions" inverseEntity="TrainingWeek"/>
+    </entity>
+    <entity name="TrainingSet" representedClassName="TrainingSet" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="loadDone" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
         <attribute name="quantityDone" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
-        <relationship name="session" maxCount="1" deletionRule="Nullify" destinationEntity="Session" inverseName="sets" inverseEntity="Session"/>
         <relationship name="templateSet" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="trainingSets" inverseEntity="TemplateSet"/>
+        <relationship name="trainingSession" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingSession" inverseName="trainingSets" inverseEntity="TrainingSession"/>
     </entity>
-    <entity name="TrainingWeek" representedClassName="TrainingWeek" parentEntity="Completeable" syncable="YES" codeGenerationType="class">
-        <relationship name="cycle" maxCount="1" deletionRule="Nullify" destinationEntity="Cycle" inverseName="weeks" inverseEntity="Cycle"/>
-        <relationship name="sessions" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="Session" inverseName="week" inverseEntity="Session"/>
+    <entity name="TrainingWeek" representedClassName="TrainingWeek" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
+        <relationship name="trainingCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingCycle" inverseName="trainingWeeks" inverseEntity="TrainingCycle"/>
+        <relationship name="trainingSessions" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSession" inverseName="trainingWeek" inverseEntity="TrainingSession"/>
     </entity>
 </model>

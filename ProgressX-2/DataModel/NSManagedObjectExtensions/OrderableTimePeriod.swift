@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Orderable {
+extension OrderableTimePeriod {
     
     // MARK: Extra Properties
     
@@ -27,14 +27,14 @@ extension Orderable {
     // Revalidates "parent" relationship
     private func revalidateRelationShip() throws {
         switch self {
-        case is Cycle:
-            try (self as! Cycle).routine!.validateForUpdate()
+        case is TrainingCycle:
+            try (self as! TrainingCycle).routine!.validateForUpdate()
         case is TrainingWeek:
-            try (self as! TrainingWeek).cycle!.validateForUpdate()
-        case is Session:
-            try (self as! Session).week!.validateForUpdate()
+            try (self as! TrainingWeek).trainingCycle!.validateForUpdate()
+        case is TrainingSession:
+            try (self as! TrainingSession).trainingWeek!.validateForUpdate()
         case is TrainingSet:
-            try (self as! TrainingSet).session!.validateForUpdate()
+            try (self as! TrainingSet).trainingSession!.validateForUpdate()
         default:
             break
         }

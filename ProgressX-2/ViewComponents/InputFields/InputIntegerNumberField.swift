@@ -9,6 +9,8 @@
 import SwiftUI
 import Combine
 
+#warning("TODO: Fix not being able to input - sign")
+
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputIntegerNumberField: View {
     

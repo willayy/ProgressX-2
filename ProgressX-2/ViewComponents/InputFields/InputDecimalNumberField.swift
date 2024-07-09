@@ -22,6 +22,8 @@ struct InputDecimalNumberField: View {
     @State var disableMaxChars = false
     @Binding var errorMessage: String
     
+    #warning("TODO: Fix not being able to input - sign")
+    
     init(
         placeHolder: String,
         allowNegatives: Bool,

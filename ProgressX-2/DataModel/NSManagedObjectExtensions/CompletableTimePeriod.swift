@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Completeable {
+extension CompleteableTimePeriod {
     
     //MARK: Extra properties
     

@@ -11,13 +11,13 @@ extension SetThreshold {
     
     // MARK: Extra Properties
     
-    public var formattedFlatLoadAdd: String {
+    public var flatLoadAddString: String {
         if self.flatQuantityAdd == nil { return ""}
         let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
         return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + " \(weightUnit)"
     }
     
-    public var formattedFlatQuantityAdd: String {
+    public var flatQuantityAddString: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
         if self.flatQuantityAdd == nil { return ""}
@@ -31,7 +31,7 @@ extension SetThreshold {
     }
     
     /// Use this property to get a correctly formatted string from the  triggerQuantity value
-    public var formattedTriggerQuantity: String {
+    public var triggerQuantityString: String {
         let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
         
         switch type {
