@@ -64,7 +64,7 @@ extension PersonalRecord {
         let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
 
         if !isQuantityInteger && isPrRepBased {
-            throw ValidationNSErrors.prAndExerciseTypeMismatch.toNSError()
+            throw ValidationNSErrors.prQuantityIsInvalid.toNSError()
         }
     }
     

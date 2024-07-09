@@ -40,19 +40,19 @@ struct PersistenceController {
     }
     
     // Flag to check if unitTests are being run
-    private static var TESTING : Bool {
+    private static let TESTING: Bool = {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-    }
+    }()
     
     /* The persistence controller intended for the app during run-time and production.
      To make this work during testing without throwing warnings the shared Persistence controller
      is aliased to the preview one during testing. If this isnt done two identical DataModels will
      be created during testing which throws warnings since all entities will be duplicated */
     static let shared = {
-        if !TESTING {
-          return PersistenceController(inMemory: false)
-        } else {
+        if TESTING {
           return preview
+        } else {
+          return PersistenceController(inMemory: false)
         }
     }()
     

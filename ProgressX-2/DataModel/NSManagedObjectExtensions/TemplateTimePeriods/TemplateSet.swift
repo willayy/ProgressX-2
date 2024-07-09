@@ -116,14 +116,14 @@ extension TemplateSet: HasOrderable {
         let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
         let groupedBy = Dictionary(grouping: thresholds, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
+        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
     }
     
     private func validateQuantityTodo() throws {
         let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
         let isPrRepBased = (self.exercise!.exerciseType == "reps")
         if !isQuantityTodoInteger && isPrRepBased {
-            throw ValidationNSErrors.quantityTodoInvalid.toNSError()
+            throw ValidationNSErrors.quantityTodoIsInvalid.toNSError()
         }
     }
 }

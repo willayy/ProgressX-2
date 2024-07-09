@@ -13,7 +13,7 @@ enum ValidationNSErrors: Int {
     /* -------------------------------------------------------- */
     // PersonalRecord
     case prAndExerciseTypeMismatch = 9999
-    case quantityInvalid = 9997
+    case prQuantityIsInvalid = 9997
     
     // Profile
     case profileNameIsInvalid = 9998
@@ -38,11 +38,11 @@ enum ValidationNSErrors: Int {
     
     // Set
     case setAndExerciseTypeMismatch = 9987
-    case quantityTodoInvalid = 9986
-    case quantityDoneInvalid = 9985
+    case quantityTodoIsInvalid = 9986
+    case quantityDoneIsInvalid = 9985
     
     // Orderable
-    case invalidPositionIndex = 9983
+    case positionIndexIsInvalid = 9983
     
     // Routine
     case routineNameIsInvalid = 9982
@@ -101,21 +101,20 @@ enum ValidationNSErrors: Int {
                     Cycle can't be complete when its weeks aren't.
                     """]
             
-        case .quantityDoneInvalid:
+        case .quantityDoneIsInvalid:
             return [NSLocalizedDescriptionKey: 
                     """
-                    Property .quantityDone on TrainingSet must
-                    be a valid integer if the prType is one of
-                    'onerepmax' or 'maxreps'.
+                    Quantity done properties on Training/Template Sets must
+                    be a valid Integer if the its exercise is rep based.
+                    If the exercise is time based it needs to be Double.
                     """]
             
-        case .quantityTodoInvalid:
+        case .quantityTodoIsInvalid:
             return [NSLocalizedDescriptionKey: 
                     """
-                    Property .quantity on TrainingSet must be a valid
-                    integer if the quantityType is numerical and the
-                    exercise type is reps. If quantityType is percent
-                    .quantity must be a valid double.
+                    Quantity todo properties on Training/Template Sets must
+                    be a valid Integer if the its exercise is rep based.
+                    If the exercise is time based it needs to be Double.
                     """]
             
         case .completeWithoutCompletionDate:
@@ -131,10 +130,10 @@ enum ValidationNSErrors: Int {
                     Cycle cant be complete when it has no weeks.
                     """]
             
-        case .quantityInvalid:
+        case .prQuantityIsInvalid:
             return [NSLocalizedDescriptionKey:
                     """
-                    Property .prQuantity on PersonalRecord cant be set
+                    Quantity property on PersonalRecord cant be set
                     to a double value that isnt a valid integer if the
                     PersonalRecord is of type 'maxreps' or 'onerepmax'.
                     """]
@@ -142,10 +141,10 @@ enum ValidationNSErrors: Int {
         case .prAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey:
                     """
-                    Pr type string does not match .exercise type string.
+                    Pr type string does not match exerice type string.
                     """]
             
-        case .invalidPositionIndex:
+        case .positionIndexIsInvalid:
             return [NSLocalizedDescriptionKey: 
                     """
                     This object contains children with duplicate
@@ -174,7 +173,9 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey: 
                     """
                     The triggerQuantity of this threshold has to
-                    be a valid integer if exercise is of type
+                    be a valid integer if exercise is of type 'reps'.
+                    If the exercise is of type 'time' it needs to be a
+                    valid Double.
                     """]
             
         case .flatLoadAddIsInvalid:

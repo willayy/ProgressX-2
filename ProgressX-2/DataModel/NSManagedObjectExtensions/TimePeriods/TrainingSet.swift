@@ -71,7 +71,7 @@ extension TrainingSet {
         let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
         let isPrRepBased = (self.exercise!.exerciseType == "reps")
         if !isQuantityTodoInteger && isPrRepBased {
-            throw ValidationNSErrors.quantityTodoInvalid.toNSError()
+            throw ValidationNSErrors.quantityTodoIsInvalid.toNSError()
         }
     }
     
@@ -79,7 +79,7 @@ extension TrainingSet {
         let isQuantityDoneInteger = (floor(self.quantityDone) == self.quantityDone)
         let isPrRepBased = (self.exercise!.exerciseType == "reps")
         if !isQuantityDoneInteger && isPrRepBased {
-            throw ValidationNSErrors.quantityDoneInvalid.toNSError()
+            throw ValidationNSErrors.quantityDoneIsInvalid.toNSError()
         }
     }
 }

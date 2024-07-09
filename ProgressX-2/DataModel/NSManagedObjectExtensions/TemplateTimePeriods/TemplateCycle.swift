@@ -35,6 +35,6 @@ extension TemplateCycle: HasOrderable {
         let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
         let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
+        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
     }
 }

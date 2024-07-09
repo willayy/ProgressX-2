@@ -39,12 +39,12 @@ extension TrainingWeek: HasOrderable {
         let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
         let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.invalidPositionIndex.toNSError()}
+        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
     }
     
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
-        if self.isComplete && self.trainingSessions == nil {
+        if self.isComplete && self.trainingSessions!.allObjects.isEmpty {
             throw ValidationNSErrors.weekCompleteWithNoSessions.toNSError()
         }
         

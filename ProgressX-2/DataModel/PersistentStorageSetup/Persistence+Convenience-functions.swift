@@ -147,6 +147,8 @@ extension PersistenceController {
         return latest
     }
     
+    #warning("TODO: Turn all functions below this into convenience inits in the extension files!")
+    
     public static func createExercise(_ context: NSManagedObjectContext, name: String, desc: String, type: String) -> Exercise {
         let exercise: Exercise = Exercise(context: context)
         exercise.exerciseName = name
