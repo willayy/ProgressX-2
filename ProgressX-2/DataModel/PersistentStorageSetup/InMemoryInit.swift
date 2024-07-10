@@ -19,52 +19,54 @@ class InMemory {
     
     private static func initProfile(_ context: NSManagedObjectContext) {
         
-        let profile: Profile = Profile(context: context)
-        profile.profileUserName = "TestProfile"
-        profile.gender = "male"
-        profile.isMetric = true
-        profile.birthDay = Date()
-        profile.height = 187
+        let profile = Profile(
+            context,
+            userName: "TestProfile",
+            gender: "male",
+            height: 187,
+            isMetric: true,
+            birthDay: Date()
+        )
         
-        let bw1 = PersistenceController.createBodyEntry(
+        let bw1 = BodyEntry(
             context,
             profile: profile,
-            weight: 65,
+            bodyWeight: 65,
             date: Date()
         )
         
-        let bw2 = PersistenceController.createBodyEntry(
+        let bw2 = BodyEntry(
             context,
             profile: profile,
-            weight: 78,
+            bodyWeight: 78,
             date: Date()-100000
         )
         
-        let bw3 = PersistenceController.createBodyEntry(
+        let bw3 = BodyEntry(
             context,
             profile: profile,
-            weight: 82,
+            bodyWeight: 82,
             date: Date()-200000
         )
         
-        let bw4 = PersistenceController.createBodyEntry(
+        let bw4 = BodyEntry(
             context,
             profile: profile,
-            weight: 85,
+            bodyWeight: 85,
             date: Date()-300000
         )
         
-        let bw5 = PersistenceController.createBodyEntry(
+        let bw5 = BodyEntry(
             context,
             profile: profile,
-            weight: 87,
+            bodyWeight: 87,
             date: Date()-400000
         )
         
-        let bw6 = PersistenceController.createBodyEntry(
+        let bw6 = BodyEntry(
             context,
             profile: profile,
-            weight: 90,
+            bodyWeight: 90,
             date: Date()-500000
         )
         
@@ -77,151 +79,151 @@ class InMemory {
     }
     
     private static func initExercisesAndPrs(_ context: NSManagedObjectContext) {
-        let testExercise1 = PersistenceController.createExercise(
+        let testExercise1 = Exercise(
             context,
             name: "testing exercise (reps)",
-            desc: "This exercise is used for debugging purposes within the canvas preview",
+            description: "This exercise is used for debugging purposes within the canvas preview",
             type: "reps"
         )
         
-        let testExercise2 = PersistenceController.createExercise(
+        let testExercise2 = Exercise(
             context,
             name: "testing exercise (time)",
-            desc: "This exercise is used for debugging purposes within the canvas preview",
+            description: "This exercise is used for debugging purposes within the canvas preview",
             type: "time"
         )
         
-        let ORMpr1 = PersistenceController.createPersonalRecord(
+        let ORMpr1 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 50,
-            q: 1,
+            weightLoad: 50,
+            quantity: 1,
             date: Date(),
             type: "onerepmax"
         )
         
-        let ORMpr2 = PersistenceController.createPersonalRecord(
+        let ORMpr2 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 45,
-            q: 1,
+            weightLoad: 45,
+            quantity: 1,
             date: Date()-100000,
             type: "onerepmax"
         )
         
-        let ORMpr3 = PersistenceController.createPersonalRecord(
+        let ORMpr3 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 67,
-            q: 1,
+            weightLoad: 67,
+            quantity: 1,
             date: Date()-200000,
             type: "onerepmax"
         )
         
-        let ORMpr4 = PersistenceController.createPersonalRecord(
+        let ORMpr4 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 89,
-            q: 1,
+            weightLoad: 89,
+            quantity: 1,
             date: Date()-300000,
             type: "onerepmax"
         )
         
-        let ORMpr5 = PersistenceController.createPersonalRecord(
+        let ORMpr5 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 72,
-            q: 1,
+            weightLoad: 72,
+            quantity: 1,
             date: Date()-400000,
             type: "onerepmax"
         )
         
-        let MRpr1 = PersistenceController.createPersonalRecord(
+        let MRpr1 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 50,
-            q: 31,
+            weightLoad: 50,
+            quantity: 31,
             date: Date(),
             type: "maxreps"
         )
         
-        let MRpr2 = PersistenceController.createPersonalRecord(
+        let MRpr2 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 45,
-            q: 21,
+            weightLoad: 45,
+            quantity: 21,
             date: Date()-100000,
             type: "maxreps"
         )
         
-        let MRpr3 = PersistenceController.createPersonalRecord(
+        let MRpr3 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 67,
-            q: 18,
+            weightLoad: 67,
+            quantity: 18,
             date: Date()-200000,
             type: "maxreps"
         )
         
-        let MRpr4 = PersistenceController.createPersonalRecord(
+        let MRpr4 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 89,
-            q: 11,
+            weightLoad: 89,
+            quantity: 11,
             date: Date()-300000,
             type: "maxreps"
         )
         
-        let MRpr5 = PersistenceController.createPersonalRecord(
+        let MRpr5 = PersonalRecord(
             context,
             exercise: testExercise1,
-            wl: 72,
-            q: 15,
+            weightLoad: 72,
+            quantity: 15,
             date: Date()-400000,
             type: "maxreps"
         )
         
-        let TMpr1 = PersistenceController.createPersonalRecord(
+        let TMpr1 = PersonalRecord(
             context,
             exercise: testExercise2,
-            wl: 50,
-            q: 31,
+            weightLoad: 50,
+            quantity: 31,
             date: Date(),
             type: "timemax"
         )
         
-        let TMpr2 = PersistenceController.createPersonalRecord(
+        let TMpr2 = PersonalRecord(
             context,
             exercise: testExercise2,
-            wl: 45,
-            q: 21,
+            weightLoad: 45,
+            quantity: 21,
             date: Date()-100000,
             type: "timemax"
         )
         
-        let TMpr3 = PersistenceController.createPersonalRecord(
+        let TMpr3 = PersonalRecord(
             context,
             exercise: testExercise2,
-            wl: 67,
-            q: 18,
+            weightLoad: 67,
+            quantity: 18,
             date: Date()-200000,
             type: "timemax"
         )
         
-        let TMpr4 = PersistenceController.createPersonalRecord(
+        let TMpr4 = PersonalRecord(
             context,
             exercise: testExercise2,
-            wl: 89,
-            q: 11,
+            weightLoad: 89,
+            quantity: 11,
             date: Date()-300000,
             type: "timemax"
         )
         
-        let TMpr5 = PersistenceController.createPersonalRecord(
+        let TMpr5 = PersonalRecord(
             context,
             exercise: testExercise2,
-            wl: 72,
-            q: 15,
+            weightLoad: 72,
+            quantity: 15,
             date: Date()-400000,
             type: "timemax"
         )
@@ -247,47 +249,62 @@ class InMemory {
     private static func initRoutines(_ context: NSManagedObjectContext) {
         
         // Creating a Routine
-        let routine = Routine(context: context)
-        routine.createdOnDate = Date()
-        routine.timePeriodName = "test routine 1"
-        routine.timePeriodDescription = "routine used for in-memory debugging"
+        let routine = Routine(
+            context,
+            name: "Test routine 1",
+            description: "Toutine used for in-memory debugging"
+        )
         
         // Adding a template cycle to that routine
-        let templateCycle = TemplateCycle(context: context)
-        templateCycle.timePeriodName = "test routine 1"
+        let templateCycle = TemplateCycle(
+            context,
+            routine: routine
+        )
         routine.templateCycle = templateCycle
-        templateCycle.routine = routine
         
         // Adding a template week to the template cycle
-        let templateWeek1 = TemplateWeek(context: context)
-        templateWeek1.timePeriodName = "Week 1"
-        templateWeek1.positionIndex = templateCycle.getNextPositionIndex()
-        templateWeek1.templateCycle = templateCycle
+        let templateWeek1 = TemplateWeek(
+            context,
+            templateCycle: templateCycle
+        )
+        templateCycle.addToTemplateWeeks(templateWeek1)
         
         // Adding a template session to the template week
-        let templateSession1 = TemplateSession(context: context)
-        templateSession1.timePeriodName = "Session 1"
-        templateSession1.positionIndex = templateWeek1.getNextPositionIndex()
-        templateSession1.templateWeek = templateWeek1
+        let templateSession1 = TemplateSession(
+            context,
+            templateWeek: templateWeek1
+        )
+        templateWeek1.addToTemplateSessions(templateSession1)
         
-        // Adding a template set to the template session
-        let templateSet1 = TemplateSet(context: context)
-        templateSet1.timePeriodName = "Set 1"
-        templateSet1.positionIndex = templateSession1.getNextPositionIndex()
-        templateSet1.templateSession = templateSession1
         // Fetch exercises for the set
         let exerciseFetchRequest = Exercise.fetchRequest()
         exerciseFetchRequest.predicate = NSPredicate(format: "exerciseName == %@", "testing exercise (reps)")
         let exercises = PersistenceController.fetch(context, fetchRequest: exerciseFetchRequest)
-        templateSet1.exercise = exercises.first
+        let exercise = exercises.first!
         
-        // Adding thresholds to Set 1
-        let threshold1 = SetThreshold(context: context)
-        threshold1.timePeriodName = "Threshold 1"
-        threshold1.triggerQuantity = 5
-        threshold1.generatePr = true
-        threshold1.prType = "onerepmax"
-        threshold1.templateSet = templateSet1
-        threshold1.positionIndex = templateSet1.getNextPositionIndex()
+        // Adding a template set to the template session
+        let templateSet1 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 1,
+            quantityType: "numerical",
+            quantity: 1
+        )
+        templateSession1.addToTemplateSets(templateSet1)
+        
+        // Adding thresholds to the set
+        let threshold1 = SetThreshold(
+            context,
+            templateSet: templateSet1,
+            triggeredAt: 5,
+            generatesPr: true,
+            prType: "onerepmax",
+            flatLoadAdd: nil,
+            flatQuantityAdd: nil
+        )
+        templateSet1.addToThresholds(threshold1)
+
     }
 }

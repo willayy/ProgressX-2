@@ -113,22 +113,19 @@ class CreateNewTemplateSetViewModel: ObservableObject {
     ]
     
     public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> Void {
-        
-        let nextPositionIndex = selectedTemplateSession!.getNextPositionIndex()
-        
-        _ = PersistenceController.createTemplateSet(
+                
+        let set = TemplateSet(
             viewContext,
-            name: newSetName,
-            description: newSetDesc,
             templateSession: selectedTemplateSession!,
-            positionIndex: nextPositionIndex,
             exercise: selectedExercise!,
             loadType: typeMap[selectedLoadType]!,
             load: Double(newSetLoad)!,
             quantityType: typeMap[selectedQuantityType]!,
             quantity: Double(newSetQuantity)!
         )
-
+        
+        selectedTemplateSession!.addToTemplateSets(set)
+        
         PersistenceController.save(viewContext)
         
         withAnimation {

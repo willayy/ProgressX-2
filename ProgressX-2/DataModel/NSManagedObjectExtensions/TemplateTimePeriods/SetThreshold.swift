@@ -6,8 +6,36 @@
 //
 
 import Foundation
+import CoreData
 
 extension SetThreshold {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateSet: TemplateSet,
+        name: String = "",
+        description: String = "",
+        triggeredAt: Double,
+        generatesPr: Bool,
+        prType: String?,
+        flatLoadAdd: NSNumber?,
+        flatQuantityAdd: NSNumber?
+    ) {
+        self.init(context: context)
+        self.templateSet = templateSet
+        self.triggerQuantity = triggeredAt
+        self.generatePr = generatesPr
+        self.prType = prType
+        self.flatLoadAdd = flatLoadAdd
+        self.flatQuantityAdd = flatLoadAdd
+        let positionIndex = templateSet.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "Threshold \(positionIndex)" : name
+        let setName = templateSet.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "Threshold in \(setName)" : description
+    }
     
     // MARK: Extra Properties
     

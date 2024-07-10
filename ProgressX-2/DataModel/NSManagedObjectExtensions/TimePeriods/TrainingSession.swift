@@ -66,8 +66,14 @@ extension TrainingSession: HasOrderable {
     }
     
     private func validateCompleteables() throws {
-        #warning("TODO: Implement with sessionIncompleWithCompleteSets")
-        #warning("DONT FORGET TO IMPLEMENT VALIDATION ERROR")
+        let sets = self.trainingSets!.allObjects as! [TrainingSet]
+        // If there are no weeks abort.
+        if sets.count == 0 { return }
+        // Else check if count of completed weeks is equal to all weeks.
+        let completedSets = sets.filter { $0.isComplete }
+        if completedSets.count == sets.count && !self.isComplete {
+            throw ValidationNSErrors.sessionIncompleteWithCompleteSets.toNSError()
+        }
     }
     
 }

@@ -67,4 +67,5 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
             )
             .environment(\.managedObjectContext, context)
         }
+        .padding(.horizontal, 10)
 }

@@ -27,14 +27,17 @@ enum ValidationNSErrors: Int {
     // Cycle
     case cycleCompleteWithUncompleteWeeks = 9994
     case cycleCompleteWithNoWeeks = 9993
+    case cycleInCompleteWithCompleteWeeks = 9976
     
     // Week
     case weekCompleteWithUncompleteSessions = 9992
     case weekCompleteWithNoSessions = 9991
+    case weekInCompleteWithCompleteSessions = 9975
     
     // Session
     case sessionCompleteWithUncompleteSets = 9990
     case sessionCompleteWithNoSets = 9989
+    case sessionIncompleteWithCompleteSets = 9974
     
     // Set
     case setAndExerciseTypeMismatch = 9987
@@ -204,6 +207,27 @@ enum ValidationNSErrors: Int {
                     """
                     The prType in the threshold does not match
                     the exercise on the thresholds set
+                    """]
+            
+        case .cycleInCompleteWithCompleteWeeks:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The cycle should not be incomplete when all it's
+                    weeks are completed.
+                    """]
+            
+        case .weekInCompleteWithCompleteSessions:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The week should not be incomplete when all it's
+                    sessions are completed.
+                    """]
+            
+        case .sessionIncompleteWithCompleteSets:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The session should not be incomplete when all it's
+                    sets are completed.
                     """]
         }
     }

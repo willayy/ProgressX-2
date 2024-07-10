@@ -75,7 +75,6 @@ struct EditExerciseView: View {
                         width: 0.6,
                         errorMessage: $viewModel.newDescIsInvalidMsg
                     )
-                    .padding(.bottom, 20)
                     
                     // MARK: Handle an edit of an exercise
                     Button(action: {
@@ -88,6 +87,8 @@ struct EditExerciseView: View {
                         Image(systemName: "square.and.arrow.down")
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.top, 20)
+                    .padding(.bottom, 10)
             }
         }
         .onAppear(perform: {

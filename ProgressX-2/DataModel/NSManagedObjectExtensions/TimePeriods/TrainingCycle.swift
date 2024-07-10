@@ -67,8 +67,14 @@ extension TrainingCycle: HasOrderable {
     }
     
     private func validateCompleteables() throws {
-        #warning("TODO: Implement with cycleIncompleWithCompleteWeeks")
-        #warning("DONT FORGET TO IMPLEMENT VALIDATION ERROR")
+        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
+        // If there are no weeks abort.
+        if weeks.count == 0 { return }
+        // Else check if count of completed weeks is equal to all weeks.
+        let completedWeeks = weeks.filter { $0.isComplete }
+        if completedWeeks.count == weeks.count && !self.isComplete {
+            throw ValidationNSErrors.cycleInCompleteWithCompleteWeeks.toNSError()
+        }
     }
     
 }

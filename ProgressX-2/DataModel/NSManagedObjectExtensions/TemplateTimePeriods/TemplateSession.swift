@@ -6,8 +6,26 @@
 //
 
 import Foundation
+import CoreData
 
 extension TemplateSession: HasOrderable {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateWeek: TemplateWeek,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.templateWeek = templateWeek
+        let positionIndex = templateWeek.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "Session \(positionIndex)" : name
+        let weekName = templateWeek.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
+    }
     
     // MARK: Extra Properties
     

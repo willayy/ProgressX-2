@@ -1,31 +1,31 @@
 [
   {
-    "type": "Reps",
+    "type": "reps",
     "name": "Bench-press",
     "description": "Classic upper body compound lift." 
   },
     {
-    "type": "Reps",
+    "type": "reps",
     "name": "Squat",
     "description": "Classic lower body compound lift." 
   },
     {
-    "type": "Reps",
+    "type": "reps",
     "name": "Shoulder-press",
     "description": "Classic upper body shoulder focused lift." 
   },
   {
-    "type": "Reps",
+    "type": "reps",
     "name": "Deadlift",
     "description": "Classic compound lift that mainly targets the lower body." 
   },
   {
-    "type": "Reps",
+    "type": "reps",
     "name": "Push-up",
     "description": "Classic bodyweight exercise targeting the chest and upper body."
   },
   {
-    "type": "Reps",
+    "type": "reps",
     "name": "Sit-up",
     "description": "Classic bodyweight exercise targeting the abdominals."
   }

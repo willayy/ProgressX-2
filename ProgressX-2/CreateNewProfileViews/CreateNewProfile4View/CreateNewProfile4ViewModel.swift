@@ -56,56 +56,56 @@ class CreateNewProfile4ViewModel: ObservableObject {
             
             switch exercise.exerciseName {
             case "Bench-press":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: Double(benchPress1RM)!,
-                        q: 1,
+                        weightLoad: Double(benchPress1RM)!,
+                        quantity: 1,
                         date: Date(),
                         type: "onerepmax"
                     )
             case "Squat":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: Double(squat1RM)!,
-                        q: 1,
+                        weightLoad: Double(squat1RM)!,
+                        quantity: 1,
                         date: Date(),
                         type: "onerepmax"
                     )
             case "Deadlift":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: Double(deadLift1RM)!,
-                        q: 1,
+                        weightLoad: Double(deadLift1RM)!,
+                        quantity: 1,
                         date: Date(),
                         type: "onerepmax"
                     )
             case "Shoulder-press":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: Double(shoulderPress1RM)!,
-                        q: 1,
+                        weightLoad: Double(shoulderPress1RM)!,
+                        quantity: 1,
                         date: Date(),
                         type: "onerepmax"
                     )
             case "Sit-up":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: bodyWeight,
-                        q: Double(situpsAmrap)!,
+                        weightLoad: bodyWeight,
+                        quantity: Double(situpsAmrap)!,
                         date: Date(),
                         type: "maxreps"
                     )
             case "Push-up":
-                _ = PersistenceController.createPersonalRecord(
+                _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        wl: bodyWeight,
-                        q: Double(pushupsAmrap)!,
+                        weightLoad: bodyWeight,
+                        quantity: Double(pushupsAmrap)!,
                         date: Date(),
                         type: "maxreps"
                     )

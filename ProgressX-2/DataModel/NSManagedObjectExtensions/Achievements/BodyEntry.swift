@@ -6,8 +6,35 @@
 //
 
 import Foundation
+import CoreData
 
 extension BodyEntry {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        profile: Profile,
+        bodyWeight: Double,
+        date: Date,
+        chestCircumference: NSNumber? = nil,
+        waistCirucmference: NSNumber? = nil,
+        upperArmCircumference: NSNumber? = nil,
+        lowerArmCircumference: NSNumber? = nil,
+        thighCircumference: NSNumber? = nil,
+        calfCircumference: NSNumber? = nil
+    ) {
+        self.init(context: context)
+        self.profile = profile
+        self.bodyWeight = bodyWeight
+        self.achievedOnDate = date
+        self.chestCirc = chestCircumference
+        self.waistCirc = waistCirucmference
+        self.uprArmCirc = upperArmCircumference
+        self.lwrArmCirc = lowerArmCircumference
+        self.thighCirc = thighCircumference
+        self.calfCirc = calfCircumference
+    }
     
     //MARK: Extra properties
     

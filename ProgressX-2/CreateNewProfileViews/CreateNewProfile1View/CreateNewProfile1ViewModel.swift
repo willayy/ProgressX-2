@@ -52,15 +52,15 @@ class CreateNewProfile1ViewModel: ObservableObject {
         let profile = Profile(context: viewContext)
         profile.birthDay = birthDay
         profile.profileUserName = userName
-        profile.height = inputHeight
+        profile.userHeight = inputHeight
         profile.gender = gender
         profile.isMetric = isMetric
         
         // Create BodyEntry
-        let bodyWeightEntry = PersistenceController.createBodyEntry(
+        let bodyWeightEntry = BodyEntry(
             viewContext,
             profile: profile,
-            weight: inputWeight,
+            bodyWeight: inputWeight,
             date: Date()
         )
         

@@ -10,6 +10,20 @@ import CoreData
 
 extension Exercise {
     
+    // MARK: Convenience initializer
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        name: String,
+        description: String,
+        type: String
+    ) {
+        self.init(context: context)
+        self.exerciseName = name
+        self.exerciseDesc = description
+        self.exerciseType = type
+    }
+    
     // MARK: Extra Properties
     
     // Nothing here

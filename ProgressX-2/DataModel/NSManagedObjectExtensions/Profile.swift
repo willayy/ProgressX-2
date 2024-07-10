@@ -10,6 +10,26 @@ import CoreData
 
 extension Profile {
     
+    // MARK: Convenienve init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        userName: String,
+        gender: String,
+        height: Double,
+        isMetric: Bool,
+        standardRestTime: Double = 180,
+        birthDay: Date
+    ) {
+        self.init(context: context)
+        self.profileUserName = userName
+        self.gender = gender
+        self.userHeight = height
+        self.isMetric = isMetric
+        self.standardRestTime = standardRestTime
+        self.birthDay = birthDay
+    }
+    
     // MARK: Extra Properties
     
     // Nothing here

@@ -11,7 +11,7 @@ import Combine
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputDecimalNumberField: View {
     
-    private var allowedChars = "1234567890."
+    private var allowedChars = "1234567890.,"
     private let maxChars = 6
     let placeHolder: String
     let allowNegatives: Bool
@@ -94,5 +94,11 @@ struct InputDecimalNumberField: View {
         
         InputField(value: $numberText, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
             .keyboardType(.decimalPad)
+            .onChange(
+                of: numberText,
+                initial: true) { _, newValue in
+                    // Always convert , to .
+                    numberText = newValue.replacingOccurrences(of: ",", with: ".")
+                }
     }
 }

@@ -6,8 +6,37 @@
 //
 
 import Foundation
+import CoreData
 
 extension TemplateSet: HasOrderable {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateSession: TemplateSession,
+        name: String = "",
+        description: String = "",
+        exercise: Exercise,
+        loadType: String,
+        load: Double,
+        quantityType: String,
+        quantity: Double
+    ) {
+        self.init(context: context)
+        self.templateSession = templateSession
+        self.exercise = exercise
+        let positionIndex = templateSession.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.loadType = loadType
+        self.setLoad = loadTodo
+        self.quantityType = quantityType
+        self.setQuantity = quantity
+        self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
+        let exerciseName = exercise.exerciseName!
+        let sessionName = templateSession.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+    }
     
     // MARK: Extra properties
     

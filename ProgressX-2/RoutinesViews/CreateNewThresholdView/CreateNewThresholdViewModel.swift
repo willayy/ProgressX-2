@@ -26,7 +26,6 @@ class CreateNewThresholdViewModel: ObservableObject {
     
     public func addNewThreshold(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
         
-        let nextPositionIndex = selectedTemplateSet.getNextPositionIndex()
         let exerciseType = selectedTemplateSet.exercise!.exerciseType
         let addPr = addPrSelection == "Add PR" ? true : false
         var prType: String? = nil
@@ -55,13 +54,12 @@ class CreateNewThresholdViewModel: ObservableObject {
             else { return NSNumber(value: Double(flatQuantityAdd)!) }
         }()
         
-        let threshold = PersistenceController.createThreshold(
+        let threshold = SetThreshold(
             viewContext,
             templateSet: selectedTemplateSet,
-            name: "Threshold \(nextPositionIndex)",
-            triggerQuantity: Double(triggerQuantity)!,
+            triggeredAt: Double(triggerQuantity)!,
+            generatesPr: addPr,
             prType: prType,
-            generatePr: addPr,
             flatLoadAdd: inputFlatLoadAdd,
             flatQuantityAdd: inputFlatQuantityAdd
         )

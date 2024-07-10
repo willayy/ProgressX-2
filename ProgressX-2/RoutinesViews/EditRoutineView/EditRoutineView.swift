@@ -122,6 +122,7 @@ struct EditRoutineView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
+                .padding(.horizontal, 10)
                 
                 Button {
                     viewModel.addWeek(
@@ -134,7 +135,8 @@ struct EditRoutineView: View {
                     Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
+                .padding(.top, 20)
+                .padding(.bottom, 10)
             
             }
         }

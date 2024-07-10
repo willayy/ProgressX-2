@@ -6,8 +6,27 @@
 //
 
 import Foundation
+import CoreData
 
 extension PersonalRecord {
+    
+    // MARK: Convenience initializer
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        exercise: Exercise,
+        weightLoad: Double,
+        quantity: Double,
+        date: Date,
+        type: String
+    ) {
+        self.init(context: context)
+        self.exercise = exercise
+        self.weightLoad = weightLoad
+        self.prQuantity = quantity
+        self.achievedOnDate = date
+        self.prType = type
+    }
     
     //MARK: Extra properties
     

@@ -35,7 +35,7 @@ class ProfileViewModel: ObservableObject {
         let profile = profiles.first!
         standardRestTime = String(profile.standardRestTime)
         selectedUnitSegment = (profile.isMetric) ? "Metric (meters, kg's)" : "Imperial (feet, lbs)"
-        height = String(profile.height)
+        height = String(profile.userHeight)
         birthDay = profile.birthDay!
         userName = profile.profileUserName!
         selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
@@ -57,8 +57,8 @@ class ProfileViewModel: ObservableObject {
             profile.gender = (selectedGenderSegment == "Male") ? "male" : "female"
         }
         
-        if profile.height != Double(height)! {
-            profile.height = Double(height)!
+        if profile.userHeight != Double(height)! {
+            profile.userHeight = Double(height)!
         }
         
         if profile.standardRestTime != Double(standardRestTime)! {

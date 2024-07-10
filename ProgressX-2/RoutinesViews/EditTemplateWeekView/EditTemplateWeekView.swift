@@ -130,6 +130,7 @@ struct EditTemplateWeekView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
+                .padding(.horizontal, 10)
                 
                 Button {
                     viewModel.addSession(
@@ -142,7 +143,8 @@ struct EditTemplateWeekView: View {
                     Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
+                .padding(.top, 20)
+                .padding(.bottom, 10)
             
             }
         }.onAppear(perform: {

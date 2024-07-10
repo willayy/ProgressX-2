@@ -178,6 +178,7 @@ struct CreateNewTemplateSetView: View {
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
+                    .padding(.bottom, 10)
                     .alert(isPresented: $viewModel.showAddThresholds, content: {
                         Alert(
                             title: Text("Add Thresholds?"),

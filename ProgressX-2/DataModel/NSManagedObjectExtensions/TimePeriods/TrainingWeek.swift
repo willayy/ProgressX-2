@@ -65,10 +65,15 @@ extension TrainingWeek: HasOrderable {
         }
     }
     
-    
     private func validateCompleteables() throws {
-        #warning("TODO: Implement with weekIncompleWithCompleteSessions")
-        #warning("DONT FORGET TO IMPLEMENT VALIDATION ERROR")
+        let sessions = self.trainingSessions!.allObjects as! [TrainingSession]
+        // If there are no weeks abort.
+        if sessions.count == 0 { return }
+        // Else check if count of completed weeks is equal to all weeks.
+        let completedSessions = sessions.filter { $0.isComplete }
+        if completedSessions.count == sessions.count && !self.isComplete {
+            throw ValidationNSErrors.weekInCompleteWithCompleteSessions.toNSError()
+        }
     }
     
     

@@ -135,7 +135,8 @@ struct EditPrView: View {
                     Image(systemName: "square.and.arrow.down")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
+                .padding(.top, 20)
+                .padding(.bottom, 10)
                 
             }
         }

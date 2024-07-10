@@ -64,10 +64,13 @@ class CreateNewExerciseViewModel: ObservableObject {
     
     public func createNewExercise(viewContext: NSManagedObjectContext) -> Void {
         // Create the new exercise
-        let exercise: Exercise = Exercise(context: viewContext)
-        exercise.exerciseType = selectedTypeOfExercise == "Reps" ? "reps" : "time"
-        exercise.exerciseName = enteredExerciseName
-        exercise.exerciseDesc = enteredExerciseDesc
+        
+        let exercise = Exercise(
+            viewContext,
+            name: enteredExerciseName,
+            description: enteredExerciseDesc,
+            type: (selectedTypeOfExercise == "Reps") ? "reps" : "time"
+        )
         
         // Add pr if selected
         if addPr == "Yes" {
@@ -85,11 +88,11 @@ class CreateNewExerciseViewModel: ObservableObject {
                     prType = "" // This should never be the case
             }
             
-            let pr = PersistenceController.createPersonalRecord(
+            let pr = PersonalRecord(
                 viewContext,
                 exercise: exercise,
-                wl: Double(enteredPrWeigtLoad)!,
-                q: Double(enteredPrQuantity)!,
+                weightLoad: Double(enteredPrWeigtLoad)!,
+                quantity: Double(enteredPrQuantity)!,
                 date: Date(),
                 type: prType
             )

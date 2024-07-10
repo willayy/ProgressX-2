@@ -61,11 +61,12 @@ struct CreateNewRoutineView: View {
                         )
                     }
                 } label: {
-                    Text("Save and continue")
+                    Text("Create routine")
                         .frame(height: 40)
                     Image(systemName: "arrow.right")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.bottom, 10)
             }
         }
     }

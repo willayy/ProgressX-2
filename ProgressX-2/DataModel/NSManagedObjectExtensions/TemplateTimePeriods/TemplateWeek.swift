@@ -6,8 +6,26 @@
 //
 
 import Foundation
+import CoreData
 
 extension TemplateWeek: HasOrderable {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateCycle: TemplateCycle,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.templateCycle = templateCycle
+        let positionIndex = templateCycle.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "Week \(positionIndex)" : name
+        let routineName = templateCycle.routine!.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
+    }
     
     // MARK: Extra Properties
     

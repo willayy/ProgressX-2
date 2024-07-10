@@ -70,12 +70,12 @@ extension PersistenceController {
         ) as! [[String: String]]
         
         for json in jsonArray {
-            if json["type"] == "Reps" {
-                _ = createExercise(context, name: json["name"]!, desc: json["description"]!, type: "reps")
-            }
-            else if json["type"] == "Time" {
-                _ = createExercise(context, name: json["name"]!, desc: json["description"]!, type: "time")
-            }
+            _ = Exercise(
+                context,
+                name: json["name"]!,
+                description: json["description"]!,
+                type: json["type"]!
+            )
         }
     }
     
@@ -145,77 +145,6 @@ extension PersistenceController {
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         let latest = fetchResult.max(by: { $0.achievedOnDate! < $1.achievedOnDate! })
         return latest
-    }
-    
-    #warning("TODO: Turn all functions below this into convenience inits in the extension files!")
-    
-    public static func createExercise(_ context: NSManagedObjectContext, name: String, desc: String, type: String) -> Exercise {
-        let exercise: Exercise = Exercise(context: context)
-        exercise.exerciseName = name
-        exercise.exerciseDesc = desc
-        exercise.exerciseType = type
-        return exercise
-    }
-    
-    public static func createPersonalRecord(_ context: NSManagedObjectContext, exercise: Exercise, wl: Double, q: Double, date: Date, type: String) -> PersonalRecord {
-        let personalRecord = PersonalRecord(context: context)
-        personalRecord.prQuantity = q
-        personalRecord.weightLoad = wl
-        personalRecord.achievedOnDate = date
-        personalRecord.prType = type
-        personalRecord.exercise = exercise
-        return personalRecord
-    }
-    
-    public static func createBodyEntry(_ context: NSManagedObjectContext, profile: Profile, weight: Double, date: Date) -> BodyEntry {
-        let bodyEntry = BodyEntry(context: context)
-        bodyEntry.bodyWeight = weight
-        bodyEntry.achievedOnDate = date
-        bodyEntry.profile = profile
-        return bodyEntry
-    }
-    
-    public static func createTemplateWeek(_ context: NSManagedObjectContext, name: String, templateCycle: TemplateCycle, positionIndex: Int64) -> TemplateWeek {
-        let week = TemplateWeek(context: context)
-        week.positionIndex = positionIndex
-        week.timePeriodName = name
-        week.templateCycle = templateCycle
-        return week
-    }
-    
-    public static func createTemplateSession(_ context: NSManagedObjectContext, name: String, templateWeek: TemplateWeek, positionIndex: Int64) -> TemplateSession {
-        let session = TemplateSession(context: context)
-        session.positionIndex = positionIndex
-        session.timePeriodName = name
-        session.templateWeek = templateWeek
-        return session
-    }
-    
-    public static func createTemplateSet(_ context: NSManagedObjectContext, name: String, description: String, templateSession: TemplateSession, positionIndex: Int64, exercise: Exercise, loadType: String, load: Double, quantityType: String, quantity: Double) -> TemplateSet {
-        let set = TemplateSet(context: context)
-        set.positionIndex = positionIndex
-        set.timePeriodName = name
-        set.timePeriodDescription = description
-        set.templateSession = templateSession
-        set.exercise = exercise
-        set.quantityType = quantityType
-        set.setQuantity = quantity
-        set.loadType = loadType
-        set.setLoad = load
-        return set
-    }
-    
-    public static func createThreshold(_ context: NSManagedObjectContext, templateSet: TemplateSet, name: String, triggerQuantity: Double, prType: String?, generatePr: Bool, flatLoadAdd: NSNumber?, flatQuantityAdd: NSNumber?) -> SetThreshold {
-        let threshold = SetThreshold(context: context)
-        threshold.positionIndex = templateSet.getNextPositionIndex()
-        threshold.timePeriodName = name
-        threshold.triggerQuantity = triggerQuantity
-        threshold.flatLoadAdd = flatLoadAdd
-        threshold.flatQuantityAdd = flatQuantityAdd
-        threshold.generatePr = generatePr
-        threshold.prType = prType
-        threshold.templateSet = templateSet
-        return threshold
     }
     
 }

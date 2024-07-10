@@ -57,6 +57,7 @@ struct RoutineLibraryView: View {
                             )
                             .environment(\.managedObjectContext, viewContext)
                         }
+                        .padding(.horizontal, 9)
                         
                         // MARK: Add new Routine button
                         Button {
@@ -67,7 +68,8 @@ struct RoutineLibraryView: View {
                             Image(systemName: "plus")
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
-                        .padding(.top, 10)
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
                         
                     }
                 }

@@ -6,9 +6,25 @@
 //
 
 import Foundation
+import CoreData
 
 extension TemplateCycle: HasOrderable {
     
+    // MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        routine: Routine,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.routine = routine
+        let routineName = routine.timePeriodName!
+        self.timePeriodName = (name == "") ? "\(routineName)-templateCycle" : name
+        self.timePeriodDescription = (description == "") ? "templateCycle created for: \(routineName)" : description
+    }
+
     // MARK: Extra properties
     
     func getNextPositionIndex() -> Int64 {

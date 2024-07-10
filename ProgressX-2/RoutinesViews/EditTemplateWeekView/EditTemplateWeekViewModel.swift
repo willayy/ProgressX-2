@@ -74,13 +74,11 @@ class EditTemplateWeekViewModel: ObservableObject {
     }
     
     public func addSession(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek?) -> Void {
-        let positionIndex = selectedTemplateWeek!.getNextPositionIndex()
-        _ = PersistenceController.createTemplateSession(
+        let session = TemplateSession(
             viewContext,
-            name: "Session \(positionIndex)",
-            templateWeek: selectedTemplateWeek!,
-            positionIndex: positionIndex
+            templateWeek: selectedTemplateWeek!
         )
+        selectedTemplateWeek!.addToTemplateSessions(session)
         PersistenceController.save(viewContext)
     }
     

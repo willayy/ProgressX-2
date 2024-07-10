@@ -10,6 +10,19 @@ import CoreData
 
 extension Routine: HasOrderable {
     
+    // MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        name: String,
+        description: String
+    ) {
+        self.init(context: context)
+        self.timePeriodName = name
+        self.timePeriodDescription = description
+        self.createdOnDate = Date()
+    }
+    
     // MARK: Extra properties
     
     var creationDateString: String? {

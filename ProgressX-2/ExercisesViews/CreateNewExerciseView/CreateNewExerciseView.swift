@@ -142,6 +142,7 @@ struct CreateNewExerciseView: View {
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
+                .padding(.bottom, 10)
                 
             }
         }.onChange(of: viewModel.selectedTypeOfPr, initial: true, {

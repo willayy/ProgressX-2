@@ -48,13 +48,13 @@ class EditRoutineViewModel: ObservableObject {
     }
     
     public func addWeek(viewContext: NSManagedObjectContext, selectedTemplateCycle: TemplateCycle?) -> Void {
-        let positionIndex = selectedTemplateCycle!.getNextPositionIndex()
-        _ = PersistenceController.createTemplateWeek(
+        let week = TemplateWeek(
             viewContext,
-            name: "Week \(positionIndex)",
-            templateCycle: selectedTemplateCycle!,
-            positionIndex: positionIndex
+            templateCycle: selectedTemplateCycle!
         )
+        
+        selectedTemplateCycle!.addToTemplateWeeks(week)
+        
         PersistenceController.save(viewContext)
     }
     

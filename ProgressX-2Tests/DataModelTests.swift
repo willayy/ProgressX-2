@@ -211,7 +211,7 @@ final class DataModelTests: XCTestCase {
         let profile = Profile(context: context!)
         profile.profileUserName = "some username"
         profile.birthDay = Date()
-        profile.height = 180
+        profile.userHeight = 180
         profile.gender = "This is not a valid gender"
         
         // Should throw

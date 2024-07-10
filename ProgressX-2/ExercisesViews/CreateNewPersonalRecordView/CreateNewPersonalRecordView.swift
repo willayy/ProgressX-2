@@ -31,6 +31,7 @@ struct CreateNewPersonalRecord: View {
                     text: "Create a new PR for exercise: \(selectedExercise!.exerciseName!)"
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
                 if viewModel.createdPrAlert {
                     SubmitAlert(
@@ -100,6 +101,7 @@ struct CreateNewPersonalRecord: View {
                 }
                 .padding(.top, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.bottom, 10)
                 
             }
         }

@@ -42,12 +42,12 @@ class CreateNewProfile3ViewModel: ObservableObject {
     
     public func addExtraInfo(viewContext: NSManagedObjectContext, bodyEntries: FetchedResults<BodyEntry>) {
         let firstEntry = bodyEntries.first!
-        firstEntry.chestCirc = Double(chestCirc)!
-        firstEntry.waistCirc = Double(waistCirc)!
-        firstEntry.thighCirc = Double(thighCirc)!
-        firstEntry.calfCirc = Double(calfCirc)!
-        firstEntry.uprArmCirc = Double(upperArmCirc)!
-        firstEntry.lwrArmCirc = Double(lowerArmCirc)!
+        firstEntry.chestCirc = NSNumber(value: Double(chestCirc)!)
+        firstEntry.waistCirc = NSNumber(value: Double(waistCirc)!)
+        firstEntry.thighCirc = NSNumber(value: Double(thighCirc)!)
+        firstEntry.calfCirc = NSNumber(value: Double(calfCirc)!)
+        firstEntry.uprArmCirc = NSNumber(value: Double(upperArmCirc)!)
+        firstEntry.lwrArmCirc = NSNumber(value: Double(lowerArmCirc)!)
         PersistenceController.save(viewContext)
     }
 }

@@ -66,7 +66,8 @@ struct ExerciseLibraryView: View {
                             Image(systemName: "plus")
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
-                        .padding(.top, 10)
+                        .padding(.top, 20)
+                        .padding(.bottom, 10)
                         
                     }
                     .toolbar {

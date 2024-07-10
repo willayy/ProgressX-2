@@ -124,9 +124,9 @@ struct ProfileView: View {
                         .padding(.top, 20)
                         .buttonStyle(BorderedProminentButtonStyle())
                         .foregroundColor(.white)
+                        .padding(.bottom, 10)
                         
                     }
-                    .padding()
                     .frame(width: 390, height: 650, alignment: .top)
                     .toolbar(.hidden, for: .tabBar)
                     .foregroundColor(Color(UIColor.lightGray))

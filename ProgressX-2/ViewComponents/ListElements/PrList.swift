@@ -67,7 +67,7 @@ struct PrList: View {
         
         Button(action: {
             newPrType = prType
-            navPath.append(6)
+            navPath.append(5)
         }) {
             Text("Add new PR")
                 .frame(height: 25)

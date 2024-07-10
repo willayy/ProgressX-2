@@ -29,7 +29,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
                 .foregroundStyle(.red)
         } else if searchedData.isEmpty {
             LightSubHeadline(text: "No \(elementName) matched your search...")
-                .padding(.vertical, 20)
+                .padding(.vertical, 10)
         } else {
             List{
                 ForEach(searchedData) { item in
@@ -39,7 +39,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
             .frame(height: 400)
             .background(Color(.systemGray6))
             .cornerRadius(10)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 10)
         }
     }
 }
