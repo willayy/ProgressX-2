@@ -33,12 +33,12 @@ class ProfileViewModel: ObservableObject {
     
     public func setViewStartValues(profiles: FetchedResults<Profile>) -> Void {
         let profile = profiles.first!
-        standardRestTime = String(profile.standardRestTime)
-        selectedUnitSegment = (profile.isMetric) ? "Metric" : "Imperial"
-        height = String(profile.userHeight)
-        birthDay = profile.birthDay!
-        userName = profile.profileUserName!
-        selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
+        self.standardRestTime = String(profile.standardRestTime)
+        self.selectedUnitSegment = (profile.isMetric) ? "Metric" : "Imperial"
+        self.height = String(profile.userHeight)
+        self.birthDay = profile.birthDay!
+        self.userName = profile.profileUserName!
+        self.selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
     }
     
     public func saveProfileChanges(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
