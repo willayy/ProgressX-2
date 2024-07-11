@@ -1,12 +1,11 @@
-[
+{
     "Deltoid",
     "Pectorials",
     "Abs",
     "Obliques",
-    "Traps",
-    "Lats",
     "Triceps",
-    "Biceps",
+    "Traps",
+    "triceps",
     "Glutes",
     "Hamstrings",
     "Calves",
@@ -14,4 +13,4 @@
     "Hip abductor",
     "Forearm",
     "Lower back"
-]
+}
