@@ -18,7 +18,7 @@ class CreateNewRoutineViewModel: ObservableObject {
     @Published var newRoutineDescIsInvalid: Bool = false
     @Published var newRoutineDescIsInvalidMsg: String = ""
  
-    public func createRoutine(viewContext: NSManagedObjectContext, navPath: Binding<[Int]>, selectedRoutine: Binding<Routine?>, selectedTemplateCycle: Binding<TemplateCycle?>) -> Void {
+    public func createRoutine(viewContext: NSManagedObjectContext) -> Void {
         
         // Create a Routine
         let newRoutine = Routine(context: viewContext)
@@ -39,8 +39,5 @@ class CreateNewRoutineViewModel: ObservableObject {
         // Save and continue
         PersistenceController.save(viewContext)
         
-        selectedRoutine.wrappedValue = newRoutine
-        selectedTemplateCycle.wrappedValue = templateCycle
-        navPath.wrappedValue.removeLast()
     }
 }

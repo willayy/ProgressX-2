@@ -53,17 +53,13 @@ struct CreateNewRoutineView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.createRoutine(
-                            viewContext: viewContext,
-                            navPath: $navPath,
-                            selectedRoutine: $selectedRoutine,
-                            selectedTemplateCycle: $selectedTemplateCycle
-                        )
+                        viewModel.createRoutine(viewContext: viewContext)
+                        navPath.removeLast()
                     }
                 } label: {
-                    Text("Create routine")
+                    Text("Create new routine")
                         .frame(height: 40)
-                    Image(systemName: "arrow.right")
+                    Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)

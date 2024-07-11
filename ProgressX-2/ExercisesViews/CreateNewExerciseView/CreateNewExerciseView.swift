@@ -31,6 +31,8 @@ struct CreateNewExerciseView: View {
         
     @StateObject private var viewModel = CreateNewExerciseViewModel()
     
+    @Binding public var navPath: [Int]
+    
     var body: some View {
         
         let weightUnit = PersistenceController.getWeightUnit(viewContext)!
@@ -147,11 +149,12 @@ struct CreateNewExerciseView: View {
                 Button(action: {
                     if validateInput() {
                         viewModel.createNewExercise(viewContext: viewContext)
+                        navPath.removeLast()
                     }
                 }) {
-                    Text("Save new exercise")
+                    Text("Create new exercise")
                         .frame(height: 40)
-                    Image(systemName: "square.and.arrow.down")
+                    Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
@@ -210,9 +213,16 @@ struct CreateNewExerciseView: View {
 }
 
 #Preview {
+    
     let context = PersistenceController.preview.container.viewContext
+    
     @State var lst: [Exercise] = [Exercise()]
-    return CreateNewExerciseView()
-                .environment(\.managedObjectContext, context)
+    
+    @State var navPath: [Int] = [Int]()
+    
+    return CreateNewExerciseView(
+                navPath: $navPath
+            )
+            .environment(\.managedObjectContext, context)
 }
 

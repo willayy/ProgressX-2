@@ -66,7 +66,7 @@ struct EditExerciseView: View {
                     BoldSubHeadline(text: "Edit exercise name")
                     
                     InputTextField(
-                        placeHolder: "New exercise name",
+                        placeHolder: "Exercise name",
                         text: $viewModel.newName,
                         maxChars: 30,
                         markAsWrong: $viewModel.newNameIsInvalid,
@@ -78,7 +78,7 @@ struct EditExerciseView: View {
                     BoldSubHeadline(text: "Edit exercise description")
                     
                     InputTextField(
-                        placeHolder: "new exercise description",
+                        placeHolder: "Exercise description",
                         text: $viewModel.newDesc,
                         maxChars: 200,
                         markAsWrong: $viewModel.newDescIsInvalid,

@@ -20,6 +20,7 @@ struct CreateNewPersonalRecord: View {
     
     // The selection of the segmented picker
     @Binding var prType: String?
+    @Binding var navPath: [Int]
     // Exercise for the PR
     @Binding var selectedExercise: Exercise?
     @StateObject private var viewModel = CreateNewPersonalRecordViewModel()
@@ -93,11 +94,12 @@ struct CreateNewPersonalRecord: View {
                             exercise: selectedExercise,
                             prType: prType
                         )
+                        navPath.removeLast()
                     }
                 }) {
-                    Text("Save changes")
+                    Text("Create new PR")
                         .frame(height: 40)
-                    Image(systemName: "square.and.arrow.down")
+                    Image(systemName: "plus")
                 }
                 .padding(.top, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
@@ -151,5 +153,11 @@ struct CreateNewPersonalRecord: View {
     
     @State var prType: String? = "onerepmax"
     
-    return CreateNewPersonalRecord(prType: $prType, selectedExercise: $exercise)
+    @State var navPath: [Int] = [Int]()
+    
+    return CreateNewPersonalRecord(
+        prType: $prType,
+        navPath: $navPath,
+        selectedExercise: $exercise
+    )
 }

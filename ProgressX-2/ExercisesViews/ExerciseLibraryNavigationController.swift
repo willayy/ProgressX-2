@@ -42,14 +42,17 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
             .navigationDestination(for: Int.self) { selection in
                 if selection == 1 {
                     
-                    CreateNewExerciseView()
-                        .environment(\.managedObjectContext, viewContext)
+                    CreateNewExerciseView(
+                        navPath: $navPath
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
                     EditExerciseView(
                         selectedExercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
@@ -58,21 +61,25 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                         navPath: $navPath,
                         editingPr: $editingPr,
                         newPrType: $newPrType
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     
                     EditPrView(
                         editingPr: $editingPr,
                         exercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 5 {
                     
                     CreateNewPersonalRecord(
-                        prType: $newPrType,
+                        prType: $newPrType, 
+                        navPath: $navPath,
                         selectedExercise: $selectedExercise
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 }
             }

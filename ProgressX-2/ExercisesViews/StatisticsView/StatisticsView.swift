@@ -43,11 +43,13 @@ struct StatisticsView: View {
                     GeneralInfoRepsExercise(
                         exercise: exercise, 
                         selection: displayedPrType
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                 } else if exercise!.exerciseType == "time" {
                     GeneralInfoTimeExercise(
                         exercise: exercise
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                 }
                 
                 if exercise!.exerciseType == "reps" {
@@ -65,8 +67,12 @@ struct StatisticsView: View {
                             exercise: exercise!,
                             prType: "onerepmax",
                             newPrType: $newPrType
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        .padding(.horizontal, 20)
+                        
                     } else {
+                        
                         DoubleChart(
                             exercise: exercise!,
                             set: "AMRAP",
@@ -79,15 +85,19 @@ struct StatisticsView: View {
                             exercise: exercise!,
                             prType: "maxreps",
                             newPrType: $newPrType
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
+                        .environment(\.managedObjectContext, viewContext)
+                        .padding(.horizontal, 20)
                     }
                     
                 } else if exercise!.exerciseType == "time" {
+                    
                     DoubleChart(
                         exercise: exercise!,
                         set: "Time-max",
                         prType: "timemax"
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                     PrList(
                         navPath: $navPath,
@@ -95,7 +105,9 @@ struct StatisticsView: View {
                         exercise: exercise!,
                         prType: "timemax", 
                         newPrType: $newPrType
-                    ).environment(\.managedObjectContext, viewContext)
+                    )
+                    .environment(\.managedObjectContext, viewContext)
+                    .padding(.horizontal, 20)
                 }
             }
         }
