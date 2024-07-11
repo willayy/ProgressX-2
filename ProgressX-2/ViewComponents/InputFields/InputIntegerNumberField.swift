@@ -15,7 +15,7 @@ import Combine
 struct InputIntegerNumberField: View {
     
     private var allowedChars = "1234567890"
-    private let maxChars = 5
+    private let maxChars = 6
     let placeHolder: String
     let allowNegatives: Bool
     @Binding var numberText: String

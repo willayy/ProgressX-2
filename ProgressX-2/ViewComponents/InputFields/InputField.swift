@@ -13,7 +13,6 @@ struct InputField: View {
     @Binding var value: String
     @Binding var markAsWrong: Bool
     let errorMessage: String
-    
     let placeHolder: String
     let width: CGFloat
     let onReceiveFunction: (String) -> String

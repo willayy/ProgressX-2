@@ -8,11 +8,13 @@
 import SwiftUI
 import Combine
 
+#warning("TODO: Fix not being able to input - sign")
+
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputDecimalNumberField: View {
     
     private var allowedChars = "1234567890.,"
-    private let maxChars = 6
+    private let maxChars = 7
     let placeHolder: String
     let allowNegatives: Bool
     let width: CGFloat
@@ -21,8 +23,6 @@ struct InputDecimalNumberField: View {
     @State private var shouldShake = false
     @State var disableMaxChars = false
     @Binding var errorMessage: String
-    
-    #warning("TODO: Fix not being able to input - sign")
     
     init(
         placeHolder: String,
@@ -77,13 +77,14 @@ struct InputDecimalNumberField: View {
         
         var mutable = curr
         
+        // If field is empty and empty is allowed
         if curr.isEmpty {
             return "0.0"
         }
         
+        // If the last char is a dot remove it
         if curr.last == "." {
-            mutable += "0"
-            disableMaxChars = true
+            mutable.removeLast()
             return mutable
         }
                 
@@ -92,7 +93,15 @@ struct InputDecimalNumberField: View {
     
     var body: some View {
         
-        InputField(value: $numberText, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(
+            value: $numberText,
+            markAsWrong: $markAsWrong,
+            errorMessage: errorMessage,
+            placeHolder: placeHolder,
+            width: width,
+            onReceiveFunction: onReceiveFunction(new:),
+            onSubmitFunction: onSubmitFunction(curr:)
+        )
             .keyboardType(.decimalPad)
             .onChange(
                 of: numberText,
