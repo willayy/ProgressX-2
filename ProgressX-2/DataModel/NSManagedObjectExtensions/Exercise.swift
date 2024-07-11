@@ -27,10 +27,18 @@ extension Exercise {
     // MARK: Extra Properties
     
     // Returns the string names of all exercise categories
-    public var categoryStrings: [String] {
+    public var categoryString: String {
         let categories: [ExerciseCategory] = self.categories!.allObjects as! [ExerciseCategory]
-        let categoryNames: [String] = categories.map { $0.categoryName! }
-        return categoryNames.sorted()
+        let categoryStrings: [String] = categories.map { $0.categoryName! }
+        var categoryString: String = ""
+        for category in categoryStrings {
+            categoryString += category
+            if !(categoryStrings.last == category) {
+                categoryString += ", "
+            }
+        }
+        
+        return categoryString.isEmpty ? "No categories" : categoryString
     }
     
     // MARK: Validation

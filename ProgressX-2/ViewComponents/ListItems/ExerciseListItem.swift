@@ -14,53 +14,94 @@ struct ExerciseListItem: View {
     @Binding var navPath: [Int]
     @Binding var selectedExercise: Exercise?
     @State var showDeleteAlert: Bool = false
+    @State private var showMagnifiedView: Bool = false
     @ObservedObject var exercise: Exercise
     
     var body: some View {
-        HStack {
+        VStack(alignment: .leading, content: {
             
-            Text(exercise.exerciseName ?? "")
+            VStack(alignment: .leading, content: {
+                
+                Text(exercise.exerciseName ?? "")
+                    .font(.title2)
+                
+                (Text("Type: ")
+                    .fontWeight(.bold)
+                + Text("\(exercise.exerciseType ?? "")"))
+                .minimumScaleFactor(0.6)
+                
+                (Text("Categories: ")
+                    .fontWeight(.bold)
+                 + Text(exercise.categoryString))
+                .minimumScaleFactor(0.6)
+                
+            })
+            .sheet(isPresented: $showMagnifiedView) {
+                MagnifiedExerciseView(exercise: exercise)
+                    .presentationDetents([.fraction(0.3)])
+                    .environment(\.managedObjectContext, viewContext)
+            }
+            .padding(.horizontal, 30)
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity, maxHeight: 60, alignment: .leading)
             
             Spacer()
             
-            // MARK: Edit button
-            Button(action: {
-                selectedExercise = exercise
-                navPath.append(2)
-            }) { Image(systemName: "pencil") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
+            HStack {
+                
+                // MARK: Magnify button
+                Button(action: {
+                    showMagnifiedView = true
+                }) { Image(systemName: "plus.magnifyingglass") }
+                    .frame(width: 20)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.horizontal, 20)
+                
+                // MARK: Edit button
+                Button(action: {
+                    selectedExercise = exercise
+                    navPath.append(2)
+                }) { Image(systemName: "pencil") }
+                    .frame(width: 20)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.horizontal, 20)
             
-            // MARK: Statistics button
-            Button(action: {
-                selectedExercise = exercise
-                navPath.append(3)
-            }) { Image(systemName: "chart.xyaxis.line") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
-            
-            // MARK: Delete button
-            Button(action: {
-                showDeleteAlert = true
-            }) { Image(systemName: "trash") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
+                // MARK: Statistics button
+                Button(action: {
+                    selectedExercise = exercise
+                    navPath.append(3)
+                }) { Image(systemName: "chart.xyaxis.line") }
+                    .frame(width: 20)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.horizontal, 20)
+
+                
+                // MARK: Delete button
+                Button(action: {
+                    showDeleteAlert = true
+                }) { Image(systemName: "trash") }
+                    .frame(width: 20)
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.horizontal, 20)
                 // Shows an alert box
-                .alert(isPresented: $showDeleteAlert, content: {
-                    Alert(
-                        title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete \(exercise.exerciseName!)?"),
-                        primaryButton: .destructive(Text("Delete")) {
-                            PersistenceController.delete(viewContext, object: exercise)
-                            PersistenceController.save(viewContext)
-                        },
-                        secondaryButton: .cancel()
-                    )
-                })
-        }
+                    .alert(isPresented: $showDeleteAlert, content: {
+                        Alert(
+                            title: Text("Delete Item"),
+                            message: Text("Are you sure you want to delete \(exercise.exerciseName!)?"),
+                            primaryButton: .destructive(Text("Delete")) {
+                                PersistenceController.delete(viewContext, object: exercise)
+                                PersistenceController.save(viewContext)
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    })
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+        })
+        .frame(width: 300, height: 100)
     }
 }
 

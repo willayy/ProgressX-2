@@ -102,6 +102,8 @@
 		83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */; };
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
 		83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */; };
+		83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */; };
+		83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
 		83D393712C35B725003B0F5E /* IntSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D393702C35B725003B0F5E /* IntSelectionList.swift */; };
@@ -234,6 +236,8 @@
 		83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
 		83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategory.swift; sourceTree = "<group>"; };
+		83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoriesList.swift; sourceTree = "<group>"; };
+		83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedExerciseView.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
 		83D393702C35B725003B0F5E /* IntSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntSelectionList.swift; sourceTree = "<group>"; };
@@ -369,6 +373,7 @@
 				83D685052C32DDF700FA78C6 /* SetExerciseSelectionList.swift */,
 				83D6850E2C35957600FA78C6 /* StringSelectionList.swift */,
 				83D393702C35B725003B0F5E /* IntSelectionList.swift */,
+				83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */,
 			);
 			path = ListElements;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 				83D685072C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift */,
 				83D393722C3694AE003B0F5E /* MagnifiedThresholdView.swift */,
 				83266E5E2C37E9C900F5F6CB /* MagnifiedPrView.swift */,
+				83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */,
 			);
 			path = MagnifiedViews;
 			sourceTree = "<group>";
@@ -917,6 +923,7 @@
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
 				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
+				83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */,
 				83266E6E2C38269F00F5F6CB /* EditTemplateSessionViewModel.swift in Sources */,
 				836486012C36E946006EB0C0 /* CreateNewProfile4ViewModel.swift in Sources */,
 				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
@@ -936,6 +943,7 @@
 				83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */,
 				836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
+				83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */,
 				83266E812C3C0E2800F5F6CB /* CreateNewPersonalRecordViewModel.swift in Sources */,
 				83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */,
 				831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */,

@@ -18,6 +18,12 @@ struct EditExerciseView: View {
         sortDescriptors: []
     ) private var exercises: FetchedResults<Exercise>
     
+    // Fetch all categories so you can edit which ones are set to this exercise
+    @FetchRequest(
+        entity: ExerciseCategory.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
+    ) private var categories: FetchedResults<ExerciseCategory>
+    
     @Binding var selectedExercise: Exercise?
     @StateObject private var viewModel = EditExerciseViewModel()
     
@@ -57,16 +63,20 @@ struct EditExerciseView: View {
                             .padding(.bottom, 20)
                     }
                     
+                    BoldSubHeadline(text: "Edit exercise name")
+                    
                     InputTextField(
                         placeHolder: "New exercise name",
                         text: $viewModel.newName,
-                        maxChars: 25,
+                        maxChars: 30,
                         markAsWrong: $viewModel.newNameIsInvalid,
                         width: 0.6,
                         errorMessage: $viewModel.newNameIsInvalidMsg
                     )
                     .padding(.bottom, 10)
-                        
+                     
+                    BoldSubHeadline(text: "Edit exercise description")
+                    
                     InputTextField(
                         placeHolder: "new exercise description",
                         text: $viewModel.newDesc,
@@ -75,11 +85,25 @@ struct EditExerciseView: View {
                         width: 0.6,
                         errorMessage: $viewModel.newDescIsInvalidMsg
                     )
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Edit exercise categories")
+                    
+                    SelectCategoriesList(
+                        selectedCategories: $viewModel.selectedCategories,
+                        categories: _categories
+                    ).onAppear(perform: {
+                        for category in selectedExercise!.categories! {
+                            viewModel.selectedCategories.insert(category as! ExerciseCategory)
+                        }
+                    })
                     
                     // MARK: Handle an edit of an exercise
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveExerciseChanges(selectedExercise: selectedExercise)
+                            viewModel.saveExerciseChanges(
+                                viewContext: viewContext,
+                                selectedExercise: selectedExercise)
                         }
                     }) {
                         Text("Save changes")

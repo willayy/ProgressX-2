@@ -23,6 +23,12 @@ struct CreateNewExerciseView: View {
         sortDescriptors: []
     ) private var exercises: FetchedResults<Exercise>
     
+    // All categories that can be selected
+    @FetchRequest(
+        entity: ExerciseCategory.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
+    ) private var categories: FetchedResults<ExerciseCategory>
+        
     @StateObject private var viewModel = CreateNewExerciseViewModel()
     
     var body: some View {
@@ -84,7 +90,7 @@ struct CreateNewExerciseView: View {
                     frameWidth: 230,
                     horizontalPadding: 100
                 )
-                    .padding(.bottom)
+                    .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if viewModel.addPr == "Yes" {
@@ -97,7 +103,7 @@ struct CreateNewExerciseView: View {
                             frameWidth: 230,
                             horizontalPadding: 100
                         )
-                        .padding(.bottom)
+                        .padding(.bottom, 5)
                     }
                     
                     InputDecimalNumberField(
@@ -108,7 +114,7 @@ struct CreateNewExerciseView: View {
                         width: 0.6,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
                     )
-                    
+
                     if viewModel.selectedTypeOfExercise == "Time" {
                         InputDecimalNumberField(
                             placeHolder: "PR time in seconds", 
@@ -118,7 +124,6 @@ struct CreateNewExerciseView: View {
                             width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
-                            
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
                         InputIntegerNumberField(
                             placeHolder: "Reps", 
@@ -130,6 +135,14 @@ struct CreateNewExerciseView: View {
                         )
                     }
                 }
+                
+                BoldSubHeadline(text: "Add categories to this exercise?")
+                    .padding(.top, 15)
+                
+                SelectCategoriesList(
+                    selectedCategories: $viewModel.selectedCategories,
+                    categories: _categories
+                )
                 
                 Button(action: {
                     if validateInput() {
@@ -145,7 +158,8 @@ struct CreateNewExerciseView: View {
                 .padding(.bottom, 10)
                 
             }
-        }.onChange(of: viewModel.selectedTypeOfPr, initial: true, {
+        }
+        .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
             viewModel.prTypeChanged(bodyEntries: bodyEntries)
         })
         .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {

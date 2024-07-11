@@ -15,6 +15,7 @@ class InMemory {
         initProfile(context)
         initExercisesAndPrs(context)
         initRoutines(context)
+        PersistenceController.generateBasicExerciseCategories(context)
     }
     
     private static func initProfile(_ context: NSManagedObjectContext) {
