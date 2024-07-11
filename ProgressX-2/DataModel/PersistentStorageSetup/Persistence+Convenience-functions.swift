@@ -68,15 +68,28 @@ extension PersistenceController {
         
         let jsonArray = try! JSONSerialization.jsonObject(
             with: asset.data, options: JSONSerialization.ReadingOptions.allowFragments
-        ) as! [[String: String]]
+        ) as! [[String: Any]]
         
         for json in jsonArray {
-            _ = Exercise(
+            let name = json["name"]! as! String
+            let description = json["description"]! as! String
+            let type = json["type"]! as! String
+            let categories: [String] = json["categories"]! as! [String]
+            
+            let exercise = Exercise(
                 context,
-                name: json["name"]!,
-                description: json["description"]!,
-                type: json["type"]!
+                name: name,
+                description: description,
+                type: type
             )
+            
+            for category in categories {
+                let fetchRequest = ExerciseCategory.fetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "categoryName == %@", category)
+                let category = fetch(context, fetchRequest: fetchRequest).first!
+                exercise.addToCategories(category)
+                category.addToExercise(exercise)
+            }
         }
     }
     
