@@ -22,9 +22,14 @@
         <attribute name="exerciseDesc" attributeType="String" minValueString="0" maxValueString="500" defaultValueString=""/>
         <attribute name="exerciseName" attributeType="String" minValueString="0" maxValueString="50"/>
         <attribute name="exerciseType" attributeType="String" minValueString="0" maxValueString="10" regularExpressionString="^(time|reps)$"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExerciseCategory" inverseName="exercise" inverseEntity="ExerciseCategory"/>
         <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="exercise" inverseEntity="TrainingSet"/>
         <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
+    </entity>
+    <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryName" optional="YES" attributeType="String"/>
+        <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="categories" inverseEntity="Exercise"/>
     </entity>
     <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" usesScalarValueType="YES"/>

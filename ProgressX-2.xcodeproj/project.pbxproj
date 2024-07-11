@@ -101,6 +101,7 @@
 		83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */; };
 		83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */; };
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
+		83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
 		83D393712C35B725003B0F5E /* IntSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D393702C35B725003B0F5E /* IntSelectionList.swift */; };
@@ -232,6 +233,7 @@
 		83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryView.swift; sourceTree = "<group>"; };
 		83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
+		83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategory.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
 		83D393702C35B725003B0F5E /* IntSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntSelectionList.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
 				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
+				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
 				833CCD562C3D6ABE00B53C97 /* TimePeriods */,
 				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
@@ -980,6 +983,7 @@
 				83266E712C3AEF6900F5F6CB /* EditTemplateSetViewModel.swift in Sources */,
 				831F2C1C2C23132F007A7A8A /* EditRoutineView.swift in Sources */,
 				83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */,
+				83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */,
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
 				83D685082C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift in Sources */,

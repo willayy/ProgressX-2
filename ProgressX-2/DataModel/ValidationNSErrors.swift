@@ -57,6 +57,9 @@ enum ValidationNSErrors: Int {
     case prTypeValueIsInvalid = 9978
     case prTypeAndExerciseMismatch = 9977
     
+    // ExerciseCategory
+    case exerciseCategoryNameIsInvalid = 9973
+    
     /* -------------------------------------------------------- */
     
     // The Error domain
@@ -229,6 +232,13 @@ enum ValidationNSErrors: Int {
                     The session should not be incomplete when all it's
                     sets are completed.
                     """]
+            
+        case .exerciseCategoryNameIsInvalid:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The name of this exerciseCategory is not unique.
+                    """
+            ]
         }
     }
     

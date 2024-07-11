@@ -26,7 +26,12 @@ extension Exercise {
     
     // MARK: Extra Properties
     
-    // Nothing here
+    // Returns the string names of all exercise categories
+    public var categoryStrings: [String] {
+        let categories: [ExerciseCategory] = self.categories!.allObjects as! [ExerciseCategory]
+        let categoryNames: [String] = categories.map { $0.categoryName! }
+        return categoryNames.sorted()
+    }
     
     // MARK: Validation
     

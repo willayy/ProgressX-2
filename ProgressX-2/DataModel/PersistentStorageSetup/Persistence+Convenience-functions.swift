@@ -79,6 +79,15 @@ extension PersistenceController {
         }
     }
     
+    public static func generateBasicExerciseCategories(_ context: NSManagedObjectContext) -> Void {
+        guard let asset = NSDataAsset(name: "ExerciseCategory", bundle: Bundle.main) else {
+            fatalError("Could not find Exercise categories")
+        }
+        
+        let jsonArray = try! JSONSerialization.jsonObject(with: <#T##Data#>)
+        
+    }
+    
     /// Staticly check if a Profile exists. That is, is there more than 0 Profiles saved to the persistent store.
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
     /// - Returns: Yes if profile exists, No if it doesnt.
