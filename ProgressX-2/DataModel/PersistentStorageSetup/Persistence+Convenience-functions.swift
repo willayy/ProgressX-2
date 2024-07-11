@@ -58,7 +58,8 @@ extension PersistenceController {
         }
     }
     
-    /// Generates a set of basic exercises as CoreDatabase entries
+    /// Generates a set of basic exercises from a data asset as CoreData entries
+    /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
     public static func generateBasicExerciseLibrary(_ context: NSManagedObjectContext) -> Void {
         guard let asset = NSDataAsset(name: "Exercises", bundle: Bundle.main) else {
@@ -79,13 +80,24 @@ extension PersistenceController {
         }
     }
     
+    /// Generates a set of exerciseCategories from a data asset as CoreData entries
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generateBasicExerciseCategories(_ context: NSManagedObjectContext) -> Void {
-        guard let asset = NSDataAsset(name: "ExerciseCategory", bundle: Bundle.main) else {
+        guard let asset = NSDataAsset(name: "ExerciseCategories", bundle: Bundle.main) else {
             fatalError("Could not find Exercise categories")
         }
         
-        let jsonArray = try! JSONSerialization.jsonObject(with: <#T##Data#>)
+        let jsonArray = try! JSONSerialization.jsonObject(
+            with: asset.data, options: JSONSerialization.ReadingOptions.allowFragments
+        ) as! [String]
         
+        for exerciseCategoryName in jsonArray {
+            _ = ExerciseCategory(
+                context,
+                name: exerciseCategoryName
+            )
+        }
     }
     
     /// Staticly check if a Profile exists. That is, is there more than 0 Profiles saved to the persistent store.
