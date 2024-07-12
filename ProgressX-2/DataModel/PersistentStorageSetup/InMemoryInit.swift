@@ -263,6 +263,14 @@ class InMemory {
         )
         routine.templateCycle = templateCycle
         
+        // Since every routine needs at least one active cycle
+        let trainingCycle = TrainingCycle(
+            context,
+            routine: routine
+        )
+        routine.addToTrainingCycles(trainingCycle)
+        
+        
         // Adding a template week to the template cycle
         let templateWeek1 = TemplateWeek(
             context,

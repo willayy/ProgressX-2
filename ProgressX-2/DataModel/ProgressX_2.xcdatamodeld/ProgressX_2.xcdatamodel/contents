@@ -14,7 +14,7 @@
         <relationship name="profile" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
     <entity name="CompleteableTimePeriod" representedClassName="CompleteableTimePeriod" isAbstract="YES" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
-        <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
+        <attribute name="completedOnDate" optional="YES" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="startedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
@@ -52,7 +52,7 @@
     <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <relationship name="templateCycle" maxCount="1" deletionRule="Cascade" destinationEntity="TemplateCycle" inverseName="routine" inverseEntity="TemplateCycle"/>
-        <relationship name="trainingCycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
+        <relationship name="trainingCycles" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
     </entity>
     <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="flatLoadAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>

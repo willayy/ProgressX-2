@@ -63,8 +63,10 @@ struct InputDecimalNumberField: View {
             filtered.removeAll(where: { $0 == "-" })
         }
         
-        // Find out of many dots there are, if more than one remove last
+        // Find out of many dots there are
         let dotAmount = filtered.filter { $0 == "." }.count
+        
+        // If more than one dot remove last one
         if dotAmount > 1 {
             let i = filtered.lastIndex(of: ".")!
             filtered.remove(at: i)
@@ -76,11 +78,6 @@ struct InputDecimalNumberField: View {
     private func onSubmitFunction(curr: String) -> String {
         
         var mutable = curr
-        
-        // If field is empty and empty is allowed
-        if curr.isEmpty {
-            return "0.0"
-        }
         
         // If the last char is a dot remove it
         if curr.last == "." {

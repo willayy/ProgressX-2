@@ -21,14 +21,27 @@ class CreateNewRoutineViewModel: ObservableObject {
     public func createRoutine(viewContext: NSManagedObjectContext) -> Void {
         
         // Create a Routine
-        let newRoutine = Routine(context: viewContext)
-        newRoutine.timePeriodName = newRoutineName
-        newRoutine.timePeriodDescription = newRoutineDesc
-        newRoutine.createdOnDate = Date()
-        let templateCycle = TemplateCycle(context: viewContext)
-        templateCycle.timePeriodName = newRoutineName
-        templateCycle.routine = newRoutine
+        let newRoutine = Routine(
+            viewContext,
+            name: newRoutineName,
+            description: newRoutineDesc
+        )
+        
+        // Create a TemplateCycle to add
+        let templateCycle = TemplateCycle(
+            viewContext,
+            routine: newRoutine
+        )
+        
         newRoutine.templateCycle = templateCycle
+        
+        // Create a TrainingCycle to add
+        let trainingCycle = TrainingCycle(
+            viewContext,
+            routine: newRoutine
+        )
+        
+        newRoutine.addToTrainingCycles(trainingCycle)
         
         // reset fields
         withAnimation {

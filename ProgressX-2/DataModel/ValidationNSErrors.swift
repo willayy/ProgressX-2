@@ -49,6 +49,7 @@ enum ValidationNSErrors: Int {
     
     // Routine
     case routineNameIsInvalid = 9982
+    case routineHasInvalidAmountOfIncompleteCycles = 9972
     
     // Threshold
     case triggerQuantityIsInvalid = 9981
@@ -237,6 +238,14 @@ enum ValidationNSErrors: Int {
             return [NSLocalizedDescriptionKey:
                     """
                     The name of this exerciseCategory is not unique.
+                    """
+            ]
+            
+        case .routineHasInvalidAmountOfIncompleteCycles:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The cycle must have one and one only cycle that is "inactive"
+                    and has isComplete set to false.
                     """
             ]
         }

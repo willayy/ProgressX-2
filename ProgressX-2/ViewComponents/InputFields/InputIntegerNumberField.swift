@@ -60,9 +60,7 @@ struct InputIntegerNumberField: View {
     
     private func onSubmitFunction(curr: String) -> String {
         
-        if curr.isEmpty {
-            return "0"
-        }
+        #warning("Consider removing this since it does nothing")
         
         return curr
     }
