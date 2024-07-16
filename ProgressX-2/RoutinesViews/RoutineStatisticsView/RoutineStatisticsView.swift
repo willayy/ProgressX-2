@@ -21,8 +21,6 @@ struct RoutineStatisticsView: View {
                 LightSubHeadline(text: "Here you can view some vital statistics for your routine")
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
-
-                //BoldSubHeadline(text: "General information")
                 
                 GroupBox {
                     VStack(alignment: .leading) {
