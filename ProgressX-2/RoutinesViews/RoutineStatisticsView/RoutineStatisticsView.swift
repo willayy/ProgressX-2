@@ -10,7 +10,6 @@ import CoreData
 
 struct RoutineStatisticsView: View {
     
-    @StateObject private var viewModel = RoutineStatisticsViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedRoutine: Routine?
     
