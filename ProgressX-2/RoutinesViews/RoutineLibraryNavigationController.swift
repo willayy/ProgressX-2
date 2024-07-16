@@ -73,7 +73,10 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                 } else if selection == 3 {
                     
                     // MARK: Routine statistic
-                    RoutineStatisticsView()
+                    RoutineStatisticsView(
+                        selectedRoutine: $selectedRoutine
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     

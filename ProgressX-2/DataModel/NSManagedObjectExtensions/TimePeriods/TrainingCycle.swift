@@ -10,6 +10,25 @@ import CoreData
 
 extension TrainingCycle: HasOrderable {
     
+    // MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        routine: Routine,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.routine = routine
+        let routineName = routine.timePeriodName!
+        let positionIndex = routine.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "\(routineName) cycle \(positionIndex)" : name
+        self.timePeriodDescription = (description == "") ? "Cycle created for \(routineName)" : description
+        self.templateCycle = routine.templateCycle
+        self.startedOnDate = Date()
+    }
+    
     // MARK: Extra properties
     
     func getNextPositionIndex() -> Int64 {

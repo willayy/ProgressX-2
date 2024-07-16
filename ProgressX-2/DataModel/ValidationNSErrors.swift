@@ -49,6 +49,7 @@ enum ValidationNSErrors: Int {
     
     // Routine
     case routineNameIsInvalid = 9982
+    case routineHasInvalidAmountOfIncompleteCycles = 9972
     
     // Threshold
     case triggerQuantityIsInvalid = 9981
@@ -56,6 +57,9 @@ enum ValidationNSErrors: Int {
     case flatQuantityAddIsInvalid = 9979
     case prTypeValueIsInvalid = 9978
     case prTypeAndExerciseMismatch = 9977
+    
+    // ExerciseCategory
+    case exerciseCategoryNameIsInvalid = 9973
     
     /* -------------------------------------------------------- */
     
@@ -229,6 +233,21 @@ enum ValidationNSErrors: Int {
                     The session should not be incomplete when all it's
                     sets are completed.
                     """]
+            
+        case .exerciseCategoryNameIsInvalid:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The name of this exerciseCategory is not unique.
+                    """
+            ]
+            
+        case .routineHasInvalidAmountOfIncompleteCycles:
+            return [NSLocalizedDescriptionKey:
+                    """
+                    The cycle must have one and one only cycle that is "inactive"
+                    and has isComplete set to false.
+                    """
+            ]
         }
     }
     

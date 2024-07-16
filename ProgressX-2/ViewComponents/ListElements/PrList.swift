@@ -62,7 +62,6 @@ struct PrList: View {
             .frame(height: 300)
             .background(Color(.systemGray6))
             .cornerRadius(10)
-            .padding(.horizontal, 40)
         }
         
         Button(action: {

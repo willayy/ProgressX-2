@@ -14,7 +14,7 @@
         <relationship name="profile" maxCount="1" deletionRule="Nullify" destinationEntity="Profile" inverseName="bodyEntries" inverseEntity="Profile"/>
     </entity>
     <entity name="CompleteableTimePeriod" representedClassName="CompleteableTimePeriod" isAbstract="YES" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
-        <attribute name="completedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
+        <attribute name="completedOnDate" optional="YES" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <attribute name="isComplete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="startedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
@@ -22,9 +22,14 @@
         <attribute name="exerciseDesc" attributeType="String" minValueString="0" maxValueString="500" defaultValueString=""/>
         <attribute name="exerciseName" attributeType="String" minValueString="0" maxValueString="50"/>
         <attribute name="exerciseType" attributeType="String" minValueString="0" maxValueString="10" regularExpressionString="^(time|reps)$"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExerciseCategory" inverseName="exercise" inverseEntity="ExerciseCategory"/>
         <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="exercise" inverseEntity="TrainingSet"/>
         <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
+    </entity>
+    <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
+        <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Deltoids|Pectorials|Abs|Obliques|Triceps|Traps|Glutes|Hamstrings|Calves|Quads|Hip abductors|Forearms|Lower back|Lats|Biceps)$"/>
+        <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="categories" inverseEntity="Exercise"/>
     </entity>
     <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="positionIndex" attributeType="Integer 64" minValueString="1" usesScalarValueType="YES"/>
@@ -47,7 +52,7 @@
     <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <relationship name="templateCycle" maxCount="1" deletionRule="Cascade" destinationEntity="TemplateCycle" inverseName="routine" inverseEntity="TemplateCycle"/>
-        <relationship name="trainingCycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
+        <relationship name="trainingCycles" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
     </entity>
     <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="flatLoadAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>

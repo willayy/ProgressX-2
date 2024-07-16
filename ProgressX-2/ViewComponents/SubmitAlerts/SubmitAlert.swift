@@ -18,13 +18,13 @@ struct SubmitAlert: View {
             .fontWeight(.light)
             .foregroundStyle(color)
             .padding(.bottom, 10)
-            .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            .onAppear(perform: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     withAnimation {
                         showAlertState = false
                     }
                 }
-            }
+            })
     }
 }
 

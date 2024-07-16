@@ -37,87 +37,90 @@ struct EditPrView: View {
                     )
                 }
                 
-                VStack(alignment: .leading) {
-                    
-                    (Text("Type: ")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                     + Text(editingPr!.typeString)
-                        .fontWeight(.light)
-                        .foregroundColor(.black))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    
-                    (Text("Achieved on date: ")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                     + Text("\(editingPr!.dateString!)")
-                        .fontWeight(.light)
-                        .foregroundColor(.black))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    
-                    (Text("Load: ")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                     + Text("\(editingPr!.loadString)")
-                        .fontWeight(.light)
-                        .foregroundColor(.black))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                    
-                    (Text("Quantity: ")
-                        .font(.subheadline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.black)
-                     + Text("\(editingPr!.quantityString)")
-                        .fontWeight(.light)
-                        .foregroundColor(.black))
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.5)
-                
+                GroupBox {
+                    VStack(alignment: .leading) {
+                        
+                        (Text("Type: ")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                         + Text(editingPr!.typeString)
+                            .fontWeight(.light)
+                            .foregroundColor(.black))
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
+                        
+                        (Text("Achieved on date: ")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                         + Text("\(editingPr!.dateString!)")
+                            .fontWeight(.light)
+                            .foregroundColor(.black))
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
+                        
+                        (Text("Load: ")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                         + Text("\(editingPr!.loadString)")
+                            .fontWeight(.light)
+                            .foregroundColor(.black))
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
+                        
+                        (Text("Quantity: ")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                         + Text("\(editingPr!.quantityString)")
+                            .fontWeight(.light)
+                            .foregroundColor(.black))
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.5)
+                        
+                    }
                 }
+                .padding(.top, 10)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Change date")
                 
-                DatePicker("", selection: $viewModel.newDate, displayedComponents: .date)
+                DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
                     .datePickerStyle(DefaultDatePickerStyle())
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
                 InputDecimalNumberField(
-                    placeHolder: "New load",
+                    placeHolder: "Load",
                     allowNegatives: false,
-                    numberText: $viewModel.newWeightLoad,
-                    markAsWrong: $viewModel.newWeightLoadInvalid,
+                    numberText: $viewModel.editedWeightLoad,
+                    markAsWrong: $viewModel.editedWeightLoadInvalid,
                     width: 0.7,
-                    errorMessage: $viewModel.newWeightLoadInvalidMsg
+                    errorMessage: $viewModel.editedWeightLoadInvalidMsg
                 )
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 
                 if editingPr!.prType == "maxreps" {
                     InputIntegerNumberField(
-                        placeHolder: "New reps",
+                        placeHolder: "Reps",
                         allowNegatives: false,
-                        numberText: $viewModel.newQuantity,
-                        markAsWrong: $viewModel.newQuantityInvalid,
+                        numberText: $viewModel.editedQuantity,
+                        markAsWrong: $viewModel.editedQuantityInvalid,
                         width: 0.7,
-                        errorMessage: $viewModel.newQuantityInvalidMsg
+                        errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
                     InputDecimalNumberField(
-                        placeHolder: "New time...", 
+                        placeHolder: "Time", 
                         allowNegatives: false,
-                        numberText: $viewModel.newQuantity,
-                        markAsWrong: $viewModel.newQuantityInvalid,
+                        numberText: $viewModel.editedQuantity,
+                        markAsWrong: $viewModel.editedQuantityInvalid,
                         width: 0.7,
-                        errorMessage: $viewModel.newQuantityInvalidMsg
+                        errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
                     .padding(.bottom, 10)
                 }
@@ -126,7 +129,7 @@ struct EditPrView: View {
                     if validateInput() {
                         viewModel.savePersonalRecordChanges(
                             viewContext: viewContext,
-                            editingPr: editingPr
+                            editingPr: editingPr!
                         )
                     }
                 }) {
@@ -141,7 +144,7 @@ struct EditPrView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(editingPr: editingPr)
+            viewModel.setViewStartValues(editingPr: editingPr!)
         })
     }
     
@@ -153,15 +156,15 @@ struct EditPrView: View {
         }()
         
         valid += loadFieldValidator.valideField(
-            inputVar: viewModel.newWeightLoad,
-            errorMessage: $viewModel.newWeightLoadInvalidMsg,
-            fieldInvalid: $viewModel.newWeightLoadInvalid
+            inputVar: viewModel.editedWeightLoad,
+            errorMessage: $viewModel.editedWeightLoadInvalidMsg,
+            fieldInvalid: $viewModel.editedWeightLoadInvalid
         )
         
         valid += quantityFieldValidator.valideField(
-            inputVar: viewModel.newQuantity,
-            errorMessage: $viewModel.newQuantityInvalidMsg,
-            fieldInvalid: $viewModel.newQuantityInvalid
+            inputVar: viewModel.editedQuantity,
+            errorMessage: $viewModel.editedQuantityInvalidMsg,
+            fieldInvalid: $viewModel.editedQuantityInvalid
         )
         
         return valid == 0

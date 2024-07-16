@@ -32,6 +32,7 @@ class CreateNewExerciseViewModel: ObservableObject {
     @Published public var enteredExerciseDescIsInvalidMsg: String = ""
     @Published public var enteredPrQuantityIsInvalidMsg: String = ""
     @Published public var enteredPrWeigtLoadIsInvalidMsg: String = ""
+    @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     // Segment picker options
     public let exerciseTypeOptions: [String] = ["Reps", "Time"]
     public let addPrOptions: [String] = ["Yes", "No"]
@@ -71,6 +72,11 @@ class CreateNewExerciseViewModel: ObservableObject {
             description: enteredExerciseDesc,
             type: (selectedTypeOfExercise == "Reps") ? "reps" : "time"
         )
+        
+        for category in selectedCategories {
+            category.addToExercise(exercise)
+            exercise.addToCategories(category)
+        }
         
         // Add pr if selected
         if addPr == "Yes" {

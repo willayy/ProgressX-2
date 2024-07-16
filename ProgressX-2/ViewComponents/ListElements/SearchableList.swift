@@ -19,17 +19,16 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
 
     var body: some View {
         if allData.isEmpty {
-            Text("You currently have no \(elementName) saved to the \(containerName)...")
-                .font(.subheadline)
-                .fontWeight(.light)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 20)
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .foregroundStyle(.red)
+            GroupBox {
+                Text("You currently have no \(elementName) saved to the \(containerName)...")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundStyle(.red)
+            }
         } else if searchedData.isEmpty {
-            LightSubHeadline(text: "No \(elementName) matched your search...")
-                .padding(.vertical, 10)
+            GroupBox {
+                LightSubHeadline(text: "No \(elementName) matched your search...")
+            }
         } else {
             List{
                 ForEach(searchedData) { item in
@@ -39,7 +38,6 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
             .frame(height: 400)
             .background(Color(.systemGray6))
             .cornerRadius(10)
-            .padding(.horizontal, 10)
         }
     }
 }

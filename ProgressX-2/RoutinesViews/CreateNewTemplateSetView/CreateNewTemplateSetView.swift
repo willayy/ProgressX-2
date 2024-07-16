@@ -172,7 +172,7 @@ struct CreateNewTemplateSetView: View {
                             )
                         }
                     } label: {
-                        Text("Create set")
+                        Text("Create new set")
                             .frame(height: 40)
                         Image(systemName: "plus")
                     }
