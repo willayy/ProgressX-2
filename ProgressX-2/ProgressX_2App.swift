@@ -33,9 +33,10 @@ struct ProgressX_2App: App {
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case .StartWorkoutView:
-                    StartWorkoutView()
-                        .environmentObject(viewRouter)
-                        .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    fatalError("CHECK ProgressX_2App and you will understand")
+                    //StartWorkoutView()
+                    //    .environmentObject(viewRouter)
+                    //    .environment(\.managedObjectContext, persistenceContainer.viewContext)
                 case .CreateNewProfileView:
                     CreateNewProfile1View()
                         .environmentObject(viewRouter)

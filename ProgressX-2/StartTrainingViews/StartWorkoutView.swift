@@ -18,20 +18,12 @@ struct StartWorkoutView: View {
     let fetchRequestRoutine: NSFetchRequest<Routine> = Routine.fetchRequest()
     let fetchRequestCycle: NSFetchRequest<TrainingCycle> =  TrainingCycle.fetchRequest()
     
-    @FetchRequest(
-        entity: Routine.entity(),
-        sortDescriptors: []
-    ) var routines: FetchedResults<Routine>
-    
-    
     @State private var showMenu: Bool = false
-    @State private var routine: Routine? = nil
+    @Binding var routine: Routine?
     @State private var trainingCycle: TrainingCycle? = nil
-    
     
     var body: some View {
 
-        
         @FetchRequest(
             entity: TrainingCycle.entity(),
             sortDescriptors: [],
@@ -55,16 +47,13 @@ struct StartWorkoutView: View {
                 VStack{
                     Button(action: {
                         copyRoutineTemplate(context: viewContext)
-                        PersistenceController.save(viewContext)
                     }) {
                         Text("Start New Training Cycle")
                     }
                     Button(action: {
-                        print(routines)
+                        print(routine?.trainingCycles?.count)
                     }) {
-                        
                         Text("increse load Routine1, Week 1, Session 1, set 1")
-
                     }
                 }
                 .toolbar {
@@ -72,6 +61,9 @@ struct StartWorkoutView: View {
                         SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
                     }
                 }
+                
+                Text(String(routine?.trainingCycles?.count ?? 0))
+                
             }
         }menuView: { safeArea in
             SideBarMenuView(safeArea)
@@ -92,7 +84,11 @@ struct StartWorkoutView: View {
     
     let context = PersistenceController.preview.container.viewContext
     
-    return StartWorkoutView()
+    let fetchRequest: NSFetchRequest<Routine> = Routine.fetchRequest()
+    let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    @State var routine = results.first
+    
+    return StartWorkoutView(routine: $routine)
         .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)
 }
