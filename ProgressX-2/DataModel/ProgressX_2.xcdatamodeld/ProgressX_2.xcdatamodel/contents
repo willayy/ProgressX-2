@@ -28,7 +28,7 @@
         <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
-        <attribute name="categoryName" optional="YES" attributeType="String"/>
+        <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Deltoids|Pectorials|Abs|Obliques|Triceps|Traps|Glutes|Hamstrings|Calves|Quads|Hip abductors|Forearms|Lower back|Lats|Biceps)$"/>
         <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="categories" inverseEntity="Exercise"/>
     </entity>
     <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">

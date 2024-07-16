@@ -4,7 +4,7 @@
     "name": "Bench-press",
     "description": "Classic upper body compound lift.",
     "categories": [
-        "Deltoid",
+        "Deltoids",
         "Pectorials",
         "Biceps"
     ]
@@ -15,7 +15,7 @@
     "description": "Classic lower body compound lift.",
     "categories": [
         "Quads",
-        "Hip abductor",
+        "Hip abductors",
         "Glutes",
         "Hamstrings"
     ]
@@ -25,7 +25,7 @@
     "name": "Shoulder-press",
     "description": "Classic upper body shoulder focused lift.",
     "categories": [
-        "Deltoid",
+        "Deltoids",
         "Traps",
         "Triceps"
     ]
@@ -49,7 +49,7 @@
     "description": "Classic bodyweight exercise targeting the chest and upper body.",
     "categories": [
         "Pectorials",
-        "Deltoid",
+        "Deltoids",
         "Biceps",
         "Triceps"
     ]

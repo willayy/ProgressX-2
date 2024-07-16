@@ -1,7 +1,9 @@
 [
-    "Deltoid",
+    "Deltoids",
     "Pectorials",
     "Abs",
+    "Biceps",
+    "Lats",
     "Obliques",
     "Triceps",
     "Traps",
@@ -9,7 +11,7 @@
     "Hamstrings",
     "Calves",
     "Quads",
-    "Hip abductor",
-    "Forearm",
+    "Hip abductors",
+    "Forearms",
     "Lower back"
 ]

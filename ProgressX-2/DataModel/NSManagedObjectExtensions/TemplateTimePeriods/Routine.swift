@@ -37,12 +37,19 @@ extension Routine: HasOrderable {
     }
     
     /// Gets all trainingSets in the routine, returns empty array if none.
-    private var allTrainingSets: [TrainingSet] {
-        let fetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
-        let predicate = NSPredicate(format: "trainingSession.trainingWeek.trainingCycle.routine == %@", self)
+    private var allTemplateSets: [TemplateSet] {
+        let fetchRequest: NSFetchRequest<TemplateSet> = TemplateSet.fetchRequest()
+        let predicate = NSPredicate(format: "templateSession.templateWeek.templateCycle.routine == %@", self)
         fetchRequest.predicate = predicate
         let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
         return results
+    }
+    
+    /// Gets all exercises of the routine.
+    private var allExercises: [Exercise] {
+        let allTemplateSets = self.allTemplateSets
+        let allExercises = allTemplateSets.map { $0.exercise! }
+        return allExercises
     }
     
     /// Gets the last session done, returns nil if no sessions done.
@@ -92,12 +99,21 @@ extension Routine: HasOrderable {
         return results
     }
     
+    /// Gets all the exercises in the routine as a dictionary where the keys are the exercises and the values the frequency.
     var exerciseInRoutine: [String : Int] {
-        let allTrainingSets = self.allTrainingSets
-        let allSetExercises = allTrainingSets.map { $0.exercise! }
-        let exerciseDictionary = Dictionary(grouping: allSetExercises) { $0.exerciseName! }
+        let allExercises = self.allExercises
+        let exerciseDictionary = Dictionary(grouping: allExercises) { $0.exerciseName! }
             .mapValues { $0.count }
         return exerciseDictionary
+    }
+    
+    /// Gets all the categories in the routine as a dictionary where the keys are the exercise-categories and the values the frequency.
+    var categoriesInRoutine: [String : Int] {
+        let allExercises = self.allExercises
+        let allCategories = allExercises.flatMap { $0.categories! }
+        let categoryDictionary = Dictionary(grouping: (allCategories as! [ExerciseCategory])) { $0.categoryName! }
+            .mapValues { $0.count }
+        return categoryDictionary
     }
     
     /// Gets the next available

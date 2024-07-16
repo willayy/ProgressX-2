@@ -23,7 +23,7 @@ struct RoutineStatisticsView: View {
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
 
-                BoldSubHeadline(text: "General information")
+                //BoldSubHeadline(text: "General information")
                 
                 GroupBox {
                     VStack(alignment: .leading) {
@@ -46,16 +46,25 @@ struct RoutineStatisticsView: View {
                             .fontWeight(.bold)
                          + Text("\(selectedRoutine!.completedCycles.count)"))
                         .padding(.vertical, 10)
+                        
                     }
                     .padding(.horizontal, 20)
                 }
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
+                
                 
                 BoldSubHeadline(text: "Exercises in your routine")
                 
-                GroupBox {
-                    
-                }
+                PieChart(data: selectedRoutine!.exerciseInRoutine)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+                
+                BoldSubHeadline(text: "Muscle groups targeted")
+                
+                PieChart(data: selectedRoutine!.categoriesInRoutine)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
                 
             }
         }
