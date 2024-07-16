@@ -33,6 +33,7 @@ struct SideBarBuilder: View {
                 }
                 
                 SideBarButton(.StartWorkout){
+                    viewRouter.rootView = .StartWorkoutView
                     showMenu.toggle()
                 }
                 
