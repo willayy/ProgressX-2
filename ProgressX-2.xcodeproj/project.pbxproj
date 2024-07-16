@@ -103,7 +103,6 @@
 		83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */; };
 		83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */; };
 		83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */; };
-		83BD39602C40724C008E09A0 /* RoutineStatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD395F2C40724C008E09A0 /* RoutineStatisticsViewModel.swift */; };
 		83BD39622C467E17008E09A0 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39612C467E17008E09A0 /* PieChart.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
@@ -238,7 +237,6 @@
 		83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategory.swift; sourceTree = "<group>"; };
 		83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoriesList.swift; sourceTree = "<group>"; };
 		83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedExerciseView.swift; sourceTree = "<group>"; };
-		83BD395F2C40724C008E09A0 /* RoutineStatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStatisticsViewModel.swift; sourceTree = "<group>"; };
 		83BD39612C467E17008E09A0 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
@@ -746,7 +744,6 @@
 			isa = PBXGroup;
 			children = (
 				831F2C372C288D66007A7A8A /* RoutineStatisticsView.swift */,
-				83BD395F2C40724C008E09A0 /* RoutineStatisticsViewModel.swift */,
 			);
 			path = RoutineStatisticsView;
 			sourceTree = "<group>";
@@ -982,7 +979,6 @@
 				83266E6B2C38214C00F5F6CB /* CreateNewRoutineViewModel.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				831F2C0A2C2195D8007A7A8A /* TrainingCycle.swift in Sources */,
-				83BD39602C40724C008E09A0 /* RoutineStatisticsViewModel.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
 				831F2C362C288D38007A7A8A /* EditTemplateWeekView.swift in Sources */,
 				8364860B2C372513006EB0C0 /* TemplateWeek.swift in Sources */,
