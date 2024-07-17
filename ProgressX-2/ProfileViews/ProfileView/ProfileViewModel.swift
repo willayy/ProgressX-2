@@ -13,7 +13,7 @@ class ProfileViewModel: ObservableObject {
     
     @Published var userName: String = ""
     @Published var birthDay: Date = Date()
-    @Published var selectedUnitSegment: String = "Metric (meters)"
+    @Published var selectedUnitSegment: String = "Metric"
     @Published var selectedGenderSegment: String = "Male"
     @Published var height: String = ""
     @Published var standardRestTime: String = ""
@@ -28,17 +28,17 @@ class ProfileViewModel: ObservableObject {
     @Published var showNoChangeAlert: Bool = false
     @Published var showProfileChangedAlert: Bool = false
     
-    let unitSegments = ["Metric (meters, kg's)", "Imperial (feet, lbs)"]
+    let unitSegments = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
     
     public func setViewStartValues(profiles: FetchedResults<Profile>) -> Void {
         let profile = profiles.first!
-        standardRestTime = String(profile.standardRestTime)
-        selectedUnitSegment = (profile.isMetric) ? "Metric (meters, kg's)" : "Imperial (feet, lbs)"
-        height = String(profile.userHeight)
-        birthDay = profile.birthDay!
-        userName = profile.profileUserName!
-        selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
+        self.standardRestTime = String(profile.standardRestTime)
+        self.selectedUnitSegment = (profile.isMetric) ? "Metric" : "Imperial"
+        self.height = String(profile.userHeight)
+        self.birthDay = profile.birthDay!
+        self.userName = profile.profileUserName!
+        self.selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
     }
     
     public func saveProfileChanges(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
@@ -49,8 +49,8 @@ class ProfileViewModel: ObservableObject {
             profile.profileUserName = userName
         }
         
-        if (profile.isMetric ? "Metric (meters, kg's)" : "Imperial (feet, lbs)") != selectedUnitSegment {
-            profile.isMetric = (selectedUnitSegment == "Metric (meters, kg's)") ? true : false
+        if (profile.isMetric ? "Metric" : "Imperial") != selectedUnitSegment {
+            profile.isMetric = (selectedUnitSegment == "Metric") ? true : false
         }
         
         if profile.gender != (selectedGenderSegment == "Male" ? "male" : "female") {

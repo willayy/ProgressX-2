@@ -11,6 +11,7 @@ import CoreData
 extension Routine: HasOrderable {
     
     // MARK: Convenience init
+    /* MARK: ---------------------------------------------------------------------------------------------- */
     
     convenience init(
         _ context: NSManagedObjectContext,
@@ -24,20 +25,69 @@ extension Routine: HasOrderable {
     }
     
     // MARK: Extra properties
+    /* MARK: ---------------------------------------------------------------------------------------------- */
     
-    var creationDateString: String? {
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
-        
-        if self.createdOnDate != nil {
-            return df.string(from: self.createdOnDate!)
-        }
-        
-        else {
-            return nil
-        }
+    /// Gets all trainingSessions in the routine, returns empty array if none.
+    private var allTrainingSessions: [TrainingSession] {
+        let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        let predicate = NSPredicate(format: "trainingWeek.trainingCycle.routine == %@", self)
+        fetchRequest.predicate = predicate
+        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
+        return results
     }
     
+    /// Gets all trainingSets in the routine, returns empty array if none.
+    private var allTemplateSets: [TemplateSet] {
+        let fetchRequest: NSFetchRequest<TemplateSet> = TemplateSet.fetchRequest()
+        let predicate = NSPredicate(format: "templateSession.templateWeek.templateCycle.routine == %@", self)
+        fetchRequest.predicate = predicate
+        let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
+        return results
+    }
+    
+    /// Gets all exercises of the routine.
+    private var allExercises: [Exercise] {
+        let allTemplateSets = self.allTemplateSets
+        let allExercises = allTemplateSets.map { $0.exercise! }
+        return allExercises
+    }
+    
+    /// Gets the last session done, returns nil if no sessions done.
+    var lastCompletedSession: TrainingSession? {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
+        let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
+        let orderedSessions = completedSessions.sorted(by: {$0.completedOnDate! > $1.completedOnDate!})
+        return orderedSessions.first
+    }
+    
+    /// Gets all sessions completed within 30 days of today, returns empty array if none.
+    var sessionsDoneThisMonth: [TrainingSession] {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
+        let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
+        let today = Date()
+        let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: today)!
+        let sessionsCompletedWithin30Days = completedSessions.filter { $0.completedOnDate! >= thirtyDaysAgo && $0.completedOnDate! <= today }
+        return sessionsCompletedWithin30Days
+    }
+    
+    /// Gets all sessions completed within 7 days of today, returns empty array if none.
+    var sessionsDoneThisWeek: [TrainingSession] {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
+        let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
+        let today = Date()
+        let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: today)!
+        let sessionsCompletedWithin7Days = completedSessions.filter { $0.completedOnDate! >= sevenDaysAgo && $0.completedOnDate! <= today }
+        return sessionsCompletedWithin7Days
+    }
+    
+    /// Gets the date when the routine was created presented as a string.
+    var creationDateString: String {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df.string(from: self.createdOnDate!)
+    }
+    
+    /// Gets all completed cycles of thre routine, returns empty array if none.
     var completedCycles: [TrainingCycle] {
         let context = self.managedObjectContext!
         let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
@@ -49,6 +99,23 @@ extension Routine: HasOrderable {
         return results
     }
     
+    /// Gets all the exercises in the routine as a dictionary where the keys are the exercises and the values the frequency.
+    var exerciseInRoutine: [String : Int] {
+        let allExercises = self.allExercises
+        let exerciseDictionary = Dictionary(grouping: allExercises) { $0.exerciseName! }
+            .mapValues { $0.count }
+        return exerciseDictionary
+    }
+    
+    /// Gets all the categories in the routine as a dictionary where the keys are the exercise-categories and the values the frequency.
+    var categoriesInRoutine: [String : Int] {
+        let allExercises = self.allExercises
+        let allCategories = allExercises.flatMap { $0.categories! }
+        let categoryDictionary = Dictionary(grouping: (allCategories as! [ExerciseCategory])) { $0.categoryName! }
+            .mapValues { $0.count }
+        return categoryDictionary
+    }
+    
     /// Gets the next available
     /// - Returns: An Int64 that is a valid positionIndex
     func getNextPositionIndex() -> Int64 {
@@ -58,6 +125,7 @@ extension Routine: HasOrderable {
     }
     
     // MARK: Validation
+    /* MARK: ---------------------------------------------------------------------------------------------- */
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
@@ -88,6 +156,18 @@ extension Routine: HasOrderable {
         let groupedBy = Dictionary(grouping: cycles, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
         if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
+    }
+    
+    // Validates that the Routine always has one and one only started Cycles
+    private func validateTrainingCycles() throws {
+        
+        let trainingCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
+        
+        let incompleteTrainingCycles = trainingCycles.filter({ !$0.isComplete })
+        
+        if incompleteTrainingCycles.count != 1 {
+            throw ValidationNSErrors.routineHasInvalidAmountOfIncompleteCycles.toNSError()
+        }
     }
         
 }

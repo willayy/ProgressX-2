@@ -12,38 +12,38 @@ import SwiftUI
 class EditPrViewModel: ObservableObject {
     
     // Input field vars
-    @Published public var newDate: Date = Date()
-    @Published public var newQuantity: String = ""
-    @Published public var newWeightLoad: String = ""
-    @Published public var newQuantityInvalid: Bool = false
-    @Published public var newWeightLoadInvalid: Bool = false
-    @Published public var newQuantityInvalidMsg: String = ""
-    @Published public var newWeightLoadInvalidMsg: String = ""
+    @Published public var editedDate: Date = Date()
+    @Published public var editedQuantity: String = ""
+    @Published public var editedWeightLoad: String = ""
+    @Published public var editedQuantityInvalid: Bool = false
+    @Published public var editedWeightLoadInvalid: Bool = false
+    @Published public var editedQuantityInvalidMsg: String = ""
+    @Published public var editedWeightLoadInvalidMsg: String = ""
     // Alert vars
     @Published public var prEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
     
-    public func setViewStartValues(editingPr: PersonalRecord?) -> Void {
-        newDate = editingPr!.achievedOnDate!
-        newWeightLoad = String(editingPr!.weightLoad)
-        newQuantity = String(Int(editingPr!.prQuantity))
+    public func setViewStartValues(editingPr: PersonalRecord) -> Void {
+        editedDate = editingPr.achievedOnDate!
+        editedWeightLoad = String(format: "%.2f", editingPr.weightLoad)
+        editedQuantity = String(Int(editingPr.prQuantity))
     }
     
-    public func savePersonalRecordChanges(viewContext: NSManagedObjectContext, editingPr: PersonalRecord?) -> Void {
+    public func savePersonalRecordChanges(viewContext: NSManagedObjectContext, editingPr: PersonalRecord) -> Void {
         
-        if editingPr!.weightLoad != Double(newWeightLoad) {
-            editingPr!.weightLoad = Double(newWeightLoad)!
+        if editingPr.weightLoad != Double(editedWeightLoad) {
+            editingPr.weightLoad = Double(editedWeightLoad)!
         }
             
-        if editingPr!.prQuantity != Double(newQuantity) {
-            editingPr!.prQuantity = Double(newQuantity)!
+        if editingPr.prQuantity != Double(editedQuantity) {
+            editingPr.prQuantity = Double(editedQuantity)!
         }
             
-        if editingPr!.achievedOnDate != newDate {
-            editingPr!.achievedOnDate = newDate
+        if editingPr.achievedOnDate != editedDate {
+            editingPr.achievedOnDate = editedDate
         }
         
-        if editingPr!.hasChanges {
+        if editingPr.hasChanges {
             withAnimation {
                 prEditedAlert = true
             }

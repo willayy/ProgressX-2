@@ -9,12 +9,9 @@ import SwiftUI
 
 struct RoutineLibraryNavigationController<Content: View>: View {
     
-    var content: Content
-    
+    public var content: Content
     @EnvironmentObject var viewRouter: ViewRouter
-    
     @Environment(\.managedObjectContext) private var viewContext
-    
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTemplateCycle: TemplateCycle?
@@ -73,7 +70,10 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                 } else if selection == 3 {
                     
                     // MARK: Routine statistic
-                    RoutineStatisticsView()
+                    RoutineStatisticsView(
+                        selectedRoutine: $selectedRoutine
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     

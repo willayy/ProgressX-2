@@ -45,12 +45,12 @@ struct ProfileView: View {
                         )
                     }
                     
-                    VStack(alignment: .center){
+                    VStack(alignment: .center) {
                         
                         BoldSubHeadline(text: "Change username")
                         
                         InputTextField(
-                            placeHolder: "Change username",
+                            placeHolder: "Username",
                             text: $viewModel.userName, 
                             maxChars: 25,
                             markAsWrong: $viewModel.userNameIsInvalid,
@@ -59,6 +59,7 @@ struct ProfileView: View {
                         ).padding(.bottom)
                         
                         BoldSubHeadline(text: "Change birth date")
+                        
                         DatePicker(
                             "",
                             selection: $viewModel.birthDay ,
@@ -71,7 +72,7 @@ struct ProfileView: View {
                         BoldSubHeadline(text: "Change default rest-time (seconds)")
                         
                         InputDecimalNumberField(
-                            placeHolder: "Change default rest-time", 
+                            placeHolder: "Default rest-time",
                             allowNegatives: false,
                             numberText: $viewModel.standardRestTime,
                             markAsWrong: $viewModel.standardRestTimeIsInvalid,
@@ -92,7 +93,7 @@ struct ProfileView: View {
                         BoldSubHeadline(text: "Change height")
                         
                         InputDecimalNumberField(
-                            placeHolder: "Change height", 
+                            placeHolder: "Height",
                             allowNegatives: false,
                             numberText: $viewModel.height,
                             markAsWrong: $viewModel.heightIsInvalid,
@@ -136,8 +137,7 @@ struct ProfileView: View {
                                 .environmentObject(viewRouter)
                         }
                     }
-                }
-                .onAppear(perform: {
+                }.onAppear(perform: {
                     viewModel.setViewStartValues(profiles: profiles)
                 })
             }

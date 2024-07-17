@@ -15,7 +15,7 @@ import Combine
 struct InputIntegerNumberField: View {
     
     private var allowedChars = "1234567890"
-    private let maxChars = 5
+    private let maxChars = 6
     let placeHolder: String
     let allowNegatives: Bool
     @Binding var numberText: String
@@ -60,9 +60,7 @@ struct InputIntegerNumberField: View {
     
     private func onSubmitFunction(curr: String) -> String {
         
-        if curr.isEmpty {
-            return "0"
-        }
+        #warning("Consider removing this since it does nothing")
         
         return curr
     }

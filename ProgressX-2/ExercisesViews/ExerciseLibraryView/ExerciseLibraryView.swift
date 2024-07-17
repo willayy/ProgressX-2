@@ -56,6 +56,7 @@ struct ExerciseLibraryView: View {
                             )
                             .environment(\.managedObjectContext, viewContext)
                         }
+                        .padding(.horizontal, 20)
                         
                         // MARK: Add new exercise button
                         Button {

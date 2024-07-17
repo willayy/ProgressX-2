@@ -57,7 +57,7 @@ struct RoutineLibraryView: View {
                             )
                             .environment(\.managedObjectContext, viewContext)
                         }
-                        .padding(.horizontal, 9)
+                        .padding(.horizontal, 20)
                         
                         // MARK: Add new Routine button
                         Button {
@@ -86,6 +86,7 @@ struct RoutineLibraryView: View {
                selectedTemplateSession: $viewModel.selectedTemplateSession,
                selectedTemplateSet: $viewModel.selectedTemplateSet,
                selectedThreshold: $viewModel.selectedThreshold)
+               .environment(\.managedObjectContext, viewContext)
         }, showMenu: $viewModel.showMenu)
     }
 }

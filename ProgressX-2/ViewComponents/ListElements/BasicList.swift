@@ -18,14 +18,12 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
     
     var body: some View {
         if data.isEmpty {
-            Text("You currently have no \(elementName) saved to \(containerName)...")
-                .font(.subheadline)
-                .fontWeight(.light)
-                .padding(.vertical, 20)
-                .padding(.horizontal, 20)
-                .background(Color(.systemGray6))
-                .cornerRadius(10)
-                .foregroundStyle(.red)
+            GroupBox {
+                Text("You currently have no \(elementName) saved to \(containerName)...")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundStyle(.red)
+            }
         } else {
             List{
                 ForEach(data) { item in
@@ -35,7 +33,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
             .frame(height: height)
             .background(Color(.systemGray6))
             .cornerRadius(10)
-            .padding(.horizontal, 20)
+
         }
     }
 }

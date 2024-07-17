@@ -23,7 +23,15 @@ struct CreateNewExerciseView: View {
         sortDescriptors: []
     ) private var exercises: FetchedResults<Exercise>
     
+    // All categories that can be selected
+    @FetchRequest(
+        entity: ExerciseCategory.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
+    ) private var categories: FetchedResults<ExerciseCategory>
+        
     @StateObject private var viewModel = CreateNewExerciseViewModel()
+    
+    @Binding public var navPath: [Int]
     
     var body: some View {
         
@@ -84,7 +92,7 @@ struct CreateNewExerciseView: View {
                     frameWidth: 230,
                     horizontalPadding: 100
                 )
-                    .padding(.bottom)
+                    .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if viewModel.addPr == "Yes" {
@@ -97,7 +105,7 @@ struct CreateNewExerciseView: View {
                             frameWidth: 230,
                             horizontalPadding: 100
                         )
-                        .padding(.bottom)
+                        .padding(.bottom, 5)
                     }
                     
                     InputDecimalNumberField(
@@ -108,7 +116,7 @@ struct CreateNewExerciseView: View {
                         width: 0.6,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
                     )
-                    
+
                     if viewModel.selectedTypeOfExercise == "Time" {
                         InputDecimalNumberField(
                             placeHolder: "PR time in seconds", 
@@ -118,7 +126,6 @@ struct CreateNewExerciseView: View {
                             width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
-                            
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
                         InputIntegerNumberField(
                             placeHolder: "Reps", 
@@ -131,21 +138,31 @@ struct CreateNewExerciseView: View {
                     }
                 }
                 
+                BoldSubHeadline(text: "Add categories to this exercise?")
+                    .padding(.top, 15)
+                
+                SelectCategoriesList(
+                    selectedCategories: $viewModel.selectedCategories,
+                    categories: _categories
+                )
+                
                 Button(action: {
                     if validateInput() {
                         viewModel.createNewExercise(viewContext: viewContext)
+                        navPath.removeLast()
                     }
                 }) {
-                    Text("Save new exercise")
+                    Text("Create new exercise")
                         .frame(height: 40)
-                    Image(systemName: "square.and.arrow.down")
+                    Image(systemName: "plus")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
                 
             }
-        }.onChange(of: viewModel.selectedTypeOfPr, initial: true, {
+        }
+        .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
             viewModel.prTypeChanged(bodyEntries: bodyEntries)
         })
         .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {
@@ -196,9 +213,16 @@ struct CreateNewExerciseView: View {
 }
 
 #Preview {
+    
     let context = PersistenceController.preview.container.viewContext
+    
     @State var lst: [Exercise] = [Exercise()]
-    return CreateNewExerciseView()
-                .environment(\.managedObjectContext, context)
+    
+    @State var navPath: [Int] = [Int]()
+    
+    return CreateNewExerciseView(
+                navPath: $navPath
+            )
+            .environment(\.managedObjectContext, context)
 }
 
