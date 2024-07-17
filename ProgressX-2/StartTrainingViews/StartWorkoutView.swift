@@ -16,26 +16,24 @@ struct StartWorkoutView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     let fetchRequestRoutine: NSFetchRequest<Routine> = Routine.fetchRequest()
-    let fetchRequestCycle: NSFetchRequest<TrainingCycle> =  TrainingCycle.fetchRequest()
+    
+    @StateObject private var viewModel = StartWorkoutViewModel()
     
     @State private var showMenu: Bool = false
     @Binding var routine: Routine?
-    @State private var trainingCycle: TrainingCycle? = nil
+    
+    @FetchRequest(
+        entity: Routine.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
+    ) var allRoutines: FetchedResults<Routine>
+    
+    @FetchRequest(
+        entity: Routine.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
+    ) var searchedRoutines: FetchedResults<Routine>
+    
     
     var body: some View {
-
-        @FetchRequest(
-            entity: TrainingCycle.entity(),
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "routine == %@", routine ?? [])
-        ) var trainingCycles: FetchedResults<TrainingCycle>
-        
-        @FetchRequest(
-            entity: TrainingWeek.entity(),
-            sortDescriptors: [],
-            predicate: NSPredicate(format: "trainingCycle == %@", trainingCycle ?? [])
-        ) var trainingWeeks: FetchedResults<TrainingWeek>
-        
         SideBar(
             rotateWhenExpands: true, // true
             disableInteractions: true, // true
@@ -45,24 +43,32 @@ struct StartWorkoutView: View {
         ) { safeArea in
             NavigationStack{
                 VStack{
-                    Button(action: {
-                        copyRoutineTemplate(context: viewContext)
-                    }) {
-                        Text("Start New Training Cycle")
-                    }
-                    Button(action: {
-                        print(routine?.trainingCycles?.count)
-                    }) {
-                        Text("increse load Routine1, Week 1, Session 1, set 1")
+                    BoldTitle(text: "Routines")
+                    
+                    LightSubHeadline(text: "Pick the routine that you want to start/continue on")
+                    SearchableList(
+                        containerName: "Routine Library",
+                        elementName: "Routines",
+                        allData: _allRoutines,
+                        searchedData: _searchedRoutines
+                    ) { routine in 
+                    BasicRoutineListItem(navPath: $viewModel.navPath, selectedRoutine: $viewModel.selectedRoutine, selectedTrainingCycle: $viewModel.selectedTrainingCycle, routine: routine)
                     }
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
                     }
+                    ToolbarItem(placement: .topBarTrailing){
+                        Button(action: {
+                            copyRoutineTemplate(context: viewContext)
+                            print(routine)
+                        }) {
+                            Text("Start New Training Cycle")
+                            
+                        }
+                    }
                 }
-                
-                Text(String(routine?.trainingCycles?.count ?? 0))
                 
             }
         }menuView: { safeArea in

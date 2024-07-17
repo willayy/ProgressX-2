@@ -305,6 +305,6 @@ class InMemory {
             flatQuantityAdd: nil
         )
         templateSet1.addToThresholds(threshold1)
-
+        
     }
 }

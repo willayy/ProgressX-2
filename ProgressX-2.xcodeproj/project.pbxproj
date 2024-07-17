@@ -122,6 +122,8 @@
 		83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */; };
 		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
+		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
+		8F7F16092C47F9DA00F37C58 /* BasicRoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */; };
 		8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */; };
 		8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F092C21A0C30072A39D /* ProfileView.swift */; };
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
@@ -254,6 +256,8 @@
 		83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4View.swift; sourceTree = "<group>"; };
 		83F110BB2C1F26040068953B /* SubmitAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlert.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
+		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
+		8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRoutineListItem.swift; sourceTree = "<group>"; };
 		8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarBuilder.swift; sourceTree = "<group>"; };
 		8F8B9F092C21A0C30072A39D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarButton.swift; sourceTree = "<group>"; };
@@ -338,6 +342,7 @@
 				831F2C2D2C24E532007A7A8A /* TemplateSessionListItem.swift */,
 				831F2C2F2C24E54B007A7A8A /* TemplateSetListItem.swift */,
 				83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */,
+				8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -796,6 +801,7 @@
 			isa = PBXGroup;
 			children = (
 				8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */,
+				8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */,
 			);
 			path = StartTrainingViews;
 			sourceTree = "<group>";
@@ -922,6 +928,7 @@
 				83D685042C32AEA900FA78C6 /* CreateNewTemplateSetView.swift in Sources */,
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
+				8F7F16092C47F9DA00F37C58 /* BasicRoutineListItem.swift in Sources */,
 				831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */,
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
@@ -1007,6 +1014,7 @@
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
 				83D685082C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift in Sources */,
+				8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */,
 				836485FF2C36E4BC006EB0C0 /* CreateNewProfile3ViewModel.swift in Sources */,
 				831F2C292C247B40007A7A8A /* Routine.swift in Sources */,
 				83266E742C3BF16300F5F6CB /* CreateNewTemplateSetViewModel.swift in Sources */,
