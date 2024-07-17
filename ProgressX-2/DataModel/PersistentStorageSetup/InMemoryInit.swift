@@ -249,6 +249,9 @@ class InMemory {
     
     private static func initRoutines(_ context: NSManagedObjectContext) {
         
+        // MARK: Setting up the template routines
+        // MARK: -----------------------------------------------------------------------------------------------------------------------
+        
         // Creating a Routine
         let routine = Routine(
             context,
@@ -270,7 +273,6 @@ class InMemory {
         )
         routine.addToTrainingCycles(trainingCycle)
         
-        
         // Adding a template week to the template cycle
         let templateWeek1 = TemplateWeek(
             context,
@@ -285,6 +287,20 @@ class InMemory {
         )
         templateWeek1.addToTemplateSessions(templateSession1)
         
+        // Adding a second template session to the template week
+        let templateSession2 = TemplateSession(
+            context,
+            templateWeek: templateWeek1
+        )
+        templateWeek1.addToTemplateSessions(templateSession2)
+        
+        // Adding a third template session to the template week
+        let templateSession3 = TemplateSession(
+            context,
+            templateWeek: templateWeek1
+        )
+        templateWeek1.addToTemplateSessions(templateSession3)
+        
         // Fetch exercises for the set
         let exerciseFetchRequest = Exercise.fetchRequest()
         exerciseFetchRequest.predicate = NSPredicate(format: "exerciseName == %@", "testing exercise (reps)")
@@ -292,7 +308,7 @@ class InMemory {
         let exercise = exercises.first!
         
         // Adding a template set to the template session
-        let templateSet1 = TemplateSet(
+        let templateSet11 = TemplateSet(
             context,
             templateSession: templateSession1,
             exercise: exercise,
@@ -301,19 +317,165 @@ class InMemory {
             quantityType: "numerical",
             quantity: 1
         )
-        templateSession1.addToTemplateSets(templateSet1)
+        templateSession1.addToTemplateSets(templateSet11)
         
         // Adding thresholds to the set
         let threshold1 = SetThreshold(
             context,
-            templateSet: templateSet1,
+            templateSet: templateSet11,
             triggeredAt: 5,
             generatesPr: true,
             prType: "onerepmax",
             flatLoadAdd: nil,
             flatQuantityAdd: nil
         )
-        templateSet1.addToThresholds(threshold1)
-
+        templateSet11.addToThresholds(threshold1)
+        
+        // Adding some more template sets to the sessions, these are without thresholds
+        let templateSet12 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 2,
+            quantityType: "numerical",
+            quantity: 2
+        )
+        
+        let templateSet21 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 1,
+            quantityType: "numerical",
+            quantity: 1
+        )
+        
+        let templateSet22 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 2,
+            quantityType: "numerical",
+            quantity: 2
+        )
+        
+        let templateSet31 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 1,
+            quantityType: "numerical",
+            quantity: 1
+        )
+        
+        let templateSet32 = TemplateSet(
+            context,
+            templateSession: templateSession1,
+            exercise: exercise,
+            loadType: "numerical",
+            load: 2,
+            quantityType: "numerical",
+            quantity: 2
+        )
+        
+        // MARK: Setting up a training routine
+        // MARK: -----------------------------------------------------------------------------------------------------------------------
+        
+        // Adding a training week to the the training cycle
+        let trainingWeek1 = TrainingWeek(
+            context,
+            trainingCycle: trainingCycle,
+            templateWeek: templateWeek1
+        )
+        trainingCycle.addToTrainingWeeks(trainingWeek1)
+        
+        // Adding the first session to the training week
+        // This session is COMPLETED
+        let trainingSession1 = TrainingSession(
+            context,
+            trainingWeek: trainingWeek1,
+            templateSession: templateSession1
+        )
+        trainingWeek1.addToTrainingSessions(trainingSession1)
+        trainingSession1.complete()
+        
+        // Adding the second session to the training week
+        let trainingSession2 = TrainingSession(
+            context,
+            trainingWeek: trainingWeek1,
+            templateSession: templateSession2
+        )
+        trainingWeek1.addToTrainingSessions(trainingSession2)
+        
+        // Adding the third session to the training week
+        let trainingSession3 = TrainingSession(
+            context,
+            trainingWeek: trainingWeek1,
+            templateSession: templateSession3
+        )
+        trainingWeek1.addToTrainingSessions(trainingSession3)
+        
+        // Adding the first set to the first training week
+        // This set is COMPLETED
+        let trainingSet11 = TrainingSet(
+            context,
+            trainingSession: trainingSession1,
+            templateSet: templateSet11
+        )
+        trainingSession1.addToTrainingSets(trainingSet11)
+        trainingSet11.complete()
+        trainingSet11.loadDone = trainingSet11.loadTodo
+        trainingSet11.quantityDone = trainingSet11.quantityTodo
+        
+        // Adding the second set to the first training week
+        // This set is COMPLETED
+        let trainingSet12 = TrainingSet(
+            context,
+            trainingSession: trainingSession1,
+            templateSet: templateSet12
+        )
+        trainingSession1.addToTrainingSets(trainingSet12)
+        trainingSet12.complete()
+        trainingSet12.loadDone = trainingSet12.loadTodo
+        trainingSet12.quantityDone = trainingSet12.quantityTodo
+        
+        // Adding the first set to the second training week
+        let trainingSet21 = TrainingSet(
+            context,
+            trainingSession: trainingSession2,
+            templateSet: templateSet21
+        )
+        trainingSession2.addToTrainingSets(trainingSet21)
+        
+        // Adding the second set to the second training week
+        let trainingSet22 = TrainingSet(
+            context,
+            trainingSession: trainingSession2,
+            templateSet: templateSet22
+        )
+        trainingSession2.addToTrainingSets(trainingSet22)
+        
+        // Adding the first set to the third training week
+        let trainingSet31 = TrainingSet(
+            context,
+            trainingSession: trainingSession3,
+            templateSet: templateSet31
+        )
+        trainingSession3.addToTrainingSets(trainingSet31)
+        
+        // Adding the second set to the third training week
+        let trainingSet32 = TrainingSet(
+            context,
+            trainingSession: trainingSession3,
+            templateSet: templateSet32
+        )
+        trainingSession3.addToTrainingSets(trainingSet32)
+        
+        
+        
     }
 }

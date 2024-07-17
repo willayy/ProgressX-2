@@ -30,7 +30,7 @@ struct PieChart: View {
         GroupBox {
             
             if data.isEmpty {
-                Text("Cant genereate this chart because there are no sets added to the selected routine.")
+                Text("Can't genereate this chart because there are no sets with categorized exercises added to this routine.")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)

@@ -53,7 +53,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets the last session done, returns nil if no sessions done.
-    var lastSessionDone: TrainingSession? {
+    var lastCompletedSession: TrainingSession? {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let orderedSessions = completedSessions.sorted(by: {$0.completedOnDate! > $1.completedOnDate!})

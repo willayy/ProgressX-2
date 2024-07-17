@@ -60,6 +60,7 @@ struct StatisticsView: View {
                             set: "1RM",
                             prType: "onerepmax"
                         ).environment(\.managedObjectContext, viewContext)
+                        .padding(.horizontal, 20)
                         
                         PrList(
                             navPath: $navPath,
@@ -78,6 +79,7 @@ struct StatisticsView: View {
                             set: "AMRAP",
                             prType: "maxreps"
                         ).environment(\.managedObjectContext, viewContext)
+                        .padding(.horizontal, 20)
                         
                         PrList(
                             navPath: $navPath,

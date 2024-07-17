@@ -56,7 +56,7 @@ struct SingleChart: View {
          + Text(" chart for ")
          + Text(exercise.exerciseName!)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/))
-        .padding(.horizontal, 40)
+        .padding(.horizontal, 10)
         .padding(.top, 20)
         
         VStack(alignment: .leading) {
@@ -64,20 +64,14 @@ struct SingleChart: View {
             LightSubHeadline(text: "bodyweight (\(weightUnit)) (Yellow)")
         }
         
-        ZStack {
-            
-            Rectangle()
-                .cornerRadius(10)
-                .foregroundStyle(Color(.systemGray6))
-                .frame(height: 225)
-                .padding(.horizontal, 40)
+        GroupBox {
             
             if personalRecordResults.isEmpty {
                 Text("Cant genereate this chart because there are no 1RM PR's recorded for exercise: \(exercise.exerciseName!)")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)
-                    .padding(.all, 80)
+                    .padding(.all, 20)
                     .multilineTextAlignment(.center)
             } else {
                 
@@ -116,7 +110,7 @@ struct SingleChart: View {
                             }
                         }
                     }
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 10)
                     .chartYScale(domain: 0...highestOfLoadAndBw + 20)
                     .frame(height: 150)
                     

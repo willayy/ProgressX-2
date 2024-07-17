@@ -10,12 +10,56 @@ import CoreData
 
 extension TrainingSession: HasOrderable {
     
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        trainingWeek: TrainingWeek,
+        templateSession: TemplateSession,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.trainingWeek = trainingWeek
+        self.templateSession = templateSession
+        let positionIndex = trainingWeek.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "Session \(positionIndex)" : name
+        let weekName = trainingWeek.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
+        self.startedOnDate = Date()
+    }
+    
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {
         let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    /// Gets the completion date of a trainingSession as a weekday string (Mon,Tue,Wed,...,Sun)
+    public var completedOnDayString: String? {
+        if self.isComplete {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEE"
+            return dateFormatter.string(from: self.completedOnDate!)
+        } else {
+            return nil
+        }
+    }
+    
+    /// Gets how many days ago a trainingSession was completed as a string "0", "1" etc...
+    public var completedDaysAgo: String? {
+        if self.isComplete {
+            let calendar = Calendar.current
+            let now = Date()
+            let components = calendar.dateComponents([.day], from: self.completedOnDate! , to: now)
+            let daysAgo = components.day ?? 0
+            return String(daysAgo)
+        } else {
+            return nil
+        }
     }
     
     // MARK: Validation
