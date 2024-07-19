@@ -27,35 +27,38 @@ struct SideBarBuilder: View {
                     .font(.largeTitle.bold())
                     .padding(.bottom, 10)
                 
-                SideBarButton(.Home){
+                SideBarButton(.Home) {
                     showMenu.toggle()
                     viewRouter.rootView = .HomeView
                 }
                 
-                SideBarButton(.StartWorkout){
+                SideBarButton(.StartWorkout) {
                     viewRouter.rootView = .StartWorkoutView
                     showMenu.toggle()
                 }
                 
-                SideBarButton(.Routines){
+                SideBarButton(.Routines) {
                     viewRouter.rootView = .RoutineLibraryView
                     showMenu.toggle()
                 }
                 
-                SideBarButton(.Exercises){
+                SideBarButton(.Exercises) {
                     showMenu.toggle()
                     viewRouter.rootView = .ExerciseLibraryView
                 }
                 
+                SideBarButton(.InfoHelp) {
+                    showMenu.toggle()
+                    viewRouter.rootView = .InfoHelp
+                }
+                
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
                 
-                SideBarButton(.Profile){
+                SideBarButton(.Profile) {
                     showMenu.toggle()
                     viewRouter.rootView = .ProfileView
                     
                 }
-                
-                
                 
             }
             
@@ -95,6 +98,7 @@ struct SideBarBuilder: View {
             case Routines = "rectangle.stack"
             case Exercises = "dumbbell"
             case Profile = "person.crop.circle"
+            case InfoHelp = "questionmark.circle"
             
             var title: String {
                 switch self {
@@ -103,6 +107,7 @@ struct SideBarBuilder: View {
                 case .Routines: return "Routines"
                 case .Exercises: return "Exercises"
                 case .Profile: return "Profile"
+                case .InfoHelp: return "Info / Help"
                 }
             }
         }
