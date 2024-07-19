@@ -13,7 +13,9 @@ struct InfoHelpView: View {
     @StateObject private var viewModel = InfoHelpViewModel()
     
     var body: some View {
-        SideBarView(content: {
+        SideBarView(
+            showMenu: $viewModel.showMenu,
+            content: {
             NavigationStack {
                 ScrollView {
                     VStack {
@@ -86,8 +88,7 @@ struct InfoHelpView: View {
                     }
                 }
             }
-        },
-                    showMenu: $viewModel.showMenu)
+        })
     }
 }
 

@@ -13,7 +13,7 @@ struct SideBarView<Content: View>: View {
     @EnvironmentObject private var viewRouter: ViewRouter
     @Binding var showMenu: Bool
     
-    init(@ViewBuilder content: () -> Content, showMenu: Binding<Bool>) {
+    init(showMenu: Binding<Bool>, @ViewBuilder content: () -> Content) {
         self._showMenu = showMenu
         self.content = content()
     }

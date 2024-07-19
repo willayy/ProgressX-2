@@ -25,8 +25,18 @@ struct RoutineLibraryView: View {
     
     var body: some View {
         
-        SideBarView(content: {
-            RoutineLibraryNavigationController(content: {
+        SideBarView(
+            showMenu: $viewModel.showMenu,
+            content: {
+            RoutineLibraryNavigationController(
+                navPath: $viewModel.navPath,
+                selectedRoutine: $viewModel.selectedRoutine,
+                selectedTemplateCycle: $viewModel.selectedTemplateCycle,
+                selectedTemplateWeek: $viewModel.selectedTemplateWeek,
+                selectedTemplateSession: $viewModel.selectedTemplateSession,
+                selectedTemplateSet: $viewModel.selectedTemplateSet,
+                selectedThreshold: $viewModel.selectedThreshold,
+                content: {
                 ScrollView {
                     VStack(alignment: .center) {
                         //MARK: View header text
@@ -79,15 +89,9 @@ struct RoutineLibraryView: View {
                             .environmentObject(viewRouter)
                     }
                 }
-            }, navPath: $viewModel.navPath,
-               selectedRoutine: $viewModel.selectedRoutine,
-               selectedTemplateCycle: $viewModel.selectedTemplateCycle,
-               selectedTemplateWeek: $viewModel.selectedTemplateWeek,
-               selectedTemplateSession: $viewModel.selectedTemplateSession,
-               selectedTemplateSet: $viewModel.selectedTemplateSet,
-               selectedThreshold: $viewModel.selectedThreshold)
-               .environment(\.managedObjectContext, viewContext)
-        }, showMenu: $viewModel.showMenu)
+            })
+            .environment(\.managedObjectContext, viewContext)
+        })
     }
 }
 
