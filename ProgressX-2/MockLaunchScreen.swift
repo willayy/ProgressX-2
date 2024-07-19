@@ -16,7 +16,7 @@ struct MockLaunchScreen: View {
                 .bold()
                 .animation(.smooth)
             
-            Text("Linear progression, routine building and statistics")
+            Text("Write once, train forever!")
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 62)

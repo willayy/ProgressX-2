@@ -38,12 +38,55 @@ extension BodyEntry {
     
     //MARK: Extra properties
     
-    // Computed property for bodyWeightString formatted nicely
-    var bodyWeightString: String {
+    /// Computed property for the bodyWeight property formatted nicely as a string with weight unit.
+    public var bodyWeightString: String {
         let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
-        return String(format: "%.2f", self.bodyWeight) + weightUnit
+        let bodyWeight = String(format: "%.2f", self.bodyWeight)
+        return "\(bodyWeight) \(weightUnit)"
     }
-        
+    
+    /// Computed property for the chestCirc property formatted nicely as a string with length unit.
+    public var chestCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let chestCirc = (self.chestCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.chestCirc!)) \(lengthUnit)"
+        return "\(chestCirc)"
+    }
+    
+    /// Computed property for the uprArmCirc property formatted nicely as a string with length unit.
+    public var upperArmCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let uprArmCirc = (self.uprArmCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.uprArmCirc!)) \(lengthUnit)"
+        return "\(uprArmCirc)"
+    }
+    
+    /// Computed property for the lwrArmCirc property formatted nicely as a string with length unit.
+    public var lowerArmCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let lwrArmCirc = (self.lwrArmCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.lwrArmCirc!)) \(lengthUnit)"
+        return "\(lwrArmCirc)"
+    }
+    
+    /// Computed property for the waistCirc property formatted nicely as a string with length unit.
+    public var waistCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let waistCirc = (self.waistCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.waistCirc!)) \(lengthUnit)"
+        return "\(waistCirc)"
+    }
+    
+    /// Computed property for the thighCirc property formatted nicely as a string with length unit.
+    public var thighCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let thighCirc = (self.thighCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.thighCirc!)) \(lengthUnit)"
+        return "\(thighCirc)"
+    }
+    
+    /// Computed property for the calfCirc property formatted nicely as a string with length unit.
+    public var calfCircumferenceString: String {
+        let lengthUnit = PersistenceController.getLengthUnit(self.managedObjectContext!)!
+        let calfCirc = (self.calfCirc == nil) ? "Not available" : "\(String(format: "%.2f", self.calfCirc!)) \(lengthUnit)"
+        return "\(calfCirc)"
+    }
+    
     //MARK: Validation
     
     // Nothing here

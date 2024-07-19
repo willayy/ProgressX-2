@@ -10,6 +10,25 @@ import CoreData
 
 extension TrainingWeek: HasOrderable {
     
+    // MARK: Convenience init
+    convenience init(
+        _ context: NSManagedObjectContext,
+        trainingCycle: TrainingCycle,
+        templateWeek: TemplateWeek,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.trainingCycle = trainingCycle
+        self.templateWeek = templateWeek
+        let positionIndex = trainingCycle.getNextPositionIndex()
+        self.positionIndex = positionIndex
+        self.timePeriodName = (name == "") ? "Week \(positionIndex)" : name
+        let routineName = trainingCycle.routine!.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
+        self.startedOnDate = Date()
+    }
+    
     // MARK: Extra Properties
     
     public func getNextPositionIndex() -> Int64 {

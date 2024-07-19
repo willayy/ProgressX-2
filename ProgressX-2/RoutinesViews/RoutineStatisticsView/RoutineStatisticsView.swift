@@ -21,14 +21,12 @@ struct RoutineStatisticsView: View {
                 LightSubHeadline(text: "Here you can view some vital statistics for your routine")
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
-
-                //BoldSubHeadline(text: "General information")
                 
                 GroupBox {
                     VStack(alignment: .leading) {
                         (Text("Last session done: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.lastSessionDone?.completionDateString! ?? "No sessions completed")"))
+                         + Text("\(selectedRoutine!.lastCompletedSession?.completionDateString! ?? "No sessions completed")"))
                         .padding(.vertical, 10)
                         
                         (Text("Sessions done this month: ")
@@ -47,7 +45,7 @@ struct RoutineStatisticsView: View {
                         .padding(.vertical, 10)
                         
                     }
-                    .padding(.horizontal, 20)
+                    .frame(width: 300)
                 }
                 .padding(.bottom, 20)
                 .padding(.horizontal, 20)

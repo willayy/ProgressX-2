@@ -86,6 +86,7 @@ struct RoutineLibraryView: View {
                selectedTemplateSession: $viewModel.selectedTemplateSession,
                selectedTemplateSet: $viewModel.selectedTemplateSet,
                selectedThreshold: $viewModel.selectedThreshold)
+               .environment(\.managedObjectContext, viewContext)
         }, showMenu: $viewModel.showMenu)
     }
 }

@@ -6,8 +6,34 @@
 //
 
 import Foundation
+import CoreData
 
 extension TrainingSet {
+    
+    //MARK: Convenience init
+    
+    convenience init(
+        _ context: NSManagedObjectContext,
+        trainingSession: TrainingSession,
+        templateSet: TemplateSet,
+        name: String = "",
+        description: String = ""
+    ) {
+        self.init(context: context)
+        self.trainingSession = trainingSession
+        let positionIndex = trainingSession.getNextPositionIndex()
+        let exercise = templateSet.exercise!
+        self.exercise = exercise
+        self.positionIndex = positionIndex
+        self.templateSet = templateSet
+        self.loadTodo = templateSet.loadTodo
+        self.quantityTodo = templateSet.quantityTodo
+        self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
+        let exerciseName = exercise.exerciseName!
+        let sessionName = trainingSession.timePeriodName!
+        self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        self.startedOnDate = Date()
+    }
     
     // MARK: Extra properties
     

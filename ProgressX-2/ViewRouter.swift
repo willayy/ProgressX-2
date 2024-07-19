@@ -10,6 +10,7 @@ import CoreData
 
 enum Route: String {
     case CreateNewProfileView = "CreateNewProfile1"
+    case StartWorkoutView = "StartWorkoutView"
     case HomeView = "HomeView"
     case ExerciseLibraryView = "ExerciseLibraryView"
     case ProfileView = "ProfileView"

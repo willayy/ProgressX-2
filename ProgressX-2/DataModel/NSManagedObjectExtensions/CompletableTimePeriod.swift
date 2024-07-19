@@ -25,6 +25,12 @@ extension CompleteableTimePeriod {
         }
     }
     
+    /// Marks object as completed
+    public func complete(onDate: Date = Date()) -> Void {
+        self.isComplete = true
+        self.completedOnDate = onDate
+    }
+    
     //MARK: Validation
     
     public override func validateForInsert() throws {
