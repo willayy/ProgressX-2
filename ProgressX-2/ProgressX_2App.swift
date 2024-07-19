@@ -56,6 +56,9 @@ struct ProgressX_2App: App {
                     RoutineLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                case .InfoHelp:
+                    InfoHelpView()
+                        .environmentObject(viewRouter)
                 }
             }
         }
