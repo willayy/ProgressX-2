@@ -21,11 +21,11 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
     @Binding var newPrType: String?
     
     init(
-        @ViewBuilder content: () -> Content,
         navPath: Binding<[Int]>,
         selectedExercise: Binding<Exercise?>,
         editingPr: Binding<PersonalRecord?>,
-        newPrType: Binding<String?>
+        newPrType: Binding<String?>,
+        @ViewBuilder content: () -> Content
     ) {
         self._navPath = navPath
         self._selectedExercise = selectedExercise

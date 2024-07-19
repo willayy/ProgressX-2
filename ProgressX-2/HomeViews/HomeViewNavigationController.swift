@@ -17,10 +17,10 @@ struct HomeViewNavigationController<Content: View>: View {
     @Binding var selectedBodyEntry: BodyEntry?
     
     init(
-        @ViewBuilder content: () -> Content,
         navPath: Binding<[Int]>,
         profile: Binding<Profile?>,
-        selectedBodyEntry: Binding<BodyEntry?>
+        selectedBodyEntry: Binding<BodyEntry?>,
+        @ViewBuilder content: () -> Content
     ) {
         self._navPath = navPath
         self._profile = profile

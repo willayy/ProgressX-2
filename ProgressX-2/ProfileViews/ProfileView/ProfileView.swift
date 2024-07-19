@@ -22,7 +22,9 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
-        SideBarView(content: {
+        SideBarView(
+            showMenu: $viewModel.showMenu,
+            content: {
             NavigationStack {
                 ScrollView {
                     
@@ -141,7 +143,7 @@ struct ProfileView: View {
                     viewModel.setViewStartValues(profiles: profiles)
                 })
             }
-        },showMenu: $viewModel.showMenu)
+        })
     }
     
     private func validateInput() -> Bool {

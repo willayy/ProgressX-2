@@ -27,8 +27,14 @@ struct HomeView: View {
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
     var body: some View {
-        SideBarView(content: {
-            HomeViewNavigationController(content: {
+        SideBarView(
+            showMenu: $viewModel.showMenu,
+            content: {
+            HomeViewNavigationController(
+                navPath: $viewModel.navPath,
+                profile: $viewModel.selectedProfile,
+                selectedBodyEntry: $viewModel.selectedBodyEntry,
+                content: {
                 ScrollView {
                     VStack(alignment: .center) {
                         
@@ -146,14 +152,10 @@ struct HomeView: View {
                         }
                     }
                 }
-            },navPath: $viewModel.navPath,
-            profile: $viewModel.selectedProfile,
-            selectedBodyEntry: $viewModel.selectedBodyEntry)
+            })
             .environmentObject(viewRouter)
             .environment(\.managedObjectContext, viewContext)
-        },
-                    
-        showMenu: $viewModel.showMenu)
+        })
         .environmentObject(viewRouter)
     }
 }

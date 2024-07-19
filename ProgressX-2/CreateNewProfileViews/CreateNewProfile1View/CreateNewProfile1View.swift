@@ -20,7 +20,9 @@ struct CreateNewProfile1View: View {
     ) private var profileResults: FetchedResults<Profile>
     
     var body: some View {
-        CreateNewProfileNavigationController(content: {
+        CreateNewProfileNavigationController(
+            navPath: $viewModel.navPath,
+            content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
@@ -131,7 +133,7 @@ struct CreateNewProfile1View: View {
                     
                 }
             }
-        },navPath: $viewModel.navPath)
+        })
         .environmentObject(viewRouter)
         .environment(\.managedObjectContext, viewContext)
     }
