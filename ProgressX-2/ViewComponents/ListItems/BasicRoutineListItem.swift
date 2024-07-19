@@ -26,7 +26,7 @@ struct BasicRoutineListItem: View {
                 
                 (Text("Created: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.creationDateString!)"))
+                 + Text("\(routine.creationDateString)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
