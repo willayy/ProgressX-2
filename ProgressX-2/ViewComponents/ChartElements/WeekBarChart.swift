@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 import CoreData
 
-struct WeekDayData: Identifiable {
+private struct WeekDayData: Identifiable {
     var id = UUID()
     var day: String
     var sessions: Int
