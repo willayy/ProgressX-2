@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 import CoreData
 
-struct BodyEntryData: Identifiable {
+private struct BodyEntryData: Identifiable {
     var id = UUID()
     var date: Date
     var bodyWeight: Double

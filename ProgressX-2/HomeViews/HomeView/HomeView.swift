@@ -88,6 +88,15 @@ struct HomeView: View {
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
                                 
+                                Button {
+                                    viewModel.navPath.append(2)
+                                } label: {
+                                    Text("View all weigh-in's")
+                                        .frame(width: 275)
+                                        .padding(.bottom, 5)
+                                }
+                                .buttonStyle(BorderedProminentButtonStyle())
+                                
                             }
                             .frame(width: 300)
                         }
@@ -137,11 +146,13 @@ struct HomeView: View {
                         }
                     }
                 }
-            }, 
-            navPath: $viewModel.navPath, profile: $viewModel.selectedProfile)
+            },navPath: $viewModel.navPath,
+            profile: $viewModel.selectedProfile,
+            selectedBodyEntry: $viewModel.selectedBodyEntry)
             .environmentObject(viewRouter)
             .environment(\.managedObjectContext, viewContext)
-        }, 
+        },
+                    
         showMenu: $viewModel.showMenu)
         .environmentObject(viewRouter)
     }

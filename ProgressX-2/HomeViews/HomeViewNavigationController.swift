@@ -14,14 +14,17 @@ struct HomeViewNavigationController<Content: View>: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var profile: Profile?
+    @Binding var selectedBodyEntry: BodyEntry?
     
     init(
         @ViewBuilder content: () -> Content,
         navPath: Binding<[Int]>,
-        profile: Binding<Profile?>
+        profile: Binding<Profile?>,
+        selectedBodyEntry: Binding<BodyEntry?>
     ) {
         self._navPath = navPath
         self._profile = profile
+        self._selectedBodyEntry = selectedBodyEntry
         self.content = content()
     }
     
@@ -34,8 +37,27 @@ struct HomeViewNavigationController<Content: View>: View {
                 if selection == 1 {
     
                     //MARK: WeighInView
-                    WeighInView()
-                        .environment(\.managedObjectContext, viewContext)
+                    WeighInView(
+                        navPath: $navPath
+                    )
+                    .environment(\.managedObjectContext, viewContext)
+                    
+                } else if selection == 2 {
+                    
+                    //MARK: View bodyEntries
+                    ViewAllWeighInsView(
+                        selectedBodyEntry: $selectedBodyEntry,
+                        navPath: $navPath
+                    )
+                    .environment(\.managedObjectContext, viewContext)
+                    
+                } else if selection == 3 {
+                    
+                    //MARK: Edit bodyEntry
+                    EditWeighInView(
+                        selectedBodyEntry: $selectedBodyEntry
+                    )
+                    .environment(\.managedObjectContext, viewContext)
                     
                 }
             }

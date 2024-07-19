@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 import CoreData
 
-struct Last30DaysData: Identifiable {
+private struct Last30DaysData: Identifiable {
     var id = UUID()
     var day: String
     var sessions: Int

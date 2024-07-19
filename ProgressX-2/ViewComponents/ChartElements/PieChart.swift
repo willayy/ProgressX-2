@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct PieChartData: Identifiable {
+private struct PieChartData: Identifiable {
     let id = UUID()
     let category: String
     let value: Int

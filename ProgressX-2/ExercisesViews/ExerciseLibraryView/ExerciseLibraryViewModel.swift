@@ -16,5 +16,4 @@ class ExerciseLibraryViewModel: ObservableObject {
     @Published var editingPr: PersonalRecord?
     @Published var newPrType: String? = nil
     
-    
 }

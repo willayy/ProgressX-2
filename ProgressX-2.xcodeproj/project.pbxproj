@@ -111,6 +111,11 @@
 		83BD396C2C47D32B008E09A0 /* BodyEntryChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD396B2C47D32B008E09A0 /* BodyEntryChart.swift */; };
 		83BD396F2C47EB7C008E09A0 /* WeighInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD396E2C47EB7C008E09A0 /* WeighInView.swift */; };
 		83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39702C47EB93008E09A0 /* WeighInViewModel.swift */; };
+		83BD39742C49244A008E09A0 /* ViewAllWeighInsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39732C49244A008E09A0 /* ViewAllWeighInsView.swift */; };
+		83BD39782C4925F7008E09A0 /* BodyEntryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */; };
+		83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39792C49297B008E09A0 /* MagnifiedBodyEntryView.swift */; };
+		83BD397F2C4945C3008E09A0 /* EditWeighInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD397E2C4945C3008E09A0 /* EditWeighInView.swift */; };
+		83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39802C4947A5008E09A0 /* EditWeighInViewModel.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
 		83D393712C35B725003B0F5E /* IntSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D393702C35B725003B0F5E /* IntSelectionList.swift */; };
@@ -252,6 +257,11 @@
 		83BD396B2C47D32B008E09A0 /* BodyEntryChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyEntryChart.swift; sourceTree = "<group>"; };
 		83BD396E2C47EB7C008E09A0 /* WeighInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeighInView.swift; sourceTree = "<group>"; };
 		83BD39702C47EB93008E09A0 /* WeighInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeighInViewModel.swift; sourceTree = "<group>"; };
+		83BD39732C49244A008E09A0 /* ViewAllWeighInsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAllWeighInsView.swift; sourceTree = "<group>"; };
+		83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyEntryListItem.swift; sourceTree = "<group>"; };
+		83BD39792C49297B008E09A0 /* MagnifiedBodyEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedBodyEntryView.swift; sourceTree = "<group>"; };
+		83BD397E2C4945C3008E09A0 /* EditWeighInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeighInView.swift; sourceTree = "<group>"; };
+		83BD39802C4947A5008E09A0 /* EditWeighInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeighInViewModel.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
 		83D393702C35B725003B0F5E /* IntSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntSelectionList.swift; sourceTree = "<group>"; };
@@ -358,6 +368,7 @@
 				831F2C2D2C24E532007A7A8A /* TemplateSessionListItem.swift */,
 				831F2C2F2C24E54B007A7A8A /* TemplateSetListItem.swift */,
 				83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */,
+				83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -775,6 +786,23 @@
 			path = WeighInView;
 			sourceTree = "<group>";
 		};
+		83BD39722C492415008E09A0 /* ViewAllWeighInsView */ = {
+			isa = PBXGroup;
+			children = (
+				83BD39732C49244A008E09A0 /* ViewAllWeighInsView.swift */,
+			);
+			path = ViewAllWeighInsView;
+			sourceTree = "<group>";
+		};
+		83BD397D2C4942ED008E09A0 /* EditWeighInView */ = {
+			isa = PBXGroup;
+			children = (
+				83BD397E2C4945C3008E09A0 /* EditWeighInView.swift */,
+				83BD39802C4947A5008E09A0 /* EditWeighInViewModel.swift */,
+			);
+			path = EditWeighInView;
+			sourceTree = "<group>";
+		};
 		83D685092C33306400FA78C6 /* MagnifiedViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +810,7 @@
 				83D393722C3694AE003B0F5E /* MagnifiedThresholdView.swift */,
 				83266E5E2C37E9C900F5F6CB /* MagnifiedPrView.swift */,
 				83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */,
+				83BD39792C49297B008E09A0 /* MagnifiedBodyEntryView.swift */,
 			);
 			path = MagnifiedViews;
 			sourceTree = "<group>";
@@ -828,6 +857,8 @@
 				83BD39692C47C872008E09A0 /* HomeViewNavigationController.swift */,
 				83266E872C3C1BFB00F5F6CB /* HomeView */,
 				83BD396D2C47EB61008E09A0 /* WeighInView */,
+				83BD39722C492415008E09A0 /* ViewAllWeighInsView */,
+				83BD397D2C4942ED008E09A0 /* EditWeighInView */,
 			);
 			path = HomeViews;
 			sourceTree = "<group>";
@@ -934,6 +965,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83BD39742C49244A008E09A0 /* ViewAllWeighInsView.swift in Sources */,
 				836485EE2C36CACA006EB0C0 /* EditTemplateSetView.swift in Sources */,
 				83BD39622C467E17008E09A0 /* PieChart.swift in Sources */,
 				8364860D2C372544006EB0C0 /* TemplateSession.swift in Sources */,
@@ -955,6 +987,7 @@
 				83266E7B2C3BF9D400F5F6CB /* EditExerciseViewModel.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
+				83BD39782C4925F7008E09A0 /* BodyEntryListItem.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
 				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
@@ -966,6 +999,7 @@
 				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
+				83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
 				83BD396C2C47D32B008E09A0 /* BodyEntryChart.swift in Sources */,
 				836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */,
@@ -1009,6 +1043,7 @@
 				831F2C2E2C24E532007A7A8A /* TemplateSessionListItem.swift in Sources */,
 				836485F92C36D78D006EB0C0 /* CreateNewProfile1ViewModel.swift in Sources */,
 				83266E6B2C38214C00F5F6CB /* CreateNewRoutineViewModel.swift in Sources */,
+				83BD397F2C4945C3008E09A0 /* EditWeighInView.swift in Sources */,
 				8310D91E2C076745004A5A3D /* GeneralInfoTimeExercise.swift in Sources */,
 				831F2C0A2C2195D8007A7A8A /* TrainingCycle.swift in Sources */,
 				8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */,
@@ -1053,6 +1088,7 @@
 				83266E612C37EEE000F5F6CB /* SideBarView.swift in Sources */,
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
+				83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,
