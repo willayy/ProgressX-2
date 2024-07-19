@@ -329,6 +329,7 @@ class InMemory {
             flatLoadAdd: nil,
             flatQuantityAdd: nil
         )
+
         templateSet11.addToThresholds(threshold1)
         
         // Adding some more template sets to the sessions, these are without thresholds
@@ -476,6 +477,7 @@ class InMemory {
         trainingSession3.addToTrainingSets(trainingSet32)
         
         
+
         
     }
 }
