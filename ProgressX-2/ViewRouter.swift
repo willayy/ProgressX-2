@@ -16,6 +16,7 @@ enum Route: String {
     case ProfileView = "ProfileView"
     case SideBarButton = "SideBarButton"
     case RoutineLibraryView = "RoutineLibraryView"
+    case InfoHelp = "InfoHelp"
 }
 
 class ViewRouter: ObservableObject {

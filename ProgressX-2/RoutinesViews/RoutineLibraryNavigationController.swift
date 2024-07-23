@@ -21,14 +21,14 @@ struct RoutineLibraryNavigationController<Content: View>: View {
     @Binding var selectedThreshold: SetThreshold?
     
     init(
-        @ViewBuilder content: () -> Content,
         navPath: Binding<[Int]>,
         selectedRoutine: Binding<Routine?>,
         selectedTemplateCycle: Binding<TemplateCycle?>,
         selectedTemplateWeek: Binding<TemplateWeek?>,
         selectedTemplateSession: Binding<TemplateSession?>,
         selectedTemplateSet: Binding<TemplateSet?>,
-        selectedThreshold: Binding<SetThreshold?>
+        selectedThreshold: Binding<SetThreshold?>,
+        @ViewBuilder content: () -> Content
     ) {
         self._navPath = navPath
         self._selectedRoutine = selectedRoutine

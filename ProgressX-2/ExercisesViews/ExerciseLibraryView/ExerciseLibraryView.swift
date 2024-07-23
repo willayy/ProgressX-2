@@ -26,8 +26,15 @@ struct ExerciseLibraryView: View {
     @StateObject private var viewModel = ExerciseLibraryViewModel()
     
     var body: some View {
-        SideBarView(content: {
-            ExerciseLibraryNavigationController(content: {
+        SideBarView(
+            showMenu: $viewModel.showMenu,
+            content: {
+            ExerciseLibraryNavigationController(
+                navPath: $viewModel.navPath,
+                selectedExercise: $viewModel.selectedExercise,
+                editingPr: $viewModel.editingPr,
+                newPrType: $viewModel.newPrType,
+                content: {
                 ScrollView {
                     VStack(alignment: .center, spacing: 10) {
                         
@@ -78,11 +85,8 @@ struct ExerciseLibraryView: View {
                         }
                     }
                 }
-            },  navPath: $viewModel.navPath,
-                selectedExercise: $viewModel.selectedExercise,
-                editingPr: $viewModel.editingPr,
-                newPrType: $viewModel.newPrType)
-        }, showMenu: $viewModel.showMenu)
+            })
+        })
         .environmentObject(viewRouter)
     }
 }

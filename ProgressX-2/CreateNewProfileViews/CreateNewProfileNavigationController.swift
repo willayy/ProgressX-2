@@ -17,7 +17,7 @@ struct CreateNewProfileNavigationController<Content: View>: View {
     
     @Binding var navPath: [Int]
     
-    init(@ViewBuilder content: () -> Content, navPath: Binding<[Int]>) {
+    init(navPath: Binding<[Int]>, @ViewBuilder content: () -> Content) {
         self._navPath = navPath
         self.content = content()
     }
