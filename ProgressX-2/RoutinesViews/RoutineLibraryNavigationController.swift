@@ -110,7 +110,8 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                     // MARK: Create new set
                     CreateNewTemplateSetView(
                         navPath: $navPath,
-                        selectedTemplateSession: $selectedTemplateSession
+                        selectedTemplateSession: $selectedTemplateSession,
+                        selectedTemplateSet: $selectedTemplateSet
                     )
                     .environment(\.managedObjectContext, viewContext)
                     
