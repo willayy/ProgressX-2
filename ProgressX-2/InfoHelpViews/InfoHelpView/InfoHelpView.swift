@@ -131,6 +131,34 @@ struct InfoHelpView: View {
                             .padding(.bottom, 10)
                         
                         ExpandingVStack(
+                            title: "Personal records") {
+                                
+                                BoldSubHeadline(text: "Personal records")
+                                    .padding(.top, 20)
+                                
+                                LightSubHeadline(text: "In ProgressX a personal record isn't necessarily be the best one you have ever done. Personal records are used to keep track of progress as a whole, with both ups and downs. If set up correctly personal records will be generated automatically as you train, but you can also add them manually on exercises via the the Exercise library tab")
+                                
+                                BoldSubHeadline(text: "One rep max (1RM)")
+                                    .padding(.top, 10)
+                                
+                                LightSubHeadline(text: "The one rep max is a personal record keeping track of much load (weight) you can lift on an exercise i a single repetition.")
+                                
+                                BoldSubHeadline(text: "As many reps as possible (AMRAP)")
+                                    .padding(.top, 10)
+                                
+                                LightSubHeadline(text: "The AMRAP pr is a personal record keeping track of how many reps you do on a exercise with a certain weight.")
+                                
+                                BoldSubHeadline(text: "Time max (Time-max)")
+                                    .padding(.top, 10)
+                                
+                                LightSubHeadline(text: "The Time-max is a personal record keeping track of many seconds you can do on a exercise with a certain weight. ")
+                                    .padding(.bottom, 20)
+                                
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.bottom, 10)
+                        
+                        ExpandingVStack(
                             title: "Creating a training routine") {
                                 
                                 BoldSubHeadline(text: "Creating a routine")
