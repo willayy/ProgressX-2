@@ -144,6 +144,7 @@ struct CreateNewProfile1View: View {
                     } label: {
                         Text("Continue")
                             .frame(width: 100, height: 50)
+                            .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(.top, 30)

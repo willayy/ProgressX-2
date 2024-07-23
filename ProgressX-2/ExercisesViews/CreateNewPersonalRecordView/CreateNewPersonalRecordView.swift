@@ -99,7 +99,9 @@ struct CreateNewPersonalRecord: View {
                 }) {
                     Text("Create new PR")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .padding(.top, 20)
                 .buttonStyle(BorderedProminentButtonStyle())

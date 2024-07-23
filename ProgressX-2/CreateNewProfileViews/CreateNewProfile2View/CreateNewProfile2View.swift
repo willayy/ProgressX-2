@@ -41,6 +41,7 @@ struct CreateNewProfile2View: View {
                     Text("No, im good!")
                         .frame(maxWidth: .infinity)
                         .frame(width: 100, height: 50)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                     .buttonStyle(.borderedProminent)
                 
@@ -50,6 +51,7 @@ struct CreateNewProfile2View: View {
                     Text("Yes, let's continue")
                         .frame(maxWidth: .infinity)
                         .frame(width: 100, height: 50)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                     .buttonStyle(.borderedProminent)
                 
