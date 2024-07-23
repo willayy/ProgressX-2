@@ -64,13 +64,15 @@ class CreateNewProfile1ViewModel: ObservableObject {
         }()
         
         // Create Profile
-        let profile = Profile(context: viewContext)
-        profile.birthDay = birthDay
-        profile.profileUserName = userName
-        profile.userHeight = inputHeight
-        profile.gender = gender
-        profile.isMetric = isMetric
-        profile.smallestPlate = smallestPlate
+        let profile = Profile(
+            viewContext,
+            userName: userName,
+            gender: gender,
+            height: inputHeight,
+            isMetric: isMetric,
+            smallestPlate: smallestPlate,
+            birthDay: birthDay
+        )
         
         // Create BodyEntry
         let bodyWeightEntry = BodyEntry(

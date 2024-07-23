@@ -26,6 +26,7 @@ class InMemory {
             gender: "male",
             height: 187,
             isMetric: true,
+            smallestPlate: 2.5,
             birthDay: Date()
         )
         
