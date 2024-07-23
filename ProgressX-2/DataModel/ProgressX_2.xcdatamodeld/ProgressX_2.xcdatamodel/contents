@@ -45,7 +45,7 @@
         <attribute name="gender" attributeType="String" regularExpressionString="^(male|female)$"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>
-        <attribute name="smallestPlate" attributeType="Double" minValueString="0" maxValueString="200" defaultValueString="2.5" usesScalarValueType="YES"/>
+        <attribute name="smallestPlate" attributeType="Double" minValueString="1" maxValueString="200" defaultValueString="2.5" usesScalarValueType="YES"/>
         <attribute name="standardRestTime" attributeType="Double" minValueString="0" defaultValueString="240" usesScalarValueType="YES"/>
         <attribute name="userHeight" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>

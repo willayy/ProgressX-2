@@ -63,13 +63,21 @@ extension TemplateSet: HasOrderable {
                 exercise: exercise,
                 prType: prType
             )
+            // Compute the percentage
             let computedLoad: Double = (latestPr?.weightLoad ?? 0) * (self.setLoad / 100)
-            return computedLoad
+            // Round to smallest plate
+            let profile = PersistenceController.getProfile(self.managedObjectContext!)
+            let smallestPlate = profile!.smallestPlate * 2 // times two because you always add two weights for balance
+            let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
+            return roundedLoad
             
         case .bodyWeightPercentage:
             let latestBw = PersistenceController.getLatestBodyEntry(self.managedObjectContext!)
             let computedLoad: Double = (latestBw?.bodyWeight ?? 0) * (self.setLoad / 100)
-            return computedLoad
+            let profile = PersistenceController.getProfile(self.managedObjectContext!)
+            let smallestPlate = profile!.smallestPlate * 2 // times two because you always add two weights for balance
+            let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
+            return roundedLoad
         }
     }
     
