@@ -133,7 +133,7 @@ struct EditTemplateSessionView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     navPath.append(7)

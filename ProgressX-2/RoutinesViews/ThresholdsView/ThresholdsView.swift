@@ -43,7 +43,7 @@ struct ThresholdsView: View {
                             threshold: threshold
                         )
                     }
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 20)
                 
                 Button {
                     navPath.append(9)
