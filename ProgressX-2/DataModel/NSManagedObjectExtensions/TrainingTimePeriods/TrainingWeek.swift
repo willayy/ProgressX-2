@@ -27,6 +27,7 @@ extension TrainingWeek: HasOrderable {
         let routineName = trainingCycle.routine!.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
         self.startedOnDate = Date()
+        trainingCycle.addToTrainingWeeks(self)
     }
     
     // MARK: Extra Properties

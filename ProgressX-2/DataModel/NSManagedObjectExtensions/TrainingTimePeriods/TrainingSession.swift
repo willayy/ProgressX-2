@@ -28,6 +28,7 @@ extension TrainingSession: HasOrderable {
         let weekName = trainingWeek.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
         self.startedOnDate = Date()
+        trainingWeek.addToTrainingSessions(self)
     }
     
     // MARK: Extra Properties

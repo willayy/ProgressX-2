@@ -23,6 +23,7 @@ extension TemplateCycle: HasOrderable {
         let routineName = routine.timePeriodName!
         self.timePeriodName = (name == "") ? "\(routineName)-templateCycle" : name
         self.timePeriodDescription = (description == "") ? "templateCycle created for: \(routineName)" : description
+        routine.templateCycle = self
     }
 
     // MARK: Extra properties
