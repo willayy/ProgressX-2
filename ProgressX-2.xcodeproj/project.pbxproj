@@ -331,7 +331,7 @@
 				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
 				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
-				833CCD562C3D6ABE00B53C97 /* TimePeriods */,
+				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
 				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
 			);
 			path = NSManagedObjectExtensions;
@@ -675,7 +675,7 @@
 			path = TemplateTimePeriods;
 			sourceTree = "<group>";
 		};
-		833CCD562C3D6ABE00B53C97 /* TimePeriods */ = {
+		833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */ = {
 			isa = PBXGroup;
 			children = (
 				831F2C092C2195D8007A7A8A /* TrainingCycle.swift */,
@@ -683,7 +683,7 @@
 				831F2BF42C20A74C007A7A8A /* TrainingSession.swift */,
 				831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */,
 			);
-			path = TimePeriods;
+			path = TrainingTimePeriods;
 			sourceTree = "<group>";
 		};
 		833CCD572C3D6B0800B53C97 /* Achievements */ = {
