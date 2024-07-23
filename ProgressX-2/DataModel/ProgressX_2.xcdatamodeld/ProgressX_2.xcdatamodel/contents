@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Achievement" representedClassName="Achievement" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
@@ -45,6 +45,7 @@
         <attribute name="gender" attributeType="String" regularExpressionString="^(male|female)$"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>
+        <attribute name="smallestPlate" attributeType="Double" minValueString="0" maxValueString="200" defaultValueString="2.5" usesScalarValueType="YES"/>
         <attribute name="standardRestTime" attributeType="Double" minValueString="0" defaultValueString="240" usesScalarValueType="YES"/>
         <attribute name="userHeight" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
