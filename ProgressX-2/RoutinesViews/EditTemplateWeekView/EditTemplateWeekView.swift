@@ -132,7 +132,7 @@ struct EditTemplateWeekView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     viewModel.addSession(

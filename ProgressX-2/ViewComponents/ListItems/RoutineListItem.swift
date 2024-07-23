@@ -19,75 +19,77 @@ struct RoutineListItem: View {
     
     var body: some View {
         
-        HStack {
-            
-            VStack(alignment: .leading) {
+        VStack(alignment: .leading, content: {
+            HStack {
+                VStack(alignment: .leading) {
+                    
+                    Text(routine.timePeriodName ?? "")
+                    
+                    (Text("Created: ")
+                        .fontWeight(.bold)
+                     + Text("\(routine.creationDateString)"))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    
+                    (Text("Completed cycles: ")
+                        .fontWeight(.bold)
+                     + Text("\(routine.completedCycles.count)"))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    
+                    (Text("Weeks: ")
+                        .fontWeight(.bold)
+                     + Text("\(routine.templateCycle?.templateWeeks?.count ?? 0)"))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    
+                }
+                .frame(width: 135, height: 55)
+                .padding(.vertical, 10)
                 
-                Text(routine.timePeriodName ?? "")
+                Spacer()
                 
-                (Text("Created: ")
-                    .fontWeight(.bold)
-                 + Text("\(routine.creationDateString)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                // MARK: Edit button
+                Button(action: {
+                    selectedRoutine = routine
+                    selectedTemplateCycle = routine.templateCycle
+                    navPath.append(2)
+                }) { Image(systemName: "pencil") }
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .buttonStyle(BorderlessButtonStyle())
                 
-                (Text("Completed cycles: ")
-                    .fontWeight(.bold)
-                 + Text("\(routine.completedCycles.count)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                // MARK: Statistics button
+                Button(action: {
+                    selectedRoutine = routine
+                    selectedTemplateCycle = routine.templateCycle
+                    navPath.append(3)
+                }) { Image(systemName: "chart.xyaxis.line") }
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .buttonStyle(BorderlessButtonStyle())
                 
-                (Text("Weeks: ")
-                    .fontWeight(.bold)
-                 + Text("\(routine.templateCycle?.templateWeeks?.count ?? 0)"))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-        
-            }
-            .frame(width: 135, height: 55)
-            .padding(.vertical, 10)
-            
-            Spacer()
-            
-            // MARK: Edit button
-            Button(action: {
-                selectedRoutine = routine
-                selectedTemplateCycle = routine.templateCycle
-                navPath.append(2)
-            }) { Image(systemName: "pencil") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
-            
-            // MARK: Statistics button
-            Button(action: {
-                selectedRoutine = routine
-                selectedTemplateCycle = routine.templateCycle
-                navPath.append(3)
-            }) { Image(systemName: "chart.xyaxis.line") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
-            
-            // MARK: Delete button
-            Button(action: {
-                showDeleteAlert = true
-            }) { Image(systemName: "trash") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
+                // MARK: Delete button
+                Button(action: {
+                    showDeleteAlert = true
+                }) { Image(systemName: "trash") }
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .buttonStyle(BorderlessButtonStyle())
                 // Shows an alert box
-                .alert(isPresented: $showDeleteAlert, content: {
-                    Alert(
-                        title: Text("Delete Item"),
-                        message: Text("Are you sure you want to delete \(routine.timePeriodName!)?"),
-                        primaryButton: .destructive(Text("Delete")) {
-                            PersistenceController.delete(viewContext, object: routine)
-                            PersistenceController.save(viewContext)
-                        },
-                        secondaryButton: .cancel()
-                    )
-                })
-        }
+                    .alert(isPresented: $showDeleteAlert, content: {
+                        Alert(
+                            title: Text("Delete Item"),
+                            message: Text("Are you sure you want to delete \(routine.timePeriodName!)?"),
+                            primaryButton: .destructive(Text("Delete")) {
+                                PersistenceController.delete(viewContext, object: routine)
+                                PersistenceController.save(viewContext)
+                            },
+                            secondaryButton: .cancel()
+                        )
+                    })
+            }
+        })
+        .frame(width: 300, height: 100)
     }
 }
