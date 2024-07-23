@@ -65,6 +65,7 @@ struct EditTemplateSetView: View {
                     navPath.append(8)
                 } label: {
                     Text("View thresholds")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
@@ -166,7 +167,9 @@ struct EditTemplateSetView: View {
                 } label: {
                     Text("Save changes")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "square.and.arrow.down")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

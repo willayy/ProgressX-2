@@ -98,7 +98,9 @@ struct EditRoutineView: View {
                         } label: {
                             Text("Save change")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 10)
@@ -132,7 +134,9 @@ struct EditRoutineView: View {
                 } label: {
                     Text("Add new Week")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
