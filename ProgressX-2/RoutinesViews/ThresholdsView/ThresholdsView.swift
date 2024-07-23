@@ -43,14 +43,16 @@ struct ThresholdsView: View {
                             threshold: threshold
                         )
                     }
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 20)
                 
                 Button {
                     navPath.append(9)
                 } label: {
                     Text("Add threshold")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

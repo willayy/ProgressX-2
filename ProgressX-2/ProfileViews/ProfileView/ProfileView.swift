@@ -27,38 +27,38 @@ struct ProfileView: View {
             content: {
             NavigationStack {
                 ScrollView {
-                    
-                    BoldTitle(text: "Profile")
-                    
-                    LightSubHeadline(text: "Here you can change/update the settings of your current profile")
-                        .padding(.horizontal, 20)
-                    
-                    if viewModel.showProfileChangedAlert {
-                        SubmitAlert(
-                            message: "Profile changes succesfully saved!",
-                            color: .green,
-                            showAlertState: $viewModel.showProfileChangedAlert
-                        )
-                    } else if viewModel.showNoChangeAlert {
-                        SubmitAlert(
-                            message: "No change!",
-                            color: .blue,
-                            showAlertState: $viewModel.showNoChangeAlert
-                        )
-                    }
-                    
-                    VStack(alignment: .center) {
+                    VStack {
+                        BoldTitle(text: "Profile")
+                        
+                        LightSubHeadline(text: "Here you can change/update the settings of your current profile")
+                            .padding(.horizontal, 20)
+                        
+                        if viewModel.showProfileChangedAlert {
+                            SubmitAlert(
+                                message: "Profile changes succesfully saved!",
+                                color: .green,
+                                showAlertState: $viewModel.showProfileChangedAlert
+                            )
+                        } else if viewModel.showNoChangeAlert {
+                            SubmitAlert(
+                                message: "No change!",
+                                color: .blue,
+                                showAlertState: $viewModel.showNoChangeAlert
+                            )
+                        }
                         
                         BoldSubHeadline(text: "Change username")
+                            .padding(.top, 10)
                         
                         InputTextField(
                             placeHolder: "Username",
-                            text: $viewModel.userName, 
+                            text: $viewModel.userName,
                             maxChars: 25,
                             markAsWrong: $viewModel.userNameIsInvalid,
                             width: 0.5,
                             errorMessage: $viewModel.userNameIsInvalidMsg
-                        ).padding(.bottom)
+                        )
+                        .padding(.bottom, 10)
                         
                         BoldSubHeadline(text: "Change birth date")
                         
@@ -69,7 +69,7 @@ struct ProfileView: View {
                         )
                         .datePickerStyle(DefaultDatePickerStyle())
                         .labelsHidden()
-                        .padding(.bottom)
+                        .padding(.bottom, 10)
                         
                         BoldSubHeadline(text: "Change default rest-time (seconds)")
                         
@@ -80,7 +80,8 @@ struct ProfileView: View {
                             markAsWrong: $viewModel.standardRestTimeIsInvalid,
                             width: 0.3,
                             errorMessage: $viewModel.standardRestTimeIsInvalidMsg
-                        ).padding(.bottom)
+                        )
+                        .padding(.bottom, 10)
                         
                         BoldSubHeadline(text: "Change weight and length units")
                         
@@ -90,7 +91,16 @@ struct ProfileView: View {
                             frameWidth: 230,
                             horizontalPadding: 20
                         )
-                        .padding(.bottom)
+                        .padding(.bottom, 10)
+                        
+                        BoldSubHeadline(text: "Change smallest plate")
+                        
+                        StringSelectionList(
+                            selected: $viewModel.selectedSmallestPlate,
+                            selections: viewModel.smallestPlateSegments
+                        )
+                        .padding(.bottom, 10)
+                        .padding(.horizontal, 40)
                         
                         BoldSubHeadline(text: "Change height")
                         
@@ -101,7 +111,8 @@ struct ProfileView: View {
                             markAsWrong: $viewModel.heightIsInvalid,
                             width: 0.3,
                             errorMessage: $viewModel.heightIsInvalidMsg
-                        ).padding(.bottom)
+                        )
+                        .padding(.bottom, 10)
                         
                         BoldSubHeadline(text: "Gender")
                         
@@ -111,6 +122,7 @@ struct ProfileView: View {
                             frameWidth: 230,
                             horizontalPadding: 20
                         )
+                        .padding(.bottom, 10)
                         
                         Button(action: {
                             if validateInput() {
@@ -130,16 +142,14 @@ struct ProfileView: View {
                         .padding(.bottom, 10)
                         
                     }
-                    .frame(width: 390, height: 650, alignment: .top)
-                    .toolbar(.hidden, for: .tabBar)
-                    .foregroundColor(Color(UIColor.lightGray))
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             SideBarButton(showMenu: $viewModel.showMenu)
                                 .environmentObject(viewRouter)
                         }
                     }
-                }.onAppear(perform: {
+                }
+                .onAppear(perform: {
                     viewModel.setViewStartValues(profiles: profiles)
                 })
             }

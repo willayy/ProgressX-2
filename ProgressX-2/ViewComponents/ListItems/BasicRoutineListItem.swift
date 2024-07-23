@@ -46,6 +46,7 @@ struct BasicRoutineListItem: View {
                     
                 } label: {
                     Text("Start workout")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
         
             }

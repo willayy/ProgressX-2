@@ -106,7 +106,9 @@ struct EditTemplateWeekView: View {
                         } label: {
                             Text("Save change")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 10)
@@ -130,7 +132,7 @@ struct EditTemplateWeekView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     viewModel.addSession(
@@ -140,7 +142,9 @@ struct EditTemplateWeekView: View {
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

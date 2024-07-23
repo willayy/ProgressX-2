@@ -75,7 +75,9 @@ struct RoutineLibraryView: View {
                         } label: {
                             Text("Add new Routine")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "plus")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 20)

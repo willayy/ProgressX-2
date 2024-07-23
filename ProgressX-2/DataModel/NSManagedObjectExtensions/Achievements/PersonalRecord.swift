@@ -26,6 +26,7 @@ extension PersonalRecord {
         self.prQuantity = quantity
         self.achievedOnDate = date
         self.prType = type
+        exercise.addToPersonalRecords(self)
     }
     
     //MARK: Extra properties

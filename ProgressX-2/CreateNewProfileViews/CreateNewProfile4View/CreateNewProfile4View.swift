@@ -161,6 +161,7 @@ struct CreateNewProfile4View: View {
                 } label: {
                     Text("Finish")
                         .frame(width: 100, height: 30)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(.top, 40)

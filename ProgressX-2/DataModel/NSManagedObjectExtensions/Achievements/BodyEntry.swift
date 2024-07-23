@@ -34,6 +34,7 @@ extension BodyEntry {
         self.lwrArmCirc = lowerArmCircumference
         self.thighCirc = thighCircumference
         self.calfCirc = calfCircumference
+        profile.addToBodyEntries(self)
     }
     
     //MARK: Extra properties

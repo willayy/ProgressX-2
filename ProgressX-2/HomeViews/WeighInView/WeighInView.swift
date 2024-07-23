@@ -110,8 +110,11 @@ struct WeighInView: View {
                         navPath.removeLast()
                     }
                 } label: {
-                    Text("Save weigh-in")
+                    Text("Add weigh-in")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
+                    Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)

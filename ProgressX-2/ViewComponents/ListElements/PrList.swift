@@ -70,7 +70,9 @@ struct PrList: View {
         }) {
             Text("Add new PR")
                 .frame(height: 25)
+                .foregroundColor(Color("buttonTextColor"))
             Image(systemName: "plus")
+                .foregroundColor(Color("buttonTextColor"))
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.top, 10)

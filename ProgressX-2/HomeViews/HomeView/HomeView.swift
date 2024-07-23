@@ -91,6 +91,7 @@ struct HomeView: View {
                                     Text("Weigh in")
                                         .frame(width: 275)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
                                 
@@ -100,6 +101,7 @@ struct HomeView: View {
                                     Text("View all weigh-in's")
                                         .frame(width: 275)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
                                 

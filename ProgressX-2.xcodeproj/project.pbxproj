@@ -629,8 +629,8 @@
 		83266E862C3C1AEA00F5F6CB /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
-				83266E622C38077F00F5F6CB /* ProfileViewModel.swift */,
 				8F8B9F092C21A0C30072A39D /* ProfileView.swift */,
+				83266E622C38077F00F5F6CB /* ProfileViewModel.swift */,
 			);
 			path = ProfileView;
 			sourceTree = "<group>";

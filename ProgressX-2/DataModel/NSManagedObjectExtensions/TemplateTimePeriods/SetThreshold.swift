@@ -35,6 +35,7 @@ extension SetThreshold {
         self.timePeriodName = (name == "") ? "Threshold \(positionIndex)" : name
         let setName = templateSet.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Threshold in \(setName)" : description
+        templateSet.addToThresholds(self)
     }
     
     // MARK: Extra Properties
@@ -67,6 +68,48 @@ extension SetThreshold {
                 return String(format: "%.0f", self.triggerQuantity) + " reps"
             case .Time:
                 return String(format: "%.2f", self.triggerQuantity) + " seconds"
+        }
+    }
+    
+    /// Use this property to trigger a SetThreshold
+    public func trigger(loadDone: Double, quantityDone: Double) -> Void {
+        let templateSet = self.templateSet!
+        
+        // Adds the flat load.
+        if self.flatLoadAdd != nil {
+            templateSet.setLoad += self.flatLoadAdd!.doubleValue
+        }
+        
+        // Adds the flat quantity
+        if self.flatQuantityAdd != nil {
+            templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
+            // Adds the quantity added to the template to itself the ensure linearity.
+            self.triggerQuantity += self.flatQuantityAdd!.doubleValue
+        }
+        
+        // Generates a PR
+        if self.generatePr {
+            let exercise = templateSet.exercise!
+            let computedLoad: Double
+            let computedQuantity: Double
+            
+            // if onerepmax pr and load done isnt 1 use Brzyckis formula to approximate.
+            if self.prType! == "onerepmax" && loadDone != 1 {
+                computedQuantity = 1
+                computedLoad = loadDone / (1.0278 - (0.0278 * quantityDone))
+            } else {
+                computedQuantity = quantityDone
+                computedLoad = loadDone
+            }
+            
+            let _ = PersonalRecord(
+                self.managedObjectContext!,
+                exercise: exercise,
+                weightLoad: computedLoad,
+                quantity: computedQuantity,
+                date: Date(),
+                type: self.prType!
+            )
         }
     }
         

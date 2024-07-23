@@ -27,9 +27,17 @@ class ProfileViewModel: ObservableObject {
     @Published var standardRestTimeIsInvalidMsg: String = ""
     @Published var showNoChangeAlert: Bool = false
     @Published var showProfileChangedAlert: Bool = false
+    @Published var selectedSmallestPlate: String = ""
     
     let unitSegments = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
+    var smallestPlateSegments: [String] {
+        if selectedUnitSegment == "Metric" {
+            return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
+        } else {
+            return ["2.5 lbs", "5 lbs", "10 lbs"]
+        }
+    }
     
     public func setViewStartValues(profiles: FetchedResults<Profile>) -> Void {
         let profile = profiles.first!
@@ -39,6 +47,13 @@ class ProfileViewModel: ObservableObject {
         self.birthDay = profile.birthDay!
         self.userName = profile.profileUserName!
         self.selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
+        self.selectedSmallestPlate = {
+            if profile.isMetric {
+                return "\(profile.smallestPlate) kg's"
+            } else {
+                return "\(profile.smallestPlate) lbs"
+            }
+        }()
     }
     
     public func saveProfileChanges(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
@@ -63,6 +78,17 @@ class ProfileViewModel: ObservableObject {
         
         if profile.standardRestTime != Double(standardRestTime)! {
             profile.standardRestTime = Double(standardRestTime)!
+        }
+        
+        let smallestPlate = {
+            let numericalValue: String = self.selectedSmallestPlate
+                .replacingOccurrences(of: " kg's", with: "")
+                .replacingOccurrences(of: " lbs", with: "")
+            return Double(numericalValue)!
+        }()
+        
+        if profile.smallestPlate != smallestPlate {
+            profile.smallestPlate = smallestPlate
         }
         
         if profile.hasChanges {

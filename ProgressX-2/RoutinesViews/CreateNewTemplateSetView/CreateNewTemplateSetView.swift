@@ -14,6 +14,7 @@ struct CreateNewTemplateSetView: View {
     @Binding var navPath: [Int]
     @StateObject private var viewModel = CreateNewTemplateSetViewModel()
     @Binding var selectedTemplateSession: TemplateSession?
+    @Binding var selectedTemplateSet: TemplateSet?
     
     var body: some View {
         ScrollView {
@@ -166,7 +167,7 @@ struct CreateNewTemplateSetView: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.createNewTemplateSet(
+                            selectedTemplateSet = viewModel.createNewTemplateSet(
                                 viewContext: viewContext,
                                 selectedTemplateSession: selectedTemplateSession
                             )
@@ -174,7 +175,9 @@ struct CreateNewTemplateSetView: View {
                     } label: {
                         Text("Create new set")
                             .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
                         Image(systemName: "plus")
+                            .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
@@ -243,9 +246,11 @@ struct CreateNewTemplateSetView: View {
     
     @State var selectedTemplateSession: TemplateSession? = templateSessions.first
     @State var navPath: [Int] = [Int]()
+    @State var selectedTemplateSet: TemplateSet? = nil
     
     return CreateNewTemplateSetView(
         navPath: $navPath,
-        selectedTemplateSession: $selectedTemplateSession
+        selectedTemplateSession: $selectedTemplateSession,
+        selectedTemplateSet: $selectedTemplateSet
     ).environment(\.managedObjectContext, context)
 }
