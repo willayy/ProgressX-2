@@ -112,7 +112,7 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         "Percentage of current body weight" : "bwperc"
     ]
     
-    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> Void {
+    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> TemplateSet {
                 
         let set = TemplateSet(
             viewContext,
@@ -124,13 +124,13 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             quantity: Double(newSetQuantity)!
         )
         
-        selectedTemplateSession!.addToTemplateSets(set)
-        
         PersistenceController.save(viewContext)
         
         withAnimation {
             showAddThresholds = true
         }
+        
+        return set
     }
     
     public func setNewSetName(selectedTemplateSession: TemplateSession?) -> Void {
