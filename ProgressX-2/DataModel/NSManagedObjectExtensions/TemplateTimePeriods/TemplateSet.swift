@@ -51,8 +51,10 @@ extension TemplateSet: HasOrderable {
         let loadTypeEnum = LoadType(rawValue: self.loadType!)!
         
         switch loadTypeEnum {
+            
         case .numerical:
             return self.setLoad
+            
         case .maxPercentage:
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "onerepmax" : "timemax"
@@ -63,6 +65,7 @@ extension TemplateSet: HasOrderable {
             )
             let computedLoad: Double = (latestPr?.weightLoad ?? 0) * (self.setLoad / 100)
             return computedLoad
+            
         case .bodyWeightPercentage:
             let latestBw = PersistenceController.getLatestBodyEntry(self.managedObjectContext!)
             let computedLoad: Double = (latestBw?.bodyWeight ?? 0) * (self.setLoad / 100)

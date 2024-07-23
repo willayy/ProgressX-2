@@ -19,6 +19,7 @@ extension Profile {
         height: Double,
         isMetric: Bool,
         standardRestTime: Double = 180,
+        smallestPlate: Double,
         birthDay: Date
     ) {
         self.init(context: context)
@@ -28,6 +29,7 @@ extension Profile {
         self.isMetric = isMetric
         self.standardRestTime = standardRestTime
         self.birthDay = birthDay
+        self.smallestPlate = smallestPlate
     }
     
     // MARK: Extra Properties
