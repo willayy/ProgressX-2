@@ -27,7 +27,7 @@ class CreateNewPersonalRecordViewModel: ObservableObject {
     
     public func createNewPersonalRecord(viewContext: NSManagedObjectContext, exercise: Exercise?, prType: String?) -> Void {
         // Create the PR
-        let pr: PersonalRecord = PersonalRecord(
+        let _: PersonalRecord = PersonalRecord(
             viewContext,
             exercise: exercise!,
             weightLoad: Double(prLoad)!,
@@ -35,8 +35,6 @@ class CreateNewPersonalRecordViewModel: ObservableObject {
             date: prDate,
             type: prType!
         )
-        
-        exercise!.addToPersonalRecords(pr)
         
         PersistenceController.save(viewContext)
         

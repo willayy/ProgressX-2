@@ -75,15 +75,12 @@ class CreateNewProfile1ViewModel: ObservableObject {
         )
         
         // Create BodyEntry
-        let bodyWeightEntry = BodyEntry(
+        let _ = BodyEntry(
             viewContext,
             profile: profile,
             bodyWeight: inputWeight,
             date: Date()
         )
-        
-        // Add BodyEntry to the profile
-        profile.addToBodyEntries(bodyWeightEntry)
         
         // Create basic exercies if they dont exist
         if !PersistenceController.basicExercisesExist(viewContext) {

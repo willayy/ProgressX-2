@@ -27,6 +27,7 @@ extension TrainingCycle: HasOrderable {
         self.timePeriodDescription = (description == "") ? "Cycle created for \(routineName)" : description
         self.templateCycle = routine.templateCycle
         self.startedOnDate = Date()
+        routine.addToTrainingCycles(self)
     }
     
     // MARK: Extra properties

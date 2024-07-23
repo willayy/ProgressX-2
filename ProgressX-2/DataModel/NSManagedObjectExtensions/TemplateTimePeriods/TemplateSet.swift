@@ -36,6 +36,7 @@ extension TemplateSet: HasOrderable {
         let exerciseName = exercise.exerciseName!
         let sessionName = templateSession.timePeriodName!
         self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        templateSession.addToTemplateSets(self)
     }
     
     // MARK: Extra properties

@@ -54,7 +54,7 @@ class WeighInViewModel: ObservableObject {
         let lowerArmCirc: NSNumber? = (lowerArmCirc.isEmpty) ? nil : NSNumber(value: Double(lowerArmCirc)!)
 
         // Create the bodyEntry.
-        let newBodyEntry = BodyEntry(
+        let _ = BodyEntry(
             viewContext,
             profile: profile,
             bodyWeight: Double(bodyWeight)!,
@@ -65,8 +65,5 @@ class WeighInViewModel: ObservableObject {
             thighCircumference: thighCirc,
             calfCircumference: calfCirc
         )
-        
-        // Add the bodyEntry tot the profile.
-        profile.addToBodyEntries(newBodyEntry)
     }
 }

@@ -35,6 +35,7 @@ extension SetThreshold {
         self.timePeriodName = (name == "") ? "Threshold \(positionIndex)" : name
         let setName = templateSet.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Threshold in \(setName)" : description
+        templateSet.addToThresholds(self)
     }
     
     // MARK: Extra Properties
