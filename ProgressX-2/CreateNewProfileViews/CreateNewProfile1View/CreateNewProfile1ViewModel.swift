@@ -14,11 +14,11 @@ class CreateNewProfile1ViewModel: ObservableObject {
     @Published var navPath: [Int] = [Int]()
     @Published var userName: String = ""
     @Published var birthDay: Date = Date()
-    @Published var selectedUnitSegment: String = "Metric (meters)"
+    @Published var selectedUnitSegment: String = "Metric"
     @Published var selectedGenderSegment: String = "Male"
     @Published var weight: String = ""
     @Published var height: String = ""
-    let unitSegments: [String] = ["Metric (meters)", "Imperial (feet)"]
+    let unitSegments: [String] = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
     @Published var userNameIsInvalid = false
     @Published var heightIsInvalid = false
@@ -26,13 +26,22 @@ class CreateNewProfile1ViewModel: ObservableObject {
     @Published var userNameIsInvalidMsg = ""
     @Published var heightIsInvalidMsg = ""
     @Published var weightIsInvalidMsg = ""
+    @Published var smallestPlateSelection: String = "1.25 kg's"
     
     var lengthUnit: String {
-        (self.selectedUnitSegment == "Metric (meters)") ? "cm" : "ft"
+        (self.selectedUnitSegment == "Metric") ? "cm" : "ft"
     }
     
     var weightUnit: String {
-        (self.selectedUnitSegment == "Metric (meters)") ? "kg" : "lbs"
+        (self.selectedUnitSegment == "Metric") ? "kg" : "lbs"
+    }
+    
+    var smallestPlateSegments: [String] {
+        if selectedUnitSegment == "Metric" {
+            return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
+        } else {
+            return ["2.5 lbs", "5 lbs", "10 lbs"]
+        }
     }
     
     public func createProfile(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
@@ -43,10 +52,16 @@ class CreateNewProfile1ViewModel: ObservableObject {
         }
         
         // Transform input values into values that can be used in the datamodel.
-        let isMetric = (selectedUnitSegment == "Metric (meters)") ? true : false
+        let isMetric = (selectedUnitSegment == "Metric") ? true : false
         let gender = (selectedGenderSegment == "Male") ? "male" : "female"
         let inputWeight = Double(weight)!
         let inputHeight = Double(height)!
+        let smallestPlate = {
+            let numericalValue: String = self.smallestPlateSelection
+                .replacingOccurrences(of: " kg's", with: "")
+                .replacingOccurrences(of: " lbs", with: "")
+            return Double(numericalValue)!
+        }()
         
         // Create Profile
         let profile = Profile(context: viewContext)
@@ -55,6 +70,7 @@ class CreateNewProfile1ViewModel: ObservableObject {
         profile.userHeight = inputHeight
         profile.gender = gender
         profile.isMetric = isMetric
+        profile.smallestPlate = smallestPlate
         
         // Create BodyEntry
         let bodyWeightEntry = BodyEntry(

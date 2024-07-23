@@ -72,6 +72,23 @@ struct CreateNewProfile1View: View {
                         horizontalPadding: 20
                     )
                     
+                    Text("What is your smallest available plate?")
+                        .foregroundColor(.black)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 10)
+                        .minimumScaleFactor(0.5);
+                    
+                    StringSelectionList(
+                        selected: $viewModel.smallestPlateSelection,
+                        selections: viewModel.smallestPlateSegments
+                    ).onChange(
+                        of: viewModel.selectedUnitSegment,
+                        initial: false, {
+                            viewModel.smallestPlateSelection = viewModel.smallestPlateSegments.first!
+                        }
+                    )
+                    
                     Text("What is your current weight?")
                         .foregroundColor(.black)
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
