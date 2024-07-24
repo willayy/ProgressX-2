@@ -45,12 +45,12 @@ extension TemplateSet: HasOrderable {
     
     /// Convience method for getting the name of the Exercise.
     /// - Returns: The name of the sets exercise as a String.
-    var setExerciseName: String? {
+    public var setExerciseName: String? {
         return self.exercise!.exerciseName
     }
     
     /// Use this property as the single source of truth for the load, in kg's or lbs, to be done on this set
-    var loadTodo: Double {
+    public var loadTodo: Double {
         let loadTypeEnum = LoadType(rawValue: self.loadType!)!
         
         switch loadTypeEnum {
@@ -85,7 +85,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property as the single source of truth for the quantity, in reps or seconds, to be done on this set
-    var quantityTodo: Double {
+    public var quantityTodo: Double {
         let quantityTypeEnum = QuantityType(rawValue: self.quantityType!)!
         
         switch quantityTypeEnum {
@@ -105,7 +105,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the load to be done on a set
-    var loadTodoString: String {
+    public var loadTodoString: String {
         switch LoadType(rawValue: loadType!)! {
         case .numerical:
             let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
@@ -118,7 +118,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the quantity to be done on a set
-    var quantityTodoString: String {
+    public var quantityTodoString: String {
         switch QuantityType(rawValue: self.quantityType!)! {
             case .numerical:
                 switch ExerciseType(rawValue: self.exercise!.exerciseType!)! {
@@ -130,6 +130,10 @@ extension TemplateSet: HasOrderable {
             case .maxPercentage:
                 return (String(format: "%.2f", self.setQuantity) + "% of max")
         }
+    }
+    
+    public var restTimeString: String {
+        return String(format: "%.2f", self.restTime)
     }
         
     /// Gets the next position index for the thresholds in this set
