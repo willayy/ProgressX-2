@@ -103,7 +103,7 @@ struct EditExerciseView: View {
                         if validateInput() {
                             viewModel.saveExerciseChanges(
                                 viewContext: viewContext,
-                                selectedExercise: selectedExercise)
+                                selectedExercise: selectedExercise!)
                         }
                     }) {
                         Text("Save changes")
@@ -118,7 +118,7 @@ struct EditExerciseView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedExercise: selectedExercise)
+            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
         })
     }
         

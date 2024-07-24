@@ -173,7 +173,7 @@ struct EditTemplateSetView: View {
                     if validateInput() {
                         viewModel.saveTemplateSetChanges(
                             viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet
+                            selectedTemplateSet: selectedTemplateSet!
                         )
                     }
                 } label: {
@@ -190,7 +190,7 @@ struct EditTemplateSetView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet)
+            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
         })
     }
     

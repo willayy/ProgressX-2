@@ -91,7 +91,7 @@ struct EditTemplateSessionView: View {
                         IntSelectionList(
                             selected: $viewModel.editedPositionIndex,
                             selections: viewModel.positionIndexes(
-                                selectedTemplateSession: selectedTemplateSession
+                                selectedTemplateSession: selectedTemplateSession!
                             )
                         )
                         
@@ -99,7 +99,7 @@ struct EditTemplateSessionView: View {
                             if validateInput() {
                                 viewModel.saveTemplateSessionChanges(
                                     viewContext: viewContext,
-                                    selectedTemplateSession: selectedTemplateSession
+                                    selectedTemplateSession: selectedTemplateSession!
                                 )
                             }
                         } label: {

@@ -132,7 +132,7 @@ extension TemplateSet: HasOrderable {
         guard let quantityType = self.quantityType else { return nil }
         guard let quantityTypeEnum = QuantityType(rawValue: quantityType) else { return nil }
         guard let exercise = self.exercise else { return nil }
-        guard let exerciseType = exercise.exerciseName else { return nil }
+        guard let exerciseType = exercise.exerciseType else { return nil }
         guard let exerciseTypeEnum = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch quantityTypeEnum {
