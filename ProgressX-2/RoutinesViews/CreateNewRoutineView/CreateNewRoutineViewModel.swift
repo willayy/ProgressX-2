@@ -33,15 +33,11 @@ class CreateNewRoutineViewModel: ObservableObject {
             routine: newRoutine
         )
         
-        newRoutine.templateCycle = templateCycle
-        
         // Create a TrainingCycle to add
         let trainingCycle = TrainingCycle(
             viewContext,
             routine: newRoutine
         )
-        
-        newRoutine.addToTrainingCycles(trainingCycle)
         
         // reset fields
         withAnimation {
