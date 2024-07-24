@@ -27,6 +27,10 @@ class EditTemplateSetViewModel: ObservableObject {
     @Published var editedSetQuantity: String = ""
     @Published var editedSetQuantityIsInvalid: Bool = false
     @Published var editedSetQuantityIsInvalidMsg: String = ""
+    // The rest time of the set
+    @Published var editedRestTime: String = ""
+    @Published var editedRestTimeIsInvalid: Bool = false
+    @Published var editedRestTimeIsInvalidMsg: String = ""
     // The PositionIndex of the set
     @Published var editedSetPositionIndex: Int64 = 0
     // The load type of the set
@@ -49,6 +53,7 @@ class EditTemplateSetViewModel: ObservableObject {
         editedQuantityType = quantityTypeMap()[selectedTemplateSet!.quantityType!]!
         editedSetLoad = selectedTemplateSet!.loadTodoString
         editedSetQuantity = selectedTemplateSet!.quantityTodoString
+        editedRestTime = selectedTemplateSet!.restTimeString
     }
     
     public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet?) -> Void {
@@ -83,6 +88,10 @@ class EditTemplateSetViewModel: ObservableObject {
         
         if editedSetPositionIndex != selectedTemplateSet!.positionIndex {
             selectedTemplateSet!.positionIndex = editedSetPositionIndex
+        }
+        
+        if Double(editedRestTime)! != selectedTemplateSet!.restTime {
+            selectedTemplateSet!.restTime = Double(editedRestTime)!
         }
         
         if selectedTemplateSet!.hasChanges {

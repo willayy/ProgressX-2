@@ -70,7 +70,7 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change position of the set in it's session")
+                BoldSubHeadline(text: "Change position of the set in it's session")
                 
                 IntSelectionList(
                     selected: $viewModel.editedSetPositionIndex,
@@ -80,7 +80,7 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change the exercise of the set")
+                BoldSubHeadline(text: "Change the exercise of the set")
                 
                 SetExerciseSelectionList(
                     selectedExercise: $viewModel.selectedExercise,
@@ -88,7 +88,19 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change the load type of the set")
+                BoldSubHeadline(text: "Change the rest time of the set")
+                
+                InputDecimalNumberField(
+                    placeHolder: "Rest time",
+                    allowNegatives: false,
+                    numberText: $viewModel.editedRestTime,
+                    markAsWrong: $viewModel.editedRestTimeIsInvalid,
+                    width: 0.6,
+                    errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                )
+                .padding(.bottom, 20)
+                
+                BoldSubHeadline(text: "Change the load type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedLoadType,
@@ -96,7 +108,7 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change the quantity type of the set")
+                BoldSubHeadline(text: "Change the quantity type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedQuantityType,
@@ -104,7 +116,7 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change the quantity or load of the set")
+                BoldSubHeadline(text: "Change the quantity or load of the set")
                 
                 HStack {
                     InputDecimalNumberField(
@@ -191,12 +203,18 @@ struct EditTemplateSetView: View {
         } else {
             quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
         }
-        
+        let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
         let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let nameValidator = StringFieldValidator()
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         
         var valid = 0
+        
+        valid += restTimeValidator.valideField(
+            inputVar: viewModel.editedRestTime,
+            errorMessage: $viewModel.editedRestTimeIsInvalidMsg,
+            fieldInvalid: $viewModel.editedRestTimeIsInvalid
+        )
         
         valid += loadValidator.valideField(
             inputVar: viewModel.editedSetLoad,
