@@ -134,6 +134,21 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             restTime: Double(restTime)!
         )
         
+        // Get all trainingSessions
+        let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession)
+        // Only included incomplete trainingSessions as completed ones are irrelevant for this change
+        let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({ !$0.isComplete })
+        
+        for session in trainingSessions {
+            let _ = TrainingSet(
+                viewContext,
+                trainingSession: session,
+                templateSet: set
+            )
+        }
+        
         PersistenceController.save(viewContext)
         
         withAnimation {

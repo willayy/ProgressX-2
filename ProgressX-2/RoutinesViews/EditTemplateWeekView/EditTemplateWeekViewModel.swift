@@ -78,7 +78,22 @@ class EditTemplateWeekViewModel: ObservableObject {
             viewContext,
             templateWeek: selectedTemplateWeek
         )
-        selectedTemplateWeek.addToTemplateSessions(session)
+        
+        // Get all trainingWeeks
+        let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek)
+        // Only included incomplete trainingWeeks as completed ones are irrelevant for this change
+        let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({ !$0.isComplete })
+        
+        for trainingWeek in trainingWeeks {
+            let _ = TrainingSession(
+                viewContext,
+                trainingWeek: trainingWeek,
+                templateSession: session
+            )
+        }
+        
         PersistenceController.save(viewContext)
     }
     
