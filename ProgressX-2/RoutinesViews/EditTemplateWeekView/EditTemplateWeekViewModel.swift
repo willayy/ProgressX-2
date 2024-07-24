@@ -38,6 +38,7 @@ class EditTemplateWeekViewModel: ObservableObject {
         editedPositionIndex = week.positionIndex
     }
     
+    /// Saves changes made to template and propogates them forwars to all matching TrainingSessions.
     public func saveTemplateWeekChanges(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
         
         if selectedTemplateWeek.timePeriodName != editedWeekName {
@@ -49,7 +50,7 @@ class EditTemplateWeekViewModel: ObservableObject {
         }
         
         if selectedTemplateWeek.positionIndex != editedPositionIndex {
-            // Find the week with the same position index in the parent routine
+            // Find the week with the same position index in the parent routine.
             let weeksInParentRoutine = selectedTemplateWeek.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
             let switchWithWeek = weeksInParentRoutine.first(
                 where: {
@@ -62,6 +63,9 @@ class EditTemplateWeekViewModel: ObservableObject {
         }
         
         if selectedTemplateWeek.hasChanges {
+            // propogates change to matching trainingWeeks.
+            propogateChanges(viewContext, selectedTemplateWeek: selectedTemplateWeek)
+            
             withAnimation {
                 showWeekChangedAlert = true
                 PersistenceController.save(viewContext)
@@ -73,6 +77,20 @@ class EditTemplateWeekViewModel: ObservableObject {
         }
     }
     
+    /// Propogating changes made to the template to all matching trainingWeeks
+    private func propogateChanges(_ viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
+        // Get all trainingWeeks
+        let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek)
+        // Fetch all incomplete weeks as these are the only ones affected
+        let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({!$0.isComplete})
+        for trainingWeek in trainingWeeks {
+            <#body#>
+        }
+    }
+    
+    /// Adds a session to the template and all incomplete matching TrainingWeeks
     public func addSession(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
         let session = TemplateSession(
             viewContext,
