@@ -12,7 +12,7 @@ extension CompleteableTimePeriod {
     
     //MARK: Extra properties
     
-    var completionDateString: String? {
+    public var completionDateString: String? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         

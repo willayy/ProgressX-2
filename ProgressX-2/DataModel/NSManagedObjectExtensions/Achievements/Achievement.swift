@@ -11,9 +11,8 @@ extension Achievement {
     
     //MARK: Extra properties
     
-    /// Formatted Date from PR
-    /// - Returns: Date-string in format "yyyy-MM-dd"
-    var dateString: String? {
+    /// Formatted Date-string in format "yyyy-MM-dd"  from PR
+    public var dateString: String? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         

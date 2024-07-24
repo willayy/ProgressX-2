@@ -51,8 +51,8 @@ class EditTemplateSetViewModel: ObservableObject {
         selectedExercise = selectedTemplateSet!.exercise!
         editedLoadType = loadTypeMap()[selectedTemplateSet!.loadType!]!
         editedQuantityType = quantityTypeMap()[selectedTemplateSet!.quantityType!]!
-        editedSetLoad = selectedTemplateSet!.loadTodoString
-        editedSetQuantity = selectedTemplateSet!.quantityTodoString
+        editedSetLoad = selectedTemplateSet!.loadTodoString!
+        editedSetQuantity = selectedTemplateSet!.quantityTodoString!
         editedRestTime = selectedTemplateSet!.restTimeString
     }
     

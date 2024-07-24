@@ -26,8 +26,8 @@ extension TrainingSet {
         self.exercise = exercise
         self.positionIndex = positionIndex
         self.templateSet = templateSet
-        self.loadTodo = templateSet.loadTodo
-        self.quantityTodo = templateSet.quantityTodo
+        self.loadTodo = templateSet.loadTodo!
+        self.quantityTodo = templateSet.quantityTodo!
         self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
         let exerciseName = exercise.exerciseName!
         let sessionName = trainingSession.timePeriodName!
@@ -39,25 +39,26 @@ extension TrainingSet {
     
     // MARK: Extra properties
     
-    /// Convience method for getting the name of the Exercise.
-    /// - Returns: The name of the sets exercise as a String.
-    var setExerciseName: String? {
-        return self.exercise!.exerciseName
+    /// Convience method for getting the name of the Exercise. Returns nil if exercise is not set.
+    public var setExerciseName: String? {
+        guard let exercise = self.exercise else { return nil }
+        return exercise.exerciseName
     }
     
     /// Uset his property to print the load todo on a set.
-    var loadTodoString: String {
+    public var loadTodoString: String {
         return String(format: "%.2f", self.loadTodo)
     }
     
     /// Use this to property to print the load done on a set.
-    var loadDoneString: String {
+    public var loadDoneString: String {
         return String(format: "%.2f", self.loadDone)
     }
     
-    /// Use this to property to print the quantity todo on a set.
-    var quantityTodoString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
+    /// Use this to property to print the quantity todo on a set. Returns nil if exercise type is not not set or is invalid
+    public var quantityTodoString: String? {
+        guard let exerciseType = self.exercise?.exerciseType else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
         case .Reps:
@@ -67,9 +68,10 @@ extension TrainingSet {
         }
     }
     
-    /// Use this to property to print the quantity done on a set.
-    var quantityDoneString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.exercise!.exerciseType!)!
+    /// Use this to property to print the quantity done on a set. Returns nil if exercise type is not not set or is invalid
+    public var quantityDoneString: String? {
+        guard let exerciseType = self.exercise?.exerciseType else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
             case .Reps:
