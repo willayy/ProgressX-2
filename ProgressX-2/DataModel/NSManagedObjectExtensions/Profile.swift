@@ -42,7 +42,7 @@ extension Profile {
     }
     
     /// Gets all sessions completed within 30 days of today for all routines, returns empty array if none.
-    var sessionsCompletedLast30days: [TrainingSession] {
+    public var sessionsCompletedLast30days: [TrainingSession] {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -52,7 +52,7 @@ extension Profile {
     }
     
     /// Gets all sessions completed within 7 days of today for all routines, returns empty array if none.
-    var sessionsCompletedThisWeek: [TrainingSession] {
+    public var sessionsCompletedThisWeek: [TrainingSession] {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let calendar = Calendar.current
@@ -66,7 +66,7 @@ extension Profile {
     }
     
     /// Gets the last completed session for any routine done.
-    var lastCompletedSession: TrainingSession? {
+    public var lastCompletedSession: TrainingSession? {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let orderedSessions = completedSessions.sorted(by: {$0.completedOnDate! > $1.completedOnDate!})
@@ -74,7 +74,7 @@ extension Profile {
     }
     
     /// Gets the routine of the last completed session.
-    var lastRoutineUsed: Routine? {
+    public var lastRoutineUsed: Routine? {
         guard let lastCompletedSession: TrainingSession = self.lastCompletedSession else { return nil }
         let week: TrainingWeek = lastCompletedSession.trainingWeek!
         let cycle: TrainingCycle = week.trainingCycle!
@@ -82,10 +82,14 @@ extension Profile {
         return routine
     }
     
-    var lastWeighIn: BodyEntry? {
+    public var lastWeighIn: BodyEntry? {
         let bodyEntries: [BodyEntry] = self.bodyEntries!.allObjects as! [BodyEntry]
         let orderedBodyEntries = bodyEntries.sorted(by: {$0.achievedOnDate! > $1.achievedOnDate!})
         return orderedBodyEntries.first
+    }
+    
+    public var standardRestTimeString: String {
+        return String(format: "%.2f", self.standardRestTime)
     }
     
     // MARK: Validation
