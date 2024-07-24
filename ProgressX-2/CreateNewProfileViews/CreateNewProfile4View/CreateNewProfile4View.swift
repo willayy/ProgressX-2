@@ -172,8 +172,8 @@ struct CreateNewProfile4View: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
-        let intFieldValidator = IntFieldValidator()
+        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
+        let intFieldValidator = IntFieldValidator(maxInputNumber: 100000)
         
         valid += doubleFieldValidator.valideField(
             inputVar: viewModel.benchPress1RM,

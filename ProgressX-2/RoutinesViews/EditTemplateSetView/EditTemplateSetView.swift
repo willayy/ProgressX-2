@@ -185,12 +185,14 @@ struct EditTemplateSetView: View {
     private func validateInput() -> Bool {
         let exerciseType = viewModel.selectedExercise!.exerciseType
         let quantityValidator: InputFieldValidator
+        
         if exerciseType == "reps" {
-            quantityValidator = IntFieldValidator()
+            quantityValidator = IntFieldValidator(maxInputNumber: 100000)
         } else {
-            quantityValidator = DoubleFieldValidator()
+            quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
         }
-        let loadValidator = DoubleFieldValidator()
+        
+        let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let nameValidator = StringFieldValidator()
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         

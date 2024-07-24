@@ -159,16 +159,17 @@ struct CreateNewProfile1View: View {
     // Validates input
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
+        let heightValidator = DoubleFieldValidator(maxInputNumber: 1000)
+        let weightValidator = DoubleFieldValidator(maxInputNumber: 1000)
         let stringFieldValidator = StringFieldValidator()
         
-        valid += doubleFieldValidator.valideField(
+        valid += heightValidator.valideField(
             inputVar: viewModel.height,
             errorMessage: $viewModel.heightIsInvalidMsg,
             fieldInvalid: $viewModel.heightIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += weightValidator.valideField(
             inputVar: viewModel.weight,
             errorMessage: $viewModel.weightIsInvalidMsg,
             fieldInvalid: $viewModel.weightIsInvalid

@@ -117,12 +117,12 @@ struct CreateNewPersonalRecord: View {
         
         var quantityValidator: InputFieldValidator
         
-        let loadValidator: InputFieldValidator = DoubleFieldValidator()
+        let loadValidator: InputFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
         
         if prType == "timemax" {
-            quantityValidator = DoubleFieldValidator()
+            quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
         } else {
-            quantityValidator = IntFieldValidator()
+            quantityValidator = IntFieldValidator(maxInputNumber: 100000)
         }
         
         valid += loadValidator.valideField(
