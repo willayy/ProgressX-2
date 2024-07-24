@@ -70,6 +70,21 @@ struct CreateNewTemplateSetView: View {
             
                 if viewModel.exerciseHasBeenSelected {
                     
+                    BoldSubHeadline(text: "Choose the rest time after this set")
+                        .padding(.top, 20)
+                    
+                    LightSubHeadline(text: "In seconds")
+                        .padding(.bottom, 5)
+                    
+                    InputDecimalNumberField(
+                        placeHolder: "Rest time",
+                        allowNegatives: false,
+                        numberText: $viewModel.restTime,
+                        markAsWrong: $viewModel.restTimeIsInvalid,
+                        width: 0.6,
+                        errorMessage: $viewModel.restTimeIsInvalidMsg
+                    )
+                    
                     BoldSubHeadline(text: "Choose load type")
                         .padding(.top, 20)
                         .padding(.bottom, 5)
@@ -196,19 +211,30 @@ struct CreateNewTemplateSetView: View {
                     })
                 }
             }
-        }
+        }.onAppear(perform: {
+            viewModel.setViewStartValues(viewContext: viewContext)
+        })
     }
     
     private func validateInput() -> Bool {
         let exerciseType = viewModel.selectedExercise!.exerciseType
         let quantityValidator: InputFieldValidator
-        if exerciseType == "reps" { quantityValidator = IntFieldValidator()}
-        else { quantityValidator = DoubleFieldValidator()}
-        let loadValidator = DoubleFieldValidator()
+        
+        if exerciseType == "reps" { quantityValidator = IntFieldValidator(maxInputNumber: 100000)}
+        else { quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)}
+        
+        let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
+        let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
         let nameValidator = StringFieldValidator()
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         
         var valid = 0
+        
+        valid += restTimeValidator.valideField(
+            inputVar: viewModel.restTime,
+            errorMessage: $viewModel.restTimeIsInvalidMsg,
+            fieldInvalid: $viewModel.restTimeIsInvalid
+        )
         
         valid += loadValidator.valideField(
             inputVar: viewModel.newSetLoad,
