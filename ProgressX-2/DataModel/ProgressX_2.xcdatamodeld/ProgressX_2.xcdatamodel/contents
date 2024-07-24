@@ -76,6 +76,7 @@
     <entity name="TemplateSet" representedClassName="TemplateSet" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="loadType" attributeType="String" regularExpressionString="^(numerical|maxperc|bwperc)$"/>
         <attribute name="quantityType" attributeType="String" regularExpressionString="^(numerical|maxperc)$"/>
+        <attribute name="restTime" attributeType="Double" minValueString="0" maxValueString="600" usesScalarValueType="YES"/>
         <attribute name="setLoad" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
         <attribute name="setQuantity" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="templateSets" inverseEntity="Exercise"/>
@@ -107,6 +108,7 @@
         <attribute name="loadTodo" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
         <attribute name="quantityDone" attributeType="Double" minValueString="0" maxValueString="100000" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
+        <attribute name="restTime" attributeType="Double" minValueString="0" maxValueString="600" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
         <relationship name="templateSet" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="trainingSets" inverseEntity="TemplateSet"/>
         <relationship name="trainingSession" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingSession" inverseName="trainingSets" inverseEntity="TrainingSession"/>

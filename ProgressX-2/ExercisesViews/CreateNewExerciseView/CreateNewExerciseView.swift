@@ -182,14 +182,14 @@ struct CreateNewExerciseView: View {
         
         // Depemnding on the the exercise
         if viewModel.selectedTypeOfExercise == "Reps" {
-            quantityFieldValidtor = IntFieldValidator()
+            quantityFieldValidtor = IntFieldValidator(maxInputNumber: 100000)
         } else {
             // This is the case when exercise is Time
-            quantityFieldValidtor = DoubleFieldValidator()
+            quantityFieldValidtor = DoubleFieldValidator(maxInputNumber: 100000)
         }
 
         // Load is a always Double
-        let loadFieldValidtor = DoubleFieldValidator()
+        let loadFieldValidtor = DoubleFieldValidator(maxInputNumber: 10000)
         let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: exercises.map {$0.exerciseName!})
         let descFieldValidator = StringFieldValidator(emptyAllowed: true)
         

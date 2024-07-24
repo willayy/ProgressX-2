@@ -167,10 +167,10 @@ struct CreateNewThresholdView: View {
         
         if exerciseType == "reps" {
             flatQuantityAddFieldValidator = IntFieldValidator(emptyAllowed: true)
-            triggerQuantityFieldValidator = IntFieldValidator()
+            triggerQuantityFieldValidator = IntFieldValidator(maxInputNumber: 100000)
         } else {
             flatQuantityAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
-            triggerQuantityFieldValidator = DoubleFieldValidator()
+            triggerQuantityFieldValidator = DoubleFieldValidator(maxInputNumber: 100000)
         }
         
         valid += flatLoadAddFieldValidator.valideField(

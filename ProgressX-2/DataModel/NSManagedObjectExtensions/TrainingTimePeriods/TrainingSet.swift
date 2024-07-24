@@ -33,6 +33,7 @@ extension TrainingSet {
         let sessionName = trainingSession.timePeriodName!
         self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
         self.startedOnDate = Date()
+        self.restTime = templateSet.restTime
         trainingSession.addToTrainingSets(self)
     }
     
