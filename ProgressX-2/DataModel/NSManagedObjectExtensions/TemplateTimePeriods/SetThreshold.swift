@@ -40,32 +40,41 @@ extension SetThreshold {
     
     // MARK: Extra Properties
     
-    public var flatLoadAddString: String {
-        if self.flatQuantityAdd == nil { return ""}
-        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
-        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + " \(weightUnit)"
+    public var flatLoadAddString: String? {
+        guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
+        guard let context = self.managedObjectContext else { return nil }
+        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        
+        return String(format: "%.2f", flatQuantityAdd) + " \(weightUnit)"
     }
     
-    public var flatQuantityAddString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
-        
-        if self.flatQuantityAdd == nil { return ""}
+    public var flatQuantityAddString: String? {
+        guard let templateSet = self.templateSet else { return nil }
+        guard let exercise = templateSet.exercise else { return nil }
+        guard let exerciseType = exercise.exerciseType else { return nil }
+        guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
             case .Reps:
-                return String(format: "%.0f", self.flatQuantityAdd?.doubleValue ?? 0) + " reps"
+                return String(format: "%.0f", flatQuantityAdd) + " reps"
+            
             case .Time:
-                return String(format: "%.2f", self.flatQuantityAdd?.doubleValue ?? 0) + " seconds"
+                return String(format: "%.2f", flatQuantityAdd) + " seconds"
         }
     }
     
     /// Use this property to get a correctly formatted string from the  triggerQuantity value
-    public var triggerQuantityString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+    public var triggerQuantityString: String? {
+        guard let templateSet = self.templateSet else { return nil }
+        guard let exercise = templateSet.exercise else { return nil }
+        guard let exerciseType = exercise.exerciseType else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
             case .Reps:
                 return String(format: "%.0f", self.triggerQuantity) + " reps"
+            
             case .Time:
                 return String(format: "%.2f", self.triggerQuantity) + " seconds"
         }

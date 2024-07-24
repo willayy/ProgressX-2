@@ -42,13 +42,13 @@ struct MagnifiedTemplateSetView: View {
             
             (Text("Quantity: ")
                 .fontWeight(.bold)
-             + Text("\(set.quantityTodoString)"))
+             + Text("\(set.quantityTodoString!)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
             (Text("Load: ")
                 .fontWeight(.bold)
-             + Text("\(set.loadTodoString)"))
+             + Text("\(set.loadTodoString!)"))
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             

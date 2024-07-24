@@ -121,11 +121,11 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         restTime = profile.standardRestTimeString
     }
     
-    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> TemplateSet {
+    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession) -> TemplateSet {
                 
         let set = TemplateSet(
             viewContext,
-            templateSession: selectedTemplateSession!,
+            templateSession: selectedTemplateSession,
             exercise: selectedExercise!,
             loadType: typeMap[selectedLoadType]!,
             load: Double(newSetLoad)!,
@@ -143,8 +143,8 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         return set
     }
     
-    public func setNewSetName(selectedTemplateSession: TemplateSession?) -> Void {
-        newSetName = "Set \(selectedTemplateSession!.getNextPositionIndex())"
+    public func setNewSetName(selectedTemplateSession: TemplateSession) -> Void {
+        newSetName = "Set \(selectedTemplateSession.getNextPositionIndex())"
     }
     
 }

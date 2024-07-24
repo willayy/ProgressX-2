@@ -22,8 +22,8 @@ class EditTemplateSessionViewModel: ObservableObject {
     @Published var editedSessionDescIsInvalidMsg: String = ""
     @Published var editedPositionIndex: Int64 = 0
     
-    public func positionIndexes(selectedTemplateSession: TemplateSession?) -> [Int64] {
-        let week = selectedTemplateSession!.templateWeek!
+    public func positionIndexes(selectedTemplateSession: TemplateSession) -> [Int64] {
+        let week = selectedTemplateSession.templateWeek!
         let sessions = week.templateSessions!.allObjects as! [TemplateSession]
         let positionIndexes = sessions.map { session in
             session.positionIndex
@@ -37,21 +37,21 @@ class EditTemplateSessionViewModel: ObservableObject {
         editedPositionIndex = selectedTemplateSession!.positionIndex
     }
     
-    public func saveTemplateSessionChanges(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> Void {
+    public func saveTemplateSessionChanges(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession) -> Void {
         
-        if selectedTemplateSession!.timePeriodName != editedSessionName {
-            selectedTemplateSession!.timePeriodName = editedSessionName
+        if selectedTemplateSession.timePeriodName != editedSessionName {
+            selectedTemplateSession.timePeriodName = editedSessionName
         }
         
-        if selectedTemplateSession!.timePeriodDescription != editedSessionDescription {
-            selectedTemplateSession!.timePeriodDescription = editedSessionDescription
+        if selectedTemplateSession.timePeriodDescription != editedSessionDescription {
+            selectedTemplateSession.timePeriodDescription = editedSessionDescription
         }
         
-        if selectedTemplateSession!.positionIndex != editedPositionIndex {
-            selectedTemplateSession!.positionIndex = editedPositionIndex
+        if selectedTemplateSession.positionIndex != editedPositionIndex {
+            selectedTemplateSession.positionIndex = editedPositionIndex
         }
         
-        if selectedTemplateSession!.hasChanges {
+        if selectedTemplateSession.hasChanges {
             withAnimation {
                 showSessionChangedAlert = true
                 PersistenceController.save(viewContext)

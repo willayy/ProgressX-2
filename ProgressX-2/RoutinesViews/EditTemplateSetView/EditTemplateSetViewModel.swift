@@ -44,57 +44,57 @@ class EditTemplateSetViewModel: ObservableObject {
     @Published var showNoChangeAlert: Bool = false
     @Published var showSetChangedAlert: Bool = false
     
-    public func setViewStartValues(selectedTemplateSet: TemplateSet?) -> Void {
-        editedSetName = selectedTemplateSet!.timePeriodName!
-        editedSetDesc = selectedTemplateSet!.timePeriodDescription!
-        editedSetPositionIndex = selectedTemplateSet!.positionIndex
-        selectedExercise = selectedTemplateSet!.exercise!
-        editedLoadType = loadTypeMap()[selectedTemplateSet!.loadType!]!
-        editedQuantityType = quantityTypeMap()[selectedTemplateSet!.quantityType!]!
-        editedSetLoad = selectedTemplateSet!.loadTodoString
-        editedSetQuantity = selectedTemplateSet!.quantityTodoString
-        editedRestTime = selectedTemplateSet!.restTimeString
+    public func setViewStartValues(selectedTemplateSet: TemplateSet) -> Void {
+        editedSetName = selectedTemplateSet.timePeriodName!
+        editedSetDesc = selectedTemplateSet.timePeriodDescription!
+        editedSetPositionIndex = selectedTemplateSet.positionIndex
+        selectedExercise = selectedTemplateSet.exercise!
+        editedLoadType = loadTypeMap()[selectedTemplateSet.loadType!]!
+        editedQuantityType = quantityTypeMap()[selectedTemplateSet.quantityType!]!
+        editedSetLoad = selectedTemplateSet.loadTodoString!
+        editedSetQuantity = selectedTemplateSet.quantityTodoString!
+        editedRestTime = selectedTemplateSet.restTimeString
     }
     
-    public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet?) -> Void {
+    public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
         
-        if editedSetName != selectedTemplateSet!.timePeriodName {
-            selectedTemplateSet!.timePeriodName = editedSetName
+        if editedSetName != selectedTemplateSet.timePeriodName {
+            selectedTemplateSet.timePeriodName = editedSetName
         }
         
-        if editedSetDesc != selectedTemplateSet!.timePeriodDescription {
-            selectedTemplateSet!.timePeriodDescription = editedSetDesc
+        if editedSetDesc != selectedTemplateSet.timePeriodDescription {
+            selectedTemplateSet.timePeriodDescription = editedSetDesc
         }
         
-        if Double(editedSetLoad)! != selectedTemplateSet!.setLoad {
-            selectedTemplateSet!.setLoad = Double(editedSetLoad)!
+        if Double(editedSetLoad)! != selectedTemplateSet.setLoad {
+            selectedTemplateSet.setLoad = Double(editedSetLoad)!
         }
         
-        if Double(editedSetQuantity) != selectedTemplateSet!.setQuantity {
-            selectedTemplateSet!.setQuantity = Double(editedSetQuantity)!
+        if Double(editedSetQuantity) != selectedTemplateSet.setQuantity {
+            selectedTemplateSet.setQuantity = Double(editedSetQuantity)!
         }
         
-        if selectedExercise!.exerciseName != selectedTemplateSet!.exercise!.exerciseName {
-            selectedTemplateSet!.exercise = selectedExercise
+        if selectedExercise!.exerciseName != selectedTemplateSet.exercise!.exerciseName {
+            selectedTemplateSet.exercise = selectedExercise
         }
         
-        if typeMap[editedLoadType] != selectedTemplateSet!.loadType {
-            selectedTemplateSet!.loadType = typeMap[editedLoadType]!
+        if typeMap[editedLoadType] != selectedTemplateSet.loadType {
+            selectedTemplateSet.loadType = typeMap[editedLoadType]!
         }
         
-        if typeMap[editedQuantityType] != selectedTemplateSet!.quantityType {
-            selectedTemplateSet!.quantityType = typeMap[editedQuantityType]!
+        if typeMap[editedQuantityType] != selectedTemplateSet.quantityType {
+            selectedTemplateSet.quantityType = typeMap[editedQuantityType]!
         }
         
-        if editedSetPositionIndex != selectedTemplateSet!.positionIndex {
-            selectedTemplateSet!.positionIndex = editedSetPositionIndex
+        if editedSetPositionIndex != selectedTemplateSet.positionIndex {
+            selectedTemplateSet.positionIndex = editedSetPositionIndex
         }
         
-        if Double(editedRestTime)! != selectedTemplateSet!.restTime {
-            selectedTemplateSet!.restTime = Double(editedRestTime)!
+        if Double(editedRestTime)! != selectedTemplateSet.restTime {
+            selectedTemplateSet.restTime = Double(editedRestTime)!
         }
         
-        if selectedTemplateSet!.hasChanges {
+        if selectedTemplateSet.hasChanges {
             withAnimation {
                 showSetChangedAlert = true
                 PersistenceController.save(viewContext)

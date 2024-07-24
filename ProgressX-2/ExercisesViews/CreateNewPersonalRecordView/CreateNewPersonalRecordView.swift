@@ -91,8 +91,8 @@ struct CreateNewPersonalRecord: View {
                     if validateInput() {
                         viewModel.createNewPersonalRecord(
                             viewContext: viewContext,
-                            exercise: selectedExercise,
-                            prType: prType
+                            exercise: selectedExercise!,
+                            prType: prType!
                         )
                         navPath.removeLast()
                     }
