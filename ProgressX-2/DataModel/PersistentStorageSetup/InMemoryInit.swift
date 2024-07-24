@@ -278,6 +278,10 @@ class InMemory {
         let exercises = PersistenceController.fetch(context, fetchRequest: exerciseFetchRequest)
         let exercise = exercises.first!
         
+        // Get the standard rest time
+        let profile = PersistenceController.getProfile(context)
+        let standardRestTime = profile!.standardRestTime
+        
         // Adding a template set to the template session
         let templateSet11 = TemplateSet(
             context,
@@ -286,7 +290,8 @@ class InMemory {
             loadType: "numerical",
             load: 1,
             quantityType: "numerical",
-            quantity: 1
+            quantity: 1,
+            restTime: standardRestTime
         )
         
         // Adding thresholds to the set
@@ -308,7 +313,8 @@ class InMemory {
             loadType: "numerical",
             load: 2,
             quantityType: "numerical",
-            quantity: 2
+            quantity: 2,
+            restTime: standardRestTime
         )
         
         let templateSet21 = TemplateSet(
@@ -318,7 +324,8 @@ class InMemory {
             loadType: "numerical",
             load: 1,
             quantityType: "numerical",
-            quantity: 1
+            quantity: 1,
+            restTime: standardRestTime
         )
         
         let templateSet22 = TemplateSet(
@@ -328,7 +335,8 @@ class InMemory {
             loadType: "numerical",
             load: 2,
             quantityType: "numerical",
-            quantity: 2
+            quantity: 2,
+            restTime: standardRestTime
         )
         
         let templateSet31 = TemplateSet(
@@ -338,7 +346,8 @@ class InMemory {
             loadType: "numerical",
             load: 1,
             quantityType: "numerical",
-            quantity: 1
+            quantity: 1,
+            restTime: standardRestTime
         )
         
         let templateSet32 = TemplateSet(
@@ -348,7 +357,8 @@ class InMemory {
             loadType: "numerical",
             load: 2,
             quantityType: "numerical",
-            quantity: 2
+            quantity: 2,
+            restTime: standardRestTime
         )
         
         // MARK: Setting up a training routine

@@ -21,7 +21,8 @@ extension TemplateSet: HasOrderable {
         loadType: String,
         load: Double,
         quantityType: String,
-        quantity: Double
+        quantity: Double,
+        restTime: Double
     ) {
         self.init(context: context)
         self.templateSession = templateSession
@@ -36,6 +37,7 @@ extension TemplateSet: HasOrderable {
         let exerciseName = exercise.exerciseName!
         let sessionName = templateSession.timePeriodName!
         self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        self.restTime = restTime
         templateSession.addToTemplateSets(self)
     }
     
