@@ -153,7 +153,7 @@ struct CreateNewProfile3View: View {
     // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
+        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 1000)
         
         valid += doubleFieldValidator.valideField(
             inputVar: viewModel.chestCirc,
