@@ -41,7 +41,7 @@ struct RoutineStatisticsView: View {
                         
                         (Text("Total completed cycles: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.completedCycles.count)"))
+                         + Text("\(selectedRoutine!.completedCycles!.count)"))
                         .padding(.vertical, 10)
                         
                     }

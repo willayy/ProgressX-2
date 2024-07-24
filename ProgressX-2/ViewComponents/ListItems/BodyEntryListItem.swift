@@ -26,7 +26,7 @@ struct BodyEntryListItem: View {
                 
                 (Text("Bodyweight: ")
                     .fontWeight(.bold)
-                 + Text("\(bodyEntry.bodyWeightString)"))
+                 + Text("\(bodyEntry.bodyWeightString!)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 

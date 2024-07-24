@@ -33,7 +33,7 @@ struct RoutineListItem: View {
                     
                     (Text("Completed cycles: ")
                         .fontWeight(.bold)
-                     + Text("\(routine.completedCycles.count)"))
+                     + Text("\(routine.completedCycles!.count)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

@@ -53,7 +53,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets the last session done, returns nil if no sessions done.
-    var lastCompletedSession: TrainingSession? {
+    public var lastCompletedSession: TrainingSession? {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let orderedSessions = completedSessions.sorted(by: {$0.completedOnDate! > $1.completedOnDate!})
@@ -61,7 +61,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets all sessions completed within 30 days of today, returns empty array if none.
-    var sessionsDoneThisMonth: [TrainingSession] {
+    public var sessionsDoneThisMonth: [TrainingSession] {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -71,7 +71,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets all sessions completed within 7 days of today, returns empty array if none.
-    var sessionsDoneThisWeek: [TrainingSession] {
+    public var sessionsDoneThisWeek: [TrainingSession] {
         let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -81,15 +81,15 @@ extension Routine: HasOrderable {
     }
     
     /// Gets the date when the routine was created presented as a string.
-    var creationDateString: String {
+    public var creationDateString: String {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         return df.string(from: self.createdOnDate!)
     }
     
-    /// Gets all completed cycles of thre routine, returns empty array if none.
-    var completedCycles: [TrainingCycle] {
-        let context = self.managedObjectContext!
+    /// Gets all completed cycles of thre routine, returns empty array if none. Returns nil if context is not set.
+    public var completedCycles: [TrainingCycle]? {
+        guard let context = self.managedObjectContext else {return nil}
         let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
         fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             NSPredicate(format: "routine == %@", self),
@@ -100,7 +100,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets all the exercises in the routine as a dictionary where the keys are the exercises and the values the frequency.
-    var exerciseInRoutine: [String : Int] {
+    public var exerciseInRoutine: [String : Int] {
         let allExercises = self.allExercises
         let exerciseDictionary = Dictionary(grouping: allExercises) { $0.exerciseName! }
             .mapValues { $0.count }
@@ -108,7 +108,7 @@ extension Routine: HasOrderable {
     }
     
     /// Gets all the categories in the routine as a dictionary where the keys are the exercise-categories and the values the frequency.
-    var categoriesInRoutine: [String : Int] {
+    public var categoriesInRoutine: [String : Int] {
         let allExercises = self.allExercises
         let allCategories = allExercises.flatMap { $0.categories! }
         let categoryDictionary = Dictionary(grouping: (allCategories as! [ExerciseCategory])) { $0.categoryName! }
@@ -118,7 +118,7 @@ extension Routine: HasOrderable {
     
     /// Gets the next available
     /// - Returns: An Int64 that is a valid positionIndex
-    func getNextPositionIndex() -> Int64 {
+    public func getNextPositionIndex() -> Int64 {
         let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
         let max = cycles.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
