@@ -21,21 +21,21 @@ class EditRoutineViewModel: ObservableObject {
     @Published var editedRoutineDescIsInvalid: Bool = false
     @Published var editedRoutineDescIsInvalidMsg: String = ""
     
-    public func setViewStartValues(selectedRoutine: Routine?) -> Void {
-        editedRoutineName = selectedRoutine!.timePeriodName!
-        editiedRoutineDescription = selectedRoutine!.timePeriodDescription!
+    public func setViewStartValues(selectedRoutine: Routine) -> Void {
+        editedRoutineName = selectedRoutine.timePeriodName!
+        editiedRoutineDescription = selectedRoutine.timePeriodDescription!
     }
     
-    public func saveRoutineChanges(viewContext: NSManagedObjectContext, selectedRoutine: Routine?) -> Void {
-        if selectedRoutine!.timePeriodName != editedRoutineName {
-            selectedRoutine!.timePeriodName = editedRoutineName
+    public func saveRoutineChanges(viewContext: NSManagedObjectContext, selectedRoutine: Routine) -> Void {
+        if selectedRoutine.timePeriodName != editedRoutineName {
+            selectedRoutine.timePeriodName = editedRoutineName
         }
         
-        if selectedRoutine!.timePeriodDescription != editiedRoutineDescription {
-            selectedRoutine!.timePeriodDescription = editiedRoutineDescription
+        if selectedRoutine.timePeriodDescription != editiedRoutineDescription {
+            selectedRoutine.timePeriodDescription = editiedRoutineDescription
         }
         
-        if selectedRoutine!.hasChanges {
+        if selectedRoutine.hasChanges {
             withAnimation {
                 showRoutineChangedAlert = true
             }
@@ -47,13 +47,13 @@ class EditRoutineViewModel: ObservableObject {
         }
     }
     
-    public func addWeek(viewContext: NSManagedObjectContext, selectedTemplateCycle: TemplateCycle?) -> Void {
+    public func addWeek(viewContext: NSManagedObjectContext, selectedTemplateCycle: TemplateCycle) -> Void {
         let week = TemplateWeek(
             viewContext,
-            templateCycle: selectedTemplateCycle!
+            templateCycle: selectedTemplateCycle
         )
         
-        selectedTemplateCycle!.addToTemplateWeeks(week)
+        selectedTemplateCycle.addToTemplateWeeks(week)
         
         PersistenceController.save(viewContext)
     }

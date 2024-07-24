@@ -96,12 +96,15 @@ struct EditTemplateWeekView: View {
                         
                         IntSelectionList(
                             selected: $viewModel.editedPositionIndex,
-                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek)
+                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek!)
                         )
                         
                         Button {
                             if validateInput() {
-                                viewModel.saveTemplateWeekChanges(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
+                                viewModel.saveTemplateWeekChanges(
+                                    viewContext: viewContext,
+                                    selectedTemplateWeek: selectedTemplateWeek!
+                                )
                             }
                         } label: {
                             Text("Save change")
@@ -137,7 +140,7 @@ struct EditTemplateWeekView: View {
                 Button {
                     viewModel.addSession(
                         viewContext: viewContext,
-                        selectedTemplateWeek: selectedTemplateWeek
+                        selectedTemplateWeek: selectedTemplateWeek!
                     )
                 } label: {
                     Text("Add new Session")

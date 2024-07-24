@@ -92,7 +92,7 @@ struct EditRoutineView: View {
                             if validateInput() {
                                 viewModel.saveRoutineChanges(
                                     viewContext: viewContext,
-                                    selectedRoutine: selectedRoutine
+                                    selectedRoutine: selectedRoutine!
                                 )
                             }
                         } label: {
@@ -129,7 +129,7 @@ struct EditRoutineView: View {
                 Button {
                     viewModel.addWeek(
                         viewContext: viewContext,
-                        selectedTemplateCycle: selectedTemplateCycle
+                        selectedTemplateCycle: selectedTemplateCycle!
                     )
                 } label: {
                     Text("Add new Week")
@@ -145,7 +145,7 @@ struct EditRoutineView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedRoutine: selectedRoutine)
+            viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
         })
     }
     

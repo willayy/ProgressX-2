@@ -25,15 +25,15 @@ class CreateNewPersonalRecordViewModel: ObservableObject {
     // Segment picker options
     private let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
     
-    public func createNewPersonalRecord(viewContext: NSManagedObjectContext, exercise: Exercise?, prType: String?) -> Void {
+    public func createNewPersonalRecord(viewContext: NSManagedObjectContext, exercise: Exercise, prType: String) -> Void {
         // Create the PR
         let _: PersonalRecord = PersonalRecord(
             viewContext,
-            exercise: exercise!,
+            exercise: exercise,
             weightLoad: Double(prLoad)!,
             quantity: Double(prQuantity)!,
             date: prDate,
-            type: prType!
+            type: prType
         )
         
         PersistenceController.save(viewContext)

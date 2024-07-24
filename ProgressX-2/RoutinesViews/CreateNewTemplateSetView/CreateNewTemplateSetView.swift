@@ -36,7 +36,7 @@ struct CreateNewTemplateSetView: View {
                 )
                 .padding(.bottom, 5)
                 .onAppear(perform: {
-                    viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession)
+                    viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession!)
                 })
                 
                 InputTextField(
@@ -184,7 +184,7 @@ struct CreateNewTemplateSetView: View {
                         if validateInput() {
                             selectedTemplateSet = viewModel.createNewTemplateSet(
                                 viewContext: viewContext,
-                                selectedTemplateSession: selectedTemplateSession
+                                selectedTemplateSession: selectedTemplateSession!
                             )
                         }
                     } label: {
