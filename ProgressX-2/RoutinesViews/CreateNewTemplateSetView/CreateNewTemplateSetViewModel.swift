@@ -27,6 +27,10 @@ class CreateNewTemplateSetViewModel: ObservableObject {
     @Published var newSetQuantity: String = ""
     @Published var newSetQuantityIsInvalid: Bool = false
     @Published var newSetQuantityIsInvalidMsg: String = ""
+    // The rest time
+    @Published var restTime: String = ""
+    @Published var restTimeIsInvalid: Bool = false
+    @Published var restTimeIsInvalidMsg: String = ""
     // The exercise of the set
     @Published var selectedExercise: Exercise? = nil
     @Published var searchWord: String = ""
@@ -112,6 +116,11 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         "Percentage of current body weight" : "bwperc"
     ]
     
+    public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
+        let profile = PersistenceController.getProfile(viewContext)!
+        restTime = profile.standardRestTimeString
+    }
+    
     public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> TemplateSet {
                 
         let set = TemplateSet(
@@ -121,7 +130,8 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             loadType: typeMap[selectedLoadType]!,
             load: Double(newSetLoad)!,
             quantityType: typeMap[selectedQuantityType]!,
-            quantity: Double(newSetQuantity)!
+            quantity: Double(newSetQuantity)!, 
+            restTime: Double(restTime)!
         )
         
         PersistenceController.save(viewContext)
