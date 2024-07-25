@@ -23,8 +23,10 @@ struct StatisticsView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Statistics for \(String(exercise!.exerciseName!))")
+                BoldTitle(text: "Statistics for")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(String(exercise!.exerciseName!))")
                 
                 LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
                 

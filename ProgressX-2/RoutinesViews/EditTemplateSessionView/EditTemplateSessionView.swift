@@ -28,8 +28,10 @@ struct EditTemplateSessionView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing session: \(selectedTemplateSession!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")

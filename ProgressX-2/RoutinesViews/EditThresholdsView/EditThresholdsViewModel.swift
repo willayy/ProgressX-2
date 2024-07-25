@@ -71,8 +71,8 @@ class EditThresholdsViewModel: ObservableObject {
         addPrSelection = prSelection
         addRepPrSelection = repPrSelection
         editedTriggerQuantity = removeSubstrings(from: selectedSetThreshold.triggerQuantityString!, substrings: removeStrings)
-        editedFlatLoadAdd = removeSubstrings(from: selectedSetThreshold.flatLoadAddString!, substrings: removeStrings)
-        editedFlatQuantityAdd = removeSubstrings(from: selectedSetThreshold.flatQuantityAddString!, substrings: removeStrings)
+        editedFlatLoadAdd = removeSubstrings(from: selectedSetThreshold.flatLoadAddString ?? "", substrings: removeStrings)
+        editedFlatQuantityAdd = removeSubstrings(from: selectedSetThreshold.flatQuantityAddString ?? "", substrings: removeStrings)
         
     }
     

@@ -26,8 +26,10 @@ struct ThresholdsView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Adding thresholds for: \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Adding thresholds for")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 
                 BoldSubHeadline(text: "Current thresholds in \(selectedTemplateSet!.timePeriodName!)")
                     .padding(.top, 20)

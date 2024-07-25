@@ -35,8 +35,10 @@ struct EditRoutineView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing routine: \(selectedRoutine!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    
+                Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")

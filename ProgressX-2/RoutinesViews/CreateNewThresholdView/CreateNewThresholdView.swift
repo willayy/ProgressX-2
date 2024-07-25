@@ -25,8 +25,10 @@ struct CreateNewThresholdView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Add a new threshold to:  \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Add a new threshold to")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 20)
                 
                 LightSubHeadline(text: "Start by assigning a trigger quantity, when this quantity is achieved during trainig the threshold is triggered.")
