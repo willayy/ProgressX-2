@@ -48,11 +48,11 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current 1RM PR",
+                    "Percentage of current 1RM PR load",
                     "Percentage of current body weight"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR",
+                    "Percentage of current TimeMax PR load",
                     "Percentage of current body weight"]
         default:
             return []
@@ -64,10 +64,10 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current AMRAP PR"]
+                    "Percentage of current AMRAP PR reps"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR"]
+                    "Percentage of current TimeMax PR time"]
         default:
             return []
         }
@@ -79,9 +79,9 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         case "Numerical":
             let weightUnit = PersistenceController.getWeightUnit(viewContext)!
             return "Load \(weightUnit)"
-        case "Percentage of current 1RM PR":
+        case "Percentage of current 1RM PR load":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of current TimeMax PR load":
             return "Percentage"
         case "Percentage of current body weight":
             return "Percentage"
@@ -97,9 +97,9 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             let exerciseType = selectedExercise?.exerciseType
             if exerciseType == nil {return "Select exercise first!"}
             return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR":
+        case "Percentage of current AMRAP PR reps":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of current TimeMax PR time":
             return "Percentage"
         default:
             return "Select exercise first!"
@@ -110,9 +110,9 @@ class CreateNewTemplateSetViewModel: ObservableObject {
      the view to the correct core data property value */
     let typeMap: [String : String] = [
         "Numerical" : "numerical",
-        "Percentage of current 1RM PR" : "maxperc",
-        "Percentage of current TimeMax PR" : "maxperc",
-        "Percentage of current AMRAP PR" : "maxperc",
+        "Percentage of current 1RM PR load" : "maxperc",
+        "Percentage of current TimeMax PR load" : "maxperc",
+        "Percentage of current AMRAP PR reps" : "maxperc",
         "Percentage of current body weight" : "bwperc"
     ]
     
