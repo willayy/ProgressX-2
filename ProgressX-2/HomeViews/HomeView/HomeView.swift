@@ -41,9 +41,11 @@ struct HomeView: View {
                         let profile: Profile = profiles.first!
                         
                         BoldTitle(text: "Home")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Welcome back \(profile.profileUserName!)!")
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                         
                         // MARK: General information
                         GroupBox {

@@ -27,9 +27,11 @@ struct CreateNewRoutineView: View {
                 
                 BoldTitle(text: "Create new routine")
                     .padding(.bottom, 10)
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Start by giving your new routine a name and optionally a description.")
                     .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 InputTextField(
                     placeHolder: "Routine name...",

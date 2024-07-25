@@ -22,8 +22,10 @@ struct ViewAllWeighInsView: View {
         ScrollView {
             VStack {
                 BoldTitle(text: "Weigh-in's")
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Here you can modify, view and delete your weigh-in's")
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 20)
                 
                 BasicList(

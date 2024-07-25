@@ -30,7 +30,7 @@ struct CreateNewProfile2View: View {
                 .fontWeight(.light)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 30.0)
+                .padding(.horizontal, 20)
                 .minimumScaleFactor(0.5);
             
             HStack(spacing: 20) {

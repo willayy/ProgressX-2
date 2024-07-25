@@ -27,8 +27,10 @@ struct CreateNewProfile1View: View {
                 VStack(alignment: .center, spacing: 10) {
                     
                     BoldTitle(text: "Create a profile!")
+                        .padding(.horizontal, 20)
                      
                     LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only.")
+                        .padding(.horizontal, 20)
                     
                     Text("Username")
                         .foregroundColor(.black)
@@ -82,7 +84,9 @@ struct CreateNewProfile1View: View {
                     StringSelectionList(
                         selected: $viewModel.smallestPlateSelection,
                         selections: viewModel.smallestPlateSegments
-                    ).onChange(
+                    )
+                    .padding(.horizontal, 20)
+                    .onChange(
                         of: viewModel.selectedUnitSegment,
                         initial: false, {
                             viewModel.smallestPlateSelection = viewModel.smallestPlateSegments.first!

@@ -21,6 +21,7 @@ struct InfoHelpView: View {
                     VStack {
                         
                         BoldTitle(text: "Help / Information")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Here you can find helpful information and how-to's for how this app works.")
                             .padding(.horizontal, 20)
