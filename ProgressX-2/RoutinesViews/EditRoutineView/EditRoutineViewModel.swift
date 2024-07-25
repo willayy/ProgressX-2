@@ -48,12 +48,26 @@ class EditRoutineViewModel: ObservableObject {
     }
     
     public func addWeek(viewContext: NSManagedObjectContext, selectedTemplateCycle: TemplateCycle) -> Void {
-        let week = TemplateWeek(
+        let templateWeek = TemplateWeek(
             viewContext,
             templateCycle: selectedTemplateCycle
         )
         
-        selectedTemplateCycle.addToTemplateWeeks(week)
+        // Get all training cycles
+        let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateCycle == %@", selectedTemplateCycle)
+        // Only included incomplete trainingCycles as completed ones are irrelevant for this change
+        let trainingCycles = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({ !$0.isComplete })
+        
+        // Add training cycles to them
+        for trainingCycle in trainingCycles {
+            let _ = TrainingWeek(
+                viewContext,
+                trainingCycle: trainingCycle,
+                templateWeek: templateWeek
+            )
+        }
         
         PersistenceController.save(viewContext)
     }
