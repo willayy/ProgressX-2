@@ -91,8 +91,11 @@ struct HomeView: View {
                                     viewModel.navPath.append(1)
                                 } label: {
                                     Text("Weigh in")
-                                        .frame(width: 275)
+                                        .frame(maxWidth: .infinity)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
+                                    
+                                    Image(systemName: "plus")
                                         .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
@@ -101,8 +104,11 @@ struct HomeView: View {
                                     viewModel.navPath.append(2)
                                 } label: {
                                     Text("View all weigh-in's")
-                                        .frame(width: 275)
+                                        .frame(maxWidth: .infinity)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
+                                    
+                                    Image(systemName: "pencil")
                                         .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
