@@ -26,36 +26,43 @@ struct ProgressX_2App: App {
                             }
                         }
                     })
-            }else {
+            } else {
                 switch (viewRouter.rootView) {
                 case .HomeView:
                     HomeView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .StartWorkoutView:
                     StartWorkoutView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                        
                 case .CreateNewProfileView:
                     CreateNewProfile1View()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .ExerciseLibraryView:
                     ExerciseLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .ProfileView:
                     ProfileView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .SideBarButton:
                     SideBarButton(showMenu: $showMenu)
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .RoutineLibraryView:
                     RoutineLibraryView()
                         .environmentObject(viewRouter)
                         .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                    
                 case .InfoHelp:
                     InfoHelpView()
                         .environmentObject(viewRouter)
