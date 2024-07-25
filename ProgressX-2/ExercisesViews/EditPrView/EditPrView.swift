@@ -20,6 +20,7 @@ struct EditPrView: View {
             VStack(alignment: .center) {
                 
                 BoldTitle(text: "Editing PR for: \(exercise!.exerciseName!)")
+                    .padding(.horizontal, 20)
                 
                 if viewModel.prEditedAlert {
                     SubmitAlert(

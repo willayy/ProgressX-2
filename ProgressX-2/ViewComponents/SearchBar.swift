@@ -23,7 +23,6 @@ struct SearchBar<T: NSManagedObject>: View {
                 .padding(10)
                 .background(Color(.systemGray6))
                 .cornerRadius(10)
-                .padding(.horizontal, 20)
                 .onDisappear(perform: { searchText = "" })
                 .onAppear(perform: {
                     // Save the initial predicate

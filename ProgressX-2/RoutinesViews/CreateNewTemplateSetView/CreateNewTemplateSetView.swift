@@ -56,6 +56,7 @@ struct CreateNewTemplateSetView: View {
                     selectedExercise: $viewModel.selectedExercise,
                     searchWord: $viewModel.searchWord
                 )
+                .padding(.horizontal, 20)
                 .onChange(
                     of: viewModel.selectedExercise,
                     initial: false
@@ -102,6 +103,7 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedLoadType,
                         selections: viewModel.loadTypeSelections
                     )
+                    .padding(.horizontal, 20)
                     
                     BoldSubHeadline(text: "Choose quantity type")
                         .padding(.top, 20)
@@ -120,6 +122,7 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedQuantityType,
                         selections: viewModel.quantityTypeSelections
                     )
+                    .padding(.horizontal, 20)
                     
                     BoldSubHeadline(text: "Choose quantity and load")
                         .padding(.top, 20)

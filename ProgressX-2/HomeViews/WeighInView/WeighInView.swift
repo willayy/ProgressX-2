@@ -18,6 +18,7 @@ struct WeighInView: View {
             VStack {
                 
                 BoldTitle(text: "Weigh in")
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Here you can weigh in with your current weight and optionally your current body measurements")
                     .padding(.bottom, 10)

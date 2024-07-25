@@ -41,6 +41,7 @@ struct CreateNewExerciseView: View {
             VStack(alignment: .center) {
                 
                 BoldTitle(text: "Create new exercise")
+                    .padding(.horizontal, 20)
                 
                 if viewModel.exerciseCreatedAlert {
                     SubmitAlert(

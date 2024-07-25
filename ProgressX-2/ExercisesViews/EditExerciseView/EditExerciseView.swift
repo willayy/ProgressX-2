@@ -58,9 +58,11 @@ struct EditExerciseView: View {
                             .fontWeight(.light)
                             .foregroundStyle(.red)
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                     } else {
                         LightSubHeadline(text: selectedExercise!.exerciseDesc!)
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                     }
                     
                     BoldSubHeadline(text: "Edit exercise name")

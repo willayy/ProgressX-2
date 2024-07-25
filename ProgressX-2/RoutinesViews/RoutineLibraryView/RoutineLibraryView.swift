@@ -41,8 +41,10 @@ struct RoutineLibraryView: View {
                     VStack(alignment: .center) {
                         //MARK: View header text
                         BoldTitle(text: "Routine library")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Here you can browse Routines you have created, view statistics, edit them and create new ones.")
+                            .padding(.horizontal, 20)
                         
                         // MARK: Search bar
                         SearchBar(
@@ -51,6 +53,7 @@ struct RoutineLibraryView: View {
                             fetchRequest: _searchedRoutines
                         )
                         .padding(.top, 20)
+                        .padding(.horizontal, 20)
                         
                         // MARK: List
                         SearchableList(
