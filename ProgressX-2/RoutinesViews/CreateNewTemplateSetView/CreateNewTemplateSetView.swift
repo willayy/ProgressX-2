@@ -137,8 +137,9 @@ struct CreateNewTemplateSetView: View {
                             allowNegatives: false,
                             numberText: $viewModel.newSetLoad,
                             markAsWrong: $viewModel.newSetLoadIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.newSetLoadIsInvalidMsg
+                            width: 0.45,
+                            errorMessage: $viewModel.newSetLoadIsInvalidMsg,
+                            bodyWeightButton: true
                         )
                         
                         if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
