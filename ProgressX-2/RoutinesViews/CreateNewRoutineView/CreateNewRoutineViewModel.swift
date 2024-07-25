@@ -28,13 +28,13 @@ class CreateNewRoutineViewModel: ObservableObject {
         )
         
         // Create a TemplateCycle to add
-        let templateCycle = TemplateCycle(
+        let _ = TemplateCycle(
             viewContext,
             routine: newRoutine
         )
         
         // Create a TrainingCycle to add
-        let trainingCycle = TrainingCycle(
+        let _ = TrainingCycle(
             viewContext,
             routine: newRoutine
         )

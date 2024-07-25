@@ -22,7 +22,7 @@ class EditTemplateWeekViewModel: ObservableObject {
     @Published var editedWeekDescIsInvalidMsg: String = ""
     @Published var editedPositionIndex: Int64 = 0
     
-    // Get the positionIndexes for all weeks in this Routine
+    /// Get the positionIndexes for all weeks in this Routine
     public func positionIndexes(selectedTemplateWeek: TemplateWeek) -> [Int64] {
         let cycle = selectedTemplateWeek.templateCycle!
         let weeks = cycle.templateWeeks!.allObjects as! [TemplateWeek]
@@ -77,16 +77,28 @@ class EditTemplateWeekViewModel: ObservableObject {
         }
     }
     
-    /// Propogating changes made to the template to all matching trainingWeeks
+    /// Propogating changes made to the TemplateWeek to all matching trainingWeeks
     private func propogateChanges(_ viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
-        // Get all trainingWeeks
+        let changes = selectedTemplateWeek.changedValues() // Get changes
         let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek)
+        
         // Fetch all incomplete weeks as these are the only ones affected
         let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({!$0.isComplete})
+        
         for trainingWeek in trainingWeeks {
-            <#body#>
+            if let timePeriodName = changes["timePeriodName"] {
+                trainingWeek.timePeriodName = (timePeriodName as! String)
+            }
+            
+            if let timePeriodDesc = changes["timePeriodDescription"] {
+                trainingWeek.timePeriodName = timePeriodDesc as? String
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                trainingWeek.positionIndex = positionIndex as! Int64
+            }
         }
     }
     
