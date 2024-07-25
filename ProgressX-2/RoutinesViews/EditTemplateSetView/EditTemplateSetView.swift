@@ -19,7 +19,9 @@ struct EditTemplateSetView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Editing: \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Editing")
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 if viewModel.showSetChangedAlert {

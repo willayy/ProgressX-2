@@ -25,9 +25,9 @@ struct EditThresholdsView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(
-                    text: "Editing: \(selectedThreshold?.timePeriodName ?? "")"
-                )
+                BoldTitle(text: "Editing")
+                
+                Title2(text: "\(selectedThreshold!.timePeriodName!)")
                 
                 LightSubHeadline(
                     text: "Here you can edit thresholds you have created"

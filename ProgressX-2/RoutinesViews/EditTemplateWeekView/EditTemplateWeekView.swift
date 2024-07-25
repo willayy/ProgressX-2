@@ -27,8 +27,10 @@ struct EditTemplateWeekView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing week: \(selectedTemplateWeek!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")

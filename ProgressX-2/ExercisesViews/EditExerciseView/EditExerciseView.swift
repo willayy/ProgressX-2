@@ -30,9 +30,9 @@ struct EditExerciseView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
-                    BoldTitle(
-                        text: "Editing exercise: \(selectedExercise!.exerciseName!)"
-                    )
+                    BoldTitle(text: "Editing")
+                    
+                    Title2(text: "\(selectedExercise!.exerciseName!)")
                         
                     if viewModel.exerciseEditedAlert {
                         SubmitAlert(
