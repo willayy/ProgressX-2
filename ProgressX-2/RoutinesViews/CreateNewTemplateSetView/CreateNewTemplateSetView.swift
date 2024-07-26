@@ -20,11 +20,16 @@ struct CreateNewTemplateSetView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Create new set")
-                    .padding(.bottom, 10)
+                BoldTitle(text: "Create new set in")
                 
-                LightSubHeadline(text: "Start by optionally giving your set a description or a custom name.")
-                    .padding(.bottom, 20)
+                Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
+                
+                HiddenLightSubHeadline(
+                    title: "What is a set?",
+                    text: "A set consists of an exercise, a quantity and a load. The load could for example be 100kg / 100lbs, quantity could be 10 reps or 100 seconds."
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 10)
                 
                 InputTextField(
                     placeHolder: "Set name",
@@ -91,11 +96,17 @@ struct CreateNewTemplateSetView: View {
                         .padding(.bottom, 5)
                     
                     if viewModel.selectedLoadType == "Numerical" {
-                        LightSubHeadline(text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs")
-                            .padding(.horizontal, 20)
+                        HiddenLightSubHeadline(
+                            title: "What is Numerical load?",
+                            text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs"
+                        )
+                        .padding(.horizontal, 20)
                     } else {
-                        LightSubHeadline(text: "Percentage load type means that the load will be a percentage value like, 90% of my current 1RM PR on this exercise or 110% of my current bodyweight")
-                            .padding(.horizontal, 20)
+                        HiddenLightSubHeadline(
+                            title: "What is Percentage load?",
+                            text: "Percentage load type means that the load will be a percentage value like, 90% of my current 1RM PR on this exercise or 110% of my current bodyweight"
+                        )
+                        .padding(.horizontal, 20)
                     }
                     
                     // MARK: Menu for selecting load type
@@ -110,11 +121,17 @@ struct CreateNewTemplateSetView: View {
                         .padding(.bottom, 5)
                     
                     if viewModel.selectedQuantityType == "Numerical" {
-                        LightSubHeadline(text: "Numerical quantity type means that the quantity will be a numerical value like 10 seconds or 5 reps.")
-                            .padding(.horizontal, 20)
+                        HiddenLightSubHeadline(
+                            title: "What is Numerical quantity?",
+                            text: "Numerical quantity type means that the quantity will be a numerical value like 10 seconds or 5 reps."
+                        )
+                        .padding(.horizontal, 20)
                     } else {
-                        LightSubHeadline(text: "Percentage quantity type means that the quantity will be a percentage of the current AMRAP/TimeMax PR")
-                            .padding(.horizontal, 20)
+                        HiddenLightSubHeadline(
+                            title: "What is percentage quantity?",
+                            text: "Percentage quantity type means that the quantity will be a percentage of the current AMRAP/TimeMax PR"
+                        )
+                        .padding(.horizontal, 20)
                     }
                     
                     // MARK: Menu for selecting quantity type
@@ -127,6 +144,12 @@ struct CreateNewTemplateSetView: View {
                     BoldSubHeadline(text: "Choose quantity and load")
                         .padding(.top, 20)
                         .padding(.bottom, 5)
+                    
+                    HiddenLightSubHeadline(
+                        title: "What is BW?",
+                        text: "BW means bodyweight, pressing the BW button will make the load automatically set to your bodyweight."
+                    )
+                    .padding(.horizontal, 20)
                     
                     // MARK: Load inputfield
                     HStack {

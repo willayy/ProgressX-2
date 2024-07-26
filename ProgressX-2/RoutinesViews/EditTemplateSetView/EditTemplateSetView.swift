@@ -38,7 +38,7 @@ struct EditTemplateSetView: View {
                     )
                 }
                 
-                LightSubHeadline(text: "Change name or description")
+                BoldSubHeadline(text: "Change name and description")
                 
                 InputTextField(
                     placeHolder: "New set name",
@@ -60,7 +60,7 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "By clicking this you can view and edit thresholds for this set")
+                BoldSubHeadline(text: "Edit or add thresholds for this set")
                     .padding(.horizontal, 10)
                 
                 Button {
@@ -72,7 +72,13 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change position of the set in it's session")
+                BoldSubHeadline(text: "Change position of this set in its session")
+                
+                HiddenLightSubHeadline(
+                    title: "What does set position mean?",
+                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session."
+                )
+                .padding(.horizontal, 20)
                 
                 IntSelectionList(
                     selected: $viewModel.editedSetPositionIndex,

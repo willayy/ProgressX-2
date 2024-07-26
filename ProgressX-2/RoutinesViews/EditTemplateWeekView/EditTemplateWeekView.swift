@@ -100,6 +100,7 @@ struct EditTemplateWeekView: View {
                             selected: $viewModel.editedPositionIndex,
                             selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek!)
                         )
+                        .padding(.horizontal, 40)
                         
                         Button {
                             if validateInput() {
@@ -123,6 +124,12 @@ struct EditTemplateWeekView: View {
                     
                 BoldSubHeadline(text: "Current sessions in this week")
                     .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What is a session?",
+                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours."
+                )
+                .padding(.horizontal, 20)
                 
                 BasicList(
                     height: 400,

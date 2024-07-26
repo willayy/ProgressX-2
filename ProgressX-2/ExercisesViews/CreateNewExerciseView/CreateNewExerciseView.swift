@@ -84,8 +84,14 @@ struct CreateNewExerciseView: View {
                     horizontalPadding: 100
                 )
                 
-                BoldSubHeadline(text: "Add personal record for this exercise?")
+                BoldSubHeadline(text: "Add PR for this exercise?")
                     .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What are PR's?",
+                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did."
+                )
+                .padding(.horizontal, 40)
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPr,
@@ -139,7 +145,7 @@ struct CreateNewExerciseView: View {
                     }
                 }
                 
-                BoldSubHeadline(text: "Add categories to this exercise?")
+                BoldSubHeadline(text: "Add muslce categories to this exercise?")
                     .padding(.top, 15)
                 
                 SelectCategoriesList(
