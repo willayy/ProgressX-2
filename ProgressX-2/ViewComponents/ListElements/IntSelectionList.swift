@@ -25,7 +25,6 @@ struct IntSelectionList: View {
                 }
             }
         }
-        .padding(.horizontal, 100)
     }
 }
 

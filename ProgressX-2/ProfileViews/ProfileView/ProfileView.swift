@@ -29,6 +29,7 @@ struct ProfileView: View {
                 ScrollView {
                     VStack {
                         BoldTitle(text: "Profile")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                             .padding(.horizontal, 20)

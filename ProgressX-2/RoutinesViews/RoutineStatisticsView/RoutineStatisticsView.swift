@@ -17,6 +17,7 @@ struct RoutineStatisticsView: View {
         ScrollView {
             VStack {
                 BoldTitle(text: "Statistics for: \(selectedRoutine!.timePeriodName!)")
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Here you can view some vital statistics for your routine")
                     .padding(.horizontal, 20)

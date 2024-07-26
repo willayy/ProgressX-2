@@ -319,7 +319,7 @@ class InMemory {
         
         let templateSet21 = TemplateSet(
             context,
-            templateSession: templateSession1,
+            templateSession: templateSession2,
             exercise: exercise,
             loadType: "numerical",
             load: 1,
@@ -330,7 +330,7 @@ class InMemory {
         
         let templateSet22 = TemplateSet(
             context,
-            templateSession: templateSession1,
+            templateSession: templateSession2,
             exercise: exercise,
             loadType: "numerical",
             load: 2,
@@ -341,7 +341,7 @@ class InMemory {
         
         let templateSet31 = TemplateSet(
             context,
-            templateSession: templateSession1,
+            templateSession: templateSession3,
             exercise: exercise,
             loadType: "numerical",
             load: 1,
@@ -352,7 +352,7 @@ class InMemory {
         
         let templateSet32 = TemplateSet(
             context,
-            templateSession: templateSession1,
+            templateSession: templateSession3,
             exercise: exercise,
             loadType: "numerical",
             load: 2,

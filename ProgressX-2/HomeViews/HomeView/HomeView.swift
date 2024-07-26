@@ -41,9 +41,11 @@ struct HomeView: View {
                         let profile: Profile = profiles.first!
                         
                         BoldTitle(text: "Home")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Welcome back \(profile.profileUserName!)!")
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                         
                         // MARK: General information
                         GroupBox {
@@ -89,8 +91,11 @@ struct HomeView: View {
                                     viewModel.navPath.append(1)
                                 } label: {
                                     Text("Weigh in")
-                                        .frame(width: 275)
+                                        .frame(maxWidth: .infinity)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
+                                    
+                                    Image(systemName: "plus")
                                         .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())
@@ -99,8 +104,11 @@ struct HomeView: View {
                                     viewModel.navPath.append(2)
                                 } label: {
                                     Text("View all weigh-in's")
-                                        .frame(width: 275)
+                                        .frame(maxWidth: .infinity)
                                         .padding(.bottom, 5)
+                                        .foregroundColor(Color("buttonTextColor"))
+                                    
+                                    Image(systemName: "pencil")
                                         .foregroundColor(Color("buttonTextColor"))
                                 }
                                 .buttonStyle(BorderedProminentButtonStyle())

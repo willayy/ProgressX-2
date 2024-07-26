@@ -9,8 +9,6 @@
 import SwiftUI
 import Combine
 
-#warning("TODO: Fix not being able to input - sign")
-
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputIntegerNumberField: View {
     
@@ -59,24 +57,35 @@ struct InputIntegerNumberField: View {
     }
     
     private func onSubmitFunction(curr: String) -> String {
-        
-        #warning("Consider removing this since it does nothing")
-        
         return curr
     }
     
     var body: some View {
-        
-        InputField(
-            value: $numberText,
-            markAsWrong: $markAsWrong,
-            errorMessage: errorMessage,
-            placeHolder: placeHolder,
-            width: width,
-            onReceiveFunction: onReceiveFunction(new:),
-            onSubmitFunction: onSubmitFunction(curr:)
-        )
-        .keyboardType(.numberPad)
+        HStack {
+            if allowNegatives {
+                Button {
+                    if numberText.first != "-" {
+                        numberText = "-" + numberText
+                    } else {
+                        numberText.removeFirst()
+                    }
+                } label: {
+                    Text("-")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+            }
+            
+            InputField(
+                value: $numberText,
+                markAsWrong: $markAsWrong,
+                errorMessage: errorMessage,
+                placeHolder: placeHolder,
+                width: width,
+                onReceiveFunction: onReceiveFunction(new:),
+                onSubmitFunction: onSubmitFunction(curr:)
+            )
+            .keyboardType(.numberPad)
+        }
     }
 }
 

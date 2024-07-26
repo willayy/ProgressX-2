@@ -19,7 +19,10 @@ struct EditPrView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Editing PR for: \(exercise!.exerciseName!)")
+                BoldTitle(text: "Editing PR for")
+                    .padding(.horizontal, 20)
+                
+                Title2(text: "\(exercise!.exerciseName!)")
                 
                 if viewModel.prEditedAlert {
                     SubmitAlert(

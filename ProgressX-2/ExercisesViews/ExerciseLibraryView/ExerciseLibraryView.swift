@@ -39,8 +39,10 @@ struct ExerciseLibraryView: View {
                     VStack(alignment: .center, spacing: 10) {
                         
                         BoldTitle(text: "Exercise library")
+                            .padding(.horizontal, 20)
                         
                         LightSubHeadline(text: "Here you can browse exercises you have stored in your library, you can delete, edit, view statistics or add new ones.")
+                            .padding(.horizontal, 20)
                         
                         SearchBar(
                             searchAttribute: "exerciseName",
@@ -48,6 +50,7 @@ struct ExerciseLibraryView: View {
                             fetchRequest: _searchedExercises
                         )
                         .padding(.top, 20)
+                        .padding(.horizontal, 20)
                         
                         //MARK: List view displaying all exercise objects
                         SearchableList(

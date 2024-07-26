@@ -32,17 +32,6 @@ struct SetExerciseSelectionList: View {
         }
         
         VStack {
-            ZStack {
-                Rectangle()
-                    .cornerRadius(10)
-                    .foregroundStyle(Color(.systemGray6))
-                    .padding(.horizontal, 40)
-                    .frame(height: 40)
-                
-                Text(selectedExercise?.exerciseName! ?? "Not selected")
-                    .fontWeight(.light)
-            }
-            
             GroupBox {
                 VStack {
                     TextField("Search...", text: $searchWord)
@@ -63,7 +52,6 @@ struct SetExerciseSelectionList: View {
                     }
                 }
             }
-            .padding(.horizontal, 40)
         }
     }
 }

@@ -8,10 +8,10 @@
 import SwiftUI
 import Combine
 
-#warning("TODO: Fix not being able to input - sign")
-
 /// TextField used for input of decimal numbers, using the InputField component.
 struct InputDecimalNumberField: View {
+    
+    @Environment(\.managedObjectContext) private var viewContext
     
     private var allowedChars = "1234567890.,"
     private let maxChars = 7
@@ -23,6 +23,7 @@ struct InputDecimalNumberField: View {
     @State private var shouldShake = false
     @State var disableMaxChars = false
     @Binding var errorMessage: String
+    let bodyWeightButton: Bool
     
     init(
         placeHolder: String,
@@ -30,12 +31,14 @@ struct InputDecimalNumberField: View {
         numberText: Binding<String>,
         markAsWrong: Binding<Bool>,
         width: CGFloat,
-        errorMessage: Binding<String>
+        errorMessage: Binding<String>,
+        bodyWeightButton: Bool = false
     ) {
         if allowNegatives { allowedChars.append("-") }
         self.placeHolder = placeHolder
         self.allowNegatives = allowNegatives
         self.width = width
+        self.bodyWeightButton = bodyWeightButton
         self._errorMessage = errorMessage
         self._numberText = numberText
         self._markAsWrong = markAsWrong
@@ -89,16 +92,29 @@ struct InputDecimalNumberField: View {
     }
     
     var body: some View {
-        
-        InputField(
-            value: $numberText,
-            markAsWrong: $markAsWrong,
-            errorMessage: errorMessage,
-            placeHolder: placeHolder,
-            width: width,
-            onReceiveFunction: onReceiveFunction(new:),
-            onSubmitFunction: onSubmitFunction(curr:)
-        )
+        HStack {
+            if allowNegatives {
+                Button {
+                    if numberText.first != "-" {
+                        numberText = "-" + numberText
+                    } else {
+                        numberText.removeFirst()
+                    }
+                } label: {
+                    Text("-")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+            }
+            
+            InputField(
+                value: $numberText,
+                markAsWrong: $markAsWrong,
+                errorMessage: errorMessage,
+                placeHolder: placeHolder,
+                width: width,
+                onReceiveFunction: onReceiveFunction(new:),
+                onSubmitFunction: onSubmitFunction(curr:)
+            )
             .keyboardType(.decimalPad)
             .onChange(
                 of: numberText,
@@ -106,5 +122,36 @@ struct InputDecimalNumberField: View {
                     // Always convert , to .
                     numberText = newValue.replacingOccurrences(of: ",", with: ".")
                 }
+            
+            if bodyWeightButton {
+                Button {
+                    let latestBodyEntry = PersistenceController.getLatestBodyEntry(viewContext)!
+                    numberText = String(format: "%.2f", latestBodyEntry.bodyWeight)
+                } label: {
+                    Text("BW")
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+            }
+        }
     }
+}
+
+#Preview {
+    
+    let context = PersistenceController.preview.container.viewContext
+    @State var inputValue: String = ""
+    @State var valueIsInvalid: Bool = false
+    @State var valueIsInvalidMsg: String = ""
+    
+    return InputDecimalNumberField(
+        placeHolder: "Testing",
+        allowNegatives: true,
+        numberText: $inputValue,
+        markAsWrong: $valueIsInvalid,
+        width: 0.4,
+        errorMessage: $valueIsInvalidMsg,
+        bodyWeightButton: true
+    )
+    .environment(\.managedObjectContext, context)
+    
 }

@@ -19,7 +19,9 @@ struct EditTemplateSetView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Editing: \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Editing")
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 if viewModel.showSetChangedAlert {
@@ -36,7 +38,7 @@ struct EditTemplateSetView: View {
                     )
                 }
                 
-                LightSubHeadline(text: "Change name or description")
+                BoldSubHeadline(text: "Change name and description")
                 
                 InputTextField(
                     placeHolder: "New set name",
@@ -58,7 +60,7 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "By clicking this you can view and edit thresholds for this set")
+                BoldSubHeadline(text: "Edit or add thresholds for this set")
                     .padding(.horizontal, 10)
                 
                 Button {
@@ -70,7 +72,13 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change position of the set in it's session")
+                BoldSubHeadline(text: "Change position of this set in its session")
+                
+                HiddenLightSubHeadline(
+                    title: "What does set position mean?",
+                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session."
+                )
+                .padding(.horizontal, 20)
                 
                 IntSelectionList(
                     selected: $viewModel.editedSetPositionIndex,
@@ -79,6 +87,7 @@ struct EditTemplateSetView: View {
                     )
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
                 BoldSubHeadline(text: "Change the exercise of the set")
                 
@@ -87,6 +96,7 @@ struct EditTemplateSetView: View {
                     searchWord: $viewModel.searchWord
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
                 BoldSubHeadline(text: "Change the rest time of the set")
                 
@@ -107,6 +117,7 @@ struct EditTemplateSetView: View {
                     selections: viewModel.loadTypeSelections()
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
                 BoldSubHeadline(text: "Change the quantity type of the set")
                 
@@ -115,6 +126,7 @@ struct EditTemplateSetView: View {
                     selections: viewModel.quantityTypeSelections()
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
                 BoldSubHeadline(text: "Change the quantity or load of the set")
                 

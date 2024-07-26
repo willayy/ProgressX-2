@@ -23,10 +23,10 @@ struct StatisticsView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Statistics for \(String(exercise!.exerciseName!))")
+                BoldTitle(text: "Statistics for")
                     .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
+                Title2(text: "\(String(exercise!.exerciseName!))")
                 
                 if exercise!.exerciseType == "reps" {
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
