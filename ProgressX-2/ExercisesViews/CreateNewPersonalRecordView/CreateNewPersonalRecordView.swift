@@ -10,19 +10,16 @@ import CoreData
 
 struct CreateNewPersonalRecord: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // Fetch bodyEntres to get current weight
     @FetchRequest(
         entity: BodyEntry.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: false)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
-    // The selection of the segmented picker
-    @Binding var prType: String?
+    @Binding var prType: String? // The selection of the segmented picker
     @Binding var navPath: [Int]
-    // Exercise for the PR
-    @Binding var selectedExercise: Exercise?
+    @Binding var selectedExercise: Exercise? // Exercise for the PR
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = CreateNewPersonalRecordViewModel()
     
     var body: some View {

@@ -10,14 +10,13 @@ import CoreData
 
 struct EditRoutineView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // To check for already taken routine names
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: []
     ) private var routines: FetchedResults<Routine>
     
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = EditRoutineViewModel()
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?

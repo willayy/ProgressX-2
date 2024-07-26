@@ -10,8 +10,6 @@ import CoreData
 
 struct ExerciseLibraryView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
@@ -22,6 +20,7 @@ struct ExerciseLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
     ) private var searchedExercises: FetchedResults<Exercise>
     
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = ExerciseLibraryViewModel()
     
     var body: some View {

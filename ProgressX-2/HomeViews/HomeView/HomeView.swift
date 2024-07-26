@@ -10,9 +10,6 @@ import CoreData
 
 struct HomeView: View {
         
-    @Environment(\.managedObjectContext) private var viewContext
-    @StateObject private var viewModel = HomeViewModel()
-    
     // Fetch all stored profiles (Should only ever be one stored)
     @FetchRequest(
         entity: Profile.entity(),
@@ -24,6 +21,9 @@ struct HomeView: View {
         entity: BodyEntry.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
         
@@ -149,7 +149,6 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
-                    
                 }
                 .frame(maxWidth: .infinity)
             }

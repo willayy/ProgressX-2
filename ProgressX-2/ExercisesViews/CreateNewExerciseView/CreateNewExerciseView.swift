@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CreateNewExerciseView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // Fetch bodyEntres to get current weight
     @FetchRequest(
         entity: BodyEntry.entity(),
@@ -30,7 +28,7 @@ struct CreateNewExerciseView: View {
     ) private var categories: FetchedResults<ExerciseCategory>
         
     @StateObject private var viewModel = CreateNewExerciseViewModel()
-    
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding public var navPath: [Int]
     
     var body: some View {

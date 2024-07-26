@@ -9,9 +9,6 @@ import SwiftUI
 
 struct CreateNewProfile3View: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    
     /* Fetch BodyEntries so it can be modified by the input values
      At this state in the app there will only be one BodyEntry, the first one. */
     @FetchRequest(
@@ -19,6 +16,8 @@ struct CreateNewProfile3View: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @Binding var navPath: [Int]
     @StateObject private var viewModel = CreateNewProfile3ViewModel()
     
     var body: some View {

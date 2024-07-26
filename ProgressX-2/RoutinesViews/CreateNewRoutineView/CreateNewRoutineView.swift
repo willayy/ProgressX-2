@@ -9,16 +9,15 @@ import SwiftUI
 
 struct CreateNewRoutineView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    @Binding var selectedRoutine: Routine?
-    @Binding var selectedTemplateCycle: TemplateCycle?
-    
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: []
     ) var routines: FetchedResults<Routine>
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @Binding var navPath: [Int]
+    @Binding var selectedRoutine: Routine?
+    @Binding var selectedTemplateCycle: TemplateCycle?
     @StateObject private var viewModel = CreateNewRoutineViewModel()
     
     var body: some View {
