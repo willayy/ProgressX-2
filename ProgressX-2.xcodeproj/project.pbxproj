@@ -21,6 +21,8 @@
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
 		8316576D2C529365003F895F /* Title2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316576C2C529365003F895F /* Title2.swift */; };
 		8316576F2C52A14A003F895F /* HiddenLightSubHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */; };
+		831657712C53CAC2003F895F /* ProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657702C53CAC2003F895F /* ProfileNavigationController.swift */; };
+		831657732C53CB93003F895F /* InfoHelpNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657722C53CB93003F895F /* InfoHelpNavigationController.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */; };
 		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
@@ -190,6 +192,8 @@
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
 		8316576C2C529365003F895F /* Title2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title2.swift; sourceTree = "<group>"; };
 		8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenLightSubHeadline.swift; sourceTree = "<group>"; };
+		831657702C53CAC2003F895F /* ProfileNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationController.swift; sourceTree = "<group>"; };
+		831657722C53CB93003F895F /* InfoHelpNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHelpNavigationController.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTimePeriod.swift; sourceTree = "<group>"; };
 		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
@@ -862,6 +866,7 @@
 		83BD39822C4A9CF9008E09A0 /* InfoHelpViews */ = {
 			isa = PBXGroup;
 			children = (
+				831657722C53CB93003F895F /* InfoHelpNavigationController.swift */,
 				83BD39852C4AA493008E09A0 /* InfoHelpView */,
 			);
 			path = InfoHelpViews;
@@ -983,6 +988,7 @@
 		8F8B9F082C21A0A10072A39D /* ProfileViews */ = {
 			isa = PBXGroup;
 			children = (
+				831657702C53CAC2003F895F /* ProfileNavigationController.swift */,
 				83266E862C3C1AEA00F5F6CB /* ProfileView */,
 			);
 			path = ProfileViews;
@@ -1144,6 +1150,7 @@
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
 				83D685002C32A24E00FA78C6 /* EditTemplateSessionView.swift in Sources */,
+				831657712C53CAC2003F895F /* ProfileNavigationController.swift in Sources */,
 				83266E632C38077F00F5F6CB /* ProfileViewModel.swift in Sources */,
 				8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */,
 				83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */,
@@ -1206,6 +1213,7 @@
 				831F2C302C24E54B007A7A8A /* TemplateSetListItem.swift in Sources */,
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
 				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
+				831657732C53CB93003F895F /* InfoHelpNavigationController.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */,
 				8364860F2C372589006EB0C0 /* TemplateSet.swift in Sources */,
 				83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */,

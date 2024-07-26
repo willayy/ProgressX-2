@@ -9,9 +9,6 @@ import SwiftUI
 
 struct RoutineLibraryView: View {
     
-    @StateObject private var viewModel = RoutineLibraryViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
@@ -21,6 +18,9 @@ struct RoutineLibraryView: View {
         entity: Routine.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
     ) var searchedRoutines: FetchedResults<Routine>
+    
+    @StateObject private var viewModel = RoutineLibraryViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         

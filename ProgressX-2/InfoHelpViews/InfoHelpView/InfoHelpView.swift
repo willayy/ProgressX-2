@@ -13,7 +13,7 @@ struct InfoHelpView: View {
     
     var body: some View {
         
-        NavigationStack {
+        InfoHelpNavigationController {
             ScrollView {
                 VStack {
                     

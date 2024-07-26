@@ -11,18 +11,17 @@ import CoreData
 
 struct ProfileView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: []
     ) private var profiles: FetchedResults<Profile>
     
     @StateObject private var viewModel = ProfileViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         
-        NavigationStack {
+        ProfileNavigationController {
             ScrollView {
                 VStack {
                     BoldTitle(text: "Profile")

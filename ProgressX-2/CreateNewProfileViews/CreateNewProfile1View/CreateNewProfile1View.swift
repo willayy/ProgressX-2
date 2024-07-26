@@ -10,14 +10,14 @@ import CoreData
 
 struct CreateNewProfile1View: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var viewModel = CreateNewProfile1ViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: []
     ) private var profileResults: FetchedResults<Profile>
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    @StateObject private var viewModel = CreateNewProfile1ViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         CreateNewProfileNavigationController(
