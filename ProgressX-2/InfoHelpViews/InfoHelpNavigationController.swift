@@ -9,8 +9,8 @@ import SwiftUI
 
 struct InfoHelpNavigationController<Content: View>: View {
         
-    var content: Content
-    
+    private var content: Content
+
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
