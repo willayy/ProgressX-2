@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RoutineLibraryNavigationController<Content: View>: View {
     
-    public var content: Content
+    private var content: Content
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?

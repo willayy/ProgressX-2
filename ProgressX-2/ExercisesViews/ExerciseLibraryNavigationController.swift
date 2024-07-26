@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExerciseLibraryNavigationController<Content: View>: View {
     
-    var content: Content
+    private var content: Content
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedExercise: Exercise?

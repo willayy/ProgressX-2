@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CreateNewProfileNavigationController<Content: View>: View {
     
-    var content: Content
+    private var content: Content
     
     @EnvironmentObject var viewRouter: ViewRouter
     

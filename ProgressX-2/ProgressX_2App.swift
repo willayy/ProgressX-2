@@ -61,12 +61,6 @@ struct ProgressX_2App: App {
                     }
                 }
                 .environmentObject(viewRouter)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        SideBarButton(showMenu: $showMenu)
-                            .environmentObject(viewRouter)
-                    }
-                }
             }
         }
     }
