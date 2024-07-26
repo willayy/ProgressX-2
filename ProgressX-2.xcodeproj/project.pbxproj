@@ -20,6 +20,7 @@
 		8310D9302C0CAB1D004A5A3D /* ExerciseListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */; };
 		8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D9312C0E0617004A5A3D /* EditPrView.swift */; };
 		8316576D2C529365003F895F /* Title2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316576C2C529365003F895F /* Title2.swift */; };
+		8316576F2C52A14A003F895F /* HiddenLightSubHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */; };
 		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
@@ -174,6 +175,7 @@
 		8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListItem.swift; sourceTree = "<group>"; };
 		8310D9312C0E0617004A5A3D /* EditPrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrView.swift; sourceTree = "<group>"; };
 		8316576C2C529365003F895F /* Title2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Title2.swift; sourceTree = "<group>"; };
+		8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiddenLightSubHeadline.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTimePeriod.swift; sourceTree = "<group>"; };
 		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				8310D90E2BFA3425004A5A3D /* BoldSubHeadline.swift */,
 				8310D9102BFA3436004A5A3D /* BoldTitle.swift */,
 				8316576C2C529365003F895F /* Title2.swift */,
+				8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */,
 			);
 			path = TextElements;
 			sourceTree = "<group>";
@@ -1116,6 +1119,7 @@
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */,
 				836485F12C36CBCD006EB0C0 /* ExerciseLibraryNavigationController.swift in Sources */,
+				8316576F2C52A14A003F895F /* HiddenLightSubHeadline.swift in Sources */,
 				831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,

@@ -30,6 +30,7 @@ struct ExpandingVStack<Content: View>: View {
                     .padding()
                     .frame(maxWidth: .infinity)
             }
+            
             if isExpanded {
                 VStack {
                     content

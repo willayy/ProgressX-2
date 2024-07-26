@@ -39,12 +39,16 @@ struct RoutineLibraryView: View {
                 content: {
                 ScrollView {
                     VStack(alignment: .center) {
+                        
                         //MARK: View header text
                         BoldTitle(text: "Routine library")
                             .padding(.horizontal, 20)
                         
-                        LightSubHeadline(text: "Here you can browse Routines you have created, view statistics, edit them and create new ones.")
-                            .padding(.horizontal, 20)
+                        HiddenLightSubHeadline(
+                            title: "What is a Routine?",
+                            text: "The routine is your training program, a routine consists of 1 or more Weeks. This gives you both the possibility of doing the same training sessions every week and having an alternating week schedule."
+                        )
+                        .padding(.horizontal, 20)
                         
                         // MARK: Search bar
                         SearchBar(

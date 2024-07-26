@@ -29,10 +29,19 @@ struct CreateNewPersonalRecord: View {
         ScrollView {
             VStack {
                 BoldTitle(
-                    text: "Create a new PR for exercise: \(selectedExercise!.exerciseName!)"
+                    text: "Create a new PR for"
                 )
-                .padding(.bottom, 20)
                 .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedExercise!.exerciseName!)")
+                .padding(.horizontal, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What are PR's?",
+                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did."
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
                 
                 if viewModel.createdPrAlert {
                     SubmitAlert(
@@ -42,12 +51,14 @@ struct CreateNewPersonalRecord: View {
                     )
                 }
                 
-                LightSubHeadline(text: "Choose a date for the PR")
+                BoldSubHeadline(text: "Choose a date for the PR")
                 
                 DatePicker("", selection: $viewModel.prDate, displayedComponents: .date)
                     .datePickerStyle(DefaultDatePickerStyle())
                     .labelsHidden()
                     .padding(.bottom, 20)
+                
+                BoldSubHeadline(text: "Choose a load for the PR")
                 
                 InputDecimalNumberField(
                     placeHolder: "Load", 
@@ -108,6 +119,7 @@ struct CreateNewPersonalRecord: View {
                 .padding(.bottom, 10)
                 
             }
+            .frame(maxWidth: .infinity)
         }
     }
     

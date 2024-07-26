@@ -113,6 +113,12 @@ struct EditRoutineView: View {
                 BoldSubHeadline(text: "Current Weeks in this routine")
                     .padding(.top, 20)
                 
+                HiddenLightSubHeadline(
+                    title: "What is a week?",
+                    text: "A week is meant as a set of training sessions that is supposed to be completed in the time span of a week."
+                )
+                .padding(.horizontal, 20)
+                
                 BasicList(
                     height: 400,
                     containerName: "this Routine",

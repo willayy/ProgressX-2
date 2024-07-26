@@ -28,8 +28,6 @@ struct StatisticsView: View {
                 
                 Title2(text: "\(String(exercise!.exerciseName!))")
                 
-                LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
-                
                 if exercise!.exerciseType == "reps" {
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
                         .padding(.top, 20)

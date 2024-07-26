@@ -96,6 +96,7 @@ struct EditTemplateSessionView: View {
                                 selectedTemplateSession: selectedTemplateSession!
                             )
                         )
+                        .padding(.horizontal, 40)
                         
                         Button {
                             if validateInput() {

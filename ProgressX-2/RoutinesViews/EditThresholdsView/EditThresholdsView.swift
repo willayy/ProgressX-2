@@ -32,6 +32,7 @@ struct EditThresholdsView: View {
                 LightSubHeadline(
                     text: "Here you can edit thresholds you have created"
                 )
+                .padding(.top, 5)
                 .padding(.horizontal, 20)
                 
                 if viewModel.showThresholdChangedAlert {
@@ -48,10 +49,14 @@ struct EditThresholdsView: View {
                     )
                 }
                 
-                LightSubHeadline(
-                    text: "Edit the trigger quantity of the threshold"
-                )
+                BoldSubHeadline(text: "Edit the trigger quantity of the threshold")
                 .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What is trigger quantity?",
+                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                )
+                .padding(.horizontal, 20)
                 
                 if exerciseType == "reps" {
                     InputIntegerNumberField(
@@ -76,6 +81,12 @@ struct EditThresholdsView: View {
                 BoldSubHeadline(text: "Modify PR generation")
                     .padding(.top, 20)
                 
+                HiddenLightSubHeadline(
+                    title: "What does modify PR generation mean?",
+                    text: "Add a PR means that when this threshold is triggered a PR will be generated on this sets exercise with the quantity and load you did on the set."
+                )
+                .padding(.horizontal, 20)
+                
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPrSelection,
                     segments: viewModel.addPrSegments,
@@ -94,12 +105,16 @@ struct EditThresholdsView: View {
                     .padding(.top, 5)
                 }
                 
-                BoldSubHeadline(text: "Edit flat load addition (can be negative)")
+                BoldSubHeadline(text: "Edit set load change")
                     .padding(.top, 20)
             
                 if loadType == "numerical" {
-                    LightSubHeadline(text: "Edit the flat load added to this threshold if the trigger quantity is reached")
-                        .padding(.horizontal, 20)
+                    
+                    HiddenLightSubHeadline(
+                        title: "What does change set load mean?",
+                        text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                    )
+                    .padding(.horizontal, 20)
                     
                     InputDecimalNumberField(
                         placeHolder: "Load (\(weightUnit))",
@@ -116,13 +131,16 @@ struct EditThresholdsView: View {
                     .padding(.horizontal, 50)
                 }
                 
-                BoldSubHeadline(text: "Edit flat quantity addition (can be negative)")
+                BoldSubHeadline(text: "Edit set quantity change")
                     .padding(.top, 20)
                 
                 if quantityType == "numerical" {
                     
-                    LightSubHeadline(text: "Edit the flat quantity added to this threshold if the trigger quantity is reached")
-                        .padding(.horizontal, 20)
+                    HiddenLightSubHeadline(
+                        title: "What does change set quantity mean?",
+                        text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                    )
+                    .padding(.horizontal, 20)
                     
                     if exerciseType == "reps" {
                         
@@ -173,6 +191,7 @@ struct EditThresholdsView: View {
                 .padding(.bottom, 10)
                 
             }
+            .frame(maxWidth: .infinity)
         }
         .onAppear(perform: {
             viewModel.setViewStartValues(
