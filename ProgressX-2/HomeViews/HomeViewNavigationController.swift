@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeViewNavigationController<Content: View>: View {
     
     public var content: Content
-    @EnvironmentObject var viewRouter: ViewRouter
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var profile: Profile?
@@ -64,9 +63,3 @@ struct HomeViewNavigationController<Content: View>: View {
         }
     }
 }
-
-/*
-#Preview {
-    HomeViewNavigationController()
-}
-*/

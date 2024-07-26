@@ -26,7 +26,9 @@ struct SideBarView<Content: View>: View {
             cornerRadius: 25,
             showMenu: $showMenu
         ) { safeArea in
+            VStack {
                 content
+            }
         } menuView: { safeArea in
             SideBarMenuView(safeArea)
         } Background: {
