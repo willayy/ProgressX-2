@@ -131,12 +131,12 @@ struct ProfileView: View {
                     .padding(.top, 20)
                     .buttonStyle(BorderedProminentButtonStyle())
                     .foregroundColor(.white)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
                     
                 }
             }
             .onAppear(perform: {
-                viewModel.setViewStartValues(profiles: profiles)
+                viewModel.setViewStartValues(profile: profiles.first!)
             })
         }
     }

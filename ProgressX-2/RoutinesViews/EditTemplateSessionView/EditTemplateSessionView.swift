@@ -85,6 +85,7 @@ struct EditTemplateSessionView: View {
                             errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
                             maxChars: 200
                         )
+                        .padding(.horizontal, 60)
                         
                         LightSubHeadline(text: "Change the sessions position in the week")
                             .padding(.top, 10)
