@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct MagnifiedExerciseView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+        
     @ObservedObject var exercise: Exercise
     
     var body: some View {

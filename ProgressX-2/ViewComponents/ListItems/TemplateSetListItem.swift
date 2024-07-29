@@ -59,7 +59,6 @@ struct TemplateSetListItem: View {
                         selectedThreshold: $selectedThreshold
                     )
                     .presentationDetents([.fraction(0.5)])
-                    .environment(\.managedObjectContext, viewContext)
                 }
                 
                 Spacer()

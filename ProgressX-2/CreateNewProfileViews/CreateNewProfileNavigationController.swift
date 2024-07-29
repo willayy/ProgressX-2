@@ -11,7 +11,6 @@ struct CreateNewProfileNavigationController<Content: View>: View {
     
     private var content: Content
     @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     
     init(navPath: Binding<[Int]>, @ViewBuilder content: () -> Content) {
@@ -29,18 +28,15 @@ struct CreateNewProfileNavigationController<Content: View>: View {
                     
                     CreateNewProfile2View(navPath: $navPath)
                         .environmentObject(viewRouter)
-                        .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
                     CreateNewProfile3View(navPath: $navPath)
-                        .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
                     CreateNewProfile4View(navPath: $navPath)
                         .environmentObject(viewRouter)
-                        .environment(\.managedObjectContext, viewContext)
                 }
             }
         }

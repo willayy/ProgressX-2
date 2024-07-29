@@ -10,10 +10,7 @@ import CoreData
 
 struct GeneralInfoTimeExercise: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest private var timeMaxResults: FetchedResults<PersonalRecord>
-    
     private let exercise: Exercise?
     
     init(exercise: Exercise?) {

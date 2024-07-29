@@ -10,10 +10,8 @@ import SwiftUI
 struct VStackWithSideBarButton<Content: View>: View {
     
     private let content: Content
-    @Binding var showMenu: Bool
-    
-    init(showMenu: Binding<Bool>, @ViewBuilder content: () -> Content) {
-        self._showMenu = showMenu
+
+    init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
     
@@ -23,7 +21,7 @@ struct VStackWithSideBarButton<Content: View>: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                SideBarButton(showMenu: $showMenu)
+                SideBarButton()
             }
         }
     }

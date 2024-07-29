@@ -39,7 +39,6 @@ struct ExerciseListItem: View {
             .sheet(isPresented: $showMagnifiedView) {
                 MagnifiedExerciseView(exercise: exercise)
                     .presentationDetents([.fraction(0.3)])
-                    .environment(\.managedObjectContext, viewContext)
             }
             .padding(.horizontal, 30)
             .padding(.vertical, 10)
