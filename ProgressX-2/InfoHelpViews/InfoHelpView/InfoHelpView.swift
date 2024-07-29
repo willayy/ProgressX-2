@@ -25,7 +25,7 @@ struct InfoHelpView: View {
                         .font(.title2)
                     
                     ExpandingVStack(
-                        title: "Weigh-in's and body tracking") {
+                        title: "Weigh-in's and body measurements") {
                             
                             // MARK: Body weight introduction
                             BoldSubHeadline(text: "Tracking body weight")
@@ -46,9 +46,7 @@ struct InfoHelpView: View {
                                 .padding(.horizontal, 10)
                                 .padding(.bottom, 10)
                             
-                            GroupBox {
-                                Image("Body-measurement-diagram")
-                            }
+                            Image("Body-measurement-diagram")
                             
                             // MARK: Measurement header
                             BoldSubHeadline(text: "The measurements")
@@ -280,4 +278,5 @@ struct InfoHelpView: View {
 #Preview {
     return InfoHelpView()
         .environmentObject(ViewRouter())
+        .environmentObject(ShowMenuController())
 }
