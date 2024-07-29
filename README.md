@@ -5,7 +5,7 @@ Fitness logging app made with Swift and the SwiftUI framework
 ProgressX-2 is an iOS App that 
 
 ## Application structure
-The small core of the app is the `ViewRouter` class and the `ProgressX_2App` class. The 
+The small core of the app is the `ViewRouter` class and the `ProgressX_2App` class. All views are wrapped in a `SideBarView` which is accessed with a EnviromentObject
 
 ## Hardware
 Simulator tested on IPhone 15 and IPhone SE, built for any iOS device (arm64).
