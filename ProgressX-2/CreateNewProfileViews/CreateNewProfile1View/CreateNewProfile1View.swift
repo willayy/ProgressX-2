@@ -60,7 +60,7 @@ struct CreateNewProfile1View: View {
                         selectedSegment: $viewModel.selectedUnitSegment,
                         segments: viewModel.unitSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     
                     BoldSubHeadline(text: "What is your smallest available plate?")
                         .padding(.top, 10)
@@ -69,7 +69,7 @@ struct CreateNewProfile1View: View {
                         selected: $viewModel.smallestPlateSelection,
                         selections: viewModel.smallestPlateSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     .onChange(
                         of: viewModel.selectedUnitSegment,
                         initial: false, {
@@ -106,7 +106,7 @@ struct CreateNewProfile1View: View {
                         selectedSegment: $viewModel.selectedGenderSegment,
                         segments: viewModel.genderSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     
                     Button {
                         if validateInput() {

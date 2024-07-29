@@ -87,4 +87,6 @@ struct ExerciseLibraryView: View {
     
     return ExerciseLibraryView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
+
 }

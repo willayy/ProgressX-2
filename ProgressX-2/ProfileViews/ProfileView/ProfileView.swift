@@ -177,4 +177,5 @@ struct ProfileView: View {
     
     return ProfileView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
 }
