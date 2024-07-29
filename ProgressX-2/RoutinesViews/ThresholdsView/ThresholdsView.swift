@@ -10,8 +10,6 @@ import CoreData
 
 struct ThresholdsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
     @Binding var selectedThreshold: SetThreshold?

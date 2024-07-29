@@ -11,7 +11,6 @@ import SwiftUI
 struct CreateNewProfile2View: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     
     var body: some View {

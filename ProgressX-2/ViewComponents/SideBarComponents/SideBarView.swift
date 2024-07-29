@@ -10,11 +10,9 @@ import SwiftUI
 struct SideBarView<Content: View>: View {
     
     var content: Content
-    @EnvironmentObject private var viewRouter: ViewRouter
-    @Binding var showMenu: Bool
+    @StateObject private var showMenuController = ShowMenuController()
     
-    init(showMenu: Binding<Bool>, @ViewBuilder content: () -> Content) {
-        self._showMenu = showMenu
+    init(@ViewBuilder content: () -> Content) {
         self.content = content()
     }
     
@@ -23,22 +21,23 @@ struct SideBarView<Content: View>: View {
             rotateWhenExpands: true,
             disableInteractions: true,
             sideMenuWidth: 200,
-            cornerRadius: 25,
-            showMenu: $showMenu
+            cornerRadius: 25
         ) { safeArea in
+            VStack {
                 content
+            }
         } menuView: { safeArea in
             SideBarMenuView(safeArea)
         } Background: {
             // propperty of the background in side menu
             Rectangle()
         }
+        .environmentObject(showMenuController)
     }
     
     @ViewBuilder
     func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
+        SideBarBuilder(safeArea: safeArea)
     }
     
 }

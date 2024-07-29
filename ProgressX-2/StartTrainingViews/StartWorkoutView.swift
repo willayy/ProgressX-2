@@ -38,8 +38,7 @@ struct StartWorkoutView: View {
             rotateWhenExpands: true, // true
             disableInteractions: true, // true
             sideMenuWidth: 200,
-            cornerRadius: 25, // 25
-            showMenu: $showMenu
+            cornerRadius: 25 // 25
         ) { safeArea in
             NavigationStack{
                 VStack{
@@ -57,7 +56,7 @@ struct StartWorkoutView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
+                        SideBarButton().environmentObject(viewRouter)
                     }
                     ToolbarItem(placement: .topBarTrailing){
                         Button(action: {
@@ -81,7 +80,7 @@ struct StartWorkoutView: View {
     
     @ViewBuilder
     func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
-        SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
+        SideBarBuilder(safeArea: safeArea)
             .environmentObject(viewRouter)
     }
 }

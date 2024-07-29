@@ -9,10 +9,6 @@ import SwiftUI
 
 struct RoutineLibraryView: View {
     
-    @EnvironmentObject private var viewRouter: ViewRouter
-    @StateObject private var viewModel = RoutineLibraryViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
@@ -23,11 +19,10 @@ struct RoutineLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
     ) var searchedRoutines: FetchedResults<Routine>
     
+    @StateObject private var viewModel = RoutineLibraryViewModel()
+    
     var body: some View {
         
-        SideBarView(
-            showMenu: $viewModel.showMenu,
-            content: {
             RoutineLibraryNavigationController(
                 navPath: $viewModel.navPath,
                 selectedRoutine: $viewModel.selectedRoutine,
@@ -36,70 +31,61 @@ struct RoutineLibraryView: View {
                 selectedTemplateSession: $viewModel.selectedTemplateSession,
                 selectedTemplateSet: $viewModel.selectedTemplateSet,
                 selectedThreshold: $viewModel.selectedThreshold,
-                content: {
-                ScrollView {
-                    VStack(alignment: .center) {
-                        
-                        //MARK: View header text
-                        BoldTitle(text: "Routine library")
-                            .padding(.horizontal, 20)
-                        
-                        HiddenLightSubHeadline(
-                            title: "What is a Routine?",
-                            text: "The routine is your training program, a routine consists of 1 or more Weeks. This gives you both the possibility of doing the same training sessions every week and having an alternating week schedule."
+            content: {
+            ScrollView {
+                VStackWithSideBarButton {
+                    
+                    //MARK: View header text
+                    BoldTitle(text: "Routine library")
+                        .padding(.horizontal, 20)
+                    
+                    HiddenLightSubHeadline(
+                        title: "What is a Routine?",
+                        text: "The routine is your training program, a routine consists of 1 or more Weeks. This gives you both the possibility of doing the same training sessions every week and having an alternating week schedule."
+                    )
+                    .padding(.horizontal, 20)
+                    
+                    // MARK: Search bar
+                    SearchBar(
+                        searchAttribute: "timePeriodName",
+                        searchText: $viewModel.searchText,
+                        fetchRequest: _searchedRoutines
+                    )
+                    .padding(.top, 20)
+                    .padding(.horizontal, 20)
+                    
+                    // MARK: List
+                    SearchableList(
+                        containerName: "Routine Library",
+                        elementName: "Routines",
+                        allData: _allRoutines,
+                        searchedData: _searchedRoutines
+                    ) { routine in
+                        RoutineListItem(
+                            navPath: $viewModel.navPath,
+                            selectedRoutine: $viewModel.selectedRoutine,
+                            selectedTemplateCycle: $viewModel.selectedTemplateCycle,
+                            routine: routine
                         )
-                        .padding(.horizontal, 20)
-                        
-                        // MARK: Search bar
-                        SearchBar(
-                            searchAttribute: "timePeriodName",
-                            searchText: $viewModel.searchText,
-                            fetchRequest: _searchedRoutines
-                        )
-                        .padding(.top, 20)
-                        .padding(.horizontal, 20)
-                        
-                        // MARK: List
-                        SearchableList(
-                            containerName: "Routine Library",
-                            elementName: "Routines",
-                            allData: _allRoutines,
-                            searchedData: _searchedRoutines
-                        ) { routine in
-                            RoutineListItem(
-                                navPath: $viewModel.navPath,
-                                selectedRoutine: $viewModel.selectedRoutine,
-                                selectedTemplateCycle: $viewModel.selectedTemplateCycle,
-                                routine: routine
-                            )
-                            .environment(\.managedObjectContext, viewContext)
-                        }
-                        .padding(.horizontal, 20)
-                        
-                        // MARK: Add new Routine button
-                        Button {
-                            viewModel.navPath.append(1)
-                        } label: {
-                            Text("Add new Routine")
-                                .frame(height: 40)
-                                .foregroundColor(Color("buttonTextColor"))
-                            Image(systemName: "plus")
-                                .foregroundColor(Color("buttonTextColor"))
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .padding(.top, 20)
-                        .padding(.bottom, 10)
-                        
                     }
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        SideBarButton(showMenu: $viewModel.showMenu)
-                            .environmentObject(viewRouter)
+                    .padding(.horizontal, 20)
+                    
+                    // MARK: Add new Routine button
+                    Button {
+                        viewModel.navPath.append(1)
+                    } label: {
+                        Text("Add new Routine")
+                            .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
+                        Image(systemName: "plus")
+                            .foregroundColor(Color("buttonTextColor"))
                     }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.top, 20)
+                    .padding(.bottom, 10)
+                    
                 }
-            })
-            .environment(\.managedObjectContext, viewContext)
+            }
         })
     }
 }
@@ -108,6 +94,5 @@ struct RoutineLibraryView: View {
     let context = PersistenceController.preview.container.viewContext
     
     return RoutineLibraryView()
-        .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)
 }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct MagnifiedPrView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+        
     @ObservedObject var personalRecord: PersonalRecord
     
     var body: some View {

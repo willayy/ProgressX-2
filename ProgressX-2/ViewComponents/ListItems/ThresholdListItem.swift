@@ -42,7 +42,6 @@ struct ThresholdListItem: View {
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedThresholdView(threshold: threshold)
                         .presentationDetents([.fraction(0.3)])
-                        .environment(\.managedObjectContext, viewContext)
                 }
                 
                 Spacer()

@@ -10,8 +10,6 @@ import CoreData
 
 struct EditExerciseView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // Fetch Exercises to check if exercise name is taken
     @FetchRequest(
         entity: Exercise.entity(),
@@ -26,6 +24,7 @@ struct EditExerciseView: View {
     
     @Binding var selectedExercise: Exercise?
     @StateObject private var viewModel = EditExerciseViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
             ScrollView {

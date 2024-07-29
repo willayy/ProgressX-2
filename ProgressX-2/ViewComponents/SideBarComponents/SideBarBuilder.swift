@@ -11,13 +11,9 @@ import CoreData
 
 struct SideBarBuilder: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @EnvironmentObject var viewRouter: ViewRouter
-
     let safeArea: UIEdgeInsets
-    
-    @Binding var showMenu: Bool
+    @EnvironmentObject private var showMenuController: ShowMenuController
     
     var body: some View {
         NavigationView {
@@ -28,36 +24,36 @@ struct SideBarBuilder: View {
                     .padding(.bottom, 10)
                 
                 SideBarButton(.Home) {
-                    showMenu.toggle()
                     viewRouter.rootView = .HomeView
+                    showMenuController.showMenu.toggle()
+
                 }
                 
                 SideBarButton(.StartWorkout) {
                     viewRouter.rootView = .StartWorkoutView
-                    showMenu.toggle()
+                    showMenuController.showMenu.toggle()
                 }
                 
                 SideBarButton(.Routines) {
                     viewRouter.rootView = .RoutineLibraryView
-                    showMenu.toggle()
+                    showMenuController.showMenu.toggle()
                 }
                 
                 SideBarButton(.Exercises) {
-                    showMenu.toggle()
                     viewRouter.rootView = .ExerciseLibraryView
+                    showMenuController.showMenu.toggle()
                 }
                 
                 SideBarButton(.InfoHelp) {
-                    showMenu.toggle()
                     viewRouter.rootView = .InfoHelp
+                    showMenuController.showMenu.toggle()
                 }
                 
                 Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
                 
                 SideBarButton(.Profile) {
-                    showMenu.toggle()
                     viewRouter.rootView = .ProfileView
-                    
+                    showMenuController.showMenu.toggle()
                 }
                 
             }
@@ -73,7 +69,7 @@ struct SideBarBuilder: View {
     }
         
         @ViewBuilder
-        func SideBarButton(_ tab:Tab, onTap: @escaping() -> () = {}) -> some View {
+        func SideBarButton(_ tab: Tab, onTap: @escaping() -> () = {}) -> some View {
             Button(action: onTap, label: {
                 HStack(spacing: 12) {
                     Image(systemName: tab.rawValue)
@@ -88,28 +84,6 @@ struct SideBarBuilder: View {
                 .foregroundStyle(Color.primary)
                 
             })
-        }
-
-        
-        //Customise the buttons in the bar button menu
-        enum Tab: String, CaseIterable {
-            case Home = "house.fill"
-            case StartWorkout = "figure.run"
-            case Routines = "rectangle.stack"
-            case Exercises = "dumbbell"
-            case Profile = "person.crop.circle"
-            case InfoHelp = "questionmark.circle"
-            
-            var title: String {
-                switch self {
-                case .Home: return "Home"
-                case .StartWorkout: return "Start workout"
-                case .Routines: return "Routines"
-                case .Exercises: return "Exercises"
-                case .Profile: return "Profile"
-                case .InfoHelp: return "Info / Help"
-                }
-            }
         }
     }
 

@@ -11,15 +11,11 @@ import CoreData
 
 struct SideBarButton: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @EnvironmentObject var viewRouter: ViewRouter
-    
-    @Binding var showMenu: Bool
+    @EnvironmentObject private var showMenuController: ShowMenuController
     
     var body: some View {
-        Button(action: { showMenu.toggle()}, label: {
-            Image(systemName: showMenu ? "xmark" : "line.3.horizontal")
+        Button(action: { showMenuController.showMenu.toggle() }, label: {
+            Image(systemName: showMenuController.showMenu ? "xmark" : "line.3.horizontal")
                 .foregroundColor(Color.primary)
                 .contentTransition(.symbolEffect)
         })

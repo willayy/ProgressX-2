@@ -9,14 +9,14 @@ import SwiftUI
 
 struct ViewAllWeighInsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var selectedBodyEntry: BodyEntry?
-    @Binding var navPath: [Int]
-    
+    // Fetch all weigh ins
     @FetchRequest(
         entity: BodyEntry.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: false)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
+    
+    @Binding var selectedBodyEntry: BodyEntry?
+    @Binding var navPath: [Int]
     
     var body: some View {
         ScrollView {

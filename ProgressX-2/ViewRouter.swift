@@ -14,7 +14,6 @@ enum Route: String {
     case HomeView = "HomeView"
     case ExerciseLibraryView = "ExerciseLibraryView"
     case ProfileView = "ProfileView"
-    case SideBarButton = "SideBarButton"
     case RoutineLibraryView = "RoutineLibraryView"
     case InfoHelp = "InfoHelp"
 }
