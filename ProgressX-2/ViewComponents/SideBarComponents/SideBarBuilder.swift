@@ -11,12 +11,8 @@ import CoreData
 
 struct SideBarBuilder: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @EnvironmentObject var viewRouter: ViewRouter
-
     let safeArea: UIEdgeInsets
-    
     @Binding var showMenu: Bool
     
     var body: some View {

@@ -122,7 +122,6 @@
 		83BD397F2C4945C3008E09A0 /* EditWeighInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD397E2C4945C3008E09A0 /* EditWeighInView.swift */; };
 		83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39802C4947A5008E09A0 /* EditWeighInViewModel.swift */; };
 		83BD39842C4A9D18008E09A0 /* InfoHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39832C4A9D18008E09A0 /* InfoHelpView.swift */; };
-		83BD39872C4AA4D9008E09A0 /* InfoHelpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39862C4AA4D9008E09A0 /* InfoHelpViewModel.swift */; };
 		83BD39892C4AA76C008E09A0 /* ExpandingVStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
@@ -294,7 +293,6 @@
 		83BD397E2C4945C3008E09A0 /* EditWeighInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeighInView.swift; sourceTree = "<group>"; };
 		83BD39802C4947A5008E09A0 /* EditWeighInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWeighInViewModel.swift; sourceTree = "<group>"; };
 		83BD39832C4A9D18008E09A0 /* InfoHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHelpView.swift; sourceTree = "<group>"; };
-		83BD39862C4AA4D9008E09A0 /* InfoHelpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHelpViewModel.swift; sourceTree = "<group>"; };
 		83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingVStack.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
@@ -878,7 +876,6 @@
 			isa = PBXGroup;
 			children = (
 				83BD39832C4A9D18008E09A0 /* InfoHelpView.swift */,
-				83BD39862C4AA4D9008E09A0 /* InfoHelpViewModel.swift */,
 			);
 			path = InfoHelpView;
 			sourceTree = "<group>";

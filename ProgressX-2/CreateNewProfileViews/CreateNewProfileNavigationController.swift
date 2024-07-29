@@ -10,11 +10,8 @@ import SwiftUI
 struct CreateNewProfileNavigationController<Content: View>: View {
     
     private var content: Content
-    
     @EnvironmentObject var viewRouter: ViewRouter
-    
     @Environment(\.managedObjectContext) private var viewContext
-    
     @Binding var navPath: [Int]
     
     init(navPath: Binding<[Int]>, @ViewBuilder content: () -> Content) {

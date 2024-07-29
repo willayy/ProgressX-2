@@ -19,13 +19,13 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     @ViewBuilder var content: (UIEdgeInsets) -> Content
     @ViewBuilder var menuView: (UIEdgeInsets) -> MenuView
     @ViewBuilder var Background: Backgroud
-    
     //View properties
     @GestureState private var isDragging: Bool = false
     @State private var offsetX: CGFloat = 0
     @State private var lastoffsetX: CGFloat = 0
     // Dim Contentview when side meue is dragged
     @State private var progress: CGFloat = 0
+    
     var body: some View {
         GeometryReader {
             let size = $0.size
@@ -154,11 +154,3 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
         }
     }
 }
-
-
-
-#Preview {
-    HomeView()
-       .environmentObject(ViewRouter())
-}
-

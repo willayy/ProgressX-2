@@ -11,10 +11,6 @@ import CoreData
 
 struct SideBarButton: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @EnvironmentObject var viewRouter: ViewRouter
-    
     @Binding var showMenu: Bool
     
     var body: some View {

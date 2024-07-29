@@ -19,8 +19,8 @@ struct RoutineLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Routine.timePeriodName, ascending: false)]
     ) var searchedRoutines: FetchedResults<Routine>
     
+    @Binding var showMenu: Bool
     @StateObject private var viewModel = RoutineLibraryViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         
@@ -34,7 +34,7 @@ struct RoutineLibraryView: View {
                 selectedThreshold: $viewModel.selectedThreshold,
             content: {
             ScrollView {
-                VStack(alignment: .center) {
+                VStackWithSideBarButton(showMenu: $showMenu) {
                     
                     //MARK: View header text
                     BoldTitle(text: "Routine library")
@@ -68,7 +68,6 @@ struct RoutineLibraryView: View {
                             selectedTemplateCycle: $viewModel.selectedTemplateCycle,
                             routine: routine
                         )
-                        .environment(\.managedObjectContext, viewContext)
                     }
                     .padding(.horizontal, 20)
                     
@@ -89,13 +88,13 @@ struct RoutineLibraryView: View {
                 }
             }
         })
-        .environment(\.managedObjectContext, viewContext)
     }
 }
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
+    @State var showMenu: Bool = false
     
-    return RoutineLibraryView()
+    return RoutineLibraryView(showMenu: $showMenu)
         .environment(\.managedObjectContext, context)
 }

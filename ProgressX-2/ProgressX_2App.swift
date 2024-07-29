@@ -33,34 +33,29 @@ struct ProgressX_2App: App {
                 SideBarView(showMenu: $showMenu) {
                     switch (viewRouter.rootView) {
                         case .HomeView:
-                            HomeView()
-                                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                            HomeView(showMenu: $showMenu)
                             
                         case .StartWorkoutView:
                             StartWorkoutView()
                             
                         case .ExerciseLibraryView:
-                            ExerciseLibraryView()
-                                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                            ExerciseLibraryView(showMenu: $showMenu)
                             
                         case .ProfileView:
-                            ProfileView()
-                                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                            ProfileView(showMenu: $showMenu)
                             
                         case .RoutineLibraryView:
-                            RoutineLibraryView()
-                                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                            RoutineLibraryView(showMenu: $showMenu)
                             
                         case .InfoHelp:
-                            InfoHelpView()
+                            InfoHelpView(showMenu: $showMenu)
                         
                         case .CreateNewProfileView:
                             CreateNewProfile1View()
-                                .environmentObject(viewRouter)
-                                .environment(\.managedObjectContext, persistenceContainer.viewContext)
                     }
                 }
                 .environmentObject(viewRouter)
+                .environment(\.managedObjectContext, persistenceContainer.viewContext)
             }
         }
     }

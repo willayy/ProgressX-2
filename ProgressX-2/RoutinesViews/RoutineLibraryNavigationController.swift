@@ -10,7 +10,6 @@ import SwiftUI
 struct RoutineLibraryNavigationController<Content: View>: View {
     
     private var content: Content
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTemplateCycle: TemplateCycle?
@@ -53,7 +52,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedRoutine: $selectedRoutine,
                         selectedTemplateCycle: $selectedTemplateCycle
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
@@ -64,7 +62,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedTemplateCycle: $selectedTemplateCycle,
                         selectedTemplateWeek: $selectedTemplateWeek
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
@@ -72,7 +69,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                     RoutineStatisticsView(
                         selectedRoutine: $selectedRoutine
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     
@@ -82,7 +78,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedTemplateWeek: $selectedTemplateWeek,
                         selectedTemplateSession: $selectedTemplateSession
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 5 {
                     
@@ -93,7 +88,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedTemplateSession: $selectedTemplateSession,
                         selectedThreshold: $selectedThreshold
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 6 {
                     
@@ -102,7 +96,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         navPath: $navPath,
                         selectedTemplateSet: $selectedTemplateSet
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 7 {
                     
@@ -112,7 +105,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedTemplateSession: $selectedTemplateSession,
                         selectedTemplateSet: $selectedTemplateSet
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 8 {
                     
@@ -122,7 +114,6 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                         selectedTemplateSet: $selectedTemplateSet,
                         selectedThreshold: $selectedThreshold
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 9 {
                     

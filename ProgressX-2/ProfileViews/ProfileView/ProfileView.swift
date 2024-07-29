@@ -16,6 +16,7 @@ struct ProfileView: View {
         sortDescriptors: []
     ) private var profiles: FetchedResults<Profile>
     
+    @Binding var showMenu: Bool
     @StateObject private var viewModel = ProfileViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     
@@ -23,7 +24,7 @@ struct ProfileView: View {
         
         ProfileNavigationController {
             ScrollView {
-                VStack {
+                VStackWithSideBarButton(showMenu: $showMenu) {
                     BoldTitle(text: "Profile")
                         .padding(.horizontal, 20)
                     
@@ -179,7 +180,8 @@ struct ProfileView: View {
 
 #Preview {
     let context = PersistenceController.preview.container.viewContext
+    @State var showMenu: Bool = false
     
-    return ProfileView()
+    return ProfileView(showMenu: $showMenu)
         .environment(\.managedObjectContext, context)
 }
