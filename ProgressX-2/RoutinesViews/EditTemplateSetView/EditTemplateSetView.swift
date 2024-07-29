@@ -90,7 +90,7 @@ struct EditTemplateSetView: View {
                     )
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
                 BoldSubHeadline(text: "Change the exercise of the set")
                 
@@ -99,7 +99,7 @@ struct EditTemplateSetView: View {
                     searchWord: $viewModel.searchWord
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
                 BoldSubHeadline(text: "Change the rest time of the set")
                 
@@ -119,7 +119,7 @@ struct EditTemplateSetView: View {
                     selections: viewModel.loadTypeSelections()
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
                 BoldSubHeadline(text: "Change the quantity type of the set")
                 
@@ -128,7 +128,7 @@ struct EditTemplateSetView: View {
                     selections: viewModel.quantityTypeSelections()
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
                 BoldSubHeadline(text: "Change the quantity or load of the set")
                 
