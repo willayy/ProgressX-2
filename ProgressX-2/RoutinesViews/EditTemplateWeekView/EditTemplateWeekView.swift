@@ -29,6 +29,9 @@ struct EditTemplateWeekView: View {
             VStack {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(week: selectedTemplateWeek!)
+                    })
                 
                 Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -163,9 +166,7 @@ struct EditTemplateWeekView: View {
                 .padding(.bottom, 10)
             
             }
-        }.onAppear(perform: {
-            viewModel.setViewStartValues(week: selectedTemplateWeek!)
-        })
+        }
     }
     
     private func validateInput() -> Bool {

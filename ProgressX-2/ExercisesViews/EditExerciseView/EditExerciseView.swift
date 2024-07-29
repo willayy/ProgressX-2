@@ -29,9 +29,13 @@ struct EditExerciseView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
+                    
                     BoldTitle(text: "Editing")
                     
                     Title2(text: "\(selectedExercise!.exerciseName!)")
+                        .onAppear(perform: {
+                            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
+                        })
                         
                     if viewModel.exerciseEditedAlert {
                         SubmitAlert(
@@ -85,6 +89,7 @@ struct EditExerciseView: View {
                         errorMessage: $viewModel.newDescIsInvalidMsg,
                         maxChars: 200
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Edit exercise categories")
@@ -117,9 +122,6 @@ struct EditExerciseView: View {
                     .padding(.bottom, 10)
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
-        })
     }
         
     private func validateInput() -> Bool {

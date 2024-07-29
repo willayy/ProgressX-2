@@ -23,9 +23,15 @@ struct ProfileView: View {
         ProfileNavigationController {
             ScrollView {
                 VStackWithSideBarButton {
+                    
                     BoldTitle(text: "Profile")
                         .padding(.horizontal, 20)
-                    
+                        .onAppear(perform: {
+                            /* Have to call this function here because
+                            of the order SwiftUI loads in views */
+                            viewModel.setViewStartValues(profile: profiles.first!)
+                        })
+                                        
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
                     
@@ -135,9 +141,6 @@ struct ProfileView: View {
                     
                 }
             }
-            .onAppear(perform: {
-                viewModel.setViewStartValues(profile: profiles.first!)
-            })
         }
     }
     

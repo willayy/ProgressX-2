@@ -20,6 +20,9 @@ struct EditTemplateSetView: View {
             VStack {
                 
                 BoldTitle(text: "Editing")
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
+                    })
                 
                 Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -195,9 +198,6 @@ struct EditTemplateSetView: View {
                 
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
-        })
     }
     
     private func validateInput() -> Bool {

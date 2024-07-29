@@ -21,6 +21,9 @@ struct EditWeighInView: View {
                 BoldTitle(text: "Editing weigh-in done at: \(selectedBodyEntry!.dateString!)")
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(bodyEntry: selectedBodyEntry!)
+                    })
                 
                 if viewModel.bodyEntryEditedAlert {
                     SubmitAlert(
@@ -148,9 +151,6 @@ struct EditWeighInView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(bodyEntry: selectedBodyEntry!)
-        })
     }
     
     private func validateInput() -> Bool {

@@ -21,6 +21,9 @@ struct EditPrView: View {
                 
                 BoldTitle(text: "Editing PR for")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(editingPr: editingPr!)
+                    })
                 
                 Title2(text: "\(exercise!.exerciseName!)")
                 
@@ -95,6 +98,9 @@ struct EditPrView: View {
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
+                BoldSubHeadline(text: "Change load")
+                    .padding(.top, 10)
+                
                 DecimalTextField(
                     placeHolder: "Load",
                     numberText: $viewModel.editedWeightLoad,
@@ -102,10 +108,12 @@ struct EditPrView: View {
                     errorMessage: $viewModel.editedWeightLoadInvalidMsg
                 )
                 .padding(.horizontal, 60)
-                .padding(.top, 10)
                 .padding(.bottom, 10)
                 
                 if editingPr!.prType == "maxreps" {
+                    
+                    BoldSubHeadline(text: "Change reps")
+                    
                     IntegerTextField(
                         placeHolder: "Reps",
                         numberText: $viewModel.editedQuantity,
@@ -115,6 +123,9 @@ struct EditPrView: View {
                     .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
+                    
+                    BoldSubHeadline(text: "Change time")
+                    
                     DecimalTextField(
                         placeHolder: "Time", 
                         numberText: $viewModel.editedQuantity,
@@ -145,9 +156,6 @@ struct EditPrView: View {
                 
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(editingPr: editingPr!)
-        })
     }
     
     private func validateInput() -> Bool {

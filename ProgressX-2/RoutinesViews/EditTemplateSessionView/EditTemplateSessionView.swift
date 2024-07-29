@@ -28,8 +28,14 @@ struct EditTemplateSessionView: View {
         
         ScrollView {
             VStack {
+                
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(
+                            selectedTemplateSession: selectedTemplateSession
+                        )
+                    })
                 
                 Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -153,11 +159,6 @@ struct EditTemplateSessionView: View {
             
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(
-                selectedTemplateSession: selectedTemplateSession
-            )
-        })
     }
     
     private func validateInput() -> Bool {

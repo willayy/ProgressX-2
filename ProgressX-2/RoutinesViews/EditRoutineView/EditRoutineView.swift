@@ -36,6 +36,9 @@ struct EditRoutineView: View {
             VStack {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
+                    })
                     
                 Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -152,9 +155,6 @@ struct EditRoutineView: View {
             
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
-        })
     }
     
     private func validateInput() -> Bool {

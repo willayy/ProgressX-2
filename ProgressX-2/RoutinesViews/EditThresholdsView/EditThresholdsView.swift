@@ -26,6 +26,11 @@ struct EditThresholdsView: View {
             VStack {
                 
                 BoldTitle(text: "Editing")
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(
+                            selectedSetThreshold: selectedThreshold!
+                        )
+                    })
                 
                 Title2(text: "\(selectedThreshold!.timePeriodName!)")
                 
@@ -189,11 +194,6 @@ struct EditThresholdsView: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(
-                selectedSetThreshold: selectedThreshold!
-            )
-        })
     }
     
     private func validateInput() -> Bool {
