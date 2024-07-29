@@ -82,10 +82,9 @@ struct ProfileView: View {
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
-                        segments: viewModel.unitSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.unitSegments
                     )
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change smallest plate")
@@ -112,10 +111,9 @@ struct ProfileView: View {
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedGenderSegment,
-                        segments: viewModel.genderSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.genderSegments
                     )
+                    .padding(.horizontal, 20)
                     .padding(.bottom, 10)
                     
                     Button(action: {

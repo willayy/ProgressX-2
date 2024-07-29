@@ -87,20 +87,18 @@ struct EditThresholdsView: View {
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPrSelection,
-                    segments: viewModel.addPrSegments,
-                    frameWidth: 250,
-                    horizontalPadding: 40
+                    segments: viewModel.addPrSegments
                 )
+                .padding(.horizontal, 40)
                 
                 // If exercise is rep-based add option to select AMRAP or 1RM pr.
                 if exerciseType == "reps" && viewModel.addPrSelection == "Add PR"  {
                     BasicSegPicker(
                         selectedSegment: $viewModel.addRepPrSelection,
-                        segments: viewModel.addRepPrSegments,
-                        frameWidth: 240,
-                        horizontalPadding: 40
+                        segments: viewModel.addRepPrSegments
                     )
                     .padding(.top, 5)
+                    .padding(.horizontal, 40)
                 }
                 
                 BoldSubHeadline(text: "Edit set load change")

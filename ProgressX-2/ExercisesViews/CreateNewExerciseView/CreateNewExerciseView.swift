@@ -77,10 +77,9 @@ struct CreateNewExerciseView: View {
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.selectedTypeOfExercise,
-                    segments: viewModel.exerciseTypeOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.exerciseTypeOptions
                 )
+                .padding(.horizontal, 100)
                 
                 BoldSubHeadline(text: "Add PR for this exercise?")
                     .padding(.top, 20)
@@ -93,11 +92,10 @@ struct CreateNewExerciseView: View {
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPr,
-                    segments: viewModel.addPrOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.addPrOptions
                 )
-                    .padding(.bottom, 5)
+                .padding(.horizontal, 100)
+                .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if viewModel.addPr == "Yes" {
@@ -106,10 +104,9 @@ struct CreateNewExerciseView: View {
                     if viewModel.selectedTypeOfExercise == "Reps" {
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedTypeOfPr,
-                            segments: viewModel.repBasedPrOptions,
-                            frameWidth: 230,
-                            horizontalPadding: 100
+                            segments: viewModel.repBasedPrOptions
                         )
+                        .padding(.horizontal, 100)
                         .padding(.bottom, 5)
                     }
                     

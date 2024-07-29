@@ -58,10 +58,9 @@ struct CreateNewProfile1View: View {
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
-                        segments: viewModel.unitSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.unitSegments
                     )
+                    .padding(.horizontal, 20)
                     
                     BoldSubHeadline(text: "What is your smallest available plate?")
                         .padding(.top, 10)
@@ -103,13 +102,11 @@ struct CreateNewProfile1View: View {
                     BoldSubHeadline(text: "What is your (biological) gender")
                         .padding(.top, 10)
                         
-                    
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedGenderSegment,
-                        segments: viewModel.genderSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.genderSegments
                     )
+                    .padding(.horizontal, 20)
                     
                     Button {
                         if validateInput() {
