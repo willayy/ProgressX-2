@@ -11,7 +11,6 @@ import CoreData
 
 struct StatisticsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var exercise: Exercise?
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?

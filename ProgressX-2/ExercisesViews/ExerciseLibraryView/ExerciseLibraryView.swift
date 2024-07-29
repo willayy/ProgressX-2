@@ -20,8 +20,6 @@ struct ExerciseLibraryView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
     ) private var searchedExercises: FetchedResults<Exercise>
     
-    @Binding var showMenu: Bool
-    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = ExerciseLibraryViewModel()
     
     var body: some View {
@@ -33,7 +31,7 @@ struct ExerciseLibraryView: View {
             newPrType: $viewModel.newPrType,
             content: {
             ScrollView {
-                VStackWithSideBarButton(showMenu: $showMenu) {
+                VStackWithSideBarButton {
                     
                     BoldTitle(text: "Exercise library")
                         .padding(.horizontal, 20)
@@ -87,8 +85,6 @@ struct ExerciseLibraryView: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     
-    @State var showMenu: Bool = false
-    
-    return ExerciseLibraryView(showMenu: $showMenu)
+    return ExerciseLibraryView()
         .environment(\.managedObjectContext, context)
 }

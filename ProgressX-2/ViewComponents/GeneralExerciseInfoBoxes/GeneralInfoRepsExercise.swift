@@ -9,15 +9,10 @@ import SwiftUI
 import CoreData
 
 struct GeneralInfoRepsExercise: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+        
     @FetchRequest private var maxRepPersonalRecords: FetchedResults<PersonalRecord>
-    
     @FetchRequest private var oneRepMaxPersonalRecords: FetchedResults<PersonalRecord>
-    
     private let exercise: Exercise?
-    
     public let selection: String
     
     init(exercise: Exercise?, selection: String) {

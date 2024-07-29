@@ -13,27 +13,21 @@ class WeighInViewModel: ObservableObject {
     @Published public var bodyWeight: String = ""
     @Published public var bodyWeightIsInvalid: Bool = false
     @Published public var bodyWeightIsInvalidMsg: String = ""
-    
     @Published public var chestCirc: String = ""
     @Published public var chestCircIsInvalid: Bool = false
     @Published public var chestCircIsInvalidMsg: String = ""
-    
     @Published public var waistCirc: String = ""
     @Published public var waistCircIsInvalid: Bool = false
     @Published public var waistCircIsInvalidMsg: String = ""
-    
     @Published public var upperArmCirc: String = ""
     @Published public var upperArmCircIsInvalid: Bool = false
     @Published public var upperArmCircIsInvalidMsg: String = ""
-    
     @Published public var lowerArmCirc: String = ""
     @Published public var lowerArmIsInvalid: Bool = false
     @Published public var lowerArmIsInvalidMsg: String = ""
-    
     @Published public var thighCirc: String = ""
     @Published public var thighCircIsInvalid: Bool = false
     @Published public var thighCircIsInvalidMsg: String = ""
-    
     @Published public var calfCirc: String = ""
     @Published public var calfCircIsInvalid: Bool = false
     @Published public var calfCircIsInvalidMsg: String = ""

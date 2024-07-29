@@ -11,8 +11,6 @@ import SwiftUI
 struct PrListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-    
-    // Access to the parents navigationstack.
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?
     @State private var showDeleteAlert: Bool = false
@@ -49,7 +47,6 @@ struct PrListItem: View {
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedPrView(personalRecord: pr)
                         .presentationDetents([.fraction(0.3)])
-                        .environment(\.managedObjectContext, viewContext)
                 }
                 
                 Spacer()

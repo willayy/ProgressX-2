@@ -10,7 +10,6 @@ import CoreData
 
 struct PrList: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest private var personalRecords: FetchedResults<PersonalRecord>
     @Binding private var navPath: [Int]
     @Binding private var editingPr: PersonalRecord?

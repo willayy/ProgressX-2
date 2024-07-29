@@ -9,13 +9,10 @@ import SwiftUI
 
 struct InfoHelpView: View {
     
-    @Binding var showMenu: Bool
-    
     var body: some View {
-        
         InfoHelpNavigationController {
             ScrollView {
-                VStackWithSideBarButton(showMenu: $showMenu, content: {
+                VStackWithSideBarButton {
                     
                     BoldTitle(text: "Help / Information")
                         .padding(.horizontal, 20)
@@ -274,16 +271,13 @@ struct InfoHelpView: View {
                             
                         }
                         .padding(.horizontal, 20)
-                })
+                }
             }
         }
     }
 }
 
 #Preview {
-    
-    @State var showMenu: Bool = true
-    
-    return InfoHelpView(showMenu: $showMenu)
+    return InfoHelpView()
         .environmentObject(ViewRouter())
 }

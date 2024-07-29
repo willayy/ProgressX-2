@@ -10,8 +10,6 @@ import CoreData
 
 struct SetExerciseSelectionList: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]

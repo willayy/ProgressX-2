@@ -15,7 +15,6 @@ struct ViewAllWeighInsView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: false)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedBodyEntry: BodyEntry?
     @Binding var navPath: [Int]
     

@@ -13,7 +13,6 @@ struct ProgressX_2App: App {
     let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
     @State var isLoading: Bool = true
-    @State var showMenu: Bool = false
     
     var body: some Scene {
         WindowGroup {            
@@ -30,10 +29,10 @@ struct ProgressX_2App: App {
                 
             } else {
                 
-                SideBarView(showMenu: $showMenu) {
+                SideBarView() {
                     switch (viewRouter.rootView) {
                         case .HomeView:
-                            HomeView(showMenu: $showMenu)
+                            HomeView()
                             
                         case .StartWorkoutView:
                             fatalError("CHECK ProgressX_2App and you will understand")
@@ -42,16 +41,16 @@ struct ProgressX_2App: App {
                             //    .environment(\.managedObjectContext, persistenceContainer.viewContext)
                             
                         case .ExerciseLibraryView:
-                            ExerciseLibraryView(showMenu: $showMenu)
+                            ExerciseLibraryView()
                             
                         case .ProfileView:
-                            ProfileView(showMenu: $showMenu)
+                            ProfileView()
                             
                         case .RoutineLibraryView:
-                            RoutineLibraryView(showMenu: $showMenu)
+                            RoutineLibraryView()
                             
                         case .InfoHelp:
-                            InfoHelpView(showMenu: $showMenu)
+                            InfoHelpView()
                         
                         case .CreateNewProfileView:
                             CreateNewProfile1View()

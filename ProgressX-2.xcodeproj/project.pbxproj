@@ -24,6 +24,8 @@
 		831657712C53CAC2003F895F /* ProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657702C53CAC2003F895F /* ProfileNavigationController.swift */; };
 		831657732C53CB93003F895F /* InfoHelpNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657722C53CB93003F895F /* InfoHelpNavigationController.swift */; };
 		831657752C53CCC5003F895F /* VStackWithSideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */; };
+		831657792C5798C5003F895F /* SideBarEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657782C5798C5003F895F /* SideBarEnums.swift */; };
+		8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316577A2C57997A003F895F /* ShowMenuController.swift */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */; };
 		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
@@ -181,6 +183,8 @@
 		831657702C53CAC2003F895F /* ProfileNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNavigationController.swift; sourceTree = "<group>"; };
 		831657722C53CB93003F895F /* InfoHelpNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHelpNavigationController.swift; sourceTree = "<group>"; };
 		831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VStackWithSideBarButton.swift; sourceTree = "<group>"; };
+		831657782C5798C5003F895F /* SideBarEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarEnums.swift; sourceTree = "<group>"; };
+		8316577A2C57997A003F895F /* ShowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMenuController.swift; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTimePeriod.swift; sourceTree = "<group>"; };
 		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
@@ -881,11 +885,13 @@
 		8F8B9F042C2195E30072A39D /* SideBarComponents */ = {
 			isa = PBXGroup;
 			children = (
+				83266E602C37EEE000F5F6CB /* SideBarView.swift */,
+				831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */,
 				831F2C0B2C21D043007A7A8A /* SideBar.swift */,
 				8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */,
 				8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */,
-				83266E602C37EEE000F5F6CB /* SideBarView.swift */,
-				831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */,
+				831657782C5798C5003F895F /* SideBarEnums.swift */,
+				8316577A2C57997A003F895F /* ShowMenuController.swift */,
 			);
 			path = SideBarComponents;
 			sourceTree = "<group>";
@@ -1068,6 +1074,7 @@
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
 				83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */,
+				8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
 				83BD396C2C47D32B008E09A0 /* BodyEntryChart.swift in Sources */,
 				836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */,
@@ -1131,6 +1138,7 @@
 				8316576F2C52A14A003F895F /* HiddenLightSubHeadline.swift in Sources */,
 				831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
+				831657792C5798C5003F895F /* SideBarEnums.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				836486072C36F306006EB0C0 /* EditTemplateWeekViewModel.swift in Sources */,
 				831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */,

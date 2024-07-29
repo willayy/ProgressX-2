@@ -22,19 +22,17 @@ struct HomeView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
-    @Binding var showMenu: Bool
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
-        
         HomeViewNavigationController(
             navPath: $viewModel.navPath,
             profile: $viewModel.selectedProfile,
             selectedBodyEntry: $viewModel.selectedBodyEntry,
             content: {
             ScrollView {
-                VStackWithSideBarButton(showMenu: $showMenu) {
+                VStackWithSideBarButton {
                     
                     let profile: Profile = profiles.first!
                     
@@ -158,10 +156,8 @@ struct HomeView: View {
 }
 
 #Preview {
-    
     let context = PersistenceController.preview.container.viewContext
-    @State var showMenu: Bool = false
     
-    return HomeView(showMenu: $showMenu)
+    return HomeView()
         .environment(\.managedObjectContext, context)
 }

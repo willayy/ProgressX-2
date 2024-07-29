@@ -9,7 +9,6 @@ import SwiftUI
 
 struct MagnifiedTemplateSetView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var set: TemplateSet
     @Binding var navPath: [Int]
     @Binding var selectedThreshold: SetThreshold?
