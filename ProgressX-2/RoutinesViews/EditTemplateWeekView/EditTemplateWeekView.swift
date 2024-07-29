@@ -77,21 +77,21 @@ struct EditTemplateWeekView: View {
                         
                         InputTextField(
                             placeHolder: "New week name",
-                            text: $viewModel.editedWeekName, 
-                            maxChars: 25,
+                            text: $viewModel.editedWeekName,
                             markAsWrong: $viewModel.editedWeekIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedWeekNameIsInvalidMsg
+                            errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
+                            maxChars: 25
                         )
+                        .padding(.horizontal, 60)
                         
                         InputTextField(
                             placeHolder: "New week description",
-                            text: $viewModel.editedWeekDescription, 
-                            maxChars: 25,
+                            text: $viewModel.editedWeekDescription,
                             markAsWrong: $viewModel.editedWeekDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedWeekDescIsInvalidMsg
+                            errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
+                            maxChars: 25
                         )
+                        .padding(.horizontal, 60)
                         
                         LightSubHeadline(text: "Change the weeks position in the routine")
                             .padding(.top, 10)

@@ -57,14 +57,13 @@ struct CreateNewPersonalRecord: View {
                 
                 BoldSubHeadline(text: "Choose a load for the PR")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Load", 
-                    allowNegatives: false,
                     numberText: $viewModel.prLoad,
                     markAsWrong: $viewModel.prLoadIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.prLoadIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 .onAppear(perform: {
                     if prType == "onerepmax" {
@@ -73,25 +72,23 @@ struct CreateNewPersonalRecord: View {
                 })
                     
                 if prType == "maxreps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "Reps", 
-                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.prQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 else if prType == "timemax" {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Seconds", 
-                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.prQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 // MARK: Handle the creation of a PR

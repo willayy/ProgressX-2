@@ -69,11 +69,11 @@ struct EditExerciseView: View {
                     InputTextField(
                         placeHolder: "Exercise name",
                         text: $viewModel.newName,
-                        maxChars: 30,
                         markAsWrong: $viewModel.newNameIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newNameIsInvalidMsg
+                        errorMessage: $viewModel.newNameIsInvalidMsg,
+                        maxChars: 30
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                      
                     BoldSubHeadline(text: "Edit exercise description")
@@ -81,10 +81,9 @@ struct EditExerciseView: View {
                     InputTextField(
                         placeHolder: "Exercise description",
                         text: $viewModel.newDesc,
-                        maxChars: 200,
                         markAsWrong: $viewModel.newDescIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newDescIsInvalidMsg
+                        errorMessage: $viewModel.newDescIsInvalidMsg,
+                        maxChars: 200
                     )
                     .padding(.bottom, 10)
                     

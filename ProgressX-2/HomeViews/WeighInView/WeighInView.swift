@@ -30,14 +30,13 @@ struct WeighInView: View {
                 
                 let lengthUnit = PersistenceController.getLengthUnit(viewContext)!
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Bodyweight (\(weightUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.bodyWeight,
                     markAsWrong: $viewModel.bodyWeightIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.bodyWeightIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Body measurements")
@@ -45,64 +44,58 @@ struct WeighInView: View {
                 LightSubHeadline(text: "These values or optional and doesn't need too be filled in")
                     .padding(.horizontal, 20)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Chest circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.chestCirc,
                     markAsWrong: $viewModel.chestCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.chestCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Upper arm circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.upperArmCirc,
                     markAsWrong: $viewModel.upperArmCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.upperArmCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Lower arm circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.lowerArmCirc,
                     markAsWrong: $viewModel.lowerArmIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.lowerArmIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Waist circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.waistCirc,
                     markAsWrong: $viewModel.waistCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.waistCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Thigh circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.thighCirc,
                     markAsWrong: $viewModel.thighCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.thighCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Calf circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.calfCirc,
                     markAsWrong: $viewModel.calfCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.calfCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 Button {

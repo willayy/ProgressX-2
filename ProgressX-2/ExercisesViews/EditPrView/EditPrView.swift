@@ -95,36 +95,33 @@ struct EditPrView: View {
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Load",
-                    allowNegatives: false,
                     numberText: $viewModel.editedWeightLoad,
                     markAsWrong: $viewModel.editedWeightLoadInvalid,
-                    width: 0.7,
                     errorMessage: $viewModel.editedWeightLoadInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
                 
                 if editingPr!.prType == "maxreps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "Reps",
-                        allowNegatives: false,
                         numberText: $viewModel.editedQuantity,
                         markAsWrong: $viewModel.editedQuantityInvalid,
-                        width: 0.7,
                         errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Time", 
-                        allowNegatives: false,
                         numberText: $viewModel.editedQuantity,
                         markAsWrong: $viewModel.editedQuantityInvalid,
-                        width: 0.7,
                         errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                 }
                 

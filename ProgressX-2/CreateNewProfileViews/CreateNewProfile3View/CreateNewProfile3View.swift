@@ -54,83 +54,77 @@ struct CreateNewProfile3View: View {
                         Text("Chest circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.chestCirc,
                             markAsWrong: $viewModel.chestCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.chestCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Waist circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.waistCirc,
                             markAsWrong: $viewModel.waistCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.waistCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Thigh circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.thighCirc,
                             markAsWrong: $viewModel.thighCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.thighCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Calf circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.calfCirc,
                             markAsWrong: $viewModel.calfCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.calfCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Lower arm circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.lowerArmCirc,
                             markAsWrong: $viewModel.lowerArmCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.lowerArmCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Upper arm circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: circumferenceUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.upperArmCirc,
                             markAsWrong: $viewModel.upperArmCircIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.upperArmCircIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
-                    
                 }
-                .padding(.top, 40)
+                .padding(.top, 20)
+                .padding(.horizontal, 20)
                 
                 Button {
                     if validateInput() {
@@ -143,7 +137,8 @@ struct CreateNewProfile3View: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
-                .padding(.top, 40)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
                 
             }
         }

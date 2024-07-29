@@ -59,23 +59,21 @@ struct EditThresholdsView: View {
                 .padding(.horizontal, 20)
                 
                 if exerciseType == "reps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "New quantity (reps)", 
-                        allowNegatives: false,
                         numberText: $viewModel.editedTriggerQuantity,
                         markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 } else {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "New quantity (seconds)", 
-                        allowNegatives: false,
                         numberText: $viewModel.editedTriggerQuantity,
                         markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 }
                                 
                 BoldSubHeadline(text: "Modify PR generation")
@@ -116,14 +114,14 @@ struct EditThresholdsView: View {
                     )
                     .padding(.horizontal, 20)
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))",
-                        allowNegatives: true,
                         numberText: $viewModel.editedFlatLoadAdd,
                         markAsWrong: $viewModel.editedFlatLoadAddIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg
+                        errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg,
+                        allowNegatives: true
                     )
+                    .padding(.horizontal, 60)
                 } else {
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
@@ -144,25 +142,25 @@ struct EditThresholdsView: View {
                     
                     if exerciseType == "reps" {
                         
-                        InputIntegerNumberField(
-                            placeHolder: "Quantity (reps)", 
-                            allowNegatives: true,
+                        IntegerTextField(
+                            placeHolder: "Quantity (reps)",
                             numberText: $viewModel.editedFlatQuantityAdd,
                             markAsWrong: $viewModel.editedFlatQuantityAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg
+                            errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                         
                     } else if exerciseType == "time" {
                         
-                        InputDecimalNumberField(
-                            placeHolder: "Quantity (seconds)", 
-                            allowNegatives: true,
+                        DecimalTextField(
+                            placeHolder: "Quantity (seconds)",
                             numberText: $viewModel.editedFlatQuantityAdd,
                             markAsWrong: $viewModel.editedFlatQuantityAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg
+                            errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                         
                     } else {
                         GroupBox {

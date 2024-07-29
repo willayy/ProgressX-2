@@ -49,14 +49,13 @@ struct EditWeighInView: View {
                 
                 let lengthUnit = PersistenceController.getLengthUnit(viewContext)!
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Bodyweight (\(weightUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedBodyWeight,
                     markAsWrong: $viewModel.editedBodyWeightIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedBodyWeightIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Change body measurements")
@@ -64,74 +63,68 @@ struct EditWeighInView: View {
                 
                 LightSubHeadline(text: "Chest circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Chest circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedChestCirc,
                     markAsWrong: $viewModel.editedChestCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedChestCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Upper arm circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Upper arm circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedUpperArmCirc,
                     markAsWrong: $viewModel.editedUpperArmCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Lower arm circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Lower arm circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedLowerArmCirc,
                     markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedLowerArmIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Waist circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Waist circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedWaistCirc,
                     markAsWrong: $viewModel.editedWaistCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedWaistCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Thigh circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Thigh circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedThighCirc,
                     markAsWrong: $viewModel.editedThighCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedThighCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Calf circumference")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Calf circumference (\(lengthUnit))",
-                    allowNegatives: false,
                     numberText: $viewModel.editedCalfCirc,
                     markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedCalfCircIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 Button {

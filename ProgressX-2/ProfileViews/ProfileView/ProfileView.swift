@@ -49,11 +49,11 @@ struct ProfileView: View {
                     InputTextField(
                         placeHolder: "Username",
                         text: $viewModel.userName,
-                        maxChars: 25,
                         markAsWrong: $viewModel.userNameIsInvalid,
-                        width: 0.5,
-                        errorMessage: $viewModel.userNameIsInvalidMsg
+                        errorMessage: $viewModel.userNameIsInvalidMsg,
+                        maxChars: 25
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change birth date")
@@ -69,14 +69,13 @@ struct ProfileView: View {
                     
                     BoldSubHeadline(text: "Change default rest-time (seconds)")
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Default rest-time",
-                        allowNegatives: false,
                         numberText: $viewModel.standardRestTime,
                         markAsWrong: $viewModel.standardRestTimeIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.standardRestTimeIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change weight and length units")
@@ -100,14 +99,13 @@ struct ProfileView: View {
                     
                     BoldSubHeadline(text: "Change height")
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Height",
-                        allowNegatives: false,
                         numberText: $viewModel.height,
                         markAsWrong: $viewModel.heightIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.heightIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Gender")

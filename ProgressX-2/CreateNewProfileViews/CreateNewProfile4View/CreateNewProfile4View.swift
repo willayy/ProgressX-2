@@ -63,56 +63,53 @@ struct CreateNewProfile4View: View {
                         Text("Benchpress")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: weightUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.benchPress1RM,
                             markAsWrong: $viewModel.benchPress1RMIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.benchPress1RMIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Squats")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: weightUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.squat1RM,
                             markAsWrong: $viewModel.squat1RMIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.squat1RMIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Shoulderpress")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: weightUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.shoulderPress1RM,
                             markAsWrong: $viewModel.shoulderPress1RMIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.shoulderPress1RMIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Deadlift")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: weightUnit, 
-                            allowNegatives: false,
                             numberText: $viewModel.deadLift1RM,
                             markAsWrong: $viewModel.deadLift1RMIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.deadLift1RMIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                 }
-                .padding(.top, 40)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
                 
                 VStack(alignment: .center, spacing: 10) {
                     
@@ -123,30 +120,29 @@ struct CreateNewProfile4View: View {
                         Text("Pushups")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "reps", 
-                            allowNegatives: false,
                             numberText: $viewModel.pushupsAmrap,
                             markAsWrong: $viewModel.pushupsAmrapIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.pushupsAmrapIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                     HStack() {
                         Text("Situps")
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "reps", 
-                            allowNegatives: false,
                             numberText: $viewModel.situpsAmrap,
                             markAsWrong: $viewModel.situpsAmrapIsInvalid,
-                            width: viewModel.inputFieldWidth,
                             errorMessage: $viewModel.situpsAmrapIsInvalidMsg
                         )
+                        .padding(.horizontal, 30)
                     }
                 }
-                .padding(.top, 40)
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
                 
                 Button {
                     if validateInput() {
@@ -164,7 +160,8 @@ struct CreateNewProfile4View: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
-                .padding(.top, 40)
+                .padding(.top, 20)
+                .padding(.bottom, 20)
                 
             }
         }

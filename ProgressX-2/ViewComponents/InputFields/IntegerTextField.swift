@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 /// TextField used for input of decimal numbers, using the InputField component.
-struct InputIntegerNumberField: View {
+struct IntegerTextField: View {
     
     private var allowedChars = "1234567890"
     private let maxChars = 6
@@ -18,22 +18,19 @@ struct InputIntegerNumberField: View {
     let allowNegatives: Bool
     @Binding var numberText: String
     @Binding var markAsWrong: Bool
-    let width: CGFloat
     @State private var shouldShake = false
     @Binding var errorMessage: String
     
     init(
         placeHolder: String,
-        allowNegatives: Bool,
         numberText: Binding<String>,
         markAsWrong: Binding<Bool>,
-        width: CGFloat,
-        errorMessage: Binding<String>
+        errorMessage: Binding<String>,
+        allowNegatives: Bool = false
     ) {
         if allowNegatives { allowedChars.append("-") }
         self.placeHolder = placeHolder
         self.allowNegatives = allowNegatives
-        self.width = width
         self._errorMessage = errorMessage
         self._numberText = numberText
         self._markAsWrong = markAsWrong
@@ -80,7 +77,6 @@ struct InputIntegerNumberField: View {
                 markAsWrong: $markAsWrong,
                 errorMessage: errorMessage,
                 placeHolder: placeHolder,
-                width: width,
                 onReceiveFunction: onReceiveFunction(new:),
                 onSubmitFunction: onSubmitFunction(curr:)
             )

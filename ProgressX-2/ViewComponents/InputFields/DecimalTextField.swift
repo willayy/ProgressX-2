@@ -9,35 +9,32 @@ import SwiftUI
 import Combine
 
 /// TextField used for input of decimal numbers, using the InputField component.
-struct InputDecimalNumberField: View {
+struct DecimalTextField: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
     private var allowedChars = "1234567890.,"
     private let maxChars = 7
     let placeHolder: String
-    let allowNegatives: Bool
-    let width: CGFloat
     @Binding var numberText: String
     @Binding var markAsWrong: Bool
+    @Binding var errorMessage: String
     @State private var shouldShake = false
     @State var disableMaxChars = false
-    @Binding var errorMessage: String
     let bodyWeightButton: Bool
+    let allowNegatives: Bool
     
     init(
         placeHolder: String,
-        allowNegatives: Bool,
         numberText: Binding<String>,
         markAsWrong: Binding<Bool>,
-        width: CGFloat,
         errorMessage: Binding<String>,
-        bodyWeightButton: Bool = false
+        bodyWeightButton: Bool = false,
+        allowNegatives: Bool = false
     ) {
         if allowNegatives { allowedChars.append("-") }
         self.placeHolder = placeHolder
         self.allowNegatives = allowNegatives
-        self.width = width
         self.bodyWeightButton = bodyWeightButton
         self._errorMessage = errorMessage
         self._numberText = numberText
@@ -111,7 +108,6 @@ struct InputDecimalNumberField: View {
                 markAsWrong: $markAsWrong,
                 errorMessage: errorMessage,
                 placeHolder: placeHolder,
-                width: width,
                 onReceiveFunction: onReceiveFunction(new:),
                 onSubmitFunction: onSubmitFunction(curr:)
             )
@@ -143,14 +139,13 @@ struct InputDecimalNumberField: View {
     @State var valueIsInvalid: Bool = false
     @State var valueIsInvalidMsg: String = ""
     
-    return InputDecimalNumberField(
+    return DecimalTextField(
         placeHolder: "Testing",
-        allowNegatives: true,
         numberText: $inputValue,
         markAsWrong: $valueIsInvalid,
-        width: 0.4,
         errorMessage: $valueIsInvalidMsg,
-        bodyWeightButton: true
+        bodyWeightButton: true,
+        allowNegatives: true
     )
     .environment(\.managedObjectContext, context)
     

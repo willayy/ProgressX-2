@@ -40,23 +40,21 @@ struct CreateNewThresholdView: View {
                 .padding(.horizontal, 20)
                 
                 if exerciseType == "reps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "Triggered at (reps)", 
-                        allowNegatives: false,
                         numberText: $viewModel.triggerQuantity,
                         markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
+                    .padding(.horizontal, 60)
                 } else if exerciseType == "time" {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Triggered at (seconds)", 
-                        allowNegatives: false,
                         numberText: $viewModel.triggerQuantity,
                         markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 BoldSubHeadline(text: "Add a PR")
@@ -97,14 +95,15 @@ struct CreateNewThresholdView: View {
                     )
                     .padding(.horizontal, 20)
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))", 
-                        allowNegatives: true,
                         numberText: $viewModel.flatLoadAdd,
                         markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                        errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                        allowNegatives: true
                     )
+                    .padding(.horizontal, 60)
+                    
                 } else {
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
@@ -123,23 +122,23 @@ struct CreateNewThresholdView: View {
                     .padding(.horizontal, 20)
                     
                     if exerciseType == "reps" {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "Quantity (reps)", 
-                            allowNegatives: true,
                             numberText: $viewModel.flatQuantityAdd,
                             markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                     } else if exerciseType == "time" {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: "Quantity (seconds)", 
-                            allowNegatives: true,
                             numberText: $viewModel.flatQuantityAdd,
                             markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                     }
                 } else {
                     GroupBox {

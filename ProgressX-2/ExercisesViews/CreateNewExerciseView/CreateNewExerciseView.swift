@@ -52,22 +52,22 @@ struct CreateNewExerciseView: View {
                 InputTextField(
                     placeHolder: "New exercise name",
                     text: $viewModel.enteredExerciseName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 
                 InputTextField(
                     placeHolder: "New exercise description",
                     text: $viewModel.enteredExerciseDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Exercise type?")
@@ -113,33 +113,30 @@ struct CreateNewExerciseView: View {
                         .padding(.bottom, 5)
                     }
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))", 
-                        allowNegatives: false,
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
 
                     if viewModel.selectedTypeOfExercise == "Time" {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: "PR time in seconds", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "Reps", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     }
                 }
                 

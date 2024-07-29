@@ -43,21 +43,21 @@ struct EditTemplateSetView: View {
                 InputTextField(
                     placeHolder: "New set name",
                     text: $viewModel.editedSetName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.editedSetNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.editedSetNameIsInvalidMsg
+                    errorMessage: $viewModel.editedSetNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 5)
                 
                 InputTextField(
                     placeHolder: "New set description",
                     text: $viewModel.editedSetDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.editedSetDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.editedSetDescIsInvalidMsg
+                    errorMessage: $viewModel.editedSetDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Edit or add thresholds for this set")
@@ -100,14 +100,13 @@ struct EditTemplateSetView: View {
                 
                 BoldSubHeadline(text: "Change the rest time of the set")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Rest time",
-                    allowNegatives: false,
                     numberText: $viewModel.editedRestTime,
                     markAsWrong: $viewModel.editedRestTimeIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Change the load type of the set")
@@ -131,16 +130,13 @@ struct EditTemplateSetView: View {
                 BoldSubHeadline(text: "Change the quantity or load of the set")
                 
                 HStack {
-                    InputDecimalNumberField(
-                        placeHolder: viewModel.loadPlaceholder(
-                            viewContext: viewContext
-                        ), 
-                        allowNegatives: false,
+                    DecimalTextField(
+                        placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
                         numberText: $viewModel.editedSetLoad,
                         markAsWrong: $viewModel.editedSetLoadIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.editedSetLoadIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     
                     if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                         Text("%")
@@ -149,14 +145,13 @@ struct EditTemplateSetView: View {
                 
                 if viewModel.selectedExercise?.exerciseType == "reps" {
                     HStack {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: viewModel.quantityPlaceholder(),
-                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                         .padding(.top, 5)
                         
                         if viewModel.quantityPlaceholder() == "Percentage" {
@@ -165,14 +160,13 @@ struct EditTemplateSetView: View {
                     }
                 } else {
                     HStack {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: viewModel.quantityPlaceholder(), 
-                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                         .padding(.top, 5)
                         
                         if viewModel.quantityPlaceholder() == "Percentage" {
