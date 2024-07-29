@@ -42,6 +42,7 @@ func copyRoutineTemplate(context: NSManagedObjectContext) {
                         newWeek.timePeriodDescription = templateWeek.timePeriodDescription
                         newWeek.trainingCycle = newCycle
                         newWeek.startedOnDate = Date()
+                        
                         print("---------------------------------week")
                         print(newWeek)
                         

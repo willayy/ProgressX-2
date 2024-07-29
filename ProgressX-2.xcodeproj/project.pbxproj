@@ -132,8 +132,22 @@
 		83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */; };
 		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
+		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
+		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
 		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
 		8F7F16092C47F9DA00F37C58 /* BasicRoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */; };
+		8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */; };
+		8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */; };
+		8F7F16112C4928F300F37C58 /* ChooseWeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */; };
+		8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */; };
+		8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16172C4948D100F37C58 /* TrainingView.swift */; };
+		8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */; };
+		8F7F161D2C51023700F37C58 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F161C2C51023700F37C58 /* Timer.swift */; };
+		8F7F16212C51146D00F37C58 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16202C51146D00F37C58 /* CircleProgressView.swift */; };
+		8F7F16292C51228100F37C58 /* TimerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16282C51228100F37C58 /* TimerContentView.swift */; };
+		8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162A2C51232E00F37C58 /* TimerExtension.swift */; };
+		8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162C2C51299700F37C58 /* TimerViewModel.swift */; };
+		8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162F2C53A89300F37C58 /* TrainingElement.swift */; };
 		8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */; };
 		8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F092C21A0C30072A39D /* ProfileView.swift */; };
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
@@ -276,8 +290,22 @@
 		83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4View.swift; sourceTree = "<group>"; };
 		83F110BB2C1F26040068953B /* SubmitAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlert.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
+		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
+		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
 		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
 		8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRoutineListItem.swift; sourceTree = "<group>"; };
+		8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutNavigationController.swift; sourceTree = "<group>"; };
+		8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekView.swift; sourceTree = "<group>"; };
+		8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekViewModel.swift; sourceTree = "<group>"; };
+		8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWeekListItem.swift; sourceTree = "<group>"; };
+		8F7F16172C4948D100F37C58 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
+		8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModel.swift; sourceTree = "<group>"; };
+		8F7F161C2C51023700F37C58 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		8F7F16202C51146D00F37C58 /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
+		8F7F16282C51228100F37C58 /* TimerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerContentView.swift; sourceTree = "<group>"; };
+		8F7F162A2C51232E00F37C58 /* TimerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerExtension.swift; sourceTree = "<group>"; };
+		8F7F162C2C51299700F37C58 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
+		8F7F162F2C53A89300F37C58 /* TrainingElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingElement.swift; sourceTree = "<group>"; };
 		8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarBuilder.swift; sourceTree = "<group>"; };
 		8F8B9F092C21A0C30072A39D /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarButton.swift; sourceTree = "<group>"; };
@@ -358,6 +386,7 @@
 		8310D9272C0CA13D004A5A3D /* ListItems */ = {
 			isa = PBXGroup;
 			children = (
+				8F7F16122C49383C00F37C58 /* TrainingListItems */,
 				83D685092C33306400FA78C6 /* MagnifiedViews */,
 				8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */,
 				8310D9282C0CA170004A5A3D /* PrListItem.swift */,
@@ -486,6 +515,8 @@
 		832214222BD42FF800DF9C7A /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				8F7F162E2C53A87200F37C58 /* TrainingElements */,
+				8F7F161B2C51022300F37C58 /* Timer */,
 				831F2C1D2C231D3B007A7A8A /* ListElements */,
 				8F8B9F042C2195E30072A39D /* SideBarComponents */,
 				83F110BA2C1F25E50068953B /* SubmitAlerts */,
@@ -814,6 +845,70 @@
 			path = GeneralExerciseInfoBoxes;
 			sourceTree = "<group>";
 		};
+		8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */ = {
+			isa = PBXGroup;
+			children = (
+				8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */,
+				8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */,
+			);
+			path = PopupFeedbackView;
+			sourceTree = "<group>";
+		};
+		8F7F160C2C4920B800F37C58 /* StartWorkoutView */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */,
+				8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */,
+			);
+			path = StartWorkoutView;
+			sourceTree = "<group>";
+		};
+		8F7F160D2C4928AF00F37C58 /* ChooseWeekView */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */,
+				8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */,
+			);
+			path = ChooseWeekView;
+			sourceTree = "<group>";
+		};
+		8F7F16122C49383C00F37C58 /* TrainingListItems */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */,
+			);
+			path = TrainingListItems;
+			sourceTree = "<group>";
+		};
+		8F7F16152C4948A400F37C58 /* TrainingView */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F16172C4948D100F37C58 /* TrainingView.swift */,
+				8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */,
+			);
+			path = TrainingView;
+			sourceTree = "<group>";
+		};
+		8F7F161B2C51022300F37C58 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F161C2C51023700F37C58 /* Timer.swift */,
+				8F7F16202C51146D00F37C58 /* CircleProgressView.swift */,
+				8F7F16282C51228100F37C58 /* TimerContentView.swift */,
+				8F7F162A2C51232E00F37C58 /* TimerExtension.swift */,
+				8F7F162C2C51299700F37C58 /* TimerViewModel.swift */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+		8F7F162E2C53A87200F37C58 /* TrainingElements */ = {
+			isa = PBXGroup;
+			children = (
+				8F7F162F2C53A89300F37C58 /* TrainingElement.swift */,
+			);
+			path = TrainingElements;
+			sourceTree = "<group>";
+		};
 		8F8B9F042C2195E30072A39D /* SideBarComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,8 +941,11 @@
 		8FF9C9C42C3FE62100E3D95A /* StartTrainingViews */ = {
 			isa = PBXGroup;
 			children = (
-				8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */,
-				8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */,
+				8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */,
+				8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */,
+				8F7F16152C4948A400F37C58 /* TrainingView */,
+				8F7F160C2C4920B800F37C58 /* StartWorkoutView */,
+				8F7F160D2C4928AF00F37C58 /* ChooseWeekView */,
 			);
 			path = StartTrainingViews;
 			sourceTree = "<group>";
@@ -969,7 +1067,10 @@
 				8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */,
 				836486042C36F1B0006EB0C0 /* RoutineLibraryViewModel.swift in Sources */,
 				836485ED2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift in Sources */,
+				8F7F16212C51146D00F37C58 /* CircleProgressView.swift in Sources */,
+				8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */,
 				832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */,
+				8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */,
 				8FF9C9C62C3FE67D00E3D95A /* StartWorkoutView.swift in Sources */,
 				8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */,
 				83D685042C32AEA900FA78C6 /* CreateNewTemplateSetView.swift in Sources */,
@@ -981,14 +1082,18 @@
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
 				83D685002C32A24E00FA78C6 /* EditTemplateSessionView.swift in Sources */,
 				83266E632C38077F00F5F6CB /* ProfileViewModel.swift in Sources */,
+				8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */,
 				83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */,
+				8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */,
 				83266E7B2C3BF9D400F5F6CB /* EditExerciseViewModel.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
 				83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
+				8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */,
 				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* InputDecimalNumberField.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
+				8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */,
 				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
 				83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */,
 				83266E6E2C38269F00F5F6CB /* EditTemplateSessionViewModel.swift in Sources */,
@@ -1000,8 +1105,10 @@
 				83BD396C2C47D32B008E09A0 /* BodyEntryChart.swift in Sources */,
 				836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */,
 				83266E682C3818C500F5F6CB /* EditRoutineViewModel.swift in Sources */,
+				8F7F16112C4928F300F37C58 /* ChooseWeekViewModel.swift in Sources */,
 				83D6850D2C3436B200FA78C6 /* (null) in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
+				8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */,
 				831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */,
 				83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */,
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
@@ -1013,6 +1120,7 @@
 				83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */,
 				83BD39642C46C03B008E09A0 /* WeekBarChart.swift in Sources */,
 				836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */,
+				8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
 				83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */,
 				83266E812C3C0E2800F5F6CB /* CreateNewPersonalRecordViewModel.swift in Sources */,
@@ -1023,6 +1131,7 @@
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
 				831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */,
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
+				8F7F161D2C51023700F37C58 /* Timer.swift in Sources */,
 				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
@@ -1046,6 +1155,7 @@
 				831F2C362C288D38007A7A8A /* EditTemplateWeekView.swift in Sources */,
 				8364860B2C372513006EB0C0 /* TemplateWeek.swift in Sources */,
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
+				8F7F16292C51228100F37C58 /* TimerContentView.swift in Sources */,
 				83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */,
@@ -1081,11 +1191,13 @@
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */,
+				8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,
 				83266E612C37EEE000F5F6CB /* SideBarView.swift in Sources */,
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
+				8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */,
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,
 			);
@@ -1238,6 +1350,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1267,6 +1380,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
