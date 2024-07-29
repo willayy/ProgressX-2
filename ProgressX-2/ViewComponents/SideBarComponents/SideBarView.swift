@@ -10,7 +10,6 @@ import SwiftUI
 struct SideBarView<Content: View>: View {
     
     var content: Content
-    @EnvironmentObject private var viewRouter: ViewRouter
     @Binding var showMenu: Bool
     
     init(showMenu: Binding<Bool>, @ViewBuilder content: () -> Content) {
@@ -40,7 +39,6 @@ struct SideBarView<Content: View>: View {
     @ViewBuilder
     func SideBarMenuView(_ safeArea: UIEdgeInsets) -> some View {
         SideBarBuilder(safeArea: safeArea, showMenu: $showMenu)
-            .environmentObject(viewRouter)
     }
     
 }

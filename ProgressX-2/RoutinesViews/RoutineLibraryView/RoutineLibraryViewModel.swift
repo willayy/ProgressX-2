@@ -15,7 +15,6 @@ class RoutineLibraryViewModel: ObservableObject {
     @Published public var selectedTemplateSession: TemplateSession? = nil
     @Published public var selectedTemplateSet: TemplateSet? = nil
     @Published public var selectedThreshold: SetThreshold? = nil
-    @Published public var showMenu: Bool = false
     @Published public var navPath: [Int] = [Int]()
     @Published public var searchText: String = ""
     

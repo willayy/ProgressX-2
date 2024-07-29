@@ -10,7 +10,6 @@ import SwiftUI
 struct HomeViewNavigationController<Content: View>: View {
     
     private var content: Content
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var profile: Profile?
     @Binding var selectedBodyEntry: BodyEntry?
@@ -39,7 +38,6 @@ struct HomeViewNavigationController<Content: View>: View {
                     WeighInView(
                         navPath: $navPath
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
@@ -48,7 +46,6 @@ struct HomeViewNavigationController<Content: View>: View {
                         selectedBodyEntry: $selectedBodyEntry,
                         navPath: $navPath
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
@@ -56,7 +53,6 @@ struct HomeViewNavigationController<Content: View>: View {
                     EditWeighInView(
                         selectedBodyEntry: $selectedBodyEntry
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 }
             }

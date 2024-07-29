@@ -14,11 +14,11 @@ struct CreateNewRoutineView: View {
         sortDescriptors: []
     ) var routines: FetchedResults<Routine>
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTemplateCycle: TemplateCycle?
     @StateObject private var viewModel = CreateNewRoutineViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         ScrollView {

@@ -10,7 +10,6 @@ import SwiftUI
 struct ExerciseLibraryNavigationController<Content: View>: View {
     
     private var content: Content
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedExercise: Exercise?
     @Binding var editingPr: PersonalRecord?
@@ -41,14 +40,12 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                     CreateNewExerciseView(
                         navPath: $navPath
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
                     EditExerciseView(
                         selectedExercise: $selectedExercise
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
@@ -58,7 +55,6 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                         editingPr: $editingPr,
                         newPrType: $newPrType
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     
@@ -66,7 +62,6 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                         editingPr: $editingPr,
                         exercise: $selectedExercise
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 5 {
                     
@@ -75,7 +70,6 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                         navPath: $navPath,
                         selectedExercise: $selectedExercise
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 }
             }
