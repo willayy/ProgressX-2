@@ -35,20 +35,21 @@ struct TrainingView: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \TrainingSet.positionIndex, ascending: true)],
             predicate: NSPredicate(format: "trainingSession == %@", selectedTrainingSession!)
         ) var trainingSets: FetchedResults<TrainingSet>
-
         
-        @State var currentsetfortesting = trainingSets.first
+        @State var currentsetfortesting = AllTrainingSets.first
         @State var Exercise = currentsetfortesting?.exercise
         
         let timer = TimerView(selectedHoursAmount: $selectedHoursAmount, selectedMinutesAmount: $selectedMinutesAmount, selectedSecondsAmount: $selectedSecondsAmount)
         
+        
+        //currentTrainingSet = routineSessions(Session: selectedTrainingSession!).first
         let startButton =
         Button(action:{
             
-            print(trainingSets)
+            print(selectedTrainingSession?.timePeriodName)
             //timer.StartTimer()
             //presentPopup.toggle()
-            print(_trainingSets)
+            
             //workoutActive = true
         }) {
             Text("hej")
@@ -58,7 +59,7 @@ struct TrainingView: View {
                 .padding(.bottom, 80)
             
             //TrainingElement(currentSet: $currentsetfortesting)
-            
+            //TrainingElement(currentSet: currentTrainingSet)
             if !workoutActive {
                 startButton
             }
@@ -66,6 +67,14 @@ struct TrainingView: View {
             PopupFeedbackView(currentTrainingSet: $currentsetfortesting, exercise: $Exercise, presentPopup: self.$presentPopup)
         })
     }
+    
+    private func routineSessions(Session: TrainingSession) -> [TrainingSet] {
+        let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
+        trainingSetFetchRequest.predicate = NSPredicate(format: "trainingSession == %@", Session)
+        let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
+        return SetResults
+    }
+    
 }
 
 

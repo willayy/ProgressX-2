@@ -10,7 +10,6 @@ import CoreData
 
 
 struct StartWorkoutView: View {
-
     
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var viewModel = StartWorkoutViewModel()
