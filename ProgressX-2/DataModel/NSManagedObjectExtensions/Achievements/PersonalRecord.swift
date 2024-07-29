@@ -26,12 +26,15 @@ extension PersonalRecord {
         self.prQuantity = quantity
         self.achievedOnDate = date
         self.prType = type
+        exercise.addToPersonalRecords(self)
     }
     
     //MARK: Extra properties
     
-    var quantityString: String {
-        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
+    /// Returns the formatted quantity of a personal record as a string, returns nil if prType is not set or is invalid.
+    public var quantityString: String? {
+        guard let prType = self.prType else { return nil }
+        guard let type: PersonalRecordType = PersonalRecordType(rawValue: prType) else { return nil }
         
         switch type {
         case .MaxReps:
@@ -43,8 +46,10 @@ extension PersonalRecord {
         }
     }
    
-    var typeString: String {
-        let type: PersonalRecordType = PersonalRecordType(rawValue: self.prType!)!
+    /// Retruns the formatted quantity of a personal record as a string, returns nil if prType is not set or is invalid.
+    public var typeString: String? {
+        guard let prType = self.prType else { return nil }
+        guard let type: PersonalRecordType = PersonalRecordType(rawValue: prType) else { return nil }
         
         switch type {
         case .MaxReps:
@@ -56,8 +61,10 @@ extension PersonalRecord {
         }
     }
    
-    var loadString: String {
-        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
+    /// Returns the formatted load of a personal record as a string, returns nil if context or weight unit (Profile) is not set.
+    public var loadString: String? {
+        guard let context = self.managedObjectContext else { return nil }
+        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
         return String(format: "%.2f", self.weightLoad) + " \(weightUnit)"
     }
     

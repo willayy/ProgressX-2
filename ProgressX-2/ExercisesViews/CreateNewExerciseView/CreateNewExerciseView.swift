@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CreateNewExerciseView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // Fetch bodyEntres to get current weight
     @FetchRequest(
         entity: BodyEntry.entity(),
@@ -30,7 +28,7 @@ struct CreateNewExerciseView: View {
     ) private var categories: FetchedResults<ExerciseCategory>
         
     @StateObject private var viewModel = CreateNewExerciseViewModel()
-    
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding public var navPath: [Int]
     
     var body: some View {
@@ -41,6 +39,7 @@ struct CreateNewExerciseView: View {
             VStack(alignment: .center) {
                 
                 BoldTitle(text: "Create new exercise")
+                    .padding(.horizontal, 20)
                 
                 if viewModel.exerciseCreatedAlert {
                     SubmitAlert(
@@ -83,8 +82,14 @@ struct CreateNewExerciseView: View {
                     horizontalPadding: 100
                 )
                 
-                BoldSubHeadline(text: "Add personal record for this exercise?")
+                BoldSubHeadline(text: "Add PR for this exercise?")
                     .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What are PR's?",
+                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did."
+                )
+                .padding(.horizontal, 40)
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPr,
@@ -138,7 +143,7 @@ struct CreateNewExerciseView: View {
                     }
                 }
                 
-                BoldSubHeadline(text: "Add categories to this exercise?")
+                BoldSubHeadline(text: "Add muslce categories to this exercise?")
                     .padding(.top, 15)
                 
                 SelectCategoriesList(
@@ -154,7 +159,9 @@ struct CreateNewExerciseView: View {
                 }) {
                     Text("Create new exercise")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
@@ -180,14 +187,14 @@ struct CreateNewExerciseView: View {
         
         // Depemnding on the the exercise
         if viewModel.selectedTypeOfExercise == "Reps" {
-            quantityFieldValidtor = IntFieldValidator()
+            quantityFieldValidtor = IntFieldValidator(maxInputNumber: 100000)
         } else {
             // This is the case when exercise is Time
-            quantityFieldValidtor = DoubleFieldValidator()
+            quantityFieldValidtor = DoubleFieldValidator(maxInputNumber: 100000)
         }
 
         // Load is a always Double
-        let loadFieldValidtor = DoubleFieldValidator()
+        let loadFieldValidtor = DoubleFieldValidator(maxInputNumber: 10000)
         let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: exercises.map {$0.exerciseName!})
         let descFieldValidator = StringFieldValidator(emptyAllowed: true)
         

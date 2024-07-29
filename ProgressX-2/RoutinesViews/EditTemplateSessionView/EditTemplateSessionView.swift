@@ -28,8 +28,10 @@ struct EditTemplateSessionView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing session: \(selectedTemplateSession!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")
@@ -91,21 +93,24 @@ struct EditTemplateSessionView: View {
                         IntSelectionList(
                             selected: $viewModel.editedPositionIndex,
                             selections: viewModel.positionIndexes(
-                                selectedTemplateSession: selectedTemplateSession
+                                selectedTemplateSession: selectedTemplateSession!
                             )
                         )
+                        .padding(.horizontal, 40)
                         
                         Button {
                             if validateInput() {
                                 viewModel.saveTemplateSessionChanges(
                                     viewContext: viewContext,
-                                    selectedTemplateSession: selectedTemplateSession
+                                    selectedTemplateSession: selectedTemplateSession!
                                 )
                             }
                         } label: {
                             Text("Save change")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 10)
@@ -131,14 +136,16 @@ struct EditTemplateSessionView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     navPath.append(7)
                 } label: {
                     Text("Add new set")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

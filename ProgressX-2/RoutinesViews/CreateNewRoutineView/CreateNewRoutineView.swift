@@ -9,17 +9,16 @@ import SwiftUI
 
 struct CreateNewRoutineView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    @Binding var selectedRoutine: Routine?
-    @Binding var selectedTemplateCycle: TemplateCycle?
-    
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: []
     ) var routines: FetchedResults<Routine>
     
+    @Binding var navPath: [Int]
+    @Binding var selectedRoutine: Routine?
+    @Binding var selectedTemplateCycle: TemplateCycle?
     @StateObject private var viewModel = CreateNewRoutineViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         ScrollView {
@@ -27,9 +26,11 @@ struct CreateNewRoutineView: View {
                 
                 BoldTitle(text: "Create new routine")
                     .padding(.bottom, 10)
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Start by giving your new routine a name and optionally a description.")
                     .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
                 InputTextField(
                     placeHolder: "Routine name...",
@@ -59,7 +60,9 @@ struct CreateNewRoutineView: View {
                 } label: {
                     Text("Create new routine")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)

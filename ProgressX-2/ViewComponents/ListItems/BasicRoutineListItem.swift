@@ -36,7 +36,7 @@ struct BasicRoutineListItem: View {
                 
                 (Text("Completed cycles: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.completedCycles.count)"))
+                 + Text("\(routine.completedCycles!.count)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
@@ -46,6 +46,12 @@ struct BasicRoutineListItem: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
+                Button {
+                    
+                } label: {
+                    Text("Start workout")
+                        .foregroundColor(Color("buttonTextColor"))
+                }
         
             }
             .frame(width: 135, height: 55)

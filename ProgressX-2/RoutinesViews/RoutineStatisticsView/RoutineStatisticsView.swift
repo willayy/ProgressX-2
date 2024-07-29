@@ -10,13 +10,13 @@ import CoreData
 
 struct RoutineStatisticsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedRoutine: Routine?
     
     var body: some View {
         ScrollView {
             VStack {
                 BoldTitle(text: "Statistics for: \(selectedRoutine!.timePeriodName!)")
+                    .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Here you can view some vital statistics for your routine")
                     .padding(.horizontal, 20)
@@ -41,7 +41,7 @@ struct RoutineStatisticsView: View {
                         
                         (Text("Total completed cycles: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.completedCycles.count)"))
+                         + Text("\(selectedRoutine!.completedCycles!.count)"))
                         .padding(.vertical, 10)
                         
                     }

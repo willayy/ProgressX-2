@@ -9,19 +9,20 @@ import SwiftUI
 
 struct HomeViewNavigationController<Content: View>: View {
     
-    public var content: Content
-    @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
+    private var content: Content
     @Binding var navPath: [Int]
     @Binding var profile: Profile?
+    @Binding var selectedBodyEntry: BodyEntry?
     
     init(
-        @ViewBuilder content: () -> Content,
         navPath: Binding<[Int]>,
-        profile: Binding<Profile?>
+        profile: Binding<Profile?>,
+        selectedBodyEntry: Binding<BodyEntry?>,
+        @ViewBuilder content: () -> Content
     ) {
         self._navPath = navPath
         self._profile = profile
+        self._selectedBodyEntry = selectedBodyEntry
         self.content = content()
     }
     
@@ -34,17 +35,27 @@ struct HomeViewNavigationController<Content: View>: View {
                 if selection == 1 {
     
                     //MARK: WeighInView
-                    WeighInView()
-                        .environment(\.managedObjectContext, viewContext)
+                    WeighInView(
+                        navPath: $navPath
+                    )
+                    
+                } else if selection == 2 {
+                    
+                    //MARK: View bodyEntries
+                    ViewAllWeighInsView(
+                        selectedBodyEntry: $selectedBodyEntry,
+                        navPath: $navPath
+                    )
+                    
+                } else if selection == 3 {
+                    
+                    //MARK: Edit bodyEntry
+                    EditWeighInView(
+                        selectedBodyEntry: $selectedBodyEntry
+                    )
                     
                 }
             }
         }
     }
 }
-
-/*
-#Preview {
-    HomeViewNavigationController()
-}
-*/

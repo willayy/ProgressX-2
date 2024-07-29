@@ -27,6 +27,10 @@ class CreateNewTemplateSetViewModel: ObservableObject {
     @Published var newSetQuantity: String = ""
     @Published var newSetQuantityIsInvalid: Bool = false
     @Published var newSetQuantityIsInvalidMsg: String = ""
+    // The rest time
+    @Published var restTime: String = ""
+    @Published var restTimeIsInvalid: Bool = false
+    @Published var restTimeIsInvalidMsg: String = ""
     // The exercise of the set
     @Published var selectedExercise: Exercise? = nil
     @Published var searchWord: String = ""
@@ -44,11 +48,11 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current 1RM PR",
+                    "Percentage of current 1RM PR load",
                     "Percentage of current body weight"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR",
+                    "Percentage of current TimeMax PR load",
                     "Percentage of current body weight"]
         default:
             return []
@@ -60,10 +64,10 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current AMRAP PR"]
+                    "Percentage of current AMRAP PR reps"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR"]
+                    "Percentage of current TimeMax PR time"]
         default:
             return []
         }
@@ -75,9 +79,9 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         case "Numerical":
             let weightUnit = PersistenceController.getWeightUnit(viewContext)!
             return "Load \(weightUnit)"
-        case "Percentage of current 1RM PR":
+        case "Percentage of current 1RM PR load":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of current TimeMax PR load":
             return "Percentage"
         case "Percentage of current body weight":
             return "Percentage"
@@ -93,9 +97,9 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             let exerciseType = selectedExercise?.exerciseType
             if exerciseType == nil {return "Select exercise first!"}
             return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR":
+        case "Percentage of current AMRAP PR reps":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of current TimeMax PR time":
             return "Percentage"
         default:
             return "Select exercise first!"
@@ -106,35 +110,56 @@ class CreateNewTemplateSetViewModel: ObservableObject {
      the view to the correct core data property value */
     let typeMap: [String : String] = [
         "Numerical" : "numerical",
-        "Percentage of current 1RM PR" : "maxperc",
-        "Percentage of current TimeMax PR" : "maxperc",
-        "Percentage of current AMRAP PR" : "maxperc",
+        "Percentage of current 1RM PR load" : "maxperc",
+        "Percentage of current TimeMax PR load" : "maxperc",
+        "Percentage of current AMRAP PR reps" : "maxperc",
         "Percentage of current body weight" : "bwperc"
     ]
     
-    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession?) -> Void {
+    public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
+        let profile = PersistenceController.getProfile(viewContext)!
+        restTime = profile.standardRestTimeString
+    }
+    
+    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession) -> TemplateSet {
                 
         let set = TemplateSet(
             viewContext,
-            templateSession: selectedTemplateSession!,
+            templateSession: selectedTemplateSession,
             exercise: selectedExercise!,
             loadType: typeMap[selectedLoadType]!,
             load: Double(newSetLoad)!,
             quantityType: typeMap[selectedQuantityType]!,
-            quantity: Double(newSetQuantity)!
+            quantity: Double(newSetQuantity)!, 
+            restTime: Double(restTime)!
         )
         
-        selectedTemplateSession!.addToTemplateSets(set)
+        // Get all trainingSessions
+        let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession)
+        // Only included incomplete trainingSessions as completed ones are irrelevant for this change
+        let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({ !$0.isComplete })
+        
+        for session in trainingSessions {
+            let _ = TrainingSet(
+                viewContext,
+                trainingSession: session,
+                templateSet: set
+            )
+        }
         
         PersistenceController.save(viewContext)
         
         withAnimation {
             showAddThresholds = true
         }
+        
+        return set
     }
     
-    public func setNewSetName(selectedTemplateSession: TemplateSession?) -> Void {
-        newSetName = "Set \(selectedTemplateSession!.getNextPositionIndex())"
+    public func setNewSetName(selectedTemplateSession: TemplateSession) -> Void {
+        newSetName = "Set \(selectedTemplateSession.getNextPositionIndex())"
     }
     
 }

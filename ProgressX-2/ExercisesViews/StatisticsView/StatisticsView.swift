@@ -11,7 +11,6 @@ import CoreData
 
 struct StatisticsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var exercise: Exercise?
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?
@@ -23,10 +22,10 @@ struct StatisticsView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Statistics for \(String(exercise!.exerciseName!))")
+                BoldTitle(text: "Statistics for")
                     .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Here you can view graphs of your progress and scroll through all your achieved prs, you can edit them by pressing the pencil button.")
+                Title2(text: "\(String(exercise!.exerciseName!))")
                 
                 if exercise!.exerciseType == "reps" {
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
@@ -44,12 +43,10 @@ struct StatisticsView: View {
                         exercise: exercise, 
                         selection: displayedPrType
                     )
-                    .environment(\.managedObjectContext, viewContext)
                 } else if exercise!.exerciseType == "time" {
                     GeneralInfoTimeExercise(
                         exercise: exercise
                     )
-                    .environment(\.managedObjectContext, viewContext)
                 }
                 
                 if exercise!.exerciseType == "reps" {
@@ -59,7 +56,7 @@ struct StatisticsView: View {
                             exercise: exercise!,
                             set: "1RM",
                             prType: "onerepmax"
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
                         .padding(.horizontal, 20)
                         
                         PrList(
@@ -69,7 +66,6 @@ struct StatisticsView: View {
                             prType: "onerepmax",
                             newPrType: $newPrType
                         )
-                        .environment(\.managedObjectContext, viewContext)
                         .padding(.horizontal, 20)
                         
                     } else {
@@ -78,7 +74,7 @@ struct StatisticsView: View {
                             exercise: exercise!,
                             set: "AMRAP",
                             prType: "maxreps"
-                        ).environment(\.managedObjectContext, viewContext)
+                        )
                         .padding(.horizontal, 20)
                         
                         PrList(
@@ -88,7 +84,6 @@ struct StatisticsView: View {
                             prType: "maxreps",
                             newPrType: $newPrType
                         )
-                        .environment(\.managedObjectContext, viewContext)
                         .padding(.horizontal, 20)
                     }
                     
@@ -99,7 +94,6 @@ struct StatisticsView: View {
                         set: "Time-max",
                         prType: "timemax"
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                     PrList(
                         navPath: $navPath,
@@ -108,7 +102,6 @@ struct StatisticsView: View {
                         prType: "timemax", 
                         newPrType: $newPrType
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     .padding(.horizontal, 20)
                 }
             }

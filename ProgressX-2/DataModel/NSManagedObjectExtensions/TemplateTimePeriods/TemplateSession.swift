@@ -25,6 +25,7 @@ extension TemplateSession: HasOrderable {
         self.timePeriodName = (name == "") ? "Session \(positionIndex)" : name
         let weekName = templateWeek.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
+        templateWeek.addToTemplateSessions(self)
     }
     
     // MARK: Extra Properties

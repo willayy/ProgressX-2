@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct MagnifiedPrView: View {
-    
-    @Environment(\.managedObjectContext) private var viewContext
-    
+        
     @ObservedObject var personalRecord: PersonalRecord
     
     var body: some View {
@@ -18,7 +16,7 @@ struct MagnifiedPrView: View {
             
             (Text("Type: ")
                 .fontWeight(.bold)
-            + Text("\(personalRecord.typeString)"))
+            + Text("\(personalRecord.typeString!)"))
             .minimumScaleFactor(0.6)
             
             (Text("Date: ")
@@ -28,12 +26,12 @@ struct MagnifiedPrView: View {
             
             (Text("Load: ")
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-             + (Text("\(personalRecord.loadString)")))
+             + (Text("\(personalRecord.loadString!)")))
             .minimumScaleFactor(0.6)
             
             (Text("Quantity: ")
                 .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-            + Text("\(personalRecord.quantityString)"))
+            + Text("\(personalRecord.quantityString!)"))
             .minimumScaleFactor(0.6)
             
         })

@@ -19,7 +19,9 @@ struct EditTemplateSetView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Editing: \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Editing")
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 if viewModel.showSetChangedAlert {
@@ -36,7 +38,7 @@ struct EditTemplateSetView: View {
                     )
                 }
                 
-                LightSubHeadline(text: "Change name or description")
+                BoldSubHeadline(text: "Change name and description")
                 
                 InputTextField(
                     placeHolder: "New set name",
@@ -58,18 +60,25 @@ struct EditTemplateSetView: View {
                 )
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "By clicking this you can view and edit thresholds for this set")
+                BoldSubHeadline(text: "Edit or add thresholds for this set")
                     .padding(.horizontal, 10)
                 
                 Button {
                     navPath.append(8)
                 } label: {
                     Text("View thresholds")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                LightSubHeadline(text: "Change position of the set in it's session")
+                BoldSubHeadline(text: "Change position of this set in its session")
+                
+                HiddenLightSubHeadline(
+                    title: "What does set position mean?",
+                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session."
+                )
+                .padding(.horizontal, 20)
                 
                 IntSelectionList(
                     selected: $viewModel.editedSetPositionIndex,
@@ -78,32 +87,48 @@ struct EditTemplateSetView: View {
                     )
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Change the exercise of the set")
+                BoldSubHeadline(text: "Change the exercise of the set")
                 
                 SetExerciseSelectionList(
                     selectedExercise: $viewModel.selectedExercise,
                     searchWord: $viewModel.searchWord
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Change the load type of the set")
+                BoldSubHeadline(text: "Change the rest time of the set")
+                
+                InputDecimalNumberField(
+                    placeHolder: "Rest time",
+                    allowNegatives: false,
+                    numberText: $viewModel.editedRestTime,
+                    markAsWrong: $viewModel.editedRestTimeIsInvalid,
+                    width: 0.6,
+                    errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                )
+                .padding(.bottom, 20)
+                
+                BoldSubHeadline(text: "Change the load type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedLoadType,
                     selections: viewModel.loadTypeSelections()
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Change the quantity type of the set")
+                BoldSubHeadline(text: "Change the quantity type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedQuantityType,
                     selections: viewModel.quantityTypeSelections()
                 )
                 .padding(.bottom, 20)
+                .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Change the quantity or load of the set")
+                BoldSubHeadline(text: "Change the quantity or load of the set")
                 
                 HStack {
                     InputDecimalNumberField(
@@ -160,13 +185,15 @@ struct EditTemplateSetView: View {
                     if validateInput() {
                         viewModel.saveTemplateSetChanges(
                             viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet
+                            selectedTemplateSet: selectedTemplateSet!
                         )
                     }
                 } label: {
                     Text("Save changes")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "square.and.arrow.down")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
@@ -175,23 +202,31 @@ struct EditTemplateSetView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet)
+            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
         })
     }
     
     private func validateInput() -> Bool {
         let exerciseType = viewModel.selectedExercise!.exerciseType
         let quantityValidator: InputFieldValidator
+        
         if exerciseType == "reps" {
-            quantityValidator = IntFieldValidator()
+            quantityValidator = IntFieldValidator(maxInputNumber: 100000)
         } else {
-            quantityValidator = DoubleFieldValidator()
+            quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
         }
-        let loadValidator = DoubleFieldValidator()
+        let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
+        let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let nameValidator = StringFieldValidator()
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         
         var valid = 0
+        
+        valid += restTimeValidator.valideField(
+            inputVar: viewModel.editedRestTime,
+            errorMessage: $viewModel.editedRestTimeIsInvalidMsg,
+            fieldInvalid: $viewModel.editedRestTimeIsInvalid
+        )
         
         valid += loadValidator.valideField(
             inputVar: viewModel.editedSetLoad,

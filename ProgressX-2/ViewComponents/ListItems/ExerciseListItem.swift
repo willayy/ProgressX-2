@@ -39,7 +39,6 @@ struct ExerciseListItem: View {
             .sheet(isPresented: $showMagnifiedView) {
                 MagnifiedExerciseView(exercise: exercise)
                     .presentationDetents([.fraction(0.3)])
-                    .environment(\.managedObjectContext, viewContext)
             }
             .padding(.horizontal, 30)
             .padding(.vertical, 10)
@@ -57,6 +56,8 @@ struct ExerciseListItem: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .padding(.horizontal, 20)
                 
+                Spacer()
+                
                 // MARK: Edit button
                 Button(action: {
                     selectedExercise = exercise
@@ -66,6 +67,8 @@ struct ExerciseListItem: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .padding(.horizontal, 20)
             
+                Spacer()
+                
                 // MARK: Statistics button
                 Button(action: {
                     selectedExercise = exercise
@@ -75,6 +78,7 @@ struct ExerciseListItem: View {
                     .buttonStyle(BorderlessButtonStyle())
                     .padding(.horizontal, 20)
 
+                Spacer()
                 
                 // MARK: Delete button
                 Button(action: {

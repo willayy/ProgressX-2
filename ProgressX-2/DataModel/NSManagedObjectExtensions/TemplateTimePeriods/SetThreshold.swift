@@ -35,38 +35,90 @@ extension SetThreshold {
         self.timePeriodName = (name == "") ? "Threshold \(positionIndex)" : name
         let setName = templateSet.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Threshold in \(setName)" : description
+        templateSet.addToThresholds(self)
     }
     
     // MARK: Extra Properties
     
-    public var flatLoadAddString: String {
-        if self.flatQuantityAdd == nil { return ""}
-        let weightUnit = PersistenceController.getWeightUnit(self.managedObjectContext!)!
-        return String(format: "%.2f", self.flatLoadAdd?.doubleValue ?? 0) + " \(weightUnit)"
+    public var flatLoadAddString: String? {
+        guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
+        guard let context = self.managedObjectContext else { return nil }
+        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        
+        return String(format: "%.2f", flatQuantityAdd) + " \(weightUnit)"
     }
     
-    public var flatQuantityAddString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
-        
-        if self.flatQuantityAdd == nil { return ""}
+    public var flatQuantityAddString: String? {
+        guard let templateSet = self.templateSet else { return nil }
+        guard let exercise = templateSet.exercise else { return nil }
+        guard let exerciseType = exercise.exerciseType else { return nil }
+        guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
             case .Reps:
-                return String(format: "%.0f", self.flatQuantityAdd?.doubleValue ?? 0) + " reps"
+                return String(format: "%.0f", flatQuantityAdd) + " reps"
+            
             case .Time:
-                return String(format: "%.2f", self.flatQuantityAdd?.doubleValue ?? 0) + " seconds"
+                return String(format: "%.2f", flatQuantityAdd) + " seconds"
         }
     }
     
     /// Use this property to get a correctly formatted string from the  triggerQuantity value
-    public var triggerQuantityString: String {
-        let type: ExerciseType = ExerciseType(rawValue: self.templateSet!.exercise!.exerciseType!)!
+    public var triggerQuantityString: String? {
+        guard let templateSet = self.templateSet else { return nil }
+        guard let exercise = templateSet.exercise else { return nil }
+        guard let exerciseType = exercise.exerciseType else { return nil }
+        guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
             case .Reps:
                 return String(format: "%.0f", self.triggerQuantity) + " reps"
+            
             case .Time:
                 return String(format: "%.2f", self.triggerQuantity) + " seconds"
+        }
+    }
+    
+    /// Use this property to trigger a SetThreshold
+    public func trigger(loadDone: Double, quantityDone: Double) -> Void {
+        let templateSet = self.templateSet!
+        
+        // Adds the flat load.
+        if self.flatLoadAdd != nil {
+            templateSet.setLoad += self.flatLoadAdd!.doubleValue
+        }
+        
+        // Adds the flat quantity
+        if self.flatQuantityAdd != nil {
+            templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
+            // Adds the quantity added to the template to itself the ensure linearity.
+            self.triggerQuantity += self.flatQuantityAdd!.doubleValue
+        }
+        
+        // Generates a PR
+        if self.generatePr {
+            let exercise = templateSet.exercise!
+            let computedLoad: Double
+            let computedQuantity: Double
+            
+            // if onerepmax pr and load done isnt 1 use Brzyckis formula to approximate.
+            if self.prType! == "onerepmax" && loadDone != 1 {
+                computedQuantity = 1
+                computedLoad = loadDone / (1.0278 - (0.0278 * quantityDone))
+            } else {
+                computedQuantity = quantityDone
+                computedLoad = loadDone
+            }
+            
+            let _ = PersonalRecord(
+                self.managedObjectContext!,
+                exercise: exercise,
+                weightLoad: computedLoad,
+                quantity: computedQuantity,
+                date: Date(),
+                type: self.prType!
+            )
         }
     }
         

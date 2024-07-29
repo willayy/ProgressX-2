@@ -122,6 +122,15 @@ extension PersistenceController {
         return fetchResult.count > 0
     }
     
+    /// Gets the Profile if one is created.
+    /// - Parameter context: A NSManagedObjectContext from a peristent container.
+    /// - Returns: A Profile object if one has been created, else nil.
+    public static func getProfile(_ context: NSManagedObjectContext) -> Profile? {
+        let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
+        let fetchResult = fetch(context, fetchRequest: fetchRequest)
+        return fetchResult.first
+    }
+    
     /// Staticly checks if there is more than 0 exercies stored in the persistent store, because this is only intended for use during the profile creation state this is validating enough.
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
     /// - Returns: Yes if there exists basic exercises, No if it doesnt.

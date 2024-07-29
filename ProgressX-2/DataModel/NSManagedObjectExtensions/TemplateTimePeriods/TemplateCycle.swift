@@ -23,11 +23,12 @@ extension TemplateCycle: HasOrderable {
         let routineName = routine.timePeriodName!
         self.timePeriodName = (name == "") ? "\(routineName)-templateCycle" : name
         self.timePeriodDescription = (description == "") ? "templateCycle created for: \(routineName)" : description
+        routine.templateCycle = self
     }
 
     // MARK: Extra properties
     
-    func getNextPositionIndex() -> Int64 {
+    public func getNextPositionIndex() -> Int64 {
         let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)

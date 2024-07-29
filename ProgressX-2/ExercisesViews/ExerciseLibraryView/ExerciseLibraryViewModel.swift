@@ -9,12 +9,10 @@ import Foundation
 
 class ExerciseLibraryViewModel: ObservableObject {
     
-    @Published var showMenu: Bool = false
     @Published var navPath = [Int]()
     @Published var selectedExercise: Exercise? = nil
     @Published var searchText: String = ""
     @Published var editingPr: PersonalRecord?
     @Published var newPrType: String? = nil
-    
     
 }

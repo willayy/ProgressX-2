@@ -25,7 +25,6 @@ struct StringSelectionList: View {
                 }
             }
         }
-        .padding(.horizontal, 40)
     }
 }
 

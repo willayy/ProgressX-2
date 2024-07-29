@@ -11,7 +11,6 @@ import SwiftUI
 struct CreateNewProfile2View: View {
     
     @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     
     var body: some View {
@@ -30,7 +29,7 @@ struct CreateNewProfile2View: View {
                 .fontWeight(.light)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 30.0)
+                .padding(.horizontal, 20)
                 .minimumScaleFactor(0.5);
             
             HStack(spacing: 20) {
@@ -41,6 +40,7 @@ struct CreateNewProfile2View: View {
                     Text("No, im good!")
                         .frame(maxWidth: .infinity)
                         .frame(width: 100, height: 50)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                     .buttonStyle(.borderedProminent)
                 
@@ -50,6 +50,7 @@ struct CreateNewProfile2View: View {
                     Text("Yes, let's continue")
                         .frame(maxWidth: .infinity)
                         .frame(width: 100, height: 50)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                     .buttonStyle(.borderedProminent)
                 

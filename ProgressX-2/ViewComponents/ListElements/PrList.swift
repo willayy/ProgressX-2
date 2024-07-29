@@ -10,7 +10,6 @@ import CoreData
 
 struct PrList: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest private var personalRecords: FetchedResults<PersonalRecord>
     @Binding private var navPath: [Int]
     @Binding private var editingPr: PersonalRecord?
@@ -70,7 +69,9 @@ struct PrList: View {
         }) {
             Text("Add new PR")
                 .frame(height: 25)
+                .foregroundColor(Color("buttonTextColor"))
             Image(systemName: "plus")
+                .foregroundColor(Color("buttonTextColor"))
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.top, 10)

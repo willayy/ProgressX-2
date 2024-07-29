@@ -9,11 +9,6 @@ import SwiftUI
 
 struct CreateNewProfile4View: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    @StateObject private var viewModel = CreateNewProfile4ViewModel()
-    
     // Fetch all the generated exerices so PR's can be added
     @FetchRequest(
         entity: Exercise.entity(),
@@ -31,6 +26,11 @@ struct CreateNewProfile4View: View {
         entity: PersonalRecord.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)]
     ) private var personalRecords: FetchedResults<PersonalRecord>
+    
+    @EnvironmentObject var viewRouter: ViewRouter
+    @Environment(\.managedObjectContext) private var viewContext
+    @Binding var navPath: [Int]
+    @StateObject private var viewModel = CreateNewProfile4ViewModel()
     
     var body: some View {
         
@@ -161,6 +161,7 @@ struct CreateNewProfile4View: View {
                 } label: {
                     Text("Finish")
                         .frame(width: 100, height: 30)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(.top, 40)
@@ -171,8 +172,8 @@ struct CreateNewProfile4View: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
-        let intFieldValidator = IntFieldValidator()
+        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
+        let intFieldValidator = IntFieldValidator(maxInputNumber: 100000)
         
         valid += doubleFieldValidator.valideField(
             inputVar: viewModel.benchPress1RM,

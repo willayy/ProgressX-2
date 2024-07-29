@@ -10,23 +10,27 @@ import CoreData
 
 struct CreateNewProfile1View: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var viewModel = CreateNewProfile1ViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: []
     ) private var profileResults: FetchedResults<Profile>
     
+    @EnvironmentObject var viewRouter: ViewRouter
+    @StateObject private var viewModel = CreateNewProfile1ViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
+    
     var body: some View {
-        CreateNewProfileNavigationController(content: {
+        CreateNewProfileNavigationController(
+            navPath: $viewModel.navPath,
+            content: {
             ScrollView {
                 VStack(alignment: .center, spacing: 10) {
                     
                     BoldTitle(text: "Create a profile!")
+                        .padding(.horizontal, 20)
                      
                     LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only.")
+                        .padding(.horizontal, 20)
                     
                     Text("Username")
                         .foregroundColor(.black)
@@ -68,6 +72,25 @@ struct CreateNewProfile1View: View {
                         segments: viewModel.unitSegments,
                         frameWidth: 230,
                         horizontalPadding: 20
+                    )
+                    
+                    Text("What is your smallest available plate?")
+                        .foregroundColor(.black)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 10)
+                        .minimumScaleFactor(0.5);
+                    
+                    StringSelectionList(
+                        selected: $viewModel.smallestPlateSelection,
+                        selections: viewModel.smallestPlateSegments
+                    )
+                    .padding(.horizontal, 20)
+                    .onChange(
+                        of: viewModel.selectedUnitSegment,
+                        initial: false, {
+                            viewModel.smallestPlateSelection = viewModel.smallestPlateSegments.first!
+                        }
                     )
                     
                     Text("What is your current weight?")
@@ -125,13 +148,14 @@ struct CreateNewProfile1View: View {
                     } label: {
                         Text("Continue")
                             .frame(width: 100, height: 50)
+                            .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(.top, 30)
                     
                 }
             }
-        },navPath: $viewModel.navPath)
+        })
         .environmentObject(viewRouter)
         .environment(\.managedObjectContext, viewContext)
     }
@@ -139,16 +163,17 @@ struct CreateNewProfile1View: View {
     // Validates input
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
+        let heightValidator = DoubleFieldValidator(maxInputNumber: 1000)
+        let weightValidator = DoubleFieldValidator(maxInputNumber: 1000)
         let stringFieldValidator = StringFieldValidator()
         
-        valid += doubleFieldValidator.valideField(
+        valid += heightValidator.valideField(
             inputVar: viewModel.height,
             errorMessage: $viewModel.heightIsInvalidMsg,
             fieldInvalid: $viewModel.heightIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += weightValidator.valideField(
             inputVar: viewModel.weight,
             errorMessage: $viewModel.weightIsInvalidMsg,
             fieldInvalid: $viewModel.weightIsInvalid

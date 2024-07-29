@@ -10,14 +10,13 @@ import CoreData
 
 struct EditRoutineView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // To check for already taken routine names
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: []
     ) private var routines: FetchedResults<Routine>
     
+    @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = EditRoutineViewModel()
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
@@ -35,8 +34,10 @@ struct EditRoutineView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing routine: \(selectedRoutine!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    
+                Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")
@@ -92,13 +93,15 @@ struct EditRoutineView: View {
                             if validateInput() {
                                 viewModel.saveRoutineChanges(
                                     viewContext: viewContext,
-                                    selectedRoutine: selectedRoutine
+                                    selectedRoutine: selectedRoutine!
                                 )
                             }
                         } label: {
                             Text("Save change")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 10)
@@ -108,6 +111,12 @@ struct EditRoutineView: View {
                     
                 BoldSubHeadline(text: "Current Weeks in this routine")
                     .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What is a week?",
+                    text: "A week is meant as a set of training sessions that is supposed to be completed in the time span of a week."
+                )
+                .padding(.horizontal, 20)
                 
                 BasicList(
                     height: 400,
@@ -122,17 +131,19 @@ struct EditRoutineView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     viewModel.addWeek(
                         viewContext: viewContext,
-                        selectedTemplateCycle: selectedTemplateCycle
+                        selectedTemplateCycle: selectedTemplateCycle!
                     )
                 } label: {
                     Text("Add new Week")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
@@ -141,7 +152,7 @@ struct EditRoutineView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedRoutine: selectedRoutine)
+            viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
         })
     }
     

@@ -10,8 +10,6 @@ import CoreData
 
 struct EditExerciseView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     // Fetch Exercises to check if exercise name is taken
     @FetchRequest(
         entity: Exercise.entity(),
@@ -26,13 +24,14 @@ struct EditExerciseView: View {
     
     @Binding var selectedExercise: Exercise?
     @StateObject private var viewModel = EditExerciseViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
-                    BoldTitle(
-                        text: "Editing exercise: \(selectedExercise!.exerciseName!)"
-                    )
+                    BoldTitle(text: "Editing")
+                    
+                    Title2(text: "\(selectedExercise!.exerciseName!)")
                         
                     if viewModel.exerciseEditedAlert {
                         SubmitAlert(
@@ -58,9 +57,11 @@ struct EditExerciseView: View {
                             .fontWeight(.light)
                             .foregroundStyle(.red)
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                     } else {
                         LightSubHeadline(text: selectedExercise!.exerciseDesc!)
                             .padding(.bottom, 20)
+                            .padding(.horizontal, 20)
                     }
                     
                     BoldSubHeadline(text: "Edit exercise name")
@@ -103,12 +104,14 @@ struct EditExerciseView: View {
                         if validateInput() {
                             viewModel.saveExerciseChanges(
                                 viewContext: viewContext,
-                                selectedExercise: selectedExercise)
+                                selectedExercise: selectedExercise!)
                         }
                     }) {
                         Text("Save changes")
                             .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
                         Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
@@ -116,7 +119,7 @@ struct EditExerciseView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedExercise: selectedExercise)
+            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
         })
     }
         

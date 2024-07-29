@@ -27,8 +27,10 @@ struct EditTemplateWeekView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Editing week: \(selectedTemplateWeek!.timePeriodName!)")
+                BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")
@@ -96,17 +98,23 @@ struct EditTemplateWeekView: View {
                         
                         IntSelectionList(
                             selected: $viewModel.editedPositionIndex,
-                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek)
+                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek!)
                         )
+                        .padding(.horizontal, 40)
                         
                         Button {
                             if validateInput() {
-                                viewModel.saveTemplateWeekChanges(viewContext: viewContext, selectedTemplateWeek: selectedTemplateWeek)
+                                viewModel.saveTemplateWeekChanges(
+                                    viewContext: viewContext,
+                                    selectedTemplateWeek: selectedTemplateWeek!
+                                )
                             }
                         } label: {
                             Text("Save change")
                                 .frame(height: 40)
+                                .foregroundColor(Color("buttonTextColor"))
                             Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(Color("buttonTextColor"))
                         }
                         .buttonStyle(BorderedProminentButtonStyle())
                         .padding(.top, 10)
@@ -116,6 +124,12 @@ struct EditTemplateWeekView: View {
                     
                 BoldSubHeadline(text: "Current sessions in this week")
                     .padding(.top, 20)
+                
+                HiddenLightSubHeadline(
+                    title: "What is a session?",
+                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours."
+                )
+                .padding(.horizontal, 20)
                 
                 BasicList(
                     height: 400,
@@ -130,17 +144,19 @@ struct EditTemplateWeekView: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 20)
                 
                 Button {
                     viewModel.addSession(
                         viewContext: viewContext,
-                        selectedTemplateWeek: selectedTemplateWeek
+                        selectedTemplateWeek: selectedTemplateWeek!
                     )
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

@@ -25,6 +25,7 @@ extension TemplateWeek: HasOrderable {
         self.timePeriodName = (name == "") ? "Week \(positionIndex)" : name
         let routineName = templateCycle.routine!.timePeriodName!
         self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
+        templateCycle.addToTemplateWeeks(self)
     }
     
     // MARK: Extra Properties

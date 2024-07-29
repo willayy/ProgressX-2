@@ -9,8 +9,8 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     
-    @Published public var showMenu: Bool = false
     @Published public var navPath: [Int] = [Int]()
     @Published public var selectedProfile: Profile? = nil
+    @Published public var selectedBodyEntry: BodyEntry? = nil
     
 }

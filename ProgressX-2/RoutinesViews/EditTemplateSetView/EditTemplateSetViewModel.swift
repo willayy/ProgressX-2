@@ -27,6 +27,10 @@ class EditTemplateSetViewModel: ObservableObject {
     @Published var editedSetQuantity: String = ""
     @Published var editedSetQuantityIsInvalid: Bool = false
     @Published var editedSetQuantityIsInvalidMsg: String = ""
+    // The rest time of the set
+    @Published var editedRestTime: String = ""
+    @Published var editedRestTimeIsInvalid: Bool = false
+    @Published var editedRestTimeIsInvalidMsg: String = ""
     // The PositionIndex of the set
     @Published var editedSetPositionIndex: Int64 = 0
     // The load type of the set
@@ -40,52 +44,57 @@ class EditTemplateSetViewModel: ObservableObject {
     @Published var showNoChangeAlert: Bool = false
     @Published var showSetChangedAlert: Bool = false
     
-    public func setViewStartValues(selectedTemplateSet: TemplateSet?) -> Void {
-        editedSetName = selectedTemplateSet!.timePeriodName!
-        editedSetDesc = selectedTemplateSet!.timePeriodDescription!
-        editedSetPositionIndex = selectedTemplateSet!.positionIndex
-        selectedExercise = selectedTemplateSet!.exercise!
-        editedLoadType = loadTypeMap()[selectedTemplateSet!.loadType!]!
-        editedQuantityType = quantityTypeMap()[selectedTemplateSet!.quantityType!]!
-        editedSetLoad = selectedTemplateSet!.loadTodoString
-        editedSetQuantity = selectedTemplateSet!.quantityTodoString
+    public func setViewStartValues(selectedTemplateSet: TemplateSet) -> Void {
+        editedSetName = selectedTemplateSet.timePeriodName!
+        editedSetDesc = selectedTemplateSet.timePeriodDescription!
+        editedSetPositionIndex = selectedTemplateSet.positionIndex
+        selectedExercise = selectedTemplateSet.exercise!
+        editedLoadType = loadTypeMap()[selectedTemplateSet.loadType!]!
+        editedQuantityType = quantityTypeMap()[selectedTemplateSet.quantityType!]!
+        editedSetLoad = selectedTemplateSet.loadTodoString!
+        editedSetQuantity = selectedTemplateSet.quantityTodoString!
+        editedRestTime = selectedTemplateSet.restTimeString
     }
     
-    public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet?) -> Void {
+    public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
         
-        if editedSetName != selectedTemplateSet!.timePeriodName {
-            selectedTemplateSet!.timePeriodName = editedSetName
+        if editedSetName != selectedTemplateSet.timePeriodName {
+            selectedTemplateSet.timePeriodName = editedSetName
         }
         
-        if editedSetDesc != selectedTemplateSet!.timePeriodDescription {
-            selectedTemplateSet!.timePeriodDescription = editedSetDesc
+        if editedSetDesc != selectedTemplateSet.timePeriodDescription {
+            selectedTemplateSet.timePeriodDescription = editedSetDesc
         }
         
-        if Double(editedSetLoad)! != selectedTemplateSet!.setLoad {
-            selectedTemplateSet!.setLoad = Double(editedSetLoad)!
+        if Double(editedSetLoad)! != selectedTemplateSet.setLoad {
+            selectedTemplateSet.setLoad = Double(editedSetLoad)!
         }
         
-        if Double(editedSetQuantity) != selectedTemplateSet!.setQuantity {
-            selectedTemplateSet!.setQuantity = Double(editedSetQuantity)!
+        if Double(editedSetQuantity) != selectedTemplateSet.setQuantity {
+            selectedTemplateSet.setQuantity = Double(editedSetQuantity)!
         }
         
-        if selectedExercise!.exerciseName != selectedTemplateSet!.exercise!.exerciseName {
-            selectedTemplateSet!.exercise = selectedExercise
+        if selectedExercise!.exerciseName != selectedTemplateSet.exercise!.exerciseName {
+            selectedTemplateSet.exercise = selectedExercise
         }
         
-        if typeMap[editedLoadType] != selectedTemplateSet!.loadType {
-            selectedTemplateSet!.loadType = typeMap[editedLoadType]!
+        if typeMap[editedLoadType] != selectedTemplateSet.loadType {
+            selectedTemplateSet.loadType = typeMap[editedLoadType]!
         }
         
-        if typeMap[editedQuantityType] != selectedTemplateSet!.quantityType {
-            selectedTemplateSet!.quantityType = typeMap[editedQuantityType]!
+        if typeMap[editedQuantityType] != selectedTemplateSet.quantityType {
+            selectedTemplateSet.quantityType = typeMap[editedQuantityType]!
         }
         
-        if editedSetPositionIndex != selectedTemplateSet!.positionIndex {
-            selectedTemplateSet!.positionIndex = editedSetPositionIndex
+        if editedSetPositionIndex != selectedTemplateSet.positionIndex {
+            selectedTemplateSet.positionIndex = editedSetPositionIndex
         }
         
-        if selectedTemplateSet!.hasChanges {
+        if Double(editedRestTime)! != selectedTemplateSet.restTime {
+            selectedTemplateSet.restTime = Double(editedRestTime)!
+        }
+        
+        if selectedTemplateSet.hasChanges {
             withAnimation {
                 showSetChangedAlert = true
                 PersistenceController.save(viewContext)
@@ -98,7 +107,48 @@ class EditTemplateSetViewModel: ObservableObject {
 
     }
     
-    // Find all the positionIndexes of the other set-children of this sets session
+    /// Propogating changes made to the TemplateSet to all matching TrainingSets.
+    private func propogateChanges(_ viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
+        let changes = selectedTemplateSet.changedValues() // Get changes
+        let fetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "templateSet == %@", selectedTemplateSet)
+        
+        // Fetch all incomplete sessions as these are the only ones affected
+        let trainingSets = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+            .filter({!$0.isComplete})
+        
+        for trainingSet in trainingSets {
+            if let timePeriodName = changes["timePeriodName"] {
+                trainingSet.timePeriodName = (timePeriodName as! String)
+            }
+            
+            if let timePeriodDesc = changes["timePeriodDescription"] {
+                trainingSet.timePeriodName = timePeriodDesc as? String
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                trainingSet.positionIndex = positionIndex as! Int64
+            }
+            
+            if let exercise = changes["exercise"] {
+                trainingSet.exercise = (exercise as! Exercise)
+            }
+            
+            if changes["setLoad"] != nil {
+                trainingSet.loadTodo = selectedTemplateSet.loadTodo!
+            }
+            
+            if changes["setQuantity"] != nil {
+                trainingSet.quantityTodo = selectedTemplateSet.quantityTodo!
+            }
+            
+            if let restTime = changes["restTime"] {
+                trainingSet.restTime = restTime as! Double
+            }
+        }
+    }
+    
+    /// Find all the positionIndexes of the other set-children of this sets session.
     public func positionIndexes(selectedTemplateSet: TemplateSet?) -> [Int64] {
         let session = selectedTemplateSet!.templateSession!
         let sets = session.templateSets!.allObjects as! [TemplateSet]
@@ -108,7 +158,7 @@ class EditTemplateSetViewModel: ObservableObject {
         return positionIndexes
     }
     
-    // func that returns load type selections
+    /// Func that returns load type selections.
     public func loadTypeSelections() -> [String] {
         switch selectedExercise?.exerciseType {
         case "reps":
@@ -124,7 +174,7 @@ class EditTemplateSetViewModel: ObservableObject {
         }
     }
     
-    // func that returns quantity type selections
+    /// Func that returns quantity type selections.
     public func quantityTypeSelections() -> [String] {
         switch selectedExercise?.exerciseType {
         case "reps":
@@ -138,7 +188,7 @@ class EditTemplateSetViewModel: ObservableObject {
         }
     }
     
-    // func that returns map that maps NSManagedObject attributes to the correct display value
+    /// Func that returns map that maps NSManagedObject attributes to the correct display value.
     public func loadTypeMap() -> [String : String] {
         if selectedExercise?.exerciseType == "reps" {
             return [
@@ -154,7 +204,7 @@ class EditTemplateSetViewModel: ObservableObject {
         }
     }
     
-    // func that returns map that maps NSManagedObject attributes to the correct display value
+    /// Func that returns map that maps NSManagedObject attributes to the correct display value.
     public func quantityTypeMap() -> [String : String] {
         if selectedExercise?.exerciseType == "reps" {
             return [
@@ -169,7 +219,7 @@ class EditTemplateSetViewModel: ObservableObject {
         }
     }
     
-    // func that returns the load placeholder
+    /// Func that returns the load placeholder.
     public func loadPlaceholder(viewContext: NSManagedObjectContext) -> String {
         switch editedLoadType {
         case "Numerical":
@@ -186,7 +236,7 @@ class EditTemplateSetViewModel: ObservableObject {
         }
     }
     
-    // func that returns variable for the quantity placeholder
+    /// Func that returns variable for the quantity placeholder.
     public func quantityPlaceholder() -> String {
         switch editedQuantityType {
         case "Numerical":

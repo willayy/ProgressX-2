@@ -12,7 +12,7 @@ extension CompleteableTimePeriod {
     
     //MARK: Extra properties
     
-    var completionDateString: String? {
+    public var completionDateString: String? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         
@@ -29,6 +29,19 @@ extension CompleteableTimePeriod {
     public func complete(onDate: Date = Date()) -> Void {
         self.isComplete = true
         self.completedOnDate = onDate
+        
+        // Check thresholds if a TrainingSet is completed.
+        if self is TrainingSet {
+            let trainingSet: TrainingSet = self as! TrainingSet
+            let templateSet: TemplateSet = trainingSet.templateSet!
+            let thresholds = templateSet.thresholds!.allObjects as! [SetThreshold]
+            
+            for threshold in thresholds {
+                if threshold.triggerQuantity >= trainingSet.quantityDone {
+                    threshold.trigger(loadDone: trainingSet.loadDone, quantityDone: trainingSet.quantityDone)
+                }
+            }
+        }
     }
     
     //MARK: Validation

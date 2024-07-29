@@ -15,17 +15,17 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     var disableInteractions: Bool = true
     var sideMenuWidth: CGFloat = 200
     var cornerRadius: CGFloat = 25
-    @Binding var showMenu: Bool
+    @EnvironmentObject private var showMenuController: ShowMenuController
     @ViewBuilder var content: (UIEdgeInsets) -> Content
     @ViewBuilder var menuView: (UIEdgeInsets) -> MenuView
     @ViewBuilder var Background: Backgroud
-    
     //View properties
     @GestureState private var isDragging: Bool = false
     @State private var offsetX: CGFloat = 0
     @State private var lastoffsetX: CGFloat = 0
     // Dim Contentview when side meue is dragged
     @State private var progress: CGFloat = 0
+    
     var body: some View {
         GeometryReader {
             let size = $0.size
@@ -74,7 +74,7 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
         .background(Background)
         .foregroundColor(.black)
         .ignoresSafeArea()
-        .onChange(of: showMenu, initial: true) { oldValue, newValue in
+        .onChange(of: showMenuController.showMenu, initial: true) { oldValue, newValue in
             withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                 if newValue{
                     showSideBar()
@@ -117,7 +117,7 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     func showSideBar(){
         offsetX = sideMenuWidth
         lastoffsetX = offsetX
-        showMenu = true
+        showMenuController.showMenu = true
         calculateProgress()
     }
     
@@ -125,7 +125,7 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     func reset() {
         offsetX = 0
         lastoffsetX = 0
-        showMenu = false
+        showMenuController.showMenu = false
         calculateProgress()
     }
     
@@ -134,29 +134,4 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
         progress = max(min(offsetX / sideMenuWidth, 1), 0)
     }
     
-    enum Tab: String, CaseIterable {
-        case Home = "house.fill"
-        case StartWorkout = "figure.run"
-        case Routines = "rectangle.stack"
-        case Exercises = "dumbbell"
-        case Profile = "person.crop.circle"
-        
-        var title: String {
-            switch self {
-            case .Home: return "Home"
-            case .StartWorkout: return "Start workout"
-            case .Routines: return "Routines"
-            case .Exercises: return "Exercises"
-            case .Profile: return "Profile"
-            }
-        }
-    }
 }
-
-
-
-#Preview {
-    HomeView()
-       .environmentObject(ViewRouter())
-}
-

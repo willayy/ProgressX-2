@@ -21,31 +21,31 @@ class EditExerciseViewModel: ObservableObject {
     @Published public var newDescIsInvalidMsg: String = ""
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
 
-    public func setViewStartValues(selectedExercise: Exercise?) -> Void {
-        newName = selectedExercise!.exerciseName ?? ""
-        newDesc = selectedExercise!.exerciseDesc ?? ""
+    public func setViewStartValues(selectedExercise: Exercise) -> Void {
+        newName = selectedExercise.exerciseName ?? ""
+        newDesc = selectedExercise.exerciseDesc ?? ""
     }
     
-    public func saveExerciseChanges(viewContext: NSManagedObjectContext, selectedExercise: Exercise?) -> Void {
+    public func saveExerciseChanges(viewContext: NSManagedObjectContext, selectedExercise: Exercise) -> Void {
         
-        if selectedCategories != Set(_immutableCocoaSet: selectedExercise!.categories!) {
-            for category in selectedExercise!.categories! {
-                selectedExercise!.removeFromCategories(category as! ExerciseCategory)
+        if selectedCategories != Set(_immutableCocoaSet: selectedExercise.categories!) {
+            for category in selectedExercise.categories! {
+                selectedExercise.removeFromCategories(category as! ExerciseCategory)
             }
             for category in selectedCategories {
-                selectedExercise!.addToCategories(category)
+                selectedExercise.addToCategories(category)
             }
         }
         
-        if newName != selectedExercise!.exerciseName {
-            selectedExercise!.exerciseName = newName
+        if newName != selectedExercise.exerciseName {
+            selectedExercise.exerciseName = newName
         }
         
-        if newDesc != selectedExercise!.exerciseDesc {
-            selectedExercise!.exerciseDesc = newDesc
+        if newDesc != selectedExercise.exerciseDesc {
+            selectedExercise.exerciseDesc = newDesc
         }
         
-        if selectedExercise!.hasChanges {            
+        if selectedExercise.hasChanges {            
             withAnimation {
                 exerciseEditedAlert = true
                 PersistenceController.save(viewContext)

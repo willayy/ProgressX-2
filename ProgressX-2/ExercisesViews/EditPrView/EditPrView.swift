@@ -19,7 +19,10 @@ struct EditPrView: View {
         ScrollView {
             VStack(alignment: .center) {
                 
-                BoldTitle(text: "Editing PR for: \(exercise!.exerciseName!)")
+                BoldTitle(text: "Editing PR for")
+                    .padding(.horizontal, 20)
+                
+                Title2(text: "\(exercise!.exerciseName!)")
                 
                 if viewModel.prEditedAlert {
                     SubmitAlert(
@@ -44,7 +47,7 @@ struct EditPrView: View {
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                         + Text(editingPr!.typeString)
+                         + Text(editingPr!.typeString!)
                             .fontWeight(.light)
                             .foregroundColor(.black))
                         .multilineTextAlignment(.center)
@@ -64,7 +67,7 @@ struct EditPrView: View {
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                         + Text("\(editingPr!.loadString)")
+                         + Text("\(editingPr!.loadString!)")
                             .fontWeight(.light)
                             .foregroundColor(.black))
                         .multilineTextAlignment(.center)
@@ -74,7 +77,7 @@ struct EditPrView: View {
                             .font(.subheadline)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
-                         + Text("\(editingPr!.quantityString)")
+                         + Text("\(editingPr!.quantityString!)")
                             .fontWeight(.light)
                             .foregroundColor(.black))
                         .multilineTextAlignment(.center)
@@ -135,7 +138,9 @@ struct EditPrView: View {
                 }) {
                     Text("Save changes")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "square.and.arrow.down")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
@@ -150,9 +155,9 @@ struct EditPrView: View {
     
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let loadFieldValidator = DoubleFieldValidator()
+        let loadFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let quantityFieldValidator: InputFieldValidator = {
-            return (editingPr!.prType == "timemax" ? DoubleFieldValidator() : IntFieldValidator())
+            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(minInputNumber: 100000))
         }()
         
         valid += loadFieldValidator.valideField(

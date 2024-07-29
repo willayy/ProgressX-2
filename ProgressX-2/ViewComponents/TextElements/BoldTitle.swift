@@ -20,7 +20,6 @@ struct BoldTitle: View {
             .foregroundColor(.black)
             .multilineTextAlignment(.center)
             .minimumScaleFactor(0.5)
-            
     }
 }
 

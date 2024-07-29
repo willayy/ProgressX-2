@@ -27,6 +27,7 @@ extension TrainingCycle: HasOrderable {
         self.timePeriodDescription = (description == "") ? "Cycle created for \(routineName)" : description
         self.templateCycle = routine.templateCycle
         self.startedOnDate = Date()
+        routine.addToTrainingCycles(self)
     }
     
     // MARK: Extra properties
@@ -62,7 +63,6 @@ extension TrainingCycle: HasOrderable {
     }
     
     private func validateIsComplete() throws {
-        
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.trainingWeeks!.allObjects.isEmpty {
             throw ValidationNSErrors.cycleCompleteWithNoWeeks.toNSError()

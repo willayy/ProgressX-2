@@ -10,8 +10,6 @@ import CoreData
 
 struct ThresholdsView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
     @Binding var selectedThreshold: SetThreshold?
@@ -26,8 +24,10 @@ struct ThresholdsView: View {
         
         ScrollView {
             VStack {
-                BoldTitle(text: "Adding thresholds for: \(selectedTemplateSet!.timePeriodName!)")
+                BoldTitle(text: "Adding thresholds for")
                     .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 
                 BoldSubHeadline(text: "Current thresholds in \(selectedTemplateSet!.timePeriodName!)")
                     .padding(.top, 20)
@@ -43,14 +43,16 @@ struct ThresholdsView: View {
                             threshold: threshold
                         )
                     }
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 20)
                 
                 Button {
                     navPath.append(9)
                 } label: {
                     Text("Add threshold")
                         .frame(height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

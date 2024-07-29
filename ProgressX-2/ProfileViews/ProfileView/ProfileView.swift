@@ -10,9 +10,6 @@ import SwiftUI
 import CoreData
 
 struct ProfileView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    @EnvironmentObject var viewRouter: ViewRouter
     
     @FetchRequest(
         entity: Profile.entity(),
@@ -20,13 +17,14 @@ struct ProfileView: View {
     ) private var profiles: FetchedResults<Profile>
     
     @StateObject private var viewModel = ProfileViewModel()
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-        SideBarView(content: {
-            NavigationStack {
-                ScrollView {
-                    
+        ProfileNavigationController {
+            ScrollView {
+                VStackWithSideBarButton {
                     BoldTitle(text: "Profile")
+                        .padding(.horizontal, 20)
                     
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
@@ -45,103 +43,106 @@ struct ProfileView: View {
                         )
                     }
                     
-                    VStack(alignment: .center) {
-                        
-                        BoldSubHeadline(text: "Change username")
-                        
-                        InputTextField(
-                            placeHolder: "Username",
-                            text: $viewModel.userName, 
-                            maxChars: 25,
-                            markAsWrong: $viewModel.userNameIsInvalid,
-                            width: 0.5,
-                            errorMessage: $viewModel.userNameIsInvalidMsg
-                        ).padding(.bottom)
-                        
-                        BoldSubHeadline(text: "Change birth date")
-                        
-                        DatePicker(
-                            "",
-                            selection: $viewModel.birthDay ,
-                            displayedComponents: .date
-                        )
-                        .datePickerStyle(DefaultDatePickerStyle())
-                        .labelsHidden()
-                        .padding(.bottom)
-                        
-                        BoldSubHeadline(text: "Change default rest-time (seconds)")
-                        
-                        InputDecimalNumberField(
-                            placeHolder: "Default rest-time",
-                            allowNegatives: false,
-                            numberText: $viewModel.standardRestTime,
-                            markAsWrong: $viewModel.standardRestTimeIsInvalid,
-                            width: 0.3,
-                            errorMessage: $viewModel.standardRestTimeIsInvalidMsg
-                        ).padding(.bottom)
-                        
-                        BoldSubHeadline(text: "Change weight and length units")
-                        
-                        BasicSegPicker(
-                            selectedSegment: $viewModel.selectedUnitSegment,
-                            segments: viewModel.unitSegments,
-                            frameWidth: 230,
-                            horizontalPadding: 20
-                        )
-                        .padding(.bottom)
-                        
-                        BoldSubHeadline(text: "Change height")
-                        
-                        InputDecimalNumberField(
-                            placeHolder: "Height",
-                            allowNegatives: false,
-                            numberText: $viewModel.height,
-                            markAsWrong: $viewModel.heightIsInvalid,
-                            width: 0.3,
-                            errorMessage: $viewModel.heightIsInvalidMsg
-                        ).padding(.bottom)
-                        
-                        BoldSubHeadline(text: "Gender")
-                        
-                        BasicSegPicker(
-                            selectedSegment: $viewModel.selectedGenderSegment,
-                            segments: viewModel.genderSegments,
-                            frameWidth: 230,
-                            horizontalPadding: 20
-                        )
-                        
-                        Button(action: {
-                            if validateInput() {
-                                viewModel.saveProfileChanges(viewContext: viewContext, profiles: profiles)
-                            }
-                        })
-                        {
-                            Text("Save changes")
-                                .frame(height: 40)
-                                .foregroundColor(Color("buttonTextColor"))
-                            Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(Color("buttonTextColor"))
+                    BoldSubHeadline(text: "Change username")
+                        .padding(.top, 10)
+                    
+                    InputTextField(
+                        placeHolder: "Username",
+                        text: $viewModel.userName,
+                        maxChars: 25,
+                        markAsWrong: $viewModel.userNameIsInvalid,
+                        width: 0.5,
+                        errorMessage: $viewModel.userNameIsInvalidMsg
+                    )
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Change birth date")
+                    
+                    DatePicker(
+                        "",
+                        selection: $viewModel.birthDay ,
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(DefaultDatePickerStyle())
+                    .labelsHidden()
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Change default rest-time (seconds)")
+                    
+                    InputDecimalNumberField(
+                        placeHolder: "Default rest-time",
+                        allowNegatives: false,
+                        numberText: $viewModel.standardRestTime,
+                        markAsWrong: $viewModel.standardRestTimeIsInvalid,
+                        width: 0.3,
+                        errorMessage: $viewModel.standardRestTimeIsInvalidMsg
+                    )
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Change weight and length units")
+                    
+                    BasicSegPicker(
+                        selectedSegment: $viewModel.selectedUnitSegment,
+                        segments: viewModel.unitSegments,
+                        frameWidth: 230,
+                        horizontalPadding: 20
+                    )
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Change smallest plate")
+                    
+                    StringSelectionList(
+                        selected: $viewModel.selectedSmallestPlate,
+                        selections: viewModel.smallestPlateSegments
+                    )
+                    .padding(.bottom, 10)
+                    .padding(.horizontal, 40)
+                    
+                    BoldSubHeadline(text: "Change height")
+                    
+                    InputDecimalNumberField(
+                        placeHolder: "Height",
+                        allowNegatives: false,
+                        numberText: $viewModel.height,
+                        markAsWrong: $viewModel.heightIsInvalid,
+                        width: 0.3,
+                        errorMessage: $viewModel.heightIsInvalidMsg
+                    )
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Gender")
+                    
+                    BasicSegPicker(
+                        selectedSegment: $viewModel.selectedGenderSegment,
+                        segments: viewModel.genderSegments,
+                        frameWidth: 230,
+                        horizontalPadding: 20
+                    )
+                    .padding(.bottom, 10)
+                    
+                    Button(action: {
+                        if validateInput() {
+                            viewModel.saveProfileChanges(viewContext: viewContext, profiles: profiles)
                         }
-                        .padding(.top, 20)
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .foregroundColor(.white)
-                        .padding(.bottom, 10)
-                        
+                    })
+                    {
+                        Text("Save changes")
+                            .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(Color("buttonTextColor"))
                     }
-                    .frame(width: 390, height: 650, alignment: .top)
-                    .toolbar(.hidden, for: .tabBar)
-                    .foregroundColor(Color(UIColor.lightGray))
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            SideBarButton(showMenu: $viewModel.showMenu)
-                                .environmentObject(viewRouter)
-                        }
-                    }
-                }.onAppear(perform: {
-                    viewModel.setViewStartValues(profiles: profiles)
-                })
+                    .padding(.top, 20)
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .foregroundColor(.white)
+                    .padding(.bottom, 10)
+                    
+                }
             }
-        },showMenu: $viewModel.showMenu)
+            .onAppear(perform: {
+                viewModel.setViewStartValues(profiles: profiles)
+            })
+        }
     }
     
     private func validateInput() -> Bool {
@@ -179,6 +180,5 @@ struct ProfileView: View {
     let context = PersistenceController.preview.container.viewContext
     
     return ProfileView()
-        .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)
 }

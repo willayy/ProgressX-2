@@ -10,8 +10,6 @@ import CoreData
 
 struct SetExerciseSelectionList: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
@@ -32,17 +30,6 @@ struct SetExerciseSelectionList: View {
         }
         
         VStack {
-            ZStack {
-                Rectangle()
-                    .cornerRadius(10)
-                    .foregroundStyle(Color(.systemGray6))
-                    .padding(.horizontal, 40)
-                    .frame(height: 40)
-                
-                Text(selectedExercise?.exerciseName! ?? "Not selected")
-                    .fontWeight(.light)
-            }
-            
             GroupBox {
                 VStack {
                     TextField("Search...", text: $searchWord)
@@ -63,7 +50,6 @@ struct SetExerciseSelectionList: View {
                     }
                 }
             }
-            .padding(.horizontal, 40)
         }
     }
 }

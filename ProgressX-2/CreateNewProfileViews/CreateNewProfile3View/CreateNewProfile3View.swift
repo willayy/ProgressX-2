@@ -9,9 +9,6 @@ import SwiftUI
 
 struct CreateNewProfile3View: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    
     /* Fetch BodyEntries so it can be modified by the input values
      At this state in the app there will only be one BodyEntry, the first one. */
     @FetchRequest(
@@ -19,6 +16,8 @@ struct CreateNewProfile3View: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @Binding var navPath: [Int]
     @StateObject private var viewModel = CreateNewProfile3ViewModel()
     
     var body: some View {
@@ -141,6 +140,7 @@ struct CreateNewProfile3View: View {
                 } label: {
                     Text("Continue")
                         .frame(width: 100, height: 30)
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(.top, 40)
@@ -152,7 +152,7 @@ struct CreateNewProfile3View: View {
     // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself
     private func validateInput() -> Bool {
         var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator()
+        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 1000)
         
         valid += doubleFieldValidator.valideField(
             inputVar: viewModel.chestCirc,
