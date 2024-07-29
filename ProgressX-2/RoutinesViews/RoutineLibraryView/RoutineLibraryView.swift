@@ -95,4 +95,5 @@ struct RoutineLibraryView: View {
     
     return RoutineLibraryView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
 }

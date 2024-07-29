@@ -21,6 +21,9 @@ struct EditPrView: View {
                 
                 BoldTitle(text: "Editing PR for")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(editingPr: editingPr!)
+                    })
                 
                 Title2(text: "\(exercise!.exerciseName!)")
                 
@@ -95,36 +98,41 @@ struct EditPrView: View {
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
-                InputDecimalNumberField(
+                BoldSubHeadline(text: "Change load")
+                    .padding(.top, 10)
+                
+                DecimalTextField(
                     placeHolder: "Load",
-                    allowNegatives: false,
                     numberText: $viewModel.editedWeightLoad,
                     markAsWrong: $viewModel.editedWeightLoadInvalid,
-                    width: 0.7,
                     errorMessage: $viewModel.editedWeightLoadInvalidMsg
                 )
-                .padding(.top, 10)
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 if editingPr!.prType == "maxreps" {
-                    InputIntegerNumberField(
+                    
+                    BoldSubHeadline(text: "Change reps")
+                    
+                    IntegerTextField(
                         placeHolder: "Reps",
-                        allowNegatives: false,
                         numberText: $viewModel.editedQuantity,
                         markAsWrong: $viewModel.editedQuantityInvalid,
-                        width: 0.7,
                         errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
-                    InputDecimalNumberField(
+                    
+                    BoldSubHeadline(text: "Change time")
+                    
+                    DecimalTextField(
                         placeHolder: "Time", 
-                        allowNegatives: false,
                         numberText: $viewModel.editedQuantity,
                         markAsWrong: $viewModel.editedQuantityInvalid,
-                        width: 0.7,
                         errorMessage: $viewModel.editedQuantityInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                 }
                 
@@ -148,9 +156,6 @@ struct EditPrView: View {
                 
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(editingPr: editingPr!)
-        })
     }
     
     private func validateInput() -> Bool {

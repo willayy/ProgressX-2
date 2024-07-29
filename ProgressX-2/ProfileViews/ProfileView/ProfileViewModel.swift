@@ -39,11 +39,10 @@ class ProfileViewModel: ObservableObject {
         }
     }
     
-    public func setViewStartValues(profiles: FetchedResults<Profile>) -> Void {
-        let profile = profiles.first!
-        self.standardRestTime = String(profile.standardRestTime)
+    public func setViewStartValues(profile: Profile) -> Void {
+        self.standardRestTime = String(format: "%.2f", profile.standardRestTime)
         self.selectedUnitSegment = (profile.isMetric) ? "Metric" : "Imperial"
-        self.height = String(profile.userHeight)
+        self.height = String(format: "%.2f", profile.userHeight)
         self.birthDay = profile.birthDay!
         self.userName = profile.profileUserName!
         self.selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"

@@ -29,9 +29,13 @@ struct EditExerciseView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
+                    
                     BoldTitle(text: "Editing")
                     
                     Title2(text: "\(selectedExercise!.exerciseName!)")
+                        .onAppear(perform: {
+                            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
+                        })
                         
                     if viewModel.exerciseEditedAlert {
                         SubmitAlert(
@@ -69,11 +73,11 @@ struct EditExerciseView: View {
                     InputTextField(
                         placeHolder: "Exercise name",
                         text: $viewModel.newName,
-                        maxChars: 30,
                         markAsWrong: $viewModel.newNameIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newNameIsInvalidMsg
+                        errorMessage: $viewModel.newNameIsInvalidMsg,
+                        maxChars: 30
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                      
                     BoldSubHeadline(text: "Edit exercise description")
@@ -81,11 +85,11 @@ struct EditExerciseView: View {
                     InputTextField(
                         placeHolder: "Exercise description",
                         text: $viewModel.newDesc,
-                        maxChars: 200,
                         markAsWrong: $viewModel.newDescIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newDescIsInvalidMsg
+                        errorMessage: $viewModel.newDescIsInvalidMsg,
+                        maxChars: 200
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Edit exercise categories")
@@ -118,9 +122,6 @@ struct EditExerciseView: View {
                     .padding(.bottom, 10)
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
-        })
     }
         
     private func validateInput() -> Bool {

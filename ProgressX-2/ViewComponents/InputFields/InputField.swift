@@ -14,7 +14,6 @@ struct InputField: View {
     @Binding var markAsWrong: Bool
     let errorMessage: String
     let placeHolder: String
-    let width: CGFloat
     let onReceiveFunction: (String) -> String
     let onSubmitFunction: (String) -> String
 
@@ -22,7 +21,6 @@ struct InputField: View {
         VStack {
             TextField(placeHolder, text: $value)
                 .minimumScaleFactor(0.75)
-                .frame(width: UIScreen.main.bounds.width * width)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .onReceive(Just(value)) { newValue in
                     let filtered = onReceiveFunction(newValue)
@@ -44,7 +42,6 @@ struct InputField: View {
                 
             if markAsWrong {
                 Text(errorMessage)
-                    .frame(width: UIScreen.main.bounds.width * width)
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)

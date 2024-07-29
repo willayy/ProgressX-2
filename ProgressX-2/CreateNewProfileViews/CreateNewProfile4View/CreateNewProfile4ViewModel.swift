@@ -36,7 +36,6 @@ class CreateNewProfile4ViewModel: ObservableObject {
     @Published var pushupsAmrapIsInvalidMsg = ""
     
     // Constants specific to elements in this view
-    let inputFieldWidth: Double = 0.2
     let minScaleFactor: Double = 0.05
     let textWidth: Double = 150
     

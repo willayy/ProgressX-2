@@ -36,6 +36,9 @@ struct EditRoutineView: View {
             VStack {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
+                    })
                     
                 Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -73,21 +76,22 @@ struct EditRoutineView: View {
                         
                         InputTextField(
                             placeHolder: "New routine name",
-                            text: $viewModel.editedRoutineName, 
-                            maxChars: 25,
+                            text: $viewModel.editedRoutineName,
                             markAsWrong: $viewModel.editedRoutineNameIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg
+                            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
+                            maxChars: 25
                         )
+                        .padding(.horizontal, 60)
                         
                         InputTextField(
                             placeHolder: "New routine description",
-                            text: $viewModel.editiedRoutineDescription, 
-                            maxChars: 200,
+                            text: $viewModel.editiedRoutineDescription,
                             markAsWrong: $viewModel.editedRoutineDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg
+                            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
+                            maxChars: 200
                         )
+                        .padding(.horizontal, 60)
+
                         
                         Button {
                             if validateInput() {
@@ -151,9 +155,6 @@ struct EditRoutineView: View {
             
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
-        })
     }
     
     private func validateInput() -> Bool {

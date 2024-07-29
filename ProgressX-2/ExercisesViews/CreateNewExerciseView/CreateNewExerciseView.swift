@@ -52,22 +52,22 @@ struct CreateNewExerciseView: View {
                 InputTextField(
                     placeHolder: "New exercise name",
                     text: $viewModel.enteredExerciseName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 
                 InputTextField(
                     placeHolder: "New exercise description",
                     text: $viewModel.enteredExerciseDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Exercise type?")
@@ -77,10 +77,9 @@ struct CreateNewExerciseView: View {
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.selectedTypeOfExercise,
-                    segments: viewModel.exerciseTypeOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.exerciseTypeOptions
                 )
+                .padding(.horizontal, 100)
                 
                 BoldSubHeadline(text: "Add PR for this exercise?")
                     .padding(.top, 20)
@@ -93,11 +92,10 @@ struct CreateNewExerciseView: View {
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPr,
-                    segments: viewModel.addPrOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.addPrOptions
                 )
-                    .padding(.bottom, 5)
+                .padding(.horizontal, 100)
+                .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if viewModel.addPr == "Yes" {
@@ -106,40 +104,36 @@ struct CreateNewExerciseView: View {
                     if viewModel.selectedTypeOfExercise == "Reps" {
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedTypeOfPr,
-                            segments: viewModel.repBasedPrOptions,
-                            frameWidth: 230,
-                            horizontalPadding: 100
+                            segments: viewModel.repBasedPrOptions
                         )
+                        .padding(.horizontal, 100)
                         .padding(.bottom, 5)
                     }
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))", 
-                        allowNegatives: false,
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
 
                     if viewModel.selectedTypeOfExercise == "Time" {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: "PR time in seconds", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "Reps", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     }
                 }
                 

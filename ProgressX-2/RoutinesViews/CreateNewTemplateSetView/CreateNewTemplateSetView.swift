@@ -34,11 +34,11 @@ struct CreateNewTemplateSetView: View {
                 InputTextField(
                     placeHolder: "Set name",
                     text: $viewModel.newSetName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.newSetNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newSetNameIsInvalidMsg
+                    errorMessage: $viewModel.newSetNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 5)
                 .onAppear(perform: {
                     viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession!)
@@ -47,11 +47,11 @@ struct CreateNewTemplateSetView: View {
                 InputTextField(
                     placeHolder: "Set description",
                     text: $viewModel.newSetDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.newSetDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newSetDescIsInvalidMsg
+                    errorMessage: $viewModel.newSetDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Choose an exercise for the set")
@@ -82,14 +82,13 @@ struct CreateNewTemplateSetView: View {
                     LightSubHeadline(text: "In seconds")
                         .padding(.bottom, 5)
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Rest time",
-                        allowNegatives: false,
                         numberText: $viewModel.restTime,
                         markAsWrong: $viewModel.restTimeIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.restTimeIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     
                     BoldSubHeadline(text: "Choose load type")
                         .padding(.top, 20)
@@ -153,17 +152,14 @@ struct CreateNewTemplateSetView: View {
                     
                     // MARK: Load inputfield
                     HStack {
-                        InputDecimalNumberField(
-                            placeHolder: viewModel.loadPlaceholder(
-                                viewContext: viewContext
-                            ), 
-                            allowNegatives: false,
+                        DecimalTextField(
+                            placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
                             numberText: $viewModel.newSetLoad,
                             markAsWrong: $viewModel.newSetLoadIsInvalid,
-                            width: 0.45,
                             errorMessage: $viewModel.newSetLoadIsInvalidMsg,
                             bodyWeightButton: true
                         )
+                        .padding(.horizontal, 60)
                         
                         if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                             Text("%")
@@ -175,14 +171,13 @@ struct CreateNewTemplateSetView: View {
                      InputFields depending on the exercise type*/
                     if viewModel.selectedExercise?.exerciseType == "reps" {
                         HStack {
-                            InputIntegerNumberField(
+                            IntegerTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
-                                allowNegatives: false,
                                 numberText: $viewModel.newSetQuantity,
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                width: 0.6,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
+                            .padding(.horizontal, 60)
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
@@ -191,14 +186,13 @@ struct CreateNewTemplateSetView: View {
                         }
                     } else {
                         HStack {
-                            InputDecimalNumberField(
+                            DecimalTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
-                                allowNegatives: false,
                                 numberText: $viewModel.newSetQuantity,
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                width: 0.6,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
+                            .padding(.horizontal, 60)
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {

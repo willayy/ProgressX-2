@@ -35,21 +35,21 @@ struct CreateNewRoutineView: View {
                 InputTextField(
                     placeHolder: "Routine name...",
                     text: $viewModel.newRoutineName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.newRoutineNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newRoutineNameIsInvalidMsg
+                    errorMessage: $viewModel.newRoutineNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
                 InputTextField(
                     placeHolder: "Routine description...",
                     text: $viewModel.newRoutineDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.newRoutineDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newRoutineDescIsInvalidMsg
+                    errorMessage: $viewModel.newRoutineDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 Button {

@@ -30,12 +30,12 @@ struct StatisticsView: View {
                 if exercise!.exerciseType == "reps" {
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
                         .padding(.top, 20)
+                    
                     BasicSegPicker(
                         selectedSegment: $displayedPrType,
-                        segments: prSegments,
-                        frameWidth: 250,
-                        horizontalPadding: 20
+                        segments: prSegments
                     )
+                    .padding(.horizontal, 20)
                 }
                 
                 if exercise!.exerciseType == "reps" {

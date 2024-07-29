@@ -32,60 +32,44 @@ struct CreateNewProfile1View: View {
                     LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only.")
                         .padding(.horizontal, 20)
                     
-                    Text("Username")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "Username")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
                     InputTextField(
                         placeHolder: "Enter username...",
                         text: $viewModel.userName, 
-                        maxChars: 25,
                         markAsWrong: $viewModel.userNameIsInvalid,
-                        width: 0.4,
-                        errorMessage: $viewModel.userNameIsInvalidMsg
+                        errorMessage: $viewModel.userNameIsInvalidMsg,
+                        maxChars: 25
                     )
+                    .padding(.horizontal, 60)
+
                     
-                    Text("Birthday")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "Birthday")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
                     DatePicker("", selection: $viewModel.birthDay, displayedComponents: .date)
                         .datePickerStyle(DefaultDatePickerStyle())
                         .labelsHidden()
                         .padding(-3)
                     
-                    Text("Metric or imperial units?")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "Metric or imperial units?")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
-                        segments: viewModel.unitSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.unitSegments
                     )
+                    .padding(.horizontal, 55)
                     
-                    Text("What is your smallest available plate?")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "What is your smallest available plate?")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
                     StringSelectionList(
                         selected: $viewModel.smallestPlateSelection,
                         selections: viewModel.smallestPlateSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     .onChange(
                         of: viewModel.selectedUnitSegment,
                         initial: false, {
@@ -93,52 +77,36 @@ struct CreateNewProfile1View: View {
                         }
                     )
                     
-                    Text("What is your current weight?")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "What is your current weight?")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: viewModel.weightUnit, 
-                        allowNegatives: false,
                         numberText: $viewModel.weight,
                         markAsWrong: $viewModel.weightIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.weightIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     
-                    Text("What is your current Height")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text:"What is your current Height")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
                     
-                    
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: viewModel.lengthUnit, 
-                        allowNegatives: false,
                         numberText: $viewModel.height,
                         markAsWrong: $viewModel.heightIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.heightIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     
-                    Text("What is your (biological) gender")
-                        .foregroundColor(.black)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .multilineTextAlignment(.center)
+                    BoldSubHeadline(text: "What is your (biological) gender")
                         .padding(.top, 10)
-                        .minimumScaleFactor(0.5);
-                    
+                        
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedGenderSegment,
-                        segments: viewModel.genderSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.genderSegments
                     )
+                    .padding(.horizontal, 55)
                     
                     Button {
                         if validateInput() {

@@ -28,8 +28,14 @@ struct EditTemplateSessionView: View {
         
         ScrollView {
             VStack {
+                
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(
+                            selectedTemplateSession: selectedTemplateSession
+                        )
+                    })
                 
                 Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -71,21 +77,21 @@ struct EditTemplateSessionView: View {
                         InputTextField(
                             placeHolder: "New session name",
                             text: $viewModel.editedSessionName,
-                            maxChars: 25,
                             markAsWrong: $viewModel.editedSessionIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedSessionNameIsInvalidMsg
+                            errorMessage: $viewModel.editedSessionNameIsInvalidMsg,
+                            maxChars: 25
                         )
+                        .padding(.horizontal, 60)
                         .padding(.top, 10)
                         
                         InputTextField(
                             placeHolder: "New session description",
                             text: $viewModel.editedSessionDescription,
-                            maxChars: 200,
                             markAsWrong: $viewModel.editedSessionDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedSessionDescIsInvalidMsg
+                            errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
+                            maxChars: 200
                         )
+                        .padding(.horizontal, 60)
                         
                         LightSubHeadline(text: "Change the sessions position in the week")
                             .padding(.top, 10)
@@ -153,11 +159,6 @@ struct EditTemplateSessionView: View {
             
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(
-                selectedTemplateSession: selectedTemplateSession
-            )
-        })
     }
     
     private func validateInput() -> Bool {

@@ -110,7 +110,8 @@ struct DoubleChart: View {
                     Toggle(isOn: $overlayBodyWeight, label: {
                         Text("Do you want to overlay bodyweight?")
                     })
-                    .padding(.horizontal, 50)
+                    .minimumScaleFactor(0.75)
+                    .padding(.horizontal, 40)
                     .padding(.top, 10)
                 }
             }
