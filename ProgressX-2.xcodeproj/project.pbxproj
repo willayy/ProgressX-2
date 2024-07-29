@@ -1203,6 +1203,7 @@
 				836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */,
 				8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */,
 				8316576D2C529365003F895F /* Title2.swift in Sources */,
+				8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
 				83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */,
 				83266E812C3C0E2800F5F6CB /* CreateNewPersonalRecordViewModel.swift in Sources */,
