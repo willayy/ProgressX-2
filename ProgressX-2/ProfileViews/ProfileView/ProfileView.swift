@@ -84,7 +84,7 @@ struct ProfileView: View {
                         selectedSegment: $viewModel.selectedUnitSegment,
                         segments: viewModel.unitSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change smallest plate")
@@ -94,7 +94,7 @@ struct ProfileView: View {
                         selections: viewModel.smallestPlateSegments
                     )
                     .padding(.bottom, 10)
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, 55)
                     
                     BoldSubHeadline(text: "Change height")
                     
@@ -113,7 +113,7 @@ struct ProfileView: View {
                         selectedSegment: $viewModel.selectedGenderSegment,
                         segments: viewModel.genderSegments
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
                     Button(action: {
