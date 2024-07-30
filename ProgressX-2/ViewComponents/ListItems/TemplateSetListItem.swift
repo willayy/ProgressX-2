@@ -20,7 +20,7 @@ struct TemplateSetListItem: View {
     var body: some View {
         
         VStack(alignment: .leading, content: {
-            HStack {
+            HStack() {
                 VStack(alignment: .leading) {
                     
                     Text(set.timePeriodName ?? "")
@@ -50,7 +50,7 @@ struct TemplateSetListItem: View {
                     .minimumScaleFactor(0.6)
                     
                 }
-                .frame(width: 155, height: 45)
+                .frame(width: 155, height: 45, alignment: .leading)
                 .padding(.vertical, 10)
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedTemplateSetView(

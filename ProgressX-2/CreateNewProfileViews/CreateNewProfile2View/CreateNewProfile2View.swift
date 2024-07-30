@@ -28,7 +28,7 @@ struct CreateNewProfile2View: View {
                 .fontWeight(.light)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 40)
                 .minimumScaleFactor(0.5);
                 
             Button {

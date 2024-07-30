@@ -93,7 +93,7 @@ extension TemplateSet: HasOrderable {
         
         switch quantityTypeEnum {
         case .numerical:
-            return self.setLoad
+            return self.setQuantity
             
         case .maxPercentage:
             let exercise = self.exercise!
