@@ -158,7 +158,10 @@ struct CreateNewProfile4View: View {
                             viewContext: viewContext
                         )
                         
-                        viewRouter.rootView = .HomeView
+                        withAnimation {
+                            viewRouter.startView = .None
+                            viewRouter.rootView = .HomeView
+                        }
                     }
                 } label: {
                     Text("Finish")

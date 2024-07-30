@@ -119,7 +119,7 @@ struct CreateNewProfile1View: View {
                             .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(.borderedProminent)
-                    .padding(.top, 30)
+                    .padding(.vertical, 20)
                     
                 }
             }

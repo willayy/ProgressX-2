@@ -26,7 +26,6 @@ struct SideBarBuilder: View {
                 SideBarButton(.Home) {
                     viewRouter.rootView = .HomeView
                     showMenuController.showMenu.toggle()
-
                 }
                 
                 SideBarButton(.StartWorkout) {
@@ -55,9 +54,7 @@ struct SideBarBuilder: View {
                     viewRouter.rootView = .ProfileView
                     showMenuController.showMenu.toggle()
                 }
-                
             }
-            
         }
         .padding(.horizontal, 15)
         .padding(.vertical, 20)
