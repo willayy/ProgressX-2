@@ -13,12 +13,12 @@ private struct BodyEntryData: Identifiable {
     var id = UUID()
     var date: Date
     var bodyWeight: Double
-    var chestCirc: Double
-    var waistCirc: Double
-    var upperArmCirc: Double
-    var lowerArmCirc: Double
-    var thighCirc: Double
-    var calfCirc: Double
+    var chestCirc: Double?
+    var waistCirc: Double?
+    var upperArmCirc: Double?
+    var lowerArmCirc: Double?
+    var thighCirc: Double?
+    var calfCirc: Double?
 }
 
 
@@ -42,12 +42,12 @@ struct BodyEntryChart: View {
             BodyEntryData(
                 date: $0.achievedOnDate!,
                 bodyWeight: $0.bodyWeight,
-                chestCirc: $0.chestCirc?.doubleValue ?? 0,
-                waistCirc: $0.waistCirc?.doubleValue ?? 0,
-                upperArmCirc: $0.uprArmCirc?.doubleValue ?? 0,
-                lowerArmCirc: $0.lwrArmCirc?.doubleValue ?? 0,
-                thighCirc: $0.thighCirc?.doubleValue ?? 0,
-                calfCirc: $0.calfCirc?.doubleValue ?? 0
+                chestCirc: $0.chestCirc?.doubleValue,
+                waistCirc: $0.waistCirc?.doubleValue,
+                upperArmCirc: $0.uprArmCirc?.doubleValue,
+                lowerArmCirc: $0.lwrArmCirc?.doubleValue,
+                thighCirc: $0.thighCirc?.doubleValue,
+                calfCirc: $0.calfCirc?.doubleValue
             )
         })
     }
@@ -60,18 +60,30 @@ struct BodyEntryChart: View {
                     case "Bodyweight":
                         chartElement(x: data.date, y: data.bodyWeight, color: .yellow)
                     case "Chest circumference":
-                        chartElement(x: data.date, y: data.chestCirc, color: .blue)
+                        if data.chestCirc != nil {
+                            chartElement(x: data.date, y: data.chestCirc!, color: .blue)
+                        }
                     case "Waist circumference":
-                        chartElement(x: data.date, y: data.waistCirc, color: .green)
+                        if data.waistCirc != nil {
+                            chartElement(x: data.date, y: data.waistCirc!, color: .green)
+                        }
                     case "Upper arm circumference":
-                        chartElement(x: data.date, y: data.upperArmCirc, color: .red)
+                        if data.upperArmCirc != nil {
+                            chartElement(x: data.date, y: data.upperArmCirc!, color: .red)
+                        }
                     case "Lower arm circumference":
-                        chartElement(x: data.date, y: data.lowerArmCirc, color: .orange)
+                        if data.lowerArmCirc != nil {
+                            chartElement(x: data.date, y: data.lowerArmCirc!, color: .orange)
+                        }
                     case "Thigh circumference":
-                        chartElement(x: data.date, y: data.thighCirc, color: .cyan)
+                        if data.thighCirc != nil {
+                            chartElement(x: data.date, y: data.thighCirc!, color: .cyan)
+                        }
                     case "Calf circumference":
-                        chartElement(x: data.date, y: data.calfCirc, color: .brown)
-                    default: 
+                        if data.calfCirc != nil {
+                            chartElement(x: data.date, y: data.calfCirc!, color: .brown)
+                        }
+                    default:
                         /* If some undefined behaviour appears 
                         with the measurementSelection default to
                         bodyweight */
