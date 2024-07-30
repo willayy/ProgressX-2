@@ -30,7 +30,7 @@ extension TemplateSet: HasOrderable {
         let positionIndex = templateSession.getNextPositionIndex()
         self.positionIndex = positionIndex
         self.loadType = loadType
-        self.setLoad = loadTodo!
+        self.setLoad = load
         self.quantityType = quantityType
         self.setQuantity = quantity
         self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
@@ -98,12 +98,9 @@ extension TemplateSet: HasOrderable {
         case .maxPercentage:
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "maxreps" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(
-                context,
-                exercise: exercise,
-                prType: prType
-            )
-            let computedLoad: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
+            let latestPr = PersistenceController.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
+            var computedLoad: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
+            if exercise.exerciseType! == "reps" { computedLoad = floor(computedLoad) }
             return computedLoad
         }
     }

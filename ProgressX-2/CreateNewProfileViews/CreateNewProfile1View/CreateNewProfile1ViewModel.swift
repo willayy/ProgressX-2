@@ -86,7 +86,6 @@ class CreateNewProfile1ViewModel: ObservableObject {
         if !PersistenceController.basicExercisesExist(viewContext) {
             PersistenceController.generateBasicExerciseCategories(viewContext)
             PersistenceController.generateBasicExerciseLibrary(viewContext)
-            PersistenceController.generateBasicRoutine(viewContext)
         }
         
         PersistenceController.save(viewContext)

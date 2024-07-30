@@ -32,7 +32,7 @@ extension PersistenceController {
         do {
             try context.save()
         } catch let error as NSError {
-            fatalError("Failed to save context: \(error), \(error.userInfo)")
+            fatalError("Failed to save context: \(error.userInfo)")
         }
     }
     
@@ -114,10 +114,17 @@ extension PersistenceController {
     }
     
     public static func getExercise(_ context: NSManagedObjectContext, name: String) -> Exercise? {
-        let fetchRequest = Exercise.fetchRequest()
+        let fetchRequest: NSFetchRequest = Exercise.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", name)
         let results = fetch(context, fetchRequest: fetchRequest)
         return results.first ?? nil
+    }
+    
+    public static func basicRoutineExists(_ context: NSManagedObjectContext) -> Bool {
+        let fetchRequest: NSFetchRequest = Routine.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", "Example routine")
+        let results = fetch(context, fetchRequest: fetchRequest)
+        return results.count == 1
     }
     
     /// Generates a basic routine.
@@ -265,7 +272,7 @@ extension PersistenceController {
             )
         
                 // Session 1 Week 2
-                _ = TemplateSession(
+                let templateSession21 = TemplateSession(
                     context,
                     templateWeek: templateWeek2,
                     name: "Upper body day (PR)"
@@ -274,7 +281,7 @@ extension PersistenceController {
                     // Set 1 Session 1 Week 2
                     let templateSet211 = TemplateSet(
                         context,
-                        templateSession: templateSession11,
+                        templateSession: templateSession21,
                         name: "Bench press",
                         exercise: benchPress,
                         loadType: "maxperc",
@@ -297,7 +304,7 @@ extension PersistenceController {
                     // Set 2 Session 1 Week 2
                     let templateSet212 = TemplateSet(
                         context,
-                        templateSession: templateSession11,
+                        templateSession: templateSession21,
                         name: "Shoulder press",
                         exercise: shoulderPress,
                         loadType: "maxperc",
@@ -320,7 +327,7 @@ extension PersistenceController {
                     // Set 3 Session 1 Week 2
                     let templateSet213 = TemplateSet(
                         context,
-                        templateSession: templateSession11,
+                        templateSession: templateSession21,
                         name: "Bicep curls",
                         exercise: bicepCurls,
                         loadType: "numerical",
@@ -343,7 +350,7 @@ extension PersistenceController {
                     // Set 4 Session 1 Week 2
                     let templateSet214 = TemplateSet(
                         context,
-                        templateSession: templateSession11,
+                        templateSession: templateSession21,
                         name: "Tricep pushdowns",
                         exercise: tricepPushDown,
                         loadType: "numerical",
@@ -364,16 +371,16 @@ extension PersistenceController {
                         )
         
                 // Session 2 Week 2
-                _ = TemplateSession(
+                let templateSession22 = TemplateSession(
                     context,
-                    templateWeek: templateWeek1,
+                    templateWeek: templateWeek2,
                     name: "Lower body day"
                 )
 
                     // Set 1 Session 2 Week 2
                     let templateSet221 = TemplateSet(
                         context,
-                        templateSession: templateSession12,
+                        templateSession: templateSession22,
                         name: "Squats",
                         exercise: squat,
                         loadType: "maxperc",
@@ -396,7 +403,7 @@ extension PersistenceController {
                     // Set 2 Session 2 Week 2
                     let templateSet222 = TemplateSet(
                         context,
-                        templateSession: templateSession12,
+                        templateSession: templateSession22,
                         name: "Deadlifts",
                         exercise: deadlift,
                         loadType: "maxperc",
@@ -419,7 +426,8 @@ extension PersistenceController {
                     // Set 2 Session 2 Week 2
                     let templateSet223 = TemplateSet(
                         context,
-                        templateSession: templateSession12,
+                        templateSession: templateSession22,
+                        name: "Sit ups",
                         exercise: sitUp,
                         loadType: "numerical",
                         load: latestBw,
