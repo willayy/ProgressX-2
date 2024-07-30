@@ -109,7 +109,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the load to be done on a set. Returns nil if loadType, context, weightUnit is not set or if loadType is invalid.
-    public var loadTodoString: String? {
+    public var setLoadString: String? {
         guard let loadType = self.loadType else { return nil }
         guard let loadTypeEnum = LoadType(rawValue: loadType) else { return nil }
         guard let context = self.managedObjectContext else { return nil }
@@ -128,7 +128,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the quantity to be done on a set, returns nil if quantityType, exercise, exerciseType, is not set or is invalid.
-    public var quantityTodoString: String? {
+    public var setQuantityString: String? {
         guard let quantityType = self.quantityType else { return nil }
         guard let quantityTypeEnum = QuantityType(rawValue: quantityType) else { return nil }
         guard let exercise = self.exercise else { return nil }

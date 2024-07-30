@@ -105,7 +105,8 @@ struct EditPrView: View {
                     placeHolder: "Load",
                     numberText: $viewModel.editedWeightLoad,
                     markAsWrong: $viewModel.editedWeightLoadInvalid,
-                    errorMessage: $viewModel.editedWeightLoadInvalidMsg
+                    errorMessage: $viewModel.editedWeightLoadInvalidMsg,
+                    bodyWeightButton: true
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
