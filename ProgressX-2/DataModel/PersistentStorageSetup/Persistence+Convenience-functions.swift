@@ -161,7 +161,7 @@ extension PersistenceController {
                 )
                     
                     // Set 1 Session 1 Week 1
-                    let templateSet111 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Bench press", 
@@ -174,7 +174,7 @@ extension PersistenceController {
                     )
                     
                     // Set 2 Session 1 Week 1
-                    let templateSet112 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Shoulder press",
@@ -187,7 +187,7 @@ extension PersistenceController {
                     )
                     
                     // Set 3 Session 1 Week 1
-                    let templateSet113 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Bicep curls",
@@ -200,7 +200,7 @@ extension PersistenceController {
                     )
         
                     // Set 4 Session 1 Week 1
-                    let templateSet114 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Tricep pushdowns",
@@ -220,7 +220,7 @@ extension PersistenceController {
                 )
                     
                     // Set 1 Session 2 Week 1
-                    let templateSet121 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         name: "Squats",
@@ -233,7 +233,7 @@ extension PersistenceController {
                     )
         
                     // Set 2 Session 2 Week 1
-                    let templateSet122 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         name: "Deadlifts",
@@ -246,7 +246,7 @@ extension PersistenceController {
                     )
         
                     // Set 3 Session 2 Week 1
-                    let templateSet123 = TemplateSet(
+                    _ = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         exercise: sitUp,
@@ -265,9 +265,9 @@ extension PersistenceController {
             )
         
                 // Session 1 Week 2
-                let templateSession21 = TemplateSession(
+                _ = TemplateSession(
                     context,
-                    templateWeek: templateWeek1,
+                    templateWeek: templateWeek2,
                     name: "Upper body day (PR)"
                 )
                     
@@ -284,7 +284,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
                     
-                        let threshold2111 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet211,
                             triggeredAt: 1,
@@ -307,7 +307,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2121 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet212,
                             triggeredAt: 1,
@@ -330,7 +330,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2131 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet213,
                             triggeredAt: 10,
@@ -353,7 +353,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2141 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet214,
                             triggeredAt: 10,
@@ -364,7 +364,7 @@ extension PersistenceController {
                         )
         
                 // Session 2 Week 2
-                let templateSession22 = TemplateSession(
+                _ = TemplateSession(
                     context,
                     templateWeek: templateWeek1,
                     name: "Lower body day"
@@ -383,7 +383,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2211 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet221,
                             triggeredAt: 1,
@@ -406,7 +406,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2221 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet222,
                             triggeredAt: 1,
@@ -428,7 +428,7 @@ extension PersistenceController {
                         restTime: profile.standardRestTime
                     )
         
-                        let threshold2231 = SetThreshold(
+                        _ = SetThreshold(
                             context,
                             templateSet: templateSet223,
                             triggeredAt: 20,
