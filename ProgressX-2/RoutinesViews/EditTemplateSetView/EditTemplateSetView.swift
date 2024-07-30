@@ -14,6 +14,7 @@ struct EditTemplateSetView: View {
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
     @StateObject private var viewModel = EditTemplateSetViewModel()
+    @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
         ScrollView {
@@ -118,6 +119,13 @@ struct EditTemplateSetView: View {
                     selected: $viewModel.editedLoadType,
                     selections: viewModel.loadTypeSelections()
                 )
+                .onChange(of: viewModel.editedLoadType, initial: true) { oldValue, newValue in
+                    if newValue == "Numerical" {
+                        withAnimation { addBodyWeightButton = true }
+                    } else {
+                        withAnimation { addBodyWeightButton = false }
+                    }
+                }
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
@@ -130,21 +138,25 @@ struct EditTemplateSetView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the quantity or load of the set")
+                BoldSubHeadline(text: "Change the load of the set")
                 
                 HStack {
                     DecimalTextField(
                         placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
                         numberText: $viewModel.editedSetLoad,
                         markAsWrong: $viewModel.editedSetLoadIsInvalid,
-                        errorMessage: $viewModel.editedSetLoadIsInvalidMsg
+                        errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
+                        bodyWeightButton: addBodyWeightButton
                     )
-                    .padding(.horizontal, 60)
                     
                     if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                         Text("%")
                     }
                 }
+                .padding(.horizontal, 60)
+                
+                BoldSubHeadline(text: "Change the quantity of the set")
+                    .padding(.top, 5)
                 
                 if viewModel.selectedExercise?.exerciseType == "reps" {
                     HStack {
@@ -154,13 +166,12 @@ struct EditTemplateSetView: View {
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
-                        .padding(.horizontal, 60)
-                        .padding(.top, 5)
                         
                         if viewModel.quantityPlaceholder() == "Percentage" {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                 } else {
                     HStack {
                         DecimalTextField(
@@ -169,13 +180,13 @@ struct EditTemplateSetView: View {
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
-                        .padding(.horizontal, 60)
                         .padding(.top, 5)
                         
                         if viewModel.quantityPlaceholder() == "Percentage" {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                 }
                 
                 Button {

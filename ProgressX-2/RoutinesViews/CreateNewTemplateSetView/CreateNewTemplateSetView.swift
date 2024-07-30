@@ -15,6 +15,7 @@ struct CreateNewTemplateSetView: View {
     @StateObject private var viewModel = CreateNewTemplateSetViewModel()
     @Binding var selectedTemplateSession: TemplateSession?
     @Binding var selectedTemplateSet: TemplateSet?
+    @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
         ScrollView {
@@ -61,7 +62,7 @@ struct CreateNewTemplateSetView: View {
                     selectedExercise: $viewModel.selectedExercise,
                     searchWord: $viewModel.searchWord
                 )
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 .onChange(
                     of: viewModel.selectedExercise,
                     initial: false
@@ -113,7 +114,14 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedLoadType,
                         selections: viewModel.loadTypeSelections
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 50)
+                    .onChange(of: viewModel.selectedLoadType, initial: true) { oldValue, newValue in
+                        if newValue == "Numerical" {
+                            withAnimation { addBodyWeightButton = true }
+                        } else {
+                            withAnimation { addBodyWeightButton = false }
+                        }
+                    }
                     
                     BoldSubHeadline(text: "Choose quantity type")
                         .padding(.top, 20)
@@ -138,7 +146,7 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedQuantityType,
                         selections: viewModel.quantityTypeSelections
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 50)
                     
                     BoldSubHeadline(text: "Choose quantity and load")
                         .padding(.top, 20)
@@ -157,14 +165,14 @@ struct CreateNewTemplateSetView: View {
                             numberText: $viewModel.newSetLoad,
                             markAsWrong: $viewModel.newSetLoadIsInvalid,
                             errorMessage: $viewModel.newSetLoadIsInvalidMsg,
-                            bodyWeightButton: true
+                            bodyWeightButton: addBodyWeightButton
                         )
-                        .padding(.horizontal, 60)
                         
                         if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                     
                     // MARK: Quantity
                     /* Shared quantity input field variable but with different
@@ -177,13 +185,13 @@ struct CreateNewTemplateSetView: View {
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
-                            .padding(.horizontal, 60)
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
                                 Text("%")
                             }
                         }
+                        .padding(.horizontal, 60)
                     } else {
                         HStack {
                             DecimalTextField(
@@ -192,13 +200,13 @@ struct CreateNewTemplateSetView: View {
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
-                            .padding(.horizontal, 60)
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
                                 Text("%")
                             }
                         }
+                        .padding(.horizontal, 60)
                     }
                     
                     Button {
