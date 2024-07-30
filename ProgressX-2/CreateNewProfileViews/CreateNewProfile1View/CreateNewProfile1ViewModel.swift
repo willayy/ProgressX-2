@@ -28,15 +28,15 @@ class CreateNewProfile1ViewModel: ObservableObject {
     @Published var weightIsInvalidMsg = ""
     @Published var smallestPlateSelection: String = "1.25 kg's"
     
-    var lengthUnit: String {
+    public var lengthUnit: String {
         (self.selectedUnitSegment == "Metric") ? "cm" : "ft"
     }
     
-    var weightUnit: String {
+    public var weightUnit: String {
         (self.selectedUnitSegment == "Metric") ? "kg" : "lbs"
     }
     
-    var smallestPlateSegments: [String] {
+    public var smallestPlateSegments: [String] {
         if selectedUnitSegment == "Metric" {
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
         } else {
@@ -86,6 +86,7 @@ class CreateNewProfile1ViewModel: ObservableObject {
         if !PersistenceController.basicExercisesExist(viewContext) {
             PersistenceController.generateBasicExerciseCategories(viewContext)
             PersistenceController.generateBasicExerciseLibrary(viewContext)
+            PersistenceController.generateBasicRoutine(viewContext)
         }
         
         PersistenceController.save(viewContext)
