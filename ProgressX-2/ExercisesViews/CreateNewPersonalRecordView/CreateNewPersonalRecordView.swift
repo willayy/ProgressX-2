@@ -61,7 +61,8 @@ struct CreateNewPersonalRecord: View {
                     placeHolder: "Load", 
                     numberText: $viewModel.prLoad,
                     markAsWrong: $viewModel.prLoadIsInvalid,
-                    errorMessage: $viewModel.prLoadIsInvalidMsg
+                    errorMessage: $viewModel.prLoadIsInvalidMsg,
+                    bodyWeightButton: true
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)

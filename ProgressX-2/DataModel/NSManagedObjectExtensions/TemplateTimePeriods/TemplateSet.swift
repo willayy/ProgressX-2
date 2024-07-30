@@ -30,7 +30,7 @@ extension TemplateSet: HasOrderable {
         let positionIndex = templateSession.getNextPositionIndex()
         self.positionIndex = positionIndex
         self.loadType = loadType
-        self.setLoad = loadTodo!
+        self.setLoad = load
         self.quantityType = quantityType
         self.setQuantity = quantity
         self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
@@ -93,23 +93,20 @@ extension TemplateSet: HasOrderable {
         
         switch quantityTypeEnum {
         case .numerical:
-            return self.setLoad
+            return self.setQuantity
             
         case .maxPercentage:
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "maxreps" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(
-                context,
-                exercise: exercise,
-                prType: prType
-            )
-            let computedLoad: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
+            let latestPr = PersistenceController.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
+            var computedLoad: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
+            if exercise.exerciseType! == "reps" { computedLoad = floor(computedLoad) }
             return computedLoad
         }
     }
     
     /// Use this property for printing the load to be done on a set. Returns nil if loadType, context, weightUnit is not set or if loadType is invalid.
-    public var loadTodoString: String? {
+    public var setLoadString: String? {
         guard let loadType = self.loadType else { return nil }
         guard let loadTypeEnum = LoadType(rawValue: loadType) else { return nil }
         guard let context = self.managedObjectContext else { return nil }
@@ -128,7 +125,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the quantity to be done on a set, returns nil if quantityType, exercise, exerciseType, is not set or is invalid.
-    public var quantityTodoString: String? {
+    public var setQuantityString: String? {
         guard let quantityType = self.quantityType else { return nil }
         guard let quantityTypeEnum = QuantityType(rawValue: quantityType) else { return nil }
         guard let exercise = self.exercise else { return nil }

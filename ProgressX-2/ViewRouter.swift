@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
-import CoreData
+
+enum StartRoute: String {
+    case CreateNewProfileView = "CreateNewProfile1"
+    case None = "None"
+}
 
 enum Route: String {
-    case CreateNewProfileView = "CreateNewProfile1"
     case StartWorkoutView = "StartWorkoutView"
     case HomeView = "HomeView"
     case ExerciseLibraryView = "ExerciseLibraryView"
@@ -19,8 +22,7 @@ enum Route: String {
 }
 
 class ViewRouter: ObservableObject {
-    static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    static let profileExists: Bool = PersistenceController.profileExists(context)
     // Set the basic rootView on app start, if a profile doesnt exist always rout to CreateNewProfile view
-    @Published var rootView: Route = (profileExists) ? Route.HomeView : Route.CreateNewProfileView
+    @Published public var startView: StartRoute = .None
+    @Published public var rootView: Route = .HomeView
 }

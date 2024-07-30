@@ -29,7 +29,7 @@ struct TemplateSessionListItem: View {
                     .minimumScaleFactor(0.6)
                     
                 }
-                .frame(width: 135, height: 20)
+                .frame(width: 135, height: 20, alignment: .leading)
                 .padding(.vertical, 10)
                 
                 Spacer()

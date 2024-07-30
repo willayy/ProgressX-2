@@ -115,4 +115,11 @@ class CreateNewProfile4ViewModel: ObservableObject {
         PersistenceController.save(viewContext)
     }
     
+    public func generateBasicRoutine(viewContext: NSManagedObjectContext) {
+        if !PersistenceController.basicRoutineExists(viewContext) {
+            PersistenceController.generateBasicRoutine(viewContext)
+            PersistenceController.save(viewContext)
+        }
+    }
+    
 }

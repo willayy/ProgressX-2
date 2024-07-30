@@ -146,13 +146,22 @@ struct CreateNewProfile4View: View {
                 
                 Button {
                     if validateInput() {
+                        
                         viewModel.addExtraInfo(
                             viewContext: viewContext,
                             bodyEntries: bodyEntries,
                             exercises: exercises,
                             personalRecords: personalRecords
                         )
-                        viewRouter.rootView = .HomeView
+                        
+                        viewModel.generateBasicRoutine(
+                            viewContext: viewContext
+                        )
+                        
+                        withAnimation {
+                            viewRouter.startView = .None
+                            viewRouter.rootView = .HomeView
+                        }
                     }
                 } label: {
                     Text("Finish")
