@@ -50,30 +50,3 @@ struct InputField: View {
         }
     }
 }
-
-struct ShakeEffect: GeometryEffect {
-    func effectValue(size: CGSize) -> ProjectionTransform {
-        return ProjectionTransform(CGAffineTransform(translationX: -10 * sin(position * 2 * .pi), y: 0))
-    }
-    
-    init(shakes: Int) {
-        position = CGFloat(shakes)
-    }
-
-    var position: CGFloat
-    var animatableData: CGFloat {
-        get { position }
-        set { position = newValue }
-    }
-}
-
-struct WrongTextFieldEffect: ViewModifier {
-    var isWrong: Bool
-
-    func body(content: Content) -> some View {
-        content.overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(isWrong ? Color.red : Color.clear, lineWidth: 1)
-        )
-    }
-}

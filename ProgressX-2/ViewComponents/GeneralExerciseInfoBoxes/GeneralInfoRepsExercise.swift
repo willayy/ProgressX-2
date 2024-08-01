@@ -65,13 +65,7 @@ struct GeneralInfoRepsExercise: View {
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
-        ZStack {
-            
-            Rectangle()
-                .cornerRadius(10)
-                .foregroundStyle(Color(.systemGray6))
-                .frame(height: 150)
-                .padding(.horizontal, 40)
+        GroupBox {
             
             VStack(alignment: .leading) {
                 
@@ -177,6 +171,7 @@ struct GeneralInfoRepsExercise: View {
                         .foregroundStyle(.blue)
                 }
             }
+            .frame(maxWidth: .infinity)
         }
     }
 }

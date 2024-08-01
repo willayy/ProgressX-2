@@ -35,7 +35,8 @@ struct CreateNewThresholdView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What is trigger quantity?",
-                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
@@ -62,7 +63,8 @@ struct CreateNewThresholdView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What does add a PR mean?",
-                    text: "Add a PR means that when this threshold is triggered a PR will be generated on this sets exercise with the quantity and load you did on the set."
+                    text: "Add a PR means that when this threshold is triggered a PR will be generated on this sets exercise with the quantity and load you did on the set.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
@@ -89,7 +91,8 @@ struct CreateNewThresholdView: View {
                 if loadType == "numerical" {
                     HiddenLightSubHeadline(
                         title: "What does change load mean?",
-                        text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                        text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
+                        alignment: .leading
                     )
                     .padding(.horizontal, 20)
                     
@@ -115,7 +118,8 @@ struct CreateNewThresholdView: View {
                 if quantityType == "numerical" {
                     HiddenLightSubHeadline(
                         title: "What does change quantity mean?",
-                        text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                        text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
+                        alignment: .leading
                     )
                     .padding(.horizontal, 20)
                     

@@ -41,8 +41,11 @@ struct CreateNewExerciseView: View {
                 BoldTitle(text: "Create new exercise")
                     .padding(.horizontal, 20)
                 
+                BoldSubHeadline(text: "Exercise name")
+                    .padding(.top, 10)
+                
                 InputTextField(
-                    placeHolder: "New exercise name",
+                    placeHolder: "Exercise name",
                     text: $viewModel.enteredExerciseName,
                     markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
                     errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
@@ -51,21 +54,27 @@ struct CreateNewExerciseView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
+                BoldSubHeadline(text: "Exercise description")
                 
-                InputTextField(
-                    placeHolder: "New exercise description",
+                inputLongTextField(
+                    placeHolder: "Exercise description",
                     text: $viewModel.enteredExerciseDesc,
                     markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
                     errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
                     maxChars: 200
                 )
+                .frame(height: 150)
                 .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Exercise type?")
+                BoldSubHeadline(text: "Exercise type")
                 
-                LightSubHeadline(text: "Should the exercise be based on doing an amount of reps or doing an amount of time?")
-                    .padding(.horizontal, 30)
+                HiddenLightSubHeadline(
+                    title: "What does exercise type mean?",
+                    text: "There are two types of exercises in ProgressX, time based exercise and rep based exercises. Time based exercises are exercises which you do a certain amount of time on, like static holds or the \"Plank\". Rep based exercsies are exercises where you do a certain amount of repetitions, like bench press or squats.",
+                    alignment: .leading
+                )
+                .padding(.horizontal, 30)
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.selectedTypeOfExercise,
@@ -78,7 +87,8 @@ struct CreateNewExerciseView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What are PR's?",
-                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did."
+                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 40)
                 

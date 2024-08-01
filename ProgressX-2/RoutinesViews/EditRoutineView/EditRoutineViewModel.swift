@@ -13,7 +13,6 @@ class EditRoutineViewModel: ObservableObject {
     
     @Published var showRoutineChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
-    @Published var showChangeInfo: Bool = false
     @Published var editedRoutineName: String = ""
     @Published var editedRoutineNameIsInvalid: Bool = false
     @Published var editedRoutineNameIsInvalidMsg: String = ""

@@ -33,7 +33,7 @@ struct CreateNewRoutineView: View {
                     .padding(.horizontal, 20)
                 
                 InputTextField(
-                    placeHolder: "Routine name...",
+                    placeHolder: "Routine name",
                     text: $viewModel.newRoutineName,
                     markAsWrong: $viewModel.newRoutineNameIsInvalid,
                     errorMessage: $viewModel.newRoutineNameIsInvalidMsg,
@@ -42,13 +42,21 @@ struct CreateNewRoutineView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                InputTextField(
-                    placeHolder: "Routine description...",
+                HiddenLightSubHeadline(
+                    title: "Why have a description?",
+                    text: "Describing routines, or anything else for that matter, is optional in ProgressX. If you choose to use it, it should be used as a way to provide some more information about the routine in a way that can't be dont by it's title.",
+                    alignment: .leading
+                )
+                .padding(.horizontal, 20)
+                
+                inputLongTextField(
+                    placeHolder: "Routine description",
                     text: $viewModel.newRoutineDesc,
                     markAsWrong: $viewModel.newRoutineDescIsInvalid,
                     errorMessage: $viewModel.newRoutineDescIsInvalidMsg,
                     maxChars: 200
                 )
+                .frame(height: 150)
                 .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 

@@ -36,6 +36,7 @@ struct PieChart: View {
                     .foregroundColor(.red)
                     .padding(.all, 80)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             } else {
                 Chart(pieChartData) { element in
                     SectorMark(
@@ -51,7 +52,7 @@ struct PieChart: View {
                     }
                 }
                 .chartLegend(position: .leading)
-                .frame(height: 300)
+                .frame(maxWidth: .infinity)
             }
         }
     }

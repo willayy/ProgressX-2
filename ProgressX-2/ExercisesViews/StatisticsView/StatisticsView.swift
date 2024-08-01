@@ -43,10 +43,12 @@ struct StatisticsView: View {
                         exercise: exercise, 
                         selection: displayedPrType
                     )
+                    .padding(.horizontal, 20)
                 } else if exercise!.exerciseType == "time" {
                     GeneralInfoTimeExercise(
                         exercise: exercise
                     )
+                    .padding(.horizontal, 20)
                 }
                 
                 if exercise!.exerciseType == "reps" {
