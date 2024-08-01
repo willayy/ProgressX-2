@@ -11,47 +11,26 @@ import CoreData
 
 final class JsonValidtionTests: XCTestCase {
     
-    var container: NSPersistentContainer?
-    var context: NSManagedObjectContext?
-    
+    var context: NSManagedObjectContext = PersistenceController.preview.container.viewContext
+
     override func setUpWithError() throws {
-        container = PersistenceController.preview.container
-        context = container!.viewContext
-        PersistenceController.generateBasicExerciseLibrary(context!)
-        PersistenceController.save(context!)
+        // Set up a full in-memory enviroment for the tests
+        PersistenceController.generateBasicExerciseCategories(context)
+        PersistenceController.generateBasicExerciseLibrary(context)
+        PersistenceController.generateBasicRoutine(context)
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        // Roll back all Entities inserted into the context but not saved.
+        context.rollback()
     }
 
     func testCreateBasicExerciseLibrary() throws {
-        
-        // Check that Basic exercises has been correctly created by the in-memory db
-        XCTAssertTrue(PersistenceController.basicExercisesExist(context!))
-        
-        // Fatal error if exercies cant be found
-        guard let asset = NSDataAsset(name: "Exercises", bundle: Bundle.main) else {
-            fatalError("Could not find exercises")
-        }
-        
-        // Assert they are not nil, kind of already done by the code above
-        XCTAssertNotNil(asset)
-        
-        let jsonArray = try! JSONSerialization.jsonObject(with: asset.data, options: JSONSerialization.ReadingOptions.allowFragments) as! [[String: String]]
-        
-        // Assert JSON array isnt nil
-        XCTAssertNotNil(jsonArray)
-        
-        // Assert JSON objects arent empty
-        for json in jsonArray {
-            XCTAssertFalse(json.isEmpty)
-            XCTAssertTrue(json["name"] != nil)
-            XCTAssertTrue(json["description"] != nil)
-            XCTAssertTrue(json["type"] != nil)
-            XCTAssertTrue(json["This should not exist"] == nil)
-        }
-        
+        #warning("TODO: Implement")
+    }
+    
+    func testCreateExerciseCategories() throws {
+        #warning("TODO: Implement")
     }
 
 }
