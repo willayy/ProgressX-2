@@ -32,6 +32,8 @@ struct CreateNewTemplateSetView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
                 
+                BoldSubHeadline(text: "Set name")
+                
                 InputTextField(
                     placeHolder: "Set name",
                     text: $viewModel.newSetName,
@@ -45,13 +47,16 @@ struct CreateNewTemplateSetView: View {
                     viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession!)
                 })
                 
-                InputTextField(
+                BoldSubHeadline(text: "Set description")
+                
+                inputLongTextField(
                     placeHolder: "Set description",
                     text: $viewModel.newSetDesc,
                     markAsWrong: $viewModel.newSetDescIsInvalid,
                     errorMessage: $viewModel.newSetDescIsInvalidMsg,
                     maxChars: 200
                 )
+                .frame(height: 150)
                 .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 

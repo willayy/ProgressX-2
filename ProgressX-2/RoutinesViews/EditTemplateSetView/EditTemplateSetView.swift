@@ -42,10 +42,10 @@ struct EditTemplateSetView: View {
                     )
                 }
                 
-                BoldSubHeadline(text: "Change name and description")
+                BoldSubHeadline(text: "Edit set name")
                 
                 InputTextField(
-                    placeHolder: "New set name",
+                    placeHolder: "Set name",
                     text: $viewModel.editedSetName,
                     markAsWrong: $viewModel.editedSetNameIsInvalid,
                     errorMessage: $viewModel.editedSetNameIsInvalidMsg,
@@ -54,13 +54,16 @@ struct EditTemplateSetView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 5)
                 
-                InputTextField(
-                    placeHolder: "New set description",
+                BoldSubHeadline(text: "Edit set description")
+                
+                inputLongTextField(
+                    placeHolder: "Set description",
                     text: $viewModel.editedSetDesc,
                     markAsWrong: $viewModel.editedSetDescIsInvalid,
                     errorMessage: $viewModel.editedSetDescIsInvalidMsg,
                     maxChars: 200
                 )
+                .frame(height: 150)
                 .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
@@ -76,7 +79,7 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change position of this set in its session")
+                BoldSubHeadline(text: "Edit position of this set in its session")
                 
                 HiddenLightSubHeadline(
                     title: "What does set position mean?",
@@ -94,7 +97,7 @@ struct EditTemplateSetView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the exercise of the set")
+                BoldSubHeadline(text: "Edit the exercise of the set")
                 
                 SetExerciseSelectionList(
                     selectedExercise: $viewModel.selectedExercise,
@@ -103,7 +106,7 @@ struct EditTemplateSetView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the rest time of the set")
+                BoldSubHeadline(text: "Edit the rest time of the set")
                 
                 DecimalTextField(
                     placeHolder: "Rest time",
@@ -114,7 +117,7 @@ struct EditTemplateSetView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change the load type of the set")
+                BoldSubHeadline(text: "Edit the load type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedLoadType,
@@ -130,7 +133,7 @@ struct EditTemplateSetView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the quantity type of the set")
+                BoldSubHeadline(text: "Edit the quantity type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedQuantityType,
@@ -139,7 +142,7 @@ struct EditTemplateSetView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the load of the set")
+                BoldSubHeadline(text: "Edit the load of the set")
                 
                 HStack {
                     DecimalTextField(
@@ -156,7 +159,7 @@ struct EditTemplateSetView: View {
                 }
                 .padding(.horizontal, 60)
                 
-                BoldSubHeadline(text: "Change the quantity of the set")
+                BoldSubHeadline(text: "Edit the quantity of the set")
                     .padding(.top, 5)
                 
                 if viewModel.selectedExercise?.exerciseType == "reps" {

@@ -13,7 +13,6 @@ class EditTemplateSessionViewModel: ObservableObject {
     
     @Published var showSessionChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
-    @Published var showChangeInfo: Bool = false
     @Published var editedSessionName: String = ""
     @Published var editedSessionIsInvalid: Bool = false
     @Published var editedSessionNameIsInvalidMsg: String = ""

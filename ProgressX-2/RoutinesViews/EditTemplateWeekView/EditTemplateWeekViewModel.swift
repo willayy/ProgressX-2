@@ -13,7 +13,6 @@ class EditTemplateWeekViewModel: ObservableObject {
     
     @Published var showWeekChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
-    @Published var showChangeInfo: Bool = false
     @Published var editedWeekName: String = ""
     @Published var editedWeekIsInvalid: Bool = false
     @Published var editedWeekNameIsInvalidMsg: String = ""
