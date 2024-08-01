@@ -80,7 +80,8 @@ struct EditTemplateSetView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What does set position mean?",
-                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session."
+                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 

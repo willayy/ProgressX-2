@@ -130,7 +130,8 @@ struct EditTemplateWeekView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What is a session?",
-                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours."
+                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
