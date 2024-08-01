@@ -11,7 +11,6 @@ import CoreData
 extension Routine: HasOrderable {
     
     // MARK: Convenience init
-    /* MARK: ---------------------------------------------------------------------------------------------- */
     
     convenience init(
         _ context: NSManagedObjectContext,
@@ -25,7 +24,6 @@ extension Routine: HasOrderable {
     }
     
     // MARK: Extra properties
-    /* MARK: ---------------------------------------------------------------------------------------------- */
     
     /// Gets all trainingSessions in the routine, returns empty array if none.
     private var allTrainingSessions: [TrainingSession] {
@@ -125,7 +123,6 @@ extension Routine: HasOrderable {
     }
     
     // MARK: Validation
-    /* MARK: ---------------------------------------------------------------------------------------------- */
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
