@@ -7,8 +7,9 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
-class WeighInViewModel: ObservableObject {
+class WeighInViewModel: SavingViewModel {
     
     @Published public var bodyWeight: String = ""
     @Published public var bodyWeightIsInvalid: Bool = false
@@ -59,5 +60,8 @@ class WeighInViewModel: ObservableObject {
             thighCircumference: thighCirc,
             calfCircumference: calfCirc
         )
+        
+        self.safeSave(viewContext: viewContext)
+        
     }
 }

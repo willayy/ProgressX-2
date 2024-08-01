@@ -108,6 +108,9 @@
 		83B013A72C5BB9A000059E42 /* inputLongTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013A62C5BB9A000059E42 /* inputLongTextField.swift */; };
 		83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */; };
 		83B013AB2C5BBDA900059E42 /* InputErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */; };
+		83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */; };
+		83B013B02C5BE42400059E42 /* SavingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AF2C5BE42400059E42 /* SavingViewModel.swift */; };
+		83B013B22C5BE51900059E42 /* EditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B12C5BE51900059E42 /* EditingViewModel.swift */; };
 		83BAF9102C5B74F200EFC1C6 /* PersistenceGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */; };
 		83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */; };
 		83BAF9142C5B769E00EFC1C6 /* PersistenceGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */; };
@@ -272,6 +275,9 @@
 		83B013A62C5BB9A000059E42 /* inputLongTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputLongTextField.swift; sourceTree = "<group>"; };
 		83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorGeometryEffect.swift; sourceTree = "<group>"; };
 		83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorViewModifier.swift; sourceTree = "<group>"; };
+		83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingErrorText.swift; sourceTree = "<group>"; };
+		83B013AF2C5BE42400059E42 /* SavingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingViewModel.swift; sourceTree = "<group>"; };
+		83B013B12C5BE51900059E42 /* EditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingViewModel.swift; sourceTree = "<group>"; };
 		83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGenerate.swift; sourceTree = "<group>"; };
 		83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceAccess.swift; sourceTree = "<group>"; };
 		83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGet.swift; sourceTree = "<group>"; };
@@ -389,6 +395,7 @@
 				8310D9102BFA3436004A5A3D /* BoldTitle.swift */,
 				8316576C2C529365003F895F /* Title2.swift */,
 				8316576E2C52A14A003F895F /* HiddenLightSubHeadline.swift */,
+				83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */,
 			);
 			path = TextElements;
 			sourceTree = "<group>";
@@ -482,6 +489,7 @@
 				831F2BEF2C209F5F007A7A8A /* RoutinesViews */,
 				832214182BC9398000DF9C7A /* CreateNewProfileViews */,
 				832214222BD42FF800DF9C7A /* ViewComponents */,
+				83B013AE2C5BE3E400059E42 /* ViewModels */,
 				83AD4A8F2BF40E8800A2E180 /* DataModel */,
 				832213E32BC92D8E00DF9C7A /* ProgressX_2App.swift */,
 				8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */,
@@ -809,6 +817,15 @@
 			path = ExercisesViews;
 			sourceTree = "<group>";
 		};
+		83B013AE2C5BE3E400059E42 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				83B013AF2C5BE42400059E42 /* SavingViewModel.swift */,
+				83B013B12C5BE51900059E42 /* EditingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		83BAF90C2C5B744500EFC1C6 /* Exercise */ = {
 			isa = PBXGroup;
 			children = (
@@ -1128,6 +1145,7 @@
 				83D684FE2C327FBB00FA78C6 /* SetThreshold.swift in Sources */,
 				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
 				83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */,
+				83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */,
 				83BD39682C47C78E008E09A0 /* HomeViewModel.swift in Sources */,
 				8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */,
 				83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */,
@@ -1143,6 +1161,7 @@
 				831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1View.swift in Sources */,
 				836486092C3724E7006EB0C0 /* TemplateCycle.swift in Sources */,
+				83B013B22C5BE51900059E42 /* EditingViewModel.swift in Sources */,
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
 				831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */,
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
@@ -1217,6 +1236,7 @@
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
 				83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */,
+				83B013B02C5BE42400059E42 /* SavingViewModel.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,

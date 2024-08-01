@@ -139,6 +139,11 @@ struct ProfileView: View {
                     .foregroundColor(.white)
                     .padding(.bottom, 20)
                     
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
             }
         }

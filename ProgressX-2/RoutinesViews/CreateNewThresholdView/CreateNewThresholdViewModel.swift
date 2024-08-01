@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CreateNewThresholdViewModel: ObservableObject {
+class CreateNewThresholdViewModel: SavingViewModel {
     
     @Published public var triggerQuantity: String = ""
     @Published public var triggerQuantityIsInvalid: Bool = false

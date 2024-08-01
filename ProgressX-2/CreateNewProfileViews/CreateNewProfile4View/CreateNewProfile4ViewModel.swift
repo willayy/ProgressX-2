@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class CreateNewProfile4ViewModel: ObservableObject {
+class CreateNewProfile4ViewModel: SavingViewModel {
     
     // Values for input fields
     @Published var benchPress1RM = ""
@@ -47,8 +47,6 @@ class CreateNewProfile4ViewModel: ObservableObject {
         for pr in personalRecords {
             PersistenceController.delete(viewContext, object: pr)
         }
-        
-        PersistenceController.save(viewContext)
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
         for exercise in exercises {
@@ -112,7 +110,9 @@ class CreateNewProfile4ViewModel: ObservableObject {
                 continue
             }
         }
-        PersistenceController.save(viewContext)
+    
+        self.safeSave(viewContext: viewContext)
+        
     }
     
     public func generateBasicRoutine(viewContext: NSManagedObjectContext) {

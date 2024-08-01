@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditThresholdsViewModel: ObservableObject {
+class EditThresholdsViewModel: SavingViewModel {
     
     @Published public var editedTriggerQuantity: String = ""
     @Published public var editedTriggerQuantityIsInvalid: Bool = false
@@ -76,7 +76,7 @@ class EditThresholdsViewModel: ObservableObject {
         
     }
     
-    public func saveSetThresholdChanges(context: NSManagedObjectContext, selectedSetThreshold: SetThreshold) -> Void {
+    public func saveSetThresholdChanges(viewContext: NSManagedObjectContext, selectedSetThreshold: SetThreshold) -> Void {
         
         let inputFlatLoadAdd: NSNumber? = {
             if editedFlatLoadAdd.isEmpty { return nil }
@@ -114,8 +114,10 @@ class EditThresholdsViewModel: ObservableObject {
         if selectedSetThreshold.hasChanges {
             withAnimation {
                 showThresholdChangedAlert = true
-                PersistenceController.save(context)
             }
+            
+            self.safeSave(viewContext: viewContext)
+            
         } else {
             withAnimation {
                 showNoChangeAlert = true

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditWeighInViewModel: ObservableObject {
+class EditWeighInViewModel: SavingViewModel {
     
     @Published public var bodyEntryEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
@@ -90,8 +90,10 @@ class EditWeighInViewModel: ObservableObject {
         if bodyEntry.hasChanges {
             withAnimation {
                 bodyEntryEditedAlert = true
-                PersistenceController.save(viewContext)
             }
+            
+            self.safeSave(viewContext: viewContext)
+            
         } else {
             withAnimation {
                 noChangeAlert = true

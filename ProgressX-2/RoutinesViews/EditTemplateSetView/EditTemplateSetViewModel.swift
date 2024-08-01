@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: ObservableObject {
+class EditTemplateSetViewModel: SavingViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile1ViewModel: ObservableObject {
+class CreateNewProfile1ViewModel: SavingViewModel {
     
     @Published var navPath: [Int] = [Int]()
     @Published var userName: String = ""
@@ -88,7 +88,7 @@ class CreateNewProfile1ViewModel: ObservableObject {
             PersistenceController.generateBasicExerciseLibrary(viewContext)
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
 }

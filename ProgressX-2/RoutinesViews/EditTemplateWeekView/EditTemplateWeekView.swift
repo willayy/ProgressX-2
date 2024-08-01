@@ -125,6 +125,11 @@ struct EditTemplateWeekView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.vertical, 10)
                     
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
                 .padding(.horizontal, 20)
                     

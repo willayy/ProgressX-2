@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: ObservableObject {
+class EditTemplateWeekViewModel: SavingViewModel {
     
     @Published var showWeekChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
@@ -123,7 +123,7 @@ class EditTemplateWeekViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
 }

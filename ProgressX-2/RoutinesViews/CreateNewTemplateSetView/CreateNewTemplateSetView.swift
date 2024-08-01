@@ -243,6 +243,12 @@ struct CreateNewTemplateSetView: View {
                             })
                         )
                     })
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
             }
         }.onAppear(perform: {

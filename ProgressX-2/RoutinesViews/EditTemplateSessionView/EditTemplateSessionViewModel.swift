@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSessionViewModel: ObservableObject {
+class EditTemplateSessionViewModel: SavingViewModel {
     
     @Published var showSessionChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
@@ -56,8 +56,10 @@ class EditTemplateSessionViewModel: ObservableObject {
             
             withAnimation {
                 showSessionChangedAlert = true
-                PersistenceController.save(viewContext)
             }
+            
+            self.safeSave(viewContext: viewContext)
+            
         } else {
             withAnimation {
                 showNoChangeAlert = true

@@ -9,25 +9,25 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: ObservableObject {
+class ProfileViewModel: SavingViewModel {
     
-    @Published var userName: String = ""
-    @Published var birthDay: Date = Date()
-    @Published var selectedUnitSegment: String = "Metric"
-    @Published var selectedGenderSegment: String = "Male"
-    @Published var height: String = ""
-    @Published var standardRestTime: String = ""
-    @Published var showMenu: Bool = false
-    @Published var userNameIsInvalid: Bool = false
-    @Published var heightIsInvalid: Bool = false
-    @Published var weightIsInvalid: Bool = false
-    @Published var standardRestTimeIsInvalid: Bool = false
-    @Published var userNameIsInvalidMsg: String = ""
-    @Published var heightIsInvalidMsg: String = ""
-    @Published var standardRestTimeIsInvalidMsg: String = ""
-    @Published var showNoChangeAlert: Bool = false
-    @Published var showProfileChangedAlert: Bool = false
-    @Published var selectedSmallestPlate: String = ""
+    @Published public var userName: String = ""
+    @Published public var birthDay: Date = Date()
+    @Published public var selectedUnitSegment: String = "Metric"
+    @Published public var selectedGenderSegment: String = "Male"
+    @Published public var height: String = ""
+    @Published public var standardRestTime: String = ""
+    @Published public var showMenu: Bool = false
+    @Published public var userNameIsInvalid: Bool = false
+    @Published public var heightIsInvalid: Bool = false
+    @Published public var weightIsInvalid: Bool = false
+    @Published public var standardRestTimeIsInvalid: Bool = false
+    @Published public var userNameIsInvalidMsg: String = ""
+    @Published public var heightIsInvalidMsg: String = ""
+    @Published public var standardRestTimeIsInvalidMsg: String = ""
+    @Published public var showNoChangeAlert: Bool = false
+    @Published public var showProfileChangedAlert: Bool = false
+    @Published public var selectedSmallestPlate: String = ""
     
     let unitSegments = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
@@ -94,7 +94,9 @@ class ProfileViewModel: ObservableObject {
             withAnimation {
                 showProfileChangedAlert = true
             }
-            PersistenceController.save(viewContext)
+            
+            self.safeSave(viewContext: viewContext)
+            
         } else {
             withAnimation {
                 showNoChangeAlert = true

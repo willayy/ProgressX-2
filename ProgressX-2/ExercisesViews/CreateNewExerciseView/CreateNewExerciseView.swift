@@ -139,13 +139,14 @@ struct CreateNewExerciseView: View {
                     }
                 }
                 
-                BoldSubHeadline(text: "Add muslce categories to this exercise?")
+                BoldSubHeadline(text: "Add muscle categories to this exercise?")
                     .padding(.top, 15)
                 
                 SelectCategoriesList(
                     selectedCategories: $viewModel.selectedCategories,
                     categories: _categories
                 )
+                .padding(.horizontal, 40)
                 
                 Button(action: {
                     if validateInput() {
@@ -162,6 +163,11 @@ struct CreateNewExerciseView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

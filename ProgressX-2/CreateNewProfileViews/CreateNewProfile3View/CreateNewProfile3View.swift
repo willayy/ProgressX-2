@@ -137,8 +137,12 @@ struct CreateNewProfile3View: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
-                .padding(.top, 20)
-                .padding(.bottom, 20)
+                .padding(.vertical, 20)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile3ViewModel: ObservableObject {
+class CreateNewProfile3ViewModel: SavingViewModel {
     
     // Inputfield value states
     @Published var chestCirc = ""

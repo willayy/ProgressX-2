@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditPrViewModel: ObservableObject {
+class EditPrViewModel: SavingViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()
@@ -47,7 +47,7 @@ class EditPrViewModel: ObservableObject {
             withAnimation {
                 prEditedAlert = true
             }
-            PersistenceController.save(viewContext)
+            self.safeSave(viewContext: viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

@@ -18,12 +18,13 @@ struct EditWeighInView: View {
         ScrollView {
             VStack {
                 
-                BoldTitle(text: "Editing weigh-in done at: \(selectedBodyEntry!.dateString!)")
+                BoldTitle(text: "Editing weigh-in done at")
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
                     .onAppear(perform: {
                         viewModel.setViewStartValues(bodyEntry: selectedBodyEntry!)
                     })
+                
+                Title2(text: "\(selectedBodyEntry!.dateString!)")
                 
                 if viewModel.bodyEntryEditedAlert {
                     SubmitAlert(
@@ -39,14 +40,15 @@ struct EditWeighInView: View {
                     )
                 }
                 
-                BoldSubHeadline(text: "Change date")
+                BoldSubHeadline(text: "Edit date")
+                    .padding(.top, 20)
                 
                 DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
                     .datePickerStyle(DefaultDatePickerStyle())
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
-                BoldSubHeadline(text: "Change bodyweight")
+                BoldSubHeadline(text: "Edit bodyweight")
                 
                 let weightUnit = PersistenceController.getWeightUnit(viewContext)!
                 
@@ -61,7 +63,7 @@ struct EditWeighInView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                BoldSubHeadline(text: "Change body measurements")
+                BoldSubHeadline(text: "Edit body measurements")
                     .padding(.bottom, 10)
                 
                 LightSubHeadline(text: "Chest circumference")
@@ -147,6 +149,11 @@ struct EditWeighInView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
             .frame(maxWidth: .infinity)

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditExerciseViewModel: ObservableObject {
+class EditExerciseViewModel: SavingViewModel {
     
     @Published public var exerciseEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
@@ -48,8 +48,9 @@ class EditExerciseViewModel: ObservableObject {
         if selectedExercise.hasChanges {            
             withAnimation {
                 exerciseEditedAlert = true
-                PersistenceController.save(viewContext)
             }
+            
+            self.safeSave(viewContext: viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

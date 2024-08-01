@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditRoutineViewModel: ObservableObject {
+class EditRoutineViewModel: SavingViewModel {
     
     @Published var showRoutineChangedAlert: Bool = false
     @Published var showNoChangeAlert: Bool = false
@@ -68,7 +68,7 @@ class EditRoutineViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
     

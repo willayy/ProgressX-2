@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewExerciseViewModel: ObservableObject {
+class CreateNewExerciseViewModel: SavingViewModel {
     
     @Published public var currBw: Double = 0
     @Published public var enteredExerciseName: String = ""
@@ -104,7 +104,7 @@ class CreateNewExerciseViewModel: ObservableObject {
             exercise.addToPersonalRecords(pr)
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
         
         // Reset the selected values
         withAnimation(.easeOut) {

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewTemplateSetViewModel: ObservableObject {
+class CreateNewTemplateSetViewModel: SavingViewModel {
     
     // The Name of the set (good default is provided)
     @Published var newSetName: String = "Set "
@@ -149,7 +149,7 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
         
         withAnimation {
             showAddThresholds = true
