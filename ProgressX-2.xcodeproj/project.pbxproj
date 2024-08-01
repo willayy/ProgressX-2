@@ -78,7 +78,6 @@
 		83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E832C3C153700F5F6CB /* EditPrViewModel.swift */; };
 		83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */; };
 		83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */; };
-		8359F9712C1AE779004BA421 /* Persistence+Convenience-functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9702C1AE779004BA421 /* Persistence+Convenience-functions.swift */; };
 		8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */; };
 		8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */; };
 		8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */; };
@@ -106,6 +105,10 @@
 		83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */; };
 		83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */; };
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
+		83BAF9102C5B74F200EFC1C6 /* PersistenceGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */; };
+		83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */; };
+		83BAF9142C5B769E00EFC1C6 /* PersistenceGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */; };
+		83BAF9162C5B78A500EFC1C6 /* PersistenceCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9152C5B78A500EFC1C6 /* PersistenceCheck.swift */; };
 		83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */; };
 		83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */; };
 		83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */; };
@@ -238,7 +241,6 @@
 		83266E832C3C153700F5F6CB /* EditPrViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrViewModel.swift; sourceTree = "<group>"; };
 		83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdViewModel.swift; sourceTree = "<group>"; };
 		83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsViewModel.swift; sourceTree = "<group>"; };
-		8359F9702C1AE779004BA421 /* Persistence+Convenience-functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistence+Convenience-functions.swift"; sourceTree = "<group>"; };
 		8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFieldValidator.swift; sourceTree = "<group>"; };
@@ -264,6 +266,10 @@
 		83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryView.swift; sourceTree = "<group>"; };
 		83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
+		83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGenerate.swift; sourceTree = "<group>"; };
+		83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceAccess.swift; sourceTree = "<group>"; };
+		83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGet.swift; sourceTree = "<group>"; };
+		83BAF9152C5B78A500EFC1C6 /* PersistenceCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceCheck.swift; sourceTree = "<group>"; };
 		83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategory.swift; sourceTree = "<group>"; };
 		83BD39582C400C9A008E09A0 /* SelectCategoriesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoriesList.swift; sourceTree = "<group>"; };
 		83BD395A2C401F6E008E09A0 /* MagnifiedExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedExerciseView.swift; sourceTree = "<group>"; };
@@ -432,7 +438,6 @@
 			isa = PBXGroup;
 			children = (
 				832213EC2BC92D9000DF9C7A /* Persistence.swift */,
-				8359F9702C1AE779004BA421 /* Persistence+Convenience-functions.swift */,
 				83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */,
 			);
 			path = PersistentStorageSetup;
@@ -774,6 +779,7 @@
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
 				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
+				83BAF90E2C5B74AB00EFC1C6 /* PersistentStorageAccess */,
 				831F2C2C2C24A3EC007A7A8A /* PersistentStorageSetup */,
 				830E26802C1753EF00815936 /* NSManagedObjectExtensions */,
 			);
@@ -813,6 +819,17 @@
 				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
 			);
 			path = TimePeriods;
+			sourceTree = "<group>";
+		};
+		83BAF90E2C5B74AB00EFC1C6 /* PersistentStorageAccess */ = {
+			isa = PBXGroup;
+			children = (
+				83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */,
+				83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */,
+				83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */,
+				83BAF9152C5B78A500EFC1C6 /* PersistenceCheck.swift */,
+			);
+			path = PersistentStorageAccess;
 			sourceTree = "<group>";
 		};
 		83BD395E2C40722B008E09A0 /* RoutineStatisticsView */ = {
@@ -1099,6 +1116,7 @@
 				83266E7E2C3C09E300F5F6CB /* CreateNewExerciseViewModel.swift in Sources */,
 				83D684FE2C327FBB00FA78C6 /* SetThreshold.swift in Sources */,
 				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
+				83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */,
 				83BD39682C47C78E008E09A0 /* HomeViewModel.swift in Sources */,
 				8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */,
 				83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */,
@@ -1120,7 +1138,7 @@
 				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
-				8359F9712C1AE779004BA421 /* Persistence+Convenience-functions.swift in Sources */,
+				83BAF9102C5B74F200EFC1C6 /* PersistenceGenerate.swift in Sources */,
 				831F2C302C24E54B007A7A8A /* TemplateSetListItem.swift in Sources */,
 				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
 				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
@@ -1134,6 +1152,7 @@
 				8322142C2BD669C000DF9C7A /* CreateNewProfile2View.swift in Sources */,
 				831F2C2E2C24E532007A7A8A /* TemplateSessionListItem.swift in Sources */,
 				836485F92C36D78D006EB0C0 /* CreateNewProfile1ViewModel.swift in Sources */,
+				83BAF9142C5B769E00EFC1C6 /* PersistenceGet.swift in Sources */,
 				83266E6B2C38214C00F5F6CB /* CreateNewRoutineViewModel.swift in Sources */,
 				83BD39842C4A9D18008E09A0 /* InfoHelpView.swift in Sources */,
 				83BD397F2C4945C3008E09A0 /* EditWeighInView.swift in Sources */,
@@ -1171,6 +1190,7 @@
 				8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */,
 				836485FF2C36E4BC006EB0C0 /* CreateNewProfile3ViewModel.swift in Sources */,
 				831F2C292C247B40007A7A8A /* Routine.swift in Sources */,
+				83BAF9162C5B78A500EFC1C6 /* PersistenceCheck.swift in Sources */,
 				83266E742C3BF16300F5F6CB /* CreateNewTemplateSetViewModel.swift in Sources */,
 				83266E5F2C37E9C900F5F6CB /* MagnifiedPrView.swift in Sources */,
 				8322142E2BD6BF7200DF9C7A /* CreateNewProfile3View.swift in Sources */,
