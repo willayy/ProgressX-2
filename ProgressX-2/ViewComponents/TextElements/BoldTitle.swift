@@ -10,8 +10,8 @@ import SwiftUI
 
 struct BoldTitle: View {
     
-    let text: String
-    let alignment: TextAlignment = .center
+    public let text: String
+    public var alignment: TextAlignment = .center
     
     var body: some View {
         Text(text)

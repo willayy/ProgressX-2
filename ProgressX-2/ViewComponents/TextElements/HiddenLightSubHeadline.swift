@@ -9,9 +9,9 @@ import SwiftUI
 
 struct HiddenLightSubHeadline: View {
     
-    let title: String
-    let text: String
-    let alignment: TextAlignment = .center
+    public let title: String
+    public let text: String
+    public var alignment: TextAlignment = .center
     @State private var expanded: Bool = false
     @State private var systemName: String = "arrowtriangle.right"
     
