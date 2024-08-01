@@ -45,7 +45,7 @@ struct RoutineStatisticsView: View {
                         .padding(.vertical, 10)
                         
                     }
-                    .frame(width: 300)
+                    .frame(maxWidth: .infinity)
                 }
                 .padding(.bottom, 20)
                 .padding(.horizontal, 20)
@@ -56,12 +56,14 @@ struct RoutineStatisticsView: View {
                 PieChart(data: selectedRoutine!.exerciseInRoutine)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
+                    .frame(height: 300)
                 
                 BoldSubHeadline(text: "Muscle groups targeted")
                 
                 PieChart(data: selectedRoutine!.categoriesInRoutine)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
+                    .frame(height: 300)
                 
             }
         }

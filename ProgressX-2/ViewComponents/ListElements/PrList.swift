@@ -46,6 +46,7 @@ struct PrList: View {
                     .font(.subheadline)
                     .padding(.horizontal, 40)
                     .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity)
             }
         }
         
@@ -58,6 +59,7 @@ struct PrList: View {
                     )
                 }
             }
+            .frame(maxWidth: .infinity)
             .frame(height: 300)
             .background(Color(.systemGray6))
             .cornerRadius(10)

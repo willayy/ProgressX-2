@@ -83,6 +83,7 @@ struct DoubleChart: View {
                     .foregroundColor(.red)
                     .padding(.all, 20)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             } else {
                 
                 // Get the highest weightload pr recorded on the exercise
@@ -114,6 +115,7 @@ struct DoubleChart: View {
                     .padding(.horizontal, 40)
                     .padding(.top, 10)
                 }
+                .frame(maxWidth: .infinity)
             }
         }
     }
