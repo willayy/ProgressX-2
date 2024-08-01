@@ -11,6 +11,7 @@ import SwiftUI
 struct BoldTitle: View {
     
     let text: String
+    let alignment: TextAlignment = .center
     
     var body: some View {
         Text(text)
@@ -18,7 +19,7 @@ struct BoldTitle: View {
             .font(.title)
             .fontWeight(.bold)
             .foregroundColor(.black)
-            .multilineTextAlignment(.center)
+            .multilineTextAlignment(alignment)
             .minimumScaleFactor(0.5)
     }
 }

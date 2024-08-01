@@ -11,14 +11,14 @@ import SwiftUI
 struct LightSubHeadline: View {
     
     let text: String
+    let alignment: TextAlignment = .center
     
     var body: some View {
         Text(text)
             .foregroundColor(Color("lighterTextColor"))
             .font(.subheadline)
             .fontWeight(.light)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, 25)
+            .multilineTextAlignment(alignment)
             .minimumScaleFactor(0.5);
     }
 }

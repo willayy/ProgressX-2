@@ -10,6 +10,7 @@ import SwiftUI
 struct Title2: View {
     
     let text: String
+    let alignment: TextAlignment = .center
     
     var body: some View {
         Text(text)
@@ -17,7 +18,7 @@ struct Title2: View {
             .font(.title2)
             .scaleEffect(CGSize(width: 1.25, height: 1.25))
             .foregroundColor(.black)
-            .multilineTextAlignment(.center)
+            .multilineTextAlignment(alignment)
             .minimumScaleFactor(0.5)
     }
 }
