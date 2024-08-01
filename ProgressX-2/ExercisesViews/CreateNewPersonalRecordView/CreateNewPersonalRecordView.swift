@@ -136,10 +136,8 @@ struct CreateNewPersonalRecord: View {
             fieldInvalid: $viewModel.prQuantityIsInvalid
         )
         
-        
         return valid == 0
     }
-    
 }
 
 #Preview {
