@@ -91,14 +91,14 @@ struct EditPrView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change date")
+                BoldSubHeadline(text: "Edit date")
                 
                 DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
                     .datePickerStyle(DefaultDatePickerStyle())
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
-                BoldSubHeadline(text: "Change load")
+                BoldSubHeadline(text: "Edit load")
                     .padding(.top, 10)
                 
                 DecimalTextField(
@@ -113,7 +113,7 @@ struct EditPrView: View {
                 
                 if editingPr!.prType == "maxreps" {
                     
-                    BoldSubHeadline(text: "Change reps")
+                    BoldSubHeadline(text: "Edit reps")
                     
                     IntegerTextField(
                         placeHolder: "Reps",
@@ -125,7 +125,7 @@ struct EditPrView: View {
                     .padding(.bottom, 10)
                 } else if editingPr!.prType == "timemax" {
                     
-                    BoldSubHeadline(text: "Change time")
+                    BoldSubHeadline(text: "Edit time")
                     
                     DecimalTextField(
                         placeHolder: "Time", 
