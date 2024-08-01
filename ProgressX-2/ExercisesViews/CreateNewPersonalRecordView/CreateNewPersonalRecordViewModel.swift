@@ -20,8 +20,6 @@ class CreateNewPersonalRecordViewModel: ObservableObject {
     @Published public var prQuantityIsInvalid: Bool = false
     @Published public var prLoadIsInvalidMsg: String = ""
     @Published public var prQuantityIsInvalidMsg: String = ""
-    // Show alert vars
-    @Published public var createdPrAlert: Bool = false
     // Segment picker options
     private let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
     
@@ -43,7 +41,6 @@ class CreateNewPersonalRecordViewModel: ObservableObject {
             prDate = Date()
             prLoad = ""
             prQuantity = ""
-            createdPrAlert = true
         }
         
     }

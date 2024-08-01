@@ -21,8 +21,6 @@ class CreateNewExerciseViewModel: ObservableObject {
     @Published public var selectedTypeOfPr: String = "1RM"
     @Published public var addPr: String = "No"
     @Published public var achieviedOnCurrBw: String = "Yes"
-    // Pop-up alert
-    @Published public var exerciseCreatedAlert: Bool = false
     // Input field vars
     @Published public var enteredExerciseNameIsInvalid: Bool = false
     @Published public var enteredExerciseDescIsInvalid: Bool = false
@@ -115,7 +113,6 @@ class CreateNewExerciseViewModel: ObservableObject {
             selectedTypeOfExercise = "Reps"
             selectedTypeOfPr = "1RM"
             addPr = "No"
-            exerciseCreatedAlert = true
         }
     }
     

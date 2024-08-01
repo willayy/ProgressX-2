@@ -40,14 +40,6 @@ struct CreateNewPersonalRecord: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
                 
-                if viewModel.createdPrAlert {
-                    SubmitAlert(
-                        message: "Succesfully created new PR!",
-                        color: .green,
-                        showAlertState: $viewModel.createdPrAlert
-                    )
-                }
-                
                 BoldSubHeadline(text: "Choose a date for the PR")
                 
                 DatePicker("", selection: $viewModel.prDate, displayedComponents: .date)
