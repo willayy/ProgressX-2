@@ -41,14 +41,6 @@ struct CreateNewExerciseView: View {
                 BoldTitle(text: "Create new exercise")
                     .padding(.horizontal, 20)
                 
-                if viewModel.exerciseCreatedAlert {
-                    SubmitAlert(
-                        message: "Successfully created new Exercise!",
-                        color: .green,
-                        showAlertState: $viewModel.exerciseCreatedAlert
-                    )
-                }
-                
                 InputTextField(
                     placeHolder: "New exercise name",
                     text: $viewModel.enteredExerciseName,
