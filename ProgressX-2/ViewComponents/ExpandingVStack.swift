@@ -38,10 +38,10 @@ struct ExpandingVStack<Content: View>: View {
                 }
                 .transition(.move(edge: .bottom))
                 .padding(5)
-                .background(Color.white.opacity(0.6))
+                .background(Color(uiColor: .systemGray6))
             }
         }
-        .background(Color.gray.opacity(0.2))
+        .background(Color(uiColor: .systemGray5))
         .cornerRadius(10)
         .animation(.easeInOut, value: isExpanded)
     }
