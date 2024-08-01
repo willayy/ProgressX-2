@@ -334,15 +334,10 @@
 		830E26802C1753EF00815936 /* NSManagedObjectExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
-				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
-				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
-				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
-				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
+				83BAF90C2C5B744500EFC1C6 /* Exercise */,
+				83BAF90D2C5B745900EFC1C6 /* TimePeriods */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
-				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
-				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
 			);
 			path = NSManagedObjectExtensions;
 			sourceTree = "<group>";
@@ -797,6 +792,27 @@
 				83266E852C3C19F000F5F6CB /* StatisticsView */,
 			);
 			path = ExercisesViews;
+			sourceTree = "<group>";
+		};
+		83BAF90C2C5B744500EFC1C6 /* Exercise */ = {
+			isa = PBXGroup;
+			children = (
+				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
+				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
+			);
+			path = Exercise;
+			sourceTree = "<group>";
+		};
+		83BAF90D2C5B745900EFC1C6 /* TimePeriods */ = {
+			isa = PBXGroup;
+			children = (
+				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
+				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
+				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
+				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
+				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
+			);
+			path = TimePeriods;
 			sourceTree = "<group>";
 		};
 		83BD395E2C40722B008E09A0 /* RoutineStatisticsView */ = {
