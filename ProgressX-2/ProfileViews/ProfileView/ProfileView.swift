@@ -29,7 +29,7 @@ struct ProfileView: View {
                         .onAppear(perform: {
                             /* Have to call this function here because
                             of the order SwiftUI loads in views */
-                            viewModel.setViewStartValues(profile: profiles.first!)
+                            viewModel.setViewStartValues(entity: profiles.first!)
                         })
                                         
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")

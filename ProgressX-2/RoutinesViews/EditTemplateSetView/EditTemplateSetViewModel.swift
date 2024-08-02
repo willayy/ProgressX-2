@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: SavingViewModel, EditingViewModel {
+class EditTemplateSetViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""
@@ -44,19 +44,19 @@ class EditTemplateSetViewModel: SavingViewModel, EditingViewModel {
     @Published var showNoChangeAlert: Bool = false
     @Published var showSetChangedAlert: Bool = false
     
-    public func setViewStartValues(selectedTemplateSet: TemplateSet) -> Void {
-        editedSetName = selectedTemplateSet.timePeriodName!
-        editedSetDesc = selectedTemplateSet.timePeriodDescription!
-        editedSetPositionIndex = selectedTemplateSet.positionIndex
-        selectedExercise = selectedTemplateSet.exercise!
-        editedLoadType = loadTypeMap()[selectedTemplateSet.loadType!]!
-        editedQuantityType = quantityTypeMap()[selectedTemplateSet.quantityType!]!
-        editedSetLoad = selectedTemplateSet.setLoadString!
-        editedSetQuantity = selectedTemplateSet.setQuantityString!
-        editedRestTime = selectedTemplateSet.restTimeString
-    }
-    
     typealias T = TemplateSet
+    
+    public func setViewStartValues(entity: TemplateSet) -> Void {
+        editedSetName = entity.timePeriodName!
+        editedSetDesc = entity.timePeriodDescription!
+        editedSetPositionIndex = entity.positionIndex
+        selectedExercise = entity.exercise!
+        editedLoadType = loadTypeMap()[entity.loadType!]!
+        editedQuantityType = quantityTypeMap()[entity.quantityType!]!
+        editedSetLoad = entity.setLoadString!
+        editedSetQuantity = entity.setQuantityString!
+        editedRestTime = entity.restTimeString
+    }
     
     public func saveEdits(entity: TemplateSet, viewContext: NSManagedObjectContext) -> Void {
         

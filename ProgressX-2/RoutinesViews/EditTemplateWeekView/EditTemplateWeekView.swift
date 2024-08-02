@@ -30,7 +30,7 @@ struct EditTemplateWeekView: View {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(week: selectedTemplateWeek!)
+                        viewModel.setViewStartValues(entity: selectedTemplateWeek!)
                     })
                 
                 Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")

@@ -34,7 +34,7 @@ struct EditExerciseView: View {
                     
                     Title2(text: "\(selectedExercise!.exerciseName!)")
                         .onAppear(perform: {
-                            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
+                            viewModel.setViewStartValues(entity: selectedExercise!)
                         })
                         
                     if viewModel.exerciseEditedAlert {

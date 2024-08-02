@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel {
+class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel, DefaultValueViewModel {
     
     @Published public var showRoutineChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
@@ -21,12 +21,12 @@ class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel {
     @Published public var editedRoutineDescIsInvalidMsg: String = ""
     @Published public var selectedTemplateCycle: TemplateCycle? = nil
     
-    public func setViewStartValues(selectedRoutine: Routine) -> Void {
-        editedRoutineName = selectedRoutine.timePeriodName!
-        editiedRoutineDescription = selectedRoutine.timePeriodDescription!
-    }
-    
     typealias T = Routine
+    
+    public func setViewStartValues(entity: Routine) -> Void {
+        editedRoutineName = entity.timePeriodName!
+        editiedRoutineDescription = entity.timePeriodDescription!
+    }
     
     public func saveEdits(entity: Routine, viewContext: NSManagedObjectContext) -> Void {
         if entity.timePeriodName != editedRoutineName {

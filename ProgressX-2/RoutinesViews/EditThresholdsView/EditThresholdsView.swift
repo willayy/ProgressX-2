@@ -27,9 +27,7 @@ struct EditThresholdsView: View {
                 
                 BoldTitle(text: "Editing")
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(
-                            selectedSetThreshold: selectedThreshold!
-                        )
+                        viewModel.setViewStartValues(entity: selectedThreshold!)
                     })
                 
                 Title2(text: "\(selectedThreshold!.timePeriodName!)")

@@ -22,7 +22,7 @@ struct EditPrView: View {
                 BoldTitle(text: "Editing PR for")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(editingPr: editingPr!)
+                        viewModel.setViewStartValues(entity: editingPr!)
                     })
                 
                 Title2(text: "\(exercise!.exerciseName!)")

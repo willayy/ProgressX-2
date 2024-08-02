@@ -21,7 +21,7 @@ struct EditWeighInView: View {
                 BoldTitle(text: "Editing weigh-in done at")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(bodyEntry: selectedBodyEntry!)
+                        viewModel.setViewStartValues(entity: selectedBodyEntry!)
                     })
                 
                 Title2(text: "\(selectedBodyEntry!.dateString!)")

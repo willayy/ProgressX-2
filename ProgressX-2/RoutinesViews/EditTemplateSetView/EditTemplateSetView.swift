@@ -22,7 +22,7 @@ struct EditTemplateSetView: View {
                 
                 BoldTitle(text: "Editing")
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
+                        viewModel.setViewStartValues(entity: selectedTemplateSet!)
                     })
                 
                 Title2(text: "\(selectedTemplateSet!.timePeriodName!)")

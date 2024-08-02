@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewModel {
+class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
     
     @Published public var showWeekChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
@@ -22,6 +22,8 @@ class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewMo
     @Published public var editedPositionIndex: Int64 = 0
     @Published public var selectedTemplateWeek: TemplateWeek? = nil
     
+    typealias T = TemplateWeek
+    
     /// Get the positionIndexes for all weeks in this Routine
     public func positionIndexes(selectedTemplateWeek: TemplateWeek) -> [Int64] {
         let cycle = selectedTemplateWeek.templateCycle!
@@ -32,13 +34,11 @@ class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewMo
         return positionIndexes.sorted()
     }
     
-    public func setViewStartValues(week: TemplateWeek) {
-        editedWeekName = week.timePeriodName!
-        editedWeekDescription = week.timePeriodDescription!
-        editedPositionIndex = week.positionIndex
+    public func setViewStartValues(entity: TemplateWeek) {
+        editedWeekName = entity.timePeriodName!
+        editedWeekDescription = entity.timePeriodDescription!
+        editedPositionIndex = entity.positionIndex
     }
-    
-    typealias T = TemplateWeek
     
     /// Saves changes made to template and propogates them forwars to all matching TrainingSessions.
     public func saveEdits(entity: TemplateWeek, viewContext: NSManagedObjectContext) -> Void {

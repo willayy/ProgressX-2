@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: SavingViewModel, EditingViewModel {
+class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Segmented picker variables
     @Published public var selectedUnitSegment: String = "Metric"
@@ -41,6 +41,8 @@ class ProfileViewModel: SavingViewModel, EditingViewModel {
     let unitSegments = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
     
+    typealias T = Profile
+    
     var smallestPlateSegments: [String] {
         if selectedUnitSegment == "Metric" {
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
@@ -49,23 +51,21 @@ class ProfileViewModel: SavingViewModel, EditingViewModel {
         }
     }
     
-    public func setViewStartValues(profile: Profile) -> Void {
-        self.standardRestTime = String(format: "%.2f", profile.standardRestTime)
-        self.selectedUnitSegment = (profile.isMetric) ? "Metric" : "Imperial"
-        self.height = String(format: "%.2f", profile.userHeight)
-        self.birthDay = profile.birthDay!
-        self.userName = profile.profileUserName!
-        self.selectedGenderSegment = (profile.gender == "male") ? "Male" : "Female"
+    public func setViewStartValues(entity: Profile) -> Void {
+        self.standardRestTime = String(format: "%.2f", entity.standardRestTime)
+        self.selectedUnitSegment = (entity.isMetric) ? "Metric" : "Imperial"
+        self.height = String(format: "%.2f", entity.userHeight)
+        self.birthDay = entity.birthDay!
+        self.userName = entity.profileUserName!
+        self.selectedGenderSegment = (entity.gender == "male") ? "Male" : "Female"
         self.selectedSmallestPlate = {
-            if profile.isMetric {
-                return "\(profile.smallestPlate) kg's"
+            if entity.isMetric {
+                return "\(entity.smallestPlate) kg's"
             } else {
-                return "\(profile.smallestPlate) lbs"
+                return "\(entity.smallestPlate) lbs"
             }
         }()
     }
-    
-    typealias T = Profile
     
     public func saveEdits(entity: Profile, viewContext: NSManagedObjectContext) -> Void {
                 

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditWeighInViewModel: SavingViewModel, EditingViewModel {
+class EditWeighInViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Submission alert variables
     @Published public var bodyEntryEditedAlert: Bool = false
@@ -43,18 +43,18 @@ class EditWeighInViewModel: SavingViewModel, EditingViewModel {
     @Published public var editedThighCircIsInvalidMsg: String = ""
     @Published public var editedCalfCircIsInvalidMsg: String = ""
     
-    public func setViewStartValues(bodyEntry: BodyEntry) -> Void {
-        editedDate = bodyEntry.achievedOnDate!
-        editedBodyWeight = String(format: "%.2f", bodyEntry.bodyWeight)
-        editedChestCirc = (bodyEntry.chestCirc == nil) ? "" : String(describing: bodyEntry.chestCirc!)
-        editedUpperArmCirc = (bodyEntry.uprArmCirc == nil) ? "" : String(describing: bodyEntry.uprArmCirc!)
-        editedLowerArmCirc = (bodyEntry.lwrArmCirc == nil) ? "" : String(describing: bodyEntry.lwrArmCirc!)
-        editedWaistCirc = (bodyEntry.waistCirc == nil) ? "" : String(describing: bodyEntry.waistCirc!)
-        editedThighCirc = (bodyEntry.thighCirc == nil) ? "" : String(describing: bodyEntry.thighCirc!)
-        editedCalfCirc = (bodyEntry.calfCirc == nil) ? "" : String(describing: bodyEntry.calfCirc!)
-    }
-    
     typealias T = BodyEntry
+    
+    public func setViewStartValues(entity: BodyEntry) -> Void {
+        editedDate = entity.achievedOnDate!
+        editedBodyWeight = String(format: "%.2f", entity.bodyWeight)
+        editedChestCirc = (entity.chestCirc == nil) ? "" : String(describing: entity.chestCirc!)
+        editedUpperArmCirc = (entity.uprArmCirc == nil) ? "" : String(describing: entity.uprArmCirc!)
+        editedLowerArmCirc = (entity.lwrArmCirc == nil) ? "" : String(describing: entity.lwrArmCirc!)
+        editedWaistCirc = (entity.waistCirc == nil) ? "" : String(describing: entity.waistCirc!)
+        editedThighCirc = (entity.thighCirc == nil) ? "" : String(describing: entity.thighCirc!)
+        editedCalfCirc = (entity.calfCirc == nil) ? "" : String(describing: entity.calfCirc!)
+    }
     
     public func saveEdits(entity: BodyEntry, viewContext: NSManagedObjectContext) -> Void {
         

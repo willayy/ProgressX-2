@@ -37,7 +37,7 @@ struct EditRoutineView: View {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
+                        viewModel.setViewStartValues(entity: selectedRoutine!)
                     })
                     
                 Title2(text: "\(selectedRoutine!.timePeriodName!)")
