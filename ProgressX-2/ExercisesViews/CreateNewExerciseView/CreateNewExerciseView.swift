@@ -150,7 +150,7 @@ struct CreateNewExerciseView: View {
                 
                 Button(action: {
                     if validateInput() {
-                        viewModel.createNewExercise(viewContext: viewContext)
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 }) {

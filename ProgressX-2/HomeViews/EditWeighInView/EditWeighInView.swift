@@ -134,8 +134,8 @@ struct EditWeighInView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveBodyEntryChanges(
-                            bodyEntry: selectedBodyEntry!,
+                        viewModel.saveEdits(
+                            entity: selectedBodyEntry!,
                             viewContext: viewContext
                         )
                     }

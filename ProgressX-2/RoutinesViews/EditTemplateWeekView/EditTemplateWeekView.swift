@@ -110,10 +110,7 @@ struct EditTemplateWeekView: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.saveTemplateWeekChanges(
-                                viewContext: viewContext,
-                                selectedTemplateWeek: selectedTemplateWeek!
-                            )
+                            viewModel.saveEdits(entity: selectedTemplateWeek!, viewContext: viewContext)
                         }
                     } label: {
                         Text("Save change")
@@ -159,10 +156,8 @@ struct EditTemplateWeekView: View {
                 .padding(.horizontal, 20)
                 
                 Button {
-                    viewModel.addSession(
-                        viewContext: viewContext,
-                        selectedTemplateWeek: selectedTemplateWeek!
-                    )
+                    viewModel.selectedTemplateWeek = selectedTemplateWeek!
+                    viewModel.saveEntry(viewContext: viewContext)
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)

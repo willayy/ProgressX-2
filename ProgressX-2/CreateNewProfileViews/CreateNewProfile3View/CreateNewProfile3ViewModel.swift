@@ -9,45 +9,48 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile3ViewModel: SavingViewModel {
+class CreateNewProfile3ViewModel: SavingViewModel, AddingViewModel {
     
     // Inputfield value states
-    @Published var chestCirc = ""
-    @Published var waistCirc = ""
-    @Published var thighCirc = ""
-    @Published var calfCirc = ""
-    @Published var upperArmCirc = ""
-    @Published var lowerArmCirc = ""
+    @Published public var chestCirc = ""
+    @Published public var waistCirc = ""
+    @Published public var thighCirc = ""
+    @Published public var calfCirc = ""
+    @Published public var upperArmCirc = ""
+    @Published public var lowerArmCirc = ""
     
     // Inputfield invalid states
-    @Published var chestCircIsInvalid = false
-    @Published var waistCircIsInvalid = false
-    @Published var thighCircIsInvalid = false
-    @Published var calfCircIsInvalid = false
-    @Published var upperArmCircIsInvalid = false
-    @Published var lowerArmCircIsInvalid = false
+    @Published public var chestCircIsInvalid = false
+    @Published public var waistCircIsInvalid = false
+    @Published public var thighCircIsInvalid = false
+    @Published public var calfCircIsInvalid = false
+    @Published public var upperArmCircIsInvalid = false
+    @Published public var lowerArmCircIsInvalid = false
     
     // Inputfield errormessage states
-    @Published var chestCircIsInvalidMsg = ""
-    @Published var waistCircIsInvalidMsg = ""
-    @Published var thighCircIsInvalidMsg = ""
-    @Published var calfCircIsInvalidMsg = ""
-    @Published var upperArmCircIsInvalidMsg = ""
-    @Published var lowerArmCircIsInvalidMsg = ""
+    @Published public var chestCircIsInvalidMsg = ""
+    @Published public var waistCircIsInvalidMsg = ""
+    @Published public var thighCircIsInvalidMsg = ""
+    @Published public var calfCircIsInvalidMsg = ""
+    @Published public var upperArmCircIsInvalidMsg = ""
+    @Published public var lowerArmCircIsInvalidMsg = ""
+    
+    // Variable needed for saveEntry
+    @Published public var firstBodyEntry: BodyEntry? = nil
     
     // Constants specific to elements in this view
     let inputFieldWidth = 0.2
     let minScaleFactor = 0.05
     let textWidth: Double = 200
     
-    public func addExtraInfo(viewContext: NSManagedObjectContext, bodyEntries: FetchedResults<BodyEntry>) {
-        let firstEntry = bodyEntries.first!
-        firstEntry.chestCirc = NSNumber(value: Double(chestCirc)!)
-        firstEntry.waistCirc = NSNumber(value: Double(waistCirc)!)
-        firstEntry.thighCirc = NSNumber(value: Double(thighCirc)!)
-        firstEntry.calfCirc = NSNumber(value: Double(calfCirc)!)
-        firstEntry.uprArmCirc = NSNumber(value: Double(upperArmCirc)!)
-        firstEntry.lwrArmCirc = NSNumber(value: Double(lowerArmCirc)!)
-        PersistenceController.save(viewContext)
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
+        let firstBodyEntry = firstBodyEntry!
+        firstBodyEntry.chestCirc = NSNumber(value: Double(chestCirc)!)
+        firstBodyEntry.waistCirc = NSNumber(value: Double(waistCirc)!)
+        firstBodyEntry.thighCirc = NSNumber(value: Double(thighCirc)!)
+        firstBodyEntry.calfCirc = NSNumber(value: Double(calfCirc)!)
+        firstBodyEntry.uprArmCirc = NSNumber(value: Double(upperArmCirc)!)
+        firstBodyEntry.lwrArmCirc = NSNumber(value: Double(lowerArmCirc)!)
+        self.safeSave(viewContext: viewContext)
     }
 }

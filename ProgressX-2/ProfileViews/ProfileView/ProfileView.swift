@@ -124,7 +124,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveProfileChanges(viewContext: viewContext, profiles: profiles)
+                            viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
                         }
                     })
                     {

@@ -195,10 +195,7 @@ struct EditTemplateSetView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveTemplateSetChanges(
-                            viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet!
-                        )
+                        viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
                     }
                 } label: {
                     Text("Save changes")

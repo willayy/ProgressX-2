@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditThresholdsViewModel: SavingViewModel {
+class EditThresholdsViewModel: SavingViewModel, EditingViewModel {
     
     @Published public var editedTriggerQuantity: String = ""
     @Published public var editedTriggerQuantityIsInvalid: Bool = false
@@ -76,7 +76,9 @@ class EditThresholdsViewModel: SavingViewModel {
         
     }
     
-    public func saveSetThresholdChanges(viewContext: NSManagedObjectContext, selectedSetThreshold: SetThreshold) -> Void {
+    typealias T = SetThreshold
+    
+    public func saveEdits(entity: SetThreshold, viewContext: NSManagedObjectContext) -> Void {
         
         let inputFlatLoadAdd: NSNumber? = {
             if editedFlatLoadAdd.isEmpty { return nil }
@@ -90,40 +92,32 @@ class EditThresholdsViewModel: SavingViewModel {
             else { return NSNumber(value: Double(editedFlatQuantityAdd)!) }
         }()
         
-        if addPrMap[addPrSelection] != selectedSetThreshold.generatePr {
-            selectedSetThreshold.generatePr = addPrMap[addPrSelection]!
-            selectedSetThreshold.prType = nil
+        if addPrMap[addPrSelection] != entity.generatePr {
+            entity.generatePr = addPrMap[addPrSelection]!
+            entity.prType = nil
         }
         
-        if prTypeMap[addRepPrSelection] != selectedSetThreshold.prType && addPrSelection == "Add PR" {
-            selectedSetThreshold.prType = prTypeMap[addRepPrSelection]!
+        if prTypeMap[addRepPrSelection] != entity.prType && addPrSelection == "Add PR" {
+            entity.prType = prTypeMap[addRepPrSelection]!
         }
         
-        if Double(editedTriggerQuantity) != selectedSetThreshold.triggerQuantity {
-            selectedSetThreshold.triggerQuantity = Double(editedTriggerQuantity)!
+        if Double(editedTriggerQuantity) != entity.triggerQuantity {
+            entity.triggerQuantity = Double(editedTriggerQuantity)!
         }
         
-        if inputFlatLoadAdd != selectedSetThreshold.flatLoadAdd {
-            selectedSetThreshold.flatLoadAdd = inputFlatLoadAdd
+        if inputFlatLoadAdd != entity.flatLoadAdd {
+            entity.flatLoadAdd = inputFlatLoadAdd
         }
         
-        if inputFlatQuantityAdd != selectedSetThreshold.flatQuantityAdd {
-            selectedSetThreshold.flatQuantityAdd = inputFlatQuantityAdd
+        if inputFlatQuantityAdd != entity.flatQuantityAdd {
+            entity.flatQuantityAdd = inputFlatQuantityAdd
         }
         
-        if selectedSetThreshold.hasChanges {
-            withAnimation {
-                showThresholdChangedAlert = true
-            }
-            
+        if entity.hasChanges {
+            withAnimation { showThresholdChangedAlert = true }
             self.safeSave(viewContext: viewContext)
-            
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
-        
     }
-    
 }

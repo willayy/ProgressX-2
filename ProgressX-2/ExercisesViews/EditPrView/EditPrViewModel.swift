@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditPrViewModel: SavingViewModel {
+class EditPrViewModel: SavingViewModel, EditingViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()
@@ -29,21 +29,23 @@ class EditPrViewModel: SavingViewModel {
         editedQuantity = String(Int(editingPr.prQuantity))
     }
     
-    public func savePersonalRecordChanges(viewContext: NSManagedObjectContext, editingPr: PersonalRecord) -> Void {
+    typealias T = PersonalRecord
+    
+    public func saveEdits(entity: PersonalRecord, viewContext: NSManagedObjectContext) -> Void {
         
-        if editingPr.weightLoad != Double(editedWeightLoad) {
-            editingPr.weightLoad = Double(editedWeightLoad)!
+        if entity.weightLoad != Double(editedWeightLoad) {
+            entity.weightLoad = Double(editedWeightLoad)!
         }
             
-        if editingPr.prQuantity != Double(editedQuantity) {
-            editingPr.prQuantity = Double(editedQuantity)!
+        if entity.prQuantity != Double(editedQuantity) {
+            entity.prQuantity = Double(editedQuantity)!
         }
             
-        if editingPr.achievedOnDate != editedDate {
-            editingPr.achievedOnDate = editedDate
+        if entity.achievedOnDate != editedDate {
+            entity.achievedOnDate = editedDate
         }
         
-        if editingPr.hasChanges {
+        if entity.hasChanges {
             withAnimation {
                 prEditedAlert = true
             }

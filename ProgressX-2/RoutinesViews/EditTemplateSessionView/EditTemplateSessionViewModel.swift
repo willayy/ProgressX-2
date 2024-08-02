@@ -53,17 +53,10 @@ class EditTemplateSessionViewModel: SavingViewModel {
         if selectedTemplateSession.hasChanges {
             // Propogate changes to matching TrainingSessions.
             propogateChanges(viewContext, selectedTemplateSession: selectedTemplateSession)
-            
-            withAnimation {
-                showSessionChangedAlert = true
-            }
-            
+            withAnimation { showSessionChangedAlert = true }
             self.safeSave(viewContext: viewContext)
-            
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
     }
     

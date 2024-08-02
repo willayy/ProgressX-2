@@ -9,29 +9,39 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewPersonalRecordViewModel: SavingViewModel {
+class CreateNewPersonalRecordViewModel: SavingViewModel, AddingViewModel {
     
     // Date picker value
     @Published public var prDate: Date = Date()
+    
     // Input field vars
     @Published public var prQuantity: String = ""
     @Published public var prLoad: String = ""
+    
+    // Input is invalid vars
     @Published public var prLoadIsInvalid: Bool = false
     @Published public var prQuantityIsInvalid: Bool = false
+    
+    // Input is invalid message vars
     @Published public var prLoadIsInvalidMsg: String = ""
     @Published public var prQuantityIsInvalidMsg: String = ""
+    
+    // Vars for saveEntry()
+    @Published public var selectedPrType: String? = nil
+    @Published public var selectedExercise: Exercise? = nil
+
     // Segment picker options
     private let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
     
-    public func createNewPersonalRecord(viewContext: NSManagedObjectContext, exercise: Exercise, prType: String) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         // Create the PR
         let _: PersonalRecord = PersonalRecord(
             viewContext,
-            exercise: exercise,
+            exercise: selectedExercise!,
             weightLoad: Double(prLoad)!,
             quantity: Double(prQuantity)!,
             date: prDate,
-            type: prType
+            type: selectedPrType!
         )
         
         self.safeSave(viewContext: viewContext)
@@ -42,7 +52,5 @@ class CreateNewPersonalRecordViewModel: SavingViewModel {
             prLoad = ""
             prQuantity = ""
         }
-        
     }
-    
 }

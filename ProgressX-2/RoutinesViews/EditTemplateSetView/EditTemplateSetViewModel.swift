@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: SavingViewModel {
+class EditTemplateSetViewModel: SavingViewModel, EditingViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""
@@ -56,53 +56,51 @@ class EditTemplateSetViewModel: SavingViewModel {
         editedRestTime = selectedTemplateSet.restTimeString
     }
     
-    public func saveTemplateSetChanges(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
+    typealias T = TemplateSet
+    
+    public func saveEdits(entity: TemplateSet, viewContext: NSManagedObjectContext) -> Void {
         
-        if editedSetName != selectedTemplateSet.timePeriodName {
-            selectedTemplateSet.timePeriodName = editedSetName
+        if editedSetName != entity.timePeriodName {
+            entity.timePeriodName = editedSetName
         }
         
-        if editedSetDesc != selectedTemplateSet.timePeriodDescription {
-            selectedTemplateSet.timePeriodDescription = editedSetDesc
+        if editedSetDesc != entity.timePeriodDescription {
+            entity.timePeriodDescription = editedSetDesc
         }
         
-        if Double(editedSetLoad)! != selectedTemplateSet.setLoad {
-            selectedTemplateSet.setLoad = Double(editedSetLoad)!
+        if Double(editedSetLoad)! != entity.setLoad {
+            entity.setLoad = Double(editedSetLoad)!
         }
         
-        if Double(editedSetQuantity) != selectedTemplateSet.setQuantity {
-            selectedTemplateSet.setQuantity = Double(editedSetQuantity)!
+        if Double(editedSetQuantity) != entity.setQuantity {
+            entity.setQuantity = Double(editedSetQuantity)!
         }
         
-        if selectedExercise!.exerciseName != selectedTemplateSet.exercise!.exerciseName {
-            selectedTemplateSet.exercise = selectedExercise
+        if selectedExercise!.exerciseName != entity.exercise!.exerciseName {
+            entity.exercise = selectedExercise
         }
         
-        if typeMap[editedLoadType] != selectedTemplateSet.loadType {
-            selectedTemplateSet.loadType = typeMap[editedLoadType]!
+        if typeMap[editedLoadType] != entity.loadType {
+            entity.loadType = typeMap[editedLoadType]!
         }
         
-        if typeMap[editedQuantityType] != selectedTemplateSet.quantityType {
-            selectedTemplateSet.quantityType = typeMap[editedQuantityType]!
+        if typeMap[editedQuantityType] != entity.quantityType {
+            entity.quantityType = typeMap[editedQuantityType]!
         }
         
-        if editedSetPositionIndex != selectedTemplateSet.positionIndex {
-            selectedTemplateSet.positionIndex = editedSetPositionIndex
+        if editedSetPositionIndex != entity.positionIndex {
+            entity.positionIndex = editedSetPositionIndex
         }
         
-        if Double(editedRestTime)! != selectedTemplateSet.restTime {
-            selectedTemplateSet.restTime = Double(editedRestTime)!
+        if Double(editedRestTime)! != entity.restTime {
+            entity.restTime = Double(editedRestTime)!
         }
         
-        if selectedTemplateSet.hasChanges {
-            withAnimation {
-                showSetChangedAlert = true
-                PersistenceController.save(viewContext)
-            }
+        if entity.hasChanges {
+            withAnimation { showSetChangedAlert = true }
+            self.safeSave(viewContext: viewContext)
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
 
     }

@@ -99,7 +99,7 @@ struct WeighInView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveNewWeighIn(viewContext: viewContext)
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 } label: {

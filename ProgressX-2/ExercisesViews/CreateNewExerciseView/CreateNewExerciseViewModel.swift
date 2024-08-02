@@ -9,28 +9,36 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewExerciseViewModel: SavingViewModel {
+class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     
+    // Input variables
     @Published public var currBw: Double = 0
     @Published public var enteredExerciseName: String = ""
     @Published public var enteredExerciseDesc: String = ""
     @Published public var enteredPrQuantity: String = ""
     @Published public var enteredPrWeigtLoad: String = ""
+    
     // Segment picker choices
     @Published public var selectedTypeOfExercise: String = "Reps"
     @Published public var selectedTypeOfPr: String = "1RM"
     @Published public var addPr: String = "No"
     @Published public var achieviedOnCurrBw: String = "Yes"
-    // Input field vars
+    
+    // Invalid input error
     @Published public var enteredExerciseNameIsInvalid: Bool = false
     @Published public var enteredExerciseDescIsInvalid: Bool = false
     @Published public var enteredPrQuantityIsInvalid: Bool = false
     @Published public var enteredPrWeigtLoadIsInvalid: Bool = false
+    
+    // Invalid input messages
     @Published public var enteredExerciseNameIsInvalidMsg: String = ""
     @Published public var enteredExerciseDescIsInvalidMsg: String = ""
     @Published public var enteredPrQuantityIsInvalidMsg: String = ""
     @Published public var enteredPrWeigtLoadIsInvalidMsg: String = ""
+    
+    // Category set
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
+    
     // Segment picker options
     public let exerciseTypeOptions: [String] = ["Reps", "Time"]
     public let addPrOptions: [String] = ["Yes", "No"]
@@ -61,7 +69,7 @@ class CreateNewExerciseViewModel: SavingViewModel {
         }
     }
     
-    public func createNewExercise(viewContext: NSManagedObjectContext) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         // Create the new exercise
         
         let exercise = Exercise(

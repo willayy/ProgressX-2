@@ -9,28 +9,38 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: SavingViewModel {
+class ProfileViewModel: SavingViewModel, EditingViewModel {
     
-    @Published public var userName: String = ""
-    @Published public var birthDay: Date = Date()
+    // Segmented picker variables
     @Published public var selectedUnitSegment: String = "Metric"
     @Published public var selectedGenderSegment: String = "Male"
+    
+    // Input variables
+    @Published public var userName: String = ""
+    @Published public var birthDay: Date = Date()
     @Published public var height: String = ""
     @Published public var standardRestTime: String = ""
-    @Published public var showMenu: Bool = false
+    @Published public var selectedSmallestPlate: String = ""
+    
+    // Submission alert states
+    @Published public var showNoChangeAlert: Bool = false
+    @Published public var showProfileChangedAlert: Bool = false
+    
+    // Ivalid input variables
     @Published public var userNameIsInvalid: Bool = false
     @Published public var heightIsInvalid: Bool = false
     @Published public var weightIsInvalid: Bool = false
     @Published public var standardRestTimeIsInvalid: Bool = false
+    
+    // Error message variables
     @Published public var userNameIsInvalidMsg: String = ""
     @Published public var heightIsInvalidMsg: String = ""
     @Published public var standardRestTimeIsInvalidMsg: String = ""
-    @Published public var showNoChangeAlert: Bool = false
-    @Published public var showProfileChangedAlert: Bool = false
-    @Published public var selectedSmallestPlate: String = ""
     
+    // Segments for segment picker
     let unitSegments = ["Metric", "Imperial"]
     let genderSegments = ["Male", "Female"]
+    
     var smallestPlateSegments: [String] {
         if selectedUnitSegment == "Metric" {
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
@@ -55,28 +65,28 @@ class ProfileViewModel: SavingViewModel {
         }()
     }
     
-    public func saveProfileChanges(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
-        
-        let profile = profiles.first!
-        
-        if userName != profile.profileUserName {
-            profile.profileUserName = userName
+    typealias T = Profile
+    
+    public func saveEdits(entity: Profile, viewContext: NSManagedObjectContext) -> Void {
+                
+        if userName != entity.profileUserName {
+            entity.profileUserName = userName
         }
         
-        if (profile.isMetric ? "Metric" : "Imperial") != selectedUnitSegment {
-            profile.isMetric = (selectedUnitSegment == "Metric") ? true : false
+        if (entity.isMetric ? "Metric" : "Imperial") != selectedUnitSegment {
+            entity.isMetric = (selectedUnitSegment == "Metric") ? true : false
         }
         
-        if profile.gender != (selectedGenderSegment == "Male" ? "male" : "female") {
-            profile.gender = (selectedGenderSegment == "Male") ? "male" : "female"
+        if entity.gender != (selectedGenderSegment == "Male" ? "male" : "female") {
+            entity.gender = (selectedGenderSegment == "Male") ? "male" : "female"
         }
         
-        if profile.userHeight != Double(height)! {
-            profile.userHeight = Double(height)!
+        if entity.userHeight != Double(height)! {
+            entity.userHeight = Double(height)!
         }
         
-        if profile.standardRestTime != Double(standardRestTime)! {
-            profile.standardRestTime = Double(standardRestTime)!
+        if entity.standardRestTime != Double(standardRestTime)! {
+            entity.standardRestTime = Double(standardRestTime)!
         }
         
         let smallestPlate = {
@@ -86,11 +96,11 @@ class ProfileViewModel: SavingViewModel {
             return Double(numericalValue)!
         }()
         
-        if profile.smallestPlate != smallestPlate {
-            profile.smallestPlate = smallestPlate
+        if entity.smallestPlate != smallestPlate {
+            entity.smallestPlate = smallestPlate
         }
         
-        if profile.hasChanges {
+        if entity.hasChanges {
             withAnimation {
                 showProfileChangedAlert = true
             }

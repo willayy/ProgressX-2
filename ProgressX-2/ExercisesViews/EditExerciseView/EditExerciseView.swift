@@ -109,9 +109,7 @@ struct EditExerciseView: View {
                     // MARK: Handle an edit of an exercise
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveExerciseChanges(
-                                viewContext: viewContext,
-                                selectedExercise: selectedExercise!)
+                            viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
                         }
                     }) {
                         Text("Save changes")

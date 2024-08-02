@@ -128,7 +128,8 @@ struct CreateNewProfile3View: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.addExtraInfo(viewContext: viewContext, bodyEntries: bodyEntries)
+                        viewModel.firstBodyEntry = bodyEntries.first
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.append(3)
                     }
                 } label: {

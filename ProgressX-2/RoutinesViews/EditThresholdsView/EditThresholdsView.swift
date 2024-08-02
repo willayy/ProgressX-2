@@ -175,9 +175,9 @@ struct EditThresholdsView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveSetThresholdChanges(
-                            viewContext: viewContext,
-                            selectedSetThreshold: selectedThreshold!
+                        viewModel.saveEdits(
+                            entity: selectedThreshold!,
+                            viewContext: viewContext
                         )
                     }
                 } label: {

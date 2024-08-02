@@ -62,7 +62,7 @@ struct CreateNewRoutineView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.createRoutine(viewContext: viewContext)
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 } label: {

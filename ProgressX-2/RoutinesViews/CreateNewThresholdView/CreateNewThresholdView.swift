@@ -151,10 +151,8 @@ struct CreateNewThresholdView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.addNewThreshold(
-                            viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet!
-                        )
+                        viewModel.selectedTemplateSet = selectedTemplateSet
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 } label: {

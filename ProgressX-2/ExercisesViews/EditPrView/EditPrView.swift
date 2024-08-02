@@ -139,10 +139,7 @@ struct EditPrView: View {
                 
                 Button(action: {
                     if validateInput() {
-                        viewModel.savePersonalRecordChanges(
-                            viewContext: viewContext,
-                            editingPr: editingPr!
-                        )
+                        viewModel.saveEdits(entity: editingPr!, viewContext: viewContext)
                     }
                 }) {
                     Text("Save changes")

@@ -9,31 +9,36 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class WeighInViewModel: SavingViewModel {
+class WeighInViewModel: SavingViewModel, AddingViewModel {
     
+    // Input variables
     @Published public var bodyWeight: String = ""
-    @Published public var bodyWeightIsInvalid: Bool = false
-    @Published public var bodyWeightIsInvalidMsg: String = ""
     @Published public var chestCirc: String = ""
-    @Published public var chestCircIsInvalid: Bool = false
-    @Published public var chestCircIsInvalidMsg: String = ""
     @Published public var waistCirc: String = ""
-    @Published public var waistCircIsInvalid: Bool = false
-    @Published public var waistCircIsInvalidMsg: String = ""
     @Published public var upperArmCirc: String = ""
-    @Published public var upperArmCircIsInvalid: Bool = false
-    @Published public var upperArmCircIsInvalidMsg: String = ""
     @Published public var lowerArmCirc: String = ""
-    @Published public var lowerArmIsInvalid: Bool = false
-    @Published public var lowerArmIsInvalidMsg: String = ""
     @Published public var thighCirc: String = ""
-    @Published public var thighCircIsInvalid: Bool = false
-    @Published public var thighCircIsInvalidMsg: String = ""
     @Published public var calfCirc: String = ""
+    
+    // Input invalid variables
+    @Published public var bodyWeightIsInvalid: Bool = false
+    @Published public var chestCircIsInvalid: Bool = false
+    @Published public var waistCircIsInvalid: Bool = false
+    @Published public var upperArmCircIsInvalid: Bool = false
+    @Published public var lowerArmIsInvalid: Bool = false
+    @Published public var thighCircIsInvalid: Bool = false
     @Published public var calfCircIsInvalid: Bool = false
+
+    // Error message variables
+    @Published public var bodyWeightIsInvalidMsg: String = ""
+    @Published public var chestCircIsInvalidMsg: String = ""
+    @Published public var waistCircIsInvalidMsg: String = ""
+    @Published public var upperArmCircIsInvalidMsg: String = ""
+    @Published public var lowerArmIsInvalidMsg: String = ""
+    @Published public var thighCircIsInvalidMsg: String = ""
     @Published public var calfCircIsInvalidMsg: String = ""
     
-    public func saveNewWeighIn(viewContext: NSManagedObjectContext) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         
         // Get the profile.
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()

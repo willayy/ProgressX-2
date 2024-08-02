@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewRoutineViewModel: SavingViewModel {
+class CreateNewRoutineViewModel: SavingViewModel, AddingViewModel {
     
     @Published var newRoutineName: String = ""
     @Published var newRoutineNameIsInvalid: Bool = false
@@ -17,8 +17,8 @@ class CreateNewRoutineViewModel: SavingViewModel {
     @Published var newRoutineDesc: String = ""
     @Published var newRoutineDescIsInvalid: Bool = false
     @Published var newRoutineDescIsInvalidMsg: String = ""
- 
-    public func createRoutine(viewContext: NSManagedObjectContext) -> Void {
+    
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         
         // Create a Routine
         let newRoutine = Routine(

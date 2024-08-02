@@ -147,16 +147,9 @@ struct CreateNewProfile4View: View {
                 Button {
                     if validateInput() {
                         
-                        viewModel.addExtraInfo(
-                            viewContext: viewContext,
-                            bodyEntries: bodyEntries,
-                            exercises: exercises,
-                            personalRecords: personalRecords
-                        )
-                        
-                        viewModel.generateBasicRoutine(
-                            viewContext: viewContext
-                        )
+                        viewModel.bodyWeight = bodyEntries.first?.bodyWeight
+                        viewModel.saveEntry(viewContext: viewContext)
+                        viewModel.generateBasicRoutine(viewContext: viewContext)
                         
                         withAnimation {
                             viewRouter.startView = .None

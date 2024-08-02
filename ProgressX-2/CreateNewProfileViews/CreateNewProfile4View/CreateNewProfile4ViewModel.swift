@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class CreateNewProfile4ViewModel: SavingViewModel {
+class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
     
     // Values for input fields
     @Published var benchPress1RM = ""
@@ -35,13 +35,20 @@ class CreateNewProfile4ViewModel: SavingViewModel {
     @Published var situpsAmrapIsInvalidMsg = ""
     @Published var pushupsAmrapIsInvalidMsg = ""
     
+    // Variables for saveEntry
+    @Published public var bodyWeight: Double? = nil
+    
     // Constants specific to elements in this view
     let minScaleFactor: Double = 0.05
     let textWidth: Double = 150
     
-    public func addExtraInfo(viewContext: NSManagedObjectContext, bodyEntries: FetchedResults<BodyEntry>, exercises: FetchedResults<Exercise>, personalRecords: FetchedResults<PersonalRecord>) {
+    public func saveEntry(viewContext: NSManagedObjectContext) {
         
-        let bodyWeight: Double = bodyEntries.first!.bodyWeight
+        let personalRecordsFr: NSFetchRequest = PersonalRecord.fetchRequest()
+        let personalRecords = PersistenceController.fetch(viewContext, fetchRequest: personalRecordsFr)
+        
+        let exercisesFr: NSFetchRequest = Exercise.fetchRequest()
+        let exercises = PersistenceController.fetch(viewContext, fetchRequest: exercisesFr)
         
         // Wipe all prs
         for pr in personalRecords {
@@ -92,7 +99,7 @@ class CreateNewProfile4ViewModel: SavingViewModel {
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        weightLoad: bodyWeight,
+                        weightLoad: bodyWeight!,
                         quantity: Double(situpsAmrap)!,
                         date: Date(),
                         type: "maxreps"
@@ -101,7 +108,7 @@ class CreateNewProfile4ViewModel: SavingViewModel {
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        weightLoad: bodyWeight,
+                        weightLoad: bodyWeight!,
                         quantity: Double(pushupsAmrap)!,
                         date: Date(),
                         type: "maxreps"

@@ -12,6 +12,6 @@ protocol EditingViewModel {
     
     associatedtype T
     
-    func saveChanges(entity: T, viewContext: NSManagedObjectContext)
+    func saveEdits(entity: T, viewContext: NSManagedObjectContext)
     
 }
