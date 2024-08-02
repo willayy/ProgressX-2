@@ -37,7 +37,7 @@ struct EditRoutineView: View {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
+                        viewModel.setViewStartValues(entity: selectedRoutine!)
                     })
                     
                 Title2(text: "\(selectedRoutine!.timePeriodName!)")
@@ -100,9 +100,9 @@ struct EditRoutineView: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.saveRoutineChanges(
-                                viewContext: viewContext,
-                                selectedRoutine: selectedRoutine!
+                            viewModel.saveEdits(
+                                entity: selectedRoutine!,
+                                viewContext: viewContext
                             )
                         }
                     } label: {
@@ -114,6 +114,11 @@ struct EditRoutineView: View {
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.vertical, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
                     
                 }
                 .padding(.horizontal, 20)
@@ -143,10 +148,8 @@ struct EditRoutineView: View {
                 .padding(.horizontal, 20)
                 
                 Button {
-                    viewModel.addWeek(
-                        viewContext: viewContext,
-                        selectedTemplateCycle: selectedTemplateCycle!
-                    )
+                    viewModel.selectedTemplateCycle = selectedTemplateCycle!
+                    viewModel.saveEntry(viewContext: viewContext)
                 } label: {
                     Text("Add new Week")
                         .frame(height: 40)

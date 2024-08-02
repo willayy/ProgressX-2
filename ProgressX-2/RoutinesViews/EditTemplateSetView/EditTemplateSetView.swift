@@ -22,7 +22,7 @@ struct EditTemplateSetView: View {
                 
                 BoldTitle(text: "Editing")
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
+                        viewModel.setViewStartValues(entity: selectedTemplateSet!)
                     })
                 
                 Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
@@ -195,10 +195,7 @@ struct EditTemplateSetView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveTemplateSetChanges(
-                            viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet!
-                        )
+                        viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
                     }
                 } label: {
                     Text("Save changes")
@@ -210,6 +207,11 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

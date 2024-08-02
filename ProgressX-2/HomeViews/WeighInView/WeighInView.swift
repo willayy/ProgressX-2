@@ -96,11 +96,10 @@ struct WeighInView: View {
                     errorMessage: $viewModel.calfCircIsInvalidMsg
                 )
                 .padding(.horizontal, 60)
-                .padding(.bottom, 20)
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveNewWeighIn(viewContext: viewContext)
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 } label: {
@@ -111,8 +110,13 @@ struct WeighInView: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.top, 20)
                 .padding(.bottom, 10)
                 
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
             }
         }
     }

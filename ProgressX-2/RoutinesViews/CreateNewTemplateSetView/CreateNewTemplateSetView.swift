@@ -22,6 +22,10 @@ struct CreateNewTemplateSetView: View {
             VStack {
                 
                 BoldTitle(text: "Create new set in")
+                    .onAppear(perform: {
+                        viewModel.selectedTemplateSession = selectedTemplateSession!
+                        viewModel.setViewStartValues(viewContext: viewContext)
+                    })
                 
                 Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                 
@@ -43,9 +47,6 @@ struct CreateNewTemplateSetView: View {
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 5)
-                .onAppear(perform: {
-                    viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession!)
-                })
                 
                 BoldSubHeadline(text: "Set description")
                 
@@ -216,10 +217,8 @@ struct CreateNewTemplateSetView: View {
                     
                     Button {
                         if validateInput() {
-                            selectedTemplateSet = viewModel.createNewTemplateSet(
-                                viewContext: viewContext,
-                                selectedTemplateSession: selectedTemplateSession!
-                            )
+                            viewModel.saveEntry(viewContext: viewContext)
+                            selectedTemplateSet = viewModel.createdTemplateSet
                         }
                     } label: {
                         Text("Create new set")
@@ -243,11 +242,15 @@ struct CreateNewTemplateSetView: View {
                             })
                         )
                     })
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
             }
-        }.onAppear(perform: {
-            viewModel.setViewStartValues(viewContext: viewContext)
-        })
+        }
     }
     
     private func validateInput() -> Bool {

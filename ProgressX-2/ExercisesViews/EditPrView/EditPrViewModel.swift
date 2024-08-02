@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditPrViewModel: ObservableObject {
+class EditPrViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()
@@ -19,35 +19,38 @@ class EditPrViewModel: ObservableObject {
     @Published public var editedWeightLoadInvalid: Bool = false
     @Published public var editedQuantityInvalidMsg: String = ""
     @Published public var editedWeightLoadInvalidMsg: String = ""
+    
     // Alert vars
     @Published public var prEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
     
-    public func setViewStartValues(editingPr: PersonalRecord) -> Void {
-        editedDate = editingPr.achievedOnDate!
-        editedWeightLoad = String(format: "%.2f", editingPr.weightLoad)
-        editedQuantity = String(Int(editingPr.prQuantity))
+    typealias T = PersonalRecord
+    
+    public func setViewStartValues(entity: PersonalRecord) -> Void {
+        editedDate = entity.achievedOnDate!
+        editedWeightLoad = String(format: "%.2f", entity.weightLoad)
+        editedQuantity = String(Int(entity.prQuantity))
     }
     
-    public func savePersonalRecordChanges(viewContext: NSManagedObjectContext, editingPr: PersonalRecord) -> Void {
+    public func saveEdits(entity: PersonalRecord, viewContext: NSManagedObjectContext) -> Void {
         
-        if editingPr.weightLoad != Double(editedWeightLoad) {
-            editingPr.weightLoad = Double(editedWeightLoad)!
+        if entity.weightLoad != Double(editedWeightLoad) {
+            entity.weightLoad = Double(editedWeightLoad)!
         }
             
-        if editingPr.prQuantity != Double(editedQuantity) {
-            editingPr.prQuantity = Double(editedQuantity)!
+        if entity.prQuantity != Double(editedQuantity) {
+            entity.prQuantity = Double(editedQuantity)!
         }
             
-        if editingPr.achievedOnDate != editedDate {
-            editingPr.achievedOnDate = editedDate
+        if entity.achievedOnDate != editedDate {
+            entity.achievedOnDate = editedDate
         }
         
-        if editingPr.hasChanges {
+        if entity.hasChanges {
             withAnimation {
                 prEditedAlert = true
             }
-            PersistenceController.save(viewContext)
+            self.safeSave(viewContext: viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

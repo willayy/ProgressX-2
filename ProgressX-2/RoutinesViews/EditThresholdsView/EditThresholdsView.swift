@@ -27,9 +27,7 @@ struct EditThresholdsView: View {
                 
                 BoldTitle(text: "Editing")
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(
-                            selectedSetThreshold: selectedThreshold!
-                        )
+                        viewModel.setViewStartValues(entity: selectedThreshold!)
                     })
                 
                 Title2(text: "\(selectedThreshold!.timePeriodName!)")
@@ -175,9 +173,9 @@ struct EditThresholdsView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveSetThresholdChanges(
-                            context: viewContext,
-                            selectedSetThreshold: selectedThreshold!
+                        viewModel.saveEdits(
+                            entity: selectedThreshold!,
+                            viewContext: viewContext
                         )
                     }
                 } label: {
@@ -190,6 +188,11 @@ struct EditThresholdsView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
             .frame(maxWidth: .infinity)

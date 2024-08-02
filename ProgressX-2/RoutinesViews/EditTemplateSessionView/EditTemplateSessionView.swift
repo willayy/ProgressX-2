@@ -33,7 +33,7 @@ struct EditTemplateSessionView: View {
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
                         viewModel.setViewStartValues(
-                            selectedTemplateSession: selectedTemplateSession
+                            entity: selectedTemplateSession!
                         )
                     })
                 
@@ -110,10 +110,7 @@ struct EditTemplateSessionView: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.saveTemplateSessionChanges(
-                                viewContext: viewContext,
-                                selectedTemplateSession: selectedTemplateSession!
-                            )
+                            viewModel.saveEdits(entity: selectedTemplateSession!, viewContext: viewContext)
                         }
                     } label: {
                         Text("Save change")
@@ -161,6 +158,10 @@ struct EditTemplateSessionView: View {
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
             }
         }
     }

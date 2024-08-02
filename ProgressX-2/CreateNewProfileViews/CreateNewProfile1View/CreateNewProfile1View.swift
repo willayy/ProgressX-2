@@ -13,7 +13,7 @@ struct CreateNewProfile1View: View {
     @FetchRequest(
         entity: Profile.entity(),
         sortDescriptors: []
-    ) private var profileResults: FetchedResults<Profile>
+    ) private var profiles: FetchedResults<Profile>
     
     @EnvironmentObject var viewRouter: ViewRouter
     @StateObject private var viewModel = CreateNewProfile1ViewModel()
@@ -110,7 +110,8 @@ struct CreateNewProfile1View: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.createProfile(viewContext: viewContext, profiles: profileResults)
+                            viewModel.profile = profiles.first
+                            viewModel.saveEntry(viewContext: viewContext)
                             viewModel.navPath.append(1)
                         }
                     } label: {
@@ -120,6 +121,11 @@ struct CreateNewProfile1View: View {
                     }
                     .buttonStyle(.borderedProminent)
                     .padding(.vertical, 20)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
                     
                 }
             }

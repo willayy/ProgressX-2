@@ -30,7 +30,7 @@ struct EditTemplateWeekView: View {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(week: selectedTemplateWeek!)
+                        viewModel.setViewStartValues(entity: selectedTemplateWeek!)
                     })
                 
                 Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")
@@ -110,10 +110,7 @@ struct EditTemplateWeekView: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.saveTemplateWeekChanges(
-                                viewContext: viewContext,
-                                selectedTemplateWeek: selectedTemplateWeek!
-                            )
+                            viewModel.saveEdits(entity: selectedTemplateWeek!, viewContext: viewContext)
                         }
                     } label: {
                         Text("Save change")
@@ -124,6 +121,11 @@ struct EditTemplateWeekView: View {
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.vertical, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
                     
                 }
                 .padding(.horizontal, 20)
@@ -154,10 +156,8 @@ struct EditTemplateWeekView: View {
                 .padding(.horizontal, 20)
                 
                 Button {
-                    viewModel.addSession(
-                        viewContext: viewContext,
-                        selectedTemplateWeek: selectedTemplateWeek!
-                    )
+                    viewModel.selectedTemplateWeek = selectedTemplateWeek!
+                    viewModel.saveEntry(viewContext: viewContext)
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)

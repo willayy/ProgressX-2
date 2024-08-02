@@ -29,7 +29,7 @@ struct ProfileView: View {
                         .onAppear(perform: {
                             /* Have to call this function here because
                             of the order SwiftUI loads in views */
-                            viewModel.setViewStartValues(profile: profiles.first!)
+                            viewModel.setViewStartValues(entity: profiles.first!)
                         })
                                         
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
@@ -124,7 +124,7 @@ struct ProfileView: View {
                     
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveProfileChanges(viewContext: viewContext, profiles: profiles)
+                            viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
                         }
                     })
                     {
@@ -138,6 +138,11 @@ struct ProfileView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .foregroundColor(.white)
                     .padding(.bottom, 20)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
                     
                 }
             }

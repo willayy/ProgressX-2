@@ -128,7 +128,8 @@ struct CreateNewProfile3View: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.addExtraInfo(viewContext: viewContext, bodyEntries: bodyEntries)
+                        viewModel.firstBodyEntry = bodyEntries.first
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.append(3)
                     }
                 } label: {
@@ -137,8 +138,12 @@ struct CreateNewProfile3View: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(.borderedProminent)
-                .padding(.top, 20)
-                .padding(.bottom, 20)
+                .padding(.vertical, 20)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

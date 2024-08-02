@@ -9,32 +9,35 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditRoutineViewModel: ObservableObject {
+class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel, DefaultValueViewModel {
     
-    @Published var showRoutineChangedAlert: Bool = false
-    @Published var showNoChangeAlert: Bool = false
-    @Published var editedRoutineName: String = ""
-    @Published var editedRoutineNameIsInvalid: Bool = false
-    @Published var editedRoutineNameIsInvalidMsg: String = ""
-    @Published var editiedRoutineDescription: String = ""
-    @Published var editedRoutineDescIsInvalid: Bool = false
-    @Published var editedRoutineDescIsInvalidMsg: String = ""
+    @Published public var showRoutineChangedAlert: Bool = false
+    @Published public var showNoChangeAlert: Bool = false
+    @Published public var editedRoutineName: String = ""
+    @Published public var editedRoutineNameIsInvalid: Bool = false
+    @Published public var editedRoutineNameIsInvalidMsg: String = ""
+    @Published public var editiedRoutineDescription: String = ""
+    @Published public var editedRoutineDescIsInvalid: Bool = false
+    @Published public var editedRoutineDescIsInvalidMsg: String = ""
+    @Published public var selectedTemplateCycle: TemplateCycle? = nil
     
-    public func setViewStartValues(selectedRoutine: Routine) -> Void {
-        editedRoutineName = selectedRoutine.timePeriodName!
-        editiedRoutineDescription = selectedRoutine.timePeriodDescription!
+    typealias T = Routine
+    
+    public func setViewStartValues(entity: Routine) -> Void {
+        editedRoutineName = entity.timePeriodName!
+        editiedRoutineDescription = entity.timePeriodDescription!
     }
     
-    public func saveRoutineChanges(viewContext: NSManagedObjectContext, selectedRoutine: Routine) -> Void {
-        if selectedRoutine.timePeriodName != editedRoutineName {
-            selectedRoutine.timePeriodName = editedRoutineName
+    public func saveEdits(entity: Routine, viewContext: NSManagedObjectContext) -> Void {
+        if entity.timePeriodName != editedRoutineName {
+            entity.timePeriodName = editedRoutineName
         }
         
-        if selectedRoutine.timePeriodDescription != editiedRoutineDescription {
-            selectedRoutine.timePeriodDescription = editiedRoutineDescription
+        if entity.timePeriodDescription != editiedRoutineDescription {
+            entity.timePeriodDescription = editiedRoutineDescription
         }
         
-        if selectedRoutine.hasChanges {
+        if entity.hasChanges {
             withAnimation {
                 showRoutineChangedAlert = true
             }
@@ -46,15 +49,15 @@ class EditRoutineViewModel: ObservableObject {
         }
     }
     
-    public func addWeek(viewContext: NSManagedObjectContext, selectedTemplateCycle: TemplateCycle) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         let templateWeek = TemplateWeek(
             viewContext,
-            templateCycle: selectedTemplateCycle
+            templateCycle: selectedTemplateCycle!
         )
         
         // Get all training cycles
         let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "templateCycle == %@", selectedTemplateCycle)
+        fetchRequest.predicate = NSPredicate(format: "templateCycle == %@", selectedTemplateCycle!)
         // Only included incomplete trainingCycles as completed ones are irrelevant for this change
         let trainingCycles = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
@@ -68,7 +71,7 @@ class EditRoutineViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
     

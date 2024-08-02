@@ -87,11 +87,9 @@ struct CreateNewPersonalRecord: View {
                 // MARK: Handle the creation of a PR
                 Button(action: {
                     if validateInput() {
-                        viewModel.createNewPersonalRecord(
-                            viewContext: viewContext,
-                            exercise: selectedExercise!,
-                            prType: prType!
-                        )
+                        viewModel.selectedExercise = selectedExercise!
+                        viewModel.selectedPrType = prType!
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 }) {
@@ -104,6 +102,11 @@ struct CreateNewPersonalRecord: View {
                 .padding(.top, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
             .frame(maxWidth: .infinity)

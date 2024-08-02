@@ -9,47 +9,58 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditExerciseViewModel: ObservableObject {
+class EditExerciseViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
+    // Submission alert variables
     @Published public var exerciseEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
+    
+    // Input variables
     @Published public var newName: String = ""
     @Published public var newDesc: String = ""
+    
+    // Input error
     @Published public var newNameIsInvalid: Bool = false
-    @Published public var newNameIsInvalidMsg: String = ""
     @Published public var newDescIsInvalid: Bool = false
+    
+    // Input error message
+    @Published public var newNameIsInvalidMsg: String = ""
     @Published public var newDescIsInvalidMsg: String = ""
+    
+    // Set variable for categories
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
-
-    public func setViewStartValues(selectedExercise: Exercise) -> Void {
-        newName = selectedExercise.exerciseName ?? ""
-        newDesc = selectedExercise.exerciseDesc ?? ""
+    
+    typealias T = Exercise
+    
+    public func setViewStartValues(entity: Exercise) -> Void {
+        newName = entity.exerciseName ?? ""
+        newDesc = entity.exerciseDesc ?? ""
     }
     
-    public func saveExerciseChanges(viewContext: NSManagedObjectContext, selectedExercise: Exercise) -> Void {
+    public func saveEdits(entity: Exercise, viewContext: NSManagedObjectContext) -> Void {
         
-        if selectedCategories != Set(_immutableCocoaSet: selectedExercise.categories!) {
-            for category in selectedExercise.categories! {
-                selectedExercise.removeFromCategories(category as! ExerciseCategory)
+        if selectedCategories != Set(_immutableCocoaSet: entity.categories!) {
+            for category in entity.categories! {
+                entity.removeFromCategories(category as! ExerciseCategory)
             }
             for category in selectedCategories {
-                selectedExercise.addToCategories(category)
+                entity.addToCategories(category)
             }
         }
         
-        if newName != selectedExercise.exerciseName {
-            selectedExercise.exerciseName = newName
+        if newName != entity.exerciseName {
+            entity.exerciseName = newName
         }
         
-        if newDesc != selectedExercise.exerciseDesc {
-            selectedExercise.exerciseDesc = newDesc
+        if newDesc != entity.exerciseDesc {
+            entity.exerciseDesc = newDesc
         }
         
-        if selectedExercise.hasChanges {            
+        if entity.hasChanges {
             withAnimation {
                 exerciseEditedAlert = true
-                PersistenceController.save(viewContext)
             }
+            self.safeSave(viewContext: viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

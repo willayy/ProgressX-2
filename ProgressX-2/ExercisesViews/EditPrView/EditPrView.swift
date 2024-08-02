@@ -22,7 +22,7 @@ struct EditPrView: View {
                 BoldTitle(text: "Editing PR for")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
-                        viewModel.setViewStartValues(editingPr: editingPr!)
+                        viewModel.setViewStartValues(entity: editingPr!)
                     })
                 
                 Title2(text: "\(exercise!.exerciseName!)")
@@ -139,10 +139,7 @@ struct EditPrView: View {
                 
                 Button(action: {
                     if validateInput() {
-                        viewModel.savePersonalRecordChanges(
-                            viewContext: viewContext,
-                            editingPr: editingPr!
-                        )
+                        viewModel.saveEdits(entity: editingPr!, viewContext: viewContext)
                     }
                 }) {
                     Text("Save changes")
@@ -154,6 +151,11 @@ struct EditPrView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

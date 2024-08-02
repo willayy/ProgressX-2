@@ -34,7 +34,7 @@ struct EditExerciseView: View {
                     
                     Title2(text: "\(selectedExercise!.exerciseName!)")
                         .onAppear(perform: {
-                            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
+                            viewModel.setViewStartValues(entity: selectedExercise!)
                         })
                         
                     if viewModel.exerciseEditedAlert {
@@ -98,7 +98,9 @@ struct EditExerciseView: View {
                     SelectCategoriesList(
                         selectedCategories: $viewModel.selectedCategories,
                         categories: _categories
-                    ).onAppear(perform: {
+                    )
+                    .padding(.horizontal, 40)
+                    .onAppear(perform: {
                         for category in selectedExercise!.categories! {
                             viewModel.selectedCategories.insert(category as! ExerciseCategory)
                         }
@@ -107,9 +109,7 @@ struct EditExerciseView: View {
                     // MARK: Handle an edit of an exercise
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveExerciseChanges(
-                                viewContext: viewContext,
-                                selectedExercise: selectedExercise!)
+                            viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
                         }
                     }) {
                         Text("Save changes")
@@ -121,6 +121,12 @@ struct EditExerciseView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
                     .padding(.bottom, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
             }
         }
     }

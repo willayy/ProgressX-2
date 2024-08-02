@@ -9,24 +9,25 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile1ViewModel: ObservableObject {
+class CreateNewProfile1ViewModel: SavingViewModel {
     
-    @Published var navPath: [Int] = [Int]()
-    @Published var userName: String = ""
-    @Published var birthDay: Date = Date()
-    @Published var selectedUnitSegment: String = "Metric"
-    @Published var selectedGenderSegment: String = "Male"
-    @Published var weight: String = ""
-    @Published var height: String = ""
-    let unitSegments: [String] = ["Metric", "Imperial"]
-    let genderSegments = ["Male", "Female"]
-    @Published var userNameIsInvalid = false
-    @Published var heightIsInvalid = false
-    @Published var weightIsInvalid = false
-    @Published var userNameIsInvalidMsg = ""
-    @Published var heightIsInvalidMsg = ""
-    @Published var weightIsInvalidMsg = ""
-    @Published var smallestPlateSelection: String = "1.25 kg's"
+    @Published public var navPath: [Int] = [Int]()
+    @Published public var userName: String = ""
+    @Published public var birthDay: Date = Date()
+    @Published public var selectedUnitSegment: String = "Metric"
+    @Published public var selectedGenderSegment: String = "Male"
+    @Published public var weight: String = ""
+    @Published public var height: String = ""
+    @Published public var userNameIsInvalid = false
+    @Published public var heightIsInvalid = false
+    @Published public var weightIsInvalid = false
+    @Published public var userNameIsInvalidMsg = ""
+    @Published public var heightIsInvalidMsg = ""
+    @Published public var weightIsInvalidMsg = ""
+    @Published public var smallestPlateSelection: String = "1.25 kg's"
+    @Published public var profile: Profile? = nil
+    public let unitSegments: [String] = ["Metric", "Imperial"]
+    public let genderSegments = ["Male", "Female"]
     
     public var lengthUnit: String {
         (self.selectedUnitSegment == "Metric") ? "cm" : "ft"
@@ -44,10 +45,9 @@ class CreateNewProfile1ViewModel: ObservableObject {
         }
     }
     
-    public func createProfile(viewContext: NSManagedObjectContext, profiles: FetchedResults<Profile>) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         if PersistenceController.profileExists(viewContext) {
-            let profile = profiles.first!
-            PersistenceController.delete(viewContext, object: profile)
+            PersistenceController.delete(viewContext, object: profile!)
             PersistenceController.save(viewContext)
         }
         
@@ -88,7 +88,7 @@ class CreateNewProfile1ViewModel: ObservableObject {
             PersistenceController.generateBasicExerciseLibrary(viewContext)
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
 }
