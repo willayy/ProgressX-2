@@ -47,7 +47,7 @@ struct StartWorkoutView: View {
                             searchText: $viewModel.searchText,
                             fetchRequest: _searchedRoutines
                         )
-                        .padding(.top, 20)
+                        .padding(.horizontal, 20)
                         
                         // MARK: List
                         SearchableList(
@@ -61,7 +61,10 @@ struct StartWorkoutView: View {
                                 selectedTrainingCycle: $viewModel.selectedTrainingCycle,
                                 selectedTrainingWeek: $viewModel.selectedTrainingWeek,
                                 selectedTrainingSession: $viewModel.selectedTrainingSession,
-                                                 routine: routine)
+                                AllTrainingSets: $viewModel.AllTrainingSets,
+                                currentTrainingSet: $viewModel.currentTrainingSet,
+                                exercise: $viewModel.exercise,
+                                routine: routine)
                             
                         }.padding(.horizontal, 20)
                         
@@ -79,16 +82,7 @@ struct StartWorkoutView: View {
                     }
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
-                            SideBarButton(showMenu: $showMenu).environmentObject(viewRouter)
-                        }
-                        ToolbarItem(placement: .topBarTrailing){
-                            Button(action: {
-                                copyRoutineTemplate(context: viewContext)
-                                print(routine)
-                            }) {
-                                Text("Start New Training Cycle")
-                                
-                            }
+                            SideBarButton().environmentObject(viewRouter)
                         }
                     }
                 }
@@ -97,11 +91,11 @@ struct StartWorkoutView: View {
                selectedTrainingCycle: $viewModel.selectedTrainingCycle,
                selectedTrainingWeek: $viewModel.selectedTrainingWeek,
                selectedTrainingSession: $viewModel.selectedTrainingSession,
-               AllTrainingSets: $viewModel.AllTrainingSets
-                )
+               AllTrainingSets: $viewModel.AllTrainingSets,
+                                             currentTrainingSet: $viewModel.currentTrainingSet, exercise: $viewModel.exercise)
                .environment(\.managedObjectContext, viewContext)
             
-            }, showMenu: $viewModel.showMenu)
+            })
         }
     }
     

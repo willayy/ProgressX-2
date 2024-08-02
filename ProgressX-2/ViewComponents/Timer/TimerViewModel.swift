@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Foundation
 
 final class TimerViewModel: ObservableObject {
     // Represents the different states the timer can be in
@@ -16,17 +17,21 @@ final class TimerViewModel: ObservableObject {
         case resumed
         case cancelled
     }
+    @Published public var StartWorcoutNotification: Bool = false
+    @Published public var Donebutton: Bool = false
 
     // MARK: Private Properties
     private var timer = Timer()
     private var totalTimeForCurrentSelection: Int {
         (selectedHoursAmount * 3600) + (selectedMinutesAmount * 60) + selectedSecondsAmount
     }
+    
+    static let timerDidFinishNotification = Notification.Name("timerDidFinishNotification")
 
     // MARK: Public Properties
     public var selectedHoursAmount: Int = 0
-    public var selectedMinutesAmount: Int = 3
-    public var selectedSecondsAmount: Int = 0
+    public var selectedMinutesAmount: Int = 0
+    public var selectedSecondsAmount: Int = 10
     @Published var state: TimerState = .cancelled {
         didSet {
             switch state {
@@ -65,13 +70,14 @@ final class TimerViewModel: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
             guard let self else { return }
 
-            self.secondsToCompletion -= 1
-            self.progress = Float(self.secondsToCompletion) / Float(self.totalTimeForCurrentSelection)
-
-            // We can't do <= here because we need the time from T-1 seconds to
-            // T-0 seconds to animate through first
-            if self.secondsToCompletion < 0 {
-                self.state = .cancelled
+            DispatchQueue.main.async {
+                self.secondsToCompletion -= 1
+                self.progress = Float(self.secondsToCompletion) / Float(self.totalTimeForCurrentSelection)
+                
+                if self.secondsToCompletion < 0 {
+                    self.state = .cancelled
+                    NotificationCenter.default.post(name: TimerViewModel.timerDidFinishNotification, object: nil)
+                }
             }
         })
     }

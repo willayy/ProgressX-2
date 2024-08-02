@@ -18,6 +18,8 @@ struct StartWorkoutNavigationController<Content: View>: View {
     @Binding var selectedTrainingWeek: TrainingWeek?
     @Binding var selectedTrainingSession: TrainingSession?
     @Binding var AllTrainingSets: [TrainingSet]
+    @Binding var currentTrainingSet: TrainingSet?
+    @Binding var exercise: Exercise?
     
     init(
         
@@ -27,7 +29,9 @@ struct StartWorkoutNavigationController<Content: View>: View {
     selectedTrainingCycle: Binding<TrainingCycle?>,
     selectedTrainingWeek: Binding<TrainingWeek?>,
     selectedTrainingSession: Binding<TrainingSession?>,
-    AllTrainingSets: Binding<[TrainingSet]>
+    AllTrainingSets: Binding<[TrainingSet]>,
+    currentTrainingSet: Binding<TrainingSet?>,
+    exercise: Binding<Exercise?>
     
     ) {
         
@@ -37,6 +41,8 @@ struct StartWorkoutNavigationController<Content: View>: View {
         self._selectedTrainingWeek = selectedTrainingWeek
         self._selectedTrainingSession = selectedTrainingSession
         self._AllTrainingSets = AllTrainingSets
+        self._currentTrainingSet = currentTrainingSet
+        self._exercise = exercise
         
         self.content = content()
         
@@ -65,7 +71,8 @@ struct StartWorkoutNavigationController<Content: View>: View {
                         selectedTrainingCycle: $selectedTrainingCycle,
                         selectedTrainingWeek: $selectedTrainingWeek,
                         selectedTrainingSession: $selectedTrainingSession,
-                        AllTrainingSets: $AllTrainingSets)
+                        AllTrainingSets: $AllTrainingSets,
+                        currentTrainingSet: $currentTrainingSet, Exercise: $exercise)
                         .environment(\.managedObjectContext, viewContext)
                     // TODO: Create choose week
                     

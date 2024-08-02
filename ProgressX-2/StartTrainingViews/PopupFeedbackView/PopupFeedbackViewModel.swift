@@ -20,7 +20,7 @@ class PopupFeedbackViewModel: ObservableObject {
     @Published var editedSetQuantityIsInvalidMsg: String = ""
     
     public func setViewStartValues(selectedTrainigeSet: TrainingSet?) -> Void {
-        editedSetQuantity = selectedTrainigeSet!.quantityTodoString
+        editedSetQuantity = selectedTrainigeSet!.quantityTodoString!
         print(selectedTrainigeSet!.quantityTodoString)
     }
     

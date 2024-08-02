@@ -24,7 +24,6 @@ struct PopupFeedbackView: View {
     
     var body: some View {
         VStack{
-            let Question = BoldTitle(text: self.text)
             if !ShowWindow {
                 if ((currentTrainingSet?.exercise?.exerciseType = "reps") != nil) {
                     BoldTitle(text: "Did you complete all your reps?")
@@ -34,7 +33,6 @@ struct PopupFeedbackView: View {
                 
                 HStack{
                     Button(action:{
-                        print(currentTrainingSet?.exercise?.exerciseType)
                         ShowWindow.toggle()
                         changeText(text: "How many reps did you do?")
                     }) {
@@ -78,6 +76,7 @@ struct PopupFeedbackView: View {
                 Button(action:{
                     viewModel.saveSetChanges(viewContext: viewContext, selectedTrainingSet: currentTrainingSet)
                     self.presentPopup.toggle()
+                    
                 }) {
                     Text("Done")
                         .bold()

@@ -27,7 +27,7 @@ struct TemplateSetListItem: View {
                     
                     (Text("Exercise: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setExerciseName!)"))
+                     + Text("\(set.setExerciseName ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

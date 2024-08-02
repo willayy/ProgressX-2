@@ -16,6 +16,8 @@ struct TimerView: View {
     @Binding var selectedHoursAmount: Int
     @Binding var selectedMinutesAmount: Int
     @Binding var selectedSecondsAmount: Int
+    @State public var StartWorcoutNotification: Bool = false
+    static var Buttontoggle: Bool = false
     
 var timerControls: some View {
     HStack {
@@ -63,23 +65,31 @@ var timerControls: some View {
 
 
 var progressView: some View {
-    ZStack {
-        withAnimation {
-            CircleProgressView(progress: $viewModel.progress)
+    
+        ZStack {
+            withAnimation {
+                CircleProgressView(progress: $viewModel.progress)
+            }
+            
+            VStack {
+                Text(viewModel.secondsToCompletion.asTimestamp)
+                    .font(.largeTitle)
+                    .foregroundColor(.black)
+            }
+            
         }
-        VStack {
-            Text(viewModel.secondsToCompletion.asTimestamp)
-                .font(.largeTitle)
-                .foregroundColor(.black)
-        }
-    }
+    
     .frame(width: 360, height: 255)
     .padding(.all, 32)
 }
 
 var body: some View {
+    
     VStack {
         progressView
+    }.alert("Start your next set", isPresented: $StartWorcoutNotification) {
+        Button("OK", role: .cancel) {
+            print(TimerView.Buttontoggle)}
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .foregroundColor(.white)
@@ -90,7 +100,7 @@ var body: some View {
     let context = PersistenceController.preview.container.viewContext
     
     @State var selectedHoursAmount = 0
-    @State var selectedMinutesAmount = 2
+    @State var selectedMinutesAmount = 0
     @State var selectedSecondsAmount = 10
     return TimerView(selectedHoursAmount: $selectedHoursAmount, selectedMinutesAmount: $selectedMinutesAmount, selectedSecondsAmount: $selectedSecondsAmount)
         .environment(\.managedObjectContext, context)

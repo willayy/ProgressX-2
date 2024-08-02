@@ -1078,7 +1078,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					832213DF2BC92D8E00DF9C7A = {
 						CreatedOnToolsVersion = 15.2;
@@ -1203,7 +1203,6 @@
 				836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */,
 				8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */,
 				8316576D2C529365003F895F /* Title2.swift in Sources */,
-				8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
 				83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */,
 				83266E812C3C0E2800F5F6CB /* CreateNewPersonalRecordViewModel.swift in Sources */,
@@ -1280,7 +1279,6 @@
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */,
 				8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */,
-				83BD39872C4AA4D9008E09A0 /* InfoHelpViewModel.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,
 				83266E612C37EEE000F5F6CB /* SideBarView.swift in Sources */,
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,

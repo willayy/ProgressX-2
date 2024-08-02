@@ -8,11 +8,13 @@
 
 import SwiftUI
 import CoreData
+import Foundation
 
 struct TrainingView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = TrainingViewModel()
+    @ObservedObject public var TimerviewModel = TimerViewModel()
     
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
@@ -20,62 +22,93 @@ struct TrainingView: View {
     @Binding var selectedTrainingWeek: TrainingWeek?
     @Binding var selectedTrainingSession: TrainingSession?
     @Binding var AllTrainingSets: [TrainingSet]
-    @State private var currentTrainingSet: TrainingSet?
+    @Binding var currentTrainingSet: TrainingSet?
+    @Binding var Exercise: Exercise?
     
     @State var selectedHoursAmount: Int = 0
-    @State var selectedMinutesAmount: Int = 3
-    @State var selectedSecondsAmount: Int = 0
-    @State var workoutActive: Bool = false
+    @State var selectedMinutesAmount: Int = 0
+    @State var selectedSecondsAmount: Int = 10
+    @State var showAlert = false
     @State var presentPopup = false
+    @State var startTimer = false
+    @State var DoneButton = false
     
     var body: some View {
-        
-        @FetchRequest(
-            entity: TrainingSet.entity(),
-            sortDescriptors: [NSSortDescriptor(keyPath: \TrainingSet.positionIndex, ascending: true)],
-            predicate: NSPredicate(format: "trainingSession == %@", selectedTrainingSession!)
-        ) var trainingSets: FetchedResults<TrainingSet>
-        
-        @State var currentsetfortesting = AllTrainingSets.first
-        @State var Exercise = currentsetfortesting?.exercise
-        
-        let timer = TimerView(selectedHoursAmount: $selectedHoursAmount, selectedMinutesAmount: $selectedMinutesAmount, selectedSecondsAmount: $selectedSecondsAmount)
-        
-        
-        //currentTrainingSet = routineSessions(Session: selectedTrainingSession!).first
-        let startButton =
-        Button(action:{
-            
-            print(selectedTrainingSession?.timePeriodName)
-            //timer.StartTimer()
-            //presentPopup.toggle()
-            
-            //workoutActive = true
-        }) {
-            Text("hej")
-        }
+    
         VStack{
-            timer.frame(width: 150, height: 150)
-                .padding(.bottom, 80)
             
-            //TrainingElement(currentSet: $currentsetfortesting)
-            //TrainingElement(currentSet: currentTrainingSet)
-            if !workoutActive {
-                startButton
+            progressView
+            
+            TrainingElement(currentSet: $currentTrainingSet)
+    
+            if !DoneButton {
+                Button(action:{
+                    presentPopup.toggle()
+                }) {
+                    Text("Done")
+                        .frame(width: 100, height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.top, 10)
+                
+            } else {
+                
+                Button(action:{
+                    TimerviewModel.state = .active
+                }) {
+                    Text("Start timer")
+                        .frame(width: 100, height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.top, 10)
+                }
+        }
+        .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Start your next set"), dismissButton: .default(Text("OK")))
+                }
+                .onAppear {
+                    NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
+                        showAlert = true
+                    }
+                }
+                .onDisappear {
+                    NotificationCenter.default.removeObserver(self)
+                }
+        .toolbar {
+            Button(action:{
+                currentTrainingSet = AllTrainingSets.last
+            }) {
+                Text("Skip set")
             }
-        }.popover(isPresented: $presentPopup, content: {
-            PopupFeedbackView(currentTrainingSet: $currentsetfortesting, exercise: $Exercise, presentPopup: self.$presentPopup)
+        }
+        .popover(isPresented: $presentPopup, content: {
+            PopupFeedbackView(currentTrainingSet: $currentTrainingSet, exercise: $Exercise, presentPopup: self.$presentPopup).onDisappear(perform: {
+                currentTrainingSet = AllTrainingSets.last
+                DoneButton.toggle()
+            })
         })
     }
-    
-    private func routineSessions(Session: TrainingSession) -> [TrainingSet] {
-        let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
-        trainingSetFetchRequest.predicate = NSPredicate(format: "trainingSession == %@", Session)
-        let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
-        return SetResults
+    var progressView: some View {
+        
+            ZStack {
+                withAnimation {
+                    CircleProgressView(progress: $TimerviewModel.progress)
+                }
+                
+                VStack {
+                    Text(TimerviewModel.secondsToCompletion.asTimestamp)
+                        .font(.largeTitle)
+                        .foregroundColor(.black)
+                }  
+            }
+        
+        .frame(width: 360, height: 255)
+        .padding(.all, 32)
     }
-    
 }
+    
 
 
 
@@ -102,12 +135,15 @@ struct TrainingView: View {
     
     @State var CurrentTrainingSet = allTrainingSets.first
     
+    @State var Exercise = CurrentTrainingSet?.exercise
+    
     return TrainingView(navPath: $navPath,
                         selectedRoutine: $selectedRoutine,
                         selectedTrainingCycle: $selectedTrainingCycle,
                         selectedTrainingWeek: $selectedTrainingWeek,
                         selectedTrainingSession: $selectedTrainingSession,
-                        AllTrainingSets: $allTrainingSets)
+                        AllTrainingSets: $allTrainingSets,
+                        currentTrainingSet: $CurrentTrainingSet, Exercise: $Exercise)
         .environment(\.managedObjectContext, context)
 }
 

@@ -16,6 +16,9 @@ struct BasicRoutineListItem: View {
     @Binding var selectedTrainingCycle: TrainingCycle?
     @Binding var selectedTrainingWeek: TrainingWeek?
     @Binding var selectedTrainingSession: TrainingSession?
+    @Binding var AllTrainingSets: [TrainingSet]
+    @Binding var currentTrainingSet: TrainingSet?
+    @Binding var exercise: Exercise?
     
     @State private var showDeleteAlert: Bool = false
     @ObservedObject var routine: Routine
@@ -70,19 +73,18 @@ struct BasicRoutineListItem: View {
             
             Button(action: {
                 selectedRoutine = routine
-                print(selectedRoutine?.timePeriodName)
                 selectedTrainingCycle = routineCycle(routine: routine).first
-                print(routineCycle(routine: routine).first?.trainingWeeks?.count)
                 selectedTrainingWeek = routineWeeks(routine: routine).first
-                print(selectedTrainingWeek?.timePeriodName)
                 selectedTrainingSession = routineSessions(routine: routine).first
-                print(selectedTrainingSession?.timePeriodName)
+                AllTrainingSets = routineSet(Session: selectedTrainingSession!)
+                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                exercise = currentTrainingSet?.exercise
                 
                 navPath.append(2)
             }) { Image(systemName: "figure.run" ) }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())        }
+                .buttonStyle(BorderlessButtonStyle())}
     }
     
     private func routineWeekAmount1(routine: Routine) -> Int {
@@ -94,38 +96,34 @@ struct BasicRoutineListItem: View {
     
     private func routineCycle(routine: Routine) -> [TrainingCycle] {
         let trainingCycleFetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
-        trainingCycleFetchRequest.predicate = NSPredicate(format: "routine == %@", routine)
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "routine == %@", routine), NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingCycleFetchRequest.predicate = compound1
         let CycleResults = PersistenceController.fetch(viewContext, fetchRequest: trainingCycleFetchRequest)
         return CycleResults
     }
     
     private func routineWeeks(routine: Routine) -> [TrainingWeek] {
         let trainingWeeksFetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
-        trainingWeeksFetchRequest.predicate = NSPredicate(format: "trainingCycle.routine == %@", routine)
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingCycle.routine == %@", routine),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingWeeksFetchRequest.predicate = compound1
         let weekResults = PersistenceController.fetch(viewContext, fetchRequest: trainingWeeksFetchRequest)
         return weekResults
     }
     
     private func routineSessions(routine: Routine) -> [TrainingSession] {
         let trainingSessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
-        trainingSessionFetchRequest.predicate = NSPredicate(format: "trainingWeek.trainingCycle.routine == %@", routine)
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingWeek.trainingCycle.routine == %@", routine),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingSessionFetchRequest.predicate = compound1
         let sessionResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSessionFetchRequest)
         return sessionResults
     }
     
-    
-    
-    private func routineWeekAmount2(routine: Routine) -> Int {
-        let trainingCycles = routine.trainingCycles!
-        var weeks: [TrainingWeek] = []
-        
-        for cycle in trainingCycles.allObjects as! [TrainingCycle] {
-            for week in cycle.trainingWeeks!.allObjects as! [TrainingWeek] {
-                weeks.append(week)
-            }
-        }
-        
-        return weeks.count
+    private func routineSet(Session: TrainingSession) -> [TrainingSet] {
+        let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingSession == %@", Session),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingSetFetchRequest.predicate = compound1
+        let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
+        return SetResults
     }
     
 }

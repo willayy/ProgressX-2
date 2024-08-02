@@ -15,7 +15,9 @@ class StartWorkoutViewModel: ObservableObject {
     @Published var selectedTrainingWeek: TrainingWeek? = nil
     @Published var selectedTrainingSession: TrainingSession? = nil
     @Published var AllTrainingSets: [TrainingSet] = []
+    @Published var currentTrainingSet: TrainingSet? = nil
     @Published public var searchText: String = ""
+    @Published var exercise: Exercise?
     
     @Published public var showMenu: Bool = false
     
