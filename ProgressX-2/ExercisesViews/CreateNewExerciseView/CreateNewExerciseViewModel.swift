@@ -40,10 +40,24 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     
     // Segment picker options
-    public let exerciseTypeOptions: [String] = ["Reps", "Time"]
-    public let addPrOptions: [String] = ["Yes", "No"]
-    public let achievedAtBwOptions: [String] = ["Yes", "No"]
-    public let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
+    public let exerciseTypeOptions: [String : String] = [
+        "Reps" : "reps",
+        "Time" : "time"
+    ]
+    
+    public let addPrOptions: [String : Bool] = [
+        "Yes" : true,
+        "No" : false
+    ]
+   
+    public let timeBasedPrOptions: [String : String] = [
+        "Time-Max" : "timemax"
+    ]
+    
+    public let repBasedPrOptions: [String : String] = [
+        "AMRAP" : "maxreps",
+        "1RM" : "onerepmax"
+    ]
     
     public func prTypeChanged(bodyEntries: FetchedResults<BodyEntry>) -> Void {
         if selectedTypeOfPr == "AMRAP" {
@@ -76,7 +90,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             viewContext,
             name: enteredExerciseName,
             description: enteredExerciseDesc,
-            type: (selectedTypeOfExercise == "Reps") ? "reps" : "time"
+            type: exerciseTypeOptions[selectedTypeOfExercise]!
         )
         
         for category in selectedCategories {
@@ -89,15 +103,8 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             // Find the pr-type from the user selected value
             let prType: String
             
-            switch selectedTypeOfPr {
-                case "AMRAP":
-                    prType = "maxreps"
-                case "1RM":
-                    prType = "onerepmax"
-                case "Time-max":
-                    prType = "timemax"
-                default:
-                    prType = "" // This should never be the case
+            if selectedTypeOfExercise == "Reps" {
+                #warning("Continue here")
             }
             
             let pr = PersonalRecord(

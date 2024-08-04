@@ -116,7 +116,8 @@ struct CreateNewExerciseView: View {
                         placeHolder: "Load (\(weightUnit))", 
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
+                        errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
+                        bodyWeightButton: true
                     )
                     .padding(.horizontal, 60)
 
