@@ -250,9 +250,7 @@ struct CreateNewTemplateSetView: View {
                     
                 }
             }
-        }.onAppear(perform: {
-            viewModel.setViewStartValues(viewContext: viewContext)
-        })
+        }
     }
     
     private func validateInput() -> Bool {
