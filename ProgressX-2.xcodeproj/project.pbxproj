@@ -363,8 +363,8 @@
 			isa = PBXGroup;
 			children = (
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
-				83B013BA2C5FB42900059E42 /* TimePeriods */,
 				83B013B92C5FB3E600059E42 /* Exercise */,
+				83B013BA2C5FB42900059E42 /* TimePeriods */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
 			);
 			path = NSManagedObjectExtensions;
@@ -804,7 +804,6 @@
 				8FF9C9C72C3FE69300E3D95A /* TemplateFetching */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
 				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
-				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
 				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
 				831F2C2C2C24A3EC007A7A8A /* PersistentStorageSetup */,
 				830E26802C1753EF00815936 /* NSManagedObjectExtensions */,
@@ -838,6 +837,7 @@
 		83B013BA2C5FB42900059E42 /* TimePeriods */ = {
 			isa = PBXGroup;
 			children = (
+				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
 				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
 				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
