@@ -27,7 +27,7 @@ struct TrainingView: View {
     
     @State var selectedHoursAmount: Int = 0
     @State var selectedMinutesAmount: Int = 0
-    @State var selectedSecondsAmount: Int = 10
+    @State var selectedSecondsAmount: Int = 5
     @State var showAlert = false
     @State var presentPopup = false
     @State var startTimer = false
@@ -44,6 +44,7 @@ struct TrainingView: View {
             if !DoneButton {
                 Button(action:{
                     presentPopup.toggle()
+                    print(currentTrainingSet?.quantityTodoString)
                 }) {
                     Text("Done")
                         .frame(width: 100, height: 40)
@@ -55,7 +56,8 @@ struct TrainingView: View {
             } else {
                 
                 Button(action:{
-                    TimerviewModel.state = .active
+                    print(selectedSecondsAmount)
+                    startTimer(Timer: TimerviewModel)
                 }) {
                     Text("Start timer")
                         .frame(width: 100, height: 40)
@@ -65,8 +67,11 @@ struct TrainingView: View {
                 .padding(.top, 10)
                 }
         }
-        .alert(isPresented: $showAlert) {
-                    Alert(title: Text("Start your next set"), dismissButton: .default(Text("OK")))
+        .task {
+            secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
+        }
+        .alert("Start your next set",isPresented: $showAlert) {
+            Button("OK", role: .cancel) { DoneButton.toggle()}
                 }
                 .onAppear {
                     NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
@@ -78,14 +83,15 @@ struct TrainingView: View {
                 }
         .toolbar {
             Button(action:{
-                currentTrainingSet = AllTrainingSets.last
+                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
             }) {
                 Text("Skip set")
             }
         }
         .popover(isPresented: $presentPopup, content: {
             PopupFeedbackView(currentTrainingSet: $currentTrainingSet, exercise: $Exercise, presentPopup: self.$presentPopup).onDisappear(perform: {
-                currentTrainingSet = AllTrainingSets.last
+                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
                 DoneButton.toggle()
             })
         })
@@ -106,6 +112,19 @@ struct TrainingView: View {
         
         .frame(width: 360, height: 255)
         .padding(.all, 32)
+    }
+    
+    func secondsToHoursMinutesSeconds(seconds: Int) {
+        selectedHoursAmount = seconds / 3600
+        selectedMinutesAmount = (seconds % 3600) / 60
+        selectedSecondsAmount = (seconds % 3600) % 60
+    }
+    
+    func startTimer(Timer: TimerViewModel){
+        TimerviewModel.selectedHoursAmount = selectedHoursAmount
+        TimerviewModel.selectedMinutesAmount = selectedMinutesAmount
+        TimerviewModel.selectedSecondsAmount = selectedSecondsAmount
+        TimerviewModel.state = .active
     }
 }
     

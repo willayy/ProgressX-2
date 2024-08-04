@@ -76,7 +76,13 @@ struct BasicRoutineListItem: View {
                 selectedTrainingCycle = routineCycle(routine: routine).first
                 selectedTrainingWeek = routineWeeks(routine: routine).first
                 selectedTrainingSession = routineSessions(routine: routine).first
-                AllTrainingSets = routineSet(Session: selectedTrainingSession!)
+                print(selectedTrainingSession?.trainingWeek?.timePeriodName)
+                AllTrainingSets = routineSet1(routine: routine)
+                print(selectedTrainingSession)
+                //AllTrainingSets = routineSet(Session: selectedTrainingSession!)
+                
+                print(AllTrainingSets.first?.timePeriodName)
+                print(AllTrainingSets.last?.timePeriodName)
                 currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
                 exercise = currentTrainingSet?.exercise
                 
@@ -117,6 +123,15 @@ struct BasicRoutineListItem: View {
         let sessionResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSessionFetchRequest)
         return sessionResults
     }
+    
+    private func routineSet1(routine: Routine) -> [TrainingSet] {
+        let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingSession.trainingWeek.trainingCycle.routine == %@", routine),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingSetFetchRequest.predicate = compound1
+        let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
+        return SetResults
+    }
+    
     
     private func routineSet(Session: TrainingSession) -> [TrainingSet] {
         let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()

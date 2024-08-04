@@ -41,6 +41,7 @@ final class TimerViewModel: ObservableObject {
                 progress = 0
 
             case .active:
+                
                 startTimer()
                 secondsToCompletion = totalTimeForCurrentSelection
                 progress = 1.0
