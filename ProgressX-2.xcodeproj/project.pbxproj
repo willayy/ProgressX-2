@@ -103,7 +103,6 @@
 		8364860F2C372589006EB0C0 /* TemplateSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364860E2C372589006EB0C0 /* TemplateSet.swift */; };
 		8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8386FC532BDD0CBE005E34F9 /* InputField.swift */; };
 		83ACDB422BE57E8500BE9FE2 /* InputIntegerNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ACDB412BE57E8500BE9FE2 /* InputIntegerNumberField.swift */; };
-		83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A8D2BF3BC3C00A2E180 /* NSManagedObject.swift */; };
 		83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */; };
 		83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */; };
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
@@ -276,7 +275,6 @@
 		8364860E2C372589006EB0C0 /* TemplateSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSet.swift; sourceTree = "<group>"; };
 		8386FC532BDD0CBE005E34F9 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		83ACDB412BE57E8500BE9FE2 /* InputIntegerNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIntegerNumberField.swift; sourceTree = "<group>"; };
-		83AD4A8D2BF3BC3C00A2E180 /* NSManagedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObject.swift; sourceTree = "<group>"; };
 		83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryView.swift; sourceTree = "<group>"; };
 		83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
@@ -364,15 +362,10 @@
 		830E26802C1753EF00815936 /* NSManagedObjectExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				83AD4A8D2BF3BC3C00A2E180 /* NSManagedObject.swift */,
-				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
-				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
-				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
-				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
+				83B013BA2C5FB42900059E42 /* TimePeriods */,
+				83B013B92C5FB3E600059E42 /* Exercise */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
-				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
-				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
 			);
 			path = NSManagedObjectExtensions;
 			sourceTree = "<group>";
@@ -833,6 +826,26 @@
 			path = ExercisesViews;
 			sourceTree = "<group>";
 		};
+		83B013B92C5FB3E600059E42 /* Exercise */ = {
+			isa = PBXGroup;
+			children = (
+				83D684F12C2E04E900FA78C6 /* Exercise.swift */,
+				83BD39562C3EF2DE008E09A0 /* ExerciseCategory.swift */,
+			);
+			path = Exercise;
+			sourceTree = "<group>";
+		};
+		83B013BA2C5FB42900059E42 /* TimePeriods */ = {
+			isa = PBXGroup;
+			children = (
+				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
+				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
+				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
+				833CCD562C3D6ABE00B53C97 /* TrainingTimePeriods */,
+			);
+			path = TimePeriods;
+			sourceTree = "<group>";
+		};
 		83BD395E2C40722B008E09A0 /* RoutineStatisticsView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1189,7 +1202,6 @@
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
 				8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */,
 				831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */,
-				83AD4A8E2BF3BC3C00A2E180 /* NSManagedObject.swift in Sources */,
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
 				83266E7E2C3C09E300F5F6CB /* CreateNewExerciseViewModel.swift in Sources */,
 				83D684FE2C327FBB00FA78C6 /* SetThreshold.swift in Sources */,
