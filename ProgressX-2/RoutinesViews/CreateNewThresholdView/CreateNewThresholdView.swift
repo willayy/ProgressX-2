@@ -35,28 +35,27 @@ struct CreateNewThresholdView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What is trigger quantity?",
-                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
                 if exerciseType == "reps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "Triggered at (reps)", 
-                        allowNegatives: false,
                         numberText: $viewModel.triggerQuantity,
                         markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
+                    .padding(.horizontal, 60)
                 } else if exerciseType == "time" {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Triggered at (seconds)", 
-                        allowNegatives: false,
                         numberText: $viewModel.triggerQuantity,
                         markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 BoldSubHeadline(text: "Add a PR")
@@ -64,26 +63,25 @@ struct CreateNewThresholdView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What does add a PR mean?",
-                    text: "Add a PR means that when this threshold is triggered a PR will be generated on this sets exercise with the quantity and load you did on the set."
+                    text: "Add a PR means that when this threshold is triggered a PR will be generated on this sets exercise with the quantity and load you did on the set.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
                 // Add PR when threshold is triggered?
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPrSelection,
-                    segments: viewModel.addPrSegments,
-                    frameWidth: 240,
-                    horizontalPadding: 40
+                    segments: viewModel.addPrSegments
                 )
+                .padding(.horizontal, 40)
                 
                 // If exercise is rep-based add option to select AMRAP or 1RM pr.
                 if exerciseType == "reps" && viewModel.addPrSelection == "Add PR"  {
                     BasicSegPicker(
                         selectedSegment: $viewModel.addRepPrSelection,
-                        segments: viewModel.addRepPrSegments,
-                        frameWidth: 240,
-                        horizontalPadding: 40
+                        segments: viewModel.addRepPrSegments
                     )
+                    .padding(.horizontal, 40)
                     .padding(.top, 5)
                 }
                 
@@ -93,18 +91,20 @@ struct CreateNewThresholdView: View {
                 if loadType == "numerical" {
                     HiddenLightSubHeadline(
                         title: "What does change load mean?",
-                        text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                        text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
+                        alignment: .leading
                     )
                     .padding(.horizontal, 20)
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))", 
-                        allowNegatives: true,
                         numberText: $viewModel.flatLoadAdd,
                         markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                        errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                        allowNegatives: true
                     )
+                    .padding(.horizontal, 60)
+                    
                 } else {
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
@@ -118,28 +118,29 @@ struct CreateNewThresholdView: View {
                 if quantityType == "numerical" {
                     HiddenLightSubHeadline(
                         title: "What does change quantity mean?",
-                        text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                        text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
+                        alignment: .leading
                     )
                     .padding(.horizontal, 20)
                     
                     if exerciseType == "reps" {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "Quantity (reps)", 
-                            allowNegatives: true,
                             numberText: $viewModel.flatQuantityAdd,
                             markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                     } else if exerciseType == "time" {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: "Quantity (seconds)", 
-                            allowNegatives: true,
                             numberText: $viewModel.flatQuantityAdd,
                             markAsWrong: $viewModel.flatLoadAddIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg
+                            errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
+                            allowNegatives: true
                         )
+                        .padding(.horizontal, 60)
                     }
                 } else {
                     GroupBox {
@@ -150,10 +151,8 @@ struct CreateNewThresholdView: View {
                 
                 Button {
                     if validateInput() {
-                        viewModel.addNewThreshold(
-                            viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet!
-                        )
+                        viewModel.selectedTemplateSet = selectedTemplateSet
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 } label: {
@@ -166,6 +165,12 @@ struct CreateNewThresholdView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
+                
             }
             .frame(maxWidth: .infinity)
         }

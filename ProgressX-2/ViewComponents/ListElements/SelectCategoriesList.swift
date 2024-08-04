@@ -37,7 +37,8 @@ struct SelectCategoriesList: View {
             }
         }
         .cornerRadius(20)
-        .frame(width: 250, height: 200)
+        .frame(height: 300)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -50,8 +51,11 @@ struct SelectCategoriesList: View {
     
     @State var selectedCategories: Set<ExerciseCategory> = Set()
     
-    return SelectCategoriesList(
-        selectedCategories: $selectedCategories,
-        categories: _categories
-    )
+    return VStack {
+        SelectCategoriesList(
+            selectedCategories: $selectedCategories,
+            categories: _categories
+        )
+        .padding(.horizontal, 20)
+    }
 }

@@ -31,7 +31,7 @@ struct BodyEntryListItem: View {
                 .minimumScaleFactor(0.6)
                 
             })
-            .frame(width: 250, height: 45)
+            .frame(width: 250, height: 45, alignment: .leading)
             .padding(.vertical, 10)
             .sheet(isPresented: $showMagnifiedView) {
                 MagnifiedBodyEntryView(bodyEntry: bodyEntry)

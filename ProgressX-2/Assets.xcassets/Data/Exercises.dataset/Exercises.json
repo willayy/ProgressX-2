@@ -1,14 +1,30 @@
 [
-  {
+    {
     "type": "reps",
-    "name": "Bench-press",
+    "name": "Tricep pushdown",
+    "description": "Classic tricep isolating exercise",
+    "categories": [
+        "Triceps"
+    ]
+    },
+    {
+    "type": "reps",
+    "name": "Bicep curls",
+    "description": "Classic bicep isolating exercise",
+    "categories": [
+        "Biceps"
+    ]
+    },
+    {
+    "type": "reps",
+    "name": "Bench press",
     "description": "Classic upper body compound lift.",
     "categories": [
         "Deltoids",
         "Pectorials",
         "Biceps"
     ]
-  },
+    },
     {
     "type": "reps",
     "name": "Squat",
@@ -19,18 +35,18 @@
         "Glutes",
         "Hamstrings"
     ]
-  },
+    },
     {
     "type": "reps",
-    "name": "Shoulder-press",
+    "name": "Shoulder press",
     "description": "Classic upper body shoulder focused lift.",
     "categories": [
         "Deltoids",
         "Traps",
         "Triceps"
     ]
-  },
-  {
+    },
+    {
     "type": "reps",
     "name": "Deadlift",
     "description": "Classic compound lift that mainly targets the lower body.",
@@ -42,10 +58,10 @@
         "Quads",
         "Abs"
     ]
-  },
-  {
+    },
+    {
     "type": "reps",
-    "name": "Push-up",
+    "name": "Push up",
     "description": "Classic bodyweight exercise targeting the chest and upper body.",
     "categories": [
         "Pectorials",
@@ -53,14 +69,14 @@
         "Biceps",
         "Triceps"
     ]
-  },
-  {
+    },
+    {
     "type": "reps",
-    "name": "Sit-up",
+    "name": "Sit up",
     "description": "Classic bodyweight exercise targeting the abdominals.",
     "categories": [
         "Abs",
         "Obliques"
     ]
-  }
+    }
 ]

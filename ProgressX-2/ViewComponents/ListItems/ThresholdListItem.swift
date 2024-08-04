@@ -37,7 +37,7 @@ struct ThresholdListItem: View {
                     .minimumScaleFactor(0.6)
                     
                 }
-                .frame(width: 155, height: 45)
+                .frame(width: 155, height: 45, alignment: .leading)
                 .padding(.vertical, 10)
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedThresholdView(threshold: threshold)

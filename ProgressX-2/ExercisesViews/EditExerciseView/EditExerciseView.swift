@@ -29,9 +29,13 @@ struct EditExerciseView: View {
     var body: some View {
             ScrollView {
                 VStack(alignment: .center) {
+                    
                     BoldTitle(text: "Editing")
                     
                     Title2(text: "\(selectedExercise!.exerciseName!)")
+                        .onAppear(perform: {
+                            viewModel.setViewStartValues(entity: selectedExercise!)
+                        })
                         
                     if viewModel.exerciseEditedAlert {
                         SubmitAlert(
@@ -69,23 +73,24 @@ struct EditExerciseView: View {
                     InputTextField(
                         placeHolder: "Exercise name",
                         text: $viewModel.newName,
-                        maxChars: 30,
                         markAsWrong: $viewModel.newNameIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newNameIsInvalidMsg
+                        errorMessage: $viewModel.newNameIsInvalidMsg,
+                        maxChars: 30
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                      
                     BoldSubHeadline(text: "Edit exercise description")
                     
-                    InputTextField(
+                    inputLongTextField(
                         placeHolder: "Exercise description",
                         text: $viewModel.newDesc,
-                        maxChars: 200,
                         markAsWrong: $viewModel.newDescIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.newDescIsInvalidMsg
+                        errorMessage: $viewModel.newDescIsInvalidMsg,
+                        maxChars: 200
                     )
+                    .frame(height: 150)
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Edit exercise categories")
@@ -93,7 +98,9 @@ struct EditExerciseView: View {
                     SelectCategoriesList(
                         selectedCategories: $viewModel.selectedCategories,
                         categories: _categories
-                    ).onAppear(perform: {
+                    )
+                    .padding(.horizontal, 40)
+                    .onAppear(perform: {
                         for category in selectedExercise!.categories! {
                             viewModel.selectedCategories.insert(category as! ExerciseCategory)
                         }
@@ -102,9 +109,7 @@ struct EditExerciseView: View {
                     // MARK: Handle an edit of an exercise
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveExerciseChanges(
-                                viewContext: viewContext,
-                                selectedExercise: selectedExercise!)
+                            viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
                         }
                     }) {
                         Text("Save changes")
@@ -116,11 +121,14 @@ struct EditExerciseView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
                     .padding(.bottom, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedExercise: selectedExercise!)
-        })
     }
         
     private func validateInput() -> Bool {

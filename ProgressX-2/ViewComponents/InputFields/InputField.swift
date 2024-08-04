@@ -14,7 +14,6 @@ struct InputField: View {
     @Binding var markAsWrong: Bool
     let errorMessage: String
     let placeHolder: String
-    let width: CGFloat
     let onReceiveFunction: (String) -> String
     let onSubmitFunction: (String) -> String
 
@@ -22,7 +21,6 @@ struct InputField: View {
         VStack {
             TextField(placeHolder, text: $value)
                 .minimumScaleFactor(0.75)
-                .frame(width: UIScreen.main.bounds.width * width)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .onReceive(Just(value)) { newValue in
                     let filtered = onReceiveFunction(newValue)
@@ -44,39 +42,11 @@ struct InputField: View {
                 
             if markAsWrong {
                 Text(errorMessage)
-                    .frame(width: UIScreen.main.bounds.width * width)
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)
             }
             
         }
-    }
-}
-
-struct ShakeEffect: GeometryEffect {
-    func effectValue(size: CGSize) -> ProjectionTransform {
-        return ProjectionTransform(CGAffineTransform(translationX: -10 * sin(position * 2 * .pi), y: 0))
-    }
-    
-    init(shakes: Int) {
-        position = CGFloat(shakes)
-    }
-
-    var position: CGFloat
-    var animatableData: CGFloat {
-        get { position }
-        set { position = newValue }
-    }
-}
-
-struct WrongTextFieldEffect: ViewModifier {
-    var isWrong: Bool
-
-    func body(content: Content) -> some View {
-        content.overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(isWrong ? Color.red : Color.clear, lineWidth: 1)
-        )
     }
 }

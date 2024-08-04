@@ -40,14 +40,6 @@ struct CreateNewPersonalRecord: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
                 
-                if viewModel.createdPrAlert {
-                    SubmitAlert(
-                        message: "Succesfully created new PR!",
-                        color: .green,
-                        showAlertState: $viewModel.createdPrAlert
-                    )
-                }
-                
                 BoldSubHeadline(text: "Choose a date for the PR")
                 
                 DatePicker("", selection: $viewModel.prDate, displayedComponents: .date)
@@ -57,14 +49,14 @@ struct CreateNewPersonalRecord: View {
                 
                 BoldSubHeadline(text: "Choose a load for the PR")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Load", 
-                    allowNegatives: false,
                     numberText: $viewModel.prLoad,
                     markAsWrong: $viewModel.prLoadIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.prLoadIsInvalidMsg
+                    errorMessage: $viewModel.prLoadIsInvalidMsg,
+                    bodyWeightButton: true
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 .onAppear(perform: {
                     if prType == "onerepmax" {
@@ -73,35 +65,31 @@ struct CreateNewPersonalRecord: View {
                 })
                     
                 if prType == "maxreps" {
-                    InputIntegerNumberField(
+                    IntegerTextField(
                         placeHolder: "Reps", 
-                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.prQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 else if prType == "timemax" {
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Seconds", 
-                        allowNegatives: false,
                         numberText: $viewModel.prQuantity,
                         markAsWrong: $viewModel.prQuantityIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.prQuantityIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                 }
                 
                 // MARK: Handle the creation of a PR
                 Button(action: {
                     if validateInput() {
-                        viewModel.createNewPersonalRecord(
-                            viewContext: viewContext,
-                            exercise: selectedExercise!,
-                            prType: prType!
-                        )
+                        viewModel.selectedExercise = selectedExercise!
+                        viewModel.selectedPrType = prType!
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 }) {
@@ -114,6 +102,11 @@ struct CreateNewPersonalRecord: View {
                 .padding(.top, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
             .frame(maxWidth: .infinity)
@@ -146,10 +139,8 @@ struct CreateNewPersonalRecord: View {
             fieldInvalid: $viewModel.prQuantityIsInvalid
         )
         
-        
         return valid == 0
     }
-    
 }
 
 #Preview {

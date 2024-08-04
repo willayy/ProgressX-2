@@ -29,6 +29,9 @@ struct EditTemplateWeekView: View {
             VStack {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(entity: selectedTemplateWeek!)
+                    })
                 
                 Title2(text: "\(selectedTemplateWeek!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -47,87 +50,93 @@ struct EditTemplateWeekView: View {
                         .padding(.bottom, 20)
                 }
                 
-                // Button that toggles showChangeInfo.
-                Button {
-                    withAnimation {
-                        viewModel.showChangeInfo.toggle()
-                    }
-                } label: {
-                    BoldSubHeadline(text: "Change week informaton")
-                        .frame(width: 240)
-                }
-                .buttonStyle(BorderedButtonStyle())
-                
                 // Expandable hidden view that has functionality for changing name and description.
-                if viewModel.showChangeInfo {
-                    VStack {
-                        if viewModel.showWeekChangedAlert {
-                            SubmitAlert(
-                                message: "Successfully edited week!",
-                                color: .green,
-                                showAlertState: $viewModel.showWeekChangedAlert
-                            )
-                        } else if viewModel.showNoChangeAlert {
-                            SubmitAlert(
-                                message: "No change!",
-                                color: .blue,
-                                showAlertState: $viewModel.showNoChangeAlert
-                            )
-                        }
-                        
-                        InputTextField(
-                            placeHolder: "New week name",
-                            text: $viewModel.editedWeekName, 
-                            maxChars: 25,
-                            markAsWrong: $viewModel.editedWeekIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedWeekNameIsInvalidMsg
+                ExpandingVStack(title: "Change week information") {
+                    
+                    if viewModel.showWeekChangedAlert {
+                        SubmitAlert(
+                            message: "Successfully edited week!",
+                            color: .green,
+                            showAlertState: $viewModel.showWeekChangedAlert
                         )
-                        
-                        InputTextField(
-                            placeHolder: "New week description",
-                            text: $viewModel.editedWeekDescription, 
-                            maxChars: 25,
-                            markAsWrong: $viewModel.editedWeekDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedWeekDescIsInvalidMsg
+                    } else if viewModel.showNoChangeAlert {
+                        SubmitAlert(
+                            message: "No change!",
+                            color: .blue,
+                            showAlertState: $viewModel.showNoChangeAlert
                         )
-                        
-                        LightSubHeadline(text: "Change the weeks position in the routine")
-                            .padding(.top, 10)
-                        
-                        IntSelectionList(
-                            selected: $viewModel.editedPositionIndex,
-                            selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek!)
-                        )
-                        .padding(.horizontal, 40)
-                        
-                        Button {
-                            if validateInput() {
-                                viewModel.saveTemplateWeekChanges(
-                                    viewContext: viewContext,
-                                    selectedTemplateWeek: selectedTemplateWeek!
-                                )
-                            }
-                        } label: {
-                            Text("Save change")
-                                .frame(height: 40)
-                                .foregroundColor(Color("buttonTextColor"))
-                            Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(Color("buttonTextColor"))
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .padding(.top, 10)
-                        
                     }
+                    
+                    BoldSubHeadline(text: "Edit week name")
+                    
+                    InputTextField(
+                        placeHolder: "Week name",
+                        text: $viewModel.editedWeekName,
+                        markAsWrong: $viewModel.editedWeekIsInvalid,
+                        errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
+                        maxChars: 25
+                    )
+                    .padding(.horizontal, 60)
+                    
+                    BoldSubHeadline(text: "Edit week description")
+                        .padding(.top, 10)
+                    
+                    HiddenLightSubHeadline(
+                        title: "Why have a description?",
+                        text: "Describing weeks, or anything else for that matter, is optional in ProgressX. If you choose to use it, it should be used as a way to provide some more information about the week in a way that can't be dont by it's title.",
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, 20)
+                    
+                    inputLongTextField(
+                        placeHolder: "New week description",
+                        text: $viewModel.editedWeekDescription,
+                        markAsWrong: $viewModel.editedWeekDescIsInvalid,
+                        errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
+                        maxChars: 25
+                    )
+                    .frame(height: 150)
+                    .padding(.horizontal, 60)
+                    
+                    LightSubHeadline(text: "Change the weeks position in the routine")
+                        .padding(.top, 10)
+                    
+                    IntSelectionList(
+                        selected: $viewModel.editedPositionIndex,
+                        selections: viewModel.positionIndexes(selectedTemplateWeek: selectedTemplateWeek!)
+                    )
+                    .backgroundStyle(.white)
+                    .padding(.horizontal, 40)
+                    
+                    Button {
+                        if validateInput() {
+                            viewModel.saveEdits(entity: selectedTemplateWeek!, viewContext: viewContext)
+                        }
+                    } label: {
+                        Text("Save change")
+                            .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(Color("buttonTextColor"))
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.vertical, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
+                .padding(.horizontal, 20)
                     
                 BoldSubHeadline(text: "Current sessions in this week")
                     .padding(.top, 20)
                 
                 HiddenLightSubHeadline(
                     title: "What is a session?",
-                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours."
+                    text: "A training session is a single gym session and is meant to be completed in 1-3 hours.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
@@ -147,10 +156,8 @@ struct EditTemplateWeekView: View {
                 .padding(.horizontal, 20)
                 
                 Button {
-                    viewModel.addSession(
-                        viewContext: viewContext,
-                        selectedTemplateWeek: selectedTemplateWeek!
-                    )
+                    viewModel.selectedTemplateWeek = selectedTemplateWeek!
+                    viewModel.saveEntry(viewContext: viewContext)
                 } label: {
                     Text("Add new Session")
                         .frame(height: 40)
@@ -163,9 +170,7 @@ struct EditTemplateWeekView: View {
                 .padding(.bottom, 10)
             
             }
-        }.onAppear(perform: {
-            viewModel.setViewStartValues(week: selectedTemplateWeek!)
-        })
+        }
     }
     
     private func validateInput() -> Bool {

@@ -36,6 +36,9 @@ struct EditRoutineView: View {
             VStack {
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(entity: selectedRoutine!)
+                    })
                     
                 Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -54,60 +57,71 @@ struct EditRoutineView: View {
                         .padding(.bottom, 20)
                 }
                 
-                Button {
-                    withAnimation {
-                        viewModel.showChangeInfo.toggle()
+                ExpandingVStack(title: "Change routine information") {
+                    
+                    if viewModel.showRoutineChangedAlert {
+                        SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $viewModel.showRoutineChangedAlert)
+                    } else if viewModel.showNoChangeAlert {
+                        SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
                     }
-                } label: {
-                    BoldSubHeadline(text: "Change routine informaton")
-                        .frame(width: 240)
-                }.buttonStyle(BorderedButtonStyle())
-                
-                if viewModel.showChangeInfo {
-                    VStack {
-                        if viewModel.showRoutineChangedAlert {
-                            SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $viewModel.showRoutineChangedAlert)
-                        } else if viewModel.showNoChangeAlert {
-                            SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
-                        }
-                        
-                        InputTextField(
-                            placeHolder: "New routine name",
-                            text: $viewModel.editedRoutineName, 
-                            maxChars: 25,
-                            markAsWrong: $viewModel.editedRoutineNameIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg
-                        )
-                        
-                        InputTextField(
-                            placeHolder: "New routine description",
-                            text: $viewModel.editiedRoutineDescription, 
-                            maxChars: 200,
-                            markAsWrong: $viewModel.editedRoutineDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg
-                        )
-                        
-                        Button {
-                            if validateInput() {
-                                viewModel.saveRoutineChanges(
-                                    viewContext: viewContext,
-                                    selectedRoutine: selectedRoutine!
-                                )
-                            }
-                        } label: {
-                            Text("Save change")
-                                .frame(height: 40)
-                                .foregroundColor(Color("buttonTextColor"))
-                            Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(Color("buttonTextColor"))
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
+                    
+                    BoldSubHeadline(text: "Edit routine name")
+                        .padding(.horizontal, 60)
                         .padding(.top, 10)
-                        
+                    
+                    InputTextField(
+                        placeHolder: "Routine name",
+                        text: $viewModel.editedRoutineName,
+                        markAsWrong: $viewModel.editedRoutineNameIsInvalid,
+                        errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
+                        maxChars: 25
+                    )
+                    .padding(.horizontal, 60)
+                    .padding(.bottom, 10)
+                    
+                    BoldSubHeadline(text: "Edit routine description")
+                    
+                    HiddenLightSubHeadline(
+                        title: "Why have a description?",
+                        text: "Describing routines, or anything else for that matter, is optional in ProgressX. If you choose to use it, it should be used as a way to provide some more information about the routine in a way that can't be dont by it's title.",
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, 20)
+                    
+                    inputLongTextField(
+                        placeHolder: "Routine description",
+                        text: $viewModel.editiedRoutineDescription,
+                        markAsWrong: $viewModel.editedRoutineDescIsInvalid,
+                        errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
+                        maxChars: 200
+                    )
+                    .frame(height: 150)
+                    .padding(.horizontal, 60)
+                    
+                    Button {
+                        if validateInput() {
+                            viewModel.saveEdits(
+                                entity: selectedRoutine!,
+                                viewContext: viewContext
+                            )
+                        }
+                    } label: {
+                        Text("Save change")
+                            .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(Color("buttonTextColor"))
                     }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.vertical, 10)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
+                .padding(.horizontal, 20)
                     
                 BoldSubHeadline(text: "Current Weeks in this routine")
                     .padding(.top, 20)
@@ -134,10 +148,8 @@ struct EditRoutineView: View {
                 .padding(.horizontal, 20)
                 
                 Button {
-                    viewModel.addWeek(
-                        viewContext: viewContext,
-                        selectedTemplateCycle: selectedTemplateCycle!
-                    )
+                    viewModel.selectedTemplateCycle = selectedTemplateCycle!
+                    viewModel.saveEntry(viewContext: viewContext)
                 } label: {
                     Text("Add new Week")
                         .frame(height: 40)
@@ -151,9 +163,6 @@ struct EditRoutineView: View {
             
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedRoutine: selectedRoutine!)
-        })
     }
     
     private func validateInput() -> Bool {

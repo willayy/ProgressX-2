@@ -17,12 +17,7 @@ struct SideBarView<Content: View>: View {
     }
     
     var body: some View {
-        SideBar(
-            rotateWhenExpands: true,
-            disableInteractions: true,
-            sideMenuWidth: 200,
-            cornerRadius: 25
-        ) { safeArea in
+        SideBar() { safeArea in
             VStack {
                 content
             }

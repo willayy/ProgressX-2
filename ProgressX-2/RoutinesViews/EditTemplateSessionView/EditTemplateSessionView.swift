@@ -28,8 +28,14 @@ struct EditTemplateSessionView: View {
         
         ScrollView {
             VStack {
+                
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(
+                            entity: selectedTemplateSession!
+                        )
+                    })
                 
                 Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -48,75 +54,76 @@ struct EditTemplateSessionView: View {
                         .padding(.bottom, 20)
                 }
                 
-                // Button that toggles showChangeInfo.
-                Button {
-                    withAnimation {
-                        viewModel.showChangeInfo.toggle()
-                    }
-                } label: {
-                    BoldSubHeadline(text: "Change session informaton")
-                        .frame(width: 240)
-                }
-                .buttonStyle(BorderedButtonStyle())
-                
                 // Expandable hidden view that has functionality for changing name and description.
-                if viewModel.showChangeInfo {
-                    VStack {
-                        if viewModel.showSessionChangedAlert {
-                            SubmitAlert(message: "Successfully edited session!", color: .green, showAlertState: $viewModel.showSessionChangedAlert)
-                        } else if viewModel.showNoChangeAlert {
-                            SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
-                        }
-                        
-                        InputTextField(
-                            placeHolder: "New session name",
-                            text: $viewModel.editedSessionName,
-                            maxChars: 25,
-                            markAsWrong: $viewModel.editedSessionIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedSessionNameIsInvalidMsg
-                        )
-                        .padding(.top, 10)
-                        
-                        InputTextField(
-                            placeHolder: "New session description",
-                            text: $viewModel.editedSessionDescription,
-                            maxChars: 200,
-                            markAsWrong: $viewModel.editedSessionDescIsInvalid,
-                            width: 0.6,
-                            errorMessage: $viewModel.editedSessionDescIsInvalidMsg
-                        )
-                        
-                        LightSubHeadline(text: "Change the sessions position in the week")
-                            .padding(.top, 10)
-                        
-                        IntSelectionList(
-                            selected: $viewModel.editedPositionIndex,
-                            selections: viewModel.positionIndexes(
-                                selectedTemplateSession: selectedTemplateSession!
-                            )
-                        )
-                        .padding(.horizontal, 40)
-                        
-                        Button {
-                            if validateInput() {
-                                viewModel.saveTemplateSessionChanges(
-                                    viewContext: viewContext,
-                                    selectedTemplateSession: selectedTemplateSession!
-                                )
-                            }
-                        } label: {
-                            Text("Save change")
-                                .frame(height: 40)
-                                .foregroundColor(Color("buttonTextColor"))
-                            Image(systemName: "square.and.arrow.down")
-                                .foregroundColor(Color("buttonTextColor"))
-                        }
-                        .buttonStyle(BorderedProminentButtonStyle())
-                        .padding(.top, 10)
-                        
+                
+                ExpandingVStack(title: "Change session info") {
+                    
+                    if viewModel.showSessionChangedAlert {
+                        SubmitAlert(message: "Successfully edited session!", color: .green, showAlertState: $viewModel.showSessionChangedAlert)
+                    } else if viewModel.showNoChangeAlert {
+                        SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
                     }
+                    
+                    BoldSubHeadline(text: "Edit session name")
+                        .padding(.top, 10)
+                    
+                    InputTextField(
+                        placeHolder: "Session name",
+                        text: $viewModel.editedSessionName,
+                        markAsWrong: $viewModel.editedSessionIsInvalid,
+                        errorMessage: $viewModel.editedSessionNameIsInvalidMsg,
+                        maxChars: 25
+                    )
+                    .padding(.horizontal, 60)
+                    
+                    BoldSubHeadline(text: "Edit session description")
+                        .padding(.top, 10)
+                    
+                    HiddenLightSubHeadline(
+                        title: "Why have a description?",
+                        text: "Describing sesisons, or anything else for that matter, is optional in ProgressX. If you choose to use it, it should be used as a way to provide some more information about the session in a way that can't be dont by it's title.",
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, 20)
+                    
+                    inputLongTextField(
+                        placeHolder: "Session description",
+                        text: $viewModel.editedSessionDescription,
+                        markAsWrong: $viewModel.editedSessionDescIsInvalid,
+                        errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
+                        maxChars: 200
+                    )
+                    .frame(height: 150)
+                    .padding(.horizontal, 60)
+                    
+                    LightSubHeadline(text: "Change the sessions position in the week")
+                        .padding(.top, 10)
+                    
+                    IntSelectionList(
+                        selected: $viewModel.editedPositionIndex,
+                        selections: viewModel.positionIndexes(
+                            selectedTemplateSession: selectedTemplateSession!
+                        )
+                    )
+                    .backgroundStyle(.white)
+                    .padding(.horizontal, 40)
+                    
+                    Button {
+                        if validateInput() {
+                            viewModel.saveEdits(entity: selectedTemplateSession!, viewContext: viewContext)
+                        }
+                    } label: {
+                        Text("Save change")
+                            .frame(height: 40)
+                            .foregroundColor(Color("buttonTextColor"))
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(Color("buttonTextColor"))
+                    }
+                    .buttonStyle(BorderedProminentButtonStyle())
+                    .padding(.vertical, 10)
+                    
                 }
+                .padding(.horizontal, 20)
                     
                 BoldSubHeadline(text: "Current sets in this session")
                     .padding(.top, 20)
@@ -151,13 +158,12 @@ struct EditTemplateSessionView: View {
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(
-                selectedTemplateSession: selectedTemplateSession
-            )
-        })
     }
     
     private func validateInput() -> Bool {

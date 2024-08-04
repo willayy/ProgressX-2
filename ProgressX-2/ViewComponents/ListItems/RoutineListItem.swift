@@ -44,7 +44,7 @@ struct RoutineListItem: View {
                     .minimumScaleFactor(0.6)
                     
                 }
-                .frame(width: 135, height: 55)
+                .frame(width: 135, height: 55, alignment: .leading)
                 .padding(.vertical, 10)
                 
                 Spacer()

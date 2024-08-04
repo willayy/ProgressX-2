@@ -9,39 +9,41 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewTemplateSetViewModel: ObservableObject {
+class CreateNewTemplateSetViewModel: SavingViewModel, AddingViewModel {
     
     // The Name of the set (good default is provided)
-    @Published var newSetName: String = "Set "
-    @Published var newSetNameIsInvalid: Bool = false
-    @Published var newSetNameIsInvalidMsg: String = ""
+    @Published public var newSetName: String = "Set "
+    @Published public var newSetNameIsInvalid: Bool = false
+    @Published public var newSetNameIsInvalidMsg: String = ""
     // The Description of the set (Optional)
-    @Published var newSetDesc: String = ""
-    @Published var newSetDescIsInvalid: Bool = false
-    @Published var newSetDescIsInvalidMsg: String = ""
+    @Published public var newSetDesc: String = ""
+    @Published public var newSetDescIsInvalid: Bool = false
+    @Published public var newSetDescIsInvalidMsg: String = ""
     // The Load of the set
-    @Published var newSetLoad: String = ""
-    @Published var newSetLoadIsInvalid: Bool = false
-    @Published var newSetLoadIsInvalidMsg: String = ""
+    @Published public var newSetLoad: String = ""
+    @Published public var newSetLoadIsInvalid: Bool = false
+    @Published public var newSetLoadIsInvalidMsg: String = ""
     // The Quantity of the set
-    @Published var newSetQuantity: String = ""
-    @Published var newSetQuantityIsInvalid: Bool = false
-    @Published var newSetQuantityIsInvalidMsg: String = ""
+    @Published public var newSetQuantity: String = ""
+    @Published public var newSetQuantityIsInvalid: Bool = false
+    @Published public var newSetQuantityIsInvalidMsg: String = ""
     // The rest time
-    @Published var restTime: String = ""
-    @Published var restTimeIsInvalid: Bool = false
-    @Published var restTimeIsInvalidMsg: String = ""
+    @Published public var restTime: String = ""
+    @Published public var restTimeIsInvalid: Bool = false
+    @Published public var restTimeIsInvalidMsg: String = ""
     // The exercise of the set
-    @Published var selectedExercise: Exercise? = nil
-    @Published var searchWord: String = ""
+    @Published public var selectedExercise: Exercise? = nil
+    @Published public var searchWord: String = ""
     // Selection of load types
-    @Published var selectedLoadType: String = "Select exercise first!"
+    @Published public var selectedLoadType: String = "Select exercise first!"
     // Selection of quantity types
-    @Published var selectedQuantityType: String = "Select exercise first!"
+    @Published public var selectedQuantityType: String = "Select exercise first!"
     // State that tracks if an exercises has been selected
-    @Published var exerciseHasBeenSelected: Bool = false
+    @Published public var exerciseHasBeenSelected: Bool = false
     // State that decides if the view should navigate to the add thresholds view
-    @Published var showAddThresholds: Bool = false
+    @Published public var showAddThresholds: Bool = false
+    @Published public var selectedTemplateSession: TemplateSession? = nil
+    @Published public var createdTemplateSet: TemplateSet? = nil
     
     // for load type selections
     var loadTypeSelections: [String] {
@@ -119,9 +121,10 @@ class CreateNewTemplateSetViewModel: ObservableObject {
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
         let profile = PersistenceController.getProfile(viewContext)!
         restTime = profile.standardRestTimeString
+        newSetName = "Set \(selectedTemplateSession!.getNextPositionIndex())"
     }
     
-    public func createNewTemplateSet(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession) -> TemplateSet {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
                 
         let set = TemplateSet(
             viewContext,
@@ -136,7 +139,7 @@ class CreateNewTemplateSetViewModel: ObservableObject {
         
         // Get all trainingSessions
         let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession)
+        fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession!)
         // Only included incomplete trainingSessions as completed ones are irrelevant for this change
         let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
@@ -149,17 +152,12 @@ class CreateNewTemplateSetViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
         
         withAnimation {
             showAddThresholds = true
         }
         
-        return set
+        self.createdTemplateSet = set
     }
-    
-    public func setNewSetName(selectedTemplateSession: TemplateSession) -> Void {
-        newSetName = "Set \(selectedTemplateSession.getNextPositionIndex())"
-    }
-    
 }

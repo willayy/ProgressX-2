@@ -41,7 +41,8 @@ struct RoutineLibraryView: View {
                     
                     HiddenLightSubHeadline(
                         title: "What is a Routine?",
-                        text: "The routine is your training program, a routine consists of 1 or more Weeks. This gives you both the possibility of doing the same training sessions every week and having an alternating week schedule."
+                        text: "The routine is your training program, a routine consists of 1 or more Weeks. This gives you both the possibility of doing the same training sessions every week and having an alternating week schedule.",
+                        alignment: .leading
                     )
                     .padding(.horizontal, 20)
                     
@@ -95,4 +96,5 @@ struct RoutineLibraryView: View {
     
     return RoutineLibraryView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
 }

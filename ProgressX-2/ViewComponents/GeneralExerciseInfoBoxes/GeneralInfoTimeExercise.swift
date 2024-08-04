@@ -45,12 +45,7 @@ struct GeneralInfoTimeExercise: View {
             .padding(.horizontal, 40)
             .padding(.top, 20)
         
-        ZStack {
-            Rectangle()
-                .cornerRadius(10)
-                .foregroundStyle(Color(.systemGray6))
-                .frame(height: 150)
-                .padding(.horizontal, 40)
+        GroupBox {
             
             VStack(alignment: .leading) {
                 
@@ -102,6 +97,7 @@ struct GeneralInfoTimeExercise: View {
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                     .foregroundStyle(.blue)
             }
+            .frame(maxWidth: .infinity)
         }
     }
 }

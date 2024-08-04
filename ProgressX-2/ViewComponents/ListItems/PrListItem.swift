@@ -42,7 +42,7 @@ struct PrListItem: View {
                      + Text("\(pr.quantityString!)"))
                     .minimumScaleFactor(0.6)
                 }
-                .frame(width: 135, height: 30)
+                .frame(width: 135, height: 30, alignment: .leading)
                 .padding(.vertical, 10)
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedPrView(personalRecord: pr)

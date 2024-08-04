@@ -73,6 +73,7 @@ struct SingleChart: View {
                     .foregroundColor(.red)
                     .padding(.all, 20)
                     .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
             } else {
                 
                 // Get the pr with the highest load recorded on the exercise
@@ -117,9 +118,11 @@ struct SingleChart: View {
                     Toggle(isOn: $overlayBodyWeight, label: {
                         Text("Do you want to overlay bodyweight?")
                     })
-                    .padding(.horizontal, 50)
+                    .minimumScaleFactor(0.75)
+                    .padding(.horizontal, 40)
                     .padding(.top, 10)
                 }
+                .frame(maxWidth: .infinity)
             }
         }
     }

@@ -11,8 +11,6 @@ struct BasicSegPicker: View {
     
     @Binding var selectedSegment: String
     let segments: [String]
-    let frameWidth: CGFloat
-    let horizontalPadding: CGFloat
     
     var body: some View {
         Picker("Options", selection: $selectedSegment) {
@@ -21,7 +19,5 @@ struct BasicSegPicker: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
-        .frame(width: frameWidth)
-        .padding(.horizontal, horizontalPadding)
     }
 }
