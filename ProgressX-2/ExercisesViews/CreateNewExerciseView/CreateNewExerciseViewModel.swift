@@ -19,7 +19,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     @Published public var enteredPrWeigtLoad: String = ""
     
     // Segment picker choices
-    @Published public var selectedTypeOfExercise: String = "Reps"
+    @Published public var selectedTypeOfExercise: String = "Rep based"
     @Published public var selectedTypeOfPr: String = "1RM"
     @Published public var addPr: String = "No"
     @Published public var achieviedOnCurrBw: String = "Yes"
@@ -41,8 +41,8 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     
     // Segment picker options
     public let exerciseTypeOptions: [String : String] = [
-        "Reps" : "reps",
-        "Time" : "time"
+        "Rep based" : "reps",
+        "Time based" : "time"
     ]
     
     public let addPrOptions: [String : Bool] = [
@@ -101,10 +101,12 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
         // Add pr if selected
         if addPr == "Yes" {
             // Find the pr-type from the user selected value
-            let prType: String
+            var prType: String = ""
             
-            if selectedTypeOfExercise == "Reps" {
-                #warning("Continue here")
+            if exerciseTypeOptions[selectedTypeOfExercise] == "reps" {
+                prType = repBasedPrOptions[selectedTypeOfPr]!
+            } else if exerciseTypeOptions[selectedTypeOfExercise] == "time" {
+                prType = timeBasedPrOptions[selectedTypeOfPr]!
             }
             
             let pr = PersonalRecord(
