@@ -24,10 +24,12 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity)
             }
         } else if searchedData.isEmpty {
             GroupBox {
                 LightSubHeadline(text: "No \(elementName) matched your search...")
+                    .frame(maxWidth: .infinity)
             }
         } else {
             List{
@@ -38,6 +40,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
             .frame(height: 400)
             .background(Color(.systemGray6))
             .cornerRadius(10)
+            .frame(maxWidth: .infinity)
         }
     }
 }

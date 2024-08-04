@@ -23,6 +23,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundStyle(.red)
+                    .frame(maxWidth: .infinity)
             }
         } else {
             List{
@@ -33,7 +34,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
             .frame(height: height)
             .background(Color(.systemGray6))
             .cornerRadius(10)
-
+            .frame(maxWidth: .infinity)
         }
     }
 }

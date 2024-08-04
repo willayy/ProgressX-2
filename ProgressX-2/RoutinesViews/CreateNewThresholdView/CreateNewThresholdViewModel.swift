@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CreateNewThresholdViewModel: ObservableObject {
+class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
     
     @Published public var triggerQuantity: String = ""
     @Published public var triggerQuantityIsInvalid: Bool = false
@@ -21,12 +21,13 @@ class CreateNewThresholdViewModel: ObservableObject {
     @Published public var flatQuantityAdd: String = ""
     @Published public var flatQuantityAddIsInvalid: Bool = false
     @Published public var flatQuantityAddIsInvalidMsg: String = ""
+    @Published public var selectedTemplateSet: TemplateSet? = nil
     public let addPrSegments: [String] = ["Add PR", "Don't add PR"]
     public let addRepPrSegments: [String] = ["1RM", "AMRAP"]
     
-    public func addNewThreshold(viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         
-        let exerciseType = selectedTemplateSet.exercise!.exerciseType
+        let exerciseType = selectedTemplateSet!.exercise!.exerciseType
         let addPr = addPrSelection == "Add PR" ? true : false
         var prType: String? = nil
         
@@ -56,7 +57,7 @@ class CreateNewThresholdViewModel: ObservableObject {
         
         let threshold = SetThreshold(
             viewContext,
-            templateSet: selectedTemplateSet,
+            templateSet: selectedTemplateSet!,
             triggeredAt: Double(triggerQuantity)!,
             generatesPr: addPr,
             prType: prType,
@@ -64,9 +65,9 @@ class CreateNewThresholdViewModel: ObservableObject {
             flatQuantityAdd: inputFlatQuantityAdd
         )
         
-        selectedTemplateSet.addToThresholds(threshold)
+        selectedTemplateSet!.addToThresholds(threshold)
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
         
     }
         

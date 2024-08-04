@@ -11,10 +11,10 @@ import SwiftUI
 struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     
     // cutomizations
-    var rotateWhenExpands: Bool = true
-    var disableInteractions: Bool = true
-    var sideMenuWidth: CGFloat = 200
-    var cornerRadius: CGFloat = 25
+    public var rotateWhenExpands: Bool = true
+    public var disableInteractions: Bool = true
+    public var sideMenuWidth: CGFloat = 200
+    public var cornerRadius: CGFloat = 25
     @EnvironmentObject private var showMenuController: ShowMenuController
     @ViewBuilder var content: (UIEdgeInsets) -> Content
     @ViewBuilder var menuView: (UIEdgeInsets) -> MenuView
@@ -45,11 +45,11 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
                 .frame(width: size.width)
                 .overlay {
                     //Resets the hove view when exiting burger menu
-                    if disableInteractions && progress > 0{
+                    if disableInteractions && progress > 0 {
                         Rectangle()
                             .fill(.black.opacity(progress * 0.2))
                             .onTapGesture {
-                                withAnimation(.snappy(duration: 0.3, extraBounce: 0)){
+                                withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                                     reset()
                                 }
                             }
@@ -76,7 +76,7 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
         .ignoresSafeArea()
         .onChange(of: showMenuController.showMenu, initial: true) { oldValue, newValue in
             withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
-                if newValue{
+                if newValue {
                     showSideBar()
                 } else {
                     reset()
@@ -92,11 +92,11 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
             .updating($isDragging) { _, out, _ in
                 out = true
             }.onChanged { value in
-                // can open new view deep in hierarcy. this disables that
-                guard value.startLocation.x > 10 else {return}
-                let translationX = isDragging ? max(min(value.translation.width + lastoffsetX, sideMenuWidth), 0) : 0
-                offsetX = translationX
-                calculateProgress()
+                    // can open new view deep in hierarcy. this disables that
+                    guard value.startLocation.x > 10 else {return}
+                    let translationX = isDragging ? max(min(value.translation.width + lastoffsetX, sideMenuWidth), 0) : 0
+                    offsetX = translationX
+                    calculateProgress()
             }.onEnded { value in
                 withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                     let velocityX = value.velocity.width / 8

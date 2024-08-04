@@ -15,12 +15,17 @@ struct CreateNewTemplateSetView: View {
     @StateObject private var viewModel = CreateNewTemplateSetViewModel()
     @Binding var selectedTemplateSession: TemplateSession?
     @Binding var selectedTemplateSet: TemplateSet?
+    @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
         ScrollView {
             VStack {
                 
                 BoldTitle(text: "Create new set in")
+                    .onAppear(perform: {
+                        viewModel.selectedTemplateSession = selectedTemplateSession!
+                        viewModel.setViewStartValues(viewContext: viewContext)
+                    })
                 
                 Title2(text: "\(selectedTemplateSession!.timePeriodName!)")
                 
@@ -31,27 +36,29 @@ struct CreateNewTemplateSetView: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 10)
                 
+                BoldSubHeadline(text: "Set name")
+                
                 InputTextField(
                     placeHolder: "Set name",
                     text: $viewModel.newSetName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.newSetNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newSetNameIsInvalidMsg
+                    errorMessage: $viewModel.newSetNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 5)
-                .onAppear(perform: {
-                    viewModel.setNewSetName(selectedTemplateSession: selectedTemplateSession!)
-                })
                 
-                InputTextField(
+                BoldSubHeadline(text: "Set description")
+                
+                inputLongTextField(
                     placeHolder: "Set description",
                     text: $viewModel.newSetDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.newSetDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.newSetDescIsInvalidMsg
+                    errorMessage: $viewModel.newSetDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .frame(height: 150)
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Choose an exercise for the set")
@@ -61,7 +68,7 @@ struct CreateNewTemplateSetView: View {
                     selectedExercise: $viewModel.selectedExercise,
                     searchWord: $viewModel.searchWord
                 )
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 .onChange(
                     of: viewModel.selectedExercise,
                     initial: false
@@ -82,14 +89,13 @@ struct CreateNewTemplateSetView: View {
                     LightSubHeadline(text: "In seconds")
                         .padding(.bottom, 5)
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Rest time",
-                        allowNegatives: false,
                         numberText: $viewModel.restTime,
                         markAsWrong: $viewModel.restTimeIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.restTimeIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     
                     BoldSubHeadline(text: "Choose load type")
                         .padding(.top, 20)
@@ -114,7 +120,14 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedLoadType,
                         selections: viewModel.loadTypeSelections
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 50)
+                    .onChange(of: viewModel.selectedLoadType, initial: true) { oldValue, newValue in
+                        if newValue == "Numerical" {
+                            withAnimation { addBodyWeightButton = true }
+                        } else {
+                            withAnimation { addBodyWeightButton = false }
+                        }
+                    }
                     
                     BoldSubHeadline(text: "Choose quantity type")
                         .padding(.top, 20)
@@ -139,7 +152,7 @@ struct CreateNewTemplateSetView: View {
                         selected: $viewModel.selectedQuantityType,
                         selections: viewModel.quantityTypeSelections
                     )
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, 50)
                     
                     BoldSubHeadline(text: "Choose quantity and load")
                         .padding(.top, 20)
@@ -153,34 +166,29 @@ struct CreateNewTemplateSetView: View {
                     
                     // MARK: Load inputfield
                     HStack {
-                        InputDecimalNumberField(
-                            placeHolder: viewModel.loadPlaceholder(
-                                viewContext: viewContext
-                            ), 
-                            allowNegatives: false,
+                        DecimalTextField(
+                            placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
                             numberText: $viewModel.newSetLoad,
                             markAsWrong: $viewModel.newSetLoadIsInvalid,
-                            width: 0.45,
                             errorMessage: $viewModel.newSetLoadIsInvalidMsg,
-                            bodyWeightButton: true
+                            bodyWeightButton: addBodyWeightButton
                         )
                         
                         if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                     
                     // MARK: Quantity
                     /* Shared quantity input field variable but with different
                      InputFields depending on the exercise type*/
                     if viewModel.selectedExercise?.exerciseType == "reps" {
                         HStack {
-                            InputIntegerNumberField(
+                            IntegerTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
-                                allowNegatives: false,
                                 numberText: $viewModel.newSetQuantity,
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                width: 0.6,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
                             .padding(.top, 5)
@@ -189,14 +197,13 @@ struct CreateNewTemplateSetView: View {
                                 Text("%")
                             }
                         }
+                        .padding(.horizontal, 60)
                     } else {
                         HStack {
-                            InputDecimalNumberField(
+                            DecimalTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
-                                allowNegatives: false,
                                 numberText: $viewModel.newSetQuantity,
                                 markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                width: 0.6,
                                 errorMessage: $viewModel.newSetQuantityIsInvalidMsg
                             )
                             .padding(.top, 5)
@@ -205,14 +212,13 @@ struct CreateNewTemplateSetView: View {
                                 Text("%")
                             }
                         }
+                        .padding(.horizontal, 60)
                     }
                     
                     Button {
                         if validateInput() {
-                            selectedTemplateSet = viewModel.createNewTemplateSet(
-                                viewContext: viewContext,
-                                selectedTemplateSession: selectedTemplateSession!
-                            )
+                            viewModel.saveEntry(viewContext: viewContext)
+                            selectedTemplateSet = viewModel.createdTemplateSet
                         }
                     } label: {
                         Text("Create new set")
@@ -236,6 +242,12 @@ struct CreateNewTemplateSetView: View {
                             })
                         )
                     })
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
+                    
                 }
             }
         }.onAppear(perform: {

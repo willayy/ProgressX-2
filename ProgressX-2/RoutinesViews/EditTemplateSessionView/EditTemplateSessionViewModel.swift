@@ -9,18 +9,19 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSessionViewModel: ObservableObject {
+class EditTemplateSessionViewModel: SavingViewModel, EditingViewModel {
     
-    @Published var showSessionChangedAlert: Bool = false
-    @Published var showNoChangeAlert: Bool = false
-    @Published var showChangeInfo: Bool = false
-    @Published var editedSessionName: String = ""
-    @Published var editedSessionIsInvalid: Bool = false
-    @Published var editedSessionNameIsInvalidMsg: String = ""
-    @Published var editedSessionDescription: String = ""
-    @Published var editedSessionDescIsInvalid: Bool = false
-    @Published var editedSessionDescIsInvalidMsg: String = ""
-    @Published var editedPositionIndex: Int64 = 0
+    @Published public var showSessionChangedAlert: Bool = false
+    @Published public var showNoChangeAlert: Bool = false
+    @Published public var editedSessionName: String = ""
+    @Published public var editedSessionIsInvalid: Bool = false
+    @Published public var editedSessionNameIsInvalidMsg: String = ""
+    @Published public var editedSessionDescription: String = ""
+    @Published public var editedSessionDescIsInvalid: Bool = false
+    @Published public var editedSessionDescIsInvalidMsg: String = ""
+    @Published public var editedPositionIndex: Int64 = 0
+    
+    typealias T = TemplateSession
     
     public func positionIndexes(selectedTemplateSession: TemplateSession) -> [Int64] {
         let week = selectedTemplateSession.templateWeek!
@@ -31,38 +32,33 @@ class EditTemplateSessionViewModel: ObservableObject {
         return positionIndexes.sorted()
     }
     
-    public func setViewStartValues(selectedTemplateSession: TemplateSession?) -> Void {
-        editedSessionName = selectedTemplateSession!.timePeriodName!
-        editedSessionDescription = selectedTemplateSession!.timePeriodDescription!
-        editedPositionIndex = selectedTemplateSession!.positionIndex
+    public func setViewStartValues(entity: TemplateSession) -> Void {
+        editedSessionName = entity.timePeriodName!
+        editedSessionDescription = entity.timePeriodDescription!
+        editedPositionIndex = entity.positionIndex
     }
     
-    public func saveTemplateSessionChanges(viewContext: NSManagedObjectContext, selectedTemplateSession: TemplateSession) -> Void {
+    public func saveEdits(entity: TemplateSession, viewContext: NSManagedObjectContext) -> Void {
         
-        if selectedTemplateSession.timePeriodName != editedSessionName {
-            selectedTemplateSession.timePeriodName = editedSessionName
+        if entity.timePeriodName != editedSessionName {
+            entity.timePeriodName = editedSessionName
         }
         
-        if selectedTemplateSession.timePeriodDescription != editedSessionDescription {
-            selectedTemplateSession.timePeriodDescription = editedSessionDescription
+        if entity.timePeriodDescription != editedSessionDescription {
+            entity.timePeriodDescription = editedSessionDescription
         }
         
-        if selectedTemplateSession.positionIndex != editedPositionIndex {
-            selectedTemplateSession.positionIndex = editedPositionIndex
+        if entity.positionIndex != editedPositionIndex {
+            entity.positionIndex = editedPositionIndex
         }
         
-        if selectedTemplateSession.hasChanges {
+        if entity.hasChanges {
             // Propogate changes to matching TrainingSessions.
-            propogateChanges(viewContext, selectedTemplateSession: selectedTemplateSession)
-            
-            withAnimation {
-                showSessionChangedAlert = true
-                PersistenceController.save(viewContext)
-            }
+            propogateChanges(viewContext, selectedTemplateSession: entity)
+            withAnimation { showSessionChangedAlert = true }
+            self.safeSave(viewContext: viewContext)
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
     }
     

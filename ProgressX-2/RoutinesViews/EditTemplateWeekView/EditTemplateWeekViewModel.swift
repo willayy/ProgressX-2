@@ -9,18 +9,20 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: ObservableObject {
+class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
     
-    @Published var showWeekChangedAlert: Bool = false
-    @Published var showNoChangeAlert: Bool = false
-    @Published var showChangeInfo: Bool = false
-    @Published var editedWeekName: String = ""
-    @Published var editedWeekIsInvalid: Bool = false
-    @Published var editedWeekNameIsInvalidMsg: String = ""
-    @Published var editedWeekDescription: String = ""
-    @Published var editedWeekDescIsInvalid: Bool = false
-    @Published var editedWeekDescIsInvalidMsg: String = ""
-    @Published var editedPositionIndex: Int64 = 0
+    @Published public var showWeekChangedAlert: Bool = false
+    @Published public var showNoChangeAlert: Bool = false
+    @Published public var editedWeekName: String = ""
+    @Published public var editedWeekIsInvalid: Bool = false
+    @Published public var editedWeekNameIsInvalidMsg: String = ""
+    @Published public var editedWeekDescription: String = ""
+    @Published public var editedWeekDescIsInvalid: Bool = false
+    @Published public var editedWeekDescIsInvalidMsg: String = ""
+    @Published public var editedPositionIndex: Int64 = 0
+    @Published public var selectedTemplateWeek: TemplateWeek? = nil
+    
+    typealias T = TemplateWeek
     
     /// Get the positionIndexes for all weeks in this Routine
     public func positionIndexes(selectedTemplateWeek: TemplateWeek) -> [Int64] {
@@ -32,48 +34,43 @@ class EditTemplateWeekViewModel: ObservableObject {
         return positionIndexes.sorted()
     }
     
-    public func setViewStartValues(week: TemplateWeek) {
-        editedWeekName = week.timePeriodName!
-        editedWeekDescription = week.timePeriodDescription!
-        editedPositionIndex = week.positionIndex
+    public func setViewStartValues(entity: TemplateWeek) {
+        editedWeekName = entity.timePeriodName!
+        editedWeekDescription = entity.timePeriodDescription!
+        editedPositionIndex = entity.positionIndex
     }
     
     /// Saves changes made to template and propogates them forwars to all matching TrainingSessions.
-    public func saveTemplateWeekChanges(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
+    public func saveEdits(entity: TemplateWeek, viewContext: NSManagedObjectContext) -> Void {
         
-        if selectedTemplateWeek.timePeriodName != editedWeekName {
-            selectedTemplateWeek.timePeriodName = editedWeekName
+        if entity.timePeriodName != editedWeekName {
+            entity.timePeriodName = editedWeekName
         }
         
-        if selectedTemplateWeek.timePeriodDescription != editedWeekDescription {
-            selectedTemplateWeek.timePeriodDescription = editedWeekDescription
+        if entity.timePeriodDescription != editedWeekDescription {
+            entity.timePeriodDescription = editedWeekDescription
         }
         
-        if selectedTemplateWeek.positionIndex != editedPositionIndex {
+        if entity.positionIndex != editedPositionIndex {
             // Find the week with the same position index in the parent routine.
-            let weeksInParentRoutine = selectedTemplateWeek.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
+            let weeksInParentRoutine = entity.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
             let switchWithWeek = weeksInParentRoutine.first(
                 where: {
                     ($0 as AnyObject).positionIndex == editedPositionIndex
                 }
             )
             // Switch position index with the week
-            switchWithWeek!.positionIndex = selectedTemplateWeek.positionIndex
-            selectedTemplateWeek.positionIndex = editedPositionIndex
+            switchWithWeek!.positionIndex = entity.positionIndex
+            entity.positionIndex = editedPositionIndex
         }
         
-        if selectedTemplateWeek.hasChanges {
+        if entity.hasChanges {
             // propogates change to matching trainingWeeks.
-            propogateChanges(viewContext, selectedTemplateWeek: selectedTemplateWeek)
-            
-            withAnimation {
-                showWeekChangedAlert = true
-                PersistenceController.save(viewContext)
-            }
+            propogateChanges(viewContext, selectedTemplateWeek: entity)
+            withAnimation { showWeekChangedAlert = true }
+            self.safeSave(viewContext: viewContext)
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
     }
     
@@ -103,7 +100,7 @@ class EditTemplateWeekViewModel: ObservableObject {
     }
     
     /// Adds a session to the template and all incomplete matching TrainingWeeks
-    public func addSession(viewContext: NSManagedObjectContext, selectedTemplateWeek: TemplateWeek) -> Void {
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         let session = TemplateSession(
             viewContext,
             templateWeek: selectedTemplateWeek
@@ -111,7 +108,7 @@ class EditTemplateWeekViewModel: ObservableObject {
         
         // Get all trainingWeeks
         let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek)
+        fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek!)
         // Only included incomplete trainingWeeks as completed ones are irrelevant for this change
         let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
@@ -124,7 +121,7 @@ class EditTemplateWeekViewModel: ObservableObject {
             )
         }
         
-        PersistenceController.save(viewContext)
+        self.safeSave(viewContext: viewContext)
     }
     
 }

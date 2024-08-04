@@ -9,89 +9,100 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditWeighInViewModel: ObservableObject {
+class EditWeighInViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
+    // Submission alert variables
     @Published public var bodyEntryEditedAlert: Bool = false
     @Published public var noChangeAlert: Bool = false
+    
+    // Input variables
     @Published public var editedDate: Date = Date()
     @Published public var editedBodyWeight: String = ""
-    @Published public var editedBodyWeightIsInvalid: Bool = false
-    @Published public var editedBodyWeightIsInvalidMsg: String = ""
     @Published public var editedChestCirc: String = ""
-    @Published public var editedChestCircIsInvalid: Bool = false
-    @Published public var editedChestCircIsInvalidMsg: String = ""
     @Published public var editedWaistCirc: String = ""
-    @Published public var editedWaistCircIsInvalid: Bool = false
-    @Published public var editedWaistCircIsInvalidMsg: String = ""
     @Published public var editedUpperArmCirc: String = ""
-    @Published public var editedUpperArmCircIsInvalid: Bool = false
-    @Published public var editedUpperArmCircIsInvalidMsg: String = ""
     @Published public var editedLowerArmCirc: String = ""
-    @Published public var editedLowerArmIsInvalid: Bool = false
-    @Published public var editedLowerArmIsInvalidMsg: String = ""
     @Published public var editedThighCirc: String = ""
-    @Published public var editedThighCircIsInvalid: Bool = false
-    @Published public var editedThighCircIsInvalidMsg: String = ""
     @Published public var editedCalfCirc: String = ""
+
+    // Invalid input variables
+    @Published public var editedBodyWeightIsInvalid: Bool = false
+    @Published public var editedChestCircIsInvalid: Bool = false
+    @Published public var editedWaistCircIsInvalid: Bool = false
+    @Published public var editedUpperArmCircIsInvalid: Bool = false
+    @Published public var editedLowerArmIsInvalid: Bool = false
+    @Published public var editedThighCircIsInvalid: Bool = false
     @Published public var editedCalfCircIsInvalid: Bool = false
+
+    // Invalid input message variables
+    @Published public var editedBodyWeightIsInvalidMsg: String = ""
+    @Published public var editedChestCircIsInvalidMsg: String = ""
+    @Published public var editedWaistCircIsInvalidMsg: String = ""
+    @Published public var editedUpperArmCircIsInvalidMsg: String = ""
+    @Published public var editedLowerArmIsInvalidMsg: String = ""
+    @Published public var editedThighCircIsInvalidMsg: String = ""
     @Published public var editedCalfCircIsInvalidMsg: String = ""
     
-    public func setViewStartValues(bodyEntry: BodyEntry) -> Void {
-        editedDate = bodyEntry.achievedOnDate!
-        editedBodyWeight = String(format: "%.2f", bodyEntry.bodyWeight)
-        editedChestCirc = (bodyEntry.chestCirc == nil) ? "" : String(describing: bodyEntry.chestCirc!)
-        editedUpperArmCirc = (bodyEntry.uprArmCirc == nil) ? "" : String(describing: bodyEntry.uprArmCirc!)
-        editedLowerArmCirc = (bodyEntry.lwrArmCirc == nil) ? "" : String(describing: bodyEntry.lwrArmCirc!)
-        editedWaistCirc = (bodyEntry.waistCirc == nil) ? "" : String(describing: bodyEntry.waistCirc!)
-        editedThighCirc = (bodyEntry.thighCirc == nil) ? "" : String(describing: bodyEntry.thighCirc!)
-        editedCalfCirc = (bodyEntry.calfCirc == nil) ? "" : String(describing: bodyEntry.calfCirc!)
+    typealias T = BodyEntry
+    
+    public func setViewStartValues(entity: BodyEntry) -> Void {
+        editedDate = entity.achievedOnDate!
+        editedBodyWeight = String(format: "%.2f", entity.bodyWeight)
+        editedChestCirc = (entity.chestCirc == nil) ? "" : String(describing: entity.chestCirc!)
+        editedUpperArmCirc = (entity.uprArmCirc == nil) ? "" : String(describing: entity.uprArmCirc!)
+        editedLowerArmCirc = (entity.lwrArmCirc == nil) ? "" : String(describing: entity.lwrArmCirc!)
+        editedWaistCirc = (entity.waistCirc == nil) ? "" : String(describing: entity.waistCirc!)
+        editedThighCirc = (entity.thighCirc == nil) ? "" : String(describing: entity.thighCirc!)
+        editedCalfCirc = (entity.calfCirc == nil) ? "" : String(describing: entity.calfCirc!)
     }
     
-    public func saveBodyEntryChanges(bodyEntry: BodyEntry, viewContext: NSManagedObjectContext) -> Void {
+    public func saveEdits(entity: BodyEntry, viewContext: NSManagedObjectContext) -> Void {
         
-        if editedDate != bodyEntry.achievedOnDate! {
-            bodyEntry.achievedOnDate = editedDate
+        if editedDate != entity.achievedOnDate! {
+            entity.achievedOnDate = editedDate
         }
         
-        if Double(editedBodyWeight) != bodyEntry.bodyWeight {
-            bodyEntry.bodyWeight = Double(editedBodyWeight)!
+        if Double(editedBodyWeight) != entity.bodyWeight {
+            entity.bodyWeight = Double(editedBodyWeight)!
         }
         
         let editedChestCirc = self.editedChestCirc.isEmpty ? nil : NSNumber(value: Double(self.editedChestCirc)!)
-        if editedChestCirc != bodyEntry.chestCirc {
-            bodyEntry.chestCirc = editedChestCirc
+        if editedChestCirc != entity.chestCirc {
+            entity.chestCirc = editedChestCirc
         }
         
         let editedUpperArmCirc = self.editedUpperArmCirc.isEmpty ? nil : NSNumber(value: Double(self.editedUpperArmCirc)!)
-        if editedUpperArmCirc != bodyEntry.uprArmCirc {
-            bodyEntry.uprArmCirc = editedUpperArmCirc
+        if editedUpperArmCirc != entity.uprArmCirc {
+            entity.uprArmCirc = editedUpperArmCirc
         }
         
         let editedLowerArmCirc = self.editedLowerArmCirc.isEmpty ? nil : NSNumber(value: Double(self.editedLowerArmCirc)!)
-        if editedLowerArmCirc != bodyEntry.lwrArmCirc {
-            bodyEntry.lwrArmCirc = editedLowerArmCirc
+        if editedLowerArmCirc != entity.lwrArmCirc {
+            entity.lwrArmCirc = editedLowerArmCirc
         }
         
         let editedWaistCirc = self.editedWaistCirc.isEmpty ? nil : NSNumber(value: Double(self.editedWaistCirc)!)
-        if editedWaistCirc != bodyEntry.waistCirc {
-            bodyEntry.waistCirc = editedWaistCirc
+        if editedWaistCirc != entity.waistCirc {
+            entity.waistCirc = editedWaistCirc
         }
         
         let editedThighCirc = self.editedThighCirc.isEmpty ? nil : NSNumber(value: Double(self.editedThighCirc)!)
-        if editedThighCirc != bodyEntry.thighCirc {
-            bodyEntry.thighCirc = editedThighCirc
+        if editedThighCirc != entity.thighCirc {
+            entity.thighCirc = editedThighCirc
         }
         
         let editedCalfCirc = self.editedCalfCirc.isEmpty ? nil : NSNumber(value: Double(self.editedCalfCirc)!)
-        if editedCalfCirc != bodyEntry.calfCirc {
-            bodyEntry.calfCirc = editedCalfCirc
+        if editedCalfCirc != entity.calfCirc {
+            entity.calfCirc = editedCalfCirc
         }
         
-        if bodyEntry.hasChanges {
+        if entity.hasChanges {
             withAnimation {
                 bodyEntryEditedAlert = true
-                PersistenceController.save(viewContext)
             }
+            
+            self.safeSave(viewContext: viewContext)
+            
         } else {
             withAnimation {
                 noChangeAlert = true

@@ -160,4 +160,5 @@ struct HomeView: View {
     
     return HomeView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
 }

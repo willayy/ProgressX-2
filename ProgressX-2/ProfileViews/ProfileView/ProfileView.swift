@@ -23,9 +23,15 @@ struct ProfileView: View {
         ProfileNavigationController {
             ScrollView {
                 VStackWithSideBarButton {
+                    
                     BoldTitle(text: "Profile")
                         .padding(.horizontal, 20)
-                    
+                        .onAppear(perform: {
+                            /* Have to call this function here because
+                            of the order SwiftUI loads in views */
+                            viewModel.setViewStartValues(entity: profiles.first!)
+                        })
+                                        
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
                     
@@ -49,11 +55,11 @@ struct ProfileView: View {
                     InputTextField(
                         placeHolder: "Username",
                         text: $viewModel.userName,
-                        maxChars: 25,
                         markAsWrong: $viewModel.userNameIsInvalid,
-                        width: 0.5,
-                        errorMessage: $viewModel.userNameIsInvalidMsg
+                        errorMessage: $viewModel.userNameIsInvalidMsg,
+                        maxChars: 25
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change birth date")
@@ -69,24 +75,22 @@ struct ProfileView: View {
                     
                     BoldSubHeadline(text: "Change default rest-time (seconds)")
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Default rest-time",
-                        allowNegatives: false,
                         numberText: $viewModel.standardRestTime,
                         markAsWrong: $viewModel.standardRestTimeIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.standardRestTimeIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change weight and length units")
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
-                        segments: viewModel.unitSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.unitSegments
                     )
+                    .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Change smallest plate")
@@ -96,33 +100,31 @@ struct ProfileView: View {
                         selections: viewModel.smallestPlateSegments
                     )
                     .padding(.bottom, 10)
-                    .padding(.horizontal, 40)
+                    .padding(.horizontal, 55)
                     
                     BoldSubHeadline(text: "Change height")
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Height",
-                        allowNegatives: false,
                         numberText: $viewModel.height,
                         markAsWrong: $viewModel.heightIsInvalid,
-                        width: 0.3,
                         errorMessage: $viewModel.heightIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
                     BoldSubHeadline(text: "Gender")
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedGenderSegment,
-                        segments: viewModel.genderSegments,
-                        frameWidth: 230,
-                        horizontalPadding: 20
+                        segments: viewModel.genderSegments
                     )
+                    .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
                     Button(action: {
                         if validateInput() {
-                            viewModel.saveProfileChanges(viewContext: viewContext, profiles: profiles)
+                            viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
                         }
                     })
                     {
@@ -135,13 +137,15 @@ struct ProfileView: View {
                     .padding(.top, 20)
                     .buttonStyle(BorderedProminentButtonStyle())
                     .foregroundColor(.white)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
+                    
+                    if viewModel.savingError {
+                        SavingErrorText()
+                            .padding(.horizontal, 20)
+                    }
                     
                 }
             }
-            .onAppear(perform: {
-                viewModel.setViewStartValues(profiles: profiles)
-            })
         }
     }
     
@@ -181,4 +185,5 @@ struct ProfileView: View {
     
     return ProfileView()
         .environment(\.managedObjectContext, context)
+        .environmentObject(ShowMenuController())
 }

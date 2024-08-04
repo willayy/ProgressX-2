@@ -41,63 +41,63 @@ struct CreateNewExerciseView: View {
                 BoldTitle(text: "Create new exercise")
                     .padding(.horizontal, 20)
                 
-                if viewModel.exerciseCreatedAlert {
-                    SubmitAlert(
-                        message: "Successfully created new Exercise!",
-                        color: .green,
-                        showAlertState: $viewModel.exerciseCreatedAlert
-                    )
-                }
+                BoldSubHeadline(text: "Exercise name")
+                    .padding(.top, 10)
                 
                 InputTextField(
-                    placeHolder: "New exercise name",
+                    placeHolder: "Exercise name",
                     text: $viewModel.enteredExerciseName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
+                BoldSubHeadline(text: "Exercise description")
                 
-                InputTextField(
-                    placeHolder: "New exercise description",
+                inputLongTextField(
+                    placeHolder: "Exercise description",
                     text: $viewModel.enteredExerciseDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg
+                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .frame(height: 150)
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Exercise type?")
+                BoldSubHeadline(text: "Exercise type")
                 
-                LightSubHeadline(text: "Should the exercise be based on doing an amount of reps or doing an amount of time?")
-                    .padding(.horizontal, 30)
+                HiddenLightSubHeadline(
+                    title: "What does exercise type mean?",
+                    text: "There are two types of exercises in ProgressX, time based exercise and rep based exercises. Time based exercises are exercises which you do a certain amount of time on, like static holds or the \"Plank\". Rep based exercsies are exercises where you do a certain amount of repetitions, like bench press or squats.",
+                    alignment: .leading
+                )
+                .padding(.horizontal, 30)
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.selectedTypeOfExercise,
-                    segments: viewModel.exerciseTypeOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.exerciseTypeOptions
                 )
+                .padding(.horizontal, 100)
                 
                 BoldSubHeadline(text: "Add PR for this exercise?")
                     .padding(.top, 20)
                 
                 HiddenLightSubHeadline(
                     title: "What are PR's?",
-                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did."
+                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 40)
                 
                 BasicSegPicker(
                     selectedSegment: $viewModel.addPr,
-                    segments: viewModel.addPrOptions,
-                    frameWidth: 230,
-                    horizontalPadding: 100
+                    segments: viewModel.addPrOptions
                 )
-                    .padding(.bottom, 5)
+                .padding(.horizontal, 100)
+                .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
                 if viewModel.addPr == "Yes" {
@@ -106,54 +106,51 @@ struct CreateNewExerciseView: View {
                     if viewModel.selectedTypeOfExercise == "Reps" {
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedTypeOfPr,
-                            segments: viewModel.repBasedPrOptions,
-                            frameWidth: 230,
-                            horizontalPadding: 100
+                            segments: viewModel.repBasedPrOptions
                         )
+                        .padding(.horizontal, 100)
                         .padding(.bottom, 5)
                     }
                     
-                    InputDecimalNumberField(
+                    DecimalTextField(
                         placeHolder: "Load (\(weightUnit))", 
-                        allowNegatives: false,
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        width: 0.6,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
                     )
+                    .padding(.horizontal, 60)
 
                     if viewModel.selectedTypeOfExercise == "Time" {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: "PR time in seconds", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: "Reps", 
-                            allowNegatives: false,
                             numberText: $viewModel.enteredPrQuantity,
                             markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
+                        .padding(.horizontal, 60)
                     }
                 }
                 
-                BoldSubHeadline(text: "Add muslce categories to this exercise?")
+                BoldSubHeadline(text: "Add muscle categories to this exercise?")
                     .padding(.top, 15)
                 
                 SelectCategoriesList(
                     selectedCategories: $viewModel.selectedCategories,
                     categories: _categories
                 )
+                .padding(.horizontal, 40)
                 
                 Button(action: {
                     if validateInput() {
-                        viewModel.createNewExercise(viewContext: viewContext)
+                        viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
                     }
                 }) {
@@ -166,6 +163,11 @@ struct CreateNewExerciseView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
+                
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
                 
             }
         }

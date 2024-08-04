@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class CreateNewProfile4ViewModel: ObservableObject {
+class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
     
     // Values for input fields
     @Published var benchPress1RM = ""
@@ -35,21 +35,25 @@ class CreateNewProfile4ViewModel: ObservableObject {
     @Published var situpsAmrapIsInvalidMsg = ""
     @Published var pushupsAmrapIsInvalidMsg = ""
     
+    // Variables for saveEntry
+    @Published public var bodyWeight: Double? = nil
+    
     // Constants specific to elements in this view
-    let inputFieldWidth: Double = 0.2
     let minScaleFactor: Double = 0.05
     let textWidth: Double = 150
     
-    public func addExtraInfo(viewContext: NSManagedObjectContext, bodyEntries: FetchedResults<BodyEntry>, exercises: FetchedResults<Exercise>, personalRecords: FetchedResults<PersonalRecord>) {
+    public func saveEntry(viewContext: NSManagedObjectContext) {
         
-        let bodyWeight: Double = bodyEntries.first!.bodyWeight
+        let personalRecordsFr: NSFetchRequest = PersonalRecord.fetchRequest()
+        let personalRecords = PersistenceController.fetch(viewContext, fetchRequest: personalRecordsFr)
+        
+        let exercisesFr: NSFetchRequest = Exercise.fetchRequest()
+        let exercises = PersistenceController.fetch(viewContext, fetchRequest: exercisesFr)
         
         // Wipe all prs
         for pr in personalRecords {
             PersistenceController.delete(viewContext, object: pr)
         }
-        
-        PersistenceController.save(viewContext)
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
         for exercise in exercises {
@@ -95,7 +99,7 @@ class CreateNewProfile4ViewModel: ObservableObject {
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        weightLoad: bodyWeight,
+                        weightLoad: bodyWeight!,
                         quantity: Double(situpsAmrap)!,
                         date: Date(),
                         type: "maxreps"
@@ -104,7 +108,7 @@ class CreateNewProfile4ViewModel: ObservableObject {
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
-                        weightLoad: bodyWeight,
+                        weightLoad: bodyWeight!,
                         quantity: Double(pushupsAmrap)!,
                         date: Date(),
                         type: "maxreps"
@@ -113,7 +117,16 @@ class CreateNewProfile4ViewModel: ObservableObject {
                 continue
             }
         }
-        PersistenceController.save(viewContext)
+    
+        self.safeSave(viewContext: viewContext)
+        
+    }
+    
+    public func generateBasicRoutine(viewContext: NSManagedObjectContext) {
+        if !PersistenceController.basicRoutineExists(viewContext) {
+            PersistenceController.generateBasicRoutine(viewContext)
+            PersistenceController.save(viewContext)
+        }
     }
     
 }

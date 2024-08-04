@@ -14,12 +14,16 @@ struct EditTemplateSetView: View {
     @Binding var navPath: [Int]
     @Binding var selectedTemplateSet: TemplateSet?
     @StateObject private var viewModel = EditTemplateSetViewModel()
+    @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
         ScrollView {
             VStack {
                 
                 BoldTitle(text: "Editing")
+                    .onAppear(perform: {
+                        viewModel.setViewStartValues(entity: selectedTemplateSet!)
+                    })
                 
                 Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 10)
@@ -38,26 +42,29 @@ struct EditTemplateSetView: View {
                     )
                 }
                 
-                BoldSubHeadline(text: "Change name and description")
+                BoldSubHeadline(text: "Edit set name")
                 
                 InputTextField(
-                    placeHolder: "New set name",
+                    placeHolder: "Set name",
                     text: $viewModel.editedSetName,
-                    maxChars: 25,
                     markAsWrong: $viewModel.editedSetNameIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.editedSetNameIsInvalidMsg
+                    errorMessage: $viewModel.editedSetNameIsInvalidMsg,
+                    maxChars: 25
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 5)
                 
-                InputTextField(
-                    placeHolder: "New set description",
+                BoldSubHeadline(text: "Edit set description")
+                
+                inputLongTextField(
+                    placeHolder: "Set description",
                     text: $viewModel.editedSetDesc,
-                    maxChars: 200,
                     markAsWrong: $viewModel.editedSetDescIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.editedSetDescIsInvalidMsg
+                    errorMessage: $viewModel.editedSetDescIsInvalidMsg,
+                    maxChars: 200
                 )
+                .frame(height: 150)
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
                 BoldSubHeadline(text: "Edit or add thresholds for this set")
@@ -72,11 +79,12 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change position of this set in its session")
+                BoldSubHeadline(text: "Edit position of this set in its session")
                 
                 HiddenLightSubHeadline(
                     title: "What does set position mean?",
-                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session."
+                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session.",
+                    alignment: .leading
                 )
                 .padding(.horizontal, 20)
                 
@@ -87,90 +95,93 @@ struct EditTemplateSetView: View {
                     )
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the exercise of the set")
+                BoldSubHeadline(text: "Edit the exercise of the set")
                 
                 SetExerciseSelectionList(
                     selectedExercise: $viewModel.selectedExercise,
                     searchWord: $viewModel.searchWord
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the rest time of the set")
+                BoldSubHeadline(text: "Edit the rest time of the set")
                 
-                InputDecimalNumberField(
+                DecimalTextField(
                     placeHolder: "Rest time",
-                    allowNegatives: false,
                     numberText: $viewModel.editedRestTime,
                     markAsWrong: $viewModel.editedRestTimeIsInvalid,
-                    width: 0.6,
                     errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                 )
+                .padding(.horizontal, 60)
                 .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Change the load type of the set")
+                BoldSubHeadline(text: "Edit the load type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedLoadType,
                     selections: viewModel.loadTypeSelections()
                 )
+                .onChange(of: viewModel.editedLoadType, initial: true) { oldValue, newValue in
+                    if newValue == "Numerical" {
+                        withAnimation { addBodyWeightButton = true }
+                    } else {
+                        withAnimation { addBodyWeightButton = false }
+                    }
+                }
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the quantity type of the set")
+                BoldSubHeadline(text: "Edit the quantity type of the set")
                 
                 StringSelectionList(
                     selected: $viewModel.editedQuantityType,
                     selections: viewModel.quantityTypeSelections()
                 )
                 .padding(.bottom, 20)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 50)
                 
-                BoldSubHeadline(text: "Change the quantity or load of the set")
+                BoldSubHeadline(text: "Edit the load of the set")
                 
                 HStack {
-                    InputDecimalNumberField(
-                        placeHolder: viewModel.loadPlaceholder(
-                            viewContext: viewContext
-                        ), 
-                        allowNegatives: false,
+                    DecimalTextField(
+                        placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
                         numberText: $viewModel.editedSetLoad,
                         markAsWrong: $viewModel.editedSetLoadIsInvalid,
-                        width: 0.6,
-                        errorMessage: $viewModel.editedSetLoadIsInvalidMsg
+                        errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
+                        bodyWeightButton: addBodyWeightButton
                     )
                     
                     if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
                         Text("%")
                     }
                 }
+                .padding(.horizontal, 60)
+                
+                BoldSubHeadline(text: "Edit the quantity of the set")
+                    .padding(.top, 5)
                 
                 if viewModel.selectedExercise?.exerciseType == "reps" {
                     HStack {
-                        InputIntegerNumberField(
+                        IntegerTextField(
                             placeHolder: viewModel.quantityPlaceholder(),
-                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
-                        .padding(.top, 5)
                         
                         if viewModel.quantityPlaceholder() == "Percentage" {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                 } else {
                     HStack {
-                        InputDecimalNumberField(
+                        DecimalTextField(
                             placeHolder: viewModel.quantityPlaceholder(), 
-                            allowNegatives: false,
                             numberText: $viewModel.editedSetQuantity,
                             markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            width: 0.6,
                             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                         )
                         .padding(.top, 5)
@@ -179,14 +190,12 @@ struct EditTemplateSetView: View {
                             Text("%")
                         }
                     }
+                    .padding(.horizontal, 60)
                 }
                 
                 Button {
                     if validateInput() {
-                        viewModel.saveTemplateSetChanges(
-                            viewContext: viewContext,
-                            selectedTemplateSet: selectedTemplateSet!
-                        )
+                        viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
                     }
                 } label: {
                     Text("Save changes")
@@ -199,11 +208,13 @@ struct EditTemplateSetView: View {
                 .padding(.top, 20)
                 .padding(.bottom, 10)
                 
+                if viewModel.savingError {
+                    SavingErrorText()
+                        .padding(.horizontal, 20)
+                }
+                
             }
         }
-        .onAppear(perform: {
-            viewModel.setViewStartValues(selectedTemplateSet: selectedTemplateSet!)
-        })
     }
     
     private func validateInput() -> Bool {

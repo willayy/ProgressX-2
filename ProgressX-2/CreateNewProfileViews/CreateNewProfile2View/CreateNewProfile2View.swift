@@ -10,7 +10,6 @@ import SwiftUI
 
 struct CreateNewProfile2View: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
     @Binding var navPath: [Int]
     
     var body: some View {
@@ -24,46 +23,27 @@ struct CreateNewProfile2View: View {
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.5);
              
-            Text("Do you wish to supply some extra data so we can set the correct PR's for some common exercises and make sure your profile body-metric's are correct? ")
+            Text("We would like you to provide some extra information to set up your profile correctly. This data will only be saved locally.")
                 .font(.subheadline)
                 .fontWeight(.light)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 40)
                 .minimumScaleFactor(0.5);
-            
-            HStack(spacing: 20) {
                 
-                Button {
-                    goToHomeView()
-                } label: {
-                    Text("No, im good!")
-                        .frame(maxWidth: .infinity)
-                        .frame(width: 100, height: 50)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                    .buttonStyle(.borderedProminent)
-                
-                Button {
-                    navPath.append(2)
-                } label: {
-                    Text("Yes, let's continue")
-                        .frame(maxWidth: .infinity)
-                        .frame(width: 100, height: 50)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                    .buttonStyle(.borderedProminent)
-                
+            Button {
+                navPath.append(2)
+            } label: {
+                Text("Yes, let's continue!")
+                    .frame(maxWidth: .infinity)
+                    .frame(width: 100, height: 50)
+                    .foregroundColor(Color("buttonTextColor"))
             }
-                .padding(.top, 20)
+            .buttonStyle(.borderedProminent)
+            .padding(.top, 20)
             
         }
     }
-    
-    private func goToHomeView() {
-        viewRouter.rootView = .HomeView
-    }
-    
 }
     
 #Preview {

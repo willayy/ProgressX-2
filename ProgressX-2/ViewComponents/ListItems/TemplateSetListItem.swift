@@ -20,26 +20,26 @@ struct TemplateSetListItem: View {
     var body: some View {
         
         VStack(alignment: .leading, content: {
-            HStack {
+            HStack() {
                 VStack(alignment: .leading) {
                     
                     Text(set.timePeriodName ?? "")
                     
                     (Text("Exercise: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setExerciseName ?? "")"))
+                     + Text("\(set.setExerciseName!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Quantity: ")
                         .fontWeight(.bold)
-                     + Text("\(set.quantityTodoString!)"))
+                     + Text("\(set.setQuantityString!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Load: ")
                         .fontWeight(.bold)
-                     + Text("\(set.loadTodoString!)"))
+                     + Text("\(set.setLoadString!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
@@ -50,7 +50,7 @@ struct TemplateSetListItem: View {
                     .minimumScaleFactor(0.6)
                     
                 }
-                .frame(width: 155, height: 45)
+                .frame(width: 155, height: 45, alignment: .leading)
                 .padding(.vertical, 10)
                 .sheet(isPresented: $showMagnifiedView) {
                     MagnifiedTemplateSetView(

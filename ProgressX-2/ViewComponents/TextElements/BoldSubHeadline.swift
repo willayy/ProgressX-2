@@ -10,7 +10,8 @@ import SwiftUI
 
 struct BoldSubHeadline: View {
     
-    let text: String
+    public let text: String
+    public var alignment: TextAlignment = .center
     
     var body: some View {
         Text(text)
@@ -18,7 +19,7 @@ struct BoldSubHeadline: View {
             .font(.subheadline)
             .fontWeight(.bold)
             .foregroundColor(.black)
-            .multilineTextAlignment(.center)
+            .multilineTextAlignment(alignment)
             .minimumScaleFactor(0.5)
     }
 }

@@ -15,11 +15,10 @@ struct InputTextField: View {
     
     let placeHolder: String
     @Binding var text: String
-    let maxChars: Int
     @Binding var markAsWrong: Bool
-    let width: CGFloat
-    @State private var shouldShake = false
     @Binding var errorMessage: String
+    let maxChars: Int
+    @State private var shouldShake = false
 
     private func onReceiveFunction(new: String) -> String {
         var filtered = new.filter { !nonAllowedChars.contains($0) }
@@ -34,6 +33,13 @@ struct InputTextField: View {
     }
     
     var body: some View {
-        InputField(value: $text, markAsWrong: $markAsWrong, errorMessage: errorMessage, placeHolder: placeHolder, width: width, onReceiveFunction: onReceiveFunction(new:), onSubmitFunction: onSubmitFunction(curr:))
+        InputField(
+            value: $text,
+            markAsWrong: $markAsWrong,
+            errorMessage: errorMessage,
+            placeHolder: placeHolder,
+            onReceiveFunction: onReceiveFunction(new:),
+            onSubmitFunction: onSubmitFunction(curr:)
+        )
     }
 }
