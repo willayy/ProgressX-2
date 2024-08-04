@@ -52,7 +52,7 @@ class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel, 
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         let templateWeek = TemplateWeek(
             viewContext,
-            templateCycle: selectedTemplateCycle
+            templateCycle: selectedTemplateCycle!
         )
         
         // Get all training cycles

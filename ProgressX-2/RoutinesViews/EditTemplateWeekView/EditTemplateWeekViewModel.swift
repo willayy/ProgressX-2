@@ -103,7 +103,7 @@ class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewMo
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         let session = TemplateSession(
             viewContext,
-            templateWeek: selectedTemplateWeek
+            templateWeek: selectedTemplateWeek!
         )
         
         // Get all trainingWeeks

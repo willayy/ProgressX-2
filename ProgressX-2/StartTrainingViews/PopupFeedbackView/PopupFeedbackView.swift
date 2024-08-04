@@ -63,13 +63,12 @@ struct PopupFeedbackView: View {
                 
             } else {
                 BoldTitle(text: self.text)
-                InputIntegerNumberField(
+                IntegerTextField(
                     placeHolder: viewModel.quantityPlaceholder(),
-                    allowNegatives: false,
                     numberText: $viewModel.editedSetQuantity,
                     markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                    width: 0.6,
-                    errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                    errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
+                    allowNegatives: false
                 )
                 .padding(.top, 5)
                 

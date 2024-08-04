@@ -13,8 +13,6 @@ struct DecimalTextField: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @Environment(\.managedObjectContext) private var viewContext
-    
     private var allowedChars = "1234567890.,"
     private let maxChars = 7
     let placeHolder: String

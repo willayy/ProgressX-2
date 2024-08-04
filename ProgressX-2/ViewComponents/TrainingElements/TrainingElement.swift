@@ -49,7 +49,7 @@ struct TrainingElement: View {
                             .padding(.leading)
                         Spacer()
                         
-                        Text(currentSet!.loadTodoString)
+                        Text(currentSet!.loadDoneString)
                             .bold()
                             .multilineTextAlignment(.trailing)
                             .padding(.trailing)

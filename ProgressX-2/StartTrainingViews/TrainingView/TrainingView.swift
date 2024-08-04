@@ -83,7 +83,7 @@ struct TrainingView: View {
                 }
         .toolbar {
             Button(action:{
-                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                currentTrainingSet = AllTrainingSets.first(where: {$0.isComplete})
             }) {
                 Text("Skip set")
             }

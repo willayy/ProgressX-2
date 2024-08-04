@@ -128,7 +128,7 @@ class CreateNewTemplateSetViewModel: SavingViewModel, AddingViewModel {
                 
         let set = TemplateSet(
             viewContext,
-            templateSession: selectedTemplateSession,
+            templateSession: selectedTemplateSession!,
             exercise: selectedExercise!,
             loadType: typeMap[selectedLoadType]!,
             load: Double(newSetLoad)!,

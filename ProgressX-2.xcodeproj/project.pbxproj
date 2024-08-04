@@ -171,10 +171,10 @@
 		8F7F16292C51228100F37C58 /* TimerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16282C51228100F37C58 /* TimerContentView.swift */; };
 		8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162A2C51232E00F37C58 /* TimerExtension.swift */; };
 		8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162C2C51299700F37C58 /* TimerViewModel.swift */; };
-		8F7F16302C53A89300F37C58 /* TrainingElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162F2C53A89300F37C58 /* TrainingElement.swift */; };
 		8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */; };
 		8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F092C21A0C30072A39D /* ProfileView.swift */; };
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
+		8FAFE55F2C5FBE6F00143223 /* TrainingElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162F2C53A89300F37C58 /* TrainingElement.swift */; };
 		8FF9C9C62C3FE67D00E3D95A /* StartWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */; };
 		8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */; };
 /* End PBXBuildFile section */
@@ -444,7 +444,6 @@
 				831F2C2D2C24E532007A7A8A /* TemplateSessionListItem.swift */,
 				831F2C2F2C24E54B007A7A8A /* TemplateSetListItem.swift */,
 				83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */,
-				83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */,
 				8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */,
 				83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */,
 			);
@@ -1197,6 +1196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FAFE55F2C5FBE6F00143223 /* TrainingElement.swift in Sources */,
 				83BD39742C49244A008E09A0 /* ViewAllWeighInsView.swift in Sources */,
 				836485EE2C36CACA006EB0C0 /* EditTemplateSetView.swift in Sources */,
 				83BD39622C467E17008E09A0 /* PieChart.swift in Sources */,

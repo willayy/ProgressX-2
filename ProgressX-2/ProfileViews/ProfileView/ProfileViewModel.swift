@@ -50,14 +50,6 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
     
     typealias T = Profile
     
-    var smallestPlateSegments: [String] {
-        if selectedUnitSegment == "Metric" {
-            return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
-        } else {
-            return ["2.5 lbs", "5 lbs", "10 lbs"]
-        }
-    }
-    
     public func setViewStartValues(entity: Profile) -> Void {
         self.standardRestTime = String(format: "%.2f", entity.standardRestTime)
         self.selectedUnitSegment = (entity.isMetric) ? "Metric" : "Imperial"

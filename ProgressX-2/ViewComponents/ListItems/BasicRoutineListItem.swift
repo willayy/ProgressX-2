@@ -76,14 +76,13 @@ struct BasicRoutineListItem: View {
                 selectedTrainingCycle = routineCycle(routine: routine).first
                 selectedTrainingWeek = routineWeeks(routine: routine).first
                 selectedTrainingSession = routineSessions(routine: routine).first
-                print(selectedTrainingSession?.trainingWeek?.timePeriodName)
-                AllTrainingSets = routineSet1(routine: routine)
                 print(selectedTrainingSession)
-                //AllTrainingSets = routineSet(Session: selectedTrainingSession!)
+                //AllTrainingSets = routineSet1(routine: routine)
+                AllTrainingSets = routineSet(Session: selectedTrainingSession!)
                 
-                print(AllTrainingSets.first?.timePeriodName)
+                print(selectedTrainingSession?.trainingSets?.count)
                 print(AllTrainingSets.last?.timePeriodName)
-                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                currentTrainingSet = AllTrainingSets.first
                 exercise = currentTrainingSet?.exercise
                 
                 navPath.append(2)
@@ -136,6 +135,14 @@ struct BasicRoutineListItem: View {
     private func routineSet(Session: TrainingSession) -> [TrainingSet] {
         let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
         let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingSession == %@", Session),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingSetFetchRequest.predicate = compound1
+        let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
+        return SetResults
+    }
+    
+    private func routineSe2(Session: TrainingSession) -> [TrainingSet] {
+        let trainingSetFetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
+        let compound1 = NSPredicate(format: "trainingSession == %@", Session)
         trainingSetFetchRequest.predicate = compound1
         let SetResults = PersistenceController.fetch(viewContext, fetchRequest: trainingSetFetchRequest)
         return SetResults
