@@ -33,11 +33,11 @@ struct CreateNewProfile4View: View {
     @StateObject private var viewModel = CreateNewProfile4ViewModel()
     
     var body: some View {
-        
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-        
+            
         ScrollView(showsIndicators: false) {
+            
             VStack(alignment: .center, spacing: 10) {
+                
                 Text("Extra information on basic exercises")
                     .font(.title)
                     .fontWeight(.bold)
@@ -64,7 +64,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: weightUnit, 
+                            placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.benchPress1RM,
                             markAsWrong: $viewModel.benchPress1RMIsInvalid,
                             errorMessage: $viewModel.benchPress1RMIsInvalidMsg
@@ -76,7 +76,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: weightUnit, 
+                            placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.squat1RM,
                             markAsWrong: $viewModel.squat1RMIsInvalid,
                             errorMessage: $viewModel.squat1RMIsInvalidMsg
@@ -88,7 +88,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: weightUnit, 
+                            placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.shoulderPress1RM,
                             markAsWrong: $viewModel.shoulderPress1RMIsInvalid,
                             errorMessage: $viewModel.shoulderPress1RMIsInvalidMsg
@@ -100,7 +100,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: weightUnit, 
+                            placeHolder: viewModel.weightUnit(viewContext), 
                             numberText: $viewModel.deadLift1RM,
                             markAsWrong: $viewModel.deadLift1RMIsInvalid,
                             errorMessage: $viewModel.deadLift1RMIsInvalidMsg

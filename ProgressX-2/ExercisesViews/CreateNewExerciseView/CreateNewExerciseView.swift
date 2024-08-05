@@ -9,12 +9,6 @@ import SwiftUI
 
 struct CreateNewExerciseView: View {
     
-    // Fetch bodyEntres to get current weight
-    @FetchRequest(
-        entity: BodyEntry.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: false)]
-    ) private var bodyEntries: FetchedResults<BodyEntry>
-    
     // Fetch Exercises
     @FetchRequest(
         entity: Exercise.entity(),
@@ -32,9 +26,6 @@ struct CreateNewExerciseView: View {
     @Binding public var navPath: [Int]
     
     var body: some View {
-        
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-        
         ScrollView {
             VStack(alignment: .center) {
                 
@@ -92,7 +83,7 @@ struct CreateNewExerciseView: View {
                 )
                 .padding(.horizontal, 40)
                 
-                BasicSegPicker(
+                BooleanSegPicker(
                     selectedSegment: $viewModel.addPr,
                     segments: viewModel.addPrOptions
                 )
@@ -100,27 +91,31 @@ struct CreateNewExerciseView: View {
                 .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
-                if viewModel.addPr == "Yes" {
+                if viewModel.addPr {
                     
                     // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
-                    if viewModel.selectedTypeOfExercise == "Reps" {
+                    if viewModel.selectedTypeOfExercise == "Rep based" {
+                        
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedTypeOfPr,
                             segments: viewModel.repBasedPrOptions
                         )
                         .padding(.horizontal, 100)
                         .padding(.bottom, 5)
+                        
                     }
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(weightUnit))", 
+                        placeHolder: "Load (\(viewModel.weightUnit))",
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg
+                        errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
+                        bodyWeightButton: true
                     )
                     .padding(.horizontal, 60)
 
-                    if viewModel.selectedTypeOfExercise == "Time" {
+                    if viewModel.selectedTypeOfExercise == "time" {
+                        
                         DecimalTextField(
                             placeHolder: "PR time in seconds", 
                             numberText: $viewModel.enteredPrQuantity,
@@ -128,7 +123,9 @@ struct CreateNewExerciseView: View {
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
                         .padding(.horizontal, 60)
-                    } else if viewModel.selectedTypeOfExercise == "Reps" && viewModel.selectedTypeOfPr == "AMRAP" {
+                        
+                    } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
+                        
                         IntegerTextField(
                             placeHolder: "Reps", 
                             numberText: $viewModel.enteredPrQuantity,
@@ -136,6 +133,7 @@ struct CreateNewExerciseView: View {
                             errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                         )
                         .padding(.horizontal, 60)
+                        
                     }
                 }
                 
@@ -149,33 +147,42 @@ struct CreateNewExerciseView: View {
                 .padding(.horizontal, 40)
                 
                 Button(action: {
+                    
                     if validateInput() {
+                        
                         viewModel.saveEntry(viewContext: viewContext)
                         navPath.removeLast()
+                        
                     }
+                    
                 }) {
+                    
                     Text("Create new exercise")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
                 
                 if viewModel.savingError {
+                    
                     SavingErrorText()
                         .padding(.horizontal, 20)
+                    
                 }
                 
             }
         }
         .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
-            viewModel.prTypeChanged(bodyEntries: bodyEntries)
+            viewModel.prTypeChanged()
         })
         .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {
-            viewModel.exerciseTypeChanged(bodyEntries: bodyEntries)
+            viewModel.exerciseTypeChanged()
         })
     }
     
@@ -212,7 +219,7 @@ struct CreateNewExerciseView: View {
             fieldInvalid: $viewModel.enteredExerciseDescIsInvalid
         )
         
-        if viewModel.addPr == "Yes" {
+        if viewModel.addPr {
             valid += loadFieldValidtor.valideField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
             valid += quantityFieldValidtor.valideField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
         }

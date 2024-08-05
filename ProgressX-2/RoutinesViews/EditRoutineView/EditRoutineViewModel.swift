@@ -72,8 +72,7 @@ class EditRoutineViewModel: SavingViewModel, AddingViewModel, EditingViewModel, 
         }
         
         self.safeSave(viewContext: viewContext)
+        
     }
-    
-    
     
 }
