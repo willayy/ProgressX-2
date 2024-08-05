@@ -23,7 +23,7 @@ struct PopupFeedbackView: View {
                 
                 if ((currentTrainingSet?.exercise?.exerciseType = "reps") != nil) {
                     BoldTitle(text: "Did you complete all your reps?")
-                } else if ((currentTrainingSet?.exercise?.exerciseType = "time") != nil){
+                } else if ((currentTrainingSet?.exercise?.exerciseType = "time") != nil) {
                     BoldTitle(text: "Did you complete the exercise witin the given timeframe")
                 }
                 
