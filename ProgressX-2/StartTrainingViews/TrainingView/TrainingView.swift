@@ -42,18 +42,10 @@ struct TrainingView: View {
             if currentTrainingSet != nil {
                 TrainingElement(currentSet: $currentTrainingSet)
             }
-            
-            Button(action:{
-                navPath.append(3)
-            }) {
-                Text("Done")
-            }
     
             if !DoneButton {
                 Button(action:{
                     presentPopup.toggle()
-                    print(currentTrainingSet?.quantityTodoString)
-                    print(AllTrainingSets.count)
                 }) {
                     Text("Done")
                         .frame(width: 100, height: 40)
@@ -170,7 +162,6 @@ struct TrainingView: View {
     @State var selectedTrainingSession: TrainingSession? = allTrainingSessions.first(where: {$0.timePeriodName == "Session 1"})
     
     @State var allTrainingSets = selectedTrainingSession?.trainingSets!.allObjects as! [TrainingSet]
-    allTrainingSets.sorted(by: {$0.positionIndex > $1.positionIndex})
     
     @State var CurrentTrainingSet = allTrainingSets.first
     

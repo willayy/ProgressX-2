@@ -115,7 +115,6 @@ struct TrainingElement: View {
     @State var selectedTrainingSession: TrainingSession? = allTrainingSessions.first(where: {$0.timePeriodName == "Session 1"})
     
     @State var allTrainingSets = selectedTrainingSession?.trainingSets!.allObjects as! [TrainingSet]
-    allTrainingSets.sorted(by: {$0.positionIndex > $1.positionIndex})
     
     @State var currentTrainingSet = allTrainingSets.first
     
