@@ -43,8 +43,6 @@ extension CompleteableTimePeriod {
                 }
             }
         }
-        
-        cascadeCompletion()
     }
     
     /// Skips a Completeable TimePeriod.
@@ -70,6 +68,7 @@ extension CompleteableTimePeriod {
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
+        cascadeCompletion()
     }
     
     /// If a child is completed and all its parent children are now complete, make parent complete.
@@ -91,7 +90,7 @@ extension CompleteableTimePeriod {
             
             let trainingSet = self as! TrainingSet
             let trainingSession = trainingSet.trainingSession!
-            if trainingSession.childrenAreComplete() { trainingSet.isComplete = true }
+            if trainingSession.childrenAreComplete() { trainingSession.isComplete = true }
             
         default:
             break

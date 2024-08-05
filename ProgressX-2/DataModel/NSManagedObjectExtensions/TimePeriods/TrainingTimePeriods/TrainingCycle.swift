@@ -44,14 +44,12 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
@@ -75,21 +73,15 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
-        // Throw if true.
         if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
-    }
-    
-    private func validateCompleteables() throws {
-        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        // If there are no weeks abort.
-        if weeks.count == 0 { return }
-        // Else check if count of completed weeks is equal to all weeks.
-        let completedWeeks = weeks.filter { $0.isComplete }
-        if completedWeeks.count == weeks.count && !self.isComplete {
+        
+        // If cycle is incomplete but its week are throw an error.
+        if !self.isComplete && self.childrenAreComplete() {
             throw ValidationNSErrors.cycleInCompleteWithCompleteWeeks.toNSError()
         }
+        
     }
     
 }
