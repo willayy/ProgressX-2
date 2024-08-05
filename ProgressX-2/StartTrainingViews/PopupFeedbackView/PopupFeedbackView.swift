@@ -106,30 +106,14 @@ struct PopupFeedbackView: View {
 
 #Preview{
     let context = PersistenceController.preview.container.viewContext
-    let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let fetchRequest: NSFetchRequest = TrainingSet.fetchRequest()
+    let trainingSets = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
-    let routine = routines.first!
+    @State var currentTrainingSet = trainingSets.first
+    @State var popupBool: Bool = false
     
-    @State var navPath: [Int] = [Int]()
-    var selectedRoutine: Routine? = routine
-    let allTrainingCycles = routine.trainingCycles!.allObjects as! [TrainingCycle]
-    var selectedTrainingCycle: TrainingCycle? = allTrainingCycles.first!
-    
-    let allTrainingWeeks = selectedTrainingCycle?.trainingWeeks!.allObjects as! [TrainingWeek]
-    var selectedTrainingWeek: TrainingWeek? = allTrainingWeeks.first!
-    
-    let allTrainingSessions = selectedTrainingWeek?.trainingSessions!.allObjects as! [TrainingSession]
-    var selectedTrainingSession: TrainingSession? = allTrainingSessions.first(where: {$0.timePeriodName == "Session 1"})
-    
-    var allTrainingSets = selectedTrainingSession?.trainingSets!.allObjects as! [TrainingSet]
-    allTrainingSets.sorted(by: {$0.positionIndex > $1.positionIndex})
-    
-    @State var CurrentTrainingSet = allTrainingSets.first
-    
-    @State var Exercise = CurrentTrainingSet!.exercise
-    
-    @State var popupbool: Bool = false
-    
-    return PopupFeedbackView(currentTrainingSet: $CurrentTrainingSet, exercise: $Exercise, presentPopup: $popupbool).environment(\.managedObjectContext, context)
+    return PopupFeedbackView(
+        currentTrainingSet: $currentTrainingSet,
+        presentPopup: $popupBool
+    ).environment(\.managedObjectContext, context)
 }
