@@ -15,8 +15,12 @@ struct StatisticsView: View {
     @Binding var navPath: [Int]
     @Binding var editingPr: PersonalRecord?
     @Binding var newPrType: String?
-    @State private var displayedPrType = "1RM"
-    private let prSegments: [String] = ["AMRAP", "1RM"]
+    @State private var displayedPrType = "onerepmax"
+    
+    private let prSegments: [String : String] = [
+        "AMRAP" : "maxreps",
+        "1RM" : "onerepmax"
+    ]
     
     var body: some View {
         ScrollView {
@@ -53,7 +57,7 @@ struct StatisticsView: View {
                 
                 if exercise!.exerciseType == "reps" {
                     
-                    if displayedPrType == "1RM" {
+                    if displayedPrType == "onerepmax" {
                         SingleChart(
                             exercise: exercise!,
                             set: "1RM",

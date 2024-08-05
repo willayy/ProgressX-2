@@ -12,8 +12,8 @@ import SwiftUI
 class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Segmented picker variables
-    @Published public var selectedUnitSegment: String = "Metric"
-    @Published public var selectedGenderSegment: String = "Male"
+    @Published public var selectedUnitSegment: Bool = true
+    @Published public var selectedGenderSegment: String = "male"
     
     // Input variables
     @Published public var userName: String = ""
@@ -38,10 +38,20 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
     @Published public var standardRestTimeIsInvalidMsg: String = ""
     
     // Segments for segment picker
-    let unitSegments = ["Metric", "Imperial"]
-    let genderSegments = ["Male", "Female"]
+    let unitSegments: [String : Bool] = [
+        "Metric" : true,
+        "Imperial" : false
+    ]
+    
+    let genderSegments: [String : String] = [
+        "Male" : "male",
+        "Female" : "female"
+    ]
+    
+    typealias T = Profile
+    
     var smallestPlateSegments: [String] {
-        if selectedUnitSegment == "Metric" {
+        if selectedUnitSegment {
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
         } else {
             return ["2.5 lbs", "5 lbs", "10 lbs"]
@@ -52,11 +62,11 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
     
     public func setViewStartValues(entity: Profile) -> Void {
         self.standardRestTime = String(format: "%.2f", entity.standardRestTime)
-        self.selectedUnitSegment = (entity.isMetric) ? "Metric" : "Imperial"
+        self.selectedUnitSegment = selectedUnitSegment
         self.height = String(format: "%.2f", entity.userHeight)
         self.birthDay = entity.birthDay!
         self.userName = entity.profileUserName!
-        self.selectedGenderSegment = (entity.gender == "male") ? "Male" : "Female"
+        self.selectedGenderSegment = selectedGenderSegment
         self.selectedSmallestPlate = {
             if entity.isMetric {
                 return "\(entity.smallestPlate) kg's"
@@ -72,12 +82,12 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
             entity.profileUserName = userName
         }
         
-        if (entity.isMetric ? "Metric" : "Imperial") != selectedUnitSegment {
-            entity.isMetric = (selectedUnitSegment == "Metric") ? true : false
+        if entity.isMetric != selectedUnitSegment {
+            entity.isMetric = selectedUnitSegment
         }
         
-        if entity.gender != (selectedGenderSegment == "Male" ? "male" : "female") {
-            entity.gender = (selectedGenderSegment == "Male") ? "male" : "female"
+        if entity.gender != selectedGenderSegment {
+            entity.gender = selectedGenderSegment
         }
         
         if entity.userHeight != Double(height)! {
@@ -100,16 +110,10 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
         }
         
         if entity.hasChanges {
-            withAnimation {
-                showProfileChangedAlert = true
-            }
-            
+            withAnimation { showProfileChangedAlert = true }
             self.safeSave(viewContext: viewContext)
-            
         } else {
-            withAnimation {
-                showNoChangeAlert = true
-            }
+            withAnimation { showNoChangeAlert = true }
         }
         
     }

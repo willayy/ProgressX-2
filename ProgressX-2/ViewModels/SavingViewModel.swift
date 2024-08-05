@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class SavingViewModel: ObservableObject {
+class SavingViewModel: ViewModel {
     
     @Published public var savingError: Bool = false
     

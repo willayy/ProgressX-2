@@ -50,12 +50,8 @@ struct EditWeighInView: View {
                 
                 BoldSubHeadline(text: "Edit bodyweight")
                 
-                let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-                
-                let lengthUnit = PersistenceController.getLengthUnit(viewContext)!
-                
                 DecimalTextField(
-                    placeHolder: "Bodyweight (\(weightUnit))",
+                    placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext))",
                     numberText: $viewModel.editedBodyWeight,
                     markAsWrong: $viewModel.editedBodyWeightIsInvalid,
                     errorMessage: $viewModel.editedBodyWeightIsInvalidMsg
@@ -69,7 +65,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Chest circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Chest circumference (\(lengthUnit))",
+                    placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedChestCirc,
                     markAsWrong: $viewModel.editedChestCircIsInvalid,
                     errorMessage: $viewModel.editedChestCircIsInvalidMsg
@@ -80,7 +76,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Upper arm circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Upper arm circumference (\(lengthUnit))",
+                    placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedUpperArmCirc,
                     markAsWrong: $viewModel.editedUpperArmCircIsInvalid,
                     errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg
@@ -91,7 +87,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Lower arm circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Lower arm circumference (\(lengthUnit))",
+                    placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedLowerArmCirc,
                     markAsWrong: $viewModel.editedCalfCircIsInvalid,
                     errorMessage: $viewModel.editedLowerArmIsInvalidMsg
@@ -102,7 +98,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Waist circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Waist circumference (\(lengthUnit))",
+                    placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedWaistCirc,
                     markAsWrong: $viewModel.editedWaistCircIsInvalid,
                     errorMessage: $viewModel.editedWaistCircIsInvalidMsg
@@ -113,7 +109,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Thigh circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Thigh circumference (\(lengthUnit))",
+                    placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedThighCirc,
                     markAsWrong: $viewModel.editedThighCircIsInvalid,
                     errorMessage: $viewModel.editedThighCircIsInvalidMsg
@@ -124,7 +120,7 @@ struct EditWeighInView: View {
                 LightSubHeadline(text: "Calf circumference")
                 
                 DecimalTextField(
-                    placeHolder: "Calf circumference (\(lengthUnit))",
+                    placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
                     numberText: $viewModel.editedCalfCirc,
                     markAsWrong: $viewModel.editedCalfCircIsInvalid,
                     errorMessage: $viewModel.editedCalfCircIsInvalidMsg

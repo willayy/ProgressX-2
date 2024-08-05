@@ -221,7 +221,7 @@ class EditTemplateSetViewModel: SavingViewModel, EditingViewModel, DefaultValueV
     public func loadPlaceholder(viewContext: NSManagedObjectContext) -> String {
         switch editedLoadType {
         case "Numerical":
-            let weightUnit = PersistenceController.getWeightUnit(viewContext)!
+            let weightUnit = self.weightUnit(viewContext)
             return "Load \(weightUnit)"
         case "Percentage of current 1RM PR":
             return "Percentage"
