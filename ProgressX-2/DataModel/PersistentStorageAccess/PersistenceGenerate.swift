@@ -92,6 +92,11 @@ extension PersistenceController {
             routine: routine
         )
         
+        let trainingCycle = TrainingCycle(
+            context,
+            routine: routine
+        )
+        
             // Week 1
             let templateWeek1 = TemplateWeek(
                 context,
