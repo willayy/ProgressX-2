@@ -58,7 +58,7 @@ class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
             else { return NSNumber(value: Double(flatQuantityAdd)!) }
         }()
         
-        let threshold = SetThreshold(
+        let _ = SetThreshold(
             viewContext,
             templateSet: selectedTemplateSet!,
             triggeredAt: Double(triggerQuantity)!,

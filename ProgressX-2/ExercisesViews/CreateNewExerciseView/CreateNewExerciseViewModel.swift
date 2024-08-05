@@ -97,7 +97,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
         if addPr {
             // Find the pr-type from the user selected value
             
-            let pr = PersonalRecord(
+            let _ = PersonalRecord(
                 viewContext,
                 exercise: exercise,
                 weightLoad: Double(enteredPrWeigtLoad)!,

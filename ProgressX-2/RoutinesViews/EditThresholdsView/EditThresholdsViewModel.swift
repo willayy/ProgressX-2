@@ -51,22 +51,8 @@ class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueVi
     
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
-        let exerciseType: String = entity.templateSet!.exercise!.exerciseType!
-        
-        let prSelection: String = {
-            if entity.generatePr { return "Add PR" }
-            else { return "Don't add PR" }
-        }()
-        
-        // Figure the selection of rep based prs if the exercise is rep based.
-        // This is not very clean
-        let repPrSelection: String = {
-            if exerciseType == "reps" {
-                if entity.prType == "onerepmax" { return "1RM" }
-                else if entity.prType == "maxreps" { return "AMRAP" }
-            }
-            return "TimeMax"
-        }()
+        addPrSelection = entity.generatePr
+        prSelection = entity.prType!
         
         // Since the formatted strings from the NSManagedObject subclasses contain suffix we need to strip them away.
         let removeStrings = [" reps", " seconds", " kg's", " lbs"]
