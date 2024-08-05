@@ -49,7 +49,7 @@ struct TrainingElement: View {
                             .padding(.leading)
                         Spacer()
                         
-                        Text(currentSet!.loadDoneString)
+                        Text(currentSet!.loadTodoString)
                             .bold()
                             .multilineTextAlignment(.trailing)
                             .padding(.trailing)
@@ -79,7 +79,7 @@ struct TrainingElement: View {
                         
                         Spacer()
                         
-                        Text(currentSet!.exercise!.latestPr?.loadString ?? "")
+                        Text(currentSet!.exercise!.latestPr?.loadString ?? "No One Rep Max logged")
                             .bold()
                             .multilineTextAlignment(.trailing)
                             .padding(.trailing)

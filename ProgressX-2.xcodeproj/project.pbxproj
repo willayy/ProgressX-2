@@ -177,6 +177,8 @@
 		8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F092C21A0C30072A39D /* ProfileView.swift */; };
 		8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */; };
 		8FAFE55F2C5FBE6F00143223 /* TrainingElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162F2C53A89300F37C58 /* TrainingElement.swift */; };
+		8FAFE5622C60D6D300143223 /* TrainingSetFinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAFE5612C60D6D300143223 /* TrainingSetFinishedView.swift */; };
+		8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAFE5632C60D6E500143223 /* TrainingSetFinishedViewModel.swift */; };
 		8FF9C9C62C3FE67D00E3D95A /* StartWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */; };
 		8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */; };
 /* End PBXBuildFile section */
@@ -363,6 +365,8 @@
 		8F8B9F0B2C21A44D0072A39D /* SideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarButton.swift; sourceTree = "<group>"; };
 		8F8B9F0E2C36B06E0072A39D /* ThresholdsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdsView.swift; sourceTree = "<group>"; };
 		8F8B9F0F2C36B06E0072A39D /* EditTemplateSetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTemplateSetView.swift; sourceTree = "<group>"; };
+		8FAFE5612C60D6D300143223 /* TrainingSetFinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetFinishedView.swift; sourceTree = "<group>"; };
+		8FAFE5632C60D6E500143223 /* TrainingSetFinishedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetFinishedViewModel.swift; sourceTree = "<group>"; };
 		8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutView.swift; sourceTree = "<group>"; };
 		8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateFetching.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1080,10 +1084,20 @@
 			path = HomeViews;
 			sourceTree = "<group>";
 		};
+		8FAFE5602C60D6AC00143223 /* TrainingSessionFinished */ = {
+			isa = PBXGroup;
+			children = (
+				8FAFE5612C60D6D300143223 /* TrainingSetFinishedView.swift */,
+				8FAFE5632C60D6E500143223 /* TrainingSetFinishedViewModel.swift */,
+			);
+			path = TrainingSessionFinished;
+			sourceTree = "<group>";
+		};
 		8FF9C9C42C3FE62100E3D95A /* StartTrainingViews */ = {
 			isa = PBXGroup;
 			children = (
 				8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */,
+				8FAFE5602C60D6AC00143223 /* TrainingSessionFinished */,
 				8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */,
 				8F7F16152C4948A400F37C58 /* TrainingView */,
 				8F7F160C2C4920B800F37C58 /* StartWorkoutView */,
@@ -1239,6 +1253,7 @@
 				8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */,
 				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* DecimalTextField.swift in Sources */,
+				8FAFE5622C60D6D300143223 /* TrainingSetFinishedView.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
 				8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */,
 				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
@@ -1366,6 +1381,7 @@
 				83B013B02C5BE42400059E42 /* SavingViewModel.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
 				8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */,
+				8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */,
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,
 			);
