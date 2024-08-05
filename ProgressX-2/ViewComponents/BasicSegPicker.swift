@@ -22,7 +22,7 @@ struct BasicSegPicker: View {
         }
         .pickerStyle(SegmentedPickerStyle())
         .onAppear(perform: {
-            shownSegment = segments.keys.first!
+            shownSegment = segments.first(where: { kvpair in kvpair.value == selectedSegment })!.key
         })
         .onChange(of: shownSegment, initial: true) {
             selectedSegment = segments[shownSegment]!
@@ -45,7 +45,7 @@ struct BooleanSegPicker: View {
         }
         .pickerStyle(SegmentedPickerStyle())
         .onAppear(perform: {
-            shownSegment = segments.keys.first!
+            shownSegment = segments.first(where: { kvpair in kvpair.value == selectedSegment })!.key
         })
         .onChange(of: shownSegment, initial: true) {
             selectedSegment = segments[shownSegment]!

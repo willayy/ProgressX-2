@@ -123,7 +123,7 @@ struct EditThresholdsView: View {
                     .padding(.horizontal, 20)
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(viewModel.weightUnit))",
+                        placeHolder: "Load (\(viewModel.weightUnit(viewContext))",
                         numberText: $viewModel.editedFlatLoadAdd,
                         markAsWrong: $viewModel.editedFlatLoadAddIsInvalid,
                         errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg,

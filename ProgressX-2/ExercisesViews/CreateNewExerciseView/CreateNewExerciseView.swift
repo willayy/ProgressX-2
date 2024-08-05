@@ -106,7 +106,7 @@ struct CreateNewExerciseView: View {
                     }
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(viewModel.weightUnit))",
+                        placeHolder: "Load (\(viewModel.weightUnit(viewContext))",
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
