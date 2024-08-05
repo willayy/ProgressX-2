@@ -15,18 +15,16 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     convenience init(
         _ context: NSManagedObjectContext,
         trainingWeek: TrainingWeek,
-        templateSession: TemplateSession,
-        name: String = "",
-        description: String = ""
+        templateSession: TemplateSession
     ) {
         self.init(context: context)
         self.trainingWeek = trainingWeek
         self.templateSession = templateSession
         let positionIndex = trainingWeek.getNextPositionIndex()
         self.positionIndex = positionIndex
-        self.timePeriodName = (name == "") ? "Session \(positionIndex)" : name
+        self.timePeriodName = templateSession.timePeriodName
         let weekName = trainingWeek.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
+        self.timePeriodDescription = templateSession.timePeriodDescription
         self.startedOnDate = Date()
         trainingWeek.addToTrainingSessions(self)
     }

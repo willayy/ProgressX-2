@@ -15,9 +15,7 @@ extension TrainingSet {
     convenience init(
         _ context: NSManagedObjectContext,
         trainingSession: TrainingSession,
-        templateSet: TemplateSet,
-        name: String = "",
-        description: String = ""
+        templateSet: TemplateSet
     ) {
         self.init(context: context)
         self.trainingSession = trainingSession
@@ -28,10 +26,10 @@ extension TrainingSet {
         self.templateSet = templateSet
         self.loadTodo = templateSet.loadTodo!
         self.quantityTodo = templateSet.quantityTodo!
-        self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
+        self.timePeriodName = templateSet.timePeriodName
         let exerciseName = exercise.exerciseName!
         let sessionName = trainingSession.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        self.timePeriodDescription = templateSet.timePeriodDescription
         self.startedOnDate = Date()
         self.restTime = templateSet.restTime
         trainingSession.addToTrainingSets(self)

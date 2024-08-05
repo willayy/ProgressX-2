@@ -14,18 +14,16 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
     convenience init(
         _ context: NSManagedObjectContext,
         trainingCycle: TrainingCycle,
-        templateWeek: TemplateWeek,
-        name: String = "",
-        description: String = ""
+        templateWeek: TemplateWeek
     ) {
         self.init(context: context)
         self.trainingCycle = trainingCycle
         self.templateWeek = templateWeek
         let positionIndex = trainingCycle.getNextPositionIndex()
         self.positionIndex = positionIndex
-        self.timePeriodName = (name == "") ? "Week \(positionIndex)" : name
+        self.timePeriodName = templateWeek.timePeriodName
         let routineName = trainingCycle.routine!.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
+        self.timePeriodDescription = templateWeek.timePeriodDescription
         self.startedOnDate = Date()
         trainingCycle.addToTrainingWeeks(self)
     }
