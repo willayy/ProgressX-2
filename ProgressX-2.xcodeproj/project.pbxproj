@@ -114,6 +114,7 @@
 		83B013B42C5CDEBB00059E42 /* AddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B32C5CDEBB00059E42 /* AddingViewModel.swift */; };
 		83B013B62C5D03ED00059E42 /* DefaultValueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B52C5D03ED00059E42 /* DefaultValueViewModel.swift */; };
 		83B013BC2C5FE90800059E42 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013BB2C5FE90800059E42 /* ViewModel.swift */; };
+		83B013BE2C60EC6100059E42 /* HasCompleteable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013BD2C60EC6100059E42 /* HasCompleteable.swift */; };
 		83BAF9102C5B74F200EFC1C6 /* PersistenceGenerate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */; };
 		83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */; };
 		83BAF9142C5B769E00EFC1C6 /* PersistenceGet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */; };
@@ -298,6 +299,7 @@
 		83B013B32C5CDEBB00059E42 /* AddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingViewModel.swift; sourceTree = "<group>"; };
 		83B013B52C5D03ED00059E42 /* DefaultValueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValueViewModel.swift; sourceTree = "<group>"; };
 		83B013BB2C5FE90800059E42 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		83B013BD2C60EC6100059E42 /* HasCompleteable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasCompleteable.swift; sourceTree = "<group>"; };
 		83BAF90F2C5B74F200EFC1C6 /* PersistenceGenerate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGenerate.swift; sourceTree = "<group>"; };
 		83BAF9112C5B756900EFC1C6 /* PersistenceAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceAccess.swift; sourceTree = "<group>"; };
 		83BAF9132C5B769E00EFC1C6 /* PersistenceGet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceGet.swift; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 			isa = PBXGroup;
 			children = (
 				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
+				83B013BD2C60EC6100059E42 /* HasCompleteable.swift */,
 				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
 				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
@@ -1324,6 +1327,7 @@
 				831657792C5798C5003F895F /* SideBarEnums.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				836486072C36F306006EB0C0 /* EditTemplateWeekViewModel.swift in Sources */,
+				83B013BE2C60EC6100059E42 /* HasCompleteable.swift in Sources */,
 				831F2C142C22FB7A007A7A8A /* ValidationNSErrors.swift in Sources */,
 				8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */,
 				8F8B9F0A2C21A0C30072A39D /* ProfileView.swift in Sources */,
