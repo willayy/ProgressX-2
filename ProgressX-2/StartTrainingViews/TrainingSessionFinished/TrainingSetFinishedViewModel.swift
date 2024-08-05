@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TrainingSetFinishedViewModel: ObservableObject {
+class TrainingSetFinishedViewModel: ViewModel {
     @Published var selectedRoutine: Routine? = nil
     @Published var navPath: [Int] = [Int]()
     @Published var selectedTrainingCycle: TrainingCycle? = nil
