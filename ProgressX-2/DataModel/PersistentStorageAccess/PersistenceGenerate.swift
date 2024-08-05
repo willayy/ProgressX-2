@@ -91,7 +91,6 @@ extension PersistenceController {
             context,
             routine: routine
         )
-        
         let trainingCycle = TrainingCycle(
             context,
             routine: routine
@@ -103,6 +102,11 @@ extension PersistenceController {
                 templateCycle: templateCycle,
                 name: "Regular week"
             )
+            let trainingWeek1 = TrainingWeek(
+                context,
+                trainingCycle: trainingCycle,
+                templateWeek: templateWeek1
+            )
         
                 // Session 1 Week 1
                 let templateSession11 = TemplateSession(
@@ -110,9 +114,14 @@ extension PersistenceController {
                     templateWeek: templateWeek1,
                     name: "Upper body day"
                 )
+                let trainingSession11 = TrainingSession(
+                    context,
+                    trainingWeek: trainingWeek1,
+                    templateSession: templateSession11
+                )
                     
                     // Set 1 Session 1 Week 1
-                    _ = TemplateSet(
+                    let templateSet111 = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Bench press",
@@ -123,9 +132,14 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession11,
+                        templateSet: templateSet111
+                    )
                     
                     // Set 2 Session 1 Week 1
-                    _ = TemplateSet(
+                    let templateSet112 = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Shoulder press",
@@ -136,9 +150,14 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession11,
+                        templateSet: templateSet112
+                    )
                     
                     // Set 3 Session 1 Week 1
-                    _ = TemplateSet(
+                    let templateSet113 = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Bicep curls",
@@ -149,9 +168,14 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession11,
+                        templateSet: templateSet113
+                    )
         
                     // Set 4 Session 1 Week 1
-                    _ = TemplateSet(
+                    let templateSet114 = TemplateSet(
                         context,
                         templateSession: templateSession11,
                         name: "Tricep pushdowns",
@@ -162,6 +186,11 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession11,
+                        templateSet: templateSet114
+                    )
         
                 // Session 2 Week 1
                 let templateSession12 = TemplateSession(
@@ -169,9 +198,14 @@ extension PersistenceController {
                     templateWeek: templateWeek1,
                     name: "Lower body day"
                 )
+                let trainingSession12 = TrainingSession(
+                    context,
+                    trainingWeek: trainingWeek1,
+                    templateSession: templateSession12
+                )
                     
                     // Set 1 Session 2 Week 1
-                    _ = TemplateSet(
+                    let templateSet121 = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         name: "Squats",
@@ -182,9 +216,14 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession12,
+                        templateSet: templateSet121
+                    )
         
                     // Set 2 Session 2 Week 1
-                    _ = TemplateSet(
+                    let templateSet122 = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         name: "Deadlifts",
@@ -195,9 +234,14 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession12,
+                        templateSet: templateSet122
+                    )
         
                     // Set 3 Session 2 Week 1
-                    _ = TemplateSet(
+                    let templateSet123 = TemplateSet(
                         context,
                         templateSession: templateSession12,
                         exercise: sitUp,
@@ -207,6 +251,11 @@ extension PersistenceController {
                         quantity: 20,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession12,
+                        templateSet: templateSet123
+                    )
                 
             // Week 2
             let templateWeek2 = TemplateWeek(
@@ -214,12 +263,22 @@ extension PersistenceController {
                 templateCycle: templateCycle,
                 name: "PR week"
             )
+            let trainingWeek2 = TrainingWeek(
+                context,
+                trainingCycle: trainingCycle,
+                templateWeek: templateWeek2
+            )
         
                 // Session 1 Week 2
                 let templateSession21 = TemplateSession(
                     context,
                     templateWeek: templateWeek2,
                     name: "Upper body day (PR)"
+                )
+                let trainingSession21 = TrainingSession(
+                    context,
+                    trainingWeek: trainingWeek2,
+                    templateSession: templateSession21
                 )
                     
                     // Set 1 Session 1 Week 2
@@ -233,6 +292,11 @@ extension PersistenceController {
                         quantityType: "numerical",
                         quantity: 1,
                         restTime: profile.standardRestTime
+                    )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession21,
+                        templateSet: templateSet211
                     )
                     
                         _ = SetThreshold(
@@ -257,6 +321,11 @@ extension PersistenceController {
                         quantity: 1,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession21,
+                        templateSet: templateSet212
+                    )
         
                         _ = SetThreshold(
                             context,
@@ -279,6 +348,11 @@ extension PersistenceController {
                         quantityType: "numerical",
                         quantity: 10,
                         restTime: profile.standardRestTime
+                    )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession21,
+                        templateSet: templateSet213
                     )
         
                         _ = SetThreshold(
@@ -303,6 +377,11 @@ extension PersistenceController {
                         quantity: 10,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession21,
+                        templateSet: templateSet214
+                    )
         
                         _ = SetThreshold(
                             context,
@@ -320,6 +399,11 @@ extension PersistenceController {
                     templateWeek: templateWeek2,
                     name: "Lower body day"
                 )
+                let trainingSession22 = TrainingSession(
+                    context,
+                    trainingWeek: trainingWeek2,
+                    templateSession: templateSession22
+                )
 
                     // Set 1 Session 2 Week 2
                     let templateSet221 = TemplateSet(
@@ -332,6 +416,11 @@ extension PersistenceController {
                         quantityType: "numerical",
                         quantity: 1,
                         restTime: profile.standardRestTime
+                    )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession22,
+                        templateSet: templateSet221
                     )
         
                         _ = SetThreshold(
@@ -356,6 +445,11 @@ extension PersistenceController {
                         quantity: 1,
                         restTime: profile.standardRestTime
                     )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession22,
+                        templateSet: templateSet222
+                    )
         
                         _ = SetThreshold(
                             context,
@@ -378,6 +472,11 @@ extension PersistenceController {
                         quantityType: "numerical",
                         quantity: 20,
                         restTime: profile.standardRestTime
+                    )
+                    _ = TrainingSet(
+                        context,
+                        trainingSession: trainingSession22,
+                        templateSet: templateSet223
                     )
         
                         _ = SetThreshold(
