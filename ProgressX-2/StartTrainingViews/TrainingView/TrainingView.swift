@@ -42,6 +42,13 @@ struct TrainingView: View {
             if currentTrainingSet != nil {
                 TrainingElement(currentSet: $currentTrainingSet)
             }
+            
+            Button(action:{
+                navPath.append(3)
+            }) {
+                Text("Done")
+
+            }
     
             if !DoneButton {
                 Button(action:{

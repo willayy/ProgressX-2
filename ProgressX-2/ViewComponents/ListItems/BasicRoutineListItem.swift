@@ -110,6 +110,14 @@ struct BasicRoutineListItem: View {
         return weekResults
     }
     
+    private func routineWeeks(cycle: TrainingCycle) -> [TrainingWeek] {
+        let trainingWeeksFetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
+        let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingCycle == %@", cycle),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])
+        trainingWeeksFetchRequest.predicate = compound1
+        let weekResults = PersistenceController.fetch(viewContext, fetchRequest: trainingWeeksFetchRequest)
+        return weekResults
+    }
+    
     private func routineSessions(Week: TrainingWeek) -> [TrainingSession] {
         let trainingSessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
         let compound1 = NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingWeek == %@", Week),NSPredicate(format: "isComplete == %@", NSNumber(value: false))])

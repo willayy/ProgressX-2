@@ -80,6 +80,7 @@ struct StartWorkoutNavigationController<Content: View>: View {
                     
                     // TODO: Create
                     TrainingSetFinishedView(navPath: $navPath)
+                        .environment(\.managedObjectContext, viewContext)
                     
                 }
             }
