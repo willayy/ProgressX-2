@@ -14,38 +14,25 @@ struct TrainingView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = TrainingViewModel()
-    @ObservedObject public var TimerviewModel = TimerViewModel()
+    @ObservedObject public var timerViewModel = TimerViewModel()
     
     @Binding var navPath: [Int]
-    @Binding var selectedRoutine: Routine?
-    @Binding var selectedTrainingCycle: TrainingCycle?
-    @Binding var selectedTrainingWeek: TrainingWeek?
     @Binding var selectedTrainingSession: TrainingSession?
-    @Binding var AllTrainingSets: [TrainingSet]
     @Binding var currentTrainingSet: TrainingSet?
-    @Binding var Exercise: Exercise?
-    
-    @State var selectedHoursAmount: Int = 0
-    @State var selectedMinutesAmount: Int = 0
-    @State var selectedSecondsAmount: Int = 5
-    @State var showAlert = false
-    @State var presentPopup = false
-    @State var startTimer = false
-    @State var DoneButton = false
-    @State var startTimerButton = false
     
     var body: some View {
     
-        VStack{
+        VStack {
             
             progressView
+            
             if currentTrainingSet != nil {
                 TrainingElement(currentSet: $currentTrainingSet)
             }
     
-            if !DoneButton {
+            if !viewModel.doneButton {
                 Button(action:{
-                    presentPopup.toggle()
+                    viewModel.presentPopup.toggle()
                 }) {
                     Text("Done")
                         .frame(width: 100, height: 40)
@@ -57,66 +44,72 @@ struct TrainingView: View {
             } else {
                 
                 Button(action:{
-                    print(selectedSecondsAmount)
-                    startTimer(Timer: TimerviewModel)
-                    startTimerButton = true
+                    viewModel.startTimer(timerViewModel: timerViewModel)
+                    viewModel.startTimerButton = true
                 }) {
                     Text("Start timer")
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
-                }.disabled(startTimerButton)
+                }
+                .disabled(viewModel.startTimerButton)
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
-                }
+            }
         }
         .task {
-            secondsToHoursMinutesSeconds(seconds: Int(5))
+            viewModel.secondsToHoursMinutesSeconds(seconds: Int(5))
         }
-        .alert("Start your next set",isPresented: $showAlert) {
-            Button("OK", role: .cancel) { DoneButton.toggle()}
-                }
-                .onAppear {
-                    NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
-                        showAlert = true
-                        startTimerButton = false
-                    }
-                }
-                .onDisappear {
-                    NotificationCenter.default.removeObserver(self)
-                }
+        .onAppear {
+            NotificationCenter.default.addObserver(
+                forName: TimerViewModel.timerDidFinishNotification,
+                object: nil,
+                queue: .main
+            ) { _ in
+                viewModel.showAlert = true
+                viewModel.startTimerButton = false
+            }
+        }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self)
+        }
+        .alert("Start your next set",isPresented: $viewModel.showAlert) {
+            Button("OK", role: .cancel) { viewModel.doneButton.toggle() }
+        }
         .toolbar {
             Button(action:{
-                viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
-                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
-                if currentTrainingSet == nil {
-                    navPath.append(3)
-                }
-                secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
+                currentTrainingSet!.skip()
+                currentTrainingSet = viewModel.getNextIncompleteSet(session: selectedTrainingSession!)
+                viewModel.safeSave(viewContext: viewContext)
+                if currentTrainingSet == nil { navPath.append(3) }
+                viewModel.secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
             }) {
                 Text("Skip set")
             }
         }
-        .popover(isPresented: $presentPopup, content: {
-            PopupFeedbackView(currentTrainingSet: $currentTrainingSet, exercise: $Exercise, presentPopup: self.$presentPopup).onDisappear(perform: {
-                
-                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
-                if currentTrainingSet == nil {
-                    navPath.append(3)
-                }
+        .popover(isPresented: $viewModel.presentPopup, content: {
+            PopupFeedbackView(
+                currentTrainingSet: $currentTrainingSet,
+                presentPopup: $viewModel.presentPopup
+            )
+            .onDisappear(perform: {
+                currentTrainingSet = viewModel.getNextIncompleteSet(session: selectedTrainingSession!)
+                if currentTrainingSet == nil { navPath.append(3) }
                 //secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
-                DoneButton.toggle()
+                viewModel.doneButton.toggle()
             })
         })
     }
+    
     var progressView: some View {
         
             ZStack {
+                
                 withAnimation {
-                    CircleProgressView(progress: $TimerviewModel.progress)
+                    CircleProgressView(progress: $timerViewModel.progress)
                 }
                 
                 VStack {
-                    Text(TimerviewModel.secondsToCompletion.asTimestamp)
+                    Text(timerViewModel.secondsToCompletion.asTimestamp)
                         .font(.largeTitle)
                         .foregroundColor(.black)
                 }  
@@ -125,55 +118,26 @@ struct TrainingView: View {
         .frame(width: 360, height: 255)
         .padding(.all, 32)
     }
-    
-    func secondsToHoursMinutesSeconds(seconds: Int) {
-        selectedHoursAmount = seconds / 3600
-        selectedMinutesAmount = (seconds % 3600) / 60
-        selectedSecondsAmount = (seconds % 3600) % 60
-    }
-    
-    func startTimer(Timer: TimerViewModel){
-        TimerviewModel.selectedHoursAmount = selectedHoursAmount
-        TimerviewModel.selectedMinutesAmount = selectedMinutesAmount
-        TimerviewModel.selectedSecondsAmount = selectedSecondsAmount
-        TimerviewModel.state = .active
-    }
 }
     
-
-
-
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+    let trainingSessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
-    let routine = routines.first!
+    let trainingSession: TrainingSession? = trainingSessions.first
+    let trainingSets = trainingSession?.trainingSets?.allObjects as! [TrainingSet]
+    let trainingSet: TrainingSet? = trainingSets.first
     
-    @State var navPath: [Int] = [Int]()
-    @State var selectedRoutine: Routine? = routine
-    let allTrainingCycles = routine.trainingCycles!.allObjects as! [TrainingCycle]
-    @State var selectedTrainingCycle: TrainingCycle? = allTrainingCycles.first!
+    @State var selectedTrainingSession = trainingSession
+    @State var currentTrainingSet = trainingSet
+    @State var navPath = [Int]()
     
-    let allTrainingWeeks = selectedTrainingCycle?.trainingWeeks!.allObjects as! [TrainingWeek]
-    @State var selectedTrainingWeek: TrainingWeek? = allTrainingWeeks.first!
-    
-    let allTrainingSessions = selectedTrainingWeek?.trainingSessions!.allObjects as! [TrainingSession]
-    @State var selectedTrainingSession: TrainingSession? = allTrainingSessions.first(where: {$0.timePeriodName == "Session 1"})
-    
-    @State var allTrainingSets = selectedTrainingSession?.trainingSets!.allObjects as! [TrainingSet]
-    
-    @State var CurrentTrainingSet = allTrainingSets.first
-    
-    @State var Exercise = CurrentTrainingSet?.exercise
-    
-    return TrainingView(navPath: $navPath,
-                        selectedRoutine: $selectedRoutine,
-                        selectedTrainingCycle: $selectedTrainingCycle,
-                        selectedTrainingWeek: $selectedTrainingWeek,
-                        selectedTrainingSession: $selectedTrainingSession,
-                        AllTrainingSets: $allTrainingSets,
-                        currentTrainingSet: $CurrentTrainingSet, Exercise: $Exercise)
-        .environment(\.managedObjectContext, context)
+    return TrainingView(
+        navPath: $navPath,
+        selectedTrainingSession: $selectedTrainingSession,
+        currentTrainingSet: $currentTrainingSet
+    )
+    .environment(\.managedObjectContext, context)
 }
 
