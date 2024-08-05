@@ -78,19 +78,19 @@ extension CompleteableTimePeriod {
             
             let trainingWeek = self as! TrainingWeek
             let trainingCycle = trainingWeek.trainingCycle!
-            if trainingCycle.childrenAreComplete() { trainingCycle.isComplete = true }
+            if trainingCycle.childrenAreComplete() { trainingCycle.complete() }
             
         case is TrainingSession:
             
             let trainingSession = self as! TrainingSession
             let trainingWeek = trainingSession.trainingWeek!
-            if trainingWeek.childrenAreComplete() { trainingWeek.isComplete = true }
+            if trainingWeek.childrenAreComplete() { trainingWeek.complete() }
             
         case is TrainingSet:
             
             let trainingSet = self as! TrainingSet
             let trainingSession = trainingSet.trainingSession!
-            if trainingSession.childrenAreComplete() { trainingSession.isComplete = true }
+            if trainingSession.childrenAreComplete() { trainingSession.complete() }
             
         default:
             break
