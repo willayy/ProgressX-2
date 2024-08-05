@@ -34,8 +34,8 @@ struct PopupFeedbackView: View {
                 
                 HStack{
                     Button(action:{
-                        ShowWindow.toggle()
-                        changeText(text: "How many reps did you do?")
+                        viewModel.showWindow.toggle()
+                        viewModel.changeText(text: "How many reps did you do?")
                     }) {
                         Text("NO")
                             .bold()
@@ -95,10 +95,6 @@ struct PopupFeedbackView: View {
         .onAppear(perform: {
             viewModel.setViewStartValues(selectedTrainigeSet: currentTrainingSet)
         })
-        
-    }
-    func changeText(text: String) {
-        self.text = text
     }
 }
 
