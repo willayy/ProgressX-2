@@ -86,7 +86,7 @@ struct ProfileView: View {
                     
                     BoldSubHeadline(text: "Change weight and length units")
                     
-                    BasicSegPicker(
+                    BooleanSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
                         segments: viewModel.unitSegments
                     )

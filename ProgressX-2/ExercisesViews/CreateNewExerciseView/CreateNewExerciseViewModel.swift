@@ -22,10 +22,9 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     @Published public var enteredPrWeigtLoad: String = ""
     
     // Segment picker choices
-    @Published public var selectedTypeOfExercise: String = "Rep based"
-    @Published public var selectedTypeOfPr: String = "1RM"
-    @Published public var addPr: String = "No"
-    @Published public var achieviedOnCurrBw: String = "Yes"
+    @Published public var selectedTypeOfExercise: String = "reps"
+    @Published public var selectedTypeOfPr: String = "onerepmax"
+    @Published public var addPr: Bool = false
     
     // Invalid input error
     @Published public var enteredExerciseNameIsInvalid: Bool = false

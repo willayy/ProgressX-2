@@ -72,11 +72,9 @@ struct HomeView: View {
                     GroupBox {
                         VStack(alignment: .center) {
                             
-                            let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-                            
                             (Text("Current weight: ")
                                 .fontWeight(.bold)
-                             + Text("\(String(format: "%.2f", profile.lastWeighIn?.bodyWeight ?? 0)) \(weightUnit)"))
+                             + Text("\(String(format: "%.2f", profile.lastWeighIn?.bodyWeight ?? 0)) \(viewModel.weightUnit(viewContext))"))
                             .padding(.vertical, 10)
                             
                             BodyEntryChart(bodyEntryData: bodyEntries.map({$0}))

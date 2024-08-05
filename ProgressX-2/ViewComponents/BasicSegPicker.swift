@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BasicSegPicker: View {
     
-    @State private var shownSegment: String
+    @State private var shownSegment: String = ""
     @Binding var selectedSegment: String
     let segments: [String : String]
     
@@ -21,6 +21,9 @@ struct BasicSegPicker: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+        .onAppear(perform: {
+            shownSegment = segments.keys.first!
+        })
         .onChange(of: shownSegment, initial: true) {
             selectedSegment = segments[shownSegment]!
         }
@@ -29,7 +32,7 @@ struct BasicSegPicker: View {
 
 struct BooleanSegPicker: View {
     
-    @State private var shownSegment: String
+    @State private var shownSegment: String = ""
     @Binding var selectedSegment: Bool
     let segments: [String : Bool]
     
@@ -41,6 +44,9 @@ struct BooleanSegPicker: View {
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+        .onAppear(perform: {
+            shownSegment = segments.keys.first!
+        })
         .onChange(of: shownSegment, initial: true) {
             selectedSegment = segments[shownSegment]!
         }

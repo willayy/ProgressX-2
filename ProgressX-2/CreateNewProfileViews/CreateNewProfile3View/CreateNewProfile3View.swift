@@ -22,9 +22,6 @@ struct CreateNewProfile3View: View {
     
     var body: some View {
         
-        // Staticly fetch units
-        let circumferenceUnit = PersistenceController.getLengthUnit(viewContext)!
-        
         // Input form for PR's on some common exercises
         ScrollView(showsIndicators: false) {
             VStack(alignment: .center, spacing: 10) {
@@ -55,7 +52,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.chestCirc,
                             markAsWrong: $viewModel.chestCircIsInvalid,
                             errorMessage: $viewModel.chestCircIsInvalidMsg
@@ -67,7 +64,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.waistCirc,
                             markAsWrong: $viewModel.waistCircIsInvalid,
                             errorMessage: $viewModel.waistCircIsInvalidMsg
@@ -79,7 +76,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.thighCirc,
                             markAsWrong: $viewModel.thighCircIsInvalid,
                             errorMessage: $viewModel.thighCircIsInvalidMsg
@@ -91,7 +88,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.calfCirc,
                             markAsWrong: $viewModel.calfCircIsInvalid,
                             errorMessage: $viewModel.calfCircIsInvalidMsg
@@ -103,7 +100,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.lowerArmCirc,
                             markAsWrong: $viewModel.lowerArmCircIsInvalid,
                             errorMessage: $viewModel.lowerArmCircIsInvalidMsg
@@ -115,7 +112,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: circumferenceUnit, 
+                            placeHolder: viewModel.lengthUnit(viewContext), 
                             numberText: $viewModel.upperArmCirc,
                             markAsWrong: $viewModel.upperArmCircIsInvalid,
                             errorMessage: $viewModel.upperArmCircIsInvalidMsg

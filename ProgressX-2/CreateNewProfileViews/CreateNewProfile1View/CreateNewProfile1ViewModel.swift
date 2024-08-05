@@ -34,8 +34,8 @@ class CreateNewProfile1ViewModel: SavingViewModel {
     @Published public var smallestPlateSelection: String = "1.25 kg's"
     
     // Seg picker selections
-    @Published public var selectedUnitSegment: String = "Metric"
-    @Published public var selectedGenderSegment: String = "Male"
+    @Published public var selectedUnitSegment: Bool = true
+    @Published public var selectedGenderSegment: String = "male"
     
     // Seg picker options
     public let unitSegments: [String : Bool] = [
@@ -48,17 +48,17 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         "Female" : "female"
     ]
     
-    public var lengthUnit: String {
-        (self.selectedUnitSegment == "Metric") ? "cm" : "ft"
+    public override func lengthUnit(_ context: NSManagedObjectContext) -> String {
+        (self.selectedUnitSegment) ? "cm" : "ft"
     }
     
-    public var weightUnit: String {
-        (self.selectedUnitSegment == "Metric") ? "kg" : "lbs"
+    public override func weightUnit(_ context: NSManagedObjectContext) -> String {
+        (self.selectedUnitSegment) ? "kg" : "lbs"
     }
     
     #warning("TODO: Make same change to StringSelectionList")
     public var smallestPlateSegments: [String] {
-        if selectedUnitSegment == "Metric" {
+        if selectedUnitSegment {
             return [
                 "1.25 kg's",
                 "2.5 kg's",
@@ -95,9 +95,9 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         let profile = Profile(
             viewContext,
             userName: userName,
-            gender: genderSegments[selectedGenderSegment]!,
+            gender: selectedGenderSegment,
             height: Double(height)!,
-            isMetric: unitSegments[selectedUnitSegment]!,
+            isMetric: selectedUnitSegment,
             smallestPlate: smallestPlate,
             birthDay: birthDay
         )

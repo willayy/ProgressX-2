@@ -81,7 +81,7 @@ struct CreateNewProfile1View: View {
                         .padding(.top, 10)
                     
                     DecimalTextField(
-                        placeHolder: viewModel.weightUnit, 
+                        placeHolder: viewModel.weightUnit(viewContext),
                         numberText: $viewModel.weight,
                         markAsWrong: $viewModel.weightIsInvalid,
                         errorMessage: $viewModel.weightIsInvalidMsg
@@ -92,7 +92,7 @@ struct CreateNewProfile1View: View {
                         .padding(.top, 10)
                     
                     DecimalTextField(
-                        placeHolder: viewModel.lengthUnit, 
+                        placeHolder: viewModel.lengthUnit(viewContext), 
                         numberText: $viewModel.height,
                         markAsWrong: $viewModel.heightIsInvalid,
                         errorMessage: $viewModel.heightIsInvalidMsg

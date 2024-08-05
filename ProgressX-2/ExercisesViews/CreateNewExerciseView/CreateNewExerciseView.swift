@@ -91,7 +91,7 @@ struct CreateNewExerciseView: View {
                 .padding(.bottom, 5)
                 
                 // MARK: Do you want to add a PR for the new exercise
-                if viewModel.addPr == "Yes" {
+                if viewModel.addPr {
                     
                     // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
                     if viewModel.selectedTypeOfExercise == "Rep based" {
@@ -106,7 +106,7 @@ struct CreateNewExerciseView: View {
                     }
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(viewModel.weightUnit(viewContext: viewContext))",
+                        placeHolder: "Load (\(viewModel.weightUnit))",
                         numberText: $viewModel.enteredPrWeigtLoad,
                         markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
                         errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
@@ -114,7 +114,7 @@ struct CreateNewExerciseView: View {
                     )
                     .padding(.horizontal, 60)
 
-                    if viewModel.selectedTypeOfExercise == "Time based" {
+                    if viewModel.selectedTypeOfExercise == "time" {
                         
                         DecimalTextField(
                             placeHolder: "PR time in seconds", 
@@ -124,7 +124,7 @@ struct CreateNewExerciseView: View {
                         )
                         .padding(.horizontal, 60)
                         
-                    } else if viewModel.selectedTypeOfExercise == "Rep based" && viewModel.selectedTypeOfPr == "AMRAP" {
+                    } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
                         
                         IntegerTextField(
                             placeHolder: "Reps", 
@@ -219,7 +219,7 @@ struct CreateNewExerciseView: View {
             fieldInvalid: $viewModel.enteredExerciseDescIsInvalid
         )
         
-        if viewModel.addPr == "Yes" {
+        if viewModel.addPr {
             valid += loadFieldValidtor.valideField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
             valid += quantityFieldValidtor.valideField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
         }

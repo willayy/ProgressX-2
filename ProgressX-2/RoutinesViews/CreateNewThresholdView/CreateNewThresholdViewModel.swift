@@ -26,30 +26,25 @@ class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
     @Published public var selectedTemplateSet: TemplateSet? = nil
     
     // Seg picker selections
-    @Published public var addPrSelection: String = "Don't add PR"
-    @Published public var addRepPrSelection: String = "1RM"
+    @Published public var addPrSelection: Bool = false
+    @Published public var prSelection: String = "onerepmax"
     
     // Seg picker options
-    public let addPrSegments: [String] = ["Add PR", "Don't add PR"]
-    public let addRepPrSegments: [String] = ["1RM", "AMRAP"]
+    public let addPrSegments: [String : Bool] = [
+        "Add PR" : true,
+        "Don't add PR" : false
+    ]
+    
+    public let repPrSegments: [String : String] = [
+        "1RM" : "onerepmax",
+        "AMRAP" : "maxreps"
+    ]
+    
+    public let timePrSegments: [String : String] = [
+        "Time-max" : "timemax"
+    ]
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
-        
-        let exerciseType = selectedTemplateSet!.exercise!.exerciseType
-        let addPr = addPrSelection == "Add PR" ? true : false
-        var prType: String? = nil
-        
-        if exerciseType == "reps" && addPr && addRepPrSelection == "1RM" {
-            prType = "onerepmax"
-        }
-        
-        else if exerciseType == "reps" && addPr && addRepPrSelection == "AMRAP" {
-            prType = "maxreps"
-        }
-        
-        else if exerciseType == "time" && addPr {
-            prType = "timemax"
-        }
         
         let inputFlatLoadAdd: NSNumber? = {
             if flatLoadAdd.isEmpty { return nil }
@@ -67,14 +62,12 @@ class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
             viewContext,
             templateSet: selectedTemplateSet!,
             triggeredAt: Double(triggerQuantity)!,
-            generatesPr: addPr,
-            prType: prType,
+            generatesPr: addPrSelection,
+            prType: prSelection,
             flatLoadAdd: inputFlatLoadAdd,
             flatQuantityAdd: inputFlatQuantityAdd
         )
-        
-        selectedTemplateSet!.addToThresholds(threshold)
-        
+            
         self.safeSave(viewContext: viewContext)
         
     }
