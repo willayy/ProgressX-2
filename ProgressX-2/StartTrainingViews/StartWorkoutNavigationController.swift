@@ -64,6 +64,14 @@ struct StartWorkoutNavigationController<Content: View>: View {
                     )
                     .environment(\.managedObjectContext, viewContext)
                     
+                } else if selection == 4 {
+                    
+                    ChooseSessionView(
+                        navPath: $navPath,
+                        selectedTrainingWeek: $selectedTrainingWeek,
+                        selectedTrainingSession: $selectedTrainingSession
+                    )
+                    
                 }
             }
 
