@@ -79,7 +79,7 @@ class CreateNewTemplateSetViewModel: SavingViewModel, AddingViewModel {
     public func loadPlaceholder(viewContext: NSManagedObjectContext) -> String {
         switch selectedLoadType {
         case "Numerical":
-            let weightUnit = PersistenceController.getWeightUnit(viewContext)!
+            let weightUnit = self.weightUnit(viewContext)
             return "Load \(weightUnit)"
         case "Percentage of current 1RM PR load":
             return "Percentage"

@@ -11,6 +11,9 @@ import SwiftUI
 
 class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     
+    // Get the viewcontext from the enviorment
+    @Environment(\.managedObjectContext) private var viewContext
+    
     // Input variables
     @Published public var currBw: Double = 0
     @Published public var enteredExerciseName: String = ""
@@ -19,10 +22,9 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     @Published public var enteredPrWeigtLoad: String = ""
     
     // Segment picker choices
-    @Published public var selectedTypeOfExercise: String = "Reps"
-    @Published public var selectedTypeOfPr: String = "1RM"
-    @Published public var addPr: String = "No"
-    @Published public var achieviedOnCurrBw: String = "Yes"
+    @Published public var selectedTypeOfExercise: String = "reps"
+    @Published public var selectedTypeOfPr: String = "onerepmax"
+    @Published public var addPr: Bool = false
     
     // Invalid input error
     @Published public var enteredExerciseNameIsInvalid: Bool = false
@@ -40,32 +42,39 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     
     // Segment picker options
-    public let exerciseTypeOptions: [String] = ["Reps", "Time"]
-    public let addPrOptions: [String] = ["Yes", "No"]
-    public let achievedAtBwOptions: [String] = ["Yes", "No"]
-    public let repBasedPrOptions: [String] = ["AMRAP", "1RM"]
+    public let exerciseTypeOptions: [String : String] = [
+        "Rep based" : "reps",
+        "Time based" : "time"
+    ]
     
-    public func prTypeChanged(bodyEntries: FetchedResults<BodyEntry>) -> Void {
-        if selectedTypeOfPr == "AMRAP" {
-            // set default load to bodyweight
-            enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
-            enteredPrQuantity = ""
-        } else if selectedTypeOfPr == "1RM" {
-            // else if "1RM" set to reps 1 and load to nothing
+    public let addPrOptions: [String : Bool] = [
+        "Yes" : true,
+        "No" : false
+    ]
+   
+    public let timeBasedPrOptions: [String : String] = [
+        "Time-Max" : "timemax"
+    ]
+    
+    public let repBasedPrOptions: [String : String] = [
+        "1RM" : "onerepmax",
+        "AMRAP" : "maxreps"
+    ]
+    
+    public func prTypeChanged() -> Void {
+        if repBasedPrOptions[selectedTypeOfPr] == "onerepmax" {
+            // else if "1RM" set to reps 1
             enteredPrQuantity = "1"
-            enteredPrWeigtLoad = ""
         }
     }
     
-    public func exerciseTypeChanged(bodyEntries: FetchedResults<BodyEntry>) -> Void {
-        if selectedTypeOfExercise == "Time" {
-            // Set the PR selector and set default load to bodyweight
-            selectedTypeOfPr = "Time-max"
-            enteredPrQuantity = ""
-            enteredPrWeigtLoad = String(bodyEntries.first!.bodyWeight)
-        } else {
-            // else set no default
-            enteredPrWeigtLoad = ""
+    public func exerciseTypeChanged() -> Void {
+        if selectedTypeOfExercise == "time" {
+            // Set the PR selector to the first time based pr option key
+            selectedTypeOfPr = timeBasedPrOptions.keys.first!
+        } else if selectedTypeOfExercise == "reps" {
+            // Set the PR selector to the first rep based pr option key
+            selectedTypeOfPr = repBasedPrOptions.keys.first!
         }
     }
     
@@ -76,7 +85,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             viewContext,
             name: enteredExerciseName,
             description: enteredExerciseDesc,
-            type: (selectedTypeOfExercise == "Reps") ? "reps" : "time"
+            type: exerciseTypeOptions[selectedTypeOfExercise]!
         )
         
         for category in selectedCategories {
@@ -85,20 +94,8 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
         }
         
         // Add pr if selected
-        if addPr == "Yes" {
+        if addPr {
             // Find the pr-type from the user selected value
-            let prType: String
-            
-            switch selectedTypeOfPr {
-                case "AMRAP":
-                    prType = "maxreps"
-                case "1RM":
-                    prType = "onerepmax"
-                case "Time-max":
-                    prType = "timemax"
-                default:
-                    prType = "" // This should never be the case
-            }
             
             let pr = PersonalRecord(
                 viewContext,
@@ -106,22 +103,10 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
                 weightLoad: Double(enteredPrWeigtLoad)!,
                 quantity: Double(enteredPrQuantity)!,
                 date: Date(),
-                type: prType
+                type: selectedTypeOfPr
             )
-            
-            exercise.addToPersonalRecords(pr)
         }
         
         self.safeSave(viewContext: viewContext)
-        
-        // Reset the selected values
-        withAnimation(.easeOut) {
-            enteredExerciseName = ""
-            enteredExerciseDesc = ""
-            selectedTypeOfExercise = "Reps"
-            selectedTypeOfPr = "1RM"
-            addPr = "No"
-        }
     }
-    
 }

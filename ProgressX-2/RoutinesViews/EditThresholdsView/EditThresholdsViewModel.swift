@@ -22,23 +22,24 @@ class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueVi
     @Published public var editedFlatQuantityAddIsInvalidMsg: String = ""
     @Published public var showNoChangeAlert: Bool = false
     @Published public var showThresholdChangedAlert: Bool = false
-    public let addPrSegments: [String] = ["Add PR", "Don't add PR"]
-    public let addRepPrSegments: [String] = ["1RM", "AMRAP"]
-    @Published public var addPrSelection: String = "Don't add PR"
-    @Published public var addRepPrSelection: String = "1RM"
+    @Published public var addPrSelection: Bool = false
+    @Published public var prSelection: String = "onerepmax"
     
-    typealias T = SetThreshold
-
-    private let addPrMap = [
+    public let addPrSegments: [String : Bool] = [
         "Add PR" : true,
         "Don't add PR" : false
     ]
     
-    private let prTypeMap = [
+    public let addRepPrSegments: [String : String] = [
         "1RM" : "onerepmax",
-        "AMRAP" : "maxreps",
-        "TimeMax" : "timemax"
+        "AMRAP" : "maxreps"
     ]
+    
+    public let addTimePrSegments: [String : String] = [
+        "Time-max" : "timemax"
+    ]
+    
+    typealias T = SetThreshold
     
     private func removeSubstrings(from string: String, substrings: [String]) -> String {
         var modifiedString = string
@@ -70,8 +71,6 @@ class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueVi
         // Since the formatted strings from the NSManagedObject subclasses contain suffix we need to strip them away.
         let removeStrings = [" reps", " seconds", " kg's", " lbs"]
         
-        addPrSelection = prSelection
-        addRepPrSelection = repPrSelection
         editedTriggerQuantity = removeSubstrings(from: entity.triggerQuantityString!, substrings: removeStrings)
         editedFlatLoadAdd = removeSubstrings(from: entity.flatLoadAddString ?? "", substrings: removeStrings)
         editedFlatQuantityAdd = removeSubstrings(from: entity.flatQuantityAddString ?? "", substrings: removeStrings)
@@ -92,13 +91,13 @@ class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueVi
             else { return NSNumber(value: Double(editedFlatQuantityAdd)!) }
         }()
         
-        if addPrMap[addPrSelection] != entity.generatePr {
-            entity.generatePr = addPrMap[addPrSelection]!
+        if addPrSelection != entity.generatePr {
+            entity.generatePr = addPrSelection
             entity.prType = nil
         }
         
-        if prTypeMap[addRepPrSelection] != entity.prType && addPrSelection == "Add PR" {
-            entity.prType = prTypeMap[addRepPrSelection]!
+        if prSelection != entity.prType && addPrSelection {
+            entity.prType = prSelection
         }
         
         if Double(editedTriggerQuantity) != entity.triggerQuantity {

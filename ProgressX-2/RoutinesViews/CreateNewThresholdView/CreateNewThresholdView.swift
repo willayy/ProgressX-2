@@ -20,7 +20,6 @@ struct CreateNewThresholdView: View {
         let exerciseType = selectedTemplateSet!.exercise!.exerciseType!
         let loadType = selectedTemplateSet!.loadType!
         let quantityType = selectedTemplateSet!.quantityType!
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
         
         ScrollView {
             VStack {
@@ -69,17 +68,24 @@ struct CreateNewThresholdView: View {
                 .padding(.horizontal, 20)
                 
                 // Add PR when threshold is triggered?
-                BasicSegPicker(
+                BooleanSegPicker(
                     selectedSegment: $viewModel.addPrSelection,
                     segments: viewModel.addPrSegments
                 )
                 .padding(.horizontal, 40)
                 
                 // If exercise is rep-based add option to select AMRAP or 1RM pr.
-                if exerciseType == "reps" && viewModel.addPrSelection == "Add PR"  {
+                if exerciseType == "reps" && viewModel.addPrSelection {
                     BasicSegPicker(
-                        selectedSegment: $viewModel.addRepPrSelection,
-                        segments: viewModel.addRepPrSegments
+                        selectedSegment: $viewModel.prSelection,
+                        segments: viewModel.repPrSegments
+                    )
+                    .padding(.horizontal, 40)
+                    .padding(.top, 5)
+                } else if exerciseType == "time" && viewModel.addPrSelection {
+                    BasicSegPicker(
+                        selectedSegment: $viewModel.prSelection,
+                        segments: viewModel.timePrSegments
                     )
                     .padding(.horizontal, 40)
                     .padding(.top, 5)
@@ -97,7 +103,7 @@ struct CreateNewThresholdView: View {
                     .padding(.horizontal, 20)
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(weightUnit))", 
+                        placeHolder: "Load (\(viewModel.weightUnit(viewContext)))", 
                         numberText: $viewModel.flatLoadAdd,
                         markAsWrong: $viewModel.flatLoadAddIsInvalid,
                         errorMessage: $viewModel.flatLoadAddIsInvalidMsg,

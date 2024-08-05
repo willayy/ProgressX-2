@@ -69,7 +69,7 @@ struct GeneralInfoRepsExercise: View {
             
             VStack(alignment: .leading) {
                 
-                if selection == "1RM" {
+                if selection == "onerepmax" {
                     
                     Text("Total 1RM pr's recorded: ")
                         .font(.subheadline)
@@ -119,7 +119,7 @@ struct GeneralInfoRepsExercise: View {
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.blue)
                     
-                } else if selection == "AMRAP" {
+                } else if selection == "maxreps" {
                     
                     (Text("Total AMRAP pr's recorded: ")
                         .font(.subheadline)
@@ -186,6 +186,6 @@ struct GeneralInfoRepsExercise: View {
 
     let exercise: Exercise = exerciseResult.first!
     
-    return GeneralInfoRepsExercise(exercise: exercise, selection: "1RM")
+    return GeneralInfoRepsExercise(exercise: exercise, selection: "onerepmax")
         .environment(\.managedObjectContext, context)
 }

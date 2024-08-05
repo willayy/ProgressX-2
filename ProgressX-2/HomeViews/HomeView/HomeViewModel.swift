@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HomeViewModel: ObservableObject {
+class HomeViewModel: ViewModel {
     
     @Published public var navPath: [Int] = [Int]()
     @Published public var selectedProfile: Profile? = nil
