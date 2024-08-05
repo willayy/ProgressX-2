@@ -57,7 +57,7 @@ struct BasicRoutineListItem: View {
                 }
         
             }
-            .frame(width: 135, height: 55)
+            .frame(width: 135, height: 55, alignment: .leading)
             .padding(.vertical, 10)
             
             Spacer()
