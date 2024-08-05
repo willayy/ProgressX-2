@@ -13,7 +13,8 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
     
     @Published var selectedExercise: Exercise? = nil
     @Published var selectedSet: TrainingSet? = nil
-    
+    @Published var text = ""
+    @Published var showWindow: Bool = false
     @Published var editedQuantityType: String = ""
     @Published var editedSetQuantity: String = ""
     @Published var editedSetQuantityIsInvalid: Bool = false
@@ -39,4 +40,9 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
             self.safeSave(viewContext: viewContext)
         }
     }
+    
+    public func changeText(text: String) {
+        self.text = text
+    }
+    
 }
