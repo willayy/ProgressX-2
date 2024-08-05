@@ -37,6 +37,8 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
     @Published public var heightIsInvalidMsg: String = ""
     @Published public var standardRestTimeIsInvalidMsg: String = ""
     
+    typealias T = Profile
+    
     // Segments for segment picker
     let unitSegments: [String : Bool] = [
         "Metric" : true,
@@ -48,8 +50,6 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
         "Female" : "female"
     ]
     
-    typealias T = Profile
-    
     var smallestPlateSegments: [String] {
         if selectedUnitSegment {
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
@@ -57,8 +57,6 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
             return ["2.5 lbs", "5 lbs", "10 lbs"]
         }
     }
-    
-    typealias T = Profile
     
     public func setViewStartValues(entity: Profile) -> Void {
         self.standardRestTime = String(format: "%.2f", entity.standardRestTime)

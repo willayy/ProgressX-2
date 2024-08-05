@@ -56,7 +56,6 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         (self.selectedUnitSegment) ? "kg" : "lbs"
     }
     
-    #warning("TODO: Make same change to StringSelectionList")
     public var smallestPlateSegments: [String] {
         if selectedUnitSegment {
             return [
