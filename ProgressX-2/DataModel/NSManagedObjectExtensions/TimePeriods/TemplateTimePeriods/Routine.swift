@@ -50,6 +50,10 @@ extension Routine: HasOrderable {
         return allExercises
     }
     
+    public var weeksInRoutine: [TemplateWeek] {
+        return self.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
+    }
+    
     /// Gets the last session done, returns nil if no sessions done.
     public var lastCompletedSession: TrainingSession? {
         let allSessions: [TrainingSession] = self.allTrainingSessions
