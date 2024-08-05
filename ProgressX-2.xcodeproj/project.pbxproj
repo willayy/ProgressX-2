@@ -161,7 +161,7 @@
 		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
 		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
 		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
-		8F7F16092C47F9DA00F37C58 /* BasicRoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */; };
+		8F7F16092C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */; };
 		8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */; };
 		8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */; };
 		8F7F16112C4928F300F37C58 /* ChooseWeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */; };
@@ -347,7 +347,7 @@
 		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
 		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
 		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
-		8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRoutineListItem.swift; sourceTree = "<group>"; };
+		8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewRoutineListItem.swift; sourceTree = "<group>"; };
 		8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutNavigationController.swift; sourceTree = "<group>"; };
 		8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekView.swift; sourceTree = "<group>"; };
 		8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekViewModel.swift; sourceTree = "<group>"; };
@@ -443,7 +443,6 @@
 		8310D9272C0CA13D004A5A3D /* ListItems */ = {
 			isa = PBXGroup;
 			children = (
-				8F7F16122C49383C00F37C58 /* TrainingListItems */,
 				83D685092C33306400FA78C6 /* MagnifiedViews */,
 				8310D92F2C0CAB1D004A5A3D /* ExerciseListItem.swift */,
 				8310D9282C0CA170004A5A3D /* PrListItem.swift */,
@@ -452,8 +451,9 @@
 				831F2C2D2C24E532007A7A8A /* TemplateSessionListItem.swift */,
 				831F2C2F2C24E54B007A7A8A /* TemplateSetListItem.swift */,
 				83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */,
-				8F7F16082C47F9DA00F37C58 /* BasicRoutineListItem.swift */,
 				83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */,
+				8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */,
+				8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -768,6 +768,13 @@
 			path = Achievements;
 			sourceTree = "<group>";
 		};
+		8351A9AF2C611E1300405ABB /* ChooseSessionView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChooseSessionView;
+			sourceTree = "<group>";
+		};
 		8359F97B2C1B2489004BA421 /* InputValidation */ = {
 			isa = PBXGroup;
 			children = (
@@ -997,8 +1004,8 @@
 		8F7F160C2C4920B800F37C58 /* StartWorkoutView */ = {
 			isa = PBXGroup;
 			children = (
-				8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */,
 				8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */,
+				8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */,
 			);
 			path = StartWorkoutView;
 			sourceTree = "<group>";
@@ -1010,14 +1017,6 @@
 				8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */,
 			);
 			path = ChooseWeekView;
-			sourceTree = "<group>";
-		};
-		8F7F16122C49383C00F37C58 /* TrainingListItems */ = {
-			isa = PBXGroup;
-			children = (
-				8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */,
-			);
-			path = TrainingListItems;
 			sourceTree = "<group>";
 		};
 		8F7F16152C4948A400F37C58 /* TrainingView */ = {
@@ -1102,6 +1101,7 @@
 				8F7F16152C4948A400F37C58 /* TrainingView */,
 				8F7F160C2C4920B800F37C58 /* StartWorkoutView */,
 				8F7F160D2C4928AF00F37C58 /* ChooseWeekView */,
+				8351A9AF2C611E1300405ABB /* ChooseSessionView */,
 			);
 			path = StartTrainingViews;
 			sourceTree = "<group>";
@@ -1234,7 +1234,7 @@
 				83D685042C32AEA900FA78C6 /* CreateNewTemplateSetView.swift in Sources */,
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
-				8F7F16092C47F9DA00F37C58 /* BasicRoutineListItem.swift in Sources */,
+				8F7F16092C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift in Sources */,
 				83B013A72C5BB9A000059E42 /* inputLongTextField.swift in Sources */,
 				831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */,
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
