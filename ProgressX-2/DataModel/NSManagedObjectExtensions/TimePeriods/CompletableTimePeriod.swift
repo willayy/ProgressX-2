@@ -12,6 +12,7 @@ extension CompleteableTimePeriod {
     
     //MARK: Extra properties
     
+    /// The completion date of a Completable object as a String.
     public var completionDateString: String? {
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
@@ -25,7 +26,7 @@ extension CompleteableTimePeriod {
         }
     }
     
-    /// Marks object as completed
+    /// Marks a Completable TimePeriod as completed.
     public func complete(onDate: Date = Date()) -> Void {
         self.isComplete = true
         self.completedOnDate = onDate
@@ -44,6 +45,19 @@ extension CompleteableTimePeriod {
         }
     }
     
+    /// Skips a Completeable TimePeriod.
+    public func skip(onDate: Date = Date()) -> Void {
+        self.isComplete = true
+        self.completedOnDate = onDate
+        
+        // Handle extra stuff if its a trainingset
+        if self is TrainingSet {
+            let trainingSet: TrainingSet = self as! TrainingSet
+            trainingSet.quantityDone = 0
+            trainingSet.loadDone = 0
+        }
+    }
+    
     //MARK: Validation
     
     public override func validateForInsert() throws {
@@ -54,6 +68,27 @@ extension CompleteableTimePeriod {
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
+        cascadeCompletion()
+    }
+    
+    /// If a child is completed and all its parent children are now complete, make parent complete.
+    private func cascadeCompletion() {
+        switch self {
+        case is TrainingWeek:
+            let trainingWeek = self as! TrainingWeek
+            let trainingCycle = trainingWeek.trainingCycle!
+            if trainingCycle.childrenAreComplete() { trainingCycle.isComplete = true }
+        case is TrainingSession:
+            let trainingSession = self as! TrainingSession
+            let trainingWeek = trainingSession.trainingWeek!
+            if trainingWeek.childrenAreComplete() { trainingWeek.isComplete = true }
+        case is TrainingSet:
+            let trainingSet = self as! TrainingSet
+            let trainingSession = trainingSet.trainingSession!
+            if trainingSession.childrenAreComplete() { trainingSet.isComplete = true }
+        default:
+            break
+        }
     }
     
     private func validateIsComplete() throws {

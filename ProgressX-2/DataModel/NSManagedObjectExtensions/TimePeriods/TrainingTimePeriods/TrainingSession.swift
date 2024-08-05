@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingSession: HasOrderable {
+extension TrainingSession: HasOrderable, HasCompleteable {
     
     //MARK: Convenience init
     
@@ -79,6 +79,12 @@ extension TrainingSession: HasOrderable {
         try validateCompleteables()
     }
     
+    internal func childrenAreComplete() -> Bool {
+        self.trainingSets!.allSatisfy { trainingSet in
+            (trainingSet as! TrainingSet).isComplete
+        }
+    }
+    
     // Validate that children has valid positionIndexes (No duplicates)
     private func validatePositionIndexes() throws {
         let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
@@ -94,18 +100,8 @@ extension TrainingSession: HasOrderable {
         }
         
         // If session is complete but it's sets arent throw an error
-        var completedSets: Int = 0
-        let sets = self.trainingSets!.allObjects as! [TrainingSet]
-        
-        // Count completed sets
-        for set in sets {
-            if set.isComplete {
-                completedSets += 1
-            }
-        }
-        
         // Throw if true
-        if self.isComplete && completedSets != sets.count {
+        if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
     }

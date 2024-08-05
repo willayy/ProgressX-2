@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingCycle: HasOrderable {
+extension TrainingCycle: HasOrderable, HasCompleteable {
     
     // MARK: Convenience init
     
@@ -62,6 +62,12 @@ extension TrainingCycle: HasOrderable {
         if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
     }
     
+    internal func childrenAreComplete() -> Bool {
+        self.trainingWeeks!.allSatisfy { trainingWeeks in
+            (trainingWeeks as! TrainingWeek).isComplete
+        }
+    }
+    
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.trainingWeeks!.allObjects.isEmpty {
@@ -69,18 +75,8 @@ extension TrainingCycle: HasOrderable {
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
-        var completedWeeks: Int = 0
-        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        
-        // Count completed weeks.
-        for week in weeks {
-            if week.isComplete {
-                completedWeeks += 1
-            }
-        }
-        
         // Throw if true.
-        if self.isComplete && completedWeeks != weeks.count {
+        if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
     }
