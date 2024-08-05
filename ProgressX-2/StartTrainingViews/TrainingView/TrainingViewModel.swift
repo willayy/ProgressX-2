@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import CoreData
 
-class TrainingViewModel: ObservableObject {
+class TrainingViewModel: SavingViewModel{
+    
     @Published var selectedRoutine: Routine? = nil
     @Published var navPath: [Int] = [Int]()
     @Published var selectedTrainingCycle: TrainingCycle? = nil
@@ -16,5 +18,13 @@ class TrainingViewModel: ObservableObject {
     @Published var AllTrainingSets: [TrainingSet] = []
     @Published public var searchText: String = ""
     
+    typealias T = TrainingSet
+    
+    public func saveEdits(entity: TrainingSet, viewContext: NSManagedObjectContext) -> Void {
+        entity.skip()
+        self.safeSave(viewContext: viewContext)
+    }
     
 }
+
+

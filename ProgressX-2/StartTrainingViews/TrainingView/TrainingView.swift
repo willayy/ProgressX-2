@@ -47,7 +47,6 @@ struct TrainingView: View {
                 navPath.append(3)
             }) {
                 Text("Done")
-
             }
     
             if !DoneButton {
@@ -95,7 +94,11 @@ struct TrainingView: View {
                 }
         .toolbar {
             Button(action:{
+                viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
                 currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                if currentTrainingSet == nil {
+                    navPath.append(3)
+                }
                 secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
             }) {
                 Text("Skip set")

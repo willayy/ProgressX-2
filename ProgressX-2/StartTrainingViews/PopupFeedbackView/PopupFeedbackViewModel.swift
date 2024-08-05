@@ -34,7 +34,6 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
         }
         
         entity.complete()
-        print(entity.isComplete)
         
         if entity.hasChanges {
             self.safeSave(viewContext: viewContext)
