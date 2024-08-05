@@ -56,7 +56,7 @@ struct CreateNewProfile1View: View {
                     BoldSubHeadline(text: "Metric or imperial units?")
                         .padding(.top, 10)
                     
-                    BasicSegPicker(
+                    BooleanSegPicker(
                         selectedSegment: $viewModel.selectedUnitSegment,
                         segments: viewModel.unitSegments
                     )
@@ -110,7 +110,6 @@ struct CreateNewProfile1View: View {
                     
                     Button {
                         if validateInput() {
-                            viewModel.profile = profiles.first
                             viewModel.saveEntry(viewContext: viewContext)
                             viewModel.navPath.append(1)
                         }

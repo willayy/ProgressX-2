@@ -11,23 +11,42 @@ import SwiftUI
 
 class CreateNewProfile1ViewModel: SavingViewModel {
     
+    // Navpath variable
     @Published public var navPath: [Int] = [Int]()
-    @Published public var userName: String = ""
+    
+    // Input variables
     @Published public var birthDay: Date = Date()
-    @Published public var selectedUnitSegment: String = "Metric"
-    @Published public var selectedGenderSegment: String = "Male"
+    @Published public var userName: String = ""
     @Published public var weight: String = ""
     @Published public var height: String = ""
+    
+    // Input variables are invalid states
     @Published public var userNameIsInvalid = false
     @Published public var heightIsInvalid = false
     @Published public var weightIsInvalid = false
+    
+    // Input variables invalid messages
     @Published public var userNameIsInvalidMsg = ""
     @Published public var heightIsInvalidMsg = ""
     @Published public var weightIsInvalidMsg = ""
+    
+    // StringSelectionList selection
     @Published public var smallestPlateSelection: String = "1.25 kg's"
-    @Published public var profile: Profile? = nil
-    public let unitSegments: [String] = ["Metric", "Imperial"]
-    public let genderSegments = ["Male", "Female"]
+    
+    // Seg picker selections
+    @Published public var selectedUnitSegment: String = "Metric"
+    @Published public var selectedGenderSegment: String = "Male"
+    
+    // Seg picker options
+    public let unitSegments: [String : Bool] = [
+        "Metric" : true,
+        "Imperial" : false
+    ]
+    
+    public let genderSegments: [String : String] = [
+        "Male" : "male",
+        "Female" : "female"
+    ]
     
     public var lengthUnit: String {
         (self.selectedUnitSegment == "Metric") ? "cm" : "ft"
@@ -37,25 +56,34 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         (self.selectedUnitSegment == "Metric") ? "kg" : "lbs"
     }
     
+    #warning("TODO: Make same change to StringSelectionList")
     public var smallestPlateSegments: [String] {
         if selectedUnitSegment == "Metric" {
-            return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
+            return [
+                "1.25 kg's",
+                "2.5 kg's",
+                "5 kg's",
+                "10 kg's"
+            ]
         } else {
-            return ["2.5 lbs", "5 lbs", "10 lbs"]
+            return [
+                "2.5 lbs",
+                "5 lbs",
+                "10 lbs"
+            ]
         }
     }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
+        
+        // If the profile exists, delete the profile.
         if PersistenceController.profileExists(viewContext) {
+            let profile = PersistenceController.getProfile(viewContext)
             PersistenceController.delete(viewContext, object: profile!)
             PersistenceController.save(viewContext)
         }
         
         // Transform input values into values that can be used in the datamodel.
-        let isMetric = (selectedUnitSegment == "Metric") ? true : false
-        let gender = (selectedGenderSegment == "Male") ? "male" : "female"
-        let inputWeight = Double(weight)!
-        let inputHeight = Double(height)!
         let smallestPlate = {
             let numericalValue: String = self.smallestPlateSelection
                 .replacingOccurrences(of: " kg's", with: "")
@@ -67,9 +95,9 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         let profile = Profile(
             viewContext,
             userName: userName,
-            gender: gender,
-            height: inputHeight,
-            isMetric: isMetric,
+            gender: genderSegments[selectedGenderSegment]!,
+            height: Double(height)!,
+            isMetric: unitSegments[selectedUnitSegment]!,
             smallestPlate: smallestPlate,
             birthDay: birthDay
         )
@@ -78,7 +106,7 @@ class CreateNewProfile1ViewModel: SavingViewModel {
         let _ = BodyEntry(
             viewContext,
             profile: profile,
-            bodyWeight: inputWeight,
+            bodyWeight: Double(weight)!,
             date: Date()
         )
         

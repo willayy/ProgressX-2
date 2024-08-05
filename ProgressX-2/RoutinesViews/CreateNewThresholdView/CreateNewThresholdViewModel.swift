@@ -13,15 +13,23 @@ class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
     @Published public var triggerQuantity: String = ""
     @Published public var triggerQuantityIsInvalid: Bool = false
     @Published public var triggerQuantityIsInvalidMSg: String = ""
-    @Published public var addPrSelection: String = "Don't add PR"
-    @Published public var addRepPrSelection: String = "1RM"
+    
     @Published public var flatLoadAdd: String = ""
     @Published public var flatLoadAddIsInvalid: Bool = false
     @Published public var flatLoadAddIsInvalidMsg: String = ""
+    
     @Published public var flatQuantityAdd: String = ""
     @Published public var flatQuantityAddIsInvalid: Bool = false
     @Published public var flatQuantityAddIsInvalidMsg: String = ""
+    
+    // Variable for saveEntry
     @Published public var selectedTemplateSet: TemplateSet? = nil
+    
+    // Seg picker selections
+    @Published public var addPrSelection: String = "Don't add PR"
+    @Published public var addRepPrSelection: String = "1RM"
+    
+    // Seg picker options
     public let addPrSegments: [String] = ["Add PR", "Don't add PR"]
     public let addRepPrSegments: [String] = ["1RM", "AMRAP"]
     

@@ -33,11 +33,11 @@ struct CreateNewProfile4View: View {
     @StateObject private var viewModel = CreateNewProfile4ViewModel()
     
     var body: some View {
-        
-        let weightUnit = PersistenceController.getWeightUnit(viewContext)!
-        
+            
         ScrollView(showsIndicators: false) {
+            
             VStack(alignment: .center, spacing: 10) {
+                
                 Text("Extra information on basic exercises")
                     .font(.title)
                     .fontWeight(.bold)

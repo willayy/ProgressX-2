@@ -9,33 +9,41 @@ import SwiftUI
 
 struct BasicSegPicker: View {
     
+    @State private var shownSegment: String
     @Binding var selectedSegment: String
     let segments: [String : String]
     
     var body: some View {
         let keys: [String] = Array(segments.keys)
-        Picker("Options", selection: $selectedSegment) {
+        Picker("Options", selection: $shownSegment) {
             ForEach(keys, id: \.self) { option in
                 Text(option).tag(option)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+        .onChange(of: shownSegment, initial: true) {
+            selectedSegment = segments[shownSegment]!
+        }
     }
 }
 
 struct BooleanSegPicker: View {
     
-    @Binding var selectedSegment: String
+    @State private var shownSegment: String
+    @Binding var selectedSegment: Bool
     let segments: [String : Bool]
     
     var body: some View {
         let keys: [String] = Array(segments.keys)
-        Picker("Options", selection: $selectedSegment) {
+        Picker("Options", selection: $shownSegment) {
             ForEach(keys, id: \.self) { option in
                 Text(option).tag(option)
             }
         }
         .pickerStyle(SegmentedPickerStyle())
+        .onChange(of: shownSegment, initial: true) {
+            selectedSegment = segments[shownSegment]!
+        }
     }
 }
 
