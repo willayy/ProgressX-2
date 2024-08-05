@@ -75,17 +75,23 @@ extension CompleteableTimePeriod {
     private func cascadeCompletion() {
         switch self {
         case is TrainingWeek:
+            
             let trainingWeek = self as! TrainingWeek
             let trainingCycle = trainingWeek.trainingCycle!
             if trainingCycle.childrenAreComplete() { trainingCycle.isComplete = true }
+            
         case is TrainingSession:
+            
             let trainingSession = self as! TrainingSession
             let trainingWeek = trainingSession.trainingWeek!
             if trainingWeek.childrenAreComplete() { trainingWeek.isComplete = true }
+            
         case is TrainingSet:
+            
             let trainingSet = self as! TrainingSet
             let trainingSession = trainingSet.trainingSession!
-            if trainingSession.childrenAreComplete() { trainingSet.isComplete = true }
+            if trainingSession.childrenAreComplete() { trainingSession.isComplete = true }
+            
         default:
             break
         }

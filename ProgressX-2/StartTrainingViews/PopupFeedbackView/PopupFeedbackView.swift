@@ -25,6 +25,7 @@ struct PopupFeedbackView: View {
     var body: some View {
         VStack{
             if !ShowWindow {
+                
                 if ((currentTrainingSet?.exercise?.exerciseType = "reps") != nil) {
                     BoldTitle(text: "Did you complete all your reps?")
                 } else if ((currentTrainingSet?.exercise?.exerciseType = "time") != nil){
@@ -58,18 +59,24 @@ struct PopupFeedbackView: View {
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.trailing, 40)
                     
-                }.padding(.top)
-                
+                }
+                .padding(.top)
                 
             } else {
                 BoldTitle(text: self.text)
+                    .padding(.horizontal, 20)
+                
+                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
+                    .padding(.vertical, 5)
+                
                 IntegerTextField(
-                    placeHolder: viewModel.quantityPlaceholder(),
+                    placeHolder: "Enter how many reps you did!",
                     numberText: $viewModel.editedSetQuantity,
                     markAsWrong: $viewModel.editedSetQuantityIsInvalid,
                     errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
                     allowNegatives: false
                 )
+                .padding(.horizontal, 60)
                 .padding(.top, 5)
                 
                 Button(action:{
@@ -79,12 +86,13 @@ struct PopupFeedbackView: View {
                 }) {
                     Text("Done")
                         .bold()
-                        .frame(width: 120, height: 70)
+                        .frame(width: 120, height: 40)
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top)
             }
-        }.onAppear(perform: {
+        }
+        .onAppear(perform: {
             viewModel.setViewStartValues(selectedTrainigeSet: currentTrainingSet)
         })
         

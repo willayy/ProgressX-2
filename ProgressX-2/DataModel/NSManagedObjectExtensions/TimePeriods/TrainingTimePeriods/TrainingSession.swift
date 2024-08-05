@@ -69,14 +69,12 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     internal func childrenAreComplete() -> Bool {
@@ -100,21 +98,13 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         }
         
         // If session is complete but it's sets arent throw an error
-        // Throw if true
         if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
-    }
-    
-    private func validateCompleteables() throws {
-        let sets = self.trainingSets!.allObjects as! [TrainingSet]
-        // If there are no weeks abort.
-        if sets.count == 0 { return }
-        // Else check if count of completed weeks is equal to all weeks.
-        let completedSets = sets.filter { $0.isComplete }
-        if completedSets.count == sets.count && !self.isComplete {
+        
+        // If session is incomplete but its sets are completed
+        if !self.isComplete && self.childrenAreComplete() {
             throw ValidationNSErrors.sessionIncompleteWithCompleteSets.toNSError()
         }
     }
-    
 }

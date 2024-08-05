@@ -22,7 +22,7 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
     typealias T = TrainingSet
     
     public func setViewStartValues(selectedTrainigeSet: TrainingSet?) -> Void {
-        editedSetQuantity = selectedTrainigeSet!.quantityTodoString!
+        editedSetQuantity = String(format: "%.0f", selectedTrainigeSet!.quantityTodo)
     }
     
     public func saveEdits(entity: TrainingSet, viewContext: NSManagedObjectContext) -> Void {
@@ -39,20 +39,4 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
             self.safeSave(viewContext: viewContext)
         }
     }
-    // func that returns variable for the quantity placeholder
-    public func quantityPlaceholder() -> String {
-        switch editedQuantityType {
-        case "Numerical":
-            let exerciseType = selectedExercise?.exerciseType
-            if exerciseType == nil {return "Select exercise first!"}
-            return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR":
-            return "Percentage"
-        case "Percentage of current TimeMax PR":
-            return "Percentage"
-        default:
-            return "Select exercise first!"
-        }
-    }
-    
 }
