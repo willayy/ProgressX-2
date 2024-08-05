@@ -78,6 +78,7 @@
 		83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E832C3C153700F5F6CB /* EditPrViewModel.swift */; };
 		83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */; };
 		83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */; };
+		8351A9B12C612D6000405ABB /* ChooseSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B02C612D6000405ABB /* ChooseSessionView.swift */; };
 		8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */; };
 		8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */; };
 		8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */; };
@@ -267,6 +268,7 @@
 		83266E832C3C153700F5F6CB /* EditPrViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrViewModel.swift; sourceTree = "<group>"; };
 		83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdViewModel.swift; sourceTree = "<group>"; };
 		83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsViewModel.swift; sourceTree = "<group>"; };
+		8351A9B02C612D6000405ABB /* ChooseSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionView.swift; sourceTree = "<group>"; };
 		8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFieldValidator.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 		8351A9AF2C611E1300405ABB /* ChooseSessionView */ = {
 			isa = PBXGroup;
 			children = (
+				8351A9B02C612D6000405ABB /* ChooseSessionView.swift */,
 			);
 			path = ChooseSessionView;
 			sourceTree = "<group>";
@@ -1289,6 +1292,7 @@
 				831657752C53CCC5003F895F /* VStackWithSideBarButton.swift in Sources */,
 				83BD39892C4AA76C008E09A0 /* ExpandingVStack.swift in Sources */,
 				836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */,
+				8351A9B12C612D6000405ABB /* ChooseSessionView.swift in Sources */,
 				8316576D2C529365003F895F /* Title2.swift in Sources */,
 				83B013B62C5D03ED00059E42 /* DefaultValueViewModel.swift in Sources */,
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
