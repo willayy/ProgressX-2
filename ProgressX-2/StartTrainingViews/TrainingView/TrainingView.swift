@@ -32,19 +32,22 @@ struct TrainingView: View {
     @State var presentPopup = false
     @State var startTimer = false
     @State var DoneButton = false
+    @State var startTimerButton = false
     
     var body: some View {
     
         VStack{
             
             progressView
-            
-            TrainingElement(currentSet: $currentTrainingSet)
+            if currentTrainingSet != nil {
+                TrainingElement(currentSet: $currentTrainingSet)
+            }
     
             if !DoneButton {
                 Button(action:{
                     presentPopup.toggle()
                     print(currentTrainingSet?.quantityTodoString)
+                    print(AllTrainingSets.count)
                 }) {
                     Text("Done")
                         .frame(width: 100, height: 40)
@@ -58,17 +61,18 @@ struct TrainingView: View {
                 Button(action:{
                     print(selectedSecondsAmount)
                     startTimer(Timer: TimerviewModel)
+                    startTimerButton = true
                 }) {
                     Text("Start timer")
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
-                }
+                }.disabled(startTimerButton)
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
                 }
         }
         .task {
-            secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
+            secondsToHoursMinutesSeconds(seconds: Int(5))
         }
         .alert("Start your next set",isPresented: $showAlert) {
             Button("OK", role: .cancel) { DoneButton.toggle()}
@@ -76,6 +80,7 @@ struct TrainingView: View {
                 .onAppear {
                     NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
                         showAlert = true
+                        startTimerButton = false
                     }
                 }
                 .onDisappear {
@@ -83,15 +88,20 @@ struct TrainingView: View {
                 }
         .toolbar {
             Button(action:{
-                currentTrainingSet = AllTrainingSets.first(where: {$0.isComplete})
+                currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
+                secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
             }) {
                 Text("Skip set")
             }
         }
         .popover(isPresented: $presentPopup, content: {
             PopupFeedbackView(currentTrainingSet: $currentTrainingSet, exercise: $Exercise, presentPopup: self.$presentPopup).onDisappear(perform: {
+                
                 currentTrainingSet = AllTrainingSets.first(where: {!$0.isComplete})
-                secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
+                if currentTrainingSet == nil {
+                    navPath.append(3)
+                }
+                //secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
                 DoneButton.toggle()
             })
         })

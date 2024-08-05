@@ -79,6 +79,7 @@ struct StartWorkoutNavigationController<Content: View>: View {
                 } else if selection == 3 {
                     
                     // TODO: Create
+                    TrainingSetFinishedView(navPath: $navPath)
                     
                 }
             }

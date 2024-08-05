@@ -47,7 +47,7 @@ struct PopupFeedbackView: View {
                     Spacer()
                     
                     Button(action:{
-                        viewModel.saveSetChanges(viewContext: viewContext, selectedTrainingSet: currentTrainingSet)
+                        viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
                         self.presentPopup.toggle()
                     }) {
                         Text("YES")
@@ -73,7 +73,7 @@ struct PopupFeedbackView: View {
                 .padding(.top, 5)
                 
                 Button(action:{
-                    viewModel.saveSetChanges(viewContext: viewContext, selectedTrainingSet: currentTrainingSet)
+                    viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
                     self.presentPopup.toggle()
                     
                 }) {

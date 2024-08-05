@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: ObservableObject {
+class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
     
     @Published var selectedExercise: Exercise? = nil
     @Published var selectedSet: TrainingSet? = nil
@@ -19,24 +19,25 @@ class PopupFeedbackViewModel: ObservableObject {
     @Published var editedSetQuantityIsInvalid: Bool = false
     @Published var editedSetQuantityIsInvalidMsg: String = ""
     
+    typealias T = TrainingSet
+    
     public func setViewStartValues(selectedTrainigeSet: TrainingSet?) -> Void {
         editedSetQuantity = selectedTrainigeSet!.quantityTodoString!
-        print(selectedTrainigeSet!.quantityTodoString)
     }
     
-    public func saveSetChanges(viewContext: NSManagedObjectContext, selectedTrainingSet: TrainingSet?) -> Void {
+    public func saveEdits(entity: TrainingSet, viewContext: NSManagedObjectContext) -> Void {
         
-        
-        if editedSetQuantity == "" {
-            selectedTrainingSet?.quantityDone = selectedTrainingSet?.quantityTodo ?? 0.0
+        if Double(editedSetQuantity) == entity.quantityTodo {
+            entity.quantityDone = entity.quantityTodo
         } else {
-            selectedTrainingSet?.quantityDone = Double(editedSetQuantity) ?? 0.0
+            entity.quantityDone = Double(editedSetQuantity) ?? 0.0
         }
         
-        print(selectedTrainingSet!.quantityDone)
+        entity.complete()
+        print(entity.isComplete)
         
-        if selectedTrainingSet!.hasChanges {
-            PersistenceController.save(viewContext)
+        if entity.hasChanges {
+            self.safeSave(viewContext: viewContext)
         }
     }
     // func that returns variable for the quantity placeholder
