@@ -14,38 +14,24 @@ struct StartWorkoutNavigationController<Content: View>: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
-    @Binding var selectedTrainingCycle: TrainingCycle?
     @Binding var selectedTrainingWeek: TrainingWeek?
     @Binding var selectedTrainingSession: TrainingSession?
-    @Binding var AllTrainingSets: [TrainingSet]
     @Binding var currentTrainingSet: TrainingSet?
-    @Binding var exercise: Exercise?
     
     init(
-        
-    @ViewBuilder content: () -> Content,
-    navPath: Binding<[Int]>,
-    selectedRoutine: Binding<Routine?>,
-    selectedTrainingCycle: Binding<TrainingCycle?>,
-    selectedTrainingWeek: Binding<TrainingWeek?>,
-    selectedTrainingSession: Binding<TrainingSession?>,
-    AllTrainingSets: Binding<[TrainingSet]>,
-    currentTrainingSet: Binding<TrainingSet?>,
-    exercise: Binding<Exercise?>
-    
+        navPath: Binding<[Int]>,
+        selectedRoutine: Binding<Routine?>,
+        selectedTrainingWeek: Binding<TrainingWeek?>,
+        selectedTrainingSession: Binding<TrainingSession?>,
+        currentTrainingSet: Binding<TrainingSet?>,
+        @ViewBuilder content: () -> Content
     ) {
-        
         self._navPath = navPath
         self._selectedRoutine = selectedRoutine
-        self._selectedTrainingCycle = selectedTrainingCycle
         self._selectedTrainingWeek = selectedTrainingWeek
         self._selectedTrainingSession = selectedTrainingSession
-        self._AllTrainingSets = AllTrainingSets
         self._currentTrainingSet = currentTrainingSet
-        self._exercise = exercise
-        
         self.content = content()
-        
     }
     
     var body: some View {
