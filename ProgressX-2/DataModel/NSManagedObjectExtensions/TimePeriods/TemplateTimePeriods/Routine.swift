@@ -79,7 +79,8 @@ extension Routine: HasOrderable {
     }
     
     /// Gets the date when the routine was created presented as a string.
-    public var creationDateString: String {
+    public var creationDateString: String? {
+        if self.createdOnDate == nil { return nil }
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         return df.string(from: self.createdOnDate!)
