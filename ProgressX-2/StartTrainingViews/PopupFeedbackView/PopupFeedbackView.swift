@@ -14,17 +14,12 @@ struct PopupFeedbackView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    
     @Binding var currentTrainingSet: TrainingSet?
-    @Binding var exercise: Exercise?
-    
-    @State var text = ""
-    @State var ShowWindow: Bool = false
     @Binding var presentPopup: Bool
     
     var body: some View {
         VStack{
-            if !ShowWindow {
+            if !viewModel.showWindow {
                 
                 if ((currentTrainingSet?.exercise?.exerciseType = "reps") != nil) {
                     BoldTitle(text: "Did you complete all your reps?")
@@ -63,7 +58,7 @@ struct PopupFeedbackView: View {
                 .padding(.top)
                 
             } else {
-                BoldTitle(text: self.text)
+                BoldTitle(text: viewModel.text)
                     .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
