@@ -23,7 +23,6 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         let positionIndex = trainingWeek.getNextPositionIndex()
         self.positionIndex = positionIndex
         self.timePeriodName = templateSession.timePeriodName
-        let weekName = trainingWeek.timePeriodName!
         self.timePeriodDescription = templateSession.timePeriodDescription
         self.startedOnDate = Date()
         trainingWeek.addToTrainingSessions(self)
@@ -63,7 +62,7 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     
     public func getNextSet() -> TrainingSet? {
         let allSets = self.trainingSets!.allObjects as! [TrainingSet]
-        let orderedIncompleteSets: [TrainingSet] = allSets.filter { set in set.isComplete }
+        let orderedIncompleteSets: [TrainingSet] = allSets.filter { set in !set.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteSets.first
     }

@@ -24,78 +24,97 @@ struct TrainingView: View {
     
         VStack {
             
+            // MARK: Which set are you on
+            let totalSets = selectedTrainingSession!.trainingSets!.count
+            let currentSetIndex = currentTrainingSet!.positionIndex
+            Title2(text: "Set \(currentSetIndex) out of \(totalSets)")
+                .padding(.bottom, 20)
+            
+            // MARK: The time progress view
             progressView
             
-            if currentTrainingSet != nil {
-                TrainingElement(currentSet: $currentTrainingSet)
-            }
-    
-            if !viewModel.doneButton {
-                Button(action:{
-                    viewModel.presentPopup.toggle()
-                }) {
-                    Text("Done")
-                        .frame(width: 100, height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
+            // MARK: Skip rest time button
+            if timerViewModel.state == .active {
+                withAnimation {
+                    Button {
+                        timerViewModel.state = .cancelled
+                    } label: {
+                        Text("Skip rest")
+                            .font(.title)
+                    }
+                    .padding(.bottom, 10)
                 }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
-                
-            } else {
-                
-                Button(action:{
-                    viewModel.startTimer(timerViewModel: timerViewModel)
-                    viewModel.startTimerButton = true
-                }) {
-                    Text("Start timer")
-                        .frame(width: 100, height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .disabled(viewModel.startTimerButton)
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 10)
             }
+            
+            // MARK: The information box about the set
+            TrainingSetInfoBox(currentTrainingSet: $currentTrainingSet)
+            
+            // MARK: Set done button
+            Button(action:{
+                viewModel.presentPopup.toggle()
+            }) {
+                Text("Done")
+                    .frame(width: 100, height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+            .padding(.top, 10)
+            .disabled(!viewModel.doneButton)
+            .onChange(of: (timerViewModel.state == .active), initial: false) {
+                viewModel.doneButton.toggle()
+            }
+                
         }
+        // MARK: Task to show start session alert.
         .task {
-            viewModel.secondsToHoursMinutesSeconds(seconds: Int(5))
-        }
-        .onAppear {
-            NotificationCenter.default.addObserver(
-                forName: TimerViewModel.timerDidFinishNotification,
-                object: nil,
-                queue: .main
-            ) { _ in
+            withAnimation {
                 viewModel.showAlert = true
-                viewModel.startTimerButton = false
             }
         }
-        .onDisappear {
-            NotificationCenter.default.removeObserver(self)
-        }
-        .alert("Start your next set",isPresented: $viewModel.showAlert) {
-            Button("OK", role: .cancel) { viewModel.doneButton.toggle() }
-        }
+        // MARK: Start your new set alert.
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(
+                title: Text("Ready to start your session?"),
+                message: Text("Press start to start your first set!"),
+                dismissButton: .default(Text("Start"))
+            )
+        } 
+        // MARK: Skip set toolbar item.
         .toolbar {
             Button(action:{
-                currentTrainingSet!.skip()
-                currentTrainingSet = selectedTrainingSession!.getNextSet()
-                viewModel.safeSave(viewContext: viewContext)
-                if currentTrainingSet == nil { navPath.append(3) }
-                viewModel.secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
+                withAnimation {
+                    currentTrainingSet!.skip()
+                    currentTrainingSet = selectedTrainingSession!.getNextSet()
+                    viewModel.safeSave(viewContext: viewContext)
+                    if currentTrainingSet == nil { 
+                        navPath.append(3)
+                    }
+                }
             }) {
                 Text("Skip set")
             }
-        }
-        .popover(isPresented: $viewModel.presentPopup, content: {
+        } 
+        // MARK: Set finished feedback view.
+        .popover(isPresented: $viewModel.presentPopup,
+                 content: {
             PopupFeedbackView(
                 currentTrainingSet: $currentTrainingSet,
                 presentPopup: $viewModel.presentPopup
             )
             .onDisappear(perform: {
-                currentTrainingSet = selectedTrainingSession!.getNextSet()
-                if currentTrainingSet == nil { navPath.append(3) }
-                //secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
-                viewModel.doneButton.toggle()
+                withAnimation {
+                    currentTrainingSet = selectedTrainingSession!.getNextSet()
+                    // if no more sets go to finish screen.
+                    if currentTrainingSet == nil {
+                        navPath.append(3)
+                    } else {
+                        // else start rest timer.
+                        viewModel.startTimer(
+                            timerViewModel: timerViewModel,
+                            seconds: Int(currentTrainingSet!.restTime)
+                        )
+                    }
+                }
             })
         })
     }
@@ -116,7 +135,7 @@ struct TrainingView: View {
             }
         
         .frame(width: 360, height: 255)
-        .padding(.all, 32)
+        .padding(.bottom, 20)
     }
 }
     

@@ -18,6 +18,7 @@ struct TrainingSetFinishedView: View {
         VStack{
             
             Title2(text: "Good job! You are now finished with this session")
+                .padding(.horizontal, 40)
             
             Button(action:{
                 withAnimation {

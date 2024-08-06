@@ -12,6 +12,8 @@ struct TrainingViewRoutineListItem: View {
     
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
+    @Binding var selectedSession: TrainingSession?
+    @Binding var currentTrainingSet: TrainingSet?
     @ObservedObject var routine: Routine
     
     var body: some View {
@@ -56,6 +58,12 @@ struct TrainingViewRoutineListItem: View {
             
             Button(action: {
                 selectedRoutine = routine
+                let nextCycle = routine.getNextCycle()!
+                let nextWeek = nextCycle.getNextWeek()!
+                let nextSession = nextWeek.getNextSession()!
+                let currentSet = nextSession.getNextSet()!
+                selectedSession = nextSession
+                currentTrainingSet = currentSet
                 navPath.append(2)
             }) { Image(systemName: "figure.run" ) }
                 .frame(width: 20)

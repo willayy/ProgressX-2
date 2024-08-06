@@ -21,18 +21,13 @@ class TrainingViewModel: SavingViewModel {
     @Published public var selectedSecondsAmount: Int = 5
     @Published public var showAlert = false
     @Published public var presentPopup = false
-    @Published public var startTimer = false
-    @Published public var doneButton = false
-    @Published public var startTimerButton = false
+    @Published public var doneButton = true
     @Published public var searchText: String = ""
     
-    func secondsToHoursMinutesSeconds(seconds: Int) {
+    func startTimer(timerViewModel: TimerViewModel, seconds: Int){
         selectedHoursAmount = seconds / 3600
         selectedMinutesAmount = (seconds % 3600) / 60
         selectedSecondsAmount = (seconds % 3600) % 60
-    }
-    
-    func startTimer(timerViewModel: TimerViewModel){
         selectedHoursAmount = selectedHoursAmount
         selectedMinutesAmount = selectedMinutesAmount
         selectedSecondsAmount = selectedSecondsAmount

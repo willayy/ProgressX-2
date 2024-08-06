@@ -43,6 +43,7 @@ struct PopupFeedbackView: View {
                     Spacer()
                     
                     Button(action:{
+                        viewModel.setFullyCompleted(currentTrainingSet: currentTrainingSet!)
                         viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
                         self.presentPopup.toggle()
                     }) {
@@ -64,6 +65,7 @@ struct PopupFeedbackView: View {
                 LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
                     .padding(.vertical, 5)
                 
+                #warning("TODO: Fix this so its reps and time")
                 IntegerTextField(
                     placeHolder: "Enter how many reps you did!",
                     numberText: $viewModel.editedSetQuantity,
@@ -75,9 +77,10 @@ struct PopupFeedbackView: View {
                 .padding(.top, 5)
                 
                 Button(action:{
+                    let quantityDone = Double(viewModel.editedSetQuantity)!
+                    viewModel.setPartiallyCompleted(currentTrainingSet: currentTrainingSet!, quantityDone: quantityDone)
                     viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
                     self.presentPopup.toggle()
-                    
                 }) {
                     Text("Done")
                         .bold()
@@ -88,7 +91,7 @@ struct PopupFeedbackView: View {
             }
         }
         .onAppear(perform: {
-            viewModel.setViewStartValues(selectedTrainigeSet: currentTrainingSet)
+            viewModel.setViewStartValues(entity: currentTrainingSet!)
         })
     }
 }

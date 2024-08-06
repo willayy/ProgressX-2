@@ -27,8 +27,6 @@ extension TrainingSet {
         self.loadTodo = templateSet.loadTodo!
         self.quantityTodo = templateSet.quantityTodo!
         self.timePeriodName = templateSet.timePeriodName
-        let exerciseName = exercise.exerciseName!
-        let sessionName = trainingSession.timePeriodName!
         self.timePeriodDescription = templateSet.timePeriodDescription
         self.startedOnDate = Date()
         self.restTime = templateSet.restTime
@@ -45,12 +43,16 @@ extension TrainingSet {
     
     /// Uset his property to print the load todo on a set.
     public var loadTodoString: String {
-        return String(format: "%.2f", self.loadTodo)
+        let context = self.managedObjectContext!
+        let weightUnit = PersistenceController.getWeightUnit(context)!
+        return "\(String(format: "%.2f", self.loadTodo)) \(weightUnit)"
     }
     
     /// Use this to property to print the load done on a set.
     public var loadDoneString: String {
-        return String(format: "%.2f", self.loadDone)
+        let context = self.managedObjectContext!
+        let weightUnit = PersistenceController.getWeightUnit(context)!
+        return "\(String(format: "%.2f", self.loadDone)) \(weightUnit)"
     }
     
     /// Use this to property to print the quantity todo on a set. Returns nil if exercise type is not not set or is invalid

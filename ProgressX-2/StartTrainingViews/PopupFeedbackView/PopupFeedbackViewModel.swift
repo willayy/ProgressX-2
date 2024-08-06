@@ -9,23 +9,32 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
+class PopupFeedbackViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
     
-    @Published var selectedExercise: Exercise? = nil
-    @Published var selectedSet: TrainingSet? = nil
     @Published var text = ""
     @Published var showWindow: Bool = false
-    @Published var editedQuantityType: String = ""
     @Published var editedSetQuantity: String = ""
     @Published var editedSetQuantityIsInvalid: Bool = false
     @Published var editedSetQuantityIsInvalidMsg: String = ""
     
     typealias T = TrainingSet
     
-    public func setViewStartValues(selectedTrainigeSet: TrainingSet?) -> Void {
-        editedSetQuantity = String(format: "%.0f", selectedTrainigeSet!.quantityTodo)
+    public func setViewStartValues(entity: TrainingSet) -> Void {
+        editedSetQuantity = String(format: "%.0f", entity.quantityTodo)
     }
     
+    public func setFullyCompleted(currentTrainingSet: TrainingSet) -> Void {
+        currentTrainingSet.loadDone = currentTrainingSet.loadTodo
+        currentTrainingSet.quantityDone = currentTrainingSet.quantityTodo
+        currentTrainingSet.complete()
+    }
+    
+    public func setPartiallyCompleted(currentTrainingSet: TrainingSet, quantityDone: Double) -> Void {
+        currentTrainingSet.quantityDone = quantityDone
+        currentTrainingSet.loadDone = currentTrainingSet.loadTodo
+        currentTrainingSet.complete()
+    }
+        
     public func saveEdits(entity: TrainingSet, viewContext: NSManagedObjectContext) -> Void {
         
         if Double(editedSetQuantity) == entity.quantityTodo {
@@ -33,8 +42,6 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel {
         } else {
             entity.quantityDone = Double(editedSetQuantity) ?? 0.0
         }
-        
-        entity.complete()
         
         if entity.hasChanges {
             self.safeSave(viewContext: viewContext)

@@ -22,7 +22,6 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         let positionIndex = trainingCycle.getNextPositionIndex()
         self.positionIndex = positionIndex
         self.timePeriodName = templateWeek.timePeriodName
-        let routineName = trainingCycle.routine!.timePeriodName!
         self.timePeriodDescription = templateWeek.timePeriodDescription
         self.startedOnDate = Date()
         trainingCycle.addToTrainingWeeks(self)
@@ -34,6 +33,13 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
         let max = sessions.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    public func getNextSession() -> TrainingSession? {
+        let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
+        let orderedIncompleteSessions: [TrainingSession] = allSessions.filter { session in !session.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteSessions.first
     }
     
     // MARK: Validation

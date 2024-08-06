@@ -127,6 +127,14 @@ extension Routine: HasOrderable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    /// Gets the next training cycle
+    public func getNextCycle() -> TrainingCycle? {
+        let allCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
+        let orderedIncompleteCycles: [TrainingCycle] = allCycles.filter { cycle in !cycle.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteCycles.first
+    }
+    
     // MARK: Validation
     
     override public func validateForInsert() throws {

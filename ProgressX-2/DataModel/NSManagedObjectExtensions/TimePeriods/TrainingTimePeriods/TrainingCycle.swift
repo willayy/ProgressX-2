@@ -38,6 +38,13 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    public func getNextWeek() -> TrainingWeek? {
+        let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
+        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks.filter { week in !week.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteWeeks.first
+    }
+    
     // MARK: Validation
     
     public override func validateForInsert() throws {
