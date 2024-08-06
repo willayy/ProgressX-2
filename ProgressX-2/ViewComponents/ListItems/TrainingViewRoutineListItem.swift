@@ -10,11 +10,8 @@ import CoreData
 
 struct TrainingViewRoutineListItem: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
-    
-    @State private var showDeleteAlert: Bool = false
     @ObservedObject var routine: Routine
     
     var body: some View {

@@ -78,7 +78,7 @@ struct TrainingView: View {
         .toolbar {
             Button(action:{
                 currentTrainingSet!.skip()
-                currentTrainingSet = viewModel.getNextIncompleteSet(session: selectedTrainingSession!)
+                currentTrainingSet = selectedTrainingSession!.getNextSet()
                 viewModel.safeSave(viewContext: viewContext)
                 if currentTrainingSet == nil { navPath.append(3) }
                 viewModel.secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
@@ -92,7 +92,7 @@ struct TrainingView: View {
                 presentPopup: $viewModel.presentPopup
             )
             .onDisappear(perform: {
-                currentTrainingSet = viewModel.getNextIncompleteSet(session: selectedTrainingSession!)
+                currentTrainingSet = selectedTrainingSession!.getNextSet()
                 if currentTrainingSet == nil { navPath.append(3) }
                 //secondsToHoursMinutesSeconds(seconds: Int(currentTrainingSet!.restTime))
                 viewModel.doneButton.toggle()

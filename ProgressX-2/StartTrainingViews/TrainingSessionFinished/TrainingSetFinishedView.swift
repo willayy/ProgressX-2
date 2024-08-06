@@ -16,9 +16,8 @@ struct TrainingSetFinishedView: View {
     
     var body: some View {
         VStack{
-            Text("Good job! You are now finished with this session")
-                .font(.title)
-                .bold()
+            
+            Title2(text: "Good job! You are now finished with this session")
             
             Button(action:{
                 withAnimation {

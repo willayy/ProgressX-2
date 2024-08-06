@@ -79,6 +79,7 @@
 		83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */; };
 		83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */; };
 		8351A9B12C612D6000405ABB /* ChooseSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B02C612D6000405ABB /* ChooseSessionView.swift */; };
+		8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */; };
 		8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */; };
 		8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */; };
 		8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */; };
@@ -269,6 +270,7 @@
 		83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdViewModel.swift; sourceTree = "<group>"; };
 		83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsViewModel.swift; sourceTree = "<group>"; };
 		8351A9B02C612D6000405ABB /* ChooseSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionView.swift; sourceTree = "<group>"; };
+		8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionListItem.swift; sourceTree = "<group>"; };
 		8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntFieldValidator.swift; sourceTree = "<group>"; };
 		8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFieldValidator.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 				83BD39772C4925F7008E09A0 /* BodyEntryListItem.swift */,
 				8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */,
 				8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */,
+				8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -1099,10 +1102,10 @@
 			isa = PBXGroup;
 			children = (
 				8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */,
+				8F7F160C2C4920B800F37C58 /* StartWorkoutView */,
+				8F7F16152C4948A400F37C58 /* TrainingView */,
 				8FAFE5602C60D6AC00143223 /* TrainingSessionFinished */,
 				8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */,
-				8F7F16152C4948A400F37C58 /* TrainingView */,
-				8F7F160C2C4920B800F37C58 /* StartWorkoutView */,
 				8F7F160D2C4928AF00F37C58 /* ChooseWeekView */,
 				8351A9AF2C611E1300405ABB /* ChooseSessionView */,
 			);
@@ -1266,6 +1269,7 @@
 				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */,
+				8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
 				83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */,
 				8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */,

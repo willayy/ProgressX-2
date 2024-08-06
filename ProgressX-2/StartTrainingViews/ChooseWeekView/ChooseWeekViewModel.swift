@@ -13,7 +13,6 @@ class ChooseWeekViewModel: ObservableObject {
     @Published var selectedTrainingCycle: TrainingCycle? = nil
     @Published var selectedTrainingWeek: TrainingWeek? = nil
     @Published public var searchText: String = ""
-    
     @Published public var showMenu: Bool = false
     
 }

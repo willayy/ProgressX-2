@@ -34,67 +34,57 @@ struct StartWorkoutView: View {
     
     var body: some View {
         SideBarView(content: {
-            StartWorkoutNavigationController(content: {
-                ScrollView {
-                    VStack(alignment: .center){
-                        BoldTitle(text: "Routines")
-                        
-                        LightSubHeadline(text: "Select the routine that you want to start/continue on")
-                        
-                        // MARK: Search bar
-                        SearchBar(
-                            searchAttribute: "timePeriodName",
-                            searchText: $viewModel.searchText,
-                            fetchRequest: _searchedRoutines
-                        )
-                        .padding(.horizontal, 20)
-                        
-                        // MARK: List
-                        SearchableList(
-                            containerName: "Routine Library",
-                            elementName: "Routines",
-                            allData: _allRoutines,
-                            searchedData: _searchedRoutines
-                        ) { routine in
-                            BasicRoutineListItem(navPath: $viewModel.navPath, 
-                                selectedRoutine: $viewModel.selectedRoutine,
-                                selectedTrainingCycle: $viewModel.selectedTrainingCycle,
-                                selectedTrainingWeek: $viewModel.selectedTrainingWeek,
-                                selectedTrainingSession: $viewModel.selectedTrainingSession,
-                                AllTrainingSets: $viewModel.AllTrainingSets,
-                                currentTrainingSet: $viewModel.currentTrainingSet,
-                                exercise: $viewModel.exercise,
-                                routine: routine)
+            StartWorkoutNavigationController(
+                navPath: $viewModel.navPath,
+                selectedRoutine: $viewModel.selectedRoutine,
+                selectedTrainingWeek: $viewModel.selectedTrainingWeek,
+                selectedTrainingSession: $viewModel.selectedTrainingSession,
+                currentTrainingSet: $viewModel.currentTrainingSet,
+                content: {
+                    ScrollView {
+                        VStack(alignment: .center) {
                             
-                        }.padding(.horizontal, 20)
-                        
-                        // MARK: Explination for buttons
-                        VStack{
-                            HStack{
-                                BoldSubHeadline(text: "Choose a specific session:")
-                                Image(systemName: "calendar")
-                            }
-                            HStack{
-                                BoldSubHeadline(text: "Continue on your previous routine:")
-                                Image(systemName: "figure.run")
+                            BoldTitle(text: "Routines")
+                            
+                            HiddenLightSubHeadline(
+                                title: "How do i start training?",
+                                text: "By pressing the icon of a running man you will automatically start the next session in the order of the routine. If you want more control you can click the calender icon and select precisely which session you want to do.",
+                                alignment: .leading
+                            )
+                            .padding(.horizontal, 20)
+                            .padding(.bottom)
+                            
+                            // MARK: Search bar
+                            SearchBar(
+                                searchAttribute: "timePeriodName",
+                                searchText: $viewModel.searchText,
+                                fetchRequest: _searchedRoutines
+                            )
+                            .padding(.horizontal, 20)
+                            
+                            // MARK: List
+                            SearchableList(
+                                containerName: "Routine Library",
+                                elementName: "Routines",
+                                allData: _allRoutines,
+                                searchedData: _searchedRoutines
+                            ) { routine in
+                                TrainingViewRoutineListItem(
+                                    navPath: $viewModel.navPath,
+                                    selectedRoutine: $viewModel.selectedRoutine,
+                                    routine: routine
+                                )
+                            }.padding(.horizontal, 20)
+                            
+                        }
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                SideBarButton().environmentObject(viewRouter)
                             }
                         }
                     }
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            SideBarButton().environmentObject(viewRouter)
-                        }
-                    }
-                }
-            }, navPath: $viewModel.navPath,
-               selectedRoutine: $viewModel.selectedRoutine,
-               selectedTrainingCycle: $viewModel.selectedTrainingCycle,
-               selectedTrainingWeek: $viewModel.selectedTrainingWeek,
-               selectedTrainingSession: $viewModel.selectedTrainingSession,
-               AllTrainingSets: $viewModel.AllTrainingSets,
-                                             currentTrainingSet: $viewModel.currentTrainingSet, exercise: $viewModel.exercise)
-               .environment(\.managedObjectContext, viewContext)
-            
+                })
+            .environment(\.managedObjectContext, viewContext)
             })
         }
     }

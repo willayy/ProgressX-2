@@ -1,28 +1,30 @@
 //
-//  TrainingWeekListItem.swift
+//  TrainingSessionListItem.swift
 //  ProgressX-2
 //
-//  Created by lucas häyhänen on 2024-07-18.
+//  Created by William Norland on 2024-08-05.
 //
 
 import SwiftUI
 
-struct TrainingWeekListItem: View {
+struct TrainingSessionListItem: View {
     
     @Binding var navPath: [Int]
-    @Binding var selectedTrainingWeek: TrainingWeek?
-    @ObservedObject var trainingWeek: TrainingWeek
+    @Binding var selectedTrainingSession: TrainingSession?
+    @Binding var currentTrainingSet: TrainingSet?
+    @ObservedObject var trainingSession: TrainingSession
     
     var body: some View {
         
         HStack {
+            
             VStack(alignment: .leading) {
                 
-                Text(trainingWeek.timePeriodName ?? "")
+                Text(trainingSession.timePeriodName ?? "")
                 
-                (Text("Sessions: ")
+                (Text("Sets: ")
                     .fontWeight(.bold)
-                 + Text("\(trainingWeek.trainingSessions?.count ?? 0)"))
+                 + Text("\(trainingSession.trainingSets?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
         
@@ -34,9 +36,10 @@ struct TrainingWeekListItem: View {
             
             // MARK: Edit button
             Button(action: {
-                selectedTrainingWeek = trainingWeek
-                navPath.append(4)
-            }) { Image(systemName: "calendar") }
+                selectedTrainingSession = trainingSession
+                currentTrainingSet = selectedTrainingSession!.getNextSet()
+                navPath.append(2)
+            }) { Image(systemName: "figure.run") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())

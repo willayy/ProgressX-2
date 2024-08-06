@@ -38,7 +38,8 @@ struct StartWorkoutNavigationController<Content: View>: View {
         NavigationStack(path: $navPath) {
             VStack {
                 content
-            }.navigationDestination(for: Int.self) { selection in
+            }
+            .navigationDestination(for: Int.self) { selection in
                 if selection == 1 {
                     
                     ChooseWeekView(
@@ -46,7 +47,6 @@ struct StartWorkoutNavigationController<Content: View>: View {
                         selectedRoutine: $selectedRoutine,
                         selectedTrainingWeek: $selectedTrainingWeek
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 2 {
                     
@@ -55,21 +55,20 @@ struct StartWorkoutNavigationController<Content: View>: View {
                         selectedTrainingSession: $selectedTrainingSession,
                         currentTrainingSet: $currentTrainingSet
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 3 {
                     
                     TrainingSetFinishedView(
                         navPath: $navPath
                     )
-                    .environment(\.managedObjectContext, viewContext)
                     
                 } else if selection == 4 {
                     
                     ChooseSessionView(
                         navPath: $navPath,
                         selectedTrainingWeek: $selectedTrainingWeek,
-                        selectedTrainingSession: $selectedTrainingSession
+                        selectedTrainingSession: $selectedTrainingSession, 
+                        currentTrainingSet: $currentTrainingSet
                     )
                     
                 }
