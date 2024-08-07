@@ -52,7 +52,10 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         if self.isComplete {
             let calendar = Calendar.current
             let now = Date()
-            let components = calendar.dateComponents([.day], from: self.completedOnDate! , to: now)
+            // Normalize dates by their start of day dates
+            let startOfDayNow: Date = calendar.startOfDay(for: now)
+            let completedSessionStartOfDay: Date = calendar.startOfDay(for: self.completedOnDate!)
+            let components = calendar.dateComponents([.day], from: completedSessionStartOfDay, to: startOfDayNow)
             let daysAgo = components.day ?? 0
             return String(daysAgo)
         } else {
