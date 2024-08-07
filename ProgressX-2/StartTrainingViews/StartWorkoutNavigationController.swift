@@ -40,6 +40,7 @@ struct StartWorkoutNavigationController<Content: View>: View {
                 content
             }
             .navigationDestination(for: Int.self) { selection in
+                
                 if selection == 1 {
                     
                     ChooseWeekView(
@@ -52,6 +53,7 @@ struct StartWorkoutNavigationController<Content: View>: View {
                     
                     TrainingView(
                         navPath: $navPath,
+                        selectedRoutine: $selectedRoutine, 
                         selectedTrainingSession: $selectedTrainingSession,
                         currentTrainingSet: $currentTrainingSet
                     )

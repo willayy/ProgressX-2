@@ -20,10 +20,14 @@ struct TrainingSetFinishedView: View {
             Title2(text: "Good job! You are now finished with this session")
                 .padding(.horizontal, 40)
             
+            // MARK: This button takes you back to the homeview
             Button(action:{
+                
+                // Uses view router to take user back to the homeview
                 withAnimation {
                     viewRouter.rootView = .HomeView
                 }
+                
             }) {
                 Text("Return to home")
                     .frame(width: 150, height: 40)
@@ -32,14 +36,18 @@ struct TrainingSetFinishedView: View {
             .buttonStyle(BorderedProminentButtonStyle())
             .padding(.top, 10)
             
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     @State var navPath: [Int] = [Int]()
+    @State var selectedRoutine: Routine? = nil
     
-    return TrainingSetFinishedView(navPath: $navPath)
-        .environmentObject(ViewRouter())
-        .environment(\.managedObjectContext, context)
+    return TrainingSetFinishedView(
+        navPath: $navPath
+    )
+    .environmentObject(ViewRouter())
+    .environment(\.managedObjectContext, context)
 }

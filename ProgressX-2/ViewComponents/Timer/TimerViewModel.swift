@@ -17,6 +17,7 @@ final class TimerViewModel: ObservableObject {
         case resumed
         case cancelled
     }
+    
     @Published public var StartWorcoutNotification: Bool = false
     @Published public var Donebutton: Bool = false
 

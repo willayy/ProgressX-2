@@ -8,6 +8,8 @@
 import Foundation
 import SwiftUI
 
+#warning("Delete this unused Struct / File ?")
+
 struct TimerView: View {
     
     @Environment(\.managedObjectContext) private var viewContext

@@ -62,7 +62,8 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     
     public func getNextSet() -> TrainingSet? {
         let allSets = self.trainingSets!.allObjects as! [TrainingSet]
-        let orderedIncompleteSets: [TrainingSet] = allSets.filter { set in !set.isComplete }
+        let orderedIncompleteSets: [TrainingSet] = allSets
+            .filter { set in !set.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteSets.first
     }

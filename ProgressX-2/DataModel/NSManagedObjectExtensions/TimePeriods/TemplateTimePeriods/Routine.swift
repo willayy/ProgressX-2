@@ -127,10 +127,23 @@ extension Routine: HasOrderable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    /// Checks if there is an active training cycle in the routine
+    public func activeTrainingCycleExists() -> Bool {
+        if self.trainingCycles!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingCycles!.allSatisfy {
+              trainingCycle in
+                (trainingCycle as! TrainingCycle).isComplete
+            }
+        }
+    }
+    
     /// Gets the next training cycle
     public func getNextCycle() -> TrainingCycle? {
         let allCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
-        let orderedIncompleteCycles: [TrainingCycle] = allCycles.filter { cycle in !cycle.isComplete }
+        let orderedIncompleteCycles: [TrainingCycle] = allCycles
+            .filter { cycle in !cycle.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteCycles.first
     }

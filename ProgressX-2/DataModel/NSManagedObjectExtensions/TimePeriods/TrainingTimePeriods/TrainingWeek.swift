@@ -37,7 +37,8 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
     
     public func getNextSession() -> TrainingSession? {
         let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
-        let orderedIncompleteSessions: [TrainingSession] = allSessions.filter { session in !session.isComplete }
+        let orderedIncompleteSessions: [TrainingSession] = allSessions
+            .filter { session in !session.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteSessions.first
     }
@@ -57,8 +58,13 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
     }
     
     internal func childrenAreComplete() -> Bool {
-        self.trainingSessions!.allSatisfy { trainingSession in
-            (trainingSession as! TrainingSession).isComplete
+        if self.trainingSessions!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSessions!.allSatisfy {
+              trainingSession in
+                (trainingSession as! TrainingSession).isComplete
+            }
         }
     }
     

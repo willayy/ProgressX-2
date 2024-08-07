@@ -17,18 +17,26 @@ struct TrainingView: View {
     @ObservedObject public var timerViewModel = TimerViewModel()
     
     @Binding var navPath: [Int]
+    @Binding var selectedRoutine: Routine?
     @Binding var selectedTrainingSession: TrainingSession?
     @Binding var currentTrainingSet: TrainingSet?
     
     var body: some View {
     
+        let exerciseType = currentTrainingSet!.exercise!.exerciseType!
+        
         VStack {
             
-            // MARK: Which set are you on
-            let totalSets = selectedTrainingSession!.trainingSets!.count
-            let currentSetIndex = currentTrainingSet!.positionIndex
-            Title2(text: "Set \(currentSetIndex) out of \(totalSets)")
-                .padding(.bottom, 20)
+            #warning("TODO: Make timed sets use the timer (I think it might work but it needs testing)")
+            
+            // MARK: Which set are you on status text
+            Title2(
+                text: viewModel.setsLeft(
+                    selectedTrainingSession: selectedTrainingSession,
+                    currentTrainingSet: currentTrainingSet
+                )
+            )
+            .padding(.bottom, 20)
             
             // MARK: The time progress view
             progressView
@@ -75,7 +83,7 @@ struct TrainingView: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(
                 title: Text("Ready to start your session?"),
-                message: Text("Press start to start your first set!"),
+                message: Text("Press start to get going with your first set!"),
                 dismissButton: .default(Text("Start"))
             )
         } 
@@ -95,11 +103,13 @@ struct TrainingView: View {
             }
         } 
         // MARK: Set finished feedback view.
-        .popover(isPresented: $viewModel.presentPopup,
-                 content: {
+        .popover(isPresented: $viewModel.presentPopup, content: {
+            
             PopupFeedbackView(
+                selectedRoutine: $selectedRoutine,
                 currentTrainingSet: $currentTrainingSet,
-                presentPopup: $viewModel.presentPopup
+                presentPopup: $viewModel.presentPopup, 
+                timeDone: $viewModel.quantityDoneOnTimedSet
             )
             .onDisappear(perform: {
                 withAnimation {
@@ -151,9 +161,11 @@ struct TrainingView: View {
     @State var selectedTrainingSession = trainingSession
     @State var currentTrainingSet = trainingSet
     @State var navPath = [Int]()
+    @State var routine: Routine? = nil
     
     return TrainingView(
         navPath: $navPath,
+        selectedRoutine: $routine, 
         selectedTrainingSession: $selectedTrainingSession,
         currentTrainingSet: $currentTrainingSet
     )

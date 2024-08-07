@@ -129,8 +129,6 @@ struct CreateNewProfile1View: View {
                 }
             }
         })
-        .environmentObject(viewRouter)
-        .environment(\.managedObjectContext, viewContext)
     }
     
     // Validates input

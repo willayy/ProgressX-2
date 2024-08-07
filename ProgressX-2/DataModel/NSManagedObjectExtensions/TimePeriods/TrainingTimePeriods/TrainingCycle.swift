@@ -40,7 +40,8 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
     
     public func getNextWeek() -> TrainingWeek? {
         let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks.filter { week in !week.isComplete }
+        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks
+            .filter { week in !week.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteWeeks.first
     }
@@ -68,8 +69,13 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
     }
     
     internal func childrenAreComplete() -> Bool {
-        self.trainingWeeks!.allSatisfy { trainingWeeks in
-            (trainingWeeks as! TrainingWeek).isComplete
+        if self.trainingWeeks!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingWeeks!.allSatisfy { 
+              trainingWeeks in
+                (trainingWeeks as! TrainingWeek).isComplete
+            }
         }
     }
     

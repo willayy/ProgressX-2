@@ -182,7 +182,7 @@
 		8FAFE5622C60D6D300143223 /* TrainingSetFinishedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAFE5612C60D6D300143223 /* TrainingSetFinishedView.swift */; };
 		8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FAFE5632C60D6E500143223 /* TrainingSetFinishedViewModel.swift */; };
 		8FF9C9C62C3FE67D00E3D95A /* StartWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */; };
-		8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */; };
+		8FF9C9C92C3FE6AC00E3D95A /* TrainingCycleGeneration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF9C9C82C3FE6AC00E3D95A /* TrainingCycleGeneration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,7 +372,7 @@
 		8FAFE5612C60D6D300143223 /* TrainingSetFinishedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetFinishedView.swift; sourceTree = "<group>"; };
 		8FAFE5632C60D6E500143223 /* TrainingSetFinishedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetFinishedViewModel.swift; sourceTree = "<group>"; };
 		8FF9C9C52C3FE67D00E3D95A /* StartWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutView.swift; sourceTree = "<group>"; };
-		8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateFetching.swift; sourceTree = "<group>"; };
+		8FF9C9C82C3FE6AC00E3D95A /* TrainingCycleGeneration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCycleGeneration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -848,8 +848,8 @@
 		83AD4A8F2BF40E8800A2E180 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				8FF9C9C72C3FE69300E3D95A /* TemplateFetching */,
 				832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */,
+				8FF9C9C82C3FE6AC00E3D95A /* TrainingCycleGeneration.swift */,
 				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
 				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
 				83BAF90E2C5B74AB00EFC1C6 /* PersistentStorageAccess */,
@@ -1112,14 +1112,6 @@
 			path = StartTrainingViews;
 			sourceTree = "<group>";
 		};
-		8FF9C9C72C3FE69300E3D95A /* TemplateFetching */ = {
-			isa = PBXGroup;
-			children = (
-				8FF9C9C82C3FE6AC00E3D95A /* TemplateFetching.swift */,
-			);
-			path = TemplateFetching;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1289,7 +1281,7 @@
 				83BAF9122C5B756900EFC1C6 /* PersistenceAccess.swift in Sources */,
 				83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */,
 				83BD39682C47C78E008E09A0 /* HomeViewModel.swift in Sources */,
-				8FF9C9C92C3FE6AC00E3D95A /* TemplateFetching.swift in Sources */,
+				8FF9C9C92C3FE6AC00E3D95A /* TrainingCycleGeneration.swift in Sources */,
 				83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */,
 				83BD39642C46C03B008E09A0 /* WeekBarChart.swift in Sources */,
 				83B013BC2C5FE90800059E42 /* ViewModel.swift in Sources */,

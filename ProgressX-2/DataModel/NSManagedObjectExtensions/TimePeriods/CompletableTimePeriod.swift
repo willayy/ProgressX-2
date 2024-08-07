@@ -74,6 +74,7 @@ extension CompleteableTimePeriod {
     /// If a child is completed and all its parent children are now complete, make parent complete.
     private func cascadeCompletion() {
         switch self {
+            
         case is TrainingWeek:
             
             let trainingWeek = self as! TrainingWeek

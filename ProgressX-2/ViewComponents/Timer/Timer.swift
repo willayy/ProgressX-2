@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+#warning("Delete this unused Struct / File ?")
+
 struct TimerViewthr: View {
     @Binding public var countdownTimer: Int
     @Binding public var timerRunning: Bool
