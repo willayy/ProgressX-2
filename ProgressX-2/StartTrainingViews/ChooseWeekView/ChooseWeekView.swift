@@ -12,7 +12,6 @@ struct ChooseWeekView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     
-    @StateObject private var viewModel = ChooseWeekViewModel()
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTrainingWeek: TrainingWeek?

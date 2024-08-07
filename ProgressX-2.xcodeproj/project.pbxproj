@@ -166,7 +166,6 @@
 		8F7F16092C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */; };
 		8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */; };
 		8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */; };
-		8F7F16112C4928F300F37C58 /* ChooseWeekViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */; };
 		8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */; };
 		8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16172C4948D100F37C58 /* TrainingView.swift */; };
 		8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */; };
@@ -352,7 +351,6 @@
 		8F7F16082C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewRoutineListItem.swift; sourceTree = "<group>"; };
 		8F7F160A2C4920B300F37C58 /* StartWorkoutNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutNavigationController.swift; sourceTree = "<group>"; };
 		8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekView.swift; sourceTree = "<group>"; };
-		8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekViewModel.swift; sourceTree = "<group>"; };
 		8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWeekListItem.swift; sourceTree = "<group>"; };
 		8F7F16172C4948D100F37C58 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModel.swift; sourceTree = "<group>"; };
@@ -1016,7 +1014,6 @@
 			isa = PBXGroup;
 			children = (
 				8F7F160E2C4928E300F37C58 /* ChooseWeekView.swift */,
-				8F7F16102C4928F300F37C58 /* ChooseWeekViewModel.swift */,
 			);
 			path = ChooseWeekView;
 			sourceTree = "<group>";
@@ -1263,7 +1260,6 @@
 				83BD396C2C47D32B008E09A0 /* BodyEntryChart.swift in Sources */,
 				836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */,
 				83266E682C3818C500F5F6CB /* EditRoutineViewModel.swift in Sources */,
-				8F7F16112C4928F300F37C58 /* ChooseWeekViewModel.swift in Sources */,
 				83D6850D2C3436B200FA78C6 /* (null) in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
 				8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */,
