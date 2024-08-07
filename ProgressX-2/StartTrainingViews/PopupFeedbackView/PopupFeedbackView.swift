@@ -61,7 +61,7 @@ struct PopupFeedbackView: View {
                             )
                             
                             viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
-                            
+                                                        
                             self.presentPopup.toggle()
                             
                         }
@@ -138,7 +138,7 @@ struct PopupFeedbackView: View {
                             entity: currentTrainingSet!,
                             viewContext: viewContext
                         )
-                        
+                                                
                         self.presentPopup.toggle()
                         
                     }
@@ -191,8 +191,8 @@ struct PopupFeedbackView: View {
     
     return PopupFeedbackView(
         selectedRoutine: $routine,
-        currentTrainingSet: $currentTrainingSet,
-        presentPopup: $popupBool, 
+        currentTrainingSet: $currentTrainingSet, 
+        presentPopup: $popupBool,
         timeDone: $timeDone
     )
     .environment(\.managedObjectContext, context)

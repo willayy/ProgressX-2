@@ -170,9 +170,7 @@
 		8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */; };
 		8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16172C4948D100F37C58 /* TrainingView.swift */; };
 		8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */; };
-		8F7F161D2C51023700F37C58 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F161C2C51023700F37C58 /* Timer.swift */; };
 		8F7F16212C51146D00F37C58 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16202C51146D00F37C58 /* CircleProgressView.swift */; };
-		8F7F16292C51228100F37C58 /* TimerContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16282C51228100F37C58 /* TimerContentView.swift */; };
 		8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162A2C51232E00F37C58 /* TimerExtension.swift */; };
 		8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162C2C51299700F37C58 /* TimerViewModel.swift */; };
 		8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8B9F052C21975B0072A39D /* SideBarBuilder.swift */; };
@@ -358,9 +356,7 @@
 		8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWeekListItem.swift; sourceTree = "<group>"; };
 		8F7F16172C4948D100F37C58 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
 		8F7F16192C4948E200F37C58 /* TrainingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingViewModel.swift; sourceTree = "<group>"; };
-		8F7F161C2C51023700F37C58 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		8F7F16202C51146D00F37C58 /* CircleProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleProgressView.swift; sourceTree = "<group>"; };
-		8F7F16282C51228100F37C58 /* TimerContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerContentView.swift; sourceTree = "<group>"; };
 		8F7F162A2C51232E00F37C58 /* TimerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerExtension.swift; sourceTree = "<group>"; };
 		8F7F162C2C51299700F37C58 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		8F7F162F2C53A89300F37C58 /* TrainingSetInfoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetInfoBox.swift; sourceTree = "<group>"; };
@@ -1037,9 +1033,7 @@
 		8F7F161B2C51022300F37C58 /* Timer */ = {
 			isa = PBXGroup;
 			children = (
-				8F7F161C2C51023700F37C58 /* Timer.swift */,
 				8F7F16202C51146D00F37C58 /* CircleProgressView.swift */,
-				8F7F16282C51228100F37C58 /* TimerContentView.swift */,
 				8F7F162A2C51232E00F37C58 /* TimerExtension.swift */,
 				8F7F162C2C51299700F37C58 /* TimerViewModel.swift */,
 			);
@@ -1302,7 +1296,6 @@
 				8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */,
 				831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */,
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
-				8F7F161D2C51023700F37C58 /* Timer.swift in Sources */,
 				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
@@ -1331,7 +1324,6 @@
 				831F2C362C288D38007A7A8A /* EditTemplateWeekView.swift in Sources */,
 				8364860B2C372513006EB0C0 /* TemplateWeek.swift in Sources */,
 				8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */,
-				8F7F16292C51228100F37C58 /* TimerContentView.swift in Sources */,
 				83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */,
 				832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */,
 				83D685062C32DDF700FA78C6 /* SetExerciseSelectionList.swift in Sources */,

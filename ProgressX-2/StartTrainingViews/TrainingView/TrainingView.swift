@@ -14,7 +14,7 @@ struct TrainingView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = TrainingViewModel()
-    @ObservedObject public var timerViewModel = TimerViewModel()
+    @StateObject public var timerViewModel = TimerViewModel()
     
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
@@ -23,7 +23,7 @@ struct TrainingView: View {
     
     var body: some View {
     
-        let exerciseType = currentTrainingSet!.exercise!.exerciseType!
+        let exerciseType = currentTrainingSet?.exercise!.exerciseType!
         
         VStack {
             
@@ -57,19 +57,45 @@ struct TrainingView: View {
             // MARK: The information box about the set
             TrainingSetInfoBox(currentTrainingSet: $currentTrainingSet)
             
-            // MARK: Set done button
-            Button(action:{
-                viewModel.presentPopup.toggle()
-            }) {
-                Text("Done")
-                    .frame(width: 100, height: 40)
-                    .foregroundColor(Color("buttonTextColor"))
-            }
-            .buttonStyle(BorderedProminentButtonStyle())
-            .padding(.top, 10)
-            .disabled(!viewModel.doneButton)
-            .onChange(of: (timerViewModel.state == .active), initial: false) {
-                viewModel.doneButton.toggle()
+            if exerciseType == "reps" {
+                
+                // MARK: Set done button but for rep
+                Button(action:{
+                    
+                    viewModel.presentPopup.toggle()
+                    
+                }) {
+                    Text(viewModel.doneButtonText)
+                        .frame(width: 100, height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.top, 10)
+                .disabled(!viewModel.doneButtonEnabled)
+                .onChange(of: (timerViewModel.state == .active), initial: false) {
+                    viewModel.doneButtonEnabled.toggle()
+                }
+                
+            } else if exerciseType == "time" {
+                
+                // MARK: Set done button but for timed sets
+                Button(action:{
+                    
+                    viewModel.doneButtonPressedOnTimedSet(timerViewModel: timerViewModel)
+                    
+                }) {
+                    Text(viewModel.doneButtonText)
+                        .frame(width: 100, height: 40)
+                        .foregroundColor(Color("buttonTextColor"))
+                }
+                .buttonStyle(BorderedProminentButtonStyle())
+                .padding(.top, 10)
+                .disabled(!viewModel.doneButtonEnabled)
+                .onChange(of: (timerViewModel.state), initial: false) {
+                    
+                    viewModel.timerStateChangeOnTimedSet(timerViewModel: timerViewModel)
+                    
+                }
             }
                 
         }
@@ -108,7 +134,7 @@ struct TrainingView: View {
             PopupFeedbackView(
                 selectedRoutine: $selectedRoutine,
                 currentTrainingSet: $currentTrainingSet,
-                presentPopup: $viewModel.presentPopup, 
+                presentPopup: $viewModel.presentPopup,
                 timeDone: $viewModel.quantityDoneOnTimedSet
             )
             .onDisappear(perform: {
