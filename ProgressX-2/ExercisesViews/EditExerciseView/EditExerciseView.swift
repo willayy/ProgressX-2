@@ -43,12 +43,14 @@ struct EditExerciseView: View {
                             color: .green,
                             showAlertState: $viewModel.exerciseEditedAlert
                         )
+                        .padding(.top, 10)
                     } else if viewModel.noChangeAlert {
                         SubmitAlert(
                             message: "No changes to Exercise",
                             color: .blue,
                             showAlertState: $viewModel.noChangeAlert
                         )
+                        .padding(.top, 10)
                     }
     
                     BoldSubHeadline(text: "Description: ")

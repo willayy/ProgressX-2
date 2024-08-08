@@ -34,12 +34,14 @@ struct EditTemplateSetView: View {
                         color: .green,
                         showAlertState: $viewModel.showSetChangedAlert
                     )
+                    .padding(.top, 10)
                 } else if viewModel.showNoChangeAlert {
                     SubmitAlert(
                         message: "No change!",
                         color: .blue,
                         showAlertState: $viewModel.showNoChangeAlert
                     )
+                    .padding(.top, 10)
                 }
                 
                 BoldSubHeadline(text: "Edit set name")

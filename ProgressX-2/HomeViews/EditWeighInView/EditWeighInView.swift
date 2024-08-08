@@ -34,12 +34,14 @@ struct EditWeighInView: View {
                         color: .green,
                         showAlertState: $viewModel.bodyEntryEditedAlert
                     )
+                    .padding(.top, 10)
                 } else if viewModel.noChangeAlert {
                     SubmitAlert(
                         message: "No change!",
                         color: .blue,
                         showAlertState: $viewModel.noChangeAlert
                     )
+                    .padding(.top, 10)
                 }
                 
                 BoldSubHeadline(text: "Edit date")

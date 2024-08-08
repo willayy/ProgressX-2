@@ -33,6 +33,7 @@ struct EditPrView: View {
                         color: .green,
                         showAlertState: $viewModel.prEditedAlert
                     )
+                    .padding(.top, 10)
                 }
                 
                 if viewModel.noChangeAlert {
@@ -41,6 +42,7 @@ struct EditPrView: View {
                         color: .blue,
                         showAlertState: $viewModel.noChangeAlert
                     )
+                    .padding(.top, 10)
                 }
                 
                 GroupBox {

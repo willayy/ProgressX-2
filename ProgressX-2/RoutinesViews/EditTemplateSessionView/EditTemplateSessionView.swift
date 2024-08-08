@@ -60,8 +60,10 @@ struct EditTemplateSessionView: View {
                     
                     if viewModel.showSessionChangedAlert {
                         SubmitAlert(message: "Successfully edited session!", color: .green, showAlertState: $viewModel.showSessionChangedAlert)
+                            .padding(.top, 10)
                     } else if viewModel.showNoChangeAlert {
                         SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
+                            .padding(.top, 10)
                     }
                     
                     BoldSubHeadline(text: "Edit session name")

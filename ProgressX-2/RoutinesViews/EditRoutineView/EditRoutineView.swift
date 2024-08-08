@@ -62,8 +62,10 @@ struct EditRoutineView: View {
                     
                     if viewModel.showRoutineChangedAlert {
                         SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $viewModel.showRoutineChangedAlert)
+                            .padding(.top, 10)
                     } else if viewModel.showNoChangeAlert {
                         SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
+                            .padding(.top, 10)
                     }
                     
                     BoldSubHeadline(text: "Edit routine name")

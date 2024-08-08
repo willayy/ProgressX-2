@@ -41,12 +41,14 @@ struct ProfileView: View {
                             color: .green,
                             showAlertState: $viewModel.showProfileChangedAlert
                         )
+                        .padding(.top, 10)
                     } else if viewModel.showNoChangeAlert {
                         SubmitAlert(
                             message: "No change!",
                             color: .blue,
                             showAlertState: $viewModel.showNoChangeAlert
                         )
+                        .padding(.top, 10)
                     }
                     
                     BoldSubHeadline(text: "Change username")

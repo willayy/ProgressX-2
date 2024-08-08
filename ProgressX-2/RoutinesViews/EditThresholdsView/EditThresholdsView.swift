@@ -44,12 +44,14 @@ struct EditThresholdsView: View {
                         color: .green,
                         showAlertState: $viewModel.showThresholdChangedAlert
                     )
+                    .padding(.top, 10)
                 } else if viewModel.showNoChangeAlert {
                     SubmitAlert(
                         message: "No change!",
                         color: .blue,
                         showAlertState: $viewModel.showNoChangeAlert
                     )
+                    .padding(.top, 10)
                 }
                 
                 BoldSubHeadline(text: "Edit the trigger quantity of the threshold")

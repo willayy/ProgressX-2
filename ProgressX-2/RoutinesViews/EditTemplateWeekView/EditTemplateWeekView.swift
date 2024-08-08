@@ -59,12 +59,14 @@ struct EditTemplateWeekView: View {
                             color: .green,
                             showAlertState: $viewModel.showWeekChangedAlert
                         )
+                        .padding(.top, 10)
                     } else if viewModel.showNoChangeAlert {
                         SubmitAlert(
                             message: "No change!",
                             color: .blue,
                             showAlertState: $viewModel.showNoChangeAlert
                         )
+                        .padding(.top, 10)
                     }
                     
                     BoldSubHeadline(text: "Edit week name")
