@@ -132,11 +132,14 @@ struct EditThresholdsView: View {
                         allowNegatives: true
                     )
                     .padding(.horizontal, 60)
+                    
                 } else {
+                    
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
                     }
                     .padding(.horizontal, 50)
+                    
                 }
                 
                 BoldSubHeadline(text: "Edit set quantity change")

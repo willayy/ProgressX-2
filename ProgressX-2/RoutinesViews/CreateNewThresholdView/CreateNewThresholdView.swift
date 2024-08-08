@@ -22,10 +22,18 @@ struct CreateNewThresholdView: View {
         let quantityType = selectedTemplateSet!.quantityType!
         
         ScrollView {
+            
             VStack {
                 
                 BoldTitle(text: "Add a new threshold to")
                     .padding(.horizontal, 20)
+                    .onAppear(perform: {
+                        if exerciseType == "reps" {
+                            viewModel.prSelection = "onerepmax"
+                        } else if exerciseType == "time" {
+                            viewModel.prSelection = "timemax"
+                        }
+                    })
                 
                 Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                     .padding(.bottom, 20)
@@ -40,6 +48,7 @@ struct CreateNewThresholdView: View {
                 .padding(.horizontal, 20)
                 
                 if exerciseType == "reps" {
+                    
                     IntegerTextField(
                         placeHolder: "Triggered at (reps)", 
                         numberText: $viewModel.triggerQuantity,
@@ -47,7 +56,9 @@ struct CreateNewThresholdView: View {
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
                     .padding(.horizontal, 60)
+                    
                 } else if exerciseType == "time" {
+                    
                     DecimalTextField(
                         placeHolder: "Triggered at (seconds)", 
                         numberText: $viewModel.triggerQuantity,
@@ -55,6 +66,7 @@ struct CreateNewThresholdView: View {
                         errorMessage: $viewModel.triggerQuantityIsInvalidMSg
                     )
                     .padding(.horizontal, 60)
+                    
                 }
                 
                 BoldSubHeadline(text: "Add a PR")
@@ -76,25 +88,30 @@ struct CreateNewThresholdView: View {
                 
                 // If exercise is rep-based add option to select AMRAP or 1RM pr.
                 if exerciseType == "reps" && viewModel.addPrSelection {
+                    
                     BasicSegPicker(
                         selectedSegment: $viewModel.prSelection,
                         segments: viewModel.repPrSegments
                     )
                     .padding(.horizontal, 40)
                     .padding(.top, 5)
+                    
                 } else if exerciseType == "time" && viewModel.addPrSelection {
+                    
                     BasicSegPicker(
                         selectedSegment: $viewModel.prSelection,
                         segments: viewModel.timePrSegments
                     )
                     .padding(.horizontal, 40)
                     .padding(.top, 5)
+                    
                 }
                 
                 BoldSubHeadline(text: "Change set load")
                     .padding(.top, 20)
             
                 if loadType == "numerical" {
+                    
                     HiddenLightSubHeadline(
                         title: "What does change load mean?",
                         text: "Change load means that when this threshold is triggered the load of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
@@ -112,16 +129,19 @@ struct CreateNewThresholdView: View {
                     .padding(.horizontal, 60)
                     
                 } else {
+                    
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
                     }
                     .padding(.horizontal, 50)
+                    
                 }
                 
                 BoldSubHeadline(text: "Change set quantity")
                     .padding(.top, 20)
                 
                 if quantityType == "numerical" {
+                    
                     HiddenLightSubHeadline(
                         title: "What does change quantity mean?",
                         text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative.",
@@ -130,6 +150,7 @@ struct CreateNewThresholdView: View {
                     .padding(.horizontal, 20)
                     
                     if exerciseType == "reps" {
+                        
                         IntegerTextField(
                             placeHolder: "Quantity (reps)", 
                             numberText: $viewModel.flatQuantityAdd,
@@ -138,7 +159,9 @@ struct CreateNewThresholdView: View {
                             allowNegatives: true
                         )
                         .padding(.horizontal, 60)
+                        
                     } else if exerciseType == "time" {
+                        
                         DecimalTextField(
                             placeHolder: "Quantity (seconds)", 
                             numberText: $viewModel.flatQuantityAdd,
@@ -147,12 +170,16 @@ struct CreateNewThresholdView: View {
                             allowNegatives: true
                         )
                         .padding(.horizontal, 60)
+                        
                     }
+                    
                 } else {
+                    
                     GroupBox {
                         LightSubHeadline(text: "Only avaiable if load type is 'Numerical'")
                     }
                     .padding(.horizontal, 50)
+                    
                 }
                 
                 Button {
@@ -162,11 +189,13 @@ struct CreateNewThresholdView: View {
                         navPath.removeLast()
                     }
                 } label: {
+                    
                     Text("Add new Threshold")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)

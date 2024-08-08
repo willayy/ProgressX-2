@@ -89,6 +89,15 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         }
         
         if editedSetPositionIndex != entity.positionIndex {
+            // Find the set with the same position index in the parent routine.
+            let setsInParentSession = entity.templateSession!.templateSets!.allObjects as! [TemplateSet]
+            let switchWithSet = setsInParentSession.first(
+                where: {
+                    $0.positionIndex == editedSetPositionIndex
+                }
+            )
+            // Switch position index with the set
+            switchWithSet!.positionIndex = entity.positionIndex
             entity.positionIndex = editedSetPositionIndex
         }
         
@@ -125,6 +134,15 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
             }
             
             if let positionIndex = changes["positionIndex"] {
+                // Find the session with the same position index in the parent routine.
+                let setsInParentSession = trainingSet.trainingSession!.trainingSets!.allObjects as! [TrainingSet]
+                let switchWithSet = setsInParentSession.first(
+                    where: {
+                        $0.positionIndex == positionIndex as! Int64
+                    }
+                )
+                // Switch position index with the session
+                switchWithSet!.positionIndex = trainingSet.positionIndex
                 trainingSet.positionIndex = positionIndex as! Int64
             }
             

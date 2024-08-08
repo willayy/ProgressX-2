@@ -27,7 +27,7 @@ class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     
     // Seg picker selections
     @Published public var addPrSelection: Bool = false
-    @Published public var prSelection: String = "onerepmax"
+    @Published public var prSelection: String = ""
     
     // Seg picker options
     public let addPrSegments: [String : Bool] = [

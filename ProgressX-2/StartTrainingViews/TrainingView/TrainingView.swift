@@ -89,7 +89,7 @@ struct TrainingView: View {
                             seconds: Int(currentTrainingSet!.quantityTodo))
                         viewModel.doneButtonText = "Done"
                     } else if viewModel.doneButtonText == "Done"{
-                        viewModel.startRestTimerForTimedSet(timer: timerViewModel)
+                        viewModel.startRestTimerForTimedSet(timer: timerViewModel) 
                     }
                 }) {
                     Text(viewModel.doneButtonText)

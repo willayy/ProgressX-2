@@ -41,14 +41,6 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     
     typealias T = SetThreshold
     
-    private func removeSubstrings(from string: String, substrings: [String]) -> String {
-        var modifiedString = string
-        for substring in substrings {
-            modifiedString = modifiedString.replacingOccurrences(of: substring, with: "")
-        }
-        return modifiedString
-    }
-    
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
         addPrSelection = entity.generatePr

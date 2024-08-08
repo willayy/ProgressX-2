@@ -56,7 +56,7 @@ class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, D
             let weeksInParentRoutine = entity.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
             let switchWithWeek = weeksInParentRoutine.first(
                 where: {
-                    ($0 as AnyObject).positionIndex == editedPositionIndex
+                    $0.positionIndex == editedPositionIndex
                 }
             )
             // Switch position index with the week
@@ -94,6 +94,15 @@ class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, D
             }
             
             if let positionIndex = changes["positionIndex"] {
+                // Find the week with the same position index in the parent routine.
+                let weeksInParentRoutine = trainingWeek.trainingCycle!.trainingWeeks!.allObjects as! [TrainingWeek]
+                let switchWithWeek = weeksInParentRoutine.first(
+                    where: {
+                        $0.positionIndex == positionIndex as! Int64
+                    }
+                )
+                // Switch position index with the week
+                switchWithWeek!.positionIndex = trainingWeek.positionIndex
                 trainingWeek.positionIndex = positionIndex as! Int64
             }
         }

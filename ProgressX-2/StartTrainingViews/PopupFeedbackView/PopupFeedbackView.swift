@@ -111,7 +111,6 @@ struct PopupFeedbackView: View {
                         viewModel.editedSetQuantity = String(format: "%.2f", timeDone!)
                     })
 
-                    
                 }
                 
                 // MARK: Button for when the reps actually done on the set are entered.

@@ -49,6 +49,15 @@ class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
         }
         
         if entity.positionIndex != editedPositionIndex {
+            // Find the session with the same position index in the parent routine.
+            let sessionInParentWeek = entity.templateWeek!.templateSessions!.allObjects as! [TemplateSession]
+            let switchWithSession = sessionInParentWeek.first(
+                where: {
+                    $0.positionIndex == editedPositionIndex
+                }
+            )
+            // Switch position index with the session
+            switchWithSession!.positionIndex = entity.positionIndex
             entity.positionIndex = editedPositionIndex
         }
         
@@ -72,17 +81,26 @@ class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
         let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({!$0.isComplete})
         
-        for trainingSesison in trainingSessions {
+        for trainingSession in trainingSessions {
             if let timePeriodName = changes["timePeriodName"] {
-                trainingSesison.timePeriodName = (timePeriodName as! String)
+                trainingSession.timePeriodName = (timePeriodName as! String)
             }
             
             if let timePeriodDesc = changes["timePeriodDescription"] {
-                trainingSesison.timePeriodName = timePeriodDesc as? String
+                trainingSession.timePeriodName = timePeriodDesc as? String
             }
             
             if let positionIndex = changes["positionIndex"] {
-                trainingSesison.positionIndex = positionIndex as! Int64
+                // Find the session with the same position index in the parent routine.
+                let sessionInParentWeek = trainingSession.trainingWeek!.trainingSessions!.allObjects as! [TrainingSession]
+                let switchWithSession = sessionInParentWeek.first(
+                    where: {
+                        $0.positionIndex == positionIndex as! Int64
+                    }
+                )
+                // Switch position index with the session
+                switchWithSession!.positionIndex = trainingSession.positionIndex
+                trainingSession.positionIndex = positionIndex as! Int64
             }
         }
     }

@@ -244,6 +244,7 @@ extension PersistenceController {
                     let templateSet123 = TemplateSet(
                         context,
                         templateSession: templateSession12,
+                        name: "Sit ups",
                         exercise: sitUp,
                         loadType: "numerical",
                         load: latestBw,
