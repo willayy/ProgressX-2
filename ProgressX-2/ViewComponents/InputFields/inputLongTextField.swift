@@ -18,6 +18,7 @@ struct inputLongTextField: View {
     @Binding var errorMessage: String
     let maxChars: Int
     @State private var shouldShake = false
+    @FocusState private var isTextFieldFocused
     
     var body: some View {
         
@@ -37,6 +38,11 @@ struct inputLongTextField: View {
                         self.text = filtered
                         self.shouldShake.toggle()
                     }
+                }
+                .focused($isTextFieldFocused)
+                .onTapGesture {
+                    self.hideKeyboard()
+                    isTextFieldFocused = false
                 }
                 .onSubmit {
                     // Handle when return key is pressed and field is empty
@@ -77,6 +83,10 @@ struct inputLongTextField: View {
     
     private func onSubmitFunction(curr: String) -> String {
         return curr
+    }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
 }
