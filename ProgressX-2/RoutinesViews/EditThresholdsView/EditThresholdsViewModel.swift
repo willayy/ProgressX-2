@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     @Published public var editedTriggerQuantity: String = ""
     @Published public var editedTriggerQuantityIsInvalid: Bool = false
@@ -100,7 +100,7 @@ class EditThresholdsViewModel: SavingViewModel, EditingViewModel, DefaultValueVi
         
         if entity.hasChanges {
             withAnimation { showThresholdChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }

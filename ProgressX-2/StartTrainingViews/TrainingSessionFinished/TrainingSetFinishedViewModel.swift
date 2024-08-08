@@ -8,7 +8,5 @@
 import Foundation
 
 class TrainingSetFinishedViewModel: ViewModel {
-    
-    @Published var navPath: [Int] = [Int]()
-    
+
 }

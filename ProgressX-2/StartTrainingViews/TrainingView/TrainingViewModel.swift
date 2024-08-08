@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class TrainingViewModel: SavingViewModel {
+class TrainingViewModel: ViewModel {
     
     @Published public var selectedRoutine: Routine? = nil
     @Published public var navPath: [Int] = [Int]()

@@ -34,12 +34,6 @@ extension PersistenceController {
         }
     }
     
-    /// Saves changes to the selected context, can throw errors if it fails to save.
-    /// - Parameter context: A NSManagedObjectContext
-    public static func save_t(_ context: NSManagedObjectContext) throws {
-        try context.save()
-    }
-    
     /// Deletes a NSManagedObject from the context
     /// - Parameters:
     ///   - context: A NSManagedObjectContext

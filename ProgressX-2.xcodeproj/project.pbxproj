@@ -112,7 +112,6 @@
 		83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */; };
 		83B013AB2C5BBDA900059E42 /* InputErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */; };
 		83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */; };
-		83B013B02C5BE42400059E42 /* SavingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AF2C5BE42400059E42 /* SavingViewModel.swift */; };
 		83B013B22C5BE51900059E42 /* EditingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B12C5BE51900059E42 /* EditingViewModel.swift */; };
 		83B013B42C5CDEBB00059E42 /* AddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B32C5CDEBB00059E42 /* AddingViewModel.swift */; };
 		83B013B62C5D03ED00059E42 /* DefaultValueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013B52C5D03ED00059E42 /* DefaultValueViewModel.swift */; };
@@ -299,7 +298,6 @@
 		83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorGeometryEffect.swift; sourceTree = "<group>"; };
 		83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorViewModifier.swift; sourceTree = "<group>"; };
 		83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingErrorText.swift; sourceTree = "<group>"; };
-		83B013AF2C5BE42400059E42 /* SavingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingViewModel.swift; sourceTree = "<group>"; };
 		83B013B12C5BE51900059E42 /* EditingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditingViewModel.swift; sourceTree = "<group>"; };
 		83B013B32C5CDEBB00059E42 /* AddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddingViewModel.swift; sourceTree = "<group>"; };
 		83B013B52C5D03ED00059E42 /* DefaultValueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultValueViewModel.swift; sourceTree = "<group>"; };
@@ -873,7 +871,6 @@
 		83B013AE2C5BE3E400059E42 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				83B013AF2C5BE42400059E42 /* SavingViewModel.swift */,
 				83B013B12C5BE51900059E42 /* EditingViewModel.swift */,
 				83B013B32C5CDEBB00059E42 /* AddingViewModel.swift */,
 				83B013B52C5D03ED00059E42 /* DefaultValueViewModel.swift */,
@@ -1370,7 +1367,6 @@
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
 				83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */,
-				83B013B02C5BE42400059E42 /* SavingViewModel.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
 				8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */,
 				8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */,

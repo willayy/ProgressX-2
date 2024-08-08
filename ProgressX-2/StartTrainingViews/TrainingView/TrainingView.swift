@@ -119,8 +119,8 @@ struct TrainingView: View {
                 withAnimation {
                     currentTrainingSet!.skip()
                     currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
-                    viewModel.safeSave(viewContext: viewContext)
-                    if currentTrainingSet == nil { 
+                    viewModel.save(viewContext)
+                    if currentTrainingSet == nil {
                         navPath.append(3)
                     }
                 }

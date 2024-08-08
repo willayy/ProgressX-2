@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditPrViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditPrViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()
@@ -50,7 +50,7 @@ class EditPrViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel 
             withAnimation {
                 prEditedAlert = true
             }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

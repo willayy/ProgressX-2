@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewTemplateSetViewModel: SavingViewModel, AddingViewModel {
+class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // The Name of the set (good default is provided)
     @Published public var newSetName: String = "Set "
@@ -152,7 +152,7 @@ class CreateNewTemplateSetViewModel: SavingViewModel, AddingViewModel {
             )
         }
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
         withAnimation {
             showAddThresholds = true

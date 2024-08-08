@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile1ViewModel: SavingViewModel {
+class CreateNewProfile1ViewModel: ViewModel {
     
     // Navpath variable
     @Published public var navPath: [Int] = [Int]()
@@ -115,7 +115,7 @@ class CreateNewProfile1ViewModel: SavingViewModel {
             PersistenceController.generateBasicExerciseLibrary(viewContext)
         }
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
     
 }

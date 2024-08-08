@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSessionViewModel: SavingViewModel, EditingViewModel {
+class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
     
     @Published public var showSessionChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
@@ -56,7 +56,7 @@ class EditTemplateSessionViewModel: SavingViewModel, EditingViewModel {
             // Propogate changes to matching TrainingSessions.
             propogateChanges(viewContext, selectedTemplateSession: entity)
             withAnimation { showSessionChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }

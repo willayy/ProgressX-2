@@ -15,7 +15,9 @@ struct EditWeighInView: View {
     @StateObject private var viewModel = EditWeighInViewModel()
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
                 
                 BoldTitle(text: "Editing weigh-in done at")
@@ -145,11 +147,6 @@ struct EditWeighInView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
-                
-                if viewModel.savingError {
-                    SavingErrorText()
-                        .padding(.horizontal, 20)
-                }
                 
             }
             .frame(maxWidth: .infinity)

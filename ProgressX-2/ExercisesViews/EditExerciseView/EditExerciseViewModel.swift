@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditExerciseViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditExerciseViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Submission alert variables
     @Published public var exerciseEditedAlert: Bool = false
@@ -60,7 +60,7 @@ class EditExerciseViewModel: SavingViewModel, EditingViewModel, DefaultValueView
             withAnimation {
                 exerciseEditedAlert = true
             }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation {
                 noChangeAlert = true

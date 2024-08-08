@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: SavingViewModel, AddingViewModel, DefaultValueViewModel {
+class PopupFeedbackViewModel: ViewModel, AddingViewModel, DefaultValueViewModel {
 
     @Published var showDidntFinishAllReps = false
     @Published var editedSetQuantity: String = ""
@@ -65,7 +65,7 @@ class PopupFeedbackViewModel: SavingViewModel, AddingViewModel, DefaultValueView
     }
         
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
 
 }
