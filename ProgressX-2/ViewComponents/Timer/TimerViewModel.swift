@@ -75,7 +75,7 @@ final class TimerViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.secondsToCompletion -= 1
                 self.progress = Float(self.secondsToCompletion) / Float(self.totalTimeForCurrentSelection)
-                
+                print(self.secondsToCompletion)
                 if self.secondsToCompletion < 0 {
                     self.state = .cancelled
                     NotificationCenter.default.post(name: TimerViewModel.timerDidFinishNotification, object: nil)

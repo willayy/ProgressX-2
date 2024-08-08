@@ -48,6 +48,10 @@ struct TrainingView: View {
                             viewModel.doneButtonEnabled.toggle()
                             viewModel.doneButtonText = "Start timed set"
                             viewModel.timedSetActive.toggle()
+                            print("hej")
+                        } else {
+                            print(viewModel.lastExercise)
+                            print(currentTrainingSet?.exercise!.exerciseType!)
                         }
                     } label: {
                         Text("Skip rest")
@@ -99,17 +103,18 @@ struct TrainingView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
                 .disabled(!viewModel.doneButtonEnabled)
-                .onChange(of: (timerViewModel.state == .active), initial: false) {
-                    if viewModel.doneButtonText == "rest time" {
-                        viewModel.doneButtonEnabled.toggle()
-                        print("hej")
-                    }
-                }
             }
                 
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
+                if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
+                    viewModel.doneButtonText = "Start timed set"
+                    viewModel.timedSetActive = true
+                    viewModel.doneButtonEnabled.toggle()
+                } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
+                    viewModel.timedSetActive = false
+                }
                 if viewModel.doneButtonText == "Start rest timer"{
                     viewModel.doneButtonEnabled.toggle()
                     viewModel.doneButtonText = "Start timed set"
@@ -160,16 +165,28 @@ struct TrainingView: View {
             )
             .onDisappear(perform: {
                 withAnimation {
+                    viewModel.startTimer(
+                        timerViewModel: timerViewModel,
+                        seconds: Int(currentTrainingSet!.restTime)
+                    )
+                    viewModel.lastExercise = (currentTrainingSet?.exercise!.exerciseType!)!
+                    
                     currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    
+                    if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
+                        viewModel.doneButtonEnabled.toggle()
+                        viewModel.doneButtonText = "rest timer"
+                    } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
+                        viewModel.doneButtonText = "Done"
+                        print(viewModel.doneButtonText)
+                    }
+                    print(viewModel.lastExercise)
+                    print(currentTrainingSet?.exercise!.exerciseType!)
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
+                        timerViewModel.state = .cancelled
                         navPath.append(3)
-                    } else {
-                        // else start rest timer.
-                        viewModel.startTimer(
-                            timerViewModel: timerViewModel,
-                            seconds: Int(currentTrainingSet!.restTime)
-                        )
+                        
                     }
                 }
             })

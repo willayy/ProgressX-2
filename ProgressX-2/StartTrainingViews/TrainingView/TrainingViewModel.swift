@@ -19,6 +19,7 @@ class TrainingViewModel: ViewModel {
     @Published public var doneButtonText = "Done"
     @Published public var quantityDoneOnTimedSet: Double? = nil
     @Published public var timedSetActive: Bool = false
+    @Published public var lastExercise: String = ""
     
     public func setsLeft(selectedTrainingSession: TrainingSession?, currentTrainingSet: TrainingSet?) -> String {
         let totalSets = selectedTrainingSession?.trainingSets?.count
@@ -34,6 +35,10 @@ class TrainingViewModel: ViewModel {
     public func doneButtonPressedOnTimedSet(timerViewModel: TimerViewModel) -> Void {
         quantityDoneOnTimedSet = Double(timerViewModel.selectedSecondsAmount - timerViewModel.secondsToCompletion)
         
+    }
+    
+    public func setLastExercise(exercise: String){
+        lastExercise = exercise
     }
     
     public func timerStateChangeOnTimedSet(timerViewModel: TimerViewModel) -> Void {
