@@ -372,13 +372,11 @@ class InMemory {
         )
         
         // Adding the first session to the training week
-        // This session is COMPLETED
         let trainingSession1 = TrainingSession(
             context,
             trainingWeek: trainingWeek1,
             templateSession: templateSession1
         )
-        trainingSession1.complete()
         
         // Adding the second session to the training week
         let trainingSession2 = TrainingSession(
@@ -401,9 +399,6 @@ class InMemory {
             trainingSession: trainingSession1,
             templateSet: templateSet11
         )
-        trainingSet11.loadDone = trainingSet11.loadTodo
-        trainingSet11.quantityDone = trainingSet11.quantityTodo
-        trainingSet11.complete()
         
         // Adding the second set to the first training week
         // This set is COMPLETED
