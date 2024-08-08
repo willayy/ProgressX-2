@@ -27,8 +27,6 @@ struct TrainingView: View {
         
         VStack {
             
-            #warning("TODO: Make timed sets use the timer (I think it might work but it needs testing)")
-            
             // MARK: Which set are you on status text
             Title2(
                 text: viewModel.setsLeft(
