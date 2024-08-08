@@ -9,13 +9,10 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class TrainingViewModel: SavingViewModel {
+class TrainingViewModel: ViewModel {
     
     @Published public var selectedRoutine: Routine? = nil
     @Published public var navPath: [Int] = [Int]()
-    @Published public var selectedTrainingCycle: TrainingCycle? = nil
-    @Published public var selectedTrainingWeek: TrainingWeek? = nil
-    @Published public var selectedTrainingSession: TrainingSession? = nil
     @Published public var showAlert = false
     @Published public var presentPopup = false
     @Published public var doneButtonEnabled = true

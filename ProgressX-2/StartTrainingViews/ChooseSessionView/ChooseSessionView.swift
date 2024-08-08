@@ -20,10 +20,7 @@ struct ChooseSessionView: View {
         @FetchRequest(
             entity: TrainingSession.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TrainingSession.positionIndex, ascending: true)],
-            predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
-                NSPredicate(format: "trainingWeek == %@", selectedTrainingWeek!),
-                NSPredicate(format: "isComplete == %@", NSNumber(value: false))
-            ])
+            predicate: NSPredicate(format: "trainingWeek == %@", selectedTrainingWeek!)
         ) var trainingSessions: FetchedResults<TrainingSession>
         
         ScrollView {

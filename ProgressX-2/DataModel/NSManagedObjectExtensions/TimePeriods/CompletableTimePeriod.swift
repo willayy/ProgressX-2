@@ -43,6 +43,8 @@ extension CompleteableTimePeriod {
                 }
             }
         }
+        
+        self.cascadeCompletion()
     }
     
     /// Skips a Completeable TimePeriod.
@@ -68,7 +70,6 @@ extension CompleteableTimePeriod {
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
-        cascadeCompletion()
     }
     
     /// If a child is completed and all its parent children are now complete, make parent complete.

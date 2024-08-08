@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewPersonalRecordViewModel: SavingViewModel, AddingViewModel {
+class CreateNewPersonalRecordViewModel: ViewModel, AddingViewModel {
     
     // Date picker value
     @Published public var prDate: Date = Date()
@@ -44,7 +44,7 @@ class CreateNewPersonalRecordViewModel: SavingViewModel, AddingViewModel {
             type: selectedPrType!
         )
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
         // Reset the view state with an animation
         withAnimation {

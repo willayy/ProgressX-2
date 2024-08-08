@@ -141,9 +141,9 @@ struct TrainingView: View {
             Button(action:{
                 withAnimation {
                     currentTrainingSet!.skip()
-                    currentTrainingSet = selectedTrainingSession!.getNextSet()
-                    viewModel.safeSave(viewContext: viewContext)
-                    if currentTrainingSet == nil { 
+                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    viewModel.save(viewContext)
+                    if currentTrainingSet == nil {
                         navPath.append(3)
                     }
                 }
@@ -162,7 +162,7 @@ struct TrainingView: View {
             )
             .onDisappear(perform: {
                 withAnimation {
-                    currentTrainingSet = selectedTrainingSession!.getNextSet()
+                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
                         navPath.append(3)

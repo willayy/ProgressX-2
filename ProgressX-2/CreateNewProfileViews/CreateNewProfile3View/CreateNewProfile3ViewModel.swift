@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile3ViewModel: SavingViewModel, AddingViewModel {
+class CreateNewProfile3ViewModel: ViewModel, AddingViewModel {
     
     // Inputfield value states
     @Published public var chestCirc = ""
@@ -51,6 +51,6 @@ class CreateNewProfile3ViewModel: SavingViewModel, AddingViewModel {
         firstBodyEntry.calfCirc = NSNumber(value: Double(calfCirc)!)
         firstBodyEntry.uprArmCirc = NSNumber(value: Double(upperArmCirc)!)
         firstBodyEntry.lwrArmCirc = NSNumber(value: Double(lowerArmCirc)!)
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
 }

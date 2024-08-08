@@ -12,13 +12,16 @@ struct TrainingSetFinishedView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var viewRouter: ViewRouter
-    @Binding var navPath: [Int]
     
     var body: some View {
         VStack{
             
-            Title2(text: "Good job! You are now finished with this session")
+            BoldTitle(text: "Good job!")
+                .padding(.bottom, 10)
+            
+            Title2(text: "You are now finished with this session")
                 .padding(.horizontal, 40)
+                .padding(.bottom, 10)
             
             // MARK: This button takes you back to the homeview
             Button(action:{
@@ -29,8 +32,8 @@ struct TrainingSetFinishedView: View {
                 }
                 
             }) {
-                Text("Return to home")
-                    .frame(width: 150, height: 40)
+                Text("Return to home screen")
+                    .frame(width: 200, height: 40)
                     .foregroundColor(Color("buttonTextColor"))
             }
             .buttonStyle(BorderedProminentButtonStyle())
@@ -42,12 +45,9 @@ struct TrainingSetFinishedView: View {
 }
 #Preview {
     let context = PersistenceController.preview.container.viewContext
-    @State var navPath: [Int] = [Int]()
     @State var selectedRoutine: Routine? = nil
     
-    return TrainingSetFinishedView(
-        navPath: $navPath
-    )
-    .environmentObject(ViewRouter())
-    .environment(\.managedObjectContext, context)
+    return TrainingSetFinishedView()
+        .environmentObject(ViewRouter())
+        .environment(\.managedObjectContext, context)
 }

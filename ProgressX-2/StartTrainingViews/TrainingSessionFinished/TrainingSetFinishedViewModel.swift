@@ -8,13 +8,5 @@
 import Foundation
 
 class TrainingSetFinishedViewModel: ViewModel {
-    
-    @Published var selectedRoutine: Routine? = nil
-    @Published var navPath: [Int] = [Int]()
-    @Published var selectedTrainingCycle: TrainingCycle? = nil
-    @Published var selectedTrainingWeek: TrainingWeek? = nil
-    @Published var selectedTrainingSession: TrainingSession? = nil
-    @Published var AllTrainingSets: [TrainingSet] = []
-    @Published public var searchText: String = ""
-    
+
 }

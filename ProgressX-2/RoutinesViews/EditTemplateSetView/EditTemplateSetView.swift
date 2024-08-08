@@ -207,12 +207,7 @@ struct EditTemplateSetView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 20)
                 .padding(.bottom, 10)
-                
-                if viewModel.savingError {
-                    SavingErrorText()
-                        .padding(.horizontal, 20)
-                }
-                
+                            
             }
         }
     }

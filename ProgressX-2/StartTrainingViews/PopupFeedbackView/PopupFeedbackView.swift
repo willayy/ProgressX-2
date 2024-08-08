@@ -50,21 +50,17 @@ struct PopupFeedbackView: View {
                     
                     // MARK: Yes i completed all sets button.
                     Button(action:{
+                            
+                        viewModel.setFullyCompleted(currentTrainingSet: currentTrainingSet!)
                         
-                        if validateInput() {
-                            
-                            viewModel.setFullyCompleted(currentTrainingSet: currentTrainingSet!)
-                            
-                            viewModel.checkIfCycleIsFinished(
-                                routine: selectedRoutine!,
-                                viewContext: viewContext
-                            )
-                            
-                            viewModel.saveEdits(entity: currentTrainingSet!, viewContext: viewContext)
-                                                        
-                            self.presentPopup.toggle()
-                            
-                        }
+                        viewModel.checkIfCycleIsFinished(
+                            routine: selectedRoutine!,
+                            viewContext: viewContext
+                        )
+                        
+                        viewModel.saveEntry(viewContext: viewContext)
+                                                    
+                        self.presentPopup.toggle()
                         
                     }) {
                         Text("YES")
@@ -135,10 +131,7 @@ struct PopupFeedbackView: View {
                             viewContext: viewContext
                         )
                         
-                        viewModel.saveEdits(
-                            entity: currentTrainingSet!,
-                            viewContext: viewContext
-                        )
+                        viewModel.saveEntry(viewContext: viewContext)
                                                 
                         self.presentPopup.toggle()
                         
@@ -177,8 +170,6 @@ struct PopupFeedbackView: View {
     }
     
 }
-
-
 
 #Preview{
     let context = PersistenceController.preview.container.viewContext

@@ -164,11 +164,6 @@ struct CreateNewProfile4View: View {
                 .buttonStyle(.borderedProminent)
                 .padding(.vertical, 20)
                 
-                if viewModel.savingError {
-                    SavingErrorText()
-                        .padding(.horizontal, 20)
-                }
-                
             }
         }
     }

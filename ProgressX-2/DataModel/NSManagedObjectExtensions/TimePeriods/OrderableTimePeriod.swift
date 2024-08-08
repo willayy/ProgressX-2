@@ -17,26 +17,25 @@ extension OrderableTimePeriod {
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        // If the positionIndex is changed tell a related object to revalidate
-        let changedValues = changedValues()
-        if changedValues.keys.contains("positionIndex") {
-            try revalidateRelationShip()
-        }
+        try revalidateParentChildRelationships()
     }
     
-    // Revalidates "parent" relationship
-    private func revalidateRelationShip() throws {
-        switch self {
-        case is TrainingCycle:
-            try (self as! TrainingCycle).routine!.validateForUpdate()
-        case is TrainingWeek:
-            try (self as! TrainingWeek).trainingCycle!.validateForUpdate()
-        case is TrainingSession:
-            try (self as! TrainingSession).trainingWeek!.validateForUpdate()
-        case is TrainingSet:
-            try (self as! TrainingSet).trainingSession!.validateForUpdate()
-        default:
-            break
+    // Revalidates "parent" and "child" relationship when positionIndex changes
+    private func revalidateParentChildRelationships() throws {
+        let changedValues = changedValues()
+        if changedValues.keys.contains("positionIndex") {
+            switch self {
+            case is TrainingCycle:
+                try (self as! TrainingCycle).routine!.validateForUpdate()
+            case is TrainingWeek:
+                try (self as! TrainingWeek).trainingCycle!.validateForUpdate()
+            case is TrainingSession:
+                try (self as! TrainingSession).trainingWeek!.validateForUpdate()
+            case is TrainingSet:
+                try (self as! TrainingSet).trainingSession!.validateForUpdate()
+            default:
+                break
+            }
         }
     }
 

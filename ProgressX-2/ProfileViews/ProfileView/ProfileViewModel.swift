@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Segmented picker variables
     @Published public var selectedUnitSegment: Bool = true
@@ -109,7 +109,7 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
         
         if entity.hasChanges {
             withAnimation { showProfileChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }

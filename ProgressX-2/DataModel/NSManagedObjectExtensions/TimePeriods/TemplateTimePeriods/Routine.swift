@@ -34,7 +34,7 @@ extension Routine: HasOrderable {
         return results
     }
     
-    /// Gets all trainingSets in the routine, returns empty array if none.
+    /// Gets all templateSets in the routine, returns empty array if none.
     private var allTemplateSets: [TemplateSet] {
         let fetchRequest: NSFetchRequest<TemplateSet> = TemplateSet.fetchRequest()
         let predicate = NSPredicate(format: "templateSession.templateWeek.templateCycle.routine == %@", self)
@@ -139,8 +139,21 @@ extension Routine: HasOrderable {
         }
     }
     
+    public func getNextWeek() -> TrainingWeek? {
+        let nextCycle = self.getNextTrainingCycle()
+        let nextWeek = nextCycle?.getNextTrainingWeek()
+        return nextWeek
+    }
+    
+    public func getNextSession() -> TrainingSession? {
+        let nextCycle = self.getNextTrainingCycle()
+        let nextWeek = nextCycle?.getNextTrainingWeek()
+        let nextSession = nextWeek?.getNextTrainingSession()
+        return nextSession
+    }
+    
     /// Gets the next training cycle
-    public func getNextCycle() -> TrainingCycle? {
+    public func getNextTrainingCycle() -> TrainingCycle? {
         let allCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
         let orderedIncompleteCycles: [TrainingCycle] = allCycles
             .filter { cycle in !cycle.isComplete }

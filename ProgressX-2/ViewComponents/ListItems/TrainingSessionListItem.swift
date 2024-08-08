@@ -27,22 +27,33 @@ struct TrainingSessionListItem: View {
                  + Text("\(trainingSession.trainingSets?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-        
+                
             }
-            .frame(width: 135, height: 20, alignment: .leading)
+            .frame(width: 200, height: 20, alignment: .leading)
             .padding(.vertical, 10)
             
             Spacer()
             
-            // MARK: Edit button
-            Button(action: {
-                selectedTrainingSession = trainingSession
-                currentTrainingSet = selectedTrainingSession!.getNextSet()
-                navPath.append(2)
-            }) { Image(systemName: "figure.run") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
+            if !trainingSession.isComplete {
+                
+                // MARK: Edit button
+                Button(action: {
+                    selectedTrainingSession = trainingSession
+                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    navPath.append(2)
+                }) { Image(systemName: "figure.run") }
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .buttonStyle(BorderlessButtonStyle())
+            
+            } else {
+                
+                Image(systemName: "checkmark.seal.fill")
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .foregroundStyle(.green)
+                
+            }
         }
     }
 }

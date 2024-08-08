@@ -52,7 +52,10 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         if self.isComplete {
             let calendar = Calendar.current
             let now = Date()
-            let components = calendar.dateComponents([.day], from: self.completedOnDate! , to: now)
+            // Normalize dates by their start of day dates
+            let startOfDayNow: Date = calendar.startOfDay(for: now)
+            let completedSessionStartOfDay: Date = calendar.startOfDay(for: self.completedOnDate!)
+            let components = calendar.dateComponents([.day], from: completedSessionStartOfDay, to: startOfDayNow)
             let daysAgo = components.day ?? 0
             return String(daysAgo)
         } else {
@@ -60,7 +63,7 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         }
     }
     
-    public func getNextSet() -> TrainingSet? {
+    public func getNextTrainingSet() -> TrainingSet? {
         let allSets = self.trainingSets!.allObjects as! [TrainingSet]
         let orderedIncompleteSets: [TrainingSet] = allSets
             .filter { set in !set.isComplete }
@@ -83,8 +86,13 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     }
     
     internal func childrenAreComplete() -> Bool {
-        self.trainingSets!.allSatisfy { trainingSet in
-            (trainingSet as! TrainingSet).isComplete
+        if self.trainingSets!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSets!.allSatisfy {
+              trainingSet in
+                (trainingSet as! TrainingSet).isComplete
+            }
         }
     }
     

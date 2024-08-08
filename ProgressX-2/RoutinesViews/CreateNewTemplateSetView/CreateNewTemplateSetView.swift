@@ -18,7 +18,9 @@ struct CreateNewTemplateSetView: View {
     @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
                 
                 BoldTitle(text: "Create new set in")
@@ -242,12 +244,6 @@ struct CreateNewTemplateSetView: View {
                             })
                         )
                     })
-                    
-                    if viewModel.savingError {
-                        SavingErrorText()
-                            .padding(.horizontal, 20)
-                    }
-                    
                 }
             }
         }

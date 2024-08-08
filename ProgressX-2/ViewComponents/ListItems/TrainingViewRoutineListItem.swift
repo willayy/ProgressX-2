@@ -36,14 +36,33 @@ struct TrainingViewRoutineListItem: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Weeks: ")
+                (Text("Total weeks: ")
                     .fontWeight(.bold)
                  + Text("\(routine.weeksInRoutine.count)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
+                (Text("Current week: ")
+                    .fontWeight(.bold)
+                 + Text("\(routine.getNextWeek()?.timePeriodName! ?? "")"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                
+                (Text("Next session: ")
+                    .fontWeight(.bold)
+                 + Text("\(routine.getNextSession()?.timePeriodName! ?? "")"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                
+                let progress = routine.getNextTrainingCycle()?.getProgress() ?? 0
+                
+                ProgressBar(
+                    height: 5,
+                    progress: progress
+                )
+                
             }
-            .frame(width: 135, height: 55, alignment: .leading)
+            .frame(width: 200, height: 90, alignment: .leading)
             .padding(.vertical, 10)
             
             Spacer()
@@ -58,10 +77,10 @@ struct TrainingViewRoutineListItem: View {
             
             Button(action: {
                 selectedRoutine = routine
-                let nextCycle = routine.getNextCycle()!
-                let nextWeek = nextCycle.getNextWeek()!
-                let nextSession = nextWeek.getNextSession()!
-                let currentSet = nextSession.getNextSet()!
+                let nextCycle = routine.getNextTrainingCycle()!
+                let nextWeek = nextCycle.getNextTrainingWeek()!
+                let nextSession = nextWeek.getNextTrainingSession()!
+                let currentSet = nextSession.getNextTrainingSet()!
                 selectedSession = nextSession
                 currentTrainingSet = currentSet
                 navPath.append(2)
