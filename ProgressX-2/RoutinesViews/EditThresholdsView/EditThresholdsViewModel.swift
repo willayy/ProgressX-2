@@ -52,14 +52,15 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
         addPrSelection = entity.generatePr
-        prSelection = entity.prType ?? ""
                 
         let exerciseType = entity.templateSet!.exercise!.exerciseType
         
         if exerciseType == "reps" {
+            prSelection = entity.prType ?? "onerepmax"
             editedTriggerQuantity = String(format: "%.0f", entity.triggerQuantity)
             editedFlatQuantityAdd = String(format: "%.0f", entity.flatQuantityAdd?.doubleValue ?? "")
         } else if exerciseType == "time" {
+            prSelection = entity.prType ?? "timemax"
             editedTriggerQuantity = String(format: "%.2f", entity.triggerQuantity)
             editedFlatQuantityAdd = String(format: "%.2f", entity.flatQuantityAdd?.doubleValue ?? "")
         }

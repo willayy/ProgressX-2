@@ -84,18 +84,6 @@ extension SetThreshold {
     public func trigger(loadDone: Double, quantityDone: Double) -> Void {
         let templateSet = self.templateSet!
         
-        // Adds the flat load.
-        if self.flatLoadAdd != nil {
-            templateSet.setLoad += self.flatLoadAdd!.doubleValue
-        }
-        
-        // Adds the flat quantity
-        if self.flatQuantityAdd != nil {
-            templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
-            // Adds the quantity added to the template to itself the ensure linearity.
-            self.triggerQuantity += self.flatQuantityAdd!.doubleValue
-        }
-        
         // Generates a PR
         if self.generatePr {
             let exercise = templateSet.exercise!
@@ -120,6 +108,19 @@ extension SetThreshold {
                 type: self.prType!
             )
         }
+        
+        // Adds the flat load.
+        if self.flatLoadAdd != nil {
+            templateSet.setLoad += self.flatLoadAdd!.doubleValue
+        }
+        
+        // Adds the flat quantity
+        if self.flatQuantityAdd != nil {
+            templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
+            // Adds the quantity added to the template to itself the ensure linearity.
+            self.triggerQuantity += self.flatQuantityAdd!.doubleValue
+        }
+        
     }
         
     // MARK: Validation

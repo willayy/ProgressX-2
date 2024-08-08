@@ -128,11 +128,11 @@ extension Routine: HasOrderable {
     }
     
     /// Checks if there is an active training cycle in the routine
-    public func activeTrainingCycleExists() -> Bool {
+    public func incompleteTrainingCycleExists() -> Bool {
         if self.trainingCycles!.allObjects.isEmpty {
             return false
         } else {
-          return self.trainingCycles!.allSatisfy {
+          return !self.trainingCycles!.allSatisfy {
               trainingCycle in
                 (trainingCycle as! TrainingCycle).isComplete
             }

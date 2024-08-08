@@ -164,10 +164,8 @@ struct TrainingView: View {
                         viewModel.doneButtonText = "rest timer"
                     } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
                         viewModel.doneButtonText = "Done"
-                        print(viewModel.doneButtonText)
                     }
-                    print(viewModel.lastExercise)
-                    print(currentTrainingSet?.exercise!.exerciseType!)
+                    
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
                         timerViewModel.state = .cancelled
