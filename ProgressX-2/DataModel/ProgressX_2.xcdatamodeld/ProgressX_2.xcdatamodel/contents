@@ -53,7 +53,7 @@
     <entity name="Routine" representedClassName="Routine" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="createdOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
         <relationship name="templateCycle" maxCount="1" deletionRule="Cascade" destinationEntity="TemplateCycle" inverseName="routine" inverseEntity="TemplateCycle"/>
-        <relationship name="trainingCycles" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
+        <relationship name="trainingCycles" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingCycle" inverseName="routine" inverseEntity="TrainingCycle"/>
     </entity>
     <entity name="SetThreshold" representedClassName="SetThreshold" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="flatLoadAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
@@ -71,7 +71,7 @@
     <entity name="TemplateSession" representedClassName="TemplateSession" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateSets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="templateSession" inverseEntity="TemplateSet"/>
         <relationship name="templateWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateWeek" inverseName="templateSessions" inverseEntity="TemplateWeek"/>
-        <relationship name="trainingSessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSession" inverseName="templateSession" inverseEntity="TrainingSession"/>
+        <relationship name="trainingSessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingSession" inverseName="templateSession" inverseEntity="TrainingSession"/>
     </entity>
     <entity name="TemplateSet" representedClassName="TemplateSet" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="loadType" attributeType="String" regularExpressionString="^(numerical|maxperc|bwperc)$"/>
@@ -82,12 +82,12 @@
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="templateSets" inverseEntity="Exercise"/>
         <relationship name="templateSession" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSession" inverseName="templateSets" inverseEntity="TemplateSession"/>
         <relationship name="thresholds" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="SetThreshold" inverseName="templateSet" inverseEntity="SetThreshold"/>
-        <relationship name="trainingSets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="templateSet" inverseEntity="TrainingSet"/>
+        <relationship name="trainingSets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingSet" inverseName="templateSet" inverseEntity="TrainingSet"/>
     </entity>
     <entity name="TemplateWeek" representedClassName="TemplateWeek" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateCycle" inverseName="templateWeeks" inverseEntity="TemplateCycle"/>
         <relationship name="templateSessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSession" inverseName="templateWeek" inverseEntity="TemplateSession"/>
-        <relationship name="trainingWeeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="templateWeek" inverseEntity="TrainingWeek"/>
+        <relationship name="trainingWeeks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="templateWeek" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="TimePeriod" representedClassName="TimePeriod" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="timePeriodDescription" attributeType="String" defaultValueString=""/>
