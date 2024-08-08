@@ -75,11 +75,6 @@ struct CreateNewRoutineView: View {
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)
                 
-                if viewModel.savingError {
-                    SavingErrorText()
-                        .padding(.horizontal, 20)
-                }
-                
             }
         }
     }

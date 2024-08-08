@@ -34,7 +34,7 @@ extension Routine: HasOrderable {
         return results
     }
     
-    /// Gets all trainingSets in the routine, returns empty array if none.
+    /// Gets all templateSets in the routine, returns empty array if none.
     private var allTemplateSets: [TemplateSet] {
         let fetchRequest: NSFetchRequest<TemplateSet> = TemplateSet.fetchRequest()
         let predicate = NSPredicate(format: "templateSession.templateWeek.templateCycle.routine == %@", self)
@@ -48,6 +48,10 @@ extension Routine: HasOrderable {
         let allTemplateSets = self.allTemplateSets
         let allExercises = allTemplateSets.map { $0.exercise! }
         return allExercises
+    }
+    
+    public var weeksInRoutine: [TemplateWeek] {
+        return self.templateCycle!.templateWeeks!.allObjects as! [TemplateWeek]
     }
     
     /// Gets the last session done, returns nil if no sessions done.
@@ -79,7 +83,8 @@ extension Routine: HasOrderable {
     }
     
     /// Gets the date when the routine was created presented as a string.
-    public var creationDateString: String {
+    public var creationDateString: String? {
+        if self.createdOnDate == nil { return nil }
         let df = DateFormatter()
         df.dateFormat = "yyyy-MM-dd"
         return df.string(from: self.createdOnDate!)
@@ -120,6 +125,40 @@ extension Routine: HasOrderable {
         let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
         let max = cycles.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    /// Checks if there is an active training cycle in the routine
+    public func activeTrainingCycleExists() -> Bool {
+        if self.trainingCycles!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingCycles!.allSatisfy {
+              trainingCycle in
+                (trainingCycle as! TrainingCycle).isComplete
+            }
+        }
+    }
+    
+    public func getNextWeek() -> TrainingWeek? {
+        let nextCycle = self.getNextTrainingCycle()
+        let nextWeek = nextCycle?.getNextTrainingWeek()
+        return nextWeek
+    }
+    
+    public func getNextSession() -> TrainingSession? {
+        let nextCycle = self.getNextTrainingCycle()
+        let nextWeek = nextCycle?.getNextTrainingWeek()
+        let nextSession = nextWeek?.getNextTrainingSession()
+        return nextSession
+    }
+    
+    /// Gets the next training cycle
+    public func getNextTrainingCycle() -> TrainingCycle? {
+        let allCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
+        let orderedIncompleteCycles: [TrainingCycle] = allCycles
+            .filter { cycle in !cycle.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteCycles.first
     }
     
     // MARK: Validation

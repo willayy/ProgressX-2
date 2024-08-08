@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class WeighInViewModel: SavingViewModel, AddingViewModel {
+class WeighInViewModel: ViewModel, AddingViewModel {
     
     // Input variables
     @Published public var bodyWeight: String = ""
@@ -66,7 +66,7 @@ class WeighInViewModel: SavingViewModel, AddingViewModel {
             calfCircumference: calfCirc
         )
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
     }
 }

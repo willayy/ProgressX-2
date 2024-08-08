@@ -99,9 +99,9 @@ extension TemplateSet: HasOrderable {
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "maxreps" : "timemax"
             let latestPr = PersistenceController.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
-            var computedLoad: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
-            if exercise.exerciseType! == "reps" { computedLoad = floor(computedLoad) }
-            return computedLoad
+            var computedQuantity: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
+            if exercise.exerciseType! == "reps" { computedQuantity = floor(computedQuantity) }
+            return computedQuantity
         }
     }
     
@@ -176,7 +176,9 @@ extension TemplateSet: HasOrderable {
         let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
         let groupedBy = Dictionary(grouping: thresholds, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
+        if !duplicates.isEmpty {
+            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
+        }
     }
     
     private func validateQuantityTodo() throws {

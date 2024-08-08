@@ -20,10 +20,13 @@ struct CreateNewProfile1View: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
+        
         CreateNewProfileNavigationController(
             navPath: $viewModel.navPath,
             content: {
+                
             ScrollView {
+                
                 VStack(alignment: .center, spacing: 10) {
                     
                     BoldTitle(text: "Create a profile!")
@@ -121,16 +124,9 @@ struct CreateNewProfile1View: View {
                     .buttonStyle(.borderedProminent)
                     .padding(.vertical, 20)
                     
-                    if viewModel.savingError {
-                        SavingErrorText()
-                            .padding(.horizontal, 20)
-                    }
-                    
                 }
             }
         })
-        .environmentObject(viewRouter)
-        .environment(\.managedObjectContext, viewContext)
     }
     
     // Validates input

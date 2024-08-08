@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
+class CreateNewExerciseViewModel: ViewModel, AddingViewModel {
     
     // Get the viewcontext from the enviorment
     @Environment(\.managedObjectContext) private var viewContext
@@ -85,7 +85,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             viewContext,
             name: enteredExerciseName,
             description: enteredExerciseDesc,
-            type: exerciseTypeOptions[selectedTypeOfExercise]!
+            type: selectedTypeOfExercise
         )
         
         for category in selectedCategories {
@@ -107,6 +107,6 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             )
         }
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
 }

@@ -41,6 +41,12 @@ extension Exercise {
         return categoryString.isEmpty ? "No categories" : categoryString
     }
     
+    public var latestPr: PersonalRecord? {
+        let personalRecords = (self.personalRecords!.allObjects as! [PersonalRecord])
+            .sorted(by: {$0.achievedOnDate! > $1.achievedOnDate!})
+        return personalRecords.first
+    }
+    
     // MARK: Validation
     
     public override func validateForInsert() throws {

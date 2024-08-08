@@ -15,9 +15,7 @@ extension TrainingSet {
     convenience init(
         _ context: NSManagedObjectContext,
         trainingSession: TrainingSession,
-        templateSet: TemplateSet,
-        name: String = "",
-        description: String = ""
+        templateSet: TemplateSet
     ) {
         self.init(context: context)
         self.trainingSession = trainingSession
@@ -28,10 +26,8 @@ extension TrainingSet {
         self.templateSet = templateSet
         self.loadTodo = templateSet.loadTodo!
         self.quantityTodo = templateSet.quantityTodo!
-        self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
-        let exerciseName = exercise.exerciseName!
-        let sessionName = trainingSession.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        self.timePeriodName = templateSet.timePeriodName
+        self.timePeriodDescription = templateSet.timePeriodDescription
         self.startedOnDate = Date()
         self.restTime = templateSet.restTime
         trainingSession.addToTrainingSets(self)
@@ -47,12 +43,16 @@ extension TrainingSet {
     
     /// Uset his property to print the load todo on a set.
     public var loadTodoString: String {
-        return String(format: "%.2f", self.loadTodo)
+        let context = self.managedObjectContext!
+        let weightUnit = PersistenceController.getWeightUnit(context)!
+        return "\(String(format: "%.2f", self.loadTodo)) \(weightUnit)"
     }
     
     /// Use this to property to print the load done on a set.
     public var loadDoneString: String {
-        return String(format: "%.2f", self.loadDone)
+        let context = self.managedObjectContext!
+        let weightUnit = PersistenceController.getWeightUnit(context)!
+        return "\(String(format: "%.2f", self.loadDone)) \(weightUnit)"
     }
     
     /// Use this to property to print the quantity todo on a set. Returns nil if exercise type is not not set or is invalid

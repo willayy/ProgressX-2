@@ -8,24 +8,21 @@
 import Foundation
 import CoreData
 
-extension TrainingWeek: HasOrderable {
+extension TrainingWeek: HasOrderable, HasCompleteable {
     
     // MARK: Convenience init
     convenience init(
         _ context: NSManagedObjectContext,
         trainingCycle: TrainingCycle,
-        templateWeek: TemplateWeek,
-        name: String = "",
-        description: String = ""
+        templateWeek: TemplateWeek
     ) {
         self.init(context: context)
         self.trainingCycle = trainingCycle
         self.templateWeek = templateWeek
         let positionIndex = trainingCycle.getNextPositionIndex()
         self.positionIndex = positionIndex
-        self.timePeriodName = (name == "") ? "Week \(positionIndex)" : name
-        let routineName = trainingCycle.routine!.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "Week in \(routineName)" : description
+        self.timePeriodName = templateWeek.timePeriodName
+        self.timePeriodDescription = templateWeek.timePeriodDescription
         self.startedOnDate = Date()
         trainingCycle.addToTrainingWeeks(self)
     }
@@ -38,20 +35,54 @@ extension TrainingWeek: HasOrderable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    public func getNextTrainingSession() -> TrainingSession? {
+        let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
+        let orderedIncompleteSessions: [TrainingSession] = allSessions
+            .filter { session in !session.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteSessions.first
+    }
+    
+    public func getAllTrainingSessions() -> [TrainingSession] {
+        let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "trainingWeek == %@", self)
+        let context = self.managedObjectContext!
+        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        return sessions
+    }
+    
+    public func getProgress() -> Double {
+        let allsession = self.getAllTrainingSessions()
+        let completedSession = allsession.filter({ $0.isComplete })
+        let numberOfSessions = Double(allsession.count)
+        let numberOfCompletedSessions = Double(completedSession.count)
+        if numberOfSessions == 0 { return 0 }
+        else { return (numberOfCompletedSessions / numberOfSessions) }
+    }
+    
     // MARK: Validation
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
+    }
+    
+    internal func childrenAreComplete() -> Bool {
+        if self.trainingSessions!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSessions!.allSatisfy {
+              trainingSession in
+                (trainingSession as! TrainingSession).isComplete
+            }
+        }
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
@@ -69,32 +100,14 @@ extension TrainingWeek: HasOrderable {
         }
         
         // If week is complete but it's sets arent throw an error.
-        var completedSessions: Int = 0
-        let sessions = self.trainingSessions!.allObjects as! [TrainingSession]
-        
-        // Count completed sessions.
-        for session in sessions {
-            if session.isComplete {
-                completedSessions += 1
-            }
-        }
-        
-        // Throw if true.
-        if self.isComplete && completedSessions != sessions.count {
+        if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
         }
-    }
-    
-    private func validateCompleteables() throws {
-        let sessions = self.trainingSessions!.allObjects as! [TrainingSession]
-        // If there are no weeks abort.
-        if sessions.count == 0 { return }
-        // Else check if count of completed weeks is equal to all weeks.
-        let completedSessions = sessions.filter { $0.isComplete }
-        if completedSessions.count == sessions.count && !self.isComplete {
+        
+        // If incomplete but with complete sessions
+        if !self.isComplete && self.childrenAreComplete() {
             throw ValidationNSErrors.weekInCompleteWithCompleteSessions.toNSError()
         }
     }
-    
     
 }

@@ -27,7 +27,6 @@ struct CreateNewProfileNavigationController<Content: View>: View {
                 if selection == 1 {
                     
                     CreateNewProfile2View(navPath: $navPath)
-                        .environmentObject(viewRouter)
                     
                 } else if selection == 2 {
                     
@@ -36,7 +35,6 @@ struct CreateNewProfileNavigationController<Content: View>: View {
                 } else if selection == 3 {
                     
                     CreateNewProfile4View(navPath: $navPath)
-                        .environmentObject(viewRouter)
                 }
             }
         }

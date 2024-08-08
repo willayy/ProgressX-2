@@ -29,7 +29,7 @@ extension SetThreshold {
         self.generatePr = generatesPr
         self.prType = prType
         self.flatLoadAdd = flatLoadAdd
-        self.flatQuantityAdd = flatLoadAdd
+        self.flatQuantityAdd = flatQuantityAdd
         let positionIndex = templateSet.getNextPositionIndex()
         self.positionIndex = positionIndex
         self.timePeriodName = (name == "") ? "Threshold \(positionIndex)" : name

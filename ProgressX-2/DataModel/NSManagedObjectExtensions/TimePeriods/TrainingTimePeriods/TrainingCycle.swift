@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingCycle: HasOrderable {
+extension TrainingCycle: HasOrderable, HasCompleteable {
     
     // MARK: Convenience init
     
@@ -38,20 +38,45 @@ extension TrainingCycle: HasOrderable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    public func getNextTrainingWeek() -> TrainingWeek? {
+        let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
+        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks
+            .filter { week in !week.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteWeeks.first
+    }
+    
+    /// Gets the completion status of this cycle
+    public func getProgress() -> Double {
+        let allsession = self.getAllTrainingSessions()
+        let completedSession = allsession.filter({ $0.isComplete })
+        let numberOfSessions = Double(allsession.count)
+        let numberOfCompletedSessions = Double(completedSession.count)
+        if numberOfSessions == 0 { return 0 }
+        else { return (numberOfCompletedSessions / numberOfSessions) }
+    }
+    
+    /// Gets all TrainingSessions in this cycle
+    public func getAllTrainingSessions() -> [TrainingSession] {
+        let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "trainingWeek.trainingCycle == %@", self)
+        let context = self.managedObjectContext!
+        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        return sessions
+    }
+    
     // MARK: Validation
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
@@ -62,6 +87,17 @@ extension TrainingCycle: HasOrderable {
         if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
     }
     
+    internal func childrenAreComplete() -> Bool {
+        if self.trainingWeeks!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingWeeks!.allSatisfy { 
+              trainingWeeks in
+                (trainingWeeks as! TrainingWeek).isComplete
+            }
+        }
+    }
+    
     private func validateIsComplete() throws {
         // if session is complete and its relationship sets is empty throw an error.
         if self.isComplete && self.trainingWeeks!.allObjects.isEmpty {
@@ -69,31 +105,15 @@ extension TrainingCycle: HasOrderable {
         }
         
         // If Cycle is complete but it's weeks arent throw an error.
-        var completedWeeks: Int = 0
-        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        
-        // Count completed weeks.
-        for week in weeks {
-            if week.isComplete {
-                completedWeeks += 1
-            }
-        }
-        
-        // Throw if true.
-        if self.isComplete && completedWeeks != weeks.count {
+        if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.cycleCompleteWithUncompleteWeeks.toNSError()
         }
-    }
-    
-    private func validateCompleteables() throws {
-        let weeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        // If there are no weeks abort.
-        if weeks.count == 0 { return }
-        // Else check if count of completed weeks is equal to all weeks.
-        let completedWeeks = weeks.filter { $0.isComplete }
-        if completedWeeks.count == weeks.count && !self.isComplete {
+        
+        // If cycle is incomplete but its week are throw an error.
+        if !self.isComplete && self.childrenAreComplete() {
             throw ValidationNSErrors.cycleInCompleteWithCompleteWeeks.toNSError()
         }
+        
     }
     
 }
