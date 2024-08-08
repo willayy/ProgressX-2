@@ -25,7 +25,7 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExerciseCategory" inverseName="exercise" inverseEntity="ExerciseCategory"/>
         <relationship name="personalRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PersonalRecord" inverseName="exercise" inverseEntity="PersonalRecord"/>
         <relationship name="sets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="exercise" inverseEntity="TrainingSet"/>
-        <relationship name="templateSets" toMany="YES" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
+        <relationship name="templateSets" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
         <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Deltoids|Pectorials|Abs|Obliques|Triceps|Traps|Glutes|Hamstrings|Calves|Quads|Hip abductors|Forearms|Lower back|Lats|Biceps)$"/>
