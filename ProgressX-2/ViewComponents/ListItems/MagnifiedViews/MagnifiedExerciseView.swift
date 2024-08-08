@@ -31,7 +31,7 @@ struct MagnifiedExerciseView: View {
             
             (Text("Categories: ")
                 .fontWeight(.bold)
-             + Text(exercise.categoryString))
+             + Text(exercise.categoryString ?? "No categories"))
             .minimumScaleFactor(0.6)
             .padding(.horizontal, 20)
         })
