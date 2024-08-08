@@ -27,8 +27,11 @@ extension Exercise {
     // MARK: Extra Properties
     
     // Returns the string names of all exercise categories
-    public var categoryString: String {
-        let categories: [ExerciseCategory] = self.categories!.allObjects as! [ExerciseCategory]
+    public var categoryString: String? {
+        
+        guard let categories: [ExerciseCategory] = self.categories?.allObjects as? [ExerciseCategory] else {
+            return nil
+        }
         let categoryStrings: [String] = categories.map { $0.categoryName! }
         var categoryString: String = ""
         for category in categoryStrings {
@@ -37,8 +40,7 @@ extension Exercise {
                 categoryString += ", "
             }
         }
-        
-        return categoryString.isEmpty ? "No categories" : categoryString
+        return categoryString
     }
     
     public var latestPr: PersonalRecord? {
