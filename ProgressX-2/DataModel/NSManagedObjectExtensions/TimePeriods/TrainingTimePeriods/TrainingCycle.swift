@@ -32,7 +32,7 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
     
     // MARK: Extra properties
     
-    func getNextPositionIndex() -> Int64 {
+    public func getNextPositionIndex() -> Int64 {
         let weeks: [TrainingWeek] = self.trainingWeeks?.allObjects as! [TrainingWeek]
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)

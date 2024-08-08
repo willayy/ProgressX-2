@@ -16,6 +16,7 @@ struct InputField: View {
     let placeHolder: String
     let onReceiveFunction: (String) -> String
     let onSubmitFunction: (String) -> String
+    @FocusState private var isTextFieldFocused
 
     var body: some View {
         VStack {
@@ -28,6 +29,11 @@ struct InputField: View {
                         self.value = filtered
                         self.shouldShake.toggle()
                     }
+                }
+                .focused($isTextFieldFocused)
+                .onTapGesture {
+                    self.hideKeyboard()
+                    isTextFieldFocused = false
                 }
                 .onSubmit {
                     // Handle when return key is pressed and field is empty
@@ -49,4 +55,9 @@ struct InputField: View {
             
         }
     }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
 }

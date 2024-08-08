@@ -94,7 +94,7 @@ struct CreateNewExerciseView: View {
                 if viewModel.addPr {
                     
                     // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
-                    if viewModel.selectedTypeOfExercise == "Rep based" {
+                    if viewModel.selectedTypeOfExercise == "reps" {
                         
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedTypeOfPr,
@@ -134,6 +134,13 @@ struct CreateNewExerciseView: View {
                         )
                         .padding(.horizontal, 60)
                         
+                    } else {
+                        
+                        GroupBox {
+                            LightSubHeadline(text: "Automatically set to 1 for 1RM")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .padding(.horizontal, 60)
                     }
                 }
                 
