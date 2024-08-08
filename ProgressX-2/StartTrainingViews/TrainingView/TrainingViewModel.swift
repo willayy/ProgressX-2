@@ -56,7 +56,7 @@ class TrainingViewModel: ViewModel {
     public func saveTimeOnTimedSet(viewContext: NSManagedObjectContext, set: TrainingSet) -> Void
     {
         set.quantityDone = quantityDoneOnTimedSet!
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
     
     public func startTimer(timerViewModel: TimerViewModel, seconds: Int) {
