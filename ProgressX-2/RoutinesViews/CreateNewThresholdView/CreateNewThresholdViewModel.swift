@@ -63,7 +63,7 @@ class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
             templateSet: selectedTemplateSet!,
             triggeredAt: Double(triggerQuantity)!,
             generatesPr: addPrSelection,
-            prType: prSelection,
+            prType: addPrSelection ? prSelection : nil,
             flatLoadAdd: inputFlatLoadAdd,
             flatQuantityAdd: inputFlatQuantityAdd
         )

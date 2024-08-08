@@ -44,6 +44,7 @@ struct EditRoutineView: View {
                     .padding(.bottom, 10)
                 
                 BoldSubHeadline(text: "Description:")
+                    .padding(.horizontal, 20)
                 
                 // Show red label if description is missing.
                 if selectedRoutine!.timePeriodDescription!.isEmpty {

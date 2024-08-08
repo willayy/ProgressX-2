@@ -11,7 +11,7 @@ struct MockLaunchScreen: View {
     var body: some View {
         VStack {
             
-            Text("ProgressX-2")
+            Text("ProgressX")
                 .font(.largeTitle)
                 .bold()
                 .animation(.smooth)
