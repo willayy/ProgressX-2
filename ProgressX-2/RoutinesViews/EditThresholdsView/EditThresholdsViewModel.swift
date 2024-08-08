@@ -53,10 +53,7 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
         
         addPrSelection = entity.generatePr
         prSelection = entity.prType ?? ""
-        
-        // Since the formatted strings from the NSManagedObject subclasses contain suffix we need to strip them away.
-        let removeStrings = [" reps", " seconds", " kg's", " lbs"]
-        
+                
         let exerciseType = entity.templateSet!.exercise!.exerciseType
         
         if exerciseType == "reps" {
