@@ -81,6 +81,24 @@ class TrainingViewModel: ViewModel {
         
     }
     
+    public func updateStatesWhenTimerStops(trainingSet: TrainingSet){
+        
+       if trainingSet.exercise!.exerciseType! == "time" && lastExercise == "reps" {
+           doneButtonText = "Start timed set"
+           timedSetActive = true
+           doneButtonEnabled.toggle()
+       } else if trainingSet.exercise!.exerciseType! == "reps" && lastExercise == "time" {
+           timedSetActive = false
+       } else if trainingSet.exercise?.exerciseType! == "time" && doneButtonText == "rest timer"{
+           doneButtonEnabled.toggle()
+           timedSetActive = true
+           doneButtonText = "Start timed set"
+       }
+       if doneButtonText == "Start rest timer"{
+           doneButtonEnabled.toggle()
+           doneButtonText = "Start timed set"
+       }
+    }
 }
 
 

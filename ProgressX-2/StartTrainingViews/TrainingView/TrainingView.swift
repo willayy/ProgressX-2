@@ -48,10 +48,6 @@ struct TrainingView: View {
                             viewModel.doneButtonEnabled.toggle()
                             viewModel.doneButtonText = "Start timed set"
                             viewModel.timedSetActive.toggle()
-                            print("hej")
-                        } else {
-                            print(viewModel.lastExercise)
-                            print(currentTrainingSet?.exercise!.exerciseType!)
                         }
                     } label: {
                         Text("Skip rest")
@@ -108,17 +104,7 @@ struct TrainingView: View {
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
-                if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
-                    viewModel.doneButtonText = "Start timed set"
-                    viewModel.timedSetActive = true
-                    viewModel.doneButtonEnabled.toggle()
-                } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
-                    viewModel.timedSetActive = false
-                }
-                if viewModel.doneButtonText == "Start rest timer"{
-                    viewModel.doneButtonEnabled.toggle()
-                    viewModel.doneButtonText = "Start timed set"
-                }
+                viewModel.updateStatesWhenTimerStops(trainingSet: currentTrainingSet!)
             }
         }
         // MARK: Task to show start session alert.
