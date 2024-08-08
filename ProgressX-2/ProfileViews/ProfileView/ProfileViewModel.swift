@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Segmented picker variables
     @Published public var selectedUnitSegment: Bool = true
@@ -37,6 +37,8 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
     @Published public var heightIsInvalidMsg: String = ""
     @Published public var standardRestTimeIsInvalidMsg: String = ""
     
+    typealias T = Profile
+    
     // Segments for segment picker
     let unitSegments: [String : Bool] = [
         "Metric" : true,
@@ -47,8 +49,6 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
         "Male" : "male",
         "Female" : "female"
     ]
-    
-    typealias T = Profile
     
     var smallestPlateSegments: [String] {
         if selectedUnitSegment {
@@ -109,7 +109,7 @@ class ProfileViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel
         
         if entity.hasChanges {
             withAnimation { showProfileChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }

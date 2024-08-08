@@ -21,4 +21,8 @@ class ViewModel: ObservableObject {
         return PersistenceController.getLengthUnit(context)!
     }
     
+    public func save(_ context: NSManagedObjectContext) -> Void {
+        PersistenceController.save(context)
+    }
+    
 }

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""
@@ -98,7 +98,7 @@ class EditTemplateSetViewModel: SavingViewModel, EditingViewModel, DefaultValueV
         
         if entity.hasChanges {
             withAnimation { showSetChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }

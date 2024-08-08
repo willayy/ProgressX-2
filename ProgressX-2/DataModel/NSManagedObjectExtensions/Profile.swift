@@ -47,7 +47,9 @@ extension Profile {
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
         let thirtyDaysAgo = Calendar.current.date(byAdding: .day, value: -30, to: today)!
-        let sessionsCompletedWithin30Days = completedSessions.filter { $0.completedOnDate! >= thirtyDaysAgo && $0.completedOnDate! <= today }
+        let sessionsCompletedWithin30Days = completedSessions.filter {
+            $0.completedOnDate! >= thirtyDaysAgo && $0.completedOnDate! <= today
+        }
         return sessionsCompletedWithin30Days
     }
     

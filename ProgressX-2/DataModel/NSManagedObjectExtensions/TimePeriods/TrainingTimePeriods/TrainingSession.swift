@@ -8,25 +8,22 @@
 import Foundation
 import CoreData
 
-extension TrainingSession: HasOrderable {
+extension TrainingSession: HasOrderable, HasCompleteable {
     
     //MARK: Convenience init
     
     convenience init(
         _ context: NSManagedObjectContext,
         trainingWeek: TrainingWeek,
-        templateSession: TemplateSession,
-        name: String = "",
-        description: String = ""
+        templateSession: TemplateSession
     ) {
         self.init(context: context)
         self.trainingWeek = trainingWeek
         self.templateSession = templateSession
         let positionIndex = trainingWeek.getNextPositionIndex()
         self.positionIndex = positionIndex
-        self.timePeriodName = (name == "") ? "Session \(positionIndex)" : name
-        let weekName = trainingWeek.timePeriodName!
-        self.timePeriodDescription = (description == "") ? "Session in \(weekName)" : description
+        self.timePeriodName = templateSession.timePeriodName
+        self.timePeriodDescription = templateSession.timePeriodDescription
         self.startedOnDate = Date()
         trainingWeek.addToTrainingSessions(self)
     }
@@ -55,12 +52,23 @@ extension TrainingSession: HasOrderable {
         if self.isComplete {
             let calendar = Calendar.current
             let now = Date()
-            let components = calendar.dateComponents([.day], from: self.completedOnDate! , to: now)
+            // Normalize dates by their start of day dates
+            let startOfDayNow: Date = calendar.startOfDay(for: now)
+            let completedSessionStartOfDay: Date = calendar.startOfDay(for: self.completedOnDate!)
+            let components = calendar.dateComponents([.day], from: completedSessionStartOfDay, to: startOfDayNow)
             let daysAgo = components.day ?? 0
             return String(daysAgo)
         } else {
             return nil
         }
+    }
+    
+    public func getNextTrainingSet() -> TrainingSet? {
+        let allSets = self.trainingSets!.allObjects as! [TrainingSet]
+        let orderedIncompleteSets: [TrainingSet] = allSets
+            .filter { set in !set.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteSets.first
     }
     
     // MARK: Validation
@@ -69,14 +77,23 @@ extension TrainingSession: HasOrderable {
         try super.validateForInsert()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateIsComplete()
         try validatePositionIndexes()
-        try validateCompleteables()
+    }
+    
+    internal func childrenAreComplete() -> Bool {
+        if self.trainingSets!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSets!.allSatisfy {
+              trainingSet in
+                (trainingSet as! TrainingSet).isComplete
+            }
+        }
     }
     
     // Validate that children has valid positionIndexes (No duplicates)
@@ -94,31 +111,13 @@ extension TrainingSession: HasOrderable {
         }
         
         // If session is complete but it's sets arent throw an error
-        var completedSets: Int = 0
-        let sets = self.trainingSets!.allObjects as! [TrainingSet]
-        
-        // Count completed sets
-        for set in sets {
-            if set.isComplete {
-                completedSets += 1
-            }
-        }
-        
-        // Throw if true
-        if self.isComplete && completedSets != sets.count {
+        if self.isComplete && !self.childrenAreComplete() {
             throw ValidationNSErrors.sessionCompleteWithUncompleteSets.toNSError()
         }
-    }
-    
-    private func validateCompleteables() throws {
-        let sets = self.trainingSets!.allObjects as! [TrainingSet]
-        // If there are no weeks abort.
-        if sets.count == 0 { return }
-        // Else check if count of completed weeks is equal to all weeks.
-        let completedSets = sets.filter { $0.isComplete }
-        if completedSets.count == sets.count && !self.isComplete {
+        
+        // If session is incomplete but its sets are completed
+        if !self.isComplete && self.childrenAreComplete() {
             throw ValidationNSErrors.sessionIncompleteWithCompleteSets.toNSError()
         }
     }
-    
 }

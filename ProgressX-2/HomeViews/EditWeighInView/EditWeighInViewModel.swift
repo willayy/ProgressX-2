@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditWeighInViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditWeighInViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     
     // Submission alert variables
     @Published public var bodyEntryEditedAlert: Bool = false
@@ -97,16 +97,10 @@ class EditWeighInViewModel: SavingViewModel, EditingViewModel, DefaultValueViewM
         }
         
         if entity.hasChanges {
-            withAnimation {
-                bodyEntryEditedAlert = true
-            }
-            
-            self.safeSave(viewContext: viewContext)
-            
+            withAnimation { bodyEntryEditedAlert = true }
+            self.save(viewContext)
         } else {
-            withAnimation {
-                noChangeAlert = true
-            }
+            withAnimation { noChangeAlert = true }
         }
         
     }

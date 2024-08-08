@@ -27,13 +27,13 @@ struct RoutineListItem: View {
                     
                     (Text("Created: ")
                         .fontWeight(.bold)
-                     + Text("\(routine.creationDateString)"))
+                     + Text("\(routine.creationDateString ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Completed cycles: ")
                         .fontWeight(.bold)
-                     + Text("\(routine.completedCycles!.count)"))
+                     + Text("\(routine.completedCycles?.count ?? 0)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

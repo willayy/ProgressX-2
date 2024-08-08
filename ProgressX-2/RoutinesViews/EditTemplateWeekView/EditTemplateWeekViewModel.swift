@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
+class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
     
     @Published public var showWeekChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
@@ -68,7 +68,7 @@ class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewMo
             // propogates change to matching trainingWeeks.
             propogateChanges(viewContext, selectedTemplateWeek: entity)
             withAnimation { showWeekChangedAlert = true }
-            self.safeSave(viewContext: viewContext)
+            self.save(viewContext)
         } else {
             withAnimation { showNoChangeAlert = true }
         }
@@ -121,7 +121,7 @@ class EditTemplateWeekViewModel: SavingViewModel, EditingViewModel, AddingViewMo
             )
         }
         
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
     }
     
 }

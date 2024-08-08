@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewRoutineViewModel: SavingViewModel, AddingViewModel {
+class CreateNewRoutineViewModel: ViewModel, AddingViewModel {
     
     @Published var newRoutineName: String = ""
     @Published var newRoutineNameIsInvalid: Bool = false
@@ -46,7 +46,7 @@ class CreateNewRoutineViewModel: SavingViewModel, AddingViewModel {
         }
         
         // Save and continue
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
     }
 }

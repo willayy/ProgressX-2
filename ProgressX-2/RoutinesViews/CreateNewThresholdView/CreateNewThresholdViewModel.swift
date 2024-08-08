@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
+class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     
     @Published public var triggerQuantity: String = ""
     @Published public var triggerQuantityIsInvalid: Bool = false
@@ -68,7 +68,7 @@ class CreateNewThresholdViewModel: SavingViewModel, AddingViewModel {
             flatQuantityAdd: inputFlatQuantityAdd
         )
             
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
     }
         

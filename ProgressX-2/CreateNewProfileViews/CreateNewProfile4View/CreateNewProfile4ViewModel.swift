@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
+class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
     
     // Values for input fields
     @Published var benchPress1RM = ""
@@ -59,7 +59,7 @@ class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
         for exercise in exercises {
             
             switch exercise.exerciseName {
-            case "Bench-press":
+            case "Bench press":
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
@@ -86,7 +86,7 @@ class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
                         date: Date(),
                         type: "onerepmax"
                     )
-            case "Shoulder-press":
+            case "Shoulder press":
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
@@ -95,7 +95,7 @@ class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
                         date: Date(),
                         type: "onerepmax"
                     )
-            case "Sit-up":
+            case "Sit up":
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
@@ -104,7 +104,7 @@ class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
                         date: Date(),
                         type: "maxreps"
                     )
-            case "Push-up":
+            case "Push up":
                 _ = PersonalRecord(
                         viewContext,
                         exercise: exercise,
@@ -118,7 +118,7 @@ class CreateNewProfile4ViewModel: SavingViewModel, AddingViewModel {
             }
         }
     
-        self.safeSave(viewContext: viewContext)
+        self.save(viewContext)
         
     }
     

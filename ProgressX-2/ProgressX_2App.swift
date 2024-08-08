@@ -52,10 +52,7 @@ struct ProgressX_2App: App {
                             HomeView()
                             
                         case .StartWorkoutView:
-                            fatalError("CHECK ProgressX_2App and you will understand")
-                            // StartWorkoutView()
-                            //    .environmentObject(viewRouter)
-                            //    .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                            StartWorkoutView()
                             
                         case .ExerciseLibraryView:
                             ExerciseLibraryView()

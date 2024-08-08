@@ -53,7 +53,7 @@ struct Last30DaysBarChart: View {
                     }
                 }
                 .padding(.horizontal, 10)
-                .padding(.bottom, 20)
+                .padding(.vertical, 20)
                 .frame(width: 750)
             }
         }
