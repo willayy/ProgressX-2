@@ -191,7 +191,9 @@ extension Routine: HasOrderable {
         let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
         let groupedBy = Dictionary(grouping: cycles, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
+        if !duplicates.isEmpty {
+            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
+        }
     }
     
     // Validates that the Routine always has one and one only started Cycles

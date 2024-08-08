@@ -53,7 +53,9 @@ extension TemplateSession: HasOrderable {
         let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
         let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
         let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
+        if !duplicates.isEmpty {
+            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
+        }
     }
     
 }

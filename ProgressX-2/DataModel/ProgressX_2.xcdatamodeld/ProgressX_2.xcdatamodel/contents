@@ -66,7 +66,7 @@
     <entity name="TemplateCycle" representedClassName="TemplateCycle" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="templateCycle" inverseEntity="Routine"/>
         <relationship name="templateWeeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateWeek" inverseName="templateCycle" inverseEntity="TemplateWeek"/>
-        <relationship name="trainingCycles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingCycle" inverseName="templateCycle" inverseEntity="TrainingCycle"/>
+        <relationship name="trainingCycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingCycle" inverseName="templateCycle" inverseEntity="TrainingCycle"/>
     </entity>
     <entity name="TemplateSession" representedClassName="TemplateSession" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateSets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="templateSession" inverseEntity="TemplateSet"/>
@@ -87,19 +87,19 @@
     <entity name="TemplateWeek" representedClassName="TemplateWeek" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <relationship name="templateCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateCycle" inverseName="templateWeeks" inverseEntity="TemplateCycle"/>
         <relationship name="templateSessions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSession" inverseName="templateWeek" inverseEntity="TemplateSession"/>
-        <relationship name="trainingWeeks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="templateWeek" inverseEntity="TrainingWeek"/>
+        <relationship name="trainingWeeks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="templateWeek" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="TimePeriod" representedClassName="TimePeriod" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="timePeriodDescription" attributeType="String" defaultValueString=""/>
         <attribute name="timePeriodName" attributeType="String"/>
     </entity>
     <entity name="TrainingCycle" representedClassName="TrainingCycle" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
-        <relationship name="routine" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="trainingCycles" inverseEntity="Routine"/>
-        <relationship name="templateCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateCycle" inverseName="trainingCycles" inverseEntity="TemplateCycle"/>
+        <relationship name="routine" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Routine" inverseName="trainingCycles" inverseEntity="Routine"/>
+        <relationship name="templateCycle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateCycle" inverseName="trainingCycles" inverseEntity="TemplateCycle"/>
         <relationship name="trainingWeeks" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingWeek" inverseName="trainingCycle" inverseEntity="TrainingWeek"/>
     </entity>
     <entity name="TrainingSession" representedClassName="TrainingSession" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
-        <relationship name="templateSession" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSession" inverseName="trainingSessions" inverseEntity="TemplateSession"/>
+        <relationship name="templateSession" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSession" inverseName="trainingSessions" inverseEntity="TemplateSession"/>
         <relationship name="trainingSets" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSet" inverseName="trainingSession" inverseEntity="TrainingSet"/>
         <relationship name="trainingWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingWeek" inverseName="trainingSessions" inverseEntity="TrainingWeek"/>
     </entity>
@@ -110,11 +110,11 @@
         <attribute name="quantityTodo" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <attribute name="restTime" attributeType="Double" minValueString="0" maxValueString="600" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="sets" inverseEntity="Exercise"/>
-        <relationship name="templateSet" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="trainingSets" inverseEntity="TemplateSet"/>
+        <relationship name="templateSet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="trainingSets" inverseEntity="TemplateSet"/>
         <relationship name="trainingSession" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingSession" inverseName="trainingSets" inverseEntity="TrainingSession"/>
     </entity>
     <entity name="TrainingWeek" representedClassName="TrainingWeek" parentEntity="CompleteableTimePeriod" syncable="YES" codeGenerationType="class">
-        <relationship name="templateWeek" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateWeek" inverseName="trainingWeeks" inverseEntity="TemplateWeek"/>
+        <relationship name="templateWeek" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateWeek" inverseName="trainingWeeks" inverseEntity="TemplateWeek"/>
         <relationship name="trainingCycle" maxCount="1" deletionRule="Nullify" destinationEntity="TrainingCycle" inverseName="trainingWeeks" inverseEntity="TrainingCycle"/>
         <relationship name="trainingSessions" optional="YES" toMany="YES" maxCount="1000" deletionRule="Cascade" destinationEntity="TrainingSession" inverseName="trainingWeek" inverseEntity="TrainingSession"/>
     </entity>
