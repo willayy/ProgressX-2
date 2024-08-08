@@ -70,6 +70,6 @@ struct MagnifiedTemplateSetView: View {
                     threshold: threshold
                 )
             }
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 20)
     }
 }

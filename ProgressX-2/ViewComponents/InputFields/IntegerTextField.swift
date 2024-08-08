@@ -68,6 +68,7 @@ struct IntegerTextField: View {
                     }
                 } label: {
                     Text("-")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
             }

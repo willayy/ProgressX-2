@@ -23,7 +23,7 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     @Published public var showNoChangeAlert: Bool = false
     @Published public var showThresholdChangedAlert: Bool = false
     @Published public var addPrSelection: Bool = false
-    @Published public var prSelection: String = "onerepmax"
+    @Published public var prSelection: String = ""
     
     public let addPrSegments: [String : Bool] = [
         "Add PR" : true,
@@ -52,14 +52,22 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
         addPrSelection = entity.generatePr
-        prSelection = entity.prType!
+        prSelection = entity.prType ?? ""
         
         // Since the formatted strings from the NSManagedObject subclasses contain suffix we need to strip them away.
         let removeStrings = [" reps", " seconds", " kg's", " lbs"]
         
-        editedTriggerQuantity = removeSubstrings(from: entity.triggerQuantityString!, substrings: removeStrings)
-        editedFlatLoadAdd = removeSubstrings(from: entity.flatLoadAddString ?? "", substrings: removeStrings)
-        editedFlatQuantityAdd = removeSubstrings(from: entity.flatQuantityAddString ?? "", substrings: removeStrings)
+        let exerciseType = entity.templateSet!.exercise!.exerciseType
+        
+        if exerciseType == "reps" {
+            editedTriggerQuantity = String(format: "%.0f", entity.triggerQuantity)
+            editedFlatQuantityAdd = String(format: "%.0f", entity.flatQuantityAdd?.doubleValue ?? "")
+        } else if exerciseType == "time" {
+            editedTriggerQuantity = String(format: "%.2f", entity.triggerQuantity)
+            editedFlatQuantityAdd = String(format: "%.2f", entity.flatQuantityAdd?.doubleValue ?? "")
+        }
+        
+        editedFlatLoadAdd = String(format: "%.2f", entity.flatLoadAdd?.doubleValue ?? "")
         
     }
         

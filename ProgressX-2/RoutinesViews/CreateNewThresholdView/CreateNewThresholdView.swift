@@ -183,7 +183,7 @@ struct CreateNewThresholdView: View {
         
         let exerciseType = selectedTemplateSet!.exercise!.exerciseType
         
-        let flatLoadAddFieldValidator = IntFieldValidator(emptyAllowed: true)
+        let flatLoadAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
         
         let flatQuantityAddFieldValidator: InputFieldValidator
         

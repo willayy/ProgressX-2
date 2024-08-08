@@ -20,23 +20,23 @@ struct MagnifiedThresholdView: View {
             
             Text("trigger quantity: ")
                 .fontWeight(.bold) +
-            Text(threshold.triggerQuantityString!)
+            Text(threshold.triggerQuantityString ?? "")
             
             Text("Generates PR?: ")
                 .fontWeight(.bold) +
             Text(String(threshold.generatePr))
             
-            Text("PR type ")
+            Text("PR type: ")
                 .fontWeight(.bold) +
-            Text(threshold.prType!)
+            Text(threshold.prType ?? "Not set")
             
             Text("Flat load add: ")
                 .fontWeight(.bold) +
-            Text(String(threshold.flatLoadAddString!))
+            Text(String(threshold.flatLoadAddString ?? "Not set"))
             
             Text("Flat quantity add: ")
                 .fontWeight(.bold) +
-            Text(threshold.flatQuantityAddString!)
+            Text(threshold.flatQuantityAddString ?? "Not set")
             
         })
     }

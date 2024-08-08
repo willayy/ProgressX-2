@@ -101,6 +101,7 @@ struct DecimalTextField: View {
                     Text("-")
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
+                .foregroundColor(Color("buttonTextColor"))
             }
             
             InputField(
@@ -125,6 +126,7 @@ struct DecimalTextField: View {
                     numberText = String(format: "%.2f", latestBodyEntry.bodyWeight)
                 } label: {
                     Text("BW")
+                        .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
             }
