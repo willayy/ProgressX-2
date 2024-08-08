@@ -34,6 +34,7 @@ struct StatisticsView: View {
                 if exercise!.exerciseType == "reps" {
                     BoldSubHeadline(text: "Do you want to view your AMRAP Pr's for this Exercise or your 1RM Pr's?")
                         .padding(.top, 20)
+                        .padding(.horizontal, 20)
                     
                     BasicSegPicker(
                         selectedSegment: $displayedPrType,
@@ -100,6 +101,7 @@ struct StatisticsView: View {
                         set: "Time-max",
                         prType: "timemax"
                     )
+                    .padding(.horizontal, 20)
                     
                     PrList(
                         navPath: $navPath,
