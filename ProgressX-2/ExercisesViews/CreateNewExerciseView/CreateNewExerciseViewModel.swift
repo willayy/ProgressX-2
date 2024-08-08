@@ -85,7 +85,7 @@ class CreateNewExerciseViewModel: SavingViewModel, AddingViewModel {
             viewContext,
             name: enteredExerciseName,
             description: enteredExerciseDesc,
-            type: exerciseTypeOptions[selectedTypeOfExercise]!
+            type: selectedTypeOfExercise
         )
         
         for category in selectedCategories {

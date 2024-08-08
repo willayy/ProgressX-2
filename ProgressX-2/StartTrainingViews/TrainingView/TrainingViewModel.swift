@@ -21,6 +21,7 @@ class TrainingViewModel: SavingViewModel {
     @Published public var doneButtonEnabled = true
     @Published public var doneButtonText = "Done"
     @Published public var quantityDoneOnTimedSet: Double? = nil
+    @Published public var timedSetActive: Bool = false
     
     public func setsLeft(selectedTrainingSession: TrainingSession?, currentTrainingSet: TrainingSet?) -> String {
         let totalSets = selectedTrainingSession?.trainingSets?.count
@@ -34,25 +35,12 @@ class TrainingViewModel: SavingViewModel {
     }
     
     public func doneButtonPressedOnTimedSet(timerViewModel: TimerViewModel) -> Void {
-        if timerViewModel.state == .active {
-            
-            quantityDoneOnTimedSet = Double(timerViewModel.selectedSecondsAmount)
-            
-            withAnimation {
-                timerViewModel.state = .paused
-                presentPopup.toggle()
-            }
-            
-        } else if timerViewModel.state == .cancelled {
-            
-            withAnimation {
-                timerViewModel.state = .active
-            }
-            
-        }
+        quantityDoneOnTimedSet = Double(timerViewModel.selectedSecondsAmount - timerViewModel.secondsToCompletion)
+        
     }
     
     public func timerStateChangeOnTimedSet(timerViewModel: TimerViewModel) -> Void {
+        
         if timerViewModel.state == .active {
             
             withAnimation {
@@ -60,7 +48,7 @@ class TrainingViewModel: SavingViewModel {
             }
             
         } else if timerViewModel.state == .cancelled {
-            
+
             withAnimation {
                 doneButtonText = "Start timed set"
             }
@@ -68,11 +56,27 @@ class TrainingViewModel: SavingViewModel {
         }
     }
     
+    public func saveTimeOnTimedSet(viewContext: NSManagedObjectContext, set: TrainingSet) -> Void
+    {
+        set.quantityDone = quantityDoneOnTimedSet!
+        self.safeSave(viewContext: viewContext)
+    }
+    
     public func startTimer(timerViewModel: TimerViewModel, seconds: Int) {
         timerViewModel.selectedHoursAmount = seconds / 3600
         timerViewModel.selectedMinutesAmount = (seconds % 3600) / 60
         timerViewModel.selectedSecondsAmount = (seconds % 3600) % 60
         timerViewModel.state = .active
+    }
+    
+    public func startRestTimerForTimedSet(timer: TimerViewModel) {
+        quantityDoneOnTimedSet = Double(timer.selectedSecondsAmount)
+        presentPopup.toggle()
+        timer.state = .cancelled
+        doneButtonText = "rest timer"
+        timedSetActive.toggle()
+        doneButtonEnabled.toggle()
+        
     }
     
 }

@@ -42,10 +42,15 @@ struct TrainingView: View {
             progressView
             
             // MARK: Skip rest time button
-            if timerViewModel.state == .active {
+            if timerViewModel.state == .active && !viewModel.timedSetActive {
                 withAnimation {
                     Button {
                         timerViewModel.state = .cancelled
+                        if viewModel.doneButtonText == "rest timer" {
+                            viewModel.doneButtonEnabled.toggle()
+                            viewModel.doneButtonText = "Start timed set"
+                            viewModel.timedSetActive.toggle()
+                        }
                     } label: {
                         Text("Skip rest")
                             .font(.title)
@@ -80,28 +85,46 @@ struct TrainingView: View {
                 
                 // MARK: Set done button but for timed sets
                 Button(action:{
-                    
-                    viewModel.doneButtonPressedOnTimedSet(timerViewModel: timerViewModel)
-                    
+                    if viewModel.doneButtonText == "Start timed set"{
+                        viewModel.startTimer(
+                            timerViewModel: timerViewModel,
+                            seconds: Int(currentTrainingSet!.quantityTodo))
+                        viewModel.doneButtonText = "Done"
+                    } else if viewModel.doneButtonText == "Done"{
+                        viewModel.startRestTimerForTimedSet(timer: timerViewModel)
+                    }
                 }) {
                     Text(viewModel.doneButtonText)
-                        .frame(width: 100, height: 40)
+                        .frame(width: 150, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
                 .disabled(!viewModel.doneButtonEnabled)
-                .onChange(of: (timerViewModel.state), initial: false) {
-                    
-                    viewModel.timerStateChangeOnTimedSet(timerViewModel: timerViewModel)
-                    
+                .onChange(of: (timerViewModel.state == .active), initial: false) {
+                    if viewModel.doneButtonText == "rest time" {
+                        viewModel.doneButtonEnabled.toggle()
+                        print("hej")
+                    }
                 }
             }
                 
         }
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
+                if viewModel.doneButtonText == "Start rest timer"{
+                    viewModel.doneButtonEnabled.toggle()
+                    viewModel.doneButtonText = "Start timed set"
+                }
+            }
+        }
         // MARK: Task to show start session alert.
         .task {
             withAnimation {
+                if exerciseType == "time"{
+                    viewModel.doneButtonText = "Start timed set"
+                    viewModel.timedSetActive = true
+                }
                 viewModel.showAlert = true
             }
         }
@@ -160,7 +183,8 @@ struct TrainingView: View {
             ZStack {
                 
                 withAnimation {
-                    CircleProgressView(progress: $timerViewModel.progress)
+                        CircleProgressView(progress: $timerViewModel.progress)
+                    
                 }
                 
                 VStack {

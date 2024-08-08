@@ -114,6 +114,7 @@ struct PopupFeedbackView: View {
                         // Take time done from trainingView
                         viewModel.editedSetQuantity = String(format: "%.2f", timeDone!)
                     })
+
                     
                 }
                 
