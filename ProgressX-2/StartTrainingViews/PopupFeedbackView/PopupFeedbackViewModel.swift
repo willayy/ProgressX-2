@@ -9,8 +9,8 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: SavingViewModel, EditingViewModel, DefaultValueViewModel {
-    
+class PopupFeedbackViewModel: SavingViewModel, AddingViewModel, DefaultValueViewModel {
+
     @Published var showDidntFinishAllReps = false
     @Published var editedSetQuantity: String = ""
     @Published var editedSetQuantityIsInvalid: Bool = false
@@ -64,17 +64,8 @@ class PopupFeedbackViewModel: SavingViewModel, EditingViewModel, DefaultValueVie
         }
     }
         
-    public func saveEdits(entity: TrainingSet, viewContext: NSManagedObjectContext) -> Void {
-        
-        if Double(editedSetQuantity) == entity.quantityTodo {
-            entity.quantityDone = entity.quantityTodo
-        } else {
-            entity.quantityDone = Double(editedSetQuantity) ?? 0.0
-        }
-        
-        if entity.hasChanges {
-            self.safeSave(viewContext: viewContext)
-        }
+    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
+        self.safeSave(viewContext: viewContext)
     }
 
 }

@@ -20,26 +20,50 @@ struct TrainingWeekListItem: View {
                 
                 Text(trainingWeek.timePeriodName ?? "")
                 
-                (Text("Sessions: ")
+                (Text("Total sessions: ")
                     .fontWeight(.bold)
                  + Text("\(trainingWeek.trainingSessions?.count ?? 0)"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
+                
+                (Text("Next session: ")
+                    .fontWeight(.bold)
+                 + Text("\(trainingWeek.getNextTrainingSession()?.timePeriodName! ?? "Finished")"))
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+                
+                let progress = trainingWeek.getProgress()
+                
+                ProgressBar(
+                    height: 5,
+                    progress: progress
+                )
         
             }
-            .frame(width: 135, height: 20, alignment: .leading)
+            .frame(width: 200, height: 35, alignment: .leading)
             .padding(.vertical, 10)
             
             Spacer()
             
-            // MARK: Edit button
-            Button(action: {
-                selectedTrainingWeek = trainingWeek
-                navPath.append(4)
-            }) { Image(systemName: "calendar") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
+            if !trainingWeek.isComplete {
+                
+                // MARK: Edit button
+                Button(action: {
+                    selectedTrainingWeek = trainingWeek
+                    navPath.append(4)
+                }) { Image(systemName: "calendar") }
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .buttonStyle(BorderlessButtonStyle())
+                
+            } else {
+                
+                Image(systemName: "checkmark.seal.fill")
+                    .frame(width: 20)
+                    .padding(.horizontal, 10)
+                    .foregroundStyle(.green)
+                
+            }
         }
     }
 }

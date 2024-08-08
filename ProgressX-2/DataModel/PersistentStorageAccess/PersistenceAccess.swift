@@ -30,7 +30,7 @@ extension PersistenceController {
         do {
             try context.save()
         } catch let error as NSError {
-            fatalError("Failed to save context: \(error)")
+            fatalError("Failed to save context: \(error.localizedDescription)")
         }
     }
     

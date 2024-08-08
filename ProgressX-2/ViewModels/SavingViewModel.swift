@@ -15,7 +15,7 @@ class SavingViewModel: ViewModel {
     
     public func safeSave(viewContext: NSManagedObjectContext) -> Void {
         do {
-            try PersistenceController.save_t(viewContext)
+            try PersistenceController.save(viewContext)
         } catch {
             withAnimation {
                 savingError = true

@@ -60,9 +60,7 @@ struct StartWorkoutNavigationController<Content: View>: View {
                     
                 } else if selection == 3 {
                     
-                    TrainingSetFinishedView(
-                        navPath: $navPath
-                    )
+                    TrainingSetFinishedView()
                     
                 } else if selection == 4 {
                     

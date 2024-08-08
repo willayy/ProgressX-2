@@ -18,13 +18,12 @@ struct ChooseWeekView: View {
     
     var body: some View {
         
+        let currentCycle = selectedRoutine!.getNextTrainingCycle()!
+        
         @FetchRequest(
             entity: TrainingWeek.entity(),
             sortDescriptors: [NSSortDescriptor(keyPath: \TrainingWeek.positionIndex, ascending: true)],
-            predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
-                NSPredicate(format: "trainingCycle.routine == %@", selectedRoutine!),
-                NSPredicate(format: "isComplete == %@", NSNumber(value: false))
-            ])
+            predicate: NSPredicate(format: "trainingCycle == %@", currentCycle)
         ) var trainingWeeks: FetchedResults<TrainingWeek>
     
         ScrollView{

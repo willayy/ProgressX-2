@@ -63,7 +63,7 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         }
     }
     
-    public func getNextSet() -> TrainingSet? {
+    public func getNextTrainingSet() -> TrainingSet? {
         let allSets = self.trainingSets!.allObjects as! [TrainingSet]
         let orderedIncompleteSets: [TrainingSet] = allSets
             .filter { set in !set.isComplete }
@@ -86,8 +86,13 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     }
     
     internal func childrenAreComplete() -> Bool {
-        self.trainingSets!.allSatisfy { trainingSet in
-            (trainingSet as! TrainingSet).isComplete
+        if self.trainingSets!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSets!.allSatisfy {
+              trainingSet in
+                (trainingSet as! TrainingSet).isComplete
+            }
         }
     }
     

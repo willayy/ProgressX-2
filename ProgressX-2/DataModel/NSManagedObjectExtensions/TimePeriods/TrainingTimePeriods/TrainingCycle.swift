@@ -38,12 +38,31 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
-    public func getNextWeek() -> TrainingWeek? {
+    public func getNextTrainingWeek() -> TrainingWeek? {
         let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
         let orderedIncompleteWeeks: [TrainingWeek] = allWeeks
             .filter { week in !week.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteWeeks.first
+    }
+    
+    /// Gets the completion status of this cycle
+    public func getProgress() -> Double {
+        let allsession = self.getAllTrainingSessions()
+        let completedSession = allsession.filter({ $0.isComplete })
+        let numberOfSessions = Double(allsession.count)
+        let numberOfCompletedSessions = Double(completedSession.count)
+        if numberOfSessions == 0 { return 0 }
+        else { return (numberOfCompletedSessions / numberOfSessions) }
+    }
+    
+    /// Gets all TrainingSessions in this cycle
+    public func getAllTrainingSessions() -> [TrainingSession] {
+        let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "trainingWeek.trainingCycle == %@", self)
+        let context = self.managedObjectContext!
+        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        return sessions
     }
     
     // MARK: Validation
