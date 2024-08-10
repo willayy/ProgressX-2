@@ -1525,7 +1525,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
-				DEVELOPMENT_TEAM = R8UM24SDJ4;
+				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ProgressX-2/Info.plist";
@@ -1544,7 +1544,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.luwi.ProgressX-2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.luwisoft.ProgressX-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1565,7 +1565,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
-				DEVELOPMENT_TEAM = R8UM24SDJ4;
+				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ProgressX-2/Info.plist";
@@ -1584,7 +1584,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.luwi.ProgressX-2";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.luwisoft.ProgressX-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
