@@ -92,8 +92,15 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
             .updating($isDragging) { _, out, _ in
                 out = true
             }.onChanged { value in
+                
+                
                     // can open new view deep in hierarcy. this disables that
+                
+                if !showMenuController.showMenu{
+                    guard value.startLocation.x < 100 else {return}
+                } else {
                     guard value.startLocation.x > 10 else {return}
+                }
                     let translationX = isDragging ? max(min(value.translation.width + lastoffsetX, sideMenuWidth), 0) : 0
                     offsetX = translationX
                     calculateProgress()
@@ -101,7 +108,8 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
                 withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                     let velocityX = value.velocity.width / 8
                     let total = velocityX + offsetX
-                    
+                    print(total)
+                    print(sideMenuWidth)
                     if total > (sideMenuWidth * 0.5){
                         showSideBar()
                     } else {
