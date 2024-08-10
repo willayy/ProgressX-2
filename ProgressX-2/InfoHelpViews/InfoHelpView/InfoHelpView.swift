@@ -356,11 +356,11 @@ struct InfoHelpView: View {
                             VStack(alignment: .leading) {
                                 
                                 LightSubHeadline(text: "William Norland")
-                                LightSubHeadline(text: "Contact: williamnorland@gmail.com")
+                                LightSubHeadline(text: "Contact: william@luwisoft.com")
                                     .padding(.bottom, 5)
                                 
                                 LightSubHeadline(text: "Lucas Häyhänen")
-                                LightSubHeadline(text: "Contact: lucas.hayhanen@live.se")
+                                LightSubHeadline(text: "Contact: lucas@luwisoft.com")
                                     .padding(.bottom, 10)
                                 
                             }
@@ -368,7 +368,7 @@ struct InfoHelpView: View {
                             BoldSubHeadline(text: "Bug reports")
                             
                             LightSubHeadline(
-                                text: "To report bugs please contact one of the developers of this app.",
+                                text: "To report bugs please contact support@luwisoft.com",
                                 alignment: .leading
                             )
                             .padding(.bottom, 20)
