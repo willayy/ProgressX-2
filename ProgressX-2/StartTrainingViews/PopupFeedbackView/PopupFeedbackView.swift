@@ -30,6 +30,11 @@ struct PopupFeedbackView: View {
                 
                 // The title chaning depending on what exercise the set was.
                 BoldTitle(text: viewModel.getPopupWindowTitle(exercise: exercise))
+                    .padding(.horizontal, 40)
+                
+                Title2(text: "on \(currentTrainingSet!.timePeriodName!)?")
+                    .padding(.bottom)
+                    
                 
                 // MARK: Did you complete all sets
                 HStack{
@@ -40,7 +45,7 @@ struct PopupFeedbackView: View {
                     }) {
                         Text("NO")
                             .bold()
-                            .frame(width: 120, height: 70)
+                            .frame(width: 120, height: 55)
                     }
                     .tint(.red)
                     .buttonStyle(BorderedProminentButtonStyle())
@@ -65,14 +70,14 @@ struct PopupFeedbackView: View {
                     }) {
                         Text("YES")
                             .bold()
-                            .frame(width: 120, height: 70)
+                            .frame(width: 120, height: 55)
                     }
                     .tint(.green)
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.trailing, 40)
                     
                 }
-                .padding(.top)
+                .padding(.horizontal, 20)
                 
             // What is shown if the user didnt finish all reps.
             } else if viewModel.showDidntFinishAllReps {
