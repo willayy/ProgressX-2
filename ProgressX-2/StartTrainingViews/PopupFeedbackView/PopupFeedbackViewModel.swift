@@ -24,9 +24,9 @@ class PopupFeedbackViewModel: ViewModel, AddingViewModel, DefaultValueViewModel 
     
     public func getPopupWindowTitle(exercise: Exercise) -> String {
         if exercise.exerciseType! == "reps" {
-            return "Did you complete all your reps?"
+            return "Did you complete all your reps"
         } else if exercise.exerciseType! == "time" {
-            return "Did you do the exercise for all the time that was assigned?"
+            return "Did you complete the full training time"
         } else {
             return ""
         }
