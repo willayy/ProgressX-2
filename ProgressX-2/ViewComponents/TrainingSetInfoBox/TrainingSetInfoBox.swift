@@ -53,7 +53,7 @@ struct TrainingSetInfoBox: View {
                             let latestBodyEntry = PersistenceController.getLatestBodyEntry(viewContext)!
                             let bodyWeight = latestBodyEntry.bodyWeight
                             if currentTrainingSet!.loadTodo == bodyWeight {
-                                Text("Bodyweight")
+                                Text("Bodyweight (\(currentTrainingSet!.loadTodo))")
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
                             } else {
