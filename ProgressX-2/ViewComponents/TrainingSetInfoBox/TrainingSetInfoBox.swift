@@ -86,7 +86,7 @@ struct TrainingSetInfoBox: View {
                             
                             Spacer()
                             
-                            let pr = currentTrainingSet?.exercise?.latestPr
+                            let pr = currentTrainingSet?.exercise?.getLatestPr
                             let prType = pr?.prType
                             
                             if prType == "maxreps" {

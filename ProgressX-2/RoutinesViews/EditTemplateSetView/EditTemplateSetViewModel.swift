@@ -55,7 +55,7 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         editedQuantityType = quantityTypeMap()[entity.quantityType!]!
         editedSetLoad = entity.setLoadString!
         editedSetQuantity = entity.setQuantityString!
-        editedRestTime = entity.restTimeString
+        editedRestTime = entity.formattedRestTime
     }
     
     public func saveEdits(entity: TemplateSet, viewContext: NSManagedObjectContext) -> Void {

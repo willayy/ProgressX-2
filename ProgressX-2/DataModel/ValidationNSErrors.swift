@@ -11,54 +11,52 @@ enum ValidationNSErrors: Int {
     
     // MARK: Custom errors
     /* -------------------------------------------------------- */
-    // PersonalRecord
+    
+    // MARK: PersonalRecord
     case prAndExerciseTypeMismatch = 9999
     case prQuantityIsInvalid = 9997
     
-    // Profile
+    // MARK: Profile
     case profileNameIsInvalid = 9998
     
-    // Exercise
+    // MARK: Exercise
     case exerciseNameIsInvalid = 9996
     
-    // Completeable
+    // MARK: Completeable
     case completeWithoutCompletionDate = 9995
+    case completeWithUncompleteChildren = 9994
+    case completeWithNoChildren = 9993
+    case InCompleteWithCompleteChildren = 9976
     
-    // Cycle
-    case cycleCompleteWithUncompleteWeeks = 9994
-    case cycleCompleteWithNoWeeks = 9993
-    case cycleInCompleteWithCompleteWeeks = 9976
+    // MARK: Cycle
+    // No custom errors
     
-    // Week
-    case weekCompleteWithUncompleteSessions = 9992
-    case weekCompleteWithNoSessions = 9991
-    case weekInCompleteWithCompleteSessions = 9975
+    // MARK: Week
+    // No custom errors
     
-    // Session
-    case sessionCompleteWithUncompleteSets = 9990
-    case sessionCompleteWithNoSets = 9989
-    case sessionIncompleteWithCompleteSets = 9974
+    // MARK: Session
+    // No custom errors
     
-    // Set
+    // MARK: Set
     case setAndExerciseTypeMismatch = 9987
     case quantityTodoIsInvalid = 9986
     case quantityDoneIsInvalid = 9985
     
-    // Orderable
+    // MARK: Orderable
     case positionIndexIsInvalid = 9983
     
-    // Routine
+    // MARK: Routine
     case routineNameIsInvalid = 9982
     case routineHasInvalidAmountOfIncompleteCycles = 9972
     
-    // Threshold
+    // MARK: Threshold
     case triggerQuantityIsInvalid = 9981
     case flatLoadAddIsInvalid = 9980
     case flatQuantityAddIsInvalid = 9979
     case prTypeValueIsInvalid = 9978
     case prTypeAndExerciseMismatch = 9977
     
-    // ExerciseCategory
+    // MARK: ExerciseCategory
     case exerciseCategoryNameIsInvalid = 9973
     
     /* -------------------------------------------------------- */
@@ -71,29 +69,6 @@ enum ValidationNSErrors: Int {
     // A computed variable that gives a NSError with the correct information
     private var userInfo: [String: Any] {
         switch self {
-        case .weekCompleteWithNoSessions:
-            return [NSLocalizedDescriptionKey:
-                    """
-                    Week can't be complete without any sessions.
-                    """]
-            
-        case .weekCompleteWithUncompleteSessions:
-            return [NSLocalizedDescriptionKey:
-                    """
-                    Week can't be complete when its sessions aren't.
-                    """]
-            
-        case .sessionCompleteWithUncompleteSets:
-            return [NSLocalizedDescriptionKey:
-                    """
-                    Session can't be complete when its sets aren't.
-                    """]
-            
-        case .sessionCompleteWithNoSets:
-            return [NSLocalizedDescriptionKey: 
-                    """
-                    Session can't be complete without any sets.
-                    """]
             
         case .setAndExerciseTypeMismatch:
             return [NSLocalizedDescriptionKey:
@@ -102,10 +77,10 @@ enum ValidationNSErrors: Int {
                     have mismatching values.
                     """]
             
-        case .cycleCompleteWithUncompleteWeeks:
+        case .completeWithUncompleteChildren:
             return [NSLocalizedDescriptionKey: 
                     """
-                    Cycle can't be complete when its weeks aren't.
+                    Parent can't be complete when its children aren't.
                     """]
             
         case .quantityDoneIsInvalid:
@@ -117,7 +92,7 @@ enum ValidationNSErrors: Int {
                     """]
             
         case .quantityTodoIsInvalid:
-            return [NSLocalizedDescriptionKey: 
+            return [NSLocalizedDescriptionKey:
                     """
                     Quantity todo properties on Training/Template Sets must
                     be a valid Integer if the its exercise is rep based.
@@ -131,10 +106,10 @@ enum ValidationNSErrors: Int {
                     a completionDate.
                     """]
             
-        case .cycleCompleteWithNoWeeks:
+        case .completeWithNoChildren:
             return [NSLocalizedDescriptionKey:
                     """
-                    Cycle cant be complete when it has no weeks.
+                    Parent cant be complete when it has no children.
                     """]
             
         case .prQuantityIsInvalid:
@@ -213,25 +188,11 @@ enum ValidationNSErrors: Int {
                     the exercise on the thresholds set
                     """]
             
-        case .cycleInCompleteWithCompleteWeeks:
+        case .InCompleteWithCompleteChildren:
             return [NSLocalizedDescriptionKey:
                     """
-                    The cycle should not be incomplete when all it's
-                    weeks are completed.
-                    """]
-            
-        case .weekInCompleteWithCompleteSessions:
-            return [NSLocalizedDescriptionKey:
-                    """
-                    The week should not be incomplete when all it's
-                    sessions are completed.
-                    """]
-            
-        case .sessionIncompleteWithCompleteSets:
-            return [NSLocalizedDescriptionKey:
-                    """
-                    The session should not be incomplete when all it's
-                    sets are completed.
+                    The parent should not be incomplete when all it's
+                    children are completed.
                     """]
             
         case .exerciseCategoryNameIsInvalid:

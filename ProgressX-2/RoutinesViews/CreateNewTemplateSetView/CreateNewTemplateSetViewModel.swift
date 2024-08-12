@@ -120,7 +120,7 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
         let profile = PersistenceController.getProfile(viewContext)!
-        restTime = profile.standardRestTimeString
+        restTime = profile.formattedStandardRestTime
         newSetName = "Set \(selectedTemplateSession!.getNextPositionIndex())"
     }
     

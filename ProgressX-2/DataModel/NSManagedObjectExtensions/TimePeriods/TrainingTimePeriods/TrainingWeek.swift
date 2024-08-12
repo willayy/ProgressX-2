@@ -29,13 +29,8 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
     
     // MARK: Extra Properties
     
-    public func getNextPositionIndex() -> Int64 {
-        let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
-        let max = sessions.max {$0.positionIndex < $1.positionIndex}
-        return Int64((max?.positionIndex ?? 0) + 1)
-    }
-    
-    public func getNextTrainingSession() -> TrainingSession? {
+    /// The next trainingSession in the order of this TrainingWeek
+    public var nextTrainingSession: TrainingSession? {
         let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
         let orderedIncompleteSessions: [TrainingSession] = allSessions
             .filter { session in !session.isComplete }
@@ -43,7 +38,8 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         return orderedIncompleteSessions.first
     }
     
-    public func getAllTrainingSessions() -> [TrainingSession] {
+    /// All TrainingSessions in this TrainingWeek
+    public var allTrainingSessions: [TrainingSession] {
         let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trainingWeek == %@", self)
         let context = self.managedObjectContext!
@@ -51,8 +47,9 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         return sessions
     }
     
-    public func getProgress() -> Double {
-        let allsession = self.getAllTrainingSessions()
+    /// The progress of the trainingweek as a double fraction
+    public var progress: Double {
+        let allsession = self.allTrainingSessions
         let completedSession = allsession.filter({ $0.isComplete })
         let numberOfSessions = Double(allsession.count)
         let numberOfCompletedSessions = Double(completedSession.count)
@@ -60,20 +57,14 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         else { return (numberOfCompletedSessions / numberOfSessions) }
     }
     
-    // MARK: Validation
-    
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validateIsComplete()
-        try validatePositionIndexes()
+    // Protocol implementation
+    public func getNextPositionIndex() -> Int64 {
+        let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
+        let max = sessions.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
     }
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validateIsComplete()
-        try validatePositionIndexes()
-    }
-    
+    // Protocol implmentation
     internal func childrenAreComplete() -> Bool {
         if self.trainingSessions!.allObjects.isEmpty {
             return false
@@ -85,29 +76,20 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         }
     }
     
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
-        let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
+    // Protocol implementation
+    internal func getPositionIndexes() -> [Int64] {
+        let children = self.trainingSessions!.allObjects as! [TrainingSession]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
     }
     
-    private func validateIsComplete() throws {
-        // if session is complete and its relationship sets is empty throw an error.
-        if self.isComplete && self.trainingSessions!.allObjects.isEmpty {
-            throw ValidationNSErrors.weekCompleteWithNoSessions.toNSError()
-        }
-        
-        // If week is complete but it's sets arent throw an error.
-        if self.isComplete && !self.childrenAreComplete() {
-            throw ValidationNSErrors.weekCompleteWithUncompleteSessions.toNSError()
-        }
-        
-        // If incomplete but with complete sessions
-        if !self.isComplete && self.childrenAreComplete() {
-            throw ValidationNSErrors.weekInCompleteWithCompleteSessions.toNSError()
-        }
+    // Protocol implementation
+    internal func hasCompleteableChildren() -> Bool {
+        return !self.trainingSessions!.allObjects.isEmpty
     }
     
+    // MARK: Validation
+    
+    // No extra validation on this class extension
+
 }

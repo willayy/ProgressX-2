@@ -20,7 +20,8 @@ extension OrderableTimePeriod {
         try revalidateParentChildRelationships()
     }
     
-    // Revalidates "parent" and "child" relationship when positionIndex changes
+    
+    /// Notifies the parent that it should evalidate its "parent" and "child" relationship when positionIndex changes in a child.
     private func revalidateParentChildRelationships() throws {
         let changedValues = changedValues()
         if changedValues.keys.contains("positionIndex") {
@@ -33,10 +34,22 @@ extension OrderableTimePeriod {
                 try (self as! TrainingSession).trainingWeek!.validateForUpdate()
             case is TrainingSet:
                 try (self as! TrainingSet).trainingSession!.validateForUpdate()
+            case is TemplateWeek:
+                try (self as! TemplateWeek).templateCycle!.validateForUpdate()
+            case is TemplateSession:
+                try (self as! TemplateSession).templateWeek!.validateForUpdate()
+            case is TemplateSet:
+                try (self as! TemplateSet).templateSession!.validateForUpdate()
+            case is SetThreshold:
+                try (self as! SetThreshold).templateSet!.validateForUpdate()
             default:
                 break
             }
         }
+    }
+    
+    public func switchPositionIndex(to: Int64) -> Void {
+        #warning("TODO: Implement, this should cause the parent to revalidate")
     }
 
 }

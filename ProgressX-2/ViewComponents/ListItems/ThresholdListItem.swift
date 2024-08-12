@@ -26,7 +26,7 @@ struct ThresholdListItem: View {
                     
                     (Text("Triggered at: ")
                         .fontWeight(.bold)
-                     + Text("\(threshold.triggerQuantityString ?? "")"))
+                     + Text("\(threshold.formattedTriggerQuantity ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

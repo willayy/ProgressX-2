@@ -32,7 +32,7 @@ struct ExerciseListItem: View {
                 
                 (Text("Categories: ")
                     .fontWeight(.bold)
-                 + Text(exercise.categoryString ?? "No categories"))
+                 + Text(exercise.formattedCategories ?? "No categories"))
                 .minimumScaleFactor(0.6)
                 
             })

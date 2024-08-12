@@ -65,7 +65,7 @@ struct Last30DaysBarChart: View {
     let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
     let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     let profile = results.first!
-    let sessions = profile.sessionsCompletedLast30days
+    let sessions = profile.getSessionsCompletedLast30days
     
     return Last30DaysBarChart(trainingSessions: sessions)
         .padding()

@@ -65,7 +65,7 @@ extension SetThreshold {
     }
     
     /// Use this property to get a correctly formatted string from the  triggerQuantity value
-    public var triggerQuantityString: String? {
+    public var formattedTriggerQuantity: String? {
         guard let templateSet = self.templateSet else { return nil }
         guard let exercise = templateSet.exercise else { return nil }
         guard let exerciseType = exercise.exerciseType else { return nil }
@@ -99,6 +99,7 @@ extension SetThreshold {
                 computedLoad = loadDone
             }
             
+            // Generate the PersonalRecord.
             let _ = PersonalRecord(
                 self.managedObjectContext!,
                 exercise: exercise,

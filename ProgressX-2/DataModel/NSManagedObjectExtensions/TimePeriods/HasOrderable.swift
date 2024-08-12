@@ -7,10 +7,13 @@
 
 import Foundation
 
-// Protocol used for Entites that has Orderables in a one-to-many relationship
+/// Protocol used for Entites that has Orderables in a one-to-many relationship.
 protocol HasOrderable {
     
-    // If object has this protocol it needs to implement this function to get the correct next position index.
+    /// Gets the next positionIndex availible in the parent objects relationship containing Orderables.
     func getNextPositionIndex() -> Int64
 
+    /// Gets all the positionIndexes of its children as a list.
+    func getPositionIndexes() -> [Int64]
+    
 }

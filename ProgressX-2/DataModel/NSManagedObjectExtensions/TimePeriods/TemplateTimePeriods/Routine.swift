@@ -119,8 +119,7 @@ extension Routine: HasOrderable {
         return categoryDictionary
     }
     
-    /// Gets the next available
-    /// - Returns: An Int64 that is a valid positionIndex
+    // Protocol implementation
     public func getNextPositionIndex() -> Int64 {
         let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
         let max = cycles.max {$0.positionIndex < $1.positionIndex}
@@ -128,7 +127,7 @@ extension Routine: HasOrderable {
     }
     
     /// Checks if there is an active training cycle in the routine
-    public func incompleteTrainingCycleExists() -> Bool {
+    public var incompleteTrainingCycleExists: Bool {
         if self.trainingCycles!.allObjects.isEmpty {
             return false
         } else {
@@ -139,21 +138,8 @@ extension Routine: HasOrderable {
         }
     }
     
-    public func getNextWeek() -> TrainingWeek? {
-        let nextCycle = self.getNextTrainingCycle()
-        let nextWeek = nextCycle?.getNextTrainingWeek()
-        return nextWeek
-    }
-    
-    public func getNextSession() -> TrainingSession? {
-        let nextCycle = self.getNextTrainingCycle()
-        let nextWeek = nextCycle?.getNextTrainingWeek()
-        let nextSession = nextWeek?.getNextTrainingSession()
-        return nextSession
-    }
-    
-    /// Gets the next training cycle
-    public func getNextTrainingCycle() -> TrainingCycle? {
+    /// Gets the next uncomplete training cycle.
+    public var nextTrainingCycle: TrainingCycle? {
         let allCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
         let orderedIncompleteCycles: [TrainingCycle] = allCycles
             .filter { cycle in !cycle.isComplete }
@@ -161,21 +147,28 @@ extension Routine: HasOrderable {
         return orderedIncompleteCycles.first
     }
     
+    // Protocol implementation
+    func getPositionIndexes() -> [Int64] {
+        let children = self.trainingCycles!.allObjects as! [TrainingCycle]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
     // MARK: Validation
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
         try validateRoutineName()
-        try validatePositionIndexes()
+        try validateTrainingCycles()
     }
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateRoutineName()
-        try validatePositionIndexes()
+        try validateTrainingCycles()
     }
     
-    // Checks that the routine name is unique
+    /// Validates that the routine name is unique
     private func validateRoutineName() throws {
         let context = self.managedObjectContext!
         let fetchrequest: NSFetchRequest<Routine> = Routine.fetchRequest()
@@ -186,23 +179,10 @@ extension Routine: HasOrderable {
         }
     }
     
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
-        let groupedBy = Dictionary(grouping: cycles, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
-        }
-    }
-    
-    // Validates that the Routine always has one and one only started Cycles
+    /// Validates that the Routine always has one and one only started Cycles
     private func validateTrainingCycles() throws {
-        
         let trainingCycles = self.trainingCycles!.allObjects as! [TrainingCycle]
-        
         let incompleteTrainingCycles = trainingCycles.filter({ !$0.isComplete })
-        
         if incompleteTrainingCycles.count != 1 {
             throw ValidationNSErrors.routineHasInvalidAmountOfIncompleteCycles.toNSError()
         }

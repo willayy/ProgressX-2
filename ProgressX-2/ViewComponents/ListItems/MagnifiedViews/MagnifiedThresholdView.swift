@@ -20,7 +20,7 @@ struct MagnifiedThresholdView: View {
             
             Text("trigger quantity: ")
                 .fontWeight(.bold) +
-            Text(threshold.triggerQuantityString ?? "")
+            Text(threshold.formattedTriggerQuantity ?? "")
             
             Text("Generates PR?: ")
                 .fontWeight(.bold) +

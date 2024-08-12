@@ -44,7 +44,6 @@ extension TemplateSet: HasOrderable {
     // MARK: Extra properties
     
     /// Convience method for getting the name of the Exercise.
-    /// - Returns: The name of the sets exercise as a String.
     public var setExerciseName: String? {
         return self.exercise?.exerciseName
     }
@@ -145,40 +144,35 @@ extension TemplateSet: HasOrderable {
         }
     }
     
-    public var restTimeString: String {
+    /// Returns the templateSets rest time double attribute as a formatted string.
+    public var formattedRestTime: String {
         return String(format: "%.2f", self.restTime)
     }
         
-    /// Gets the next position index for the thresholds in this set
+    // Protocol implementation
     public func getNextPositionIndex() -> Int64 {
         let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
         let max = thresholds.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    // Protocol implementation
+    func getPositionIndexes() -> [Int64] {
+        let children = self.thresholds!.allObjects as! [SetThreshold]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
     // MARK: Validation
     
-    // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateQuantityTodo()
-        try validatePositionIndexes()
     }
     
-    // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
         try validateQuantityTodo()
-        try validatePositionIndexes()
-    }
-    
-    private func validatePositionIndexes() throws {
-        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
-        let groupedBy = Dictionary(grouping: thresholds, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
-        }
     }
     
     private func validateQuantityTodo() throws {

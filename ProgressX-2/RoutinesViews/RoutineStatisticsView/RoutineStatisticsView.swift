@@ -26,7 +26,7 @@ struct RoutineStatisticsView: View {
                     VStack(alignment: .leading) {
                         (Text("Last session done: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.lastCompletedSession?.completionDateString! ?? "No sessions completed")"))
+                         + Text("\(selectedRoutine!.lastCompletedSession?.formattedCompletionDate! ?? "No sessions completed")"))
                         .padding(.vertical, 10)
                         
                         (Text("Sessions done this month: ")

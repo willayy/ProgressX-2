@@ -30,32 +30,22 @@ extension TemplateSession: HasOrderable {
     
     // MARK: Extra Properties
     
+    // Protocol implementation
     public func getNextPositionIndex() -> Int64 {
         let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    // Protocol implementation
+    func getPositionIndexes() -> [Int64] {
+        let children = self.templateSets!.allObjects as! [TemplateSet]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
     // MARK: Validation
     
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validatePositionIndexes()
-    }
-    
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validatePositionIndexes()
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
-        let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
-        }
-    }
+    // No extra validation on this class extension
     
 }

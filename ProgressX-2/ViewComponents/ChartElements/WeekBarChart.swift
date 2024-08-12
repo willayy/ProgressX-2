@@ -64,7 +64,7 @@ struct WeekBarChart: View {
     let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
     let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     let profile = results.first!
-    let sessions = profile.sessionsCompletedThisWeek
+    let sessions = profile.getSessionsCompletedThisWeek
     
     return WeekBarChart(trainingSessions: sessions)
         .padding()

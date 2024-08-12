@@ -49,17 +49,17 @@ struct HomeView: View {
                             
                             (Text("Last session done: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.lastCompletedSession?.completionDateString ?? "No sessions completed.")"))
+                             + Text("\(profile.getLastCompletedSession?.formattedCompletionDate ?? "No sessions completed.")"))
                             .padding(.vertical, 5)
                             
                             (Text("Last routine trained: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.lastRoutineUsed?.timePeriodName! ?? "No sessions completed.")"))
+                             + Text("\(profile.getLastRoutineUsed?.timePeriodName! ?? "No sessions completed.")"))
                             .padding(.vertical, 5)
                             
                             (Text("Last weigh in: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.lastWeighIn?.dateString ?? "No weigh-ins done")"))
+                             + Text("\(profile.getLastWeighIn?.dateString ?? "No weigh-ins done")"))
                             .padding(.vertical, 5)
                             
                         }
@@ -74,7 +74,7 @@ struct HomeView: View {
                             
                             (Text("Current weight: ")
                                 .fontWeight(.bold)
-                             + Text("\(String(format: "%.2f", profile.lastWeighIn?.bodyWeight ?? 0)) \(viewModel.weightUnit(viewContext))"))
+                             + Text("\(String(format: "%.2f", profile.getLastWeighIn?.bodyWeight ?? 0)) \(viewModel.weightUnit(viewContext))"))
                             .padding(.vertical, 10)
                             
                             BodyEntryChart(bodyEntryData: bodyEntries.map({$0}))
@@ -119,10 +119,10 @@ struct HomeView: View {
                             
                             (Text("Sessions done this week: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.sessionsCompletedThisWeek.count)"))
+                             + Text("\(profile.getSessionsCompletedThisWeek.count)"))
                             .padding(.vertical, 10)
                             
-                            WeekBarChart(trainingSessions: profile.sessionsCompletedThisWeek)
+                            WeekBarChart(trainingSessions: profile.getSessionsCompletedThisWeek)
                             
                         }
                         .frame(width: 300)
@@ -136,10 +136,10 @@ struct HomeView: View {
                             
                             (Text("Sessions done last 30 days: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.sessionsCompletedLast30days.count)"))
+                             + Text("\(profile.getSessionsCompletedLast30days.count)"))
                             .padding(.vertical, 10)
                             
-                            Last30DaysBarChart(trainingSessions: profile.sessionsCompletedLast30days)
+                            Last30DaysBarChart(trainingSessions: profile.getSessionsCompletedLast30days)
                             
                         }
                         .frame(width: 300)
