@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol HasParent {
+    
+    associatedtype ParentType
+    
+    var parent: ParentType { get set }
+    
+}

@@ -161,6 +161,8 @@
 		83EE6EE62C1F351500FF17C1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */; };
 		83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */; };
 		83F110BC2C1F26040068953B /* SubmitAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110BB2C1F26040068953B /* SubmitAlert.swift */; };
+		83F26D182C70C12D00C8EB82 /* HasParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F26D172C70C12D00C8EB82 /* HasParent.swift */; };
+		83F26D1A2C70C1E300C8EB82 /* HasChildren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F26D192C70C1E300C8EB82 /* HasChildren.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
 		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
 		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
@@ -349,6 +351,8 @@
 		83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4View.swift; sourceTree = "<group>"; };
 		83F110BB2C1F26040068953B /* SubmitAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitAlert.swift; sourceTree = "<group>"; };
+		83F26D172C70C12D00C8EB82 /* HasParent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasParent.swift; sourceTree = "<group>"; };
+		83F26D192C70C1E300C8EB82 /* HasChildren.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasChildren.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
 		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
 		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
@@ -901,6 +905,8 @@
 				83114B202C68E5570099E7A7 /* TimePeriod.swift */,
 				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
 				83B013BD2C60EC6100059E42 /* HasCompleteable.swift */,
+				83F26D192C70C1E300C8EB82 /* HasChildren.swift */,
+				83F26D172C70C12D00C8EB82 /* HasParent.swift */,
 				83D684F82C2EC74900FA78C6 /* OrderableTimePeriod.swift */,
 				831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */,
 				833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */,
@@ -1237,6 +1243,7 @@
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
 				83D685002C32A24E00FA78C6 /* EditTemplateSessionView.swift in Sources */,
+				83F26D182C70C12D00C8EB82 /* HasParent.swift in Sources */,
 				831657712C53CAC2003F895F /* ProfileNavigationController.swift in Sources */,
 				83266E632C38077F00F5F6CB /* ProfileViewModel.swift in Sources */,
 				8F7F161A2C4948E200F37C58 /* TrainingViewModel.swift in Sources */,
@@ -1338,6 +1345,7 @@
 				831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */,
 				831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */,
 				831657792C5798C5003F895F /* SideBarEnums.swift in Sources */,
+				83F26D1A2C70C1E300C8EB82 /* HasChildren.swift in Sources */,
 				831F2C0E2C21D066007A7A8A /* HomeView.swift in Sources */,
 				836486072C36F306006EB0C0 /* EditTemplateWeekViewModel.swift in Sources */,
 				83B013BE2C60EC6100059E42 /* HasCompleteable.swift in Sources */,
