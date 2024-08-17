@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 extension OrderableTimePeriod {
     
@@ -25,26 +26,9 @@ extension OrderableTimePeriod {
     private func revalidateParentChildRelationships() throws {
         let changedValues = changedValues()
         if changedValues.keys.contains("positionIndex") {
-            switch self {
-            case is TrainingCycle:
-                try (self as! TrainingCycle).routine!.validateForUpdate()
-            case is TrainingWeek:
-                try (self as! TrainingWeek).trainingCycle!.validateForUpdate()
-            case is TrainingSession:
-                try (self as! TrainingSession).trainingWeek!.validateForUpdate()
-            case is TrainingSet:
-                try (self as! TrainingSet).trainingSession!.validateForUpdate()
-            case is TemplateWeek:
-                try (self as! TemplateWeek).templateCycle!.validateForUpdate()
-            case is TemplateSession:
-                try (self as! TemplateSession).templateWeek!.validateForUpdate()
-            case is TemplateSet:
-                try (self as! TemplateSet).templateSession!.validateForUpdate()
-            case is SetThreshold:
-                try (self as! SetThreshold).templateSet!.validateForUpdate()
-            default:
-                break
-            }
+            let selfAsHasParent: any HasParent = self as! any HasParent
+            let parentAsNsManagedObject: NSManagedObject = selfAsHasParent.parent as! NSManagedObject
+            try parentAsNsManagedObject.validateForUpdate()
         }
     }
     
