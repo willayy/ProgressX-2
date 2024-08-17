@@ -45,7 +45,7 @@ extension Exercise {
     }
     
     /// Gets the latest PR achieved on this exercise
-    public var getLatestPr: PersonalRecord? {
+    public var latestPr: PersonalRecord? {
         let personalRecords = (self.personalRecords!.allObjects as! [PersonalRecord])
         let latestPr = personalRecords.min(by: {$0.achievedOnDate! < $1.achievedOnDate!})
         return latestPr
