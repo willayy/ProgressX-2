@@ -10,7 +10,7 @@ import CoreData
 
 extension Profile {
     
-    // MARK: Convenienve init
+    // MARK: Convenience init
     
     /// This initializer sets up a Profile NSManagedObject correctly by assigning all the necessary attributes.
     convenience init(
