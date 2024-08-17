@@ -36,15 +36,15 @@ extension Profile {
     // MARK: Extra Properties
     
     /// Gets all trainingSessions, completed or not, in the for the whole profile, returns empty array if there are none.
-    private var getAllTrainingSessions: [TrainingSession] {
+    private var allTrainingSessions: [TrainingSession] {
         let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
         let results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
         return results
     }
     
     /// Gets all sessions completed within 30 days of today for all routines, returns empty array if none.
-    public var getSessionsCompletedLast30days: [TrainingSession] {
-        let allSessions: [TrainingSession] = self.getAllTrainingSessions
+    public var sessionsCompletedLast30days: [TrainingSession] {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
         // Filter out all the incomplete sessions.
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -57,8 +57,8 @@ extension Profile {
     }
     
     /// Gets all sessions completed within 7 days of today for all routines, returns empty array if none.
-    public var getSessionsCompletedThisWeek: [TrainingSession] {
-        let allSessions: [TrainingSession] = self.getAllTrainingSessions
+    public var sessionsCompletedThisWeek: [TrainingSession] {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
         // Filter out all the incomplete sessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let calendar = Calendar.current
@@ -73,8 +73,8 @@ extension Profile {
     }
     
     /// Gets the last completed session for any routine done. Returns nil if no sessions are completed.
-    public var getLastCompletedSession: TrainingSession? {
-        let allSessions: [TrainingSession] = self.getAllTrainingSessions
+    public var lastCompletedSession: TrainingSession? {
+        let allSessions: [TrainingSession] = self.allTrainingSessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         // Pick the session with the smallest completion date.
         let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! < $1.completedOnDate! })
@@ -82,9 +82,9 @@ extension Profile {
     }
     
     /// Gets the routine of the last completed session. Returns nil of no sessions are completed.
-    public var getLastRoutineUsed: Routine? {
+    public var lastRoutineUsed: Routine? {
         // If no sessions has been completed return nil
-        guard let lastCompletedSession: TrainingSession = self.getLastCompletedSession else { return nil }
+        guard let lastCompletedSession: TrainingSession = self.lastCompletedSession else { return nil }
         // Get the week, then the cycle, then the routine...
         let week: TrainingWeek = lastCompletedSession.trainingWeek!
         let cycle: TrainingCycle = week.trainingCycle!
@@ -93,7 +93,7 @@ extension Profile {
     }
     
     /// Gets the latest bodyentry from the latest weight in.
-    public var getLastWeighIn: BodyEntry? {
+    public var lastWeighIn: BodyEntry? {
         let bodyEntries: [BodyEntry] = self.bodyEntries!.allObjects as! [BodyEntry]
         let lastBodyEntry = bodyEntries.min(by: { $0.achievedOnDate! < $1.achievedOnDate! })
         return lastBodyEntry
