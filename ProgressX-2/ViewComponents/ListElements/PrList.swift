@@ -103,5 +103,6 @@ struct PrList: View {
         exercise: exercise!,
         prType: "timemax",
         newPrType: $newPrType
-    ).environment(\.managedObjectContext, context)
+    )
+    .environment(\.managedObjectContext, context)
 }
