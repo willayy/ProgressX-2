@@ -15,12 +15,15 @@ struct RoutineStatisticsView: View {
     var body: some View {
         ScrollView {
             VStack {
-                BoldTitle(text: "Statistics for: \(selectedRoutine!.timePeriodName!)")
+                BoldTitle(text: "Statistics for ")
+                    .padding(.horizontal, 20)
+                
+                Title2(text: "\(selectedRoutine!.timePeriodName!)")
                     .padding(.horizontal, 20)
                 
                 LightSubHeadline(text: "Here you can view some vital statistics for your routine")
                     .padding(.horizontal, 20)
-                    .padding(.bottom, 20)
+                    .padding(.vertical, 10)
                 
                 GroupBox {
                     VStack(alignment: .leading) {
