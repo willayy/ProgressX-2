@@ -67,6 +67,7 @@ struct StatisticsView: View {
                         .padding(.horizontal, 20)
                         
                         PrList(
+                            height: 500,
                             navPath: $navPath,
                             editingPr: $editingPr,
                             exercise: exercise!,
@@ -85,6 +86,7 @@ struct StatisticsView: View {
                         .padding(.horizontal, 20)
                         
                         PrList(
+                            height: 500,
                             navPath: $navPath,
                             editingPr: $editingPr,
                             exercise: exercise!,
@@ -104,6 +106,7 @@ struct StatisticsView: View {
                     .padding(.horizontal, 20)
                     
                     PrList(
+                        height: 500,
                         navPath: $navPath,
                         editingPr: $editingPr,
                         exercise: exercise!,

@@ -30,7 +30,9 @@ struct ExerciseLibraryView: View {
             editingPr: $viewModel.editingPr,
             newPrType: $viewModel.newPrType,
             content: {
+                
             ScrollView {
+                
                 VStackWithSideBarButton {
                     
                     BoldTitle(text: "Exercise library")
@@ -49,6 +51,7 @@ struct ExerciseLibraryView: View {
                     
                     //MARK: List view displaying all exercise objects
                     SearchableList(
+                        height: 500,
                         containerName: "Exercise Library",
                         elementName: "Exercises",
                         allData: _allExercises,
@@ -73,8 +76,7 @@ struct ExerciseLibraryView: View {
                             .foregroundColor(Color("buttonTextColor"))
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
+                    .padding(.vertical, 10)
                     
                 }
             }

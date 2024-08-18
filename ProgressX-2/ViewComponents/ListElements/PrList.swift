@@ -10,6 +10,7 @@ import CoreData
 
 struct PrList: View {
     
+    private let height: CGFloat
     @FetchRequest private var personalRecords: FetchedResults<PersonalRecord>
     @Binding private var navPath: [Int]
     @Binding private var editingPr: PersonalRecord?
@@ -17,7 +18,8 @@ struct PrList: View {
     private let prType: String
     @Binding private var newPrType: String?
     
-    init(navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise, prType: String, newPrType: Binding<String?>) {
+    init(height: CGFloat, navPath: Binding<[Int]>, editingPr: Binding<PersonalRecord?>, exercise: Exercise, prType: String, newPrType: Binding<String?>) {
+        self.height = height
         self._navPath = navPath
         self.exercise = exercise
         self._editingPr = editingPr
@@ -60,7 +62,7 @@ struct PrList: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 300)
+            .frame(height: height)
             .background(Color(.systemGray6))
             .cornerRadius(10)
         }
@@ -98,6 +100,7 @@ struct PrList: View {
     @State var newPrType: String? = nil
     
     return PrList(
+        height: 400,
         navPath: $navPath,
         editingPr: $editingPr,
         exercise: exercise!,

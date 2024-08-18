@@ -57,6 +57,7 @@ struct RoutineLibraryView: View {
                     
                     // MARK: List
                     SearchableList(
+                        height: 500,
                         containerName: "Routine Library",
                         elementName: "Routines",
                         allData: _allRoutines,
