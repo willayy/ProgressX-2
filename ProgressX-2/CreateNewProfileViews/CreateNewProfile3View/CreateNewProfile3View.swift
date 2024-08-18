@@ -182,9 +182,6 @@ struct CreateNewProfile3View: View {
                 Text("Skip this")
                     .frame(width: 100, height: 40)
                     .foregroundColor(Color("buttonTextColor"))
-                
-                Image(systemName: "")
-                    .foregroundColor(Color("buttonTextColor"))
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical, 20)
