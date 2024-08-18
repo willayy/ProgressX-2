@@ -25,12 +25,12 @@ struct ExerciseLibraryView: View {
     var body: some View {
         
         ExerciseLibraryNavigationController(
-            navPath: $viewModel.navPath,
-            selectedExercise: $viewModel.selectedExercise,
-            editingPr: $viewModel.editingPr,
-            newPrType: $viewModel.newPrType,
-            content: {
-                
+        navPath: $viewModel.navPath,
+        selectedExercise: $viewModel.selectedExercise,
+        editingPr: $viewModel.editingPr,
+        newPrType: $viewModel.newPrType,
+        content: {
+                    
             ScrollView {
                 
                 VStackWithSideBarButton {
@@ -65,21 +65,22 @@ struct ExerciseLibraryView: View {
                     }
                     .padding(.horizontal, 20)
                     
-                    // MARK: Add new exercise button
-                    Button {
-                        viewModel.navPath.append(1)
-                    } label: {
-                        Text("Add new exercise")
-                            .frame(height: 40)
-                            .foregroundColor(Color("buttonTextColor"))
-                        Image(systemName: "plus")
-                            .foregroundColor(Color("buttonTextColor"))
-                    }
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    .padding(.vertical, 10)
-                    
                 }
             }
+                    
+            // MARK: Add new exercise button
+            Button {
+                viewModel.navPath.append(1)
+            } label: {
+                Text("Add new exercise")
+                    .frame(height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+                Image(systemName: "plus")
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+            .padding(.vertical, 20)
+
         })
     }
 }

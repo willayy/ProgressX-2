@@ -16,7 +16,9 @@ struct EditPrView: View {
     @StateObject private var viewModel = EditPrViewModel()
     
     var body: some View {
+        
         ScrollView {
+            
             VStack(alignment: .center) {
                 
                 BoldTitle(text: "Editing PR for")
@@ -151,8 +153,7 @@ struct EditPrView: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+                .padding(.vertical, 20)
                 
             }
         }

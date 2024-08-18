@@ -24,6 +24,7 @@ struct CreateNewProfile3View: View {
         
         // Input form for PR's on some common exercises
         ScrollView(showsIndicators: false) {
+            
             VStack(alignment: .center, spacing: 10) {
                 
                 Text("Extra information on body measurements")
@@ -112,7 +113,7 @@ struct CreateNewProfile3View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: viewModel.lengthUnit(viewContext), 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.upperArmCirc,
                             markAsWrong: $viewModel.upperArmCircIsInvalid,
                             errorMessage: $viewModel.upperArmCircIsInvalidMsg
@@ -123,22 +124,22 @@ struct CreateNewProfile3View: View {
                 .padding(.top, 20)
                 .padding(.horizontal, 20)
                 
-                Button {
-                    if validateInput() {
-                        viewModel.firstBodyEntry = bodyEntries.first
-                        viewModel.saveEntry(viewContext: viewContext)
-                        navPath.append(3)
-                    }
-                } label: {
-                    Text("Continue")
-                        .frame(width: 100, height: 30)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 20)
-                
             }
         }
+                
+        Button {
+            if validateInput() {
+                viewModel.firstBodyEntry = bodyEntries.first
+                viewModel.saveEntry(viewContext: viewContext)
+                navPath.append(3)
+            }
+        } label: {
+            Text("Continue")
+                .frame(width: 100, height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(.borderedProminent)
+        .padding(.vertical, 20)
     }
     
     // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself

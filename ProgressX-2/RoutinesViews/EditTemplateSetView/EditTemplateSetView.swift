@@ -17,201 +17,201 @@ struct EditTemplateSetView: View {
     @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
+        
         ScrollView {
-            VStack {
-                
-                BoldTitle(text: "Editing")
-                    .onAppear(perform: {
-                        viewModel.setViewStartValues(entity: selectedTemplateSet!)
-                    })
-                
-                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
-                    .padding(.bottom, 10)
-                
-                if viewModel.showSetChangedAlert {
-                    SubmitAlert(
-                        message: "Successfully edited set!",
-                        color: .green,
-                        showAlertState: $viewModel.showSetChangedAlert
-                    )
-                    .padding(.top, 10)
-                } else if viewModel.showNoChangeAlert {
-                    SubmitAlert(
-                        message: "No change!",
-                        color: .blue,
-                        showAlertState: $viewModel.showNoChangeAlert
-                    )
-                    .padding(.top, 10)
+            
+            BoldTitle(text: "Editing")
+                .onAppear(perform: {
+                    viewModel.setViewStartValues(entity: selectedTemplateSet!)
+                })
+            
+            Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
+                .padding(.bottom, 10)
+            
+            if viewModel.showSetChangedAlert {
+                SubmitAlert(
+                    message: "Successfully edited set!",
+                    color: .green,
+                    showAlertState: $viewModel.showSetChangedAlert
+                )
+                .padding(.top, 10)
+            } else if viewModel.showNoChangeAlert {
+                SubmitAlert(
+                    message: "No change!",
+                    color: .blue,
+                    showAlertState: $viewModel.showNoChangeAlert
+                )
+                .padding(.top, 10)
+            }
+            
+            BoldSubHeadline(text: "Edit set name")
+            
+            InputTextField(
+                placeHolder: "Set name",
+                text: $viewModel.editedSetName,
+                markAsWrong: $viewModel.editedSetNameIsInvalid,
+                errorMessage: $viewModel.editedSetNameIsInvalidMsg,
+                maxChars: 25
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 5)
+            
+            BoldSubHeadline(text: "Edit set description")
+            
+            inputLongTextField(
+                placeHolder: "Set description",
+                text: $viewModel.editedSetDesc,
+                markAsWrong: $viewModel.editedSetDescIsInvalid,
+                errorMessage: $viewModel.editedSetDescIsInvalidMsg,
+                maxChars: 200
+            )
+            .frame(height: 150)
+            .padding(.horizontal, 60)
+            .padding(.bottom, 20)
+            
+            BoldSubHeadline(text: "Edit or add thresholds for this set")
+                .padding(.horizontal, 10)
+            
+            Button {
+                navPath.append(8)
+            } label: {
+                Text("View thresholds")
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+            .padding(.bottom, 20)
+            
+            BoldSubHeadline(text: "Edit position of this set in its session")
+            
+            HiddenLightSubHeadline(
+                title: "What does set position mean?",
+                text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session.",
+                alignment: .leading
+            )
+            .padding(.horizontal, 20)
+            
+            IntSelectionList(
+                selected: $viewModel.editedSetPositionIndex,
+                selections: viewModel.positionIndexes(
+                    selectedTemplateSet: selectedTemplateSet
+                )
+            )
+            .padding(.bottom, 20)
+            .padding(.horizontal, 50)
+            
+            BoldSubHeadline(text: "Edit the exercise of the set")
+            
+            SetExerciseSelectionList(
+                selectedExercise: $viewModel.selectedExercise,
+                searchWord: $viewModel.searchWord
+            )
+            .padding(.bottom, 20)
+            .padding(.horizontal, 50)
+            
+            BoldSubHeadline(text: "Edit the rest time of the set")
+            
+            DecimalTextField(
+                placeHolder: "Rest time",
+                numberText: $viewModel.editedRestTime,
+                markAsWrong: $viewModel.editedRestTimeIsInvalid,
+                errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 20)
+            
+            BoldSubHeadline(text: "Edit the load type of the set")
+            
+            StringSelectionList(
+                selected: $viewModel.editedLoadType,
+                selections: viewModel.loadTypeSelections()
+            )
+            .onChange(of: viewModel.editedLoadType, initial: true) { oldValue, newValue in
+                if newValue == "Numerical" {
+                    withAnimation { addBodyWeightButton = true }
+                } else {
+                    withAnimation { addBodyWeightButton = false }
                 }
-                
-                BoldSubHeadline(text: "Edit set name")
-                
-                InputTextField(
-                    placeHolder: "Set name",
-                    text: $viewModel.editedSetName,
-                    markAsWrong: $viewModel.editedSetNameIsInvalid,
-                    errorMessage: $viewModel.editedSetNameIsInvalidMsg,
-                    maxChars: 25
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 5)
-                
-                BoldSubHeadline(text: "Edit set description")
-                
-                inputLongTextField(
-                    placeHolder: "Set description",
-                    text: $viewModel.editedSetDesc,
-                    markAsWrong: $viewModel.editedSetDescIsInvalid,
-                    errorMessage: $viewModel.editedSetDescIsInvalidMsg,
-                    maxChars: 200
-                )
-                .frame(height: 150)
-                .padding(.horizontal, 60)
-                .padding(.bottom, 20)
-                
-                BoldSubHeadline(text: "Edit or add thresholds for this set")
-                    .padding(.horizontal, 10)
-                
-                Button {
-                    navPath.append(8)
-                } label: {
-                    Text("View thresholds")
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.bottom, 20)
-                
-                BoldSubHeadline(text: "Edit position of this set in its session")
-                
-                HiddenLightSubHeadline(
-                    title: "What does set position mean?",
-                    text: "The position of the set is meant as the sets position relative to other sets in this sesison. This is used to change the order you perform your sets when you do this session.",
-                    alignment: .leading
-                )
-                .padding(.horizontal, 20)
-                
-                IntSelectionList(
-                    selected: $viewModel.editedSetPositionIndex,
-                    selections: viewModel.positionIndexes(
-                        selectedTemplateSet: selectedTemplateSet
-                    )
-                )
-                .padding(.bottom, 20)
-                .padding(.horizontal, 50)
-                
-                BoldSubHeadline(text: "Edit the exercise of the set")
-                
-                SetExerciseSelectionList(
-                    selectedExercise: $viewModel.selectedExercise,
-                    searchWord: $viewModel.searchWord
-                )
-                .padding(.bottom, 20)
-                .padding(.horizontal, 50)
-                
-                BoldSubHeadline(text: "Edit the rest time of the set")
-                
+            }
+            .padding(.bottom, 20)
+            .padding(.horizontal, 50)
+            
+            BoldSubHeadline(text: "Edit the quantity type of the set")
+            
+            StringSelectionList(
+                selected: $viewModel.editedQuantityType,
+                selections: viewModel.quantityTypeSelections()
+            )
+            .padding(.bottom, 20)
+            .padding(.horizontal, 50)
+            
+            BoldSubHeadline(text: "Edit the load of the set")
+            
+            HStack {
                 DecimalTextField(
-                    placeHolder: "Rest time",
-                    numberText: $viewModel.editedRestTime,
-                    markAsWrong: $viewModel.editedRestTimeIsInvalid,
-                    errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                    placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
+                    numberText: $viewModel.editedSetLoad,
+                    markAsWrong: $viewModel.editedSetLoadIsInvalid,
+                    errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
+                    bodyWeightButton: addBodyWeightButton
                 )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 20)
                 
-                BoldSubHeadline(text: "Edit the load type of the set")
-                
-                StringSelectionList(
-                    selected: $viewModel.editedLoadType,
-                    selections: viewModel.loadTypeSelections()
-                )
-                .onChange(of: viewModel.editedLoadType, initial: true) { oldValue, newValue in
-                    if newValue == "Numerical" {
-                        withAnimation { addBodyWeightButton = true }
-                    } else {
-                        withAnimation { addBodyWeightButton = false }
-                    }
+                if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
+                    Text("%")
                 }
-                .padding(.bottom, 20)
-                .padding(.horizontal, 50)
-                
-                BoldSubHeadline(text: "Edit the quantity type of the set")
-                
-                StringSelectionList(
-                    selected: $viewModel.editedQuantityType,
-                    selections: viewModel.quantityTypeSelections()
-                )
-                .padding(.bottom, 20)
-                .padding(.horizontal, 50)
-                
-                BoldSubHeadline(text: "Edit the load of the set")
-                
+            }
+            .padding(.horizontal, 60)
+            
+            BoldSubHeadline(text: "Edit the quantity of the set")
+                .padding(.top, 5)
+            
+            if viewModel.selectedExercise?.exerciseType == "reps" {
                 HStack {
-                    DecimalTextField(
-                        placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
-                        numberText: $viewModel.editedSetLoad,
-                        markAsWrong: $viewModel.editedSetLoadIsInvalid,
-                        errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
-                        bodyWeightButton: addBodyWeightButton
+                    IntegerTextField(
+                        placeHolder: viewModel.quantityPlaceholder(),
+                        numberText: $viewModel.editedSetQuantity,
+                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
+                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
                     )
                     
-                    if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
+                    if viewModel.quantityPlaceholder() == "Percentage" {
                         Text("%")
                     }
                 }
                 .padding(.horizontal, 60)
-                
-                BoldSubHeadline(text: "Edit the quantity of the set")
+            } else {
+                HStack {
+                    DecimalTextField(
+                        placeHolder: viewModel.quantityPlaceholder(),
+                        numberText: $viewModel.editedSetQuantity,
+                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
+                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                    )
                     .padding(.top, 5)
-                
-                if viewModel.selectedExercise?.exerciseType == "reps" {
-                    HStack {
-                        IntegerTextField(
-                            placeHolder: viewModel.quantityPlaceholder(),
-                            numberText: $viewModel.editedSetQuantity,
-                            markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
-                        )
-                        
-                        if viewModel.quantityPlaceholder() == "Percentage" {
-                            Text("%")
-                        }
+                    
+                    if viewModel.quantityPlaceholder() == "Percentage" {
+                        Text("%")
                     }
-                    .padding(.horizontal, 60)
-                } else {
-                    HStack {
-                        DecimalTextField(
-                            placeHolder: viewModel.quantityPlaceholder(), 
-                            numberText: $viewModel.editedSetQuantity,
-                            markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                            errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
-                        )
-                        .padding(.top, 5)
-                        
-                        if viewModel.quantityPlaceholder() == "Percentage" {
-                            Text("%")
-                        }
-                    }
-                    .padding(.horizontal, 60)
                 }
-                
-                Button {
-                    if validateInput() {
-                        viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
-                    }
-                } label: {
-                    Text("Save changes")
-                        .frame(height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                    Image(systemName: "square.and.arrow.down")
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-                            
+                .padding(.horizontal, 60)
             }
+            
         }
+                
+        Button {
+            if validateInput() {
+                viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
+            }
+        } label: {
+            Text("Save changes")
+                .frame(height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+            Image(systemName: "square.and.arrow.down")
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.top, 20)
+        .padding(.bottom, 10)
+                            
     }
     
     private func validateInput() -> Bool {

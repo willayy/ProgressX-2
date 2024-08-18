@@ -100,7 +100,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         DecimalTextField(
-                            placeHolder: viewModel.weightUnit(viewContext), 
+                            placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.deadLift1RM,
                             markAsWrong: $viewModel.deadLift1RMIsInvalid,
                             errorMessage: $viewModel.deadLift1RMIsInvalidMsg
@@ -121,7 +121,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         IntegerTextField(
-                            placeHolder: "reps", 
+                            placeHolder: "reps",
                             numberText: $viewModel.pushupsAmrap,
                             markAsWrong: $viewModel.pushupsAmrapIsInvalid,
                             errorMessage: $viewModel.pushupsAmrapIsInvalidMsg
@@ -133,7 +133,7 @@ struct CreateNewProfile4View: View {
                             .minimumScaleFactor(viewModel.minScaleFactor)
                             .frame(width: viewModel.textWidth)
                         IntegerTextField(
-                            placeHolder: "reps", 
+                            placeHolder: "reps",
                             numberText: $viewModel.situpsAmrap,
                             markAsWrong: $viewModel.situpsAmrapIsInvalid,
                             errorMessage: $viewModel.situpsAmrapIsInvalidMsg
@@ -144,28 +144,28 @@ struct CreateNewProfile4View: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 
-                Button {
-                    if validateInput() {
-                        
-                        viewModel.bodyWeight = bodyEntries.first?.bodyWeight
-                        viewModel.saveEntry(viewContext: viewContext)
-                        viewModel.generateBasicRoutine(viewContext: viewContext)
-                        
-                        withAnimation {
-                            viewRouter.startView = .None
-                            viewRouter.rootView = .HomeView
-                        }
-                    }
-                } label: {
-                    Text("Finish")
-                        .frame(width: 100, height: 30)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 20)
-                
             }
         }
+                
+        Button {
+            if validateInput() {
+                
+                viewModel.bodyWeight = bodyEntries.first?.bodyWeight
+                viewModel.saveEntry(viewContext: viewContext)
+                viewModel.generateBasicRoutine(viewContext: viewContext)
+                
+                withAnimation {
+                    viewRouter.startView = .None
+                    viewRouter.rootView = .HomeView
+                }
+            }
+        } label: {
+            Text("Finish")
+                .frame(width: 100, height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(.borderedProminent)
+        .padding(.vertical, 20)
     }
     
     private func validateInput() -> Bool {

@@ -26,164 +26,159 @@ struct CreateNewExerciseView: View {
     @Binding public var navPath: [Int]
     
     var body: some View {
+                
         ScrollView {
-            VStack(alignment: .center) {
+            
+            BoldTitle(text: "Create new exercise")
+                .padding(.horizontal, 20)
+            
+            BoldSubHeadline(text: "Exercise name")
+                .padding(.top, 10)
+            
+            InputTextField(
+                placeHolder: "Exercise name",
+                text: $viewModel.enteredExerciseName,
+                markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
+                errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
+                maxChars: 25
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Exercise description")
+            
+            inputLongTextField(
+                placeHolder: "Exercise description",
+                text: $viewModel.enteredExerciseDesc,
+                markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
+                errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
+                maxChars: 200
+            )
+            .frame(height: 150)
+            .padding(.horizontal, 60)
+            .padding(.bottom, 20)
+            
+            BoldSubHeadline(text: "Exercise type")
+            
+            HiddenLightSubHeadline(
+                title: "What does exercise type mean?",
+                text: "There are two types of exercises in ProgressX, time based exercise and rep based exercises. Time based exercises are exercises which you do a certain amount of time on, like static holds or the \"Plank\". Rep based exercsies are exercises where you do a certain amount of repetitions, like bench press or squats.",
+                alignment: .leading
+            )
+            .padding(.horizontal, 30)
+            
+            BasicSegPicker(
+                selectedSegment: $viewModel.selectedTypeOfExercise,
+                segments: viewModel.exerciseTypeOptions
+            )
+            .padding(.horizontal, 100)
+            
+            BoldSubHeadline(text: "Add PR for this exercise?")
+                .padding(.top, 20)
+            
+            HiddenLightSubHeadline(
+                title: "What are PR's?",
+                text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did.",
+                alignment: .leading
+            )
+            .padding(.horizontal, 40)
+            
+            BooleanSegPicker(
+                selectedSegment: $viewModel.addPr,
+                segments: viewModel.addPrOptions
+            )
+            .padding(.horizontal, 100)
+            .padding(.bottom, 5)
+            
+            // MARK: Do you want to add a PR for the new exercise
+            if viewModel.addPr {
                 
-                BoldTitle(text: "Create new exercise")
-                    .padding(.horizontal, 20)
-                
-                BoldSubHeadline(text: "Exercise name")
-                    .padding(.top, 10)
-                
-                InputTextField(
-                    placeHolder: "Exercise name",
-                    text: $viewModel.enteredExerciseName,
-                    markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
-                    errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
-                    maxChars: 25
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                BoldSubHeadline(text: "Exercise description")
-                
-                inputLongTextField(
-                    placeHolder: "Exercise description",
-                    text: $viewModel.enteredExerciseDesc,
-                    markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
-                    errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
-                    maxChars: 200
-                )
-                .frame(height: 150)
-                .padding(.horizontal, 60)
-                .padding(.bottom, 20)
-                
-                BoldSubHeadline(text: "Exercise type")
-                
-                HiddenLightSubHeadline(
-                    title: "What does exercise type mean?",
-                    text: "There are two types of exercises in ProgressX, time based exercise and rep based exercises. Time based exercises are exercises which you do a certain amount of time on, like static holds or the \"Plank\". Rep based exercsies are exercises where you do a certain amount of repetitions, like bench press or squats.",
-                    alignment: .leading
-                )
-                .padding(.horizontal, 30)
-                
-                BasicSegPicker(
-                    selectedSegment: $viewModel.selectedTypeOfExercise,
-                    segments: viewModel.exerciseTypeOptions
-                )
-                .padding(.horizontal, 100)
-                
-                BoldSubHeadline(text: "Add PR for this exercise?")
-                    .padding(.top, 20)
-                
-                HiddenLightSubHeadline(
-                    title: "What are PR's?",
-                    text: "A PR (personal record) is a dated record of how you performed on an exercise. For rep based exercises the available PR's are AMRAP (As many reps as possible) and 1RM (one rep max). For time based exercise there is only Time-max PR's which is like an AMRAP PR but instead of counting the reps you did it counts the time you did.",
-                    alignment: .leading
-                )
-                .padding(.horizontal, 40)
-                
-                BooleanSegPicker(
-                    selectedSegment: $viewModel.addPr,
-                    segments: viewModel.addPrOptions
-                )
-                .padding(.horizontal, 100)
-                .padding(.bottom, 5)
-                
-                // MARK: Do you want to add a PR for the new exercise
-                if viewModel.addPr {
+                // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
+                if viewModel.selectedTypeOfExercise == "reps" {
                     
-                    // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
-                    if viewModel.selectedTypeOfExercise == "reps" {
-                        
-                        BasicSegPicker(
-                            selectedSegment: $viewModel.selectedTypeOfPr,
-                            segments: viewModel.repBasedPrOptions
-                        )
-                        .padding(.horizontal, 100)
-                        .padding(.bottom, 5)
-                        
-                    }
+                    BasicSegPicker(
+                        selectedSegment: $viewModel.selectedTypeOfPr,
+                        segments: viewModel.repBasedPrOptions
+                    )
+                    .padding(.horizontal, 100)
+                    .padding(.bottom, 5)
+                    
+                }
+                
+                DecimalTextField(
+                    placeHolder: "Load (\(viewModel.weightUnit(viewContext))",
+                    numberText: $viewModel.enteredPrWeigtLoad,
+                    markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
+                    errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
+                    bodyWeightButton: true
+                )
+                .padding(.horizontal, 60)
+                
+                if viewModel.selectedTypeOfExercise == "time" {
                     
                     DecimalTextField(
-                        placeHolder: "Load (\(viewModel.weightUnit(viewContext))",
-                        numberText: $viewModel.enteredPrWeigtLoad,
-                        markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                        errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
-                        bodyWeightButton: true
+                        placeHolder: "PR time in seconds",
+                        numberText: $viewModel.enteredPrQuantity,
+                        markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
+                        errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
                     )
                     .padding(.horizontal, 60)
-
-                    if viewModel.selectedTypeOfExercise == "time" {
-                        
-                        DecimalTextField(
-                            placeHolder: "PR time in seconds", 
-                            numberText: $viewModel.enteredPrQuantity,
-                            markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
-                        )
-                        .padding(.horizontal, 60)
-                        
-                    } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
-                        
-                        IntegerTextField(
-                            placeHolder: "Reps", 
-                            numberText: $viewModel.enteredPrQuantity,
-                            markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                            errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
-                        )
-                        .padding(.horizontal, 60)
-                        
-                    } else {
-                        
-                        GroupBox {
-                            LightSubHeadline(text: "Automatically set to 1 for 1RM")
-                                .frame(maxWidth: .infinity)
-                        }
-                        .padding(.horizontal, 60)
+                    
+                } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
+                    
+                    IntegerTextField(
+                        placeHolder: "Reps",
+                        numberText: $viewModel.enteredPrQuantity,
+                        markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
+                        errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
+                    )
+                    .padding(.horizontal, 60)
+                    
+                } else {
+                    
+                    GroupBox {
+                        LightSubHeadline(text: "Automatically set to 1 for 1RM")
+                            .frame(maxWidth: .infinity)
                     }
+                    .padding(.horizontal, 60)
                 }
-                
-                BoldSubHeadline(text: "Add muscle categories to this exercise?")
-                    .padding(.top, 15)
-                
-                SelectCategoriesList(
-                    selectedCategories: $viewModel.selectedCategories,
-                    categories: _categories
-                )
-                .padding(.horizontal, 40)
-                
-                Button(action: {
-                    
-                    if validateInput() {
-                        
-                        viewModel.saveEntry(viewContext: viewContext)
-                        navPath.removeLast()
-                        
-                    }
-                    
-                }) {
-                    
-                    Text("Create new exercise")
-                        .frame(height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                    
-                    Image(systemName: "plus")
-                        .foregroundColor(Color("buttonTextColor"))
-                    
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-                
             }
+            
+            BoldSubHeadline(text: "Add muscle categories to this exercise?")
+                .padding(.top, 15)
+            
+            SelectCategoriesList(
+                selectedCategories: $viewModel.selectedCategories,
+                categories: _categories
+            )
+            .padding(.horizontal, 40)
+            
         }
-        .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
-            viewModel.prTypeChanged()
-        })
-        .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {
-            viewModel.exerciseTypeChanged()
-        })
+                
+            Button(action: {
+                if validateInput() {
+                    
+                    viewModel.saveEntry(viewContext: viewContext)
+                    navPath.removeLast()
+                    
+                }
+            }) {
+                Text("Create new exercise")
+                    .frame(height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+                
+                Image(systemName: "plus")
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(BorderedProminentButtonStyle())
+            .padding(.vertical, 20)
+            .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
+                viewModel.prTypeChanged()
+            })
+            .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {
+                viewModel.exerciseTypeChanged()
+            })
+        
     }
     
     /// Validates input, marks textfields that are filled incorrectly.
