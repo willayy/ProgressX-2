@@ -162,7 +162,7 @@ struct EditPrView: View {
         var valid: Int = 0
         let loadFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let quantityFieldValidator: InputFieldValidator = {
-            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(minInputNumber: 100000))
+            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(maxInputNumber: 100000))
         }()
         
         valid += loadFieldValidator.valideField(
