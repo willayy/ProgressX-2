@@ -60,45 +60,22 @@ extension CompleteableTimePeriod {
             trainingSet.quantityDone = 0
             trainingSet.loadDone = 0
         }
+        
+        self.cascadeCompletion()
     }
-    
-    /* The cascadeCompletion method is not really what i want it to be, the issue is mainly that all
-     the different entities who have a relationship to a parent have different names for this relationship.
-     If all the etiteis with parents hade the same name for their parent relationship this could be made much shorter
-     and concise by using a single key to access all parent values. The parent values could then be cast to
-     HasCompleteable. */
     
     /// If a child is completed and all its parent children are now complete, make parent complete.
     private func cascadeCompletion() {
-
-        switch self {
-            
-        case is TrainingWeek:
-            
-            let trainingWeek = self as! TrainingWeek
-            let trainingCycle = trainingWeek.trainingCycle!
-            if trainingCycle.childrenAreComplete() && !trainingCycle.isComplete {
-                trainingCycle.complete()
+        if let completableWithParent = self as? (any HasParent) {
+            let parent = completableWithParent.parent
+            // Forced cast because if self has parent, parent is HasCompleteable
+            if (parent as! HasCompleteable).childrenAreComplete() {
+                /* If parent is completeable, this needs to be checked since routines are parents
+                 but not completeable. */
+                if let completableParent = parent as? CompleteableTimePeriod {
+                    completableParent.complete()
+                }
             }
-            
-        case is TrainingSession:
-            
-            let trainingSession = self as! TrainingSession
-            let trainingWeek = trainingSession.trainingWeek!
-            if trainingWeek.childrenAreComplete() && !trainingWeek.isComplete {
-                trainingWeek.complete()
-            }
-            
-        case is TrainingSet:
-            
-            let trainingSet = self as! TrainingSet
-            let trainingSession = trainingSet.trainingSession!
-            if trainingSession.childrenAreComplete() && !trainingSession.isComplete {
-                trainingSession.complete()
-            }
-            
-        default:
-            break
         }
     }
     

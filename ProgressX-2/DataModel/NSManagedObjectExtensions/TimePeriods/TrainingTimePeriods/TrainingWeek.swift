@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingWeek: HasOrderable, HasCompleteable {
+extension TrainingWeek: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     // MARK: Convenience init
     convenience init(
@@ -27,34 +27,20 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
         trainingCycle.addToTrainingWeeks(self)
     }
     
-    // MARK: Extra Properties
+    // MARK: Protocol implementation
+        
+    typealias ParentType = TrainingCycle
     
-    /// The next trainingSession in the order of this TrainingWeek
-    public var nextTrainingSession: TrainingSession? {
-        let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
-        let orderedIncompleteSessions: [TrainingSession] = allSessions
-            .filter { session in !session.isComplete }
-            .sorted(by: { $0.positionIndex < $1.positionIndex })
-        return orderedIncompleteSessions.first
+    typealias ChildrenType = TrainingSession
+    
+    // Protocol implementation
+    var children: [TrainingSession] {
+        return self.trainingSessions!.allObjects as! [TrainingSession]
     }
     
-    /// All TrainingSessions in this TrainingWeek
-    public var allTrainingSessions: [TrainingSession] {
-        let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "trainingWeek == %@", self)
-        let context = self.managedObjectContext!
-        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
-        return sessions
-    }
-    
-    /// The progress of the trainingweek as a double fraction
-    public var progress: Double {
-        let allsession = self.allTrainingSessions
-        let completedSession = allsession.filter({ $0.isComplete })
-        let numberOfSessions = Double(allsession.count)
-        let numberOfCompletedSessions = Double(completedSession.count)
-        if numberOfSessions == 0 { return 0 }
-        else { return (numberOfCompletedSessions / numberOfSessions) }
+    // Protocol implementation
+    var parent: TrainingCycle {
+        return self.trainingCycle!
     }
     
     // Protocol implementation
@@ -86,6 +72,22 @@ extension TrainingWeek: HasOrderable, HasCompleteable {
     // Protocol implementation
     internal func hasCompleteableChildren() -> Bool {
         return !self.trainingSessions!.allObjects.isEmpty
+    }
+    
+    // MARK: Extra Properties
+    
+    /// The next trainingSession in the order of this TrainingWeek
+    public var nextTrainingSession: TrainingSession? {
+        let allSessions = self.trainingSessions!.allObjects as! [TrainingSession]
+        let orderedIncompleteSessions: [TrainingSession] = allSessions
+            .filter { session in !session.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteSessions.first
+    }
+    
+    public var progress: Double {
+        let context = self.managedObjectContext!
+        return CoreDataAccess.getProgressOf(trainingWeek: self, context)
     }
     
     // MARK: Validation

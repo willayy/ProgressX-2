@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingSession: HasOrderable, HasCompleteable {
+extension TrainingSession: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     //MARK: Convenience init
     
@@ -26,6 +26,53 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         self.timePeriodDescription = templateSession.timePeriodDescription
         self.startedOnDate = Date()
         trainingWeek.addToTrainingSessions(self)
+    }
+    
+    // MARK: Protocol implementation
+        
+    typealias ParentType = TrainingWeek
+    
+    typealias ChildrenType = TrainingSet
+    
+    // Protocol implementation
+    var children: [TrainingSet] {
+        return self.trainingSets!.allObjects as! [TrainingSet]
+    }
+    
+    // Protocol implementation
+    var parent: TrainingWeek {
+        return self.trainingWeek!
+    }
+    
+    // Protocol implementation
+    public func getNextPositionIndex() -> Int64 {
+        let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
+        let max = sets.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    // Protocol implementation
+    internal func childrenAreComplete() -> Bool {
+        if self.trainingSets!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSets!.allSatisfy {
+              trainingSet in
+                (trainingSet as! TrainingSet).isComplete
+            }
+        }
+    }
+    
+    // Protocol implementation
+    internal func getPositionIndexes() -> [Int64] {
+        let children = self.trainingSets!.allObjects as! [TrainingSet]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
+    // Protocol implementation
+    internal func hasCompleteableChildren() -> Bool {
+        return !self.trainingSets!.allObjects.isEmpty
     }
     
     // MARK: Extra Properties
@@ -64,37 +111,6 @@ extension TrainingSession: HasOrderable, HasCompleteable {
             .filter { set in !set.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
         return orderedIncompleteSets.first
-    }
-    
-    // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
-        let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
-        let max = sets.max {$0.positionIndex < $1.positionIndex}
-        return Int64((max?.positionIndex ?? 0) + 1)
-    }
-    
-    // Protocol implementation
-    internal func childrenAreComplete() -> Bool {
-        if self.trainingSets!.allObjects.isEmpty {
-            return false
-        } else {
-          return self.trainingSets!.allSatisfy {
-              trainingSet in
-                (trainingSet as! TrainingSet).isComplete
-            }
-        }
-    }
-    
-    // Protocol implementation
-    internal func getPositionIndexes() -> [Int64] {
-        let children = self.trainingSets!.allObjects as! [TrainingSet]
-        let positionIndexes = children.map { $0.positionIndex }
-        return positionIndexes
-    }
-    
-    // Protocol implementation
-    internal func hasCompleteableChildren() -> Bool {
-        return !self.trainingSets!.allObjects.isEmpty
     }
     
     // MARK: Validation

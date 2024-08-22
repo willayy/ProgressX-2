@@ -117,7 +117,7 @@ extension CoreDataAccess {
     }
         
     /// Gets the last session done, returns nil if no sessions done.
-    public static func getLastCompletedSessionIn(routine: Routine, _ context: NSManagedObjectContext) -> TrainingSession? {
+    public static func getLastSessionDoneIn(routine: Routine, _ context: NSManagedObjectContext) -> TrainingSession? {
         let allSessions: [TrainingSession] = getAllTrainingSessionsIn(routine: routine, context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let orderedSessions = completedSessions.sorted(by: {$0.completedOnDate! > $1.completedOnDate!})
@@ -125,7 +125,7 @@ extension CoreDataAccess {
     }
     
     /// Gets all sessions completed within 30 days of today, returns empty array if none.
-    public static func getSessionsDoneThisMonthIn(routine: Routine, _ context: NSManagedObjectContext) -> [TrainingSession] {
+    public static func getSessionsDoneLast30DaysIn(routine: Routine, _ context: NSManagedObjectContext) -> [TrainingSession] {
         let allSessions: [TrainingSession] = getAllTrainingSessionsIn(routine: routine, context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -135,7 +135,7 @@ extension CoreDataAccess {
     }
     
     /// Gets all sessions completed within 7 days of today, returns empty array if none.
-    public static func getSessionsDoneThisWeekIn(routine: Routine, _ context: NSManagedObjectContext) -> [TrainingSession] {
+    public static func getSessionsDoneLast7DaysIn(routine: Routine, _ context: NSManagedObjectContext) -> [TrainingSession] {
         let allSessions: [TrainingSession] = getAllTrainingSessionsIn(routine: routine, context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         let today = Date()
@@ -164,12 +164,12 @@ extension CoreDataAccess {
     /// Gets all trainingSessions, completed or not, in the for the whole profile, returns empty array if there are none.
     private static func getAllTrainingSessions(_ context: NSManagedObjectContext) -> [TrainingSession] {
         let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
-        let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
         return results
     }
     
     /// Gets all sessions completed within 30 days of today for all routines, returns empty array if none.
-    public static func getAllSessionsCompletedLast30days(_ context: NSManagedObjectContext) -> [TrainingSession] {
+    public static func getAllSessionsDoneLast30days(_ context: NSManagedObjectContext) -> [TrainingSession] {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         // Filter out all the incomplete sessions.
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
@@ -183,7 +183,7 @@ extension CoreDataAccess {
     }
     
     /// Gets all sessions completed within 7 days of today for all routines, returns empty array if none.
-    public static func getAllSessionsCompletedThisWeek(_ context: NSManagedObjectContext) -> [TrainingSession] {
+    public static func getAllSessionsDoneThisWeek(_ context: NSManagedObjectContext) -> [TrainingSession] {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         // Filter out all the incomplete sessions
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
@@ -199,7 +199,7 @@ extension CoreDataAccess {
     }
     
     /// Gets the last completed session for any routine done. Returns nil if no sessions are completed.
-    public static func getLastCompletedSession(_ context: NSManagedObjectContext) -> TrainingSession? {
+    public static func getLastSessionDone(_ context: NSManagedObjectContext) -> TrainingSession? {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         // Pick the session with the smallest completion date.
@@ -210,7 +210,7 @@ extension CoreDataAccess {
     /// Gets the routine of the last completed session. Returns nil of no sessions are completed.
     public static func getLastRoutineUsed(_ context: NSManagedObjectContext) -> Routine? {
         // If no sessions has been completed return nil
-        guard let lastCompletedSession: TrainingSession = getLastCompletedSession(context) else {
+        guard let lastCompletedSession: TrainingSession = getLastSessionDone(context) else {
             return nil
         }
         
@@ -225,7 +225,7 @@ extension CoreDataAccess {
     public static func getAllTrainingSessionsIn(trainingCycle: TrainingCycle, _ context: NSManagedObjectContext) -> [TrainingSession] {
         let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trainingWeek.trainingCycle == %@", trainingCycle)
-        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
         return sessions
     }
     
@@ -234,7 +234,7 @@ extension CoreDataAccess {
         let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trainingWeek == %@", trainingWeek)
         let context = context
-        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
         return sessions
     }
     

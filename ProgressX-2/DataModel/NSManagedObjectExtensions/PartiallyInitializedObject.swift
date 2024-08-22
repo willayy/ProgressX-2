@@ -13,6 +13,6 @@ import Foundation
 protocol PartiallyInitializedObject {
     
     /// Checks if the objects is set up correctly according to the constraints of the DataModel.
-    func objectIsSetUp() -> Bool
+    func verifyObjectIsSetUp() -> Void
     
 }

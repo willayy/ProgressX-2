@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingCycle: HasOrderable, HasCompleteable {
+extension TrainingCycle: HasOrderable, HasCompleteable, HasParent {
     
     // MARK: Convenience init
     
@@ -30,33 +30,20 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
         routine.addToTrainingCycles(self)
     }
     
-    // MARK: Extra properties
+    // MARK: Protocol implementation
+        
+    typealias ParentType = Routine
     
-    public var nextTrainingWeek: TrainingWeek? {
-        let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
-        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks
-            .filter { week in !week.isComplete }
-            .sorted(by: { $0.positionIndex < $1.positionIndex })
-        return orderedIncompleteWeeks.first
+    typealias ChildrenType = TrainingWeek
+    
+    // Protocol implementation
+    var children: [TrainingWeek] {
+        return self.trainingWeeks!.allObjects as! [TrainingWeek]
     }
     
-    /// Gets all TrainingSessions in this cycle
-    public var allTrainingSessions: [TrainingSession] {
-        let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "trainingWeek.trainingCycle == %@", self)
-        let context = self.managedObjectContext!
-        let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
-        return sessions
-    }
-    
-    /// Gets the completion status of this cycle
-    public var progress: Double {
-        let allsession = self.allTrainingSessions
-        let completedSession = allsession.filter({ $0.isComplete })
-        let numberOfSessions = Double(allsession.count)
-        let numberOfCompletedSessions = Double(completedSession.count)
-        if numberOfSessions == 0 { return 0 }
-        else { return (numberOfCompletedSessions / numberOfSessions) }
+    // Protocol implementation
+    var parent: Routine {
+        return self.routine!
     }
     
     // Protocol implementation
@@ -88,6 +75,21 @@ extension TrainingCycle: HasOrderable, HasCompleteable {
     // Protocol implementation
     internal func hasCompleteableChildren() -> Bool {
         return !self.trainingWeeks!.allObjects.isEmpty
+    }
+    
+    // MARK: Extra properties
+    
+    public var nextTrainingWeek: TrainingWeek? {
+        let allWeeks = self.trainingWeeks!.allObjects as! [TrainingWeek]
+        let orderedIncompleteWeeks: [TrainingWeek] = allWeeks
+            .filter { week in !week.isComplete }
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
+        return orderedIncompleteWeeks.first
+    }
+    
+    public var progress: Double {
+        let context = self.managedObjectContext!
+        return CoreDataAccess.getProgressOf(trainingCycle: self, context)
     }
     
     // MARK: Validation

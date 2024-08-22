@@ -63,7 +63,7 @@ struct PersistenceController {
         let context = result.container.viewContext
         // Populate with in-memory data
         InMemory.initialize(context: context)
-        PersistenceController.save(context)
+        CoreDataAccess.save(context)
         return result
     }()
     

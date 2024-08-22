@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TemplateSet: HasOrderable {
+extension TemplateSet: HasOrderable, HasParent, HasChildren {
     
     //MARK: Convenience init
     
@@ -41,6 +41,35 @@ extension TemplateSet: HasOrderable {
         templateSession.addToTemplateSets(self)
     }
     
+    // MARK: Protocol implementation
+        
+    typealias ParentType = TemplateSession
+    
+    typealias ChildrenType = SetThreshold
+    
+    var children: [SetThreshold] {
+        return self.thresholds!.allObjects as! [SetThreshold]
+    }
+    
+    // Protocol implementation
+    var parent: TemplateSession {
+        return self.templateSession!
+    }
+    
+    // Protocol implementation
+    public func getNextPositionIndex() -> Int64 {
+        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
+        let max = thresholds.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    // Protocol implementation
+    func getPositionIndexes() -> [Int64] {
+        let children = self.thresholds!.allObjects as! [SetThreshold]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
     // MARK: Extra properties
     
     /// Convience method for getting the name of the Exercise.
@@ -61,7 +90,7 @@ extension TemplateSet: HasOrderable {
         case .maxPercentage:
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "onerepmax" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(
+            let latestPr = CoreDataAccess.getLatestPersonalRecord(
                 self.managedObjectContext!,
                 exercise: exercise,
                 prType: prType
@@ -69,15 +98,15 @@ extension TemplateSet: HasOrderable {
             // Compute the percentage
             let computedLoad: Double = (latestPr?.weightLoad ?? 0) * (self.setLoad / 100)
             // Round to smallest plate
-            let profile = PersistenceController.getProfile(context)
+            let profile = CoreDataAccess.getProfile(context)
             let smallestPlate = profile!.smallestPlate * 2 // times two because you always add two weights for balance
             let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
             return roundedLoad
             
         case .bodyWeightPercentage:
-            let latestBw = PersistenceController.getLatestBodyEntry(context)
+            let latestBw = CoreDataAccess.getLatestBodyEntry(context)
             let computedLoad: Double = (latestBw?.bodyWeight ?? 0) * (self.setLoad / 100)
-            guard let profile = PersistenceController.getProfile(context) else { return nil }
+            guard let profile = CoreDataAccess.getProfile(context) else { return nil }
             let smallestPlate = profile.smallestPlate * 2 // times two because you always add two weights for balance
             let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
             return roundedLoad
@@ -97,7 +126,7 @@ extension TemplateSet: HasOrderable {
         case .maxPercentage:
             let exercise = self.exercise!
             let prType = exercise.exerciseType == "reps" ? "maxreps" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
+            let latestPr = CoreDataAccess.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
             var computedQuantity: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
             if exercise.exerciseType! == "reps" { computedQuantity = floor(computedQuantity) }
             return computedQuantity
@@ -109,7 +138,7 @@ extension TemplateSet: HasOrderable {
         guard let loadType = self.loadType else { return nil }
         guard let loadTypeEnum = LoadType(rawValue: loadType) else { return nil }
         guard let context = self.managedObjectContext else { return nil }
-        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         
         switch loadTypeEnum {
         case .numerical:
@@ -149,20 +178,6 @@ extension TemplateSet: HasOrderable {
         return String(format: "%.2f", self.restTime)
     }
         
-    // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
-        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
-        let max = thresholds.max {$0.positionIndex < $1.positionIndex}
-        return Int64((max?.positionIndex ?? 0) + 1)
-    }
-    
-    // Protocol implementation
-    func getPositionIndexes() -> [Int64] {
-        let children = self.thresholds!.allObjects as! [SetThreshold]
-        let positionIndexes = children.map { $0.positionIndex }
-        return positionIndexes
-    }
-    
     // MARK: Validation
     
     override public func validateForUpdate() throws {
