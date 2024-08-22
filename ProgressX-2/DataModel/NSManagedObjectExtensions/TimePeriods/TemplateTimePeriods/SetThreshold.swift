@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension SetThreshold {
+extension SetThreshold: HasParent {
     
     //MARK: Convenience init
     
@@ -38,12 +38,21 @@ extension SetThreshold {
         templateSet.addToThresholds(self)
     }
     
+    // MARK: Protocol implementation
+        
+    typealias ParentType = TemplateSet
+    
+    // Protocol implementation
+    var parent: TemplateSet {
+        return self.templateSet!
+    }
+    
     // MARK: Extra Properties
     
     public var flatLoadAddString: String? {
         guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
         guard let context = self.managedObjectContext else { return nil }
-        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         
         return String(format: "%.2f", flatQuantityAdd) + " \(weightUnit)"
     }
@@ -82,10 +91,22 @@ extension SetThreshold {
     
     /// Use this property to trigger a SetThreshold
     public func trigger(loadDone: Double, quantityDone: Double) -> Void {
+        
         let templateSet = self.templateSet!
+        
+        let flatLoadAdd = self.flatQuantityAdd?.doubleValue ?? 0
+        
+        let flatQuantityAdd = self.flatQuantityAdd?.doubleValue ?? 0
+        
+        let thresholdShouldTrigger = quantityDone >= self.triggerQuantity
+        
+        /* If a threshold takes away load or quantity it should only be
+         triggered when the quantity done is below the triggerQuantity */
+        let thresholdShouldModify = !( (flatQuantityAdd < 0 || flatLoadAdd < 0) && thresholdShouldTrigger )
         
         // Generates a PR
         if self.generatePr {
+            
             let exercise = templateSet.exercise!
             let computedLoad: Double
             let computedQuantity: Double
@@ -110,16 +131,23 @@ extension SetThreshold {
             )
         }
         
-        // Adds the flat load.
-        if self.flatLoadAdd != nil {
-            templateSet.setLoad += self.flatLoadAdd!.doubleValue
-        }
-        
-        // Adds the flat quantity
-        if self.flatQuantityAdd != nil {
-            templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
-            // Adds the quantity added to the template to itself the ensure linearity.
-            self.triggerQuantity += self.flatQuantityAdd!.doubleValue
+        if thresholdShouldModify {
+            
+            // Adds the flat load.
+            if self.flatLoadAdd != nil && thresholdShouldTrigger {
+                
+                templateSet.setLoad += self.flatLoadAdd!.doubleValue
+            }
+            
+            // Adds the flat quantity
+            if self.flatQuantityAdd != nil && thresholdShouldTrigger {
+                
+                templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
+                
+                // Adds the quantity added to the template to itself the ensure linearity.
+                self.triggerQuantity += self.flatQuantityAdd!.doubleValue
+            }
+            
         }
         
     }

@@ -10,30 +10,56 @@ import CoreData
 
 extension OrderableTimePeriod {
     
+    // MARK: Convenience init
+    
+    // Nothing here.
+    
     // MARK: Extra Properties
     
-    // Nothing here
+    // Nothing here.
     
     // MARK: Validaiton
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
-        try revalidateParentChildRelationships()
+        try validatePositionIndexesInSiblings()
     }
     
-    
-    /// Notifies the parent that it should evalidate its "parent" and "child" relationship when positionIndex changes in a child.
-    private func revalidateParentChildRelationships() throws {
-        let changedValues = changedValues()
-        if changedValues.keys.contains("positionIndex") {
-            let selfAsHasParent: any HasParent = self as! any HasParent
-            let parentAsNsManagedObject: NSManagedObject = selfAsHasParent.parent as! NSManagedObject
-            try parentAsNsManagedObject.validateForUpdate()
+    override public func validateForInsert() throws {
+        try super.validateForInsert()
+        try validatePositionIndexesInSiblings()
+    }
+        
+    /// Validates that there are no siblings (objects with the same parent as this one)  with the same positionIndexes.
+    private func validatePositionIndexesInSiblings() throws {
+        // Forced cast because all orderables have parents.
+        let parent = (self as! (any HasParent)).parent
+        // Forced cast because all parents have orderables.
+        let positionIndexes = (parent as! HasOrderable).getPositionIndexes()
+        let hasDuplicates = (positionIndexes.count != Set(positionIndexes).count)
+        if hasDuplicates {
+            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
         }
     }
     
+    /// Switches to any new positionIndex if  its occupied by another orderable timeperiod
     public func switchPositionIndex(to: Int64) -> Void {
-        #warning("TODO: Implement, this should cause the parent to revalidate")
+        // Forced cast because all orderables have parents.
+        let selfAsHasParent: any HasParent = self as! (any HasParent)
+        // Forced cast because all parents have children.
+        let parent: any HasChildren = selfAsHasParent.parent as! (any HasChildren)
+        // Since self is Orderable all its siblings are as well.
+        let siblings = parent.children as! [OrderableTimePeriod]
+        
+        // Find the sibling with the positionIndex you want to switch to.
+        let siblingWithDesiredPI = siblings.first(where: { $0.positionIndex == to })
+        
+        if siblingWithDesiredPI == nil {
+            self.positionIndex = to
+        } else {
+            siblingWithDesiredPI!.positionIndex = self.positionIndex
+            self.positionIndex = to
+        }
     }
 
 }

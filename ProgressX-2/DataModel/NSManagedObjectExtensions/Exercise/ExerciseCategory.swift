@@ -39,17 +39,9 @@ extension ExerciseCategory {
     
     /// Validates that the name of the category is unique.
     private func validateCategoryNameIsUnique() throws {
-        let fetchRequest = ExerciseCategory.fetchRequest()
-        var fetchResults = PersistenceController.fetch(
-            self.managedObjectContext!,
-            fetchRequest: fetchRequest
-        )
-        // Remove itself from the fetchResults
-        fetchResults.removeAll {$0 === self}
-        let duplicates = fetchResults.contains { $0.categoryName! == self.categoryName }
-        if duplicates {
-            throw ValidationNSErrors.exerciseCategoryNameIsInvalid.toNSError()
-        }
+        let context = self.managedObjectContext!
+        let duplicates = CoreDataAccess.categoryNameIsUnique(context)
+        if duplicates { throw ValidationNSErrors.exerciseCategoryNameIsInvalid.toNSError() }
     }
     
 }

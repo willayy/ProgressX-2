@@ -15,9 +15,9 @@ final class JsonValidtionTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Set up a full in-memory enviroment for the tests
-        PersistenceController.generateBasicExerciseCategories(context)
-        PersistenceController.generateBasicExerciseLibrary(context)
-        PersistenceController.generateBasicRoutine(context)
+        CoreDataAccess.generateExerciseCategories(context)
+        CoreDataAccess.generateStarterExerciseLibrary(context)
+        CoreDataAccess.generateBasicRoutine(context)
     }
 
     override func tearDownWithError() throws {

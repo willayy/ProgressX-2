@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TemplateCycle: HasOrderable {
+extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // MARK: Convenience init
     
@@ -25,8 +25,22 @@ extension TemplateCycle: HasOrderable {
         self.timePeriodDescription = (description == "") ? "templateCycle created for: \(routineName)" : description
         routine.templateCycle = self
     }
-
-    // MARK: Extra properties
+    
+    // MARK: Protocol implementation
+    
+    typealias ChildrenType = TemplateWeek
+    
+    typealias ParentType = Routine
+    
+    // Protocol implementation
+    var children: [TemplateWeek] {
+        return self.templateWeeks!.allObjects as! [TemplateWeek]
+    }
+    
+    // Protocol implementation
+    var parent: Routine {
+        return self.routine!
+    }
     
     // Protocol implementation
     public func getNextPositionIndex() -> Int64 {
@@ -41,9 +55,13 @@ extension TemplateCycle: HasOrderable {
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes
     }
+
+    // MARK: Extra properties
+    
+    // No extra properties on this class extension.
     
     // MARK: Validation
     
-    // No extra validation on this class extension
+    // No extra validation on this class extension.
     
 }

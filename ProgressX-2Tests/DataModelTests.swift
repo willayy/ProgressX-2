@@ -17,16 +17,29 @@ final class DataModelTests: XCTestCase {
     
     // MARK: SETUP
     override func setUpWithError() throws {
-        // Set up a full in-memory enviroment for the tests
-        PersistenceController.generateBasicExerciseCategories(context)
-        PersistenceController.generateBasicExerciseLibrary(context)
-        PersistenceController.generateBasicRoutine(context)
+        // In memory profile, routine, and exercises should already be set up by PersistenceController.
     }
 
     // MARK: TEAR DOWN
     override func tearDownWithError() throws {
         // Roll back all Entities inserted into the context but not saved.
         context.rollback()
+    }
+    
+    func testCoreDataAccess() {
+        #warning("TODO: Implement")
+    }
+    
+    func testCoreDataAccessGenerate() {
+        #warning("TODO: Implement")
+    }
+    
+    func testCoreDataAccessGetters() {
+        #warning("TODO: Implement")
+    }
+    
+    func testCoreDataAccessCheckers() {
+        #warning("TODO: Implement")
     }
     
     func testProfile() {

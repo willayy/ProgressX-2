@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingSet {
+extension TrainingSet: HasParent {
     
     //MARK: Convenience init
     
@@ -33,6 +33,15 @@ extension TrainingSet {
         trainingSession.addToTrainingSets(self)
     }
     
+    // MARK: Protocol implementation
+        
+    typealias ParentType = TrainingSession
+    
+    // Protocol implementation
+    var parent: TrainingSession {
+        return self.trainingSession!
+    }
+    
     // MARK: Extra properties
     
     /// Convience method for getting the name of the Exercise. Returns nil if exercise is not set.
@@ -44,14 +53,14 @@ extension TrainingSet {
     /// Uset his property to print the load todo on a set.
     public var loadTodoString: String {
         let context = self.managedObjectContext!
-        let weightUnit = PersistenceController.getWeightUnit(context)!
+        let weightUnit = CoreDataAccess.getWeightUnit(context)!
         return "\(String(format: "%.2f", self.loadTodo)) \(weightUnit)"
     }
     
     /// Use this to property to print the load done on a set.
     public var loadDoneString: String {
         let context = self.managedObjectContext!
-        let weightUnit = PersistenceController.getWeightUnit(context)!
+        let weightUnit = CoreDataAccess.getWeightUnit(context)!
         return "\(String(format: "%.2f", self.loadDone)) \(weightUnit)"
     }
     

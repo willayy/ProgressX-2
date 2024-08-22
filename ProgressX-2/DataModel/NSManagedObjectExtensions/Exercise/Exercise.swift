@@ -51,6 +51,10 @@ extension Exercise {
         return latestPr
     }
     
+    // MARK: Protocol implementation
+    
+    // No protocol implemenation in this class extension
+    
     // MARK: Validation
     
     public override func validateForInsert() throws {
@@ -65,12 +69,11 @@ extension Exercise {
     
     /// Checks that the name of the exercise is unique
     private func validateExerciseNameIsUnique() throws {
-        let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-        var fetchResults = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        // Removing the self instance, this might be unnecessary
-        fetchResults.removeAll { $0 === self }
-        let duplicates = fetchResults.contains { $0.exerciseName! == self.exerciseName }
-        if duplicates { throw ValidationNSErrors.exerciseNameIsInvalid.toNSError() }
+        let context = self.managedObjectContext!
+        let duplicates = CoreDataAccess.exerciseNameIsUnique(context)
+        if duplicates {
+            throw ValidationNSErrors.exerciseNameIsInvalid.toNSError()
+        }
     }
     
 }

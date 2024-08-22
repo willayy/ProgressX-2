@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TemplateSession: HasOrderable {
+extension TemplateSession: HasOrderable, HasChildren, HasParent {
     
     //MARK: Convenience init
     
@@ -28,7 +28,21 @@ extension TemplateSession: HasOrderable {
         templateWeek.addToTemplateSessions(self)
     }
     
-    // MARK: Extra Properties
+    // MARK: Protocol implementation
+    
+    typealias ChildrenType = TemplateSet
+    
+    typealias ParentType = TemplateWeek
+    
+    // Protocol implementation
+    var children: [TemplateSet] {
+        return self.templateSets!.allObjects as! [TemplateSet]
+    }
+    
+    // Protocol implementation
+    var parent: TemplateWeek {
+        return self.templateWeek!
+    }
     
     // Protocol implementation
     public func getNextPositionIndex() -> Int64 {
@@ -43,6 +57,10 @@ extension TemplateSession: HasOrderable {
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes
     }
+    
+    // MARK: Extra Properties
+    
+    // No extra properties on this class extension
     
     // MARK: Validation
     
