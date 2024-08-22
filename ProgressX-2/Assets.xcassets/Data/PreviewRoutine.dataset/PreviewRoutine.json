@@ -12,7 +12,7 @@
                     {
                         "type" : "TemplateWeek",
                         "timePeriodName" : "PPL week",
-                        "timePeriodDescription" : "Metallicdpas PPL routine only consists of a single 6 day week that is repeated over and over. "
+                        "timePeriodDescription" : "Metallicdpas PPL routine only consists of a single 6 day week that is repeated over and over. ",
                         "children" : [
                             
                             {
@@ -23,7 +23,7 @@
                                     {
                                         "type" : "TemplateSet",
                                         "timePeriodName" : "Deadlifts",
-                                        "exercise" : "Deadlift"
+                                        "exercise" : "Deadlift",
                                         "setLoad" : 0.7,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
