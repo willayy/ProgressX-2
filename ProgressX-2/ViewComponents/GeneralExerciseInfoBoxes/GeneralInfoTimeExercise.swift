@@ -108,7 +108,7 @@ struct GeneralInfoTimeExercise: View {
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "time")
     
-    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
+    let exerciseResult: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequestExercise)
 
     let exercise: Exercise = exerciseResult.first!
     

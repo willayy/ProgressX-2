@@ -48,18 +48,25 @@ struct TrainingSetInfoBox: View {
                                 .bold()
                                 .multilineTextAlignment(.leading)
                                 .padding(.leading)
+                            
                             Spacer()
                             
-                            let latestBodyEntry = PersistenceController.getLatestBodyEntry(viewContext)!
+                            let latestBodyEntry = CoreDataAccess.getLatestBodyEntry(viewContext)!
+                            
                             let bodyWeight = latestBodyEntry.bodyWeight
+                            
                             if currentTrainingSet!.loadTodo == bodyWeight {
+                                
                                 Text("Bodyweight (\(currentTrainingSet!.loadTodo))")
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
+                                
                             } else {
+                                
                                 Text(currentTrainingSet!.loadTodoString)
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
+                                
                             }
                         }
                         
@@ -86,7 +93,7 @@ struct TrainingSetInfoBox: View {
                             
                             Spacer()
                             
-                            let pr = currentTrainingSet?.exercise?.getLatestPr
+                            let pr = currentTrainingSet?.exercise?.latestPr
                             let prType = pr?.prType
                             
                             if prType == "maxreps" {
@@ -127,7 +134,7 @@ struct TrainingSetInfoBox: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let routines = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let routine = routines.first!
     

@@ -301,7 +301,7 @@ struct CreateNewTemplateSetView: View {
     
     let context = PersistenceController.preview.container.viewContext
     let fetchReqeust: NSFetchRequest = TemplateSession.fetchRequest()
-    let templateSessions = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
+    let templateSessions = CoreDataAccess.fetch(context, fetchRequest: fetchReqeust)
     
     @State var selectedTemplateSession: TemplateSession? = templateSessions.first
     @State var navPath: [Int] = [Int]()

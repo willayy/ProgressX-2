@@ -45,14 +45,14 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
     public func saveEntry(viewContext: NSManagedObjectContext) {
         
         let personalRecordsFr: NSFetchRequest = PersonalRecord.fetchRequest()
-        let personalRecords = PersistenceController.fetch(viewContext, fetchRequest: personalRecordsFr)
+        let personalRecords = CoreDataAccess.fetch(viewContext, fetchRequest: personalRecordsFr)
         
         let exercisesFr: NSFetchRequest = Exercise.fetchRequest()
-        let exercises = PersistenceController.fetch(viewContext, fetchRequest: exercisesFr)
+        let exercises = CoreDataAccess.fetch(viewContext, fetchRequest: exercisesFr)
         
         // Wipe all prs
         for pr in personalRecords {
-            PersistenceController.delete(viewContext, object: pr)
+            CoreDataAccess.delete(viewContext, object: pr)
         }
         
         // Iterate through basic exercises generated and map the correct values to the correct exercise. Very boilerplaty code, should probably be replaced by something more sophisticated.
@@ -123,9 +123,9 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
     }
     
     public func generateBasicRoutine(viewContext: NSManagedObjectContext) {
-        if !PersistenceController.basicRoutineExists(viewContext) {
-            PersistenceController.generateBasicRoutine(viewContext)
-            PersistenceController.save(viewContext)
+        if !CoreDataAccess.basicRoutineExists(viewContext) {
+            CoreDataAccess.generateBasicRoutine(viewContext)
+            CoreDataAccess.save(viewContext)
         }
     }
     

@@ -27,7 +27,7 @@ struct RoutineListItem: View {
                     
                     (Text("Created: ")
                         .fontWeight(.bold)
-                     + Text("\(routine.creationDateString ?? "")"))
+                     + Text("\(routine.formattedCreatedOnDate ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
@@ -82,8 +82,8 @@ struct RoutineListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(routine.timePeriodName!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: routine)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: routine)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

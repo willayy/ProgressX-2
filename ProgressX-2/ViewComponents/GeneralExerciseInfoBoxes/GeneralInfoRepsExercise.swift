@@ -182,7 +182,7 @@ struct GeneralInfoRepsExercise: View {
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
-    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let exerciseResult: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
 
     let exercise: Exercise = exerciseResult.first!
     

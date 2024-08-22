@@ -81,7 +81,7 @@ class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, D
         fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek)
         
         // Fetch all incomplete weeks as these are the only ones affected
-        let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingWeeks = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({!$0.isComplete})
         
         for trainingWeek in trainingWeeks {
@@ -119,7 +119,7 @@ class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, D
         let fetchRequest: NSFetchRequest<TrainingWeek> = TrainingWeek.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "templateWeek == %@", selectedTemplateWeek!)
         // Only included incomplete trainingWeeks as completed ones are irrelevant for this change
-        let trainingWeeks = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingWeeks = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
         
         for trainingWeek in trainingWeeks {

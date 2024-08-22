@@ -28,11 +28,11 @@ struct TrainingWeekListItem: View {
                 
                 (Text("Next session: ")
                     .fontWeight(.bold)
-                 + Text("\(trainingWeek.getNextTrainingSession()?.timePeriodName! ?? "Finished")"))
+                 + Text("\(trainingWeek.nextTrainingSession?.timePeriodName! ?? "Finished")"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                let progress = trainingWeek.getProgress()
+                let progress = trainingWeek.progress
                 
                 ProgressBar(
                     height: 5,

@@ -78,7 +78,7 @@ class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
         fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession)
         
         // Fetch all incomplete sessions as these are the only ones affected
-        let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingSessions = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({!$0.isComplete})
         
         for trainingSession in trainingSessions {

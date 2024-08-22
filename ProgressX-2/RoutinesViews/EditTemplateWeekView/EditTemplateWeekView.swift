@@ -196,7 +196,7 @@ struct EditTemplateWeekView: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = TemplateWeek.fetchRequest()
-    let weeks = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let weeks = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let week = weeks.first!
     

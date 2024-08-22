@@ -47,7 +47,7 @@ struct DoubleChart: View {
     
     var body: some View {
         
-        let weightUnit: String = PersistenceController.getWeightUnit(viewContext)!
+        let weightUnit: String = CoreDataAccess.getWeightUnit(viewContext)!
         // Infer the quantity unit from the personal records, if not possible set to unknown.
         let quantityUnit: String = {
             if exercise.exerciseType == "reps" {
@@ -179,7 +179,7 @@ struct DoubleChart: View {
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
-    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestExercise)
+    let exerciseResult: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequestExercise)
 
     let exercise: Exercise = exerciseResult.first!
     

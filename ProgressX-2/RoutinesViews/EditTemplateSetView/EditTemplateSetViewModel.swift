@@ -121,7 +121,7 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         fetchRequest.predicate = NSPredicate(format: "templateSet == %@", selectedTemplateSet)
         
         // Fetch all incomplete sessions as these are the only ones affected
-        let trainingSets = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingSets = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({!$0.isComplete})
         
         for trainingSet in trainingSets {

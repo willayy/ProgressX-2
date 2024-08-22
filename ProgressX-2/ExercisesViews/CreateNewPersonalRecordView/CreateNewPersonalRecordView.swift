@@ -144,7 +144,7 @@ struct CreateNewPersonalRecord: View {
     let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestRepBasedExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
-    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
     
     @State var exercise: Exercise? = exerciseResults.first
     

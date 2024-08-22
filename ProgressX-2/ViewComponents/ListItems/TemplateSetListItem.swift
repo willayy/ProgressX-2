@@ -93,8 +93,8 @@ struct TemplateSetListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(set.timePeriodName!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: set)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: set)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

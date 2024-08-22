@@ -119,7 +119,7 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     ]
     
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
-        let profile = PersistenceController.getProfile(viewContext)!
+        let profile = CoreDataAccess.getProfile(viewContext)!
         restTime = profile.formattedStandardRestTime
         newSetName = "Set \(selectedTemplateSession!.getNextPositionIndex())"
     }
@@ -142,7 +142,7 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
         let fetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "templateSession == %@", selectedTemplateSession!)
         // Only included incomplete trainingSessions as completed ones are irrelevant for this change
-        let trainingSessions = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingSessions = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
         
         for session in trainingSessions {

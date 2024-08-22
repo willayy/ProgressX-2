@@ -76,8 +76,8 @@ struct ThresholdListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete Threshold \(threshold.positionIndex)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: threshold)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: threshold)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

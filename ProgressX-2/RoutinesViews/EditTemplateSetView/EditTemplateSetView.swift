@@ -269,7 +269,7 @@ struct EditTemplateSetView: View {
 
     let context = PersistenceController.preview.container.viewContext
     let fetchReqeust: NSFetchRequest = TemplateSet.fetchRequest()
-    let templateSets = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
+    let templateSets = CoreDataAccess.fetch(context, fetchRequest: fetchReqeust)
     
     @State var selectedTemplateSet: TemplateSet? = templateSets.first
     @State var navPath: [Int] = [Int]()

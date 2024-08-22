@@ -197,7 +197,7 @@ struct EditRoutineView: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let routines = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let routine = routines.first!
     

@@ -124,7 +124,7 @@ struct StatisticsView: View {
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
-    let exerciseResult: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let exerciseResult: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
 
     @State var exercise: Exercise? = exerciseResult.first!
     

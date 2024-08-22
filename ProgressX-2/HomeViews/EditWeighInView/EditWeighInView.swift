@@ -213,7 +213,7 @@ struct EditWeighInView: View {
     
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest<BodyEntry> = BodyEntry.fetchRequest()
-    let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     @State var selectedBodyEntry: BodyEntry? = results.first!
     
     return EditWeighInView(

@@ -42,7 +42,7 @@ class WeighInViewModel: ViewModel, AddingViewModel {
         
         // Get the profile.
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
-        let results: [Profile] = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let results: [Profile] = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
         let profile: Profile = results.first!
         
         // Convert input strings to optional NSNumbers.

@@ -93,8 +93,8 @@ struct ExerciseListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(exercise.exerciseName!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: exercise)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: exercise)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

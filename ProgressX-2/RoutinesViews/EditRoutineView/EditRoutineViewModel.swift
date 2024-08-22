@@ -59,7 +59,7 @@ class EditRoutineViewModel: ViewModel, AddingViewModel, EditingViewModel, Defaul
         let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "templateCycle == %@", selectedTemplateCycle!)
         // Only included incomplete trainingCycles as completed ones are irrelevant for this change
-        let trainingCycles = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
+        let trainingCycles = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
             .filter({ !$0.isComplete })
         
         // Add training cycles to them

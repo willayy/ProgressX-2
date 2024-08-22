@@ -57,7 +57,7 @@ class PopupFeedbackViewModel: ViewModel, AddingViewModel, DefaultValueViewModel 
     public func checkIfCycleIsFinished(routine: Routine, viewContext: NSManagedObjectContext) -> Void {
         // If the training cycle is finished create a new one.
         if !routine.incompleteTrainingCycleExists {
-            TrainingCycleGeneration.createNewCycleFromRoutine(
+            CoreDataAccess.createNewCycleFromRoutine(
                 routine: routine,
                 context: viewContext
             )

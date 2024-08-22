@@ -15,7 +15,7 @@ struct ProgressX_2App: App {
     @StateObject var viewRouter = ViewRouter()
     @State var isLoading: Bool = true
     static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    static let profileExists: Bool = PersistenceController.profileExists(context)
+    static let profileExists: Bool = CoreDataAccess.profileExists(context)
 
     var body: some Scene {
         WindowGroup {            

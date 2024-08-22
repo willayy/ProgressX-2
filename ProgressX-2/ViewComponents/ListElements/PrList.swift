@@ -87,7 +87,7 @@ struct PrList: View {
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "exerciseType == %@","time")
     
-    let timeBasedExerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let timeBasedExerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let exercise: Exercise? = timeBasedExerciseResults.first
     

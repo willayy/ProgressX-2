@@ -189,7 +189,7 @@ struct EditTemplateSessionView: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = TemplateSession.fetchRequest()
-    let sessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let sessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let session = sessions.first!
     

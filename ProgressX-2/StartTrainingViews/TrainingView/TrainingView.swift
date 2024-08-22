@@ -109,35 +109,48 @@ struct TrainingView: View {
         }
         // MARK: Task to show start session alert.
         .task {
+            
             withAnimation {
+                
                 if exerciseType == "time"{
                     viewModel.doneButtonText = "Start timed set"
                     viewModel.timedSetActive = true
                 }
                 viewModel.showAlert = true
+                
             }
+            
         }
         // MARK: Start your new set alert.
         .alert(isPresented: $viewModel.showAlert) {
+            
             Alert(
                 title: Text("Ready to start your session?"),
                 message: Text("Press start to get going with your first set!"),
                 dismissButton: .default(Text("Start"))
             )
-        } 
+            
+        }
         // MARK: Skip set toolbar item.
         .toolbar {
+            
             Button(action:{
+                
                 withAnimation {
+                    
                     currentTrainingSet!.skip()
-                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    currentTrainingSet = selectedTrainingSession!.nextTrainingSet
                     viewModel.save(viewContext)
                     if currentTrainingSet == nil {
                         navPath.append(3)
                     }
+                    
                 }
+                
             }) {
+                
                 Text("Skip set")
+                
             }
         } 
         // MARK: Set finished feedback view.
@@ -150,26 +163,37 @@ struct TrainingView: View {
                 timeDone: $viewModel.quantityDoneOnTimedSet
             )
             .onDisappear(perform: {
+                
                 withAnimation {
+                    
                     viewModel.startTimer(
                         timerViewModel: timerViewModel,
                         seconds: Int(currentTrainingSet!.restTime)
                     )
+                    
                     viewModel.lastExercise = (currentTrainingSet?.exercise!.exerciseType!)!
                     
-                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    currentTrainingSet = selectedTrainingSession!.nextTrainingSet
                     
                     if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
+                        
                         viewModel.doneButtonEnabled.toggle()
+                        
                         viewModel.doneButtonText = "rest timer"
+                        
                     } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
+                        
                         viewModel.doneButtonText = "Done"
+                        
                     }
                     
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
+                        
                         timerViewModel.state = .cancelled
+                        
                         navPath.append(3)
+                        
                         
                     }
                 }
@@ -201,7 +225,7 @@ struct TrainingView: View {
 #Preview {
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-    let trainingSessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let trainingSessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let trainingSession: TrainingSession? = trainingSessions.first
     let trainingSets = trainingSession?.trainingSets?.allObjects as! [TrainingSet]

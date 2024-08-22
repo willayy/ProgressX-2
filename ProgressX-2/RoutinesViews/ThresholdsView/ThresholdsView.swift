@@ -66,7 +66,7 @@ struct ThresholdsView: View {
     
     let context = PersistenceController.preview.container.viewContext
     let fetchRequest: NSFetchRequest = TemplateSet.fetchRequest()
-    let templateSets = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let templateSets = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var templateSet: TemplateSet? = templateSets.first!
     @State var navPath: [Int] = [Int]()

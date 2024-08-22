@@ -186,7 +186,7 @@ struct EditPrView: View {
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let exerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var exercise: Exercise? = exerciseResults.first
     
