@@ -1,0 +1,116 @@
+[
+    {
+        "type" : "Routine",
+        "timePeriodName" : "6 day PPL",
+        "timePeriodDescription" : "Linear progression based push/pull/legs program. A 6 day routine, can also be run as a 3 day routine. Created by Metallicdpas.",
+        "children" : [
+            
+            {
+                "type" : "TemplateCycle",
+                "children" : [
+                    
+                    {
+                        "type" : "TemplateWeek",
+                        "timePeriodName" : "PPL week",
+                        "timePeriodDescription" : "Metallicdpas PPL routine only consists of a single 6 day week that is repeated over and over. ",
+                        "children" : [
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Push day",
+                                "children" : [
+                                    
+                                    {
+                                        "type" : "TemplateSet",
+                                        "timePeriodName" : "Deadlifts",
+                                        "exercise" : "Deadlift",
+                                        "setLoad" : 0.7,
+                                        "setQuantity" : 5,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "InitialLoadMaxPerc" : 1,
+                                        "children" : [
+                                            
+                                            {
+                                                "type" : "SetThreshold",
+                                                "flatLoadAdd" : 2.5,
+                                                "flatQuantityAdd" : 0,
+                                                "generatePr" : 1,
+                                                "prType": "onerepmax",
+                                                "triggerQuantity" : 5
+                                            },
+                                            
+                                            {
+                                                "type" : "SetThreshold",
+                                                "flatLoadAdd" : 0,
+                                                "flatQuantityAdd" : 0,
+                                                "generatePr" : 1,
+                                                "prType": "onerepmax",
+                                                "triggerQuantity" : 1
+                                            },
+                                            
+                                            {
+                                                "type" : "SetThreshold",
+                                                "flatLoadAdd" : -2.5,
+                                                "flatQuantityAdd" : 0,
+                                                "generatePr" : 1,
+                                                "prType": "onerepmax",
+                                                "triggerQuantity" : 2
+                                            }
+                                            
+                                        ]
+                                    }
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Pull day",
+                                "children" : [
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Leg day",
+                                "children" : [
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Push day",
+                                "children" : [
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Pull day",
+                                "children" : [
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "type" : "TemplateSession",
+                                "timePeriodName" : "Leg day",
+                                "children" : [
+                                    
+                                ]
+                            }
+                            
+                        ]
+                        
+                    }
+                    
+                ]
+            }
+            
+        ]
+    }
+]
