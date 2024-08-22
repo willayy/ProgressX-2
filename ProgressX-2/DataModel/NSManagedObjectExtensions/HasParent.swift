@@ -11,6 +11,6 @@ protocol HasParent {
     
     associatedtype ParentType
     
-    var parent: ParentType { get set }
+    var parent: ParentType { get }
     
 }

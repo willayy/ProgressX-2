@@ -1,5 +1,5 @@
 //
-//  PersistenceGen.swift
+//  Generate.swift
 //  ProgressX-2
 //
 //  Created by William Norland on 2024-08-01.
@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import UIKit
 
-extension PersistenceController {
+extension CoreDataAccess {
     
     /// Generates a set of basic exercises from a data asset as CoreData entries
     /// - Parameter context: NSManagedObjectContext

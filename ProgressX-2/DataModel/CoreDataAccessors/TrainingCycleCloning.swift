@@ -7,7 +7,7 @@
 
 import CoreData
 
-class TrainingCycleGeneration {
+extension CoreDataAccess {
     
     public static func createNewCycleFromRoutine(routine: Routine, context: NSManagedObjectContext) {
         

@@ -11,6 +11,6 @@ protocol HasChildren {
     
     associatedtype ChildrenType
     
-    var parent: [ChildrenType] { get set }
+    var children: [ChildrenType] { get }
     
 }
