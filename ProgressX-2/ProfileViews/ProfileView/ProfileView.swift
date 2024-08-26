@@ -178,7 +178,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return ProfileView()
         .environment(\.managedObjectContext, context)

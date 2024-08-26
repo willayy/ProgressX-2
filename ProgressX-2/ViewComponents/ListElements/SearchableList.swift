@@ -47,7 +47,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     // Does not really work as intended here because @FetchRequest wrapper does not work in Preview context.
     

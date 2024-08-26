@@ -38,6 +38,48 @@ extension SetThreshold: HasParent {
         templateSet.addToThresholds(self)
     }
     
+    /// Initializer for a SetThreshold using JSON data
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateSet: TemplateSet,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.templateSet = templateSet
+        templateSet.addToThresholds(self)
+        self.positionIndex = templateSet.getNextPositionIndex()
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+        
+        // If JSON data has value "nil" set prType to nil, else set it to its correct literal.
+        let prType = json["prType"] as! String
+        
+        self.prType = ( prType == "nil") ? nil : prType
+        
+        self.triggerQuantity = (json["triggerQuantity"] as! Double)
+        
+        // The value in the flatQuantityAdd field should either be a Double or the literal "nil".
+        let flatQuantityAdd = json["flatQuantityAdd"]
+        
+        if flatQuantityAdd is String && (flatQuantityAdd as! String) == "nil"  {
+            self.flatQuantityAdd = nil
+        } else {
+            self.flatQuantityAdd = flatQuantityAdd as! NSNumber?
+        }
+        
+        // The value in the flatLoadAdd field should either be a Double or the literal "nil".
+        let flatLoadAdd = json["flatLoadAdd"]
+        
+        if flatLoadAdd is String && (flatLoadAdd as! String) == "nil" {
+            self.flatLoadAdd = nil
+        } else {
+            self.flatLoadAdd = (flatLoadAdd as! NSNumber?)
+        }
+        
+        // In the JSON files generate PR is an int where 1 is true and 0 (or anthing else) is false.
+        self.generatePr = (json["generatePr"] as! Int) == 1
+    }
+    
     // MARK: Protocol implementation
         
     typealias ParentType = TemplateSet
@@ -49,7 +91,8 @@ extension SetThreshold: HasParent {
     
     // MARK: Extra Properties
     
-    public var flatLoadAddString: String? {
+    /// FlatLoadAdd value formatted as a String
+    public var formattedFlatLoadAdd: String? {
         guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
         guard let context = self.managedObjectContext else { return nil }
         guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
@@ -57,7 +100,8 @@ extension SetThreshold: HasParent {
         return String(format: "%.2f", flatQuantityAdd) + " \(weightUnit)"
     }
     
-    public var flatQuantityAddString: String? {
+    /// flatQuantityAdd value formatted as a String
+    public var formattedFlatQuantityAdd: String? {
         guard let templateSet = self.templateSet else { return nil }
         guard let exercise = templateSet.exercise else { return nil }
         guard let exerciseType = exercise.exerciseType else { return nil }

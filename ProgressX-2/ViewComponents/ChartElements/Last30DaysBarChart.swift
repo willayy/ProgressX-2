@@ -67,7 +67,7 @@ struct Last30DaysBarChart: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let sessions = CoreDataAccess.getAllSessionsDoneLast30days(context)
     
     return Last30DaysBarChart(trainingSessions: sessions)

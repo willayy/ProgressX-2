@@ -14,6 +14,7 @@ extension CoreDataAccess {
     
     // MARK: Helper functions
     
+    /// Gets a bundled asset by its name.
     private static func getAsset(_ assetName: String) -> NSDataAsset {
         guard let asset = NSDataAsset(name: assetName, bundle: Bundle.main) else {
             fatalError("Could not find \(assetName) data asset")
@@ -21,6 +22,7 @@ extension CoreDataAccess {
         return asset
     }
     
+    /// Transforms a NSDataAsset JSON file to a dictionary.
     private static func transformAsset(_ asset: NSDataAsset) -> [[String : Any]] {
         let transformedAsset = try! JSONSerialization.jsonObject(
             with: asset.data,
@@ -29,15 +31,16 @@ extension CoreDataAccess {
         return transformedAsset
     }
     
-    private static func generateExercise(data: [String : Any], _ context: NSManagedObjectContext) -> Void {
+    /// Generates an Exercise from JSON data.
+    private static func generateExercise(jsonDict: [String : Any], _ context: NSManagedObjectContext) -> Void {
         
-        let name = data["name"]! as! String
+        let name = jsonDict["name"]! as! String
         
-        let description = data["description"]! as! String
+        let description = jsonDict["description"]! as! String
         
-        let type = data["type"]! as! String
+        let type = jsonDict["type"]! as! String
         
-        let categories: [String] = data["categories"]! as! [String]
+        let categories: [String] = jsonDict["categories"]! as! [String]
         
         let exercise = Exercise(
             context,
@@ -60,14 +63,68 @@ extension CoreDataAccess {
         }
     }
     
-    private static func generateRoutine(data: [String : Any], _ context: NSManagedObjectContext) -> Void {
-        
-        
-
+    /// Gets the children of a JSON derived dictionary.
+    private static func getChildren(jsonDict: [String : Any]) -> [[String : Any]] {
+        return jsonDict["children"] as! [[String : Any]]
     }
     
-    // MARK: Preview
+    /// Generates a Routine from JSON data.
+    private static func generateRoutine(jsonDict: [String : Any], _ context: NSManagedObjectContext) -> Void {
     
+        // Create the routine
+        let routine = Routine(context, json: jsonDict)
+        
+        // Get the template cycle JSON, special case since there is only a single TemplateCycle
+        let templateCycleJSON = (jsonDict["children"] as! [[String : Any]])[0]
+        
+        // Create the templateCycle and trainingCycle
+        let templateCycle = TemplateCycle(context, routine: routine, json: templateCycleJSON)
+        let trainingCycle = TrainingCycle(context, routine: routine)
+        
+        let templateWeeksJSON = getChildren(jsonDict: templateCycleJSON)
+        
+        // Iterate over all weeks in templatecycle
+        for templateWeekJSON in templateWeeksJSON {
+            
+            // Create the templateWeek and trainingWeek
+            let templateWeek = TemplateWeek(context, templateCycle: templateCycle, json: templateWeekJSON)
+            let trainingWeek = TrainingWeek(context, trainingCycle: trainingCycle, templateWeek: templateWeek)
+            
+            let templateSessionsJSON = getChildren(jsonDict: templateWeekJSON)
+            
+            // Iterate over all sessions in templateWeek
+            for templateSessionJSON in templateSessionsJSON {
+                
+                // Create the templateSession and trainingSession
+                let templateSession = TemplateSession(context, templateWeek: templateWeek, json: templateSessionJSON)
+                let trainingSession = TrainingSession(context, trainingWeek: trainingWeek, templateSession: templateSession)
+                
+                let templateSetsJSON = getChildren(jsonDict: templateSessionJSON)
+                
+                // Iterate over all sets in templateSession
+                for templateSetJSON in templateSetsJSON {
+                    
+                    let templateSet = TemplateSet(context, templateSession: templateSession, json: templateSetJSON)
+                    _ = TrainingSet(context, trainingSession: trainingSession, templateSet: templateSet)
+                    
+                    let setThresholdsJSON = getChildren(jsonDict: templateSetJSON)
+                    
+                    // Iterate over all thresholds in templateSet
+                    for setThresholdJSON in setThresholdsJSON {
+                        
+                        _ = SetThreshold(context, templateSet: templateSet, json: setThresholdJSON)
+                        
+                    }
+                }
+            }
+        }
+    }
+        
+    // MARK: Preview in-memory database generating functions
+    
+    /// Generates categories for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewCategories(_ context: NSManagedObjectContext) -> Void {
         
         let asset = getAsset("PreviewExerciseCategories")
@@ -85,6 +142,9 @@ extension CoreDataAccess {
         }
     }
     
+    /// Generates exercises for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewExercises(_ context: NSManagedObjectContext) -> Void {
         
         let asset = getAsset("PreviewExercises")
@@ -93,11 +153,14 @@ extension CoreDataAccess {
         
         for json in jsonArray {
             
-            generateExercise(data: json, context)
+            generateExercise(jsonDict: json, context)
             
         }
     }
     
+    /// Generates a profile for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewProfile(_ context: NSManagedObjectContext) -> Void {
         
         let asset = getAsset("PreviewProfile")
@@ -118,6 +181,9 @@ extension CoreDataAccess {
         
     }
     
+    /// Generates body entries for the profile in the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewBodyEntries(_ context: NSManagedObjectContext) -> Void {
         
         let asset = getAsset("PreviewBodyEntries")
@@ -143,6 +209,9 @@ extension CoreDataAccess {
         
     }
     
+    /// Generates personal records for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewPersonalRecords(_ context: NSManagedObjectContext) -> Void {
         
         let asset = getAsset("PreviewPersonalRecords")
@@ -174,11 +243,21 @@ extension CoreDataAccess {
         
     }
     
+    /// Generates a routines for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generatePreviewRoutine(_ context: NSManagedObjectContext) -> Void {
         
+        let asset = getAsset("PreviewRoutine")
+        
+        let jsonArray = transformAsset(asset)
+        
+        let jsonRoutine = jsonArray.first!
+        
+        generateRoutine(jsonDict: jsonRoutine, context)
     }
     
-    // MARK: Live
+    // MARK: Live database generating functions
     
     /// Generates a set of basic exercises from a data asset as CoreData entries
     /// - Parameter context: NSManagedObjectContext
@@ -191,7 +270,7 @@ extension CoreDataAccess {
         
         for json in jsonArray {
             
-            generateExercise(data: json, context)
+            generateExercise(jsonDict: json, context)
             
         }
     }
@@ -215,7 +294,10 @@ extension CoreDataAccess {
             )
         }
     }
-        
+    
+    /// Generates a set of popular starter routines based of the starter exercises generated.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
     public static func generateStarterRoutines(_ context: NSManagedObjectContext) -> Void {
         
     }

@@ -60,7 +60,7 @@ struct WeekBarChart: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let sessions = CoreDataAccess.getAllSessionsDoneThisWeek(context)
     
     return WeekBarChart(trainingSessions: sessions)

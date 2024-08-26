@@ -23,6 +23,17 @@ extension Routine: HasOrderable, HasChildren {
         self.createdOnDate = Date()
     }
     
+    /// Initializer for a Routine using JSON data
+    convenience init(
+        _ context: NSManagedObjectContext,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+        self.createdOnDate = Date()
+    }
+    
     // MARK: Extra properties
     
     /// The last completed session of this routine.

@@ -78,7 +78,7 @@ struct RoutineStatisticsView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Routine> = Routine.fetchRequest()
     

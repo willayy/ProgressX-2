@@ -8,8 +8,8 @@
 import CoreData
 
 struct PersistenceController {
-    
-    let container: NSPersistentContainer
+        
+    private let container: NSPersistentContainer
 
     init(inMemory: Bool) {
         
@@ -48,7 +48,7 @@ struct PersistenceController {
      To make this work during testing without throwing warnings the shared Persistence controller
      is aliased to the preview one during testing. If this isnt done two identical DataModels will
      be created during testing which throws warnings since all entities will be duplicated */
-    static let shared = {
+    private static let shared = {
         if TESTING {
           return preview
         } else {
@@ -57,7 +57,7 @@ struct PersistenceController {
     }()
     
     // The persistence ontroller intended for the app during developement with the canvas view and testing
-    static let preview = {
+    private static let preview = {
         // Initialize as in-memory
         let result = PersistenceController(inMemory: true)
         let context = result.container.viewContext
@@ -66,6 +66,16 @@ struct PersistenceController {
         CoreDataAccess.save(context)
         return result
     }()
+    
+    /// Accessor for the preview viewContext
+    public static var previewViewContext: NSManagedObjectContext {
+        return preview.container.viewContext
+    }
+    
+    /// Accessor for the live viewContext
+    public static var viewContext: NSManagedObjectContext {
+        return shared.container.viewContext
+    }
     
 }
 

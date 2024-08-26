@@ -223,7 +223,7 @@ struct TrainingView: View {
 }
     
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
     let trainingSessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     

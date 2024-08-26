@@ -44,7 +44,7 @@ struct TrainingSetFinishedView: View {
     }
 }
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     @State var selectedRoutine: Routine? = nil
     
     return TrainingSetFinishedView()

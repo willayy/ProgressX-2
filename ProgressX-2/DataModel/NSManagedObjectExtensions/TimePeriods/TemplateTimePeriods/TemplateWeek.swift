@@ -28,6 +28,20 @@ extension TemplateWeek: HasOrderable, HasChildren, HasParent {
         templateCycle.addToTemplateWeeks(self)
     }
     
+    /// Initializer for a TemplateWeek using JSON data
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateCycle: TemplateCycle,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.templateCycle = templateCycle
+        templateCycle.addToTemplateWeeks(self)
+        self.positionIndex = templateCycle.getNextPositionIndex()
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+    }
+    
     // MARK: Protocol implementation
     
     typealias ChildrenType = TemplateSession

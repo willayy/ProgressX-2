@@ -89,7 +89,7 @@ struct StartWorkoutView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return StartWorkoutView()
         .environmentObject(ViewRouter())

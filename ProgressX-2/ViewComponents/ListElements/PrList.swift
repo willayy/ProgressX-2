@@ -82,7 +82,7 @@ struct PrList: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequest.predicate = NSPredicate(format: "exerciseType == %@","time")

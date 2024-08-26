@@ -267,7 +267,7 @@ struct EditTemplateSetView: View {
 
 #Preview {
 
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchReqeust: NSFetchRequest = TemplateSet.fetchRequest()
     let templateSets = CoreDataAccess.fetch(context, fetchRequest: fetchReqeust)
     

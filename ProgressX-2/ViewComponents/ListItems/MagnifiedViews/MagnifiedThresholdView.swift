@@ -32,11 +32,11 @@ struct MagnifiedThresholdView: View {
             
             Text("Flat load add: ")
                 .fontWeight(.bold) +
-            Text(String(threshold.flatLoadAddString ?? "Not set"))
+            Text(String(threshold.formattedFlatLoadAdd ?? "Not set"))
             
             Text("Flat quantity add: ")
                 .fontWeight(.bold) +
-            Text(threshold.flatQuantityAddString ?? "Not set")
+            Text(threshold.formattedFlatQuantityAdd ?? "Not set")
             
         })
     }

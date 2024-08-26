@@ -251,7 +251,7 @@ struct EditThresholdsView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest<SetThreshold> = SetThreshold.fetchRequest()
     let thresholds = CoreDataAccess.fetch(
         context,

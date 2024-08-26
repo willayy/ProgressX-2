@@ -160,7 +160,7 @@ struct CreateNewProfile1View: View {
     
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     return CreateNewProfile1View()
         .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)

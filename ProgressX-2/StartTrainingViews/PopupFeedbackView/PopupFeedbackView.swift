@@ -176,7 +176,7 @@ struct PopupFeedbackView: View {
 }
 
 #Preview{
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = TrainingSet.fetchRequest()
     let trainingSets = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     

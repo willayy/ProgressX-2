@@ -83,7 +83,7 @@ struct ExerciseLibraryView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return ExerciseLibraryView()
         .environment(\.managedObjectContext, context)

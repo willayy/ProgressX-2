@@ -299,7 +299,7 @@ struct CreateNewTemplateSetView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchReqeust: NSFetchRequest = TemplateSession.fetchRequest()
     let templateSessions = CoreDataAccess.fetch(context, fetchRequest: fetchReqeust)
     

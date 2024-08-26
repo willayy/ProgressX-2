@@ -26,6 +26,19 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
         routine.templateCycle = self
     }
     
+    /// Initializer for a TemplateCycle using JSON data
+    convenience init(
+        _ context: NSManagedObjectContext,
+        routine: Routine,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.routine = routine
+        routine.templateCycle = self
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+    }
+    
     // MARK: Protocol implementation
     
     typealias ChildrenType = TemplateWeek

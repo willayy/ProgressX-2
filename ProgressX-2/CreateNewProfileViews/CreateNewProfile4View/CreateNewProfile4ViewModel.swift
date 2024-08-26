@@ -123,8 +123,8 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
     }
     
     public func generateBasicRoutine(viewContext: NSManagedObjectContext) {
-        if !CoreDataAccess.basicRoutineExists(viewContext) {
-            CoreDataAccess.generateBasicRoutine(viewContext)
+        if !CoreDataAccess.basicRoutinesExists(viewContext) {
+            CoreDataAccess.generateStarterRoutines(viewContext)
             CoreDataAccess.save(viewContext)
         }
     }

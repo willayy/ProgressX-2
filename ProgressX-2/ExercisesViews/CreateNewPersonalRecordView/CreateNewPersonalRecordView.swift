@@ -139,7 +139,7 @@ struct CreateNewPersonalRecord: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestRepBasedExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")

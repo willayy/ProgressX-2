@@ -120,7 +120,7 @@ struct BodyEntryChart: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest<BodyEntry> = BodyEntry.fetchRequest()
     fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
     let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)

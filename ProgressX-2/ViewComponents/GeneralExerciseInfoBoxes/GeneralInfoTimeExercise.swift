@@ -103,7 +103,7 @@ struct GeneralInfoTimeExercise: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequestExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestExercise.predicate = NSPredicate(format: "exerciseType == %@", "time")

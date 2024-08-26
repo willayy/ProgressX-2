@@ -11,11 +11,10 @@ import CoreData
 @main
 struct ProgressX_2App: App {
 
-    let persistenceContainer = PersistenceController.shared.container
     @StateObject var viewRouter = ViewRouter()
     @State var isLoading: Bool = true
-    static let context: NSManagedObjectContext = PersistenceController.shared.container.viewContext
-    static let profileExists: Bool = CoreDataAccess.profileExists(context)
+    private static let context: NSManagedObjectContext = PersistenceController.viewContext
+    private static let profileExists: Bool = CoreDataAccess.profileExists(context)
 
     var body: some Scene {
         WindowGroup {            
@@ -40,7 +39,7 @@ struct ProgressX_2App: App {
                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
                 .zIndex(1)
                 .environmentObject(viewRouter)
-                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                .environment(\.managedObjectContext, ProgressX_2App.context)
                 
             } else {
                 
@@ -70,7 +69,7 @@ struct ProgressX_2App: App {
                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
                 .zIndex(1)
                 .environmentObject(viewRouter)
-                .environment(\.managedObjectContext, persistenceContainer.viewContext)
+                .environment(\.managedObjectContext, ProgressX_2App.context)
             }
         }
     }

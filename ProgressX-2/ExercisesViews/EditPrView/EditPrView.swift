@@ -182,7 +182,7 @@ struct EditPrView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     

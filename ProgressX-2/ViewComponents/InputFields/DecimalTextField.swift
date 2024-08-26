@@ -142,7 +142,7 @@ struct DecimalTextField: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     @State var inputValue: String = ""
     @State var valueIsInvalid: Bool = false
     @State var valueIsInvalidMsg: String = ""

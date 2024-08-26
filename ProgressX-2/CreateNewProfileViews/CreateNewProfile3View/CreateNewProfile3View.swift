@@ -188,7 +188,7 @@ struct CreateNewProfile3View: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     @State var navPath = [Int]()
     

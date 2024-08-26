@@ -41,6 +41,26 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren {
         templateSession.addToTemplateSets(self)
     }
     
+    /// Initializer for a TemplateSet using JSON data
+    convenience init(
+        _ context: NSManagedObjectContext,
+        templateSession: TemplateSession,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.templateSession = templateSession
+        templateSession.addToTemplateSets(self)
+        self.positionIndex = templateSession.getNextPositionIndex()
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+        self.loadType = (json["loadType"] as! String)
+        self.setLoad = (json["setLoad"] as! Double)
+        self.quantityType = (json["quantityType"] as! String)
+        self.setQuantity = (json["setQuantity"] as! Double)
+        self.restTime = (json["restTime"] as! Double)
+        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)
+    }
+    
     // MARK: Protocol implementation
         
     typealias ParentType = TemplateSession
