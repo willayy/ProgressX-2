@@ -30,8 +30,10 @@ struct DisplayMusclesDummy: View {
                             .padding(.top)
                             .frame(height: 300)
                     }
-                    
+                
             }
         }
     }
 }
+
+
