@@ -12,7 +12,7 @@ extension SetThreshold: HasParent {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateSet: TemplateSet,
         name: String = "",
@@ -39,7 +39,7 @@ extension SetThreshold: HasParent {
     }
     
     /// Initializer for a SetThreshold using JSON data
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateSet: TemplateSet,
         json: [String : Any]
@@ -82,10 +82,10 @@ extension SetThreshold: HasParent {
     
     // MARK: Protocol implementation
         
-    typealias ParentType = TemplateSet
+    internal typealias ParentType = TemplateSet
     
     // Protocol implementation
-    var parent: TemplateSet {
+    internal var parent: TemplateSet {
         return self.templateSet!
     }
     

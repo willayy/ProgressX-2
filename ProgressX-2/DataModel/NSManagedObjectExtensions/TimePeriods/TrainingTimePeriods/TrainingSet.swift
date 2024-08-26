@@ -35,10 +35,10 @@ extension TrainingSet: HasParent {
     
     // MARK: Protocol implementation
         
-    typealias ParentType = TrainingSession
+    internal typealias ParentType = TrainingSession
     
     // Protocol implementation
-    var parent: TrainingSession {
+    internal var parent: TrainingSession {
         return self.trainingSession!
     }
     

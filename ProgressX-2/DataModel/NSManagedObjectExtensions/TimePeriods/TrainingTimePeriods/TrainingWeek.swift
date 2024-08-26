@@ -11,7 +11,7 @@ import CoreData
 extension TrainingWeek: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     // MARK: Convenience init
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         trainingCycle: TrainingCycle,
         templateWeek: TemplateWeek
@@ -29,22 +29,22 @@ extension TrainingWeek: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     // MARK: Protocol implementation
         
-    typealias ParentType = TrainingCycle
+    internal typealias ParentType = TrainingCycle
     
-    typealias ChildrenType = TrainingSession
+    internal typealias ChildrenType = TrainingSession
     
     // Protocol implementation
-    var children: [TrainingSession] {
+    internal var children: [TrainingSession] {
         return self.trainingSessions!.allObjects as! [TrainingSession]
     }
     
     // Protocol implementation
-    var parent: TrainingCycle {
+    internal var parent: TrainingCycle {
         return self.trainingCycle!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let sessions: [TrainingSession] = self.trainingSessions?.allObjects as! [TrainingSession]
         let max = sessions.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)

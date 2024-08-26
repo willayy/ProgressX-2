@@ -12,7 +12,7 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateSession: TemplateSession,
         name: String = "",
@@ -42,7 +42,7 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren {
     }
     
     /// Initializer for a TemplateSet using JSON data
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateSession: TemplateSession,
         json: [String : Any]
@@ -63,28 +63,28 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren {
     
     // MARK: Protocol implementation
         
-    typealias ParentType = TemplateSession
+    internal typealias ParentType = TemplateSession
     
-    typealias ChildrenType = SetThreshold
+    internal typealias ChildrenType = SetThreshold
     
-    var children: [SetThreshold] {
+    internal var children: [SetThreshold] {
         return self.thresholds!.allObjects as! [SetThreshold]
     }
     
     // Protocol implementation
-    var parent: TemplateSession {
+    internal var parent: TemplateSession {
         return self.templateSession!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
         let max = thresholds.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    func getPositionIndexes() -> [Int64] {
+    internal func getPositionIndexes() -> [Int64] {
         let children = self.thresholds!.allObjects as! [SetThreshold]
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes

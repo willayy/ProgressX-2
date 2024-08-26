@@ -12,7 +12,7 @@ extension TrainingCycle: HasOrderable, HasCompleteable, HasParent {
     
     // MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         routine: Routine,
         name: String = "",
@@ -32,22 +32,22 @@ extension TrainingCycle: HasOrderable, HasCompleteable, HasParent {
     
     // MARK: Protocol implementation
         
-    typealias ParentType = Routine
+    internal typealias ParentType = Routine
     
-    typealias ChildrenType = TrainingWeek
+    internal typealias ChildrenType = TrainingWeek
     
     // Protocol implementation
-    var children: [TrainingWeek] {
+    internal var children: [TrainingWeek] {
         return self.trainingWeeks!.allObjects as! [TrainingWeek]
     }
     
     // Protocol implementation
-    var parent: Routine {
+    internal var parent: Routine {
         return self.routine!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let weeks: [TrainingWeek] = self.trainingWeeks?.allObjects as! [TrainingWeek]
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)

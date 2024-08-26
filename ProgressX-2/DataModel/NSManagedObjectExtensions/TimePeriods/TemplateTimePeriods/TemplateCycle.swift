@@ -12,7 +12,7 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         routine: Routine,
         name: String = "",
@@ -27,7 +27,7 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     }
     
     /// Initializer for a TemplateCycle using JSON data
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         routine: Routine,
         json: [String : Any]
@@ -41,29 +41,29 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // MARK: Protocol implementation
     
-    typealias ChildrenType = TemplateWeek
+    internal typealias ChildrenType = TemplateWeek
     
-    typealias ParentType = Routine
+    internal typealias ParentType = Routine
     
     // Protocol implementation
-    var children: [TemplateWeek] {
+    internal var children: [TemplateWeek] {
         return self.templateWeeks!.allObjects as! [TemplateWeek]
     }
     
     // Protocol implementation
-    var parent: Routine {
+    internal var parent: Routine {
         return self.routine!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    func getPositionIndexes() -> [Int64] {
+    internal func getPositionIndexes() -> [Int64] {
         let children = self.templateWeeks!.allObjects as! [TemplateWeek]
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes

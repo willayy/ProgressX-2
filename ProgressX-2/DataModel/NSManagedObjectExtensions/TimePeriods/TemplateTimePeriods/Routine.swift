@@ -12,7 +12,7 @@ extension Routine: HasOrderable, HasChildren {
     
     // MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         name: String,
         description: String
@@ -24,7 +24,7 @@ extension Routine: HasOrderable, HasChildren {
     }
     
     /// Initializer for a Routine using JSON data
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         json: [String : Any]
     ) {
@@ -105,24 +105,24 @@ extension Routine: HasOrderable, HasChildren {
     // MARK: Protocol implementation
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let cycles: [TrainingCycle] = self.trainingCycles?.allObjects as! [TrainingCycle]
         let max = cycles.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    func getPositionIndexes() -> [Int64] {
+    internal func getPositionIndexes() -> [Int64] {
         let children = self.trainingCycles!.allObjects as! [TrainingCycle]
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes
     }
     
     // Protocol implementation
-    typealias ChildrenType = TrainingCycle
+    internal typealias ChildrenType = TrainingCycle
     
     // Protocol implementation
-    public var children: [TrainingCycle] {
+    internal var children: [TrainingCycle] {
         return self.trainingCycles!.allObjects as! [TrainingCycle]
     }
     

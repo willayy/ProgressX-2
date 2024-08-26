@@ -12,7 +12,7 @@ extension TemplateSession: HasOrderable, HasChildren, HasParent {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateWeek: TemplateWeek,
         name: String = "",
@@ -29,7 +29,7 @@ extension TemplateSession: HasOrderable, HasChildren, HasParent {
     }
     
     /// Initializer for a TemplateSession using JSON data
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateWeek: TemplateWeek,
         json: [String : Any]
@@ -44,29 +44,29 @@ extension TemplateSession: HasOrderable, HasChildren, HasParent {
     
     // MARK: Protocol implementation
     
-    typealias ChildrenType = TemplateSet
+    internal typealias ChildrenType = TemplateSet
     
-    typealias ParentType = TemplateWeek
+    internal typealias ParentType = TemplateWeek
     
     // Protocol implementation
-    var children: [TemplateSet] {
+    internal var children: [TemplateSet] {
         return self.templateSets!.allObjects as! [TemplateSet]
     }
     
     // Protocol implementation
-    var parent: TemplateWeek {
+    internal var parent: TemplateWeek {
         return self.templateWeek!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    func getPositionIndexes() -> [Int64] {
+    internal func getPositionIndexes() -> [Int64] {
         let children = self.templateSets!.allObjects as! [TemplateSet]
         let positionIndexes = children.map { $0.positionIndex }
         return positionIndexes

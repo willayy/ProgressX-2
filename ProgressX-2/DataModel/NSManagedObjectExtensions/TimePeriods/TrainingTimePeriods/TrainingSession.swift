@@ -30,22 +30,22 @@ extension TrainingSession: HasOrderable, HasCompleteable, HasParent, HasChildren
     
     // MARK: Protocol implementation
         
-    typealias ParentType = TrainingWeek
+    internal typealias ParentType = TrainingWeek
     
-    typealias ChildrenType = TrainingSet
+    internal typealias ChildrenType = TrainingSet
     
     // Protocol implementation
-    var children: [TrainingSet] {
+    internal var children: [TrainingSet] {
         return self.trainingSets!.allObjects as! [TrainingSet]
     }
     
     // Protocol implementation
-    var parent: TrainingWeek {
+    internal var parent: TrainingWeek {
         return self.trainingWeek!
     }
     
     // Protocol implementation
-    public func getNextPositionIndex() -> Int64 {
+    internal func getNextPositionIndex() -> Int64 {
         let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
