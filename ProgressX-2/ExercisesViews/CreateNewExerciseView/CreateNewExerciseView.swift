@@ -153,6 +153,9 @@ struct CreateNewExerciseView: View {
             )
             .padding(.horizontal, 40)
             
+            DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories, categories: _categories)
+
+            
         }
                 
             Button(action: {
