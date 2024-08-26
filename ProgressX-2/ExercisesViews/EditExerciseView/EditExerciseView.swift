@@ -107,7 +107,11 @@ struct EditExerciseView: View {
                     viewModel.selectedCategories.insert(category as! ExerciseCategory)
                 }
             })
+            //DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories, categories: _categories)
+       
         }
+
+            
                 
         // MARK: Handle an edit of an exercise
         Button(action: {
