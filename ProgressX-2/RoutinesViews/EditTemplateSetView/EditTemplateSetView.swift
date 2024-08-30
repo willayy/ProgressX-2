@@ -93,7 +93,7 @@ struct EditTemplateSetView: View {
                 IntSelectionList(
                     selected: $viewModel.editedSetPositionIndex,
                     selections: viewModel.positionIndexes(
-                        selectedTemplateSet: selectedTemplateSet
+                        selectedTemplateSet: selectedTemplateSet!
                     )
                 )
                 .padding(.bottom, 20)

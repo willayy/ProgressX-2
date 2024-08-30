@@ -133,39 +133,84 @@ extension SetThreshold: HasParent {
         }
     }
     
-    /// Use this property to trigger a SetThreshold
-    public func trigger(loadDone: Double, quantityDone: Double) -> Void {
+    /// Returns true if quantityDone is larger than triggerQuantity.
+    internal func isTriggered(quantityDone: Double) -> Bool {
+        
+        if quantityDone >= self.triggerQuantity {
+            
+            return true
+            
+        } else {
+            
+            return false
+            
+        }
+    }
+    
+    /// Modifies the load of the template set with flatLoadAdd.
+    internal func addLoadModifiers() -> Void {
         
         let templateSet = self.templateSet!
         
-        let flatLoadAdd = self.flatQuantityAdd?.doubleValue ?? 0
+        let flatLoadAdd: Double = self.flatQuantityAdd?.doubleValue ?? 0
         
-        let flatQuantityAdd = self.flatQuantityAdd?.doubleValue ?? 0
+        templateSet.setLoad += flatLoadAdd
         
-        let thresholdShouldTrigger = quantityDone >= self.triggerQuantity
+    }
+    
+    /// Modifies the quantity of the template set with the flatQuantityAdd.
+    internal func addQuantityModifiers() -> Void {
         
-        /* If a threshold takes away load or quantity it should only be
-         triggered when the quantity done is below the triggerQuantity */
-        let thresholdShouldModify = !( (flatQuantityAdd < 0 || flatLoadAdd < 0) && thresholdShouldTrigger )
+        let templateSet = self.templateSet!
         
-        // Generates a PR
+        let flatQuantityAdd: Double = self.flatQuantityAdd?.doubleValue ?? 0
+        
+        templateSet.setQuantity += flatQuantityAdd
+        
+        // Also modify trigger quantity to ensure linearity
+        self.triggerQuantity += flatQuantityAdd
+        
+    }
+    
+    /// Generates a personal record if it's possible.
+    internal func generatePersonalRecord(quantityDone: Double, loadDone: Double) -> Void {
+        
         if self.generatePr {
             
-            let exercise = templateSet.exercise!
-            let computedLoad: Double
-            let computedQuantity: Double
+            let templateSet = self.templateSet!
             
-            // if onerepmax pr and load done isnt 1 use Brzyckis formula to approximate.
-            if self.prType! == "onerepmax" && loadDone != 1 {
-                computedQuantity = 1
-                computedLoad = loadDone / (1.0278 - (0.0278 * quantityDone))
-            } else {
-                computedQuantity = quantityDone
-                computedLoad = loadDone
-            }
+            let exercise = templateSet.exercise!
+            
+            let computedLoad: Double = {
+                
+                // if onerepmax pr and load done isnt 1 use Brzyckis formula to approximate
+                if self.prType! == "onerepmax" && loadDone != 1 {
+                    
+                    return (loadDone / (1.0278 - (0.0278 * quantityDone)))
+                    
+                } else {
+                    
+                    return loadDone
+                    
+                }
+            }()
+            
+            let computedQuantity: Double = {
+                
+                // If prType is onerepmax always set quantityDone to 1
+                if self.prType! == "onerepmax" {
+                    
+                    return 1
+                    
+                } else {
+                    
+                    return quantityDone
+                    
+                }
+            }()
             
             // Generate the PersonalRecord.
-            let _ = PersonalRecord(
+            _ = PersonalRecord(
                 self.managedObjectContext!,
                 exercise: exercise,
                 weightLoad: computedLoad,
@@ -174,26 +219,6 @@ extension SetThreshold: HasParent {
                 type: self.prType!
             )
         }
-        
-        if thresholdShouldModify {
-            
-            // Adds the flat load.
-            if self.flatLoadAdd != nil && thresholdShouldTrigger {
-                
-                templateSet.setLoad += self.flatLoadAdd!.doubleValue
-            }
-            
-            // Adds the flat quantity
-            if self.flatQuantityAdd != nil && thresholdShouldTrigger {
-                
-                templateSet.setQuantity += self.flatQuantityAdd!.doubleValue
-                
-                // Adds the quantity added to the template to itself the ensure linearity.
-                self.triggerQuantity += self.flatQuantityAdd!.doubleValue
-            }
-            
-        }
-        
     }
         
     // MARK: Validation

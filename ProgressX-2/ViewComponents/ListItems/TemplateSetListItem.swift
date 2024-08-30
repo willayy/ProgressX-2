@@ -33,13 +33,13 @@ struct TemplateSetListItem: View {
                     
                     (Text("Quantity: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setQuantityString!)"))
+                     + Text("\(set.formattedSetQuantity!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Load: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setLoadString!)"))
+                     + Text("\(set.formattedSetLoad!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

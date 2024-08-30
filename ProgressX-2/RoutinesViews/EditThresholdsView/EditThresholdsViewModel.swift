@@ -60,7 +60,7 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
         editedFlatLoadAdd = String(format: "%.2f", entity.flatLoadAdd?.doubleValue ?? "")
         
     }
-        
+    
     public func saveEdits(entity: SetThreshold, viewContext: NSManagedObjectContext) -> Void {
         
         let inputFlatLoadAdd: NSNumber? = {

@@ -8,23 +8,37 @@
 import Foundation
 
 enum ExerciseType: String {
+    
     case Reps = "reps"
+    
     case Time = "time"
+    
 }
 
 enum PersonalRecordType: String {
+    
     case OneRepMax = "onerepmax"
+    
     case TimeMax = "timemax"
+    
     case MaxReps = "maxreps"
+    
 }
 
 enum LoadType: String {
+    
     case maxPercentage = "maxperc"
+    
     case bodyWeightPercentage = "bwperc"
+    
     case numerical = "numerical"
+    
 }
 
 enum QuantityType: String {
+    
     case maxPercentage = "maxperc"
+    
     case numerical = "numerical"
+    
 }

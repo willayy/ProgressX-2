@@ -112,14 +112,11 @@ extension Routine: HasOrderable, HasChildren {
     }
     
     // Protocol implementation
-    internal func getPositionIndexes() -> [Int64] {
+    public func getPositionIndexes() -> [Int64] {
         let children = self.trainingCycles!.allObjects as! [TrainingCycle]
         let positionIndexes = children.map { $0.positionIndex }
-        return positionIndexes
+        return positionIndexes.sorted()
     }
-    
-    // Protocol implementation
-    internal typealias ChildrenType = TrainingCycle
     
     // Protocol implementation
     internal var children: [TrainingCycle] {

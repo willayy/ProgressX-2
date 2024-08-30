@@ -41,10 +41,6 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // MARK: Protocol implementation
     
-    internal typealias ChildrenType = TemplateWeek
-    
-    internal typealias ParentType = Routine
-    
     // Protocol implementation
     internal var children: [TemplateWeek] {
         return self.templateWeeks!.allObjects as! [TemplateWeek]
@@ -57,18 +53,24 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // Protocol implementation
     internal func getNextPositionIndex() -> Int64 {
+        
         let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
+        
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
+        
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    internal func getPositionIndexes() -> [Int64] {
+    public func getPositionIndexes() -> [Int64] {
+        
         let children = self.templateWeeks!.allObjects as! [TemplateWeek]
+        
         let positionIndexes = children.map { $0.positionIndex }
-        return positionIndexes
+        
+        return positionIndexes.sorted()
     }
-
+    
     // MARK: Extra properties
     
     // No extra properties on this class extension.

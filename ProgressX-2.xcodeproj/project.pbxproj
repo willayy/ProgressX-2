@@ -87,6 +87,10 @@
 		8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */; };
 		8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F97C2C1C63F5004BA421 /* BodyEntry.swift */; };
 		8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F97E2C1C64BE004BA421 /* Achievement.swift */; };
+		83618BB92C7F56C0001D401E /* ThresholdHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BB82C7F56C0001D401E /* ThresholdHandler.swift */; };
+		83618BBD2C8094C2001D401E /* IsChangePropogator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BBC2C8094C2001D401E /* IsChangePropogator.swift */; };
+		83618BC32C809757001D401E /* QuantityTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC22C809757001D401E /* QuantityTodoCalculator.swift */; };
+		83618BC52C8098CB001D401E /* LoadTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */; };
 		836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485E82C36C156006EB0C0 /* CreateNewThresholdView.swift */; };
 		836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EA2C36C560006EB0C0 /* EditThresholdsView.swift */; };
 		836485ED2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EC2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift */; };
@@ -277,6 +281,10 @@
 		8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFieldValidator.swift; sourceTree = "<group>"; };
 		8359F97C2C1C63F5004BA421 /* BodyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyEntry.swift; sourceTree = "<group>"; };
 		8359F97E2C1C64BE004BA421 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		83618BB82C7F56C0001D401E /* ThresholdHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdHandler.swift; sourceTree = "<group>"; };
+		83618BBC2C8094C2001D401E /* IsChangePropogator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsChangePropogator.swift; sourceTree = "<group>"; };
+		83618BC22C809757001D401E /* QuantityTodoCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityTodoCalculator.swift; sourceTree = "<group>"; };
+		83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTodoCalculator.swift; sourceTree = "<group>"; };
 		836485E82C36C156006EB0C0 /* CreateNewThresholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdView.swift; sourceTree = "<group>"; };
 		836485EA2C36C560006EB0C0 /* EditThresholdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsView.swift; sourceTree = "<group>"; };
 		836485EC2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfileNavigationController.swift; sourceTree = "<group>"; };
@@ -395,13 +403,11 @@
 		830E26802C1753EF00815936 /* NSManagedObjectExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
-				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
-				83B013BD2C60EC6100059E42 /* HasCompleteable.swift */,
-				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
-				83F26D192C70C1E300C8EB82 /* HasChildren.swift */,
-				83F26D172C70C12D00C8EB82 /* HasParent.swift */,
 				83D684F52C2E064500FA78C6 /* Profile.swift */,
+				83618BC12C80972F001D401E /* Validation */,
+				83618BC02C809722001D401E /* Enums */,
+				83618BBF2C809700001D401E /* Handlers */,
+				83618BBE2C8096E5001D401E /* Protocols */,
 				83BAF90C2C5B744500EFC1C6 /* Exercise */,
 				83BAF90D2C5B745900EFC1C6 /* TimePeriods */,
 				833CCD572C3D6B0800B53C97 /* Achievements */,
@@ -797,6 +803,44 @@
 				8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */,
 			);
 			path = InputValidation;
+			sourceTree = "<group>";
+		};
+		83618BBE2C8096E5001D401E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				83F26D172C70C12D00C8EB82 /* HasParent.swift */,
+				83F26D192C70C1E300C8EB82 /* HasChildren.swift */,
+				83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */,
+				83B013BD2C60EC6100059E42 /* HasCompleteable.swift */,
+				83618BBC2C8094C2001D401E /* IsChangePropogator.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		83618BBF2C809700001D401E /* Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				83618BB82C7F56C0001D401E /* ThresholdHandler.swift */,
+				83618BC22C809757001D401E /* QuantityTodoCalculator.swift */,
+				83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */,
+			);
+			path = Handlers;
+			sourceTree = "<group>";
+		};
+		83618BC02C809722001D401E /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				831F2C312C24E8F1007A7A8A /* DataModelEnums.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		83618BC12C80972F001D401E /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				831F2C132C22FB7A007A7A8A /* ValidationNSErrors.swift */,
+			);
+			path = Validation;
 			sourceTree = "<group>";
 		};
 		836485F42C36D713006EB0C0 /* CreateNewProfile1View */ = {
@@ -1218,6 +1262,7 @@
 				836485EE2C36CACA006EB0C0 /* EditTemplateSetView.swift in Sources */,
 				83BD39622C467E17008E09A0 /* PieChart.swift in Sources */,
 				8364860D2C372544006EB0C0 /* TemplateSession.swift in Sources */,
+				83618BC32C809757001D401E /* QuantityTodoCalculator.swift in Sources */,
 				836485EF2C36CACA006EB0C0 /* ThresholdsView.swift in Sources */,
 				8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */,
 				836486042C36F1B0006EB0C0 /* RoutineLibraryViewModel.swift in Sources */,
@@ -1257,6 +1302,7 @@
 				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
 				83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */,
 				83266E6E2C38269F00F5F6CB /* EditTemplateSessionViewModel.swift in Sources */,
+				83618BBD2C8094C2001D401E /* IsChangePropogator.swift in Sources */,
 				836486012C36E946006EB0C0 /* CreateNewProfile4ViewModel.swift in Sources */,
 				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
@@ -1372,7 +1418,9 @@
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */,
 				8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */,
+				83618BB92C7F56C0001D401E /* ThresholdHandler.swift in Sources */,
 				831F2C272C243381007A7A8A /* BasicList.swift in Sources */,
+				83618BC52C8098CB001D401E /* LoadTodoCalculator.swift in Sources */,
 				83266E612C37EEE000F5F6CB /* SideBarView.swift in Sources */,
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,

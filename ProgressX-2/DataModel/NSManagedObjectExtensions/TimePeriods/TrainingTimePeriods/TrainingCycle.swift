@@ -31,10 +31,6 @@ extension TrainingCycle: HasOrderable, HasCompleteable, HasParent {
     }
     
     // MARK: Protocol implementation
-        
-    internal typealias ParentType = Routine
-    
-    internal typealias ChildrenType = TrainingWeek
     
     // Protocol implementation
     internal var children: [TrainingWeek] {
@@ -88,7 +84,9 @@ extension TrainingCycle: HasOrderable, HasCompleteable, HasParent {
     }
     
     public var progress: Double {
+        
         let context = self.managedObjectContext!
+        
         return CoreDataAccess.getProgressOf(trainingCycle: self, context)
     }
     

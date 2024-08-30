@@ -11,13 +11,10 @@ import CoreData
 
 final class JsonValidtionTests: XCTestCase {
     
-    var context: NSManagedObjectContext = PersistenceController.preview.container.viewContext
+    var context: NSManagedObjectContext = PersistenceController.previewViewContext
 
     override func setUpWithError() throws {
         // Set up a full in-memory enviroment for the tests
-        CoreDataAccess.generateExerciseCategories(context)
-        CoreDataAccess.generateStarterExerciseLibrary(context)
-        CoreDataAccess.generateBasicRoutine(context)
     }
 
     override func tearDownWithError() throws {

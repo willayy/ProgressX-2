@@ -13,7 +13,7 @@ import CoreData
 
 final class DataModelTests: XCTestCase {
    
-    var context: NSManagedObjectContext = PersistenceController.preview.container.viewContext
+    var context: NSManagedObjectContext = PersistenceController.previewViewContext
     
     // MARK: SETUP
     override func setUpWithError() throws {

@@ -27,7 +27,6 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
-                                        "InitialLoadMaxPerc" : 1,
                                         "children" : [
                                             
                                             {
@@ -43,7 +42,7 @@
                                             {
                                                 "timePeriodName" : "",
                                                 "timePeriodDescription" : "",
-                                                "flatLoadAdd" : 0,
+                                                "flatLoadAdd" : -2.5,
                                                 "flatQuantityAdd" : 0,
                                                 "generatePr" : 1,
                                                 "prType": "onerepmax",

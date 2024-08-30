@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TemplateSession: HasOrderable, HasChildren, HasParent {
+extension TemplateSession: HasOrderable, HasChildren, HasParent, IsChangePropogator {
     
     //MARK: Convenience init
     
@@ -44,32 +44,69 @@ extension TemplateSession: HasOrderable, HasChildren, HasParent {
     
     // MARK: Protocol implementation
     
-    internal typealias ChildrenType = TemplateSet
-    
-    internal typealias ParentType = TemplateWeek
-    
     // Protocol implementation
     internal var children: [TemplateSet] {
+        
         return self.templateSets!.allObjects as! [TemplateSet]
+        
     }
     
     // Protocol implementation
     internal var parent: TemplateWeek {
+        
         return self.templateWeek!
+        
     }
     
     // Protocol implementation
     internal func getNextPositionIndex() -> Int64 {
+        
         let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
+        
         let max = sets.max {$0.positionIndex < $1.positionIndex}
+        
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
     // Protocol implementation
-    internal func getPositionIndexes() -> [Int64] {
+    public func getPositionIndexes() -> [Int64] {
+        
         let children = self.templateSets!.allObjects as! [TemplateSet]
+        
         let positionIndexes = children.map { $0.positionIndex }
-        return positionIndexes
+        
+        return positionIndexes.sorted()
+    }
+    
+    // Protocol implementation
+    public func propogateChanges() -> Void {
+        
+        let trainingSessions = self.trainingSessions?.allObjects as! [TrainingSession]
+        
+        let changes = self.changedValues()
+        
+        // There should only be one active week with self as its templateWeek
+        for trainingSession in trainingSessions {
+            
+            if let timePeriodName = changes["timePeriodName"] {
+                
+                trainingSession.timePeriodName = timePeriodName as? String
+                
+            }
+            
+            if let timePeriodDescription = changes["timePeriodDescription"] {
+                
+                trainingSession.timePeriodDescription = timePeriodDescription as? String
+                
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                
+                trainingSession.switchPositionIndex(to: positionIndex as! Int64)
+                
+            }
+            
+        }
     }
     
     // MARK: Extra Properties

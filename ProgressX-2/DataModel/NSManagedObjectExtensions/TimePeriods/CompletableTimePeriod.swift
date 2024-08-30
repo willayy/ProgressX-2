@@ -37,12 +37,10 @@ extension CompleteableTimePeriod {
             let trainingSet: TrainingSet = self as! TrainingSet
             let templateSet: TemplateSet = trainingSet.templateSet!
             let thresholds = templateSet.thresholds!.allObjects as! [SetThreshold]
-            
-            for threshold in thresholds {
-                if threshold.triggerQuantity >= trainingSet.quantityDone {
-                    threshold.trigger(loadDone: trainingSet.loadDone, quantityDone: trainingSet.quantityDone)
-                }
-            }
+            let loadDone = trainingSet.loadDone
+            let quantityDone = trainingSet.quantityDone
+            let handler = ThresholdHandler(thresholds: thresholds)
+            handler.handleThresholds(quantityDone: quantityDone, loadDone: loadDone)
         }
         
         self.cascadeCompletion()

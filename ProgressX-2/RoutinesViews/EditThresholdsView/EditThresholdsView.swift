@@ -59,7 +59,7 @@ struct EditThresholdsView: View {
                 
                 HiddenLightSubHeadline(
                     title: "What is trigger quantity?",
-                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR. If you have several thresholds only the highest completed one is the one that will be triggered."
                 )
                 .padding(.horizontal, 20)
                 
