@@ -48,7 +48,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
 
     @FetchRequest(
         entity: Exercise.entity(),
