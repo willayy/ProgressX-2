@@ -15,7 +15,7 @@
                         "children" : [
                             
                             {
-                                "timePeriodName" : "Push day",
+                                "timePeriodName" : "Pull day",
                                 "timePeriodDescription" : "",
                                 "children" : [
                                     
@@ -23,51 +23,268 @@
                                         "timePeriodName" : "Deadlifts",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Deadlift",
-                                        "setLoad" : 0.7,
+                                        "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
-                                            {
-                                                "timePeriodName" : "",
-                                                "timePeriodDescription" : "",
-                                                "flatLoadAdd" : 2.5,
-                                                "flatQuantityAdd" : 0,
-                                                "generatePr" : 1,
-                                                "prType": "onerepmax",
-                                                "triggerQuantity" : 5
-                                            },
-                                            
-                                            {
-                                                "timePeriodName" : "",
-                                                "timePeriodDescription" : "",
-                                                "flatLoadAdd" : -2.5,
-                                                "flatQuantityAdd" : 0,
-                                                "generatePr" : 1,
-                                                "prType": "onerepmax",
-                                                "triggerQuantity" : 1
-                                            },
-                                            
-                                            {
-                                                "timePeriodName" : "",
-                                                "timePeriodDescription" : "",
-                                                "flatLoadAdd" : -2.5,
-                                                "flatQuantityAdd" : 0,
-                                                "generatePr" : 1,
-                                                "prType": "onerepmax",
-                                                "triggerQuantity" : 2
-                                            }
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Chin ups",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Chinup",
+                                        "setLoad" : 100,
+                                        "setQuantity" : 8,
+                                        "loadType" : "bwperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
                                             
                                         ]
-                                    }
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Chin ups",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Chinup",
+                                        "setLoad" : 100,
+                                        "setQuantity" : 8,
+                                        "loadType" : "bwperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Chin ups",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Chinup",
+                                        "setLoad" : 100,
+                                        "setQuantity" : 8,
+                                        "loadType" : "bwperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
                                     
+                                    {
+                                        "timePeriodName" : "Seated cable rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Seated cable row",
+                                        "setLoad" : 30,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Seated cable rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Seated cable row",
+                                        "setLoad" : 30,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Seated cable rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Seated cable row",
+                                        "setLoad" : 30,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 5,
+                                        "setQuantity" : 15,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 5,
+                                        "setQuantity" : 15,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 5,
+                                        "setQuantity" : 15,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 5,
+                                        "setQuantity" : 15,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 5,
+                                        "setQuantity" : 15,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 7.5,
+                                        "setQuantity" : 10,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    }
+
                                 ]
                             },
                             
                             {
                                 "type" : "TemplateSession",
-                                "timePeriodName" : "Pull day",
+                                "timePeriodName" : "Push day",
                                 "children" : [
                                     
                                 ]
@@ -83,7 +300,7 @@
                             
                             {
                                 "type" : "TemplateSession",
-                                "timePeriodName" : "Push day",
+                                "timePeriodName" : "Pull day",
                                 "children" : [
                                     
                                 ]
@@ -91,7 +308,7 @@
                             
                             {
                                 "type" : "TemplateSession",
-                                "timePeriodName" : "Pull day",
+                                "timePeriodName" : "Push day",
                                 "children" : [
                                     
                                 ]
@@ -106,12 +323,9 @@
                             }
                             
                         ]
-                        
                     }
-                    
                 ]
             }
-            
         ]
     }
 ]
