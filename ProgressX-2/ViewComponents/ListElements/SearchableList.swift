@@ -11,6 +11,7 @@ import CoreData
 // This is a list that takes a randomAccessCollection as an argument
 struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifiable {
     
+    let height: CGFloat
     let containerName: String
     let elementName: String
     @FetchRequest var allData: FetchedResults<T>
@@ -37,7 +38,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
                     content(item)
                 }
             }
-            .frame(height: 400)
+            .frame(height: height)
             .background(Color(.systemGray6))
             .cornerRadius(10)
             .frame(maxWidth: .infinity)
@@ -47,10 +48,8 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
 
 #Preview {
     
-    let context = PersistenceController.previewViewContext
-    
-    // Does not really work as intended here because @FetchRequest wrapper does not work in Preview context.
-    
+    let context = PersistenceController.preview.container.viewContext
+
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
@@ -66,6 +65,7 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
     @State var selectedExercise: Exercise? = nil
     
     return SearchableList(
+        height: 400,
         containerName: "Exercise Library",
         elementName: "Exercises",
         allData: _allExercises,
@@ -75,6 +75,6 @@ struct SearchableList<T: NSManagedObject, Content: View>: View where T: Identifi
                 selectedExercise: $selectedExercise,
                 exercise: exercise
             )
-            .environment(\.managedObjectContext, context)
         }
+        .environment(\.managedObjectContext, context)
 }

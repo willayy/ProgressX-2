@@ -20,18 +20,21 @@ struct ProfileView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
+        
         ProfileNavigationController {
+            
             ScrollView {
+                
                 VStackWithSideBarButton {
                     
                     BoldTitle(text: "Profile")
                         .padding(.horizontal, 20)
                         .onAppear(perform: {
                             /* Have to call this function here because
-                            of the order SwiftUI loads in views */
+                             of the order SwiftUI loads in views */
                             viewModel.setViewStartValues(entity: profiles.first!)
                         })
-                                        
+                    
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
                     
@@ -124,25 +127,24 @@ struct ProfileView: View {
                     .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
-                    Button(action: {
-                        if validateInput() {
-                            viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
-                        }
-                    })
-                    {
-                        Text("Save changes")
-                            .frame(height: 40)
-                            .foregroundColor(Color("buttonTextColor"))
-                        Image(systemName: "square.and.arrow.down")
-                            .foregroundColor(Color("buttonTextColor"))
-                    }
-                    .padding(.top, 20)
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    .foregroundColor(.white)
-                    .padding(.bottom, 20)
-                    
                 }
             }
+                    
+            Button(action: {
+                if validateInput() {
+                    viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
+                }
+            })
+            {
+                Text("Save changes")
+                    .frame(height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+                Image(systemName: "square.and.arrow.down")
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .padding(.vertical, 20)
+            .buttonStyle(BorderedProminentButtonStyle())
+            
         }
     }
     

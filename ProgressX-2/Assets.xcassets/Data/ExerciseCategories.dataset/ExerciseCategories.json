@@ -1,21 +1,22 @@
 [
     {
         "categoryNames" : [
-            "Deltoids",
-            "Pectorials",
             "Abs",
             "Biceps",
-            "Lats",
-            "Obliques",
-            "Triceps",
-            "Traps",
             "Glutes",
-            "Hamstrings",
             "Calves",
-            "Quads",
-            "Hip abductors",
-            "Forearms",
-            "Lower back"
+            "Chins",
+            "Hamstrings",
+            "Lats",
+            "Lower back",
+            "Lower arm back",
+            "Lower arm front",
+            "Obliques",
+            "Pectorials",
+            "Shoulders",
+            "Thighs",
+            "Traps",
+            "Triceps"
         ]
     }
 ]

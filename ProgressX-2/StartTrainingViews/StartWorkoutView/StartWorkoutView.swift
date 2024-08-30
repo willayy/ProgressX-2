@@ -66,6 +66,7 @@ struct StartWorkoutView: View {
                     
                     // MARK: List
                     SearchableList(
+                        height: 500,
                         containerName: "Routine Library",
                         elementName: "Routines",
                         allData: _allRoutines,
@@ -92,6 +93,6 @@ struct StartWorkoutView: View {
     let context = PersistenceController.previewViewContext
     
     return StartWorkoutView()
-        .environmentObject(ViewRouter())
+        .environmentObject(ShowMenuController())
         .environment(\.managedObjectContext, context)
 }

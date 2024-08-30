@@ -10,7 +10,7 @@ import CoreData
 
 struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable {
     
-    let height: CGFloat?
+    let height: CGFloat
     let containerName: String
     let elementName: String
     @FetchRequest var data: FetchedResults<T>
@@ -41,10 +41,8 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
 
 #Preview {
     
-    let context = PersistenceController.previewViewContext
-    
-    // Does not really work as intended here because @FetchRequest wrapper does not work in Preview context.
-    
+    let context = PersistenceController.preview.container.viewContext
+
     @FetchRequest(
         entity: Exercise.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Exercise.exerciseName, ascending: false)]
@@ -64,7 +62,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
                 selectedExercise: $selectedExercise,
                 exercise: exercise
             )
-            .environment(\.managedObjectContext, context)
         }
         .padding(.horizontal, 10)
+        .environment(\.managedObjectContext, context)
 }

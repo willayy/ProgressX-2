@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Achievement" representedClassName="Achievement" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
@@ -28,7 +28,7 @@
         <relationship name="templateSets" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
-        <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Deltoids|Pectorials|Abs|Obliques|Triceps|Traps|Glutes|Hamstrings|Calves|Quads|Hip abductors|Forearms|Lower back|Lats|Biceps)$"/>
+        <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Abs|Biceps|Glutes|Calves|Chins|Hamstrings|Lats|Lower back|Lower arm back|Lower arm front|Obliques|Pectorials|Shoulders|Thighs|Traps|Triceps)$"/>
         <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="categories" inverseEntity="Exercise"/>
     </entity>
     <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
@@ -41,7 +41,7 @@
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="personalRecords" inverseEntity="Exercise"/>
     </entity>
     <entity name="Profile" representedClassName="Profile" syncable="YES" codeGenerationType="class">
-        <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
+        <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-3155763660" usesScalarValueType="NO"/>
         <attribute name="gender" attributeType="String" regularExpressionString="^(male|female)$"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>

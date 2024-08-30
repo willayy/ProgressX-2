@@ -18,141 +18,138 @@ struct EditWeighInView: View {
         
         ScrollView {
             
-            VStack {
-                
-                BoldTitle(text: "Editing weigh-in done at")
-                    .padding(.horizontal, 20)
-                    .onAppear(perform: {
-                        viewModel.setViewStartValues(entity: selectedBodyEntry!)
-                    })
-                
-                Title2(text: "\(selectedBodyEntry!.dateString!)")
-                
-                if viewModel.bodyEntryEditedAlert {
-                    SubmitAlert(
-                        message: "Successfully edited weigh-in!",
-                        color: .green,
-                        showAlertState: $viewModel.bodyEntryEditedAlert
-                    )
-                    .padding(.top, 10)
-                } else if viewModel.noChangeAlert {
-                    SubmitAlert(
-                        message: "No change!",
-                        color: .blue,
-                        showAlertState: $viewModel.noChangeAlert
-                    )
-                    .padding(.top, 10)
-                }
-                
-                BoldSubHeadline(text: "Edit date")
-                    .padding(.top, 20)
-                
-                DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
-                    .datePickerStyle(DefaultDatePickerStyle())
-                    .labelsHidden()
-                    .padding(.bottom, 10)
-                
-                BoldSubHeadline(text: "Edit bodyweight")
-                
-                DecimalTextField(
-                    placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext))",
-                    numberText: $viewModel.editedBodyWeight,
-                    markAsWrong: $viewModel.editedBodyWeightIsInvalid,
-                    errorMessage: $viewModel.editedBodyWeightIsInvalidMsg
+            BoldTitle(text: "Editing weigh-in done at")
+                .padding(.horizontal, 20)
+                .onAppear(perform: {
+                    viewModel.setViewStartValues(entity: selectedBodyEntry!)
+                })
+            
+            Title2(text: "\(selectedBodyEntry!.dateString!)")
+            
+            if viewModel.bodyEntryEditedAlert {
+                SubmitAlert(
+                    message: "Successfully edited weigh-in!",
+                    color: .green,
+                    showAlertState: $viewModel.bodyEntryEditedAlert
                 )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                BoldSubHeadline(text: "Edit body measurements")
-                    .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Chest circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedChestCirc,
-                    markAsWrong: $viewModel.editedChestCircIsInvalid,
-                    errorMessage: $viewModel.editedChestCircIsInvalidMsg
+                .padding(.top, 10)
+            } else if viewModel.noChangeAlert {
+                SubmitAlert(
+                    message: "No change!",
+                    color: .blue,
+                    showAlertState: $viewModel.noChangeAlert
                 )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Upper arm circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedUpperArmCirc,
-                    markAsWrong: $viewModel.editedUpperArmCircIsInvalid,
-                    errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Lower arm circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedLowerArmCirc,
-                    markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                    errorMessage: $viewModel.editedLowerArmIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Waist circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedWaistCirc,
-                    markAsWrong: $viewModel.editedWaistCircIsInvalid,
-                    errorMessage: $viewModel.editedWaistCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Thigh circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedThighCirc,
-                    markAsWrong: $viewModel.editedThighCircIsInvalid,
-                    errorMessage: $viewModel.editedThighCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                LightSubHeadline(text: "Calf circumference")
-                
-                DecimalTextField(
-                    placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.editedCalfCirc,
-                    markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                    errorMessage: $viewModel.editedCalfCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 20)
-                
-                Button {
-                    if validateInput() {
-                        viewModel.saveEdits(
-                            entity: selectedBodyEntry!,
-                            viewContext: viewContext
-                        )
-                    }
-                } label: {
-                    Text("Save changes")
-                        .frame(height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                    Image(systemName: "square.and.arrow.down")
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-                
+                .padding(.top, 10)
             }
-            .frame(maxWidth: .infinity)
+            
+            BoldSubHeadline(text: "Edit date")
+                .padding(.top, 20)
+            
+            DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
+                .datePickerStyle(DefaultDatePickerStyle())
+                .labelsHidden()
+                .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Edit bodyweight")
+            
+            DecimalTextField(
+                placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext))",
+                numberText: $viewModel.editedBodyWeight,
+                markAsWrong: $viewModel.editedBodyWeightIsInvalid,
+                errorMessage: $viewModel.editedBodyWeightIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Edit body measurements")
+                .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Chest circumference")
+            
+            DecimalTextField(
+                placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedChestCirc,
+                markAsWrong: $viewModel.editedChestCircIsInvalid,
+                errorMessage: $viewModel.editedChestCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Upper arm circumference")
+            
+            DecimalTextField(
+                placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedUpperArmCirc,
+                markAsWrong: $viewModel.editedUpperArmCircIsInvalid,
+                errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Lower arm circumference")
+            
+            DecimalTextField(
+                placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedLowerArmCirc,
+                markAsWrong: $viewModel.editedCalfCircIsInvalid,
+                errorMessage: $viewModel.editedLowerArmIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Waist circumference")
+            
+            DecimalTextField(
+                placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedWaistCirc,
+                markAsWrong: $viewModel.editedWaistCircIsInvalid,
+                errorMessage: $viewModel.editedWaistCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Thigh circumference")
+            
+            DecimalTextField(
+                placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedThighCirc,
+                markAsWrong: $viewModel.editedThighCircIsInvalid,
+                errorMessage: $viewModel.editedThighCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            LightSubHeadline(text: "Calf circumference")
+            
+            DecimalTextField(
+                placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.editedCalfCirc,
+                markAsWrong: $viewModel.editedCalfCircIsInvalid,
+                errorMessage: $viewModel.editedCalfCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 20)
+            
         }
+            
+        Button {
+            if validateInput() {
+                viewModel.saveEdits(
+                    entity: selectedBodyEntry!,
+                    viewContext: viewContext
+                )
+            }
+        } label: {
+            Text("Save changes")
+                .frame(height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+            Image(systemName: "square.and.arrow.down")
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.top, 20)
+        .padding(.bottom, 10)
+    
     }
     
     private func validateInput() -> Bool {

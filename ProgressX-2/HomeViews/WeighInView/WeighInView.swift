@@ -14,103 +14,103 @@ struct WeighInView: View {
     @Binding var navPath: [Int]
     
     var body: some View {
+        
         ScrollView {
-            VStack {
-                
-                BoldTitle(text: "Weigh in")
-                    .padding(.horizontal, 20)
-                
-                LightSubHeadline(text: "Here you can weigh in with your current weight and optionally your current body measurements")
-                    .padding(.bottom, 10)
-                    .padding(.horizontal, 20)
-                
-                BoldSubHeadline(text: "Bodyweight")
-                
-                DecimalTextField(
-                    placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext)))",
-                    numberText: $viewModel.bodyWeight,
-                    markAsWrong: $viewModel.bodyWeightIsInvalid,
-                    errorMessage: $viewModel.bodyWeightIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
+            
+            BoldTitle(text: "Weigh in")
+                .padding(.horizontal, 20)
+            
+            LightSubHeadline(text: "Here you can weigh in with your current weight and optionally your current body measurements")
                 .padding(.bottom, 10)
-                
-                BoldSubHeadline(text: "Body measurements")
-                
-                LightSubHeadline(text: "These values or optional and doesn't need too be filled in")
-                    .padding(.horizontal, 20)
-                
-                DecimalTextField(
-                    placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.chestCirc,
-                    markAsWrong: $viewModel.chestCircIsInvalid,
-                    errorMessage: $viewModel.chestCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                DecimalTextField(
-                    placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.upperArmCirc,
-                    markAsWrong: $viewModel.upperArmCircIsInvalid,
-                    errorMessage: $viewModel.upperArmCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                DecimalTextField(
-                    placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.lowerArmCirc,
-                    markAsWrong: $viewModel.lowerArmIsInvalid,
-                    errorMessage: $viewModel.lowerArmIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                DecimalTextField(
-                    placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.waistCirc,
-                    markAsWrong: $viewModel.waistCircIsInvalid,
-                    errorMessage: $viewModel.waistCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                DecimalTextField(
-                    placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.thighCirc,
-                    markAsWrong: $viewModel.thighCircIsInvalid,
-                    errorMessage: $viewModel.thighCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                .padding(.bottom, 10)
-                
-                DecimalTextField(
-                    placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
-                    numberText: $viewModel.calfCirc,
-                    markAsWrong: $viewModel.calfCircIsInvalid,
-                    errorMessage: $viewModel.calfCircIsInvalidMsg
-                )
-                .padding(.horizontal, 60)
-                
-                Button {
-                    if validateInput() {
-                        viewModel.saveEntry(viewContext: viewContext)
-                        navPath.removeLast()
-                    }
-                } label: {
-                    Text("Add weigh-in")
-                        .frame(height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                    Image(systemName: "plus")
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-                
-            }
+                .padding(.horizontal, 20)
+            
+            BoldSubHeadline(text: "Bodyweight")
+            
+            DecimalTextField(
+                placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext)))",
+                numberText: $viewModel.bodyWeight,
+                markAsWrong: $viewModel.bodyWeightIsInvalid,
+                errorMessage: $viewModel.bodyWeightIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Body measurements")
+            
+            LightSubHeadline(text: "These values or optional and doesn't need too be filled in")
+                .padding(.horizontal, 20)
+            
+            DecimalTextField(
+                placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.chestCirc,
+                markAsWrong: $viewModel.chestCircIsInvalid,
+                errorMessage: $viewModel.chestCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            DecimalTextField(
+                placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.upperArmCirc,
+                markAsWrong: $viewModel.upperArmCircIsInvalid,
+                errorMessage: $viewModel.upperArmCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            DecimalTextField(
+                placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.lowerArmCirc,
+                markAsWrong: $viewModel.lowerArmIsInvalid,
+                errorMessage: $viewModel.lowerArmIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            DecimalTextField(
+                placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.waistCirc,
+                markAsWrong: $viewModel.waistCircIsInvalid,
+                errorMessage: $viewModel.waistCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            DecimalTextField(
+                placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.thighCirc,
+                markAsWrong: $viewModel.thighCircIsInvalid,
+                errorMessage: $viewModel.thighCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            DecimalTextField(
+                placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
+                numberText: $viewModel.calfCirc,
+                markAsWrong: $viewModel.calfCircIsInvalid,
+                errorMessage: $viewModel.calfCircIsInvalidMsg
+            )
+            .padding(.horizontal, 60)
+            
         }
+            
+        Button {
+            if validateInput() {
+                viewModel.saveEntry(viewContext: viewContext)
+                navPath.removeLast()
+            }
+        } label: {
+            Text("Add weigh-in")
+                .frame(height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+            Image(systemName: "plus")
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.top, 20)
+        .padding(.bottom, 10)
+
     }
     
     private func validateInput() -> Bool {

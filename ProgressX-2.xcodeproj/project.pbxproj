@@ -166,6 +166,7 @@
 		83F26D182C70C12D00C8EB82 /* HasParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F26D172C70C12D00C8EB82 /* HasParent.swift */; };
 		83F26D1A2C70C1E300C8EB82 /* HasChildren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F26D192C70C1E300C8EB82 /* HasChildren.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
+		8F1307492C7C9E5900F9BB72 /* DisplayMusclesDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */; };
 		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
 		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
 		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
@@ -358,6 +359,7 @@
 		83F26D172C70C12D00C8EB82 /* HasParent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasParent.swift; sourceTree = "<group>"; };
 		83F26D192C70C1E300C8EB82 /* HasChildren.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasChildren.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
+		8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMusclesDummy.swift; sourceTree = "<group>"; };
 		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
 		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
 		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 				831F2C1E2C231E40007A7A8A /* SearchBar.swift */,
 				83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */,
 				8354CA272C63AE2000E3EA98 /* ProgressBar.swift */,
+				8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -1425,6 +1428,7 @@
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
 				83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */,
+				8F1307492C7C9E5900F9BB72 /* DisplayMusclesDummy.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
 				8F7F160B2C4920B300F37C58 /* StartWorkoutNavigationController.swift in Sources */,
 				8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */,
@@ -1604,7 +1608,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "luwisoft.ProgressX-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1650,7 +1654,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "luwisoft.ProgressX-2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

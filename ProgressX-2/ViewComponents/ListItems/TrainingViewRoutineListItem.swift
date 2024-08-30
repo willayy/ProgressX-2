@@ -97,18 +97,18 @@ struct TrainingViewRoutineListItem: View {
             Button(action: {
                 
                 selectedRoutine = routine
+                let nextCycle = routine.getNextTrainingCycle()!
+                let nextWeek = nextCycle.getNextTrainingWeek()
+                let nextSession = nextWeek?.getNextTrainingSession()
+                let currentSet = nextSession?.getNextTrainingSet()
                 
-                let nextCycle = routine.nextTrainingCycle!
-                let nextWeek = nextCycle.nextTrainingWeek!
-                let nextSession = nextWeek.nextTrainingSession!
-                let currentSet = nextSession.nextTrainingSet!
-                
-                selectedSession = nextSession
-                
-                currentTrainingSet = currentSet
-                
-                navPath.append(2)
-                
+                // There exists a next week/session/set
+                // This should probably have some feedback for the user as well.
+                if currentSet != nil {
+                    selectedSession = nextSession
+                    currentTrainingSet = currentSet
+                    navPath.append(2)
+                }
             }) { Image(systemName: "figure.run" ) }
                 .frame(width: 20)
                 .padding(.horizontal, 10)

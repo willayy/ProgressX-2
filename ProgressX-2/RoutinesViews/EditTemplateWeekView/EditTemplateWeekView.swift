@@ -26,7 +26,7 @@ struct EditTemplateWeekView: View {
         ) var templateSessions: FetchedResults<TemplateSession>
         
         ScrollView {
-            VStack {
+                
                 BoldTitle(text: "Editing")
                     .padding(.horizontal, 20)
                     .onAppear(perform: {
@@ -123,10 +123,10 @@ struct EditTemplateWeekView: View {
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.vertical, 10)
-                
+                    
                 }
                 .padding(.horizontal, 20)
-                    
+                
                 BoldSubHeadline(text: "Current sessions in this week")
                     .padding(.top, 20)
                 
@@ -144,13 +144,15 @@ struct EditTemplateWeekView: View {
                     data: _templateSessions
                 ) { session in
                     TemplateSessionListItem(
-                        navPath: $navPath, 
+                        navPath: $navPath,
                         selectedTemplateSession: $selectedTemplateSession,
                         session: session
                     )
                     .environment(\.managedObjectContext, viewContext)
                 }
                 .padding(.horizontal, 20)
+                
+            }
                 
                 Button {
                     viewModel.selectedTemplateWeek = selectedTemplateWeek!
@@ -163,12 +165,9 @@ struct EditTemplateWeekView: View {
                         .foregroundColor(Color("buttonTextColor"))
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+                .padding(.vertical, 20)
             
-            }
         }
-    }
     
     private func validateInput() -> Bool {
         var valid: Int = 0

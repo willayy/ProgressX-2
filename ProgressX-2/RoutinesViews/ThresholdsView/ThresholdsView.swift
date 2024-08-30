@@ -23,42 +23,42 @@ struct ThresholdsView: View {
         ) var thresholds: FetchedResults<SetThreshold>
         
         ScrollView {
-            VStack {
-                BoldTitle(text: "Adding thresholds for")
-                    .padding(.horizontal, 20)
-                
-                Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
-                
-                BoldSubHeadline(text: "Current thresholds in \(selectedTemplateSet!.timePeriodName!)")
-                    .padding(.top, 20)
-                
-                BasicList(
-                    height: 400,
-                    containerName: "this set",
-                    elementName: "threshold",
-                    data: _thresholds) { threshold in
-                        ThresholdListItem(
-                            navPath: $navPath,
-                            selectedThreshold: $selectedThreshold,
-                            threshold: threshold
-                        )
-                    }
-                    .padding(.horizontal, 20)
-                
-                Button {
-                    navPath.append(9)
-                } label: {
-                    Text("Add threshold")
-                        .frame(height: 40)
-                        .foregroundColor(Color("buttonTextColor"))
-                    Image(systemName: "plus")
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(BorderedProminentButtonStyle())
+            
+            BoldTitle(text: "Adding thresholds for")
+                .padding(.horizontal, 20)
+            
+            Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
+            
+            BoldSubHeadline(text: "Current thresholds in \(selectedTemplateSet!.timePeriodName!)")
                 .padding(.top, 20)
-
-            }
+            
+            BasicList(
+                height: 400,
+                containerName: "this set",
+                elementName: "threshold",
+                data: _thresholds) { threshold in
+                    ThresholdListItem(
+                        navPath: $navPath,
+                        selectedThreshold: $selectedThreshold,
+                        threshold: threshold
+                    )
+                }
+                .padding(.horizontal, 20)
+            
         }
+        
+        Button {
+            navPath.append(9)
+        } label: {
+            Text("Add threshold")
+                .frame(height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+            Image(systemName: "plus")
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.vertical, 20)
+
     }
 }
 

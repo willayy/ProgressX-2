@@ -27,105 +27,108 @@ struct EditExerciseView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
-            ScrollView {
-                VStack(alignment: .center) {
                     
-                    BoldTitle(text: "Editing")
-                    
-                    Title2(text: "\(selectedExercise!.exerciseName!)")
-                        .onAppear(perform: {
-                            viewModel.setViewStartValues(entity: selectedExercise!)
-                        })
-                        
-                    if viewModel.exerciseEditedAlert {
-                        SubmitAlert(
-                            message: "Succesfully edited Exercise!",
-                            color: .green,
-                            showAlertState: $viewModel.exerciseEditedAlert
-                        )
-                        .padding(.top, 10)
-                    } else if viewModel.noChangeAlert {
-                        SubmitAlert(
-                            message: "No changes to Exercise",
-                            color: .blue,
-                            showAlertState: $viewModel.noChangeAlert
-                        )
-                        .padding(.top, 10)
-                    }
-    
-                    BoldSubHeadline(text: "Description: ")
-                        .padding(.top, 10)
-                    
-                    // if description is empty show a red label instead
-                    if selectedExercise!.exerciseDesc!.isEmpty {
-                        Text("No description.")
-                            .font(.subheadline)
-                            .fontWeight(.light)
-                            .foregroundStyle(.red)
-                            .padding(.bottom, 20)
-                            .padding(.horizontal, 20)
-                    } else {
-                        LightSubHeadline(text: selectedExercise!.exerciseDesc!)
-                            .padding(.bottom, 20)
-                            .padding(.horizontal, 20)
-                    }
-                    
-                    BoldSubHeadline(text: "Edit exercise name")
-                    
-                    InputTextField(
-                        placeHolder: "Exercise name",
-                        text: $viewModel.newName,
-                        markAsWrong: $viewModel.newNameIsInvalid,
-                        errorMessage: $viewModel.newNameIsInvalidMsg,
-                        maxChars: 30
-                    )
-                    .padding(.horizontal, 60)
-                    .padding(.bottom, 10)
-                     
-                    BoldSubHeadline(text: "Edit exercise description")
-                    
-                    inputLongTextField(
-                        placeHolder: "Exercise description",
-                        text: $viewModel.newDesc,
-                        markAsWrong: $viewModel.newDescIsInvalid,
-                        errorMessage: $viewModel.newDescIsInvalidMsg,
-                        maxChars: 200
-                    )
-                    .frame(height: 150)
-                    .padding(.horizontal, 60)
-                    .padding(.bottom, 10)
-                    
-                    BoldSubHeadline(text: "Edit exercise categories")
-                    
-                    SelectCategoriesList(
-                        selectedCategories: $viewModel.selectedCategories,
-                        categories: _categories
-                    )
-                    .padding(.horizontal, 40)
-                    .onAppear(perform: {
-                        for category in selectedExercise!.categories! {
-                            viewModel.selectedCategories.insert(category as! ExerciseCategory)
-                        }
-                    })
-                    
-                    // MARK: Handle an edit of an exercise
-                    Button(action: {
-                        if validateInput() {
-                            viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
-                        }
-                    }) {
-                        Text("Save changes")
-                            .frame(height: 40)
-                            .foregroundColor(Color("buttonTextColor"))
-                        Image(systemName: "square.and.arrow.down")
-                            .foregroundColor(Color("buttonTextColor"))
-                    }
-                    .buttonStyle(BorderedProminentButtonStyle())
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                    
+        ScrollView {
+                
+            BoldTitle(text: "Editing")
+            
+            Title2(text: "\(selectedExercise!.exerciseName!)")
+                .onAppear(perform: {
+                    viewModel.setViewStartValues(entity: selectedExercise!)
+                })
+            
+            if viewModel.exerciseEditedAlert {
+                SubmitAlert(
+                    message: "Succesfully edited Exercise!",
+                    color: .green,
+                    showAlertState: $viewModel.exerciseEditedAlert
+                )
+                .padding(.top, 10)
+            } else if viewModel.noChangeAlert {
+                SubmitAlert(
+                    message: "No changes to Exercise",
+                    color: .blue,
+                    showAlertState: $viewModel.noChangeAlert
+                )
+                .padding(.top, 10)
             }
+            
+            BoldSubHeadline(text: "Description: ")
+                .padding(.top, 10)
+            
+            // if description is empty show a red label instead
+            if selectedExercise!.exerciseDesc!.isEmpty {
+                Text("No description.")
+                    .font(.subheadline)
+                    .fontWeight(.light)
+                    .foregroundStyle(.red)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
+            } else {
+                LightSubHeadline(text: selectedExercise!.exerciseDesc!)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
+            }
+            
+            BoldSubHeadline(text: "Edit exercise name")
+            
+            InputTextField(
+                placeHolder: "Exercise name",
+                text: $viewModel.newName,
+                markAsWrong: $viewModel.newNameIsInvalid,
+                errorMessage: $viewModel.newNameIsInvalidMsg,
+                maxChars: 30
+            )
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Edit exercise description")
+            
+            inputLongTextField(
+                placeHolder: "Exercise description",
+                text: $viewModel.newDesc,
+                markAsWrong: $viewModel.newDescIsInvalid,
+                errorMessage: $viewModel.newDescIsInvalidMsg,
+                maxChars: 200
+            )
+            .frame(height: 150)
+            .padding(.horizontal, 60)
+            .padding(.bottom, 10)
+            
+            BoldSubHeadline(text: "Edit exercise categories")
+            
+            SelectCategoriesList(
+                selectedCategories: $viewModel.selectedCategories,
+                categories: _categories
+            )
+            .padding(.horizontal, 40)
+            .onAppear(perform: {
+                for category in selectedExercise!.categories! {
+                    viewModel.selectedCategories.insert(category as! ExerciseCategory)
+                }
+            })
+
+            DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories, categories: _categories)
+       
         }
+
+            
+                
+        // MARK: Handle an edit of an exercise
+        Button(action: {
+            if validateInput() {
+                viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
+            }
+        }) {
+            Text("Save changes")
+                .frame(height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+            Image(systemName: "square.and.arrow.down")
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(BorderedProminentButtonStyle())
+        .padding(.vertical, 20)
+
     }
         
     private func validateInput() -> Bool {

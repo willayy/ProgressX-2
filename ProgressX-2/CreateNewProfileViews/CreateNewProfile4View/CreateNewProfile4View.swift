@@ -59,56 +59,88 @@ struct CreateNewProfile4View: View {
                     Text("One rep max's")
                         .font(.headline)
                     
-                    HStack() {
+                    HStack {
+                        
                         Text("Benchpress")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.benchPress1RM,
                             markAsWrong: $viewModel.benchPress1RMIsInvalid,
                             errorMessage: $viewModel.benchPress1RMIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Squats")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.squat1RM,
                             markAsWrong: $viewModel.squat1RMIsInvalid,
                             errorMessage: $viewModel.squat1RMIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Shoulderpress")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.shoulderPress1RM,
                             markAsWrong: $viewModel.shoulderPress1RMIsInvalid,
                             errorMessage: $viewModel.shoulderPress1RMIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Deadlift")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
-                            placeHolder: viewModel.weightUnit(viewContext), 
+                            placeHolder: viewModel.weightUnit(viewContext),
                             numberText: $viewModel.deadLift1RM,
                             markAsWrong: $viewModel.deadLift1RMIsInvalid,
                             errorMessage: $viewModel.deadLift1RMIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
+                    
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 55)
                 .padding(.top, 20)
                 
                 VStack(alignment: .center, spacing: 10) {
@@ -116,56 +148,71 @@ struct CreateNewProfile4View: View {
                     Text("AMRAP's")
                         .font(.headline)
                     
-                    HStack() {
+                    HStack {
+                        
                         Text("Pushups")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         IntegerTextField(
-                            placeHolder: "reps", 
+                            placeHolder: "reps",
                             numberText: $viewModel.pushupsAmrap,
                             markAsWrong: $viewModel.pushupsAmrapIsInvalid,
                             errorMessage: $viewModel.pushupsAmrapIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Situps")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         IntegerTextField(
-                            placeHolder: "reps", 
+                            placeHolder: "reps",
                             numberText: $viewModel.situpsAmrap,
                             markAsWrong: $viewModel.situpsAmrapIsInvalid,
                             errorMessage: $viewModel.situpsAmrapIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
                 }
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 55)
                 .padding(.top, 20)
-                
-                Button {
-                    if validateInput() {
-                        
-                        viewModel.bodyWeight = bodyEntries.first?.bodyWeight
-                        viewModel.saveEntry(viewContext: viewContext)
-                        viewModel.generateBasicRoutine(viewContext: viewContext)
-                        
-                        withAnimation {
-                            viewRouter.startView = .None
-                            viewRouter.rootView = .HomeView
-                        }
-                    }
-                } label: {
-                    Text("Finish")
-                        .frame(width: 100, height: 30)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 20)
                 
             }
         }
+                
+        Button {
+            if validateInput() {
+                
+                viewModel.bodyWeight = bodyEntries.first?.bodyWeight
+                viewModel.saveEntry(viewContext: viewContext)
+                viewModel.generateBasicRoutine(viewContext: viewContext)
+                
+                withAnimation {
+                    viewRouter.startView = .None
+                    viewRouter.rootView = .HomeView
+                }
+            }
+        } label: {
+            Text("Finish")
+                .frame(width: 100, height: 40)
+                .foregroundColor(Color("buttonTextColor"))
+        }
+        .buttonStyle(.borderedProminent)
+        .padding(.vertical, 20)
     }
     
     private func validateInput() -> Bool {

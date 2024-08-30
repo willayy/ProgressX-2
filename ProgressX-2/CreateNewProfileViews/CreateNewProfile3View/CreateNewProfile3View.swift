@@ -24,6 +24,7 @@ struct CreateNewProfile3View: View {
         
         // Input form for PR's on some common exercises
         ScrollView(showsIndicators: false) {
+            
             VStack(alignment: .center, spacing: 10) {
                 
                 Text("Extra information on body measurements")
@@ -33,7 +34,7 @@ struct CreateNewProfile3View: View {
                     .multilineTextAlignment(.center)
                     .minimumScaleFactor(viewModel.minScaleFactor);
                 
-                Text("Please fill in all the following fields of measurements for specific body parts, this is only your initial measurements. You can continue to add measurements when weighing-in in the future.")
+                Text("Optionally fill in all the following fields of measurements for specific body parts, this is only your initial measurements. You can continue to add measurements when weighing-in in the future.")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.gray)
@@ -47,97 +48,162 @@ struct CreateNewProfile3View: View {
                     Text("Circumference metrics")
                         .font(.headline)
                     
-                    HStack() {
+                    HStack {
+                        
                         Text("Chest circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.chestCirc,
                             markAsWrong: $viewModel.chestCircIsInvalid,
                             errorMessage: $viewModel.chestCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Waist circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.waistCirc,
                             markAsWrong: $viewModel.waistCircIsInvalid,
                             errorMessage: $viewModel.waistCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Thigh circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.thighCirc,
                             markAsWrong: $viewModel.thighCircIsInvalid,
                             errorMessage: $viewModel.thighCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Calf circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.calfCirc,
                             markAsWrong: $viewModel.calfCircIsInvalid,
                             errorMessage: $viewModel.calfCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Lower arm circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
                             placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.lowerArmCirc,
                             markAsWrong: $viewModel.lowerArmCircIsInvalid,
                             errorMessage: $viewModel.lowerArmCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                
                     }
-                    HStack() {
+                    
+                    HStack {
+                        
                         Text("Upper arm circumference")
                             .minimumScaleFactor(viewModel.minScaleFactor)
-                            .frame(width: viewModel.textWidth)
+                            .frame(
+                                width: viewModel.textWidth,
+                                alignment: .leading
+                            )
+                        
+                        Spacer(minLength: 50)
+                        
                         DecimalTextField(
-                            placeHolder: viewModel.lengthUnit(viewContext), 
+                            placeHolder: viewModel.lengthUnit(viewContext),
                             numberText: $viewModel.upperArmCirc,
                             markAsWrong: $viewModel.upperArmCircIsInvalid,
                             errorMessage: $viewModel.upperArmCircIsInvalidMsg
                         )
-                        .padding(.horizontal, 30)
+                        
                     }
                 }
                 .padding(.top, 20)
-                .padding(.horizontal, 20)
-                
-                Button {
-                    if validateInput() {
-                        viewModel.firstBodyEntry = bodyEntries.first
-                        viewModel.saveEntry(viewContext: viewContext)
-                        navPath.append(3)
-                    }
-                } label: {
-                    Text("Continue")
-                        .frame(width: 100, height: 30)
-                        .foregroundColor(Color("buttonTextColor"))
-                }
-                .buttonStyle(.borderedProminent)
-                .padding(.vertical, 20)
+                .padding(.horizontal, 30)
                 
             }
+        }
+        
+        HStack {
+            
+            Button {
+                navPath.append(3)
+            } label: {
+                Text("Skip this")
+                    .frame(width: 100, height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.vertical, 20)
+            .tint(.red.opacity(0.9))
+            
+            Button {
+                if validateInput() {
+                    viewModel.firstBodyEntry = bodyEntries.first
+                    viewModel.saveEntry(viewContext: viewContext)
+                    navPath.append(3)
+                }
+            } label: {
+                Text("Continue")
+                    .frame(width: 80, height: 40)
+                    .foregroundColor(Color("buttonTextColor"))
+                
+                Image(systemName: "arrow.right")
+                    .foregroundColor(Color("buttonTextColor"))
+            }
+            .buttonStyle(.borderedProminent)
+            .padding(.vertical, 20)
+            
         }
     }
     

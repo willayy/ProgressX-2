@@ -21,7 +21,9 @@ struct CreateNewRoutineView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
+        
         ScrollView {
+            
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
                 
                 BoldTitle(text: "Create new routine")

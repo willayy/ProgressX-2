@@ -23,8 +23,11 @@ struct CreateNewPersonalRecord: View {
     @StateObject private var viewModel = CreateNewPersonalRecordViewModel()
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
+                
                 BoldTitle(
                     text: "Create a new PR for"
                 )
@@ -99,9 +102,8 @@ struct CreateNewPersonalRecord: View {
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
                 }
-                .padding(.top, 20)
+                .padding(.vertical, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
-                .padding(.bottom, 10)
                 
             }
             .frame(maxWidth: .infinity)

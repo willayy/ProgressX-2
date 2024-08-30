@@ -108,8 +108,6 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
                 withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                     let velocityX = value.velocity.width / 8
                     let total = velocityX + offsetX
-                    print(total)
-                    print(sideMenuWidth)
                     if total > (sideMenuWidth * 0.5){
                         showSideBar()
                     } else {
