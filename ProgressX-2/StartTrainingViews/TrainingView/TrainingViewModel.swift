@@ -20,6 +20,9 @@ class TrainingViewModel: ViewModel {
     @Published public var quantityDoneOnTimedSet: Double? = nil
     @Published public var timedSetActive: Bool = false
     @Published public var lastExercise: String = ""
+    @Published public var secondsElapsed: Int = 0
+    
+    var timerForSessionLength: Timer = Timer()
     
     public func setsLeft(selectedTrainingSession: TrainingSession?, currentTrainingSet: TrainingSet?) -> String {
         let totalSets = selectedTrainingSession?.trainingSets?.count
@@ -80,6 +83,17 @@ class TrainingViewModel: ViewModel {
         doneButtonEnabled.toggle()
         
     }
+    
+    func startSessionTimer() {
+            timerForSessionLength = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                self.secondsElapsed += 1
+            }
+        }
+    
+    func stopSessionTimer() {
+            timerForSessionLength.invalidate()
+            secondsElapsed = 0
+        }
     
     public func updateStatesWhenTimerStops(trainingSet: TrainingSet){
         
