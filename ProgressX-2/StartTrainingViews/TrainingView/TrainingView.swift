@@ -37,7 +37,13 @@ struct TrainingView: View {
             .padding(.bottom, 20)
             
             // MARK: The time progress view
-            progressView
+            // Only displays the timer if it is counting
+            if timerViewModel.state == .active {
+                withAnimation{
+                    progressView
+                }
+            }
+         
             
             // MARK: Skip rest time button
             if timerViewModel.state == .active && !viewModel.timedSetActive {
@@ -180,12 +186,11 @@ struct TrainingView: View {
     var progressView: some View {
         
             ZStack {
-                
-                withAnimation {
+                    withAnimation {
                         CircleProgressView(progress: $timerViewModel.progress)
-                    
-                }
-                
+                    }
+
+                // display information about the current set
                 VStack {
                     Text(timerViewModel.secondsToCompletion.asTimestamp)
                         .font(.largeTitle)
