@@ -36,11 +36,11 @@ struct CreateNewThresholdView: View {
             Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 .padding(.bottom, 20)
             
-            BoldSubHeadline(text: "Trigger quantity")
+            BoldSubHeadline(text: "Trigger bounds")
             
             HiddenLightSubHeadline(
-                title: "What is trigger quantity?",
-                text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR.",
+                title: "What is trigger bounds?",
+                text: "Thresholds have a bound range of quantity that you need to be within to trigger it. For example if you have a set with 10 reps and a lower / upper bound of 5 and 10 you will trigger the threshold if you complete 5 to 10 reps.",
                 alignment: .leading
             )
             .padding(.horizontal, 20)
@@ -121,7 +121,7 @@ struct CreateNewThresholdView: View {
                 
             }
             
-            BoldSubHeadline(text: "Change set load")
+            BoldSubHeadline(text: "Change set load on trigger?")
                 .padding(.top, 20)
             
             if loadType == "numerical" {
@@ -151,7 +151,7 @@ struct CreateNewThresholdView: View {
                 
             }
             
-            BoldSubHeadline(text: "Change set quantity")
+            BoldSubHeadline(text: "Change set quantity on trigger?")
                 .padding(.top, 20)
             
             if quantityType == "numerical" {
