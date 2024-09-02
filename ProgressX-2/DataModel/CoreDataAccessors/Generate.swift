@@ -132,7 +132,7 @@ extension CoreDataAccess {
         let jsonArray = transformAsset(asset)
         
         // JSON Array contains a single object with an attribute that is an array of strings.
-        let names = jsonArray[0]["categoryName"] as! [String]
+        let names = jsonArray[0]["categoryNames"] as! [String]
         
         for name in names {
             _ = ExerciseCategory(
@@ -171,7 +171,7 @@ extension CoreDataAccess {
         
         _ = Profile(
             context,
-            userName: profile["userName"] as! String,
+            userName: profile["profileUserName"] as! String,
             gender: profile["gender"] as! String,
             height: profile["height"] as! Double,
             isMetric: (profile["isMetric"] as! Int) == 1,
@@ -192,7 +192,7 @@ extension CoreDataAccess {
         
         let fetchRequest: NSFetchRequest = Profile.fetchRequest()
         
-        fetchRequest.predicate = NSPredicate(format: "userName == %@", "TestProfile")
+        fetchRequest.predicate = NSPredicate(format: "profileUserName == %@", "TestProfile")
         
         let results = fetch(context, fetchRequest: fetchRequest)
         

@@ -48,20 +48,36 @@ struct CreateNewThresholdView: View {
             if exerciseType == "reps" {
                 
                 IntegerTextField(
-                    placeHolder: "Triggered at (reps)",
-                    numberText: $viewModel.triggerQuantity,
-                    markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                    errorMessage: $viewModel.triggerQuantityIsInvalidMSg
+                    placeHolder: "lower bound (reps)",
+                    numberText: $viewModel.lowerBound,
+                    markAsWrong: $viewModel.lowerBoundIsInvalid,
+                    errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                )
+                .padding(.horizontal, 60)
+                
+                IntegerTextField(
+                    placeHolder: "upper bound (reps)",
+                    numberText: $viewModel.upperBound,
+                    markAsWrong: $viewModel.upperBoundIsInvalid,
+                    errorMessage: $viewModel.upperBoundIsInvalidMSg
                 )
                 .padding(.horizontal, 60)
                 
             } else if exerciseType == "time" {
                 
                 DecimalTextField(
-                    placeHolder: "Triggered at (seconds)",
-                    numberText: $viewModel.triggerQuantity,
-                    markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                    errorMessage: $viewModel.triggerQuantityIsInvalidMSg
+                    placeHolder: "lower bound (seconds)",
+                    numberText: $viewModel.lowerBound,
+                    markAsWrong: $viewModel.lowerBoundIsInvalid,
+                    errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                )
+                .padding(.horizontal, 60)
+                
+                DecimalTextField(
+                    placeHolder: "upper bound (seconds)",
+                    numberText: $viewModel.upperBound,
+                    markAsWrong: $viewModel.upperBoundIsInvalid,
+                    errorMessage: $viewModel.upperBoundIsInvalidMSg
                 )
                 .padding(.horizontal, 60)
                 
@@ -214,11 +230,17 @@ struct CreateNewThresholdView: View {
         let triggerQuantityFieldValidator: InputFieldValidator
         
         if exerciseType == "reps" {
+            
             flatQuantityAddFieldValidator = IntFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = IntFieldValidator(maxInputNumber: 100000)
+            
         } else {
+            
             flatQuantityAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = DoubleFieldValidator(maxInputNumber: 100000)
+            
         }
         
         valid += flatLoadAddFieldValidator.valideField(
@@ -234,9 +256,15 @@ struct CreateNewThresholdView: View {
         )
         
         valid += triggerQuantityFieldValidator.valideField(
-            inputVar: viewModel.triggerQuantity,
-            errorMessage: $viewModel.triggerQuantityIsInvalidMSg,
-            fieldInvalid: $viewModel.triggerQuantityIsInvalid
+            inputVar: viewModel.lowerBound,
+            errorMessage: $viewModel.lowerBoundIsInvalidMSg,
+            fieldInvalid: $viewModel.lowerBoundIsInvalid
+        )
+        
+        valid += triggerQuantityFieldValidator.valideField(
+            inputVar: viewModel.upperBound,
+            errorMessage: $viewModel.upperBoundIsInvalidMSg,
+            fieldInvalid: $viewModel.upperBoundIsInvalid
         )
         
         return valid == 0

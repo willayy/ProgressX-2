@@ -39,9 +39,16 @@ extension ExerciseCategory {
     
     /// Validates that the name of the category is unique.
     private func validateCategoryNameIsUnique() throws {
+        
         let context = self.managedObjectContext!
-        let duplicates = CoreDataAccess.categoryNameIsUnique(context)
-        if duplicates { throw ValidationNSErrors.exerciseCategoryNameIsInvalid.toNSError() }
+        
+        let duplicatesDoesNotExist = CoreDataAccess.categoryNameIsUnique(context)
+        
+        if !duplicatesDoesNotExist {
+            
+            throw ValidationNSErrors.exerciseCategoryNameIsInvalid.toNSError()
+            
+        }
     }
     
 }

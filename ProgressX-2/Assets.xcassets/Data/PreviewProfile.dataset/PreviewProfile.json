@@ -1,6 +1,6 @@
 [
     {
-        "userName" : "TestProfile",
+        "profileUserName" : "TestProfile",
         "gender" : "male",
         "height" : 187,
         "isMetric" : 1,

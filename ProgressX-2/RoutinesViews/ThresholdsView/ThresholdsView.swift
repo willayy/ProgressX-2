@@ -11,15 +11,21 @@ import CoreData
 struct ThresholdsView: View {
     
     @Binding var navPath: [Int]
+    
     @Binding var selectedTemplateSet: TemplateSet?
+    
     @Binding var selectedThreshold: SetThreshold?
     
     var body: some View {
         
         @FetchRequest(
+            
             entity: SetThreshold.entity(),
-            sortDescriptors: [NSSortDescriptor(keyPath: \SetThreshold.triggerQuantity, ascending: true)],
+            
+            sortDescriptors: [NSSortDescriptor(keyPath: \SetThreshold.lowerBound, ascending: true)],
+            
             predicate: NSPredicate(format: "templateSet == %@", selectedTemplateSet!)
+            
         ) var thresholds: FetchedResults<SetThreshold>
         
         ScrollView {
@@ -37,24 +43,31 @@ struct ThresholdsView: View {
                 containerName: "this set",
                 elementName: "threshold",
                 data: _thresholds) { threshold in
+                    
                     ThresholdListItem(
                         navPath: $navPath,
                         selectedThreshold: $selectedThreshold,
                         threshold: threshold
                     )
+                    
                 }
                 .padding(.horizontal, 20)
             
         }
         
         Button {
+            
             navPath.append(9)
+            
         } label: {
+            
             Text("Add threshold")
                 .frame(height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
             Image(systemName: "plus")
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.vertical, 20)

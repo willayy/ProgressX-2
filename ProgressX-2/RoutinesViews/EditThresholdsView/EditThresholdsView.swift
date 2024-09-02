@@ -62,21 +62,41 @@ struct EditThresholdsView: View {
             .padding(.horizontal, 20)
             
             if exerciseType == "reps" {
+                
                 IntegerTextField(
-                    placeHolder: "New quantity (reps)",
-                    numberText: $viewModel.editedTriggerQuantity,
-                    markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                    errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
+                    placeHolder: "New lower bound (reps)",
+                    numberText: $viewModel.editedLowerBound,
+                    markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                    errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
                 )
                 .padding(.horizontal, 60)
+                
+                IntegerTextField(
+                    placeHolder: "New upper bound (reps)",
+                    numberText: $viewModel.editedUpperBound,
+                    markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                    errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                )
+                .padding(.horizontal, 60)
+                
             } else {
+                
                 DecimalTextField(
-                    placeHolder: "New quantity (seconds)",
-                    numberText: $viewModel.editedTriggerQuantity,
-                    markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                    errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
+                    placeHolder: "New lower bound (seconds)",
+                    numberText: $viewModel.editedLowerBound,
+                    markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                    errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
                 )
                 .padding(.horizontal, 60)
+                
+                DecimalTextField(
+                    placeHolder: "New upper bound (seconds)",
+                    numberText: $viewModel.editedUpperBound,
+                    markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                    errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                )
+                .padding(.horizontal, 60)
+                
             }
             
             BoldSubHeadline(text: "Modify PR generation")
@@ -215,11 +235,17 @@ struct EditThresholdsView: View {
         let triggerQuantityFieldValidator: InputFieldValidator
         
         if exerciseType == "reps" {
+            
             flatQuantityAddFieldValidator = IntFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = IntFieldValidator(maxInputNumber: 100000)
+            
         } else {
+            
             flatQuantityAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = DoubleFieldValidator(maxInputNumber: 100000)
+            
         }
         
         valid += flatLoadAddFieldValidator.valideField(
@@ -235,9 +261,15 @@ struct EditThresholdsView: View {
         )
         
         valid += triggerQuantityFieldValidator.valideField(
-            inputVar: viewModel.editedTriggerQuantity,
-            errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.editedTriggerQuantityIsInvalid
+            inputVar: viewModel.editedLowerBound,
+            errorMessage: $viewModel.editedLowerBoundIsInvalidMsg,
+            fieldInvalid: $viewModel.editedLowerBoundIsInvalid
+        )
+        
+        valid += triggerQuantityFieldValidator.valideField(
+            inputVar: viewModel.editedUpperBound,
+            errorMessage: $viewModel.editedUpperBoundIsInvalidMsg,
+            fieldInvalid: $viewModel.editedUpperBoundIsInvalid
         )
         
         return valid == 0

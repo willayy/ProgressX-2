@@ -70,8 +70,8 @@ extension Exercise {
     /// Checks that the name of the exercise is unique
     private func validateExerciseNameIsUnique() throws {
         let context = self.managedObjectContext!
-        let duplicates = CoreDataAccess.exerciseNameIsUnique(context)
-        if duplicates {
+        let duplicatesDoesNotExist = CoreDataAccess.exerciseNameIsUnique(context)
+        if !duplicatesDoesNotExist {
             throw ValidationNSErrors.exerciseNameIsInvalid.toNSError()
         }
     }

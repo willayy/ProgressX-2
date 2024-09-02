@@ -139,10 +139,15 @@ extension Routine: HasOrderable, HasChildren {
     
     /// Validates that the routine name is unique
     private func validateRoutineName() throws {
+        
         let context = self.managedObjectContext!
-        let duplicates = CoreDataAccess.routineNameIsUnique(context)
-        if duplicates {
+        
+        let duplicatesDoesNotExist = CoreDataAccess.routineNameIsUnique(context)
+        
+        if !duplicatesDoesNotExist {
+            
             throw ValidationNSErrors.routineNameIsInvalid.toNSError()
+            
         }
     }
     

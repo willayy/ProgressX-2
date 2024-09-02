@@ -110,9 +110,9 @@ extension Profile {
         
         let context = self.managedObjectContext!
         
-        let duplicates = CoreDataAccess.profileNameIsUnique(context)
+        let duplicatesDoesNotExist = CoreDataAccess.profileNameIsUnique(context)
         
-        if duplicates {
+        if !duplicatesDoesNotExist {
             
             throw ValidationNSErrors.profileNameIsInvalid.toNSError()
             

@@ -1,7 +1,7 @@
 [
     {
         "timePeriodName" : "Preview routine",
-        "timePeruidDescription" : "A Routine generated in-memory for testing and the SwiftUI preview.",
+        "timePeriodDescription" : "A Routine generated in-memory for testing and the SwiftUI preview.",
         "children" : [
             
             {
@@ -22,7 +22,7 @@
                                     {
                                         "timePeriodName" : "Set 1",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (reps)",
+                                        "exercise" : "testing exercise (reps)",
                                         "loadType" : "numerical",
                                         "setLoad" : 100,
                                         "quantityType" : "numerical",
@@ -36,7 +36,8 @@
                                                 "prType" : "onerepmax",
                                                 "flatQuantityAdd" : 2.5,
                                                 "flatLoadAdd" : 2,
-                                                "triggerQuantity" : 5,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 5,
                                                 "generatePr" : 1
                                             }
                                             
@@ -58,9 +59,10 @@
                                                 "timePeriodName" : "Threshold 1",
                                                 "timePeriodDescription" : "",
                                                 "prType" : "timemax",
-                                                "flatQuantityAdd" : "nil",
+                                                "flatQuantityAdd" : null,
                                                 "flatLoadAdd" : 2,
-                                                "triggerQuantity" : 2,
+                                                "upperBound" : 2,
+                                                "lowerBound" : 0,
                                                 "generatePr" : 1
                                             }
                                             
@@ -78,7 +80,7 @@
                                     {
                                         "timePeriodName" : "Set 1",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (reps)",
+                                        "exercise" : "testing exercise (reps)",
                                         "loadType" : "maxperc",
                                         "setLoad" : 0.8,
                                         "quantityType" : "numerical",
@@ -90,9 +92,10 @@
                                                 "timePeriodName" : "Threshold 1",
                                                 "timePeriodDescription" : "",
                                                 "prType" : "maxreps",
-                                                "flatQuantityAdd" : "nil",
-                                                "flatLoadAdd" : "nil",
-                                                "triggerQuantity" : 5,
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 5,
                                                 "generatePr" : 1
                                             }
                                             
@@ -102,7 +105,7 @@
                                     {
                                         "timePeriodName" : "Set 2",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (time)",
+                                        "exercise" : "testing exercise (time)",
                                         "loadType" : "bwperc",
                                         "setLoad" : 0.8,
                                         "quantityType" : "numerical",
@@ -115,8 +118,9 @@
                                                 "timePeriodDescription" : "",
                                                 "prType" : "timemax",
                                                 "flatQuantityAdd" : 10,
-                                                "flatLoadAdd" : "nil",
-                                                "triggerQuantity" : 20,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 60,
+                                                "lowerBound" : 20,
                                                 "generatePr" : 1
                                             }
                                             
@@ -142,7 +146,7 @@
                                     {
                                         "timePeriodName" : "Set 1",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (reps)",
+                                        "exercise" : "testing exercise (reps)",
                                         "loadType" : "numerical",
                                         "setLoad" : 95,
                                         "quantityType" : "numerical",
@@ -156,7 +160,8 @@
                                                 "prType" : "onerepmax",
                                                 "flatQuantityAdd" : 2,
                                                 "flatLoadAdd" : 2,
-                                                "triggerQuantity" : 2,
+                                                "upperBound" : 15,
+                                                "lowerBound" : 2,
                                                 "generatePr" : 1
                                             }
                                             
@@ -166,7 +171,7 @@
                                     {
                                         "timePeriodName" : "Set 2",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (time)",
+                                        "exercise" : "testing exercise (time)",
                                         "loadType" : "bwperc",
                                         "setLoad" : 0.4,
                                         "quantityType" : "numerical",
@@ -179,8 +184,9 @@
                                                 "timePeriodDescription" : "",
                                                 "prType" : "timemax",
                                                 "flatQuantityAdd" : 2,
-                                                "flatLoadAdd" : "nil",
-                                                "triggerQuantity" : 2,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 20,
+                                                "lowerBound" : 2,
                                                 "generatePr" : 1
                                             }
                                             
@@ -198,7 +204,7 @@
                                     {
                                         "timePeriodName" : "Set 1",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (reps)",
+                                        "exercise" : "testing exercise (reps)",
                                         "loadType" : "bwperc",
                                         "setLoad" : 0.7,
                                         "quantityType" : "maxperc",
@@ -210,9 +216,10 @@
                                                 "timePeriodName" : "Threshold 1",
                                                 "timePeriodDescription" : "",
                                                 "prType" : "maxreps",
-                                                "flatQuantityAdd" : "nil",
-                                                "flatLoadAdd" : "nil",
-                                                "triggerQuantity" : 2,
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 2,
                                                 "generatePr" : 1
                                             }
                                             
@@ -222,7 +229,7 @@
                                     {
                                         "timePeriodName" : "Set 2",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "tesing exercise (time)",
+                                        "exercise" : "testing exercise (time)",
                                         "loadType" : "maxperc",
                                         "setLoad" : 0.99,
                                         "quantityType" : "numerical",
@@ -235,8 +242,9 @@
                                                 "timePeriodDescription" : "",
                                                 "prType" : "timemax",
                                                 "flatQuantityAdd" : 10,
-                                                "flatLoadAdd" : "nil",
-                                                "triggerQuantity" : 50,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 50,
                                                 "generatePr" : 1
                                             }
                                             

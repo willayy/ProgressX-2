@@ -13,31 +13,25 @@ internal class ThresholdHandler {
     private var thresholds: [SetThreshold]
     
     internal init(thresholds: [SetThreshold]) {
+        
         self.thresholds = thresholds
+        
     }
     
+    /// Handels the triggering of the thresholds in a set.
     internal func handleThresholds(quantityDone: Double, loadDone: Double) -> Void {
         
-        /* Personal record generation, only the threshold with the largest
-         trigger quantity gets to generate a PR if it exists */
-        let triggeredThresholds = thresholds.filter {
+        let triggeredThreshold = thresholds.first {
             
             $0.isTriggered(quantityDone: quantityDone)
             
         }
         
-        // Sort so the lowest triggerquantity is first, also use trigger thresholds.
-        let highestTriggeredThreshold = triggeredThresholds.max {
-            
-            $0.triggerQuantity < $1.triggerQuantity
-            
-        }
+        triggeredThreshold?.addLoadModifiers()
         
-        highestTriggeredThreshold?.addLoadModifiers()
+        triggeredThreshold?.addQuantityModifiers()
         
-        highestTriggeredThreshold?.addQuantityModifiers()
-        
-        highestTriggeredThreshold?.generatePersonalRecord(quantityDone: quantityDone, loadDone: loadDone)
-        
+        triggeredThreshold?.generatePersonalRecord(quantityDone: quantityDone, loadDone: loadDone)
+                
     }
 }

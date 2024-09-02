@@ -17,7 +17,8 @@ extension SetThreshold: HasParent {
         templateSet: TemplateSet,
         name: String = "",
         description: String = "",
-        triggeredAt: Double,
+        upperBound: Double,
+        lowerBound: Double,
         generatesPr: Bool,
         prType: String?,
         flatLoadAdd: NSNumber?,
@@ -25,7 +26,8 @@ extension SetThreshold: HasParent {
     ) {
         self.init(context: context)
         self.templateSet = templateSet
-        self.triggerQuantity = triggeredAt
+        self.lowerBound = lowerBound
+        self.upperBound = upperBound
         self.generatePr = generatesPr
         self.prType = prType
         self.flatLoadAdd = flatLoadAdd
@@ -51,30 +53,20 @@ extension SetThreshold: HasParent {
         self.timePeriodName = (json["timePeriodName"] as! String)
         self.timePeriodDescription = (json["timePeriodDescription"] as! String)
         
-        // If JSON data has value "nil" set prType to nil, else set it to its correct literal.
-        let prType = json["prType"] as! String
+        // JSON data can have a string value or nil.
+        self.prType = json["prType"] as! String?
         
-        self.prType = ( prType == "nil") ? nil : prType
+        // Upper and lower bound of the threshold.
+        self.upperBound = json["upperBound"] as! Double
         
-        self.triggerQuantity = (json["triggerQuantity"] as! Double)
+        self.lowerBound = json["lowerBound"] as! Double
         
-        // The value in the flatQuantityAdd field should either be a Double or the literal "nil".
+        // Flat load and quantity add. Needs some seperate handling because NSNull cant be cast to NSNumber?
         let flatQuantityAdd = json["flatQuantityAdd"]
+        self.flatQuantityAdd = (flatQuantityAdd is NSNull) ? nil : flatQuantityAdd as! NSNumber?
         
-        if flatQuantityAdd is String && (flatQuantityAdd as! String) == "nil"  {
-            self.flatQuantityAdd = nil
-        } else {
-            self.flatQuantityAdd = flatQuantityAdd as! NSNumber?
-        }
-        
-        // The value in the flatLoadAdd field should either be a Double or the literal "nil".
         let flatLoadAdd = json["flatLoadAdd"]
-        
-        if flatLoadAdd is String && (flatLoadAdd as! String) == "nil" {
-            self.flatLoadAdd = nil
-        } else {
-            self.flatLoadAdd = (flatLoadAdd as! NSNumber?)
-        }
+        self.flatLoadAdd = (flatLoadAdd is NSNull) ? nil : flatLoadAdd as! NSNumber?
         
         // In the JSON files generate PR is an int where 1 is true and 0 (or anthing else) is false.
         self.generatePr = (json["generatePr"] as! Int) == 1
@@ -109,42 +101,54 @@ extension SetThreshold: HasParent {
         guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
+            
             case .Reps:
+            
                 return String(format: "%.0f", flatQuantityAdd) + " reps"
             
             case .Time:
+            
                 return String(format: "%.2f", flatQuantityAdd) + " seconds"
         }
     }
     
     /// Use this property to get a correctly formatted string from the  triggerQuantity value
     public var formattedTriggerQuantity: String? {
+        
         guard let templateSet = self.templateSet else { return nil }
         guard let exercise = templateSet.exercise else { return nil }
         guard let exerciseType = exercise.exerciseType else { return nil }
         guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
         switch type {
+            
             case .Reps:
-                return String(format: "%.0f", self.triggerQuantity) + " reps"
+            
+                let upperBound = String(format: "%.0f", self.upperBound)
+            
+                let lowerBound = String(format: "%.0f", self.lowerBound)
+            
+                return "Between \(lowerBound) - \(upperBound) reps"
             
             case .Time:
-                return String(format: "%.2f", self.triggerQuantity) + " seconds"
+            
+                let upperBound = String(format: "%.2f", self.upperBound)
+            
+                let lowerBound = String(format: "%.2f", self.lowerBound)
+            
+                return "Between \(lowerBound) - \(upperBound) seconds"
         }
     }
     
     /// Returns true if quantityDone is larger than triggerQuantity.
     internal func isTriggered(quantityDone: Double) -> Bool {
         
-        if quantityDone >= self.triggerQuantity {
-            
-            return true
-            
-        } else {
-            
-            return false
-            
-        }
+        let isAboveLower = (quantityDone >= self.lowerBound)
+        
+        let isBelowUpper = (quantityDone <= self.upperBound)
+        
+        return (isAboveLower && isBelowUpper) ? true : false
+        
     }
     
     /// Modifies the load of the template set with flatLoadAdd.
@@ -168,7 +172,7 @@ extension SetThreshold: HasParent {
         templateSet.setQuantity += flatQuantityAdd
         
         // Also modify trigger quantity to ensure linearity
-        self.triggerQuantity += flatQuantityAdd
+        self.upperBound += flatQuantityAdd
         
     }
     
@@ -243,10 +247,17 @@ extension SetThreshold: HasParent {
     
     // Validates that the trigger quantity matches the exercise of the set
     private func validateTriggerQuantity() throws {
-        let isTriggerQuantityInteger = (floor(self.triggerQuantity) == self.triggerQuantity)
+        
+        let isUpperBoundInteger = (floor(self.upperBound) == self.upperBound)
+        
+        let isLowerBoundInteger = (floor(self.lowerBound) == self.lowerBound)
+        
         let isPrRepBased = (self.templateSet!.exercise!.exerciseType == "reps")
-        if !isTriggerQuantityInteger && isPrRepBased {
+        
+        if !isLowerBoundInteger && !isUpperBoundInteger && isPrRepBased {
+            
             throw ValidationNSErrors.triggerQuantityIsInvalid.toNSError()
+            
         }
     }
     
