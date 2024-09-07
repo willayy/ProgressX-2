@@ -56,7 +56,7 @@ struct ChooseWeekHistoryView: View {
                     }.padding(.horizontal, 20)
                 }
             }
-        })
+        }, selectedTrainingSession: $viewModel.selectedTrainingSession)
     }
 }
 

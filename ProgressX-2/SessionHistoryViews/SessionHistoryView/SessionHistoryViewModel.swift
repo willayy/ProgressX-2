@@ -10,5 +10,6 @@ import Foundation
 class SessionHistoryViewModel: ObservableObject{
     
     @Published var navPath: [Int] = [Int]()
+    @Published var selectedTrainingSession: TrainingSession? = nil
     
 }
