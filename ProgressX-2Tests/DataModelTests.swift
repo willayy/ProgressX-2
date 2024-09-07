@@ -136,6 +136,15 @@ final class DataModelTests: XCTestCase {
         
         let previewRoutine = getPreviewRoutine()
         
+        // Get all training sessions in routine
+        let trainingSessionsInRoutine = CoreDataAccess.getAllTrainingSessionsIn(routine: previewRoutine, context)
+        
+        // Map all template session
+        let templateSessionsInRoutine: [TemplateSession] = trainingSessionsInRoutine.map { $0.templateSession! }
+        
+        // Get all trainingSets
+        let trainingSets: [TrainingSet] = trainingSessionsInRoutine.flatMap { $0.children }
+        
     }
         
 }
