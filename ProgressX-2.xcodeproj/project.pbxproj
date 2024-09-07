@@ -92,6 +92,7 @@
 		83618BC32C809757001D401E /* QuantityTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC22C809757001D401E /* QuantityTodoCalculator.swift */; };
 		83618BC52C8098CB001D401E /* LoadTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */; };
 		83618BC72C85DBAE001D401E /* CoreDataAccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC62C85DBAE001D401E /* CoreDataAccessTests.swift */; };
+		83618BC82C8C9D50001D401E /* SessionHistoryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F12C6A5ADD0003E76E /* SessionHistoryNavigationController.swift */; };
 		836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485E82C36C156006EB0C0 /* CreateNewThresholdView.swift */; };
 		836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EA2C36C560006EB0C0 /* EditThresholdsView.swift */; };
 		836485ED2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EC2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift */; };
@@ -182,7 +183,6 @@
 		8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162C2C51299700F37C58 /* TimerViewModel.swift */; };
 		8F8417EE2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417ED2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift */; };
 		8F8417F02C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417EF2C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift */; };
-		8F8417F22C6A5ADD0003E76E /* SessionHistoryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F12C6A5ADD0003E76E /* SessionHistoryNavigationController.swift */; };
 		8F8417F42C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F32C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift */; };
 		8F8417F72C6CD9920003E76E /* SessionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F62C6CD9920003E76E /* SessionHistoryView.swift */; };
 		8F8417F92C6CD9AC0003E76E /* SessionHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F82C6CD9AC0003E76E /* SessionHistoryViewModel.swift */; };
@@ -1305,6 +1305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83618BC82C8C9D50001D401E /* SessionHistoryNavigationController.swift in Sources */,
 				8FAFE55F2C5FBE6F00143223 /* TrainingSetInfoBox.swift in Sources */,
 				83BD39742C49244A008E09A0 /* ViewAllWeighInsView.swift in Sources */,
 				836485EE2C36CACA006EB0C0 /* EditTemplateSetView.swift in Sources */,
