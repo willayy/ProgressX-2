@@ -132,6 +132,26 @@ final class DataModelTests: XCTestCase {
         
     }
     
+    /// Helper method for testSetThreshold
+    private func templateSetData(templateSets: [TemplateSet]) -> [[String : Double]] {
+        
+        var templateSetsData: [[String : Double]] = []
+        
+        for templateSet in templateSets {
+            
+            let templateSetData = [
+                "loadTodo" : templateSet.loadTodo!,
+                "quantityTodo" : templateSet.quantityTodo!
+            ]
+            
+            templateSetsData.append(templateSetData)
+            
+        }
+        
+        return templateSetsData
+        
+    }
+    
     func testSetThreshold() {
         
         let previewRoutine = getPreviewRoutine()
@@ -142,9 +162,26 @@ final class DataModelTests: XCTestCase {
         // Map all template session
         let templateSessionsInRoutine: [TemplateSession] = trainingSessionsInRoutine.map { $0.templateSession! }
         
+        let templateSets: [TemplateSet] = templateSessionsInRoutine.flatMap { $0.children }
+        
+        // Save all template set data to an array of dictionaries so we can compare before and after threshold effects.
+        let templateSetDataBefore = templateSetData(templateSets: templateSets)
+        
         // Get all trainingSets
         let trainingSets: [TrainingSet] = trainingSessionsInRoutine.flatMap { $0.children }
         
+        for trainingSet in trainingSets {
+            
+            trainingSet.loadDone = trainingSet.loadTodo
+            
+            trainingSet.quantityDone = trainingSet.quantityTodo
+            
+            trainingSet.complete()
+            
+        }
+        
+        let templateSetDataAfter = templateSetData(templateSets: templateSets)
+    
     }
         
 }
