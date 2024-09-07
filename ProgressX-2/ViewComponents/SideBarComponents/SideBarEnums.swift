@@ -13,6 +13,7 @@ enum Tab: String, CaseIterable {
     case Routines = "rectangle.stack"
     case Exercises = "dumbbell"
     case InfoHelp = "questionmark.circle"
+    case SessionHistory = "calendar.badge.clock"
     case Profile = "person.crop.circle"
     
     var title: String {
@@ -23,6 +24,7 @@ enum Tab: String, CaseIterable {
         case .Exercises: return "Exercises"
         case .Profile: return "Profile"
         case .InfoHelp: return "Info / Help"
+        case .SessionHistory: return "Session history"
         }
     }
 }
