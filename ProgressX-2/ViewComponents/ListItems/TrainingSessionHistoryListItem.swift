@@ -24,7 +24,7 @@ struct TrainingSessionHistoryListItem: View {
                 
                 Text("Completion date: ")
                     .fontWeight(.bold)
-                + Text(session.completionDateString ?? "")
+                + Text(session.formattedCompletionDate ?? "")
                 
                 (Text("Sets: ")
                     .fontWeight(.bold)
@@ -36,7 +36,7 @@ struct TrainingSessionHistoryListItem: View {
             Spacer()
             
             Button(action: {
-                print(session.completionDateString)
+                print(session.formattedCompletionDate)
                 selectedTrainingSession = session
                 navPath.append(1)
             }) { Image(systemName: "figure.run") }
