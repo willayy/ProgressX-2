@@ -91,6 +91,7 @@
 		83618BBD2C8094C2001D401E /* IsChangePropogator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BBC2C8094C2001D401E /* IsChangePropogator.swift */; };
 		83618BC32C809757001D401E /* QuantityTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC22C809757001D401E /* QuantityTodoCalculator.swift */; };
 		83618BC52C8098CB001D401E /* LoadTodoCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */; };
+		83618BC72C85DBAE001D401E /* CoreDataAccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BC62C85DBAE001D401E /* CoreDataAccessTests.swift */; };
 		836485E92C36C156006EB0C0 /* CreateNewThresholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485E82C36C156006EB0C0 /* CreateNewThresholdView.swift */; };
 		836485EB2C36C560006EB0C0 /* EditThresholdsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EA2C36C560006EB0C0 /* EditThresholdsView.swift */; };
 		836485ED2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836485EC2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift */; };
@@ -286,6 +287,7 @@
 		83618BBC2C8094C2001D401E /* IsChangePropogator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsChangePropogator.swift; sourceTree = "<group>"; };
 		83618BC22C809757001D401E /* QuantityTodoCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantityTodoCalculator.swift; sourceTree = "<group>"; };
 		83618BC42C8098CB001D401E /* LoadTodoCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTodoCalculator.swift; sourceTree = "<group>"; };
+		83618BC62C85DBAE001D401E /* CoreDataAccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccessTests.swift; sourceTree = "<group>"; };
 		836485E82C36C156006EB0C0 /* CreateNewThresholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdView.swift; sourceTree = "<group>"; };
 		836485EA2C36C560006EB0C0 /* EditThresholdsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsView.swift; sourceTree = "<group>"; };
 		836485EC2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfileNavigationController.swift; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 			children = (
 				831F2BF82C20E38D007A7A8A /* DataModelTests.swift */,
 				8310D91B2C051951004A5A3D /* JsonValidtionTests.swift */,
+				83618BC62C85DBAE001D401E /* CoreDataAccessTests.swift */,
 			);
 			path = "ProgressX-2Tests";
 			sourceTree = "<group>";
@@ -1442,6 +1445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				831F2BFA2C20E38D007A7A8A /* DataModelTests.swift in Sources */,
+				83618BC72C85DBAE001D401E /* CoreDataAccessTests.swift in Sources */,
 				8310D91C2C051951004A5A3D /* JsonValidtionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

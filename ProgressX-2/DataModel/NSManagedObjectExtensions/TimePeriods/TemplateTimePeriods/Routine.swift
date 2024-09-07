@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension Routine: HasOrderable, HasChildren {
+extension Routine: HasOrderable, HasChildren, HasCompleteable {
     
     // MARK: Convenience init
     
@@ -121,6 +121,23 @@ extension Routine: HasOrderable, HasChildren {
     // Protocol implementation
     internal var children: [TrainingCycle] {
         return self.trainingCycles!.allObjects as! [TrainingCycle]
+    }
+    
+    // Protocol implementation
+    func childrenAreComplete() -> Bool {
+        if self.trainingCycles!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingCycles!.allSatisfy {
+              trainingCycle in
+                (trainingCycle as! TrainingCycle).isComplete
+            }
+        }
+    }
+    
+    // Protocol implementation
+    func hasCompleteableChildren() -> Bool {
+        return !self.trainingCycles!.allObjects.isEmpty
     }
     
     // MARK: Validation

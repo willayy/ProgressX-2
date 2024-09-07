@@ -26,64 +26,116 @@ final class DataModelTests: XCTestCase {
         context.rollback()
     }
     
-    func testCoreDataAccess() {
-        #warning("TODO: Implement")
+    private func getPreviewRoutine() -> Routine {
+        
+        let routineFetchRequest: NSFetchRequest = Routine.fetchRequest()
+        
+        routineFetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", "Preview routine")
+        
+        let routineResults = CoreDataAccess.fetch(context, fetchRequest: routineFetchRequest)
+        
+        let routine = routineResults.first!
+        
+        return routine
     }
     
-    func testCoreDataAccessGenerate() {
-        #warning("TODO: Implement")
-    }
-    
-    func testCoreDataAccessGetters() {
-        #warning("TODO: Implement")
-    }
-    
-    func testCoreDataAccessCheckers() {
-        #warning("TODO: Implement")
-    }
-    
-    func testProfile() {
-        #warning("TODO: Implement")
-    }
-    
-    func testExercise() {
-        #warning("TODO: Implement")
-    }
-    
-    func testExerciseCategory() {
-        #warning("TODO: Implement")
+    func testCascadeCompletion() {
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let sessions = CoreDataAccess.getAllTrainingSessionsIn(routine: previewRoutine, context)
+        
+        let session = sessions.first!
+        
+        let sets = session.children
+        
+        for set in sets { set.complete() }
+        
+        // Test if completing sets cascades to session
+        XCTAssertTrue(session.isComplete)
+        
+        /* Complete all sessions in the routine, if you where to try to save this you would get an error
+         but since we arent saving and cascading completion works anyway its fine*/
+        for session in sessions { session.complete() }
+        
+        let trainingCycle = previewRoutine.children.first!
+        
+        XCTAssertTrue(trainingCycle.isComplete)
+        
     }
     
     func testOrderableTimePeriod() {
-        #warning("TODO: Implement")
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let templateCycles: TemplateCycle? = previewRoutine.templateCycle
+        
+        let templateWeeks: [TemplateWeek] = templateCycles.flatMap { $0.children }!
+        
+        let templateSessions: [TemplateSession] = templateWeeks.flatMap { $0.children }
+        
+        let templateSets: [TemplateSet] = templateSessions.flatMap { $0.children }
+        
+        // Try to switch around every template time period in the routine to 1, in the end it should be able to save.
+        
+        for templateWeek in templateWeeks {
+            templateWeek.switchPositionIndex(to: 1)
+        }
+        
+        for templateSession in templateSessions {
+            templateSession.switchPositionIndex(to: 1)
+        }
+        
+        for templateSet in templateSets {
+            templateSet.switchPositionIndex(to: 1)
+        }
+        
+        CoreDataAccess.save(context)
+        
     }
     
-    func testCompleteableTimePeriod() {
-        #warning("TODO: Implement")
-    }
-    
-    func testRoutine() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateCycle() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateWeek() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateSession() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateSet() {
-        #warning("TODO: Implement")
+    func testPropogateChanges() {
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let trainingCycles = previewRoutine.children
+        
+        let templateCycle = previewRoutine.templateCycle!
+        
+        // Get template and training weeks.
+        
+        let trainingWeeks = trainingCycles.first!.children
+        
+        let templateWeeks = templateCycle.children
+        
+        var renameCounter = 1
+        
+        // Rename all weeks.
+        
+        for templateWeek in templateWeeks {
+            
+            templateWeek.timePeriodName = "Renamed week \(renameCounter)"
+            
+            templateWeek.propogateChanges()
+            
+            renameCounter += 1
+            
+        }
+        
+        // Check that all weeks has been renamed, this is not very rigourous but it works for now.
+        
+        for trainingWeek in trainingWeeks {
+            
+            XCTAssertTrue(trainingWeek.timePeriodName!.contains("Renamed week"))
+            
+        }
+        
     }
     
     func testSetThreshold() {
-        #warning("TODO: Implement")
+        
+        let previewRoutine = getPreviewRoutine()
+        
     }
         
 }
