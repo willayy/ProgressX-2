@@ -286,7 +286,72 @@
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Push day",
                                 "children" : [
-                                    
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 50,
+                                        "setQuantity" : 5,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    }
+
                                 ]
                             },
                             
