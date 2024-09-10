@@ -1,81 +1,100 @@
 [
     {
-    "type": "reps",
-    "name": "Tricep pushdown",
-    "description": "Classic tricep isolating exercise",
-    "categories": [
-        "Triceps"
-    ]
+        "type": "reps",
+        "name": "Tricep pushdown",
+        "description": "Classic tricep isolating exercise",
+        "categories": [
+            "Triceps"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Bicep curls",
-    "description": "Classic bicep isolating exercise",
-    "categories": [
-        "Biceps"
-    ]
+        "type": "reps",
+        "name": "Bicep curls",
+        "description": "Classic bicep isolating exercise",
+        "categories": [
+            "Biceps"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Bench press",
-    "description": "Classic upper body compound lift.",
-    "categories": [
-        "Shoulders",
-        "Pectorials",
-        "Biceps"
-    ]
+        "type": "reps",
+        "name": "Bench press",
+        "description": "Classic upper body compound lift.",
+        "categories": [
+            "Shoulders",
+            "Pectorials",
+            "Biceps"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Squat",
-    "description": "Classic lower body compound lift.",
-    "categories": [
-        "Thighs",
-        "Glutes",
-        "Hamstrings"
-    ]
+        "type": "reps",
+        "name": "Squat",
+        "description": "Classic lower body compound lift.",
+        "categories": [
+            "Thighs",
+            "Glutes",
+            "Hamstrings"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Shoulder press",
-    "description": "Classic upper body shoulder focused lift.",
-    "categories": [
-        "Shoulders",
-        "Traps",
-        "Triceps"
-    ]
+        "type": "reps",
+        "name": "Shoulder press",
+        "description": "Classic upper body shoulder focused lift.",
+        "categories": [
+            "Shoulders",
+            "Traps",
+            "Triceps"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Deadlift",
-    "description": "Classic compound lift that mainly targets the lower body.",
-    "categories": [
-        "Glutes",
-        "Hamstrings",
-        "Lower back",
-        "Lats",
-        "Thighs",
-        "Abs"
-    ]
+        "type": "reps",
+        "name": "Deadlift",
+        "description": "Classic compound lift that mainly targets the lower body.",
+        "categories": [
+            "Glutes",
+            "Hamstrings",
+            "Lower back",
+            "Lats",
+            "Thighs",
+            "Abs"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Push up",
-    "description": "Classic bodyweight exercise targeting the chest and upper body.",
-    "categories": [
-        "Pectorials",
-        "Shoulders",
-        "Biceps",
-        "Triceps"
-    ]
+        "type": "reps",
+        "name": "Push up",
+        "description": "Classic bodyweight exercise targeting the chest and upper body.",
+        "categories": [
+            "Pectorials",
+            "Shoulders",
+            "Biceps",
+            "Triceps"
+        ]
     },
+    
     {
-    "type": "reps",
-    "name": "Sit up",
-    "description": "Classic bodyweight exercise targeting the abdominals.",
-    "categories": [
-        "Abs",
-        "Obliques"
-    ]
+        "type": "reps",
+        "name": "Sit up",
+        "description": "Classic bodyweight exercise targeting the abdominals.",
+        "categories": [
+            "Abs",
+            "Obliques"
+        ]
+    },
+    
+    {
+        "type": "reps",
+        "name": "Chinup",
+        "description": "Classic bodyweight exercise targeting the upper back and arms",
+        "categories": [
+                "Shoulders",
+                "Lats",
+                "Triceps",
+                "Biceps"
+        ]
     }
 ]

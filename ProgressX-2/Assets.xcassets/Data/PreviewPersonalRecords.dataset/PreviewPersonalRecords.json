@@ -1,0 +1,107 @@
+[
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 100,
+        "quantity" : 1,
+        "prType" : "onerepmax"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 90,
+        "quantity" : 1,
+        "prType" : "onerepmax"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 1,
+        "prType" : "onerepmax"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 70,
+        "quantity" : 1,
+        "prType" : "onerepmax"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 60,
+        "quantity" : 1,
+        "prType" : "onerepmax"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 50,
+        "prType" : "maxreps"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 40,
+        "prType" : "maxreps"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 30,
+        "prType" : "maxreps"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 20,
+        "prType" : "maxreps"
+    },
+    
+    {
+        "exercise" : "testing exercise (reps)",
+        "load" : 80,
+        "quantity" : 10,
+        "prType" : "maxreps"
+    },
+    
+    {
+        "exercise" : "testing exercise (time)",
+        "load" : 60,
+        "quantity" : 180,
+        "prType" : "timemax"
+    },
+    
+    {
+        "exercise" : "testing exercise (time)",
+        "load" : 60,
+        "quantity" : 120,
+        "prType" : "timemax"
+    },
+    
+    {
+        "exercise" : "testing exercise (time)",
+        "load" : 60,
+        "quantity" : 90,
+        "prType" : "timemax"
+    },
+    
+    {
+        "exercise" : "testing exercise (time)",
+        "load" : 60,
+        "quantity" : 60,
+        "prType" : "timemax"
+    },
+    
+    {
+        "exercise" : "testing exercise (time)",
+        "load" : 60,
+        "quantity" : 30,
+        "prType" : "timemax"
+    },
+    
+]
