@@ -10,11 +10,21 @@
     
     {
         "type": "reps",
-        "name": "Bicep curls",
+        "name": "Dumbbell curl",
         "description": "Classic bicep isolating exercise",
         "categories": [
             "Biceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Hammer curl",
+        "description" : "Variation on the classic curl exercise",
+        "categories": [
+            "Biceps",
+            "Forearms"
+        ]	
     },
     
     {
@@ -96,5 +106,46 @@
                 "Triceps",
                 "Biceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Overhead press",
+        "description": "Classic upper body compound lift with a focus on shoulders.",
+        "categories": [
+            "Shoulders",
+            "Triceps"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Incline dumbbell press",
+        "description": "Classic upper body compound lift with a focus on the upper chest.",
+        "categories": [
+            "Pectorials",
+            "Shoulders",
+            "Triceps"
+        ]
+
+    },
+
+    {
+        "type": "reps",
+        "name": "Lateral raise",
+        "description": "Classic shoulder isolating exercise",
+        "categories": [
+            "Shoulders"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Overhead tricep extension",
+        "description": "Classic tricep isolating exercise",
+        "categories": [
+            "Triceps"
+        ]
     }
+
 ]

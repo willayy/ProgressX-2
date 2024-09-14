@@ -363,8 +363,229 @@
                                         "children" : [
 
                                         ]
-                                    }
+                                    },
 
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Incline dumbbell press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Incline dumbbell press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Incline dumbbell press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Incline dumbbell press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Incline dumbbell press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Incline dumbbell press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Tricep pushdowns",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Tricep pushdown",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Tricep pushdowns",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Tricep pushdown",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Tricep pushdowns",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Tricep pushdown",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead tricep extensions",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead tricep extension",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead tricep extensions",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead tricep extension",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead tricep extensions",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead tricep extension",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Lateral raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Lateral raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    }
+                                    
                                 ]
                             },
                             
