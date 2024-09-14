@@ -76,7 +76,7 @@
     
     {
         "type": "reps",
-        "name": "Push up",
+        "name": "Push-up",
         "description": "Classic bodyweight exercise targeting the chest and upper body.",
         "categories": [
             "Pectorials",
@@ -88,7 +88,7 @@
     
     {
         "type": "reps",
-        "name": "Sit up",
+        "name": "Sit-up",
         "description": "Classic bodyweight exercise targeting the abdominals.",
         "categories": [
             "Abs",
@@ -98,7 +98,7 @@
     
     {
         "type": "reps",
-        "name": "Chinup",
+        "name": "Chin-up",
         "description": "Classic bodyweight exercise targeting the upper back and arms",
         "categories": [
                 "Shoulders",
