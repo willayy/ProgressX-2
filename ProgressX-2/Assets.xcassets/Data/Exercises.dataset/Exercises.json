@@ -146,6 +146,36 @@
         "categories": [
             "Triceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Romanian deadlift",
+        "description": "Classic deadlift variation that targets the hamstrings and lower back.",
+        "categories": [
+            "Hamstrings",
+            "Lower back"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Leg press",
+        "description": "Classic lower body compound lift.",
+        "categories": [
+            "Thighs",
+            "Glutes",
+            "Hamstrings"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Leg curl",
+        "description": "Classic hamstring isolating exercise",
+        "categories": [
+            "Hamstrings"
+        ]
     }
 
 ]

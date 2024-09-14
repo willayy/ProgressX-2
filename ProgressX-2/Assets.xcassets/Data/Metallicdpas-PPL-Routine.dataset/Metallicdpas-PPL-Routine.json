@@ -594,6 +594,227 @@
                                 "timePeriodName" : "Leg day",
                                 "children" : [
                                     
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 50,
+                                        "setQuantity" : 5,
+                                        "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Romanian deadlifts",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Romanian deadlift",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Romanian deadlifts",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Romanian deadlift",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Romanian deadlifts",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Romanian deadlift",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg curl",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg curl",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Leg curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Leg curl",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Calf raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "calf raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Calf raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "calf raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Calf raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "calf raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Calf raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "calf raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Calf raises",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "calf raise",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    }
+
                                 ]
                             },
                             
