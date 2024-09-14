@@ -36,7 +36,6 @@ struct TrainingSessionHistoryListItem: View {
             Spacer()
             
             Button(action: {
-                print(session.formattedCompletionDate)
                 selectedTrainingSession = session
                 navPath.append(1)
             }) { Image(systemName: "figure.run") }

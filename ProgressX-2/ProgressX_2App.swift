@@ -62,8 +62,8 @@ struct ProgressX_2App: App {
                         case .RoutineLibraryView:
                             RoutineLibraryView()
                         
-                        case .ChooseWeekHistoryView:
-                            ChooseWeekHistoryView()
+                        case .ChooseSessionHistoryView:
+                            ChooseSessionkHistoryView()
                             
                         case .InfoHelp:
                             InfoHelpView()

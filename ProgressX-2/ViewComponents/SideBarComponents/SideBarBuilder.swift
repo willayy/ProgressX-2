@@ -44,7 +44,7 @@ struct SideBarBuilder: View {
                 }
                 
                 SideBarButton(.SessionHistory) {
-                    viewRouter.rootView = .ChooseWeekHistoryView
+                    viewRouter.rootView = .ChooseSessionHistoryView
                     showMenuController.showMenu.toggle()
                 }
                 

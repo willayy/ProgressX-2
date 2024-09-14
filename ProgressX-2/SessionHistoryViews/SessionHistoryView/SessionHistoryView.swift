@@ -11,52 +11,61 @@ import CoreData
 
 struct SessionHistoryView: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var viewModel = SessionHistoryViewModel()
+    @Binding var navPath: [Int]
     @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var viewModel = SessionHistoryViewModel()
     @Binding var selectedTrainingSession: TrainingSession?
     
     var body: some View {
         
-       let trainingsets = selectedTrainingSession?.trainingSets?.allObjects as! [TrainingSet]
+        @FetchRequest(
+            entity: TrainingSet.entity(),
+            sortDescriptors: [],
+            predicate: NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingSession == %@", selectedTrainingSession!),
+                                                                       NSPredicate(format: "trainingSession.isComplete == %@", NSNumber(booleanLiteral: true))])
+        ) var allTrainingSets: FetchedResults<TrainingSet>
         
-        PieChart(data: SetsForChart(sets: trainingsets))
-            .padding(.horizontal, 20)
-            .padding(.bottom, 20)
-            .frame(height: 300)
-        
-        Button {
+        ScrollView{
+            BoldTitle(text: (selectedTrainingSession?.timePeriodName)!)
+                .padding(.horizontal, 20)
             
-            (trainingsets.first?.exercise?.exerciseName)
-        } label: {
-            Text("hej")
+            LightSubHeadline(text: ((selectedTrainingSession?.timePeriodDescription)! + " In routine " + ((selectedTrainingSession?.parent.parent.parent.timePeriodName) ?? "")))
+                .padding(.bottom, 20)
+                .padding(.horizontal, 20)
+            
+            let trainingsets = selectedTrainingSession?.trainingSets?.allObjects as! [TrainingSet]
+            
+            PieChart(data: SetsForChart(sets: trainingsets))
+                .padding(.horizontal, 20)
+                .padding(.bottom, 20)
+                .frame(height: 300)
+            
+            BasicList(
+                height: 400,
+                containerName: "",
+                elementName: "Sets",
+                data: _allTrainingSets)
+            { set in
+                SetHistoryListItem(
+                    navPath: $navPath, selectedTrainingSet: $viewModel.selectedTrainingSet, set: set)
+            
+                }.padding(.horizontal, 20)
+            }
         }
     }
     
     public func SetsForChart(sets: [TrainingSet]) -> [String:Int]{
-        let completed = 0
-        let uncompleted = 0
-        var colection:[String:Int] = ["completed":0, "uncompleted": 0]
+        var colection:[String:Int] = ["Completed full set":0, "Completed with less reps": 0, "Skipped set": 0]
         for trainingset in sets{
-            if trainingset.loadDone < trainingset.loadTodo{
-                colection.updateValue(completed + 1, forKey: "uncompleted")
+            if trainingset.quantityDone < trainingset.quantityTodo && trainingset.quantityDone > 0{
+                colection["Completed with less reps"]! += 1
+            } else if trainingset.quantityDone == trainingset.quantityTodo {
+                colection["Completed full set"]! += 1
             } else {
-                colection.updateValue(completed + 1, forKey: "completed")
+                colection["Skipped set"]! += 1
             }
         }
         return colection
     }
-}
 
-#Preview {
-    let context = PersistenceController.previewViewContext
-    let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "isComplete == %@", NSNumber(booleanLiteral: true))
-    let trainingSessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
-    
-    let trainingSession: TrainingSession? = trainingSessions.first
-    
-    @State var trainingsession = trainingSession
-    return SessionHistoryView( selectedTrainingSession: $trainingsession)
-        .environment(\.managedObjectContext, context)
-}
+
