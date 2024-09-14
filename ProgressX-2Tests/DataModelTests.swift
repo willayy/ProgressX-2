@@ -133,13 +133,14 @@ final class DataModelTests: XCTestCase {
     }
     
     /// Helper method for testSetThreshold
-    private func templateSetData(templateSets: [TemplateSet]) -> [[String : Double]] {
+    private func templateSetData(templateSets: [TemplateSet]) -> [[String : Any]] {
         
-        var templateSetsData: [[String : Double]] = []
+        var templateSetsData: [[String : Any]] = []
         
         for templateSet in templateSets {
             
-            let templateSetData = [
+            let templateSetData: [String : Any] = [
+                "index" : templateSet.positionIndex,
                 "loadTodo" : templateSet.loadTodo!,
                 "quantityTodo" : templateSet.quantityTodo!
             ]
@@ -170,6 +171,7 @@ final class DataModelTests: XCTestCase {
         // Get all trainingSets
         let trainingSets: [TrainingSet] = trainingSessionsInRoutine.flatMap { $0.children }
         
+        // Complete all training sets
         for trainingSet in trainingSets {
             
             trainingSet.loadDone = trainingSet.loadTodo
@@ -181,6 +183,32 @@ final class DataModelTests: XCTestCase {
         }
         
         let templateSetDataAfter = templateSetData(templateSets: templateSets)
+        
+        var setDifferences = 0
+        
+        // Compare the data before and after completing the sets to see that progression got applied by thresholds.
+        for templateSetData in templateSetDataAfter {
+            
+            let positionIndex = templateSetData["index"] as! Int64
+            
+            let beforeData = templateSetDataBefore.first { ($0["index"] as! Int64) == positionIndex }!
+            
+            let loadBefore = beforeData["loadTodo"] as! Double
+            
+            let loadAfter = templateSetData["loadTodo"] as! Double
+            
+            let quantityBefore = beforeData["quantityTodo"] as! Double
+            
+            let quantityAfter = templateSetData["quantityTodo"] as! Double
+            
+            if quantityBefore != quantityAfter { setDifferences += 1 }
+            
+            if loadBefore != loadAfter { setDifferences += 1 }
+                        
+        }
+        
+        // For the preview routine we know that the difference between the sets after completion should amount to 15.
+        XCTAssertEqual(setDifferences, 15)
         
     }
         
