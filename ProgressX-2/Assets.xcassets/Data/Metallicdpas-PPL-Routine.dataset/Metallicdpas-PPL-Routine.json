@@ -21,7 +21,7 @@
                                     
                                     {
                                         "timePeriodName" : "Deadlifts",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Deadlift",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -29,12 +29,45 @@
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
                                         ]
                                     },
 
                                     {
                                         "timePeriodName" : "Chin ups",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Chinup",
                                         "setLoad" : 100,
                                         "setQuantity" : 8,
@@ -42,6 +75,17 @@
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "maxreps",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
                                         ]
                                     },
 
@@ -73,11 +117,35 @@
                                     
                                     {
                                         "timePeriodName" : "Seated cable rows",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Seated cable row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Seated cable rows",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
@@ -88,22 +156,9 @@
                                         "timePeriodName" : "Seated cable rows",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Seated cable rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
@@ -112,11 +167,35 @@
 
                                     {
                                         "timePeriodName" : "Face pulls",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Face pulls",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 15,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Face pulls",
-                                        "setLoad" : 5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -127,9 +206,9 @@
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Face pulls",
-                                        "setLoad" : 5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -140,9 +219,9 @@
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Face pulls",
-                                        "setLoad" : 5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -153,9 +232,9 @@
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Face pulls",
-                                        "setLoad" : 5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -163,12 +242,36 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Face pulls",
+                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
-                                        "setLoad" : 5,
-                                        "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -179,9 +282,9 @@
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -192,9 +295,9 @@
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -202,25 +305,36 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Hammer curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
 
                                     {
-                                        "timePeriodName" : "Hammer curls",
+                                        "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -231,9 +345,9 @@
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -244,35 +358,9 @@
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Dumbbell curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Dumbbell curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -286,62 +374,10 @@
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Push day",
                                 "children" : [
-
+                                    
                                     {
                                         "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Bench press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Bench press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Bench press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Bench press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Bench press",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -349,18 +385,114 @@
                                         "quantityType" : "numerical",
                                         "children" : [
 
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Bench press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Bench press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
                                         ]
                                     },
 
                                     {
                                         "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Overhead press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -393,13 +525,24 @@
 
                                     {
                                         "timePeriodName" : "Incline dumbbell press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Incline dumbbell press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -432,13 +575,24 @@
 
                                     {
                                         "timePeriodName" : "Tricep pushdowns",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Tricep pushdown",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -471,13 +625,24 @@
 
                                     {
                                         "timePeriodName" : "Lateral raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Lateral raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -510,13 +675,24 @@
 
                                     {
                                         "timePeriodName" : "Overhead tricep extensions",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Overhead tricep extension",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -549,13 +725,24 @@
 
                                     {
                                         "timePeriodName" : "Lateral raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Lateral raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -596,37 +783,70 @@
                                     
                                     {
                                         "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Squat",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Squat",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Squat",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -635,13 +855,24 @@
 
                                     {
                                         "timePeriodName" : "Romanian deadlifts",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Romanian deadlift",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -674,13 +905,24 @@
 
                                     {
                                         "timePeriodName" : "Leg press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Leg press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -713,13 +955,24 @@
 
                                     {
                                         "timePeriodName" : "Leg curls",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Leg curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -752,13 +1005,24 @@
 
                                     {
                                         "timePeriodName" : "Calf raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -825,63 +1089,96 @@
 
                                     {
                                         "timePeriodName" : "Barbell rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Barbell rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Barbell rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Barbell rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Barbell rows",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "barbell row",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Barbell rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "barbell row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Barbell rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "barbell row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Barbell rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "barbell row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Barbell rows",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "barbell row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
@@ -890,7 +1187,7 @@
 
                                     {
                                         "timePeriodName" : "Chin ups",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Chinup",
                                         "setLoad" : 100,
                                         "setQuantity" : 8,
@@ -898,6 +1195,17 @@
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "maxreps",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
                                         ]
                                     },
 
@@ -929,11 +1237,35 @@
                                     
                                     {
                                         "timePeriodName" : "Seated cable rows",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Seated cable row",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Seated cable rows",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
@@ -944,22 +1276,9 @@
                                         "timePeriodName" : "Seated cable rows",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-                                            
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Seated cable rows",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Seated cable row",
-                                        "setLoad" : 30,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
                                             
@@ -968,13 +1287,24 @@
 
                                     {
                                         "timePeriodName" : "Face pulls",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Face pulls",
-                                        "setLoad" : 5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 15,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1033,11 +1363,35 @@
 
                                     {
                                         "timePeriodName" : "Hammer curls",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Hammer curls",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1048,9 +1402,9 @@
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1061,9 +1415,9 @@
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1071,12 +1425,36 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Hammer curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
-                                        "setLoad" : 7.5,
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Dumbbell curls",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Dumbbell curls",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1087,9 +1465,9 @@
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1100,35 +1478,9 @@
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
                                         "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
+                                        "setLoad" : 75,
                                         "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Dumbbell curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Dumbbell curls",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
-                                        "setLoad" : 7.5,
-                                        "setQuantity" : 10,
-                                        "loadType" : "numerical",
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1144,59 +1496,7 @@
                                     
                                     {
                                         "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Overhead press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Overhead press",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -1204,18 +1504,114 @@
                                         "quantityType" : "numerical",
                                         "children" : [
 
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
                                         ]
                                     },
 
                                     {
                                         "timePeriodName" : "Bench press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Bench press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1248,13 +1644,24 @@
 
                                     {
                                         "timePeriodName" : "Incline dumbbell press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Incline dumbbell press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1287,13 +1694,24 @@
 
                                     {
                                         "timePeriodName" : "Tricep pushdowns",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Tricep pushdown",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1326,13 +1744,24 @@
 
                                     {
                                         "timePeriodName" : "Lateral raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Lateral raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1365,13 +1794,24 @@
 
                                     {
                                         "timePeriodName" : "Overhead tricep extensions",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Overhead tricep extension",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1404,13 +1844,24 @@
 
                                     {
                                         "timePeriodName" : "Lateral raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Lateral raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1451,37 +1902,70 @@
                                     
                                     {
                                         "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Squat",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
-                                        "exercise" : "Squat",
-                                        "setLoad" : 75,
-                                        "setQuantity" : 5,
-                                        "loadType" : "maxperc",
-                                        "quantityType" : "numerical",
-                                        "children" : [
-
-                                        ]
-                                    },
-
-                                    {
-                                        "timePeriodName" : "Squats",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Squat",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 3",
+                                                "timePeriodDescription" : "This threshold increases the load by 2.5 in the next cycle and genereates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2.5,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 5,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 2",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 4,
+                                                "lowerBound" : 2,
+                                                "generatePr" : 1
+                                            },
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold decreases the load by 2.5 and generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : -2.5,
+                                                "upperBound" : 1,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Squats",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Squat",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 5,
+                                        "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
 
@@ -1490,13 +1974,24 @@
 
                                     {
                                         "timePeriodName" : "Romanian deadlifts",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Romanian deadlift",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1529,13 +2024,24 @@
 
                                     {
                                         "timePeriodName" : "Leg press",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Leg press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1568,13 +2074,24 @@
 
                                     {
                                         "timePeriodName" : "Leg curls",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "Leg curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
@@ -1607,13 +2124,24 @@
 
                                     {
                                         "timePeriodName" : "Calf raises",
-                                        "timePeriodDescription" : "",
+                                        "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "exercise" : "calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
                                         "children" : [
+
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "This threshold generates a PR if triggered.",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 0,
+                                                "generatePr" : 1
+                                            }
 
                                         ]
                                     },
