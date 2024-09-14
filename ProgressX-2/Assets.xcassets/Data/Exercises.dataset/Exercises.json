@@ -177,6 +177,17 @@
             "Lower back",
             "Biceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Seated cable row",
+        "description": "Classic upper body compound lift with a focus on the back.",
+        "categories": [
+            "Lats",
+            "Lower back",
+            "Biceps"
+        ]
     }
 
 ]
