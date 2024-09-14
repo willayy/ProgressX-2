@@ -110,16 +110,6 @@
 
     {
         "type": "reps",
-        "name": "Overhead press",
-        "description": "Classic upper body compound lift with a focus on shoulders.",
-        "categories": [
-            "Shoulders",
-            "Triceps"
-        ]
-    },
-
-    {
-        "type": "reps",
         "name": "Incline dumbbell press",
         "description": "Classic upper body compound lift with a focus on the upper chest.",
         "categories": [

@@ -478,9 +478,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
@@ -502,9 +502,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
@@ -515,9 +515,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
@@ -1503,11 +1503,11 @@
                                 "children" : [
                                     
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "baseInitialLoadOnPr" : true,
                                         "initialLoadMultiplier" : 0.75,
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
@@ -1551,9 +1551,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
@@ -1564,9 +1564,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
@@ -1577,9 +1577,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
@@ -1590,9 +1590,9 @@
                                     },
 
                                     {
-                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodName" : "Shoulder press",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Overhead press",
+                                        "exercise" : "Shoulder press",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
