@@ -54,7 +54,8 @@ extension SetThreshold: HasParent {
         self.timePeriodDescription = (json["timePeriodDescription"] as! String)
         
         // JSON data can have a string value or nil.
-        self.prType = json["prType"] as! String?
+        let prType = json["prType"]
+        self.prType = (prType is NSNull) ? nil : prType as! String?
         
         // Upper and lower bound of the threshold.
         self.upperBound = json["upperBound"] as! Double
@@ -69,7 +70,7 @@ extension SetThreshold: HasParent {
         self.flatLoadAdd = (flatLoadAdd is NSNull) ? nil : flatLoadAdd as! NSNumber?
         
         // In the JSON files generate PR is an int where 1 is true and 0 (or anthing else) is false.
-        self.generatePr = (json["generatePr"] as! Int) == 1
+        self.generatePr = json["generatePr"] as! Bool
     }
     
     // MARK: Protocol implementation

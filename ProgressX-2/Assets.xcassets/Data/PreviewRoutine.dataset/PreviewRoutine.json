@@ -208,7 +208,7 @@
                                         "loadType" : "bwperc",
                                         "setLoad" : 70,
                                         "quantityType" : "maxperc",
-                                        "setQuantity" : 0.4,
+                                        "setQuantity" : 40,
                                         "restTime" : 180,
                                         "children" : [
                                             
