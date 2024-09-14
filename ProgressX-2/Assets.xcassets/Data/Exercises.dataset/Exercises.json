@@ -10,11 +10,21 @@
     
     {
         "type": "reps",
-        "name": "Bicep curls",
+        "name": "Dumbbell curl",
         "description": "Classic bicep isolating exercise",
         "categories": [
             "Biceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Hammer curl",
+        "description" : "Variation on the classic curl exercise",
+        "categories": [
+            "Biceps",
+            "Forearms"
+        ]	
     },
     
     {
@@ -96,5 +106,87 @@
                 "Triceps",
                 "Biceps"
         ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Overhead press",
+        "description": "Classic upper body compound lift with a focus on shoulders.",
+        "categories": [
+            "Shoulders",
+            "Triceps"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Incline dumbbell press",
+        "description": "Classic upper body compound lift with a focus on the upper chest.",
+        "categories": [
+            "Pectorials",
+            "Shoulders",
+            "Triceps"
+        ]
+
+    },
+
+    {
+        "type": "reps",
+        "name": "Lateral raise",
+        "description": "Classic shoulder isolating exercise",
+        "categories": [
+            "Shoulders"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Overhead tricep extension",
+        "description": "Classic tricep isolating exercise",
+        "categories": [
+            "Triceps"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Romanian deadlift",
+        "description": "Classic deadlift variation that targets the hamstrings and lower back.",
+        "categories": [
+            "Hamstrings",
+            "Lower back"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Leg press",
+        "description": "Classic lower body compound lift.",
+        "categories": [
+            "Thighs",
+            "Glutes",
+            "Hamstrings"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Leg curl",
+        "description": "Classic hamstring isolating exercise",
+        "categories": [
+            "Hamstrings"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Barbell row",
+        "description": "Classic upper body compound lift with a focus on the back.",
+        "categories": [
+            "Lats",
+            "Lower back",
+            "Biceps"
+        ]
     }
+
 ]
