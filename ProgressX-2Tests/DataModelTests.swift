@@ -181,7 +181,7 @@ final class DataModelTests: XCTestCase {
         }
         
         let templateSetDataAfter = templateSetData(templateSets: templateSets)
-    
+        
     }
         
 }

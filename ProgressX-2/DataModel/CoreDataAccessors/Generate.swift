@@ -142,6 +142,39 @@ extension CoreDataAccess {
         }
     }
     
+    /// Generates PersonalRecords for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
+    public static func generatePreviewPersonalRecords(_ context: NSManagedObjectContext) -> Void {
+        
+        let asset = getAsset("PreviewPersonalRecords")
+        
+        let jsonArray = transformAsset(asset)
+        
+        /* Just use this offset instead of relying on dates in the JSON, 
+         it becomes less data that we need to write by hand
+         and in the end it's just for the preview anyway */
+        var dateOffset = 1000000
+        
+        for json in jsonArray {
+            
+            let exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)!
+            
+            _ = PersonalRecord(
+                context,
+                exercise: exercise,
+                weightLoad: json["load"] as! Double,
+                quantity: json["quantity"] as! Double,
+                date: Date() - TimeInterval(dateOffset),
+                type: json["prType"] as! String
+            )
+            
+            dateOffset += 1000000
+            
+        }
+        
+    }
+    
     /// Generates exercises for the in-memory database.
     /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
@@ -205,40 +238,6 @@ extension CoreDataAccess {
                 bodyWeight: json["bodyWeight"] as! Double,
                 date: Date(timeIntervalSince1970: TimeInterval((json["date"] as! Int)))
             )
-        }
-        
-    }
-    
-    /// Generates personal records for the in-memory database.
-    /// - Parameter context: NSManagedObjectContext
-    /// - Returns: Void
-    public static func generatePreviewPersonalRecords(_ context: NSManagedObjectContext) -> Void {
-        
-        let asset = getAsset("PreviewPersonalRecords")
-        
-        let jsonArray = transformAsset(asset)
-        
-        for json in jsonArray {
-            
-            let exerciseName = json["exerciseName"] as! String
-            
-            let fetchRequest = Exercise.fetchRequest()
-            
-            fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", exerciseName)
-            
-            let results = fetch(context, fetchRequest: fetchRequest)
-            
-            let exercise = results.first!
-            
-            _ = PersonalRecord(
-                context,
-                exercise: exercise,
-                weightLoad: json["weightLoad"] as! Double,
-                quantity: json["quantity"] as! Double,
-                date: Date(timeIntervalSince1970: TimeInterval((json["date"] as! Int))),
-                type: json["type"] as! String
-            )
-            
         }
         
     }

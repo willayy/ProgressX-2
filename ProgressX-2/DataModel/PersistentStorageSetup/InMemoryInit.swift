@@ -12,11 +12,19 @@ import CoreData
 class InMemory {
     
     public static func initialize(context: NSManagedObjectContext) -> Void {
+        
         CoreDataAccess.generatePreviewProfile(context)
+        
         CoreDataAccess.generatePreviewBodyEntries(context)
+        
         CoreDataAccess.generatePreviewCategories(context)
+        
         CoreDataAccess.generatePreviewExercises(context)
+        
+        CoreDataAccess.generatePreviewPersonalRecords(context)
+        
         CoreDataAccess.generatePreviewRoutine(context)
+        
     }
     
 }
