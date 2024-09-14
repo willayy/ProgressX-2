@@ -350,6 +350,19 @@
                                         "children" : [
 
                                         ]
+                                    },
+
+                                    {
+                                        "timePeriodName" : "Overhead press",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "Overhead press",
+                                        "setLoad" : 75,
+                                        "setQuantity" : 10,
+                                        "loadType" : "maxperc",
+                                        "quantityType" : "numerical",
+                                        "children" : [
+
+                                        ]
                                     }
 
                                 ]
