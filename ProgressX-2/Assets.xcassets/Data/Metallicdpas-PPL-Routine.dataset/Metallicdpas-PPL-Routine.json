@@ -22,6 +22,8 @@
                                     {
                                         "timePeriodName" : "Deadlifts",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "Deadlift",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -37,7 +39,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -48,7 +50,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -59,7 +61,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -83,7 +85,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -133,7 +135,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -183,7 +185,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -259,7 +261,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -322,7 +324,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -378,6 +380,8 @@
                                     {
                                         "timePeriodName" : "Bench press",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "Bench press",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -393,7 +397,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -404,7 +408,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -415,7 +419,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -491,7 +495,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -541,7 +545,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -591,7 +595,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -641,7 +645,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -691,7 +695,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -741,7 +745,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -784,6 +788,8 @@
                                     {
                                         "timePeriodName" : "Squats",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "Squat",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -799,7 +805,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -810,7 +816,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -821,7 +827,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -871,7 +877,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -921,7 +927,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -971,7 +977,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1021,7 +1027,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1090,6 +1096,8 @@
                                     {
                                         "timePeriodName" : "Barbell rows",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "barbell row",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -1105,7 +1113,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1116,7 +1124,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1127,7 +1135,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1203,7 +1211,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1253,7 +1261,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1303,7 +1311,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1379,7 +1387,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1442,7 +1450,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1497,6 +1505,8 @@
                                     {
                                         "timePeriodName" : "Overhead press",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "Overhead press",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -1512,7 +1522,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1523,7 +1533,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1534,7 +1544,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1610,7 +1620,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1660,7 +1670,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1710,7 +1720,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1760,7 +1770,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1810,7 +1820,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1860,7 +1870,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1903,6 +1913,8 @@
                                     {
                                         "timePeriodName" : "Squats",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
+                                        "baseInitialLoadOnPr" : true,
+                                        "initialLoadMultiplier" : 0.75,
                                         "exercise" : "Squat",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
@@ -1918,7 +1930,7 @@
                                                 "flatLoadAdd" : 2.5,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1929,7 +1941,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 4,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             },
 
                                             {
@@ -1940,7 +1952,7 @@
                                                 "flatLoadAdd" : -2.5,
                                                 "upperBound" : 1,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -1990,7 +2002,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -2040,7 +2052,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -2090,7 +2102,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]
@@ -2140,7 +2152,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
 
                                         ]

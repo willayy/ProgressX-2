@@ -38,7 +38,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -63,7 +63,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 2,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -96,7 +96,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -121,7 +121,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 60,
                                                 "lowerBound" : 20,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -162,7 +162,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 15,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -187,7 +187,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 20,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -220,7 +220,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -245,7 +245,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 50,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
