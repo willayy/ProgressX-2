@@ -141,13 +141,13 @@ struct EditExerciseView: View {
         
         let exerciseDescValidator = StringFieldValidator()
         
-        valid += exerciseNameValidator.valideField(
+        valid += exerciseNameValidator.validateField(
             inputVar: viewModel.newName,
             errorMessage: $viewModel.newNameIsInvalidMsg,
             fieldInvalid: $viewModel.newNameIsInvalid
         )
         
-        valid += exerciseDescValidator.valideField(
+        valid += exerciseDescValidator.validateField(
             inputVar: viewModel.newDesc,
             errorMessage: $viewModel.newDescIsInvalidMsg,
             fieldInvalid: $viewModel.newDescIsInvalid

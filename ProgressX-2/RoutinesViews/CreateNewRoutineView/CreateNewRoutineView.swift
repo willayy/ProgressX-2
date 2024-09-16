@@ -92,13 +92,13 @@ struct CreateNewRoutineView: View {
         
         let descValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.newRoutineName,
             errorMessage: $viewModel.newRoutineNameIsInvalidMsg,
             fieldInvalid: $viewModel.newRoutineNameIsInvalid
         )
         
-        valid += descValidator.valideField(
+        valid += descValidator.validateField(
             inputVar: viewModel.newRoutineDesc,
             errorMessage: $viewModel.newRoutineDescIsInvalidMsg,
             fieldInvalid: $viewModel.newRoutineDescIsInvalid

@@ -248,25 +248,25 @@ struct EditThresholdsView: View {
             
         }
         
-        valid += flatLoadAddFieldValidator.valideField(
+        valid += flatLoadAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatLoadAdd,
             errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatLoadAddIsInvalid
         )
         
-        valid += flatQuantityAddFieldValidator.valideField(
+        valid += flatQuantityAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatQuantityAdd,
             errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatQuantityAddIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.editedLowerBound,
             errorMessage: $viewModel.editedLowerBoundIsInvalidMsg,
             fieldInvalid: $viewModel.editedLowerBoundIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.editedUpperBound,
             errorMessage: $viewModel.editedUpperBoundIsInvalidMsg,
             fieldInvalid: $viewModel.editedUpperBoundIsInvalid

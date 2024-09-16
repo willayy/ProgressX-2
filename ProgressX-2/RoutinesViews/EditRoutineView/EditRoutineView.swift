@@ -175,13 +175,13 @@ struct EditRoutineView: View {
         
         let routineDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += routineNameValidator.valideField(
+        valid += routineNameValidator.validateField(
             inputVar: viewModel.editedRoutineName,
             errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineNameIsInvalid
         )
         
-        valid += routineDescValidator.valideField(
+        valid += routineDescValidator.validateField(
             inputVar: viewModel.editiedRoutineDescription,
             errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineDescIsInvalid

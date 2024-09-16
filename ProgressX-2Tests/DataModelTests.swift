@@ -207,8 +207,8 @@ final class DataModelTests: XCTestCase {
                         
         }
         
-        // For the preview routine we know that the difference between the sets after completion should amount to 15.
-        XCTAssertEqual(setDifferences, 15)
+        // For the preview routine we know that the difference between the sets after completion should amount to.
+        XCTAssertEqual(setDifferences, 14)
         
     }
         

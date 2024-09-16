@@ -263,31 +263,31 @@ struct CreateNewTemplateSetView: View {
         
         var valid = 0
         
-        valid += restTimeValidator.valideField(
+        valid += restTimeValidator.validateField(
             inputVar: viewModel.restTime,
             errorMessage: $viewModel.restTimeIsInvalidMsg,
             fieldInvalid: $viewModel.restTimeIsInvalid
         )
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.newSetLoad,
             errorMessage: $viewModel.newSetLoadIsInvalidMsg,
             fieldInvalid: $viewModel.newSetLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.newSetQuantity,
             errorMessage: $viewModel.newSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.newSetQuantityIsInvalid
         )
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.newSetName,
             errorMessage: $viewModel.newSetNameIsInvalidMsg,
             fieldInvalid: $viewModel.newSetNameIsInvalid
         )
         
-        valid += descValidtor.valideField(
+        valid += descValidtor.validateField(
             inputVar: viewModel.newSetDesc,
             errorMessage: $viewModel.newSetDescIsInvalidMsg,
             fieldInvalid: $viewModel.newSetDescIsInvalid

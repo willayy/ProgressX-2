@@ -298,7 +298,28 @@ extension CoreDataAccess {
     /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
     public static func generateStarterRoutines(_ context: NSManagedObjectContext) -> Void {
-        #warning("TODO: Implement")
+        
+        /* MARK: WARNING,
+        when adding new routine assets here make sure to also add them
+        in the basicRoutinesExists(_ context: NSManagedObjectContext) function
+        in CoreDataAccessors/Checkers.swift */
+        
+        // Fill this list with routine assets
+        let assets = [
+            getAsset("Metallicdpas-PPL-Routine")
+        ]
+        
+        // Transform every asset into a routine
+        for asset in assets {
+            
+            let jsonArray = transformAsset(asset)
+            
+            let jsonRoutine = jsonArray.first!
+            
+            generateRoutine(jsonDict: jsonRoutine, context)
+            
+        }
+        
     }
         
 }

@@ -243,25 +243,25 @@ struct CreateNewThresholdView: View {
             
         }
         
-        valid += flatLoadAddFieldValidator.valideField(
+        valid += flatLoadAddFieldValidator.validateField(
             inputVar: viewModel.flatLoadAdd,
             errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
             fieldInvalid: $viewModel.flatLoadAddIsInvalid
         )
         
-        valid += flatQuantityAddFieldValidator.valideField(
+        valid += flatQuantityAddFieldValidator.validateField(
             inputVar: viewModel.flatQuantityAdd,
             errorMessage: $viewModel.flatQuantityAddIsInvalidMsg,
             fieldInvalid: $viewModel.flatQuantityAddIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.lowerBound,
             errorMessage: $viewModel.lowerBoundIsInvalidMSg,
             fieldInvalid: $viewModel.lowerBoundIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.upperBound,
             errorMessage: $viewModel.upperBoundIsInvalidMSg,
             fieldInvalid: $viewModel.upperBoundIsInvalid

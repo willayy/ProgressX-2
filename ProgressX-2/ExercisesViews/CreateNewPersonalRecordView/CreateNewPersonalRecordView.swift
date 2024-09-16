@@ -124,13 +124,13 @@ struct CreateNewPersonalRecord: View {
             quantityValidator = IntFieldValidator(maxInputNumber: 100000)
         }
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.prLoad,
             errorMessage: $viewModel.prLoadIsInvalidMsg,
             fieldInvalid: $viewModel.prLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.prQuantity,
             errorMessage: $viewModel.prQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.prQuantityIsInvalid

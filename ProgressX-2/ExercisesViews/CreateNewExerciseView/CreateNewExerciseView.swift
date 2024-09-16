@@ -205,21 +205,21 @@ struct CreateNewExerciseView: View {
         let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: exercises.map {$0.exerciseName!})
         let descFieldValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += nameFieldValidator.valideField(
+        valid += nameFieldValidator.validateField(
             inputVar: viewModel.enteredExerciseName,
             errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg ,
             fieldInvalid: $viewModel.enteredExerciseNameIsInvalid
         )
         
-        valid += descFieldValidator.valideField(
+        valid += descFieldValidator.validateField(
             inputVar: viewModel.enteredExerciseDesc,
             errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg ,
             fieldInvalid: $viewModel.enteredExerciseDescIsInvalid
         )
         
         if viewModel.addPr {
-            valid += loadFieldValidtor.valideField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
-            valid += quantityFieldValidtor.valideField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
+            valid += loadFieldValidtor.validateField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
+            valid += quantityFieldValidtor.validateField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
         }
         
         return valid == 0

@@ -164,7 +164,7 @@ struct PopupFeedbackView: View {
         if exercise.exerciseType == "reps" { inputFieldValidator = IntFieldValidator() }
         else { inputFieldValidator = DoubleFieldValidator() }
         
-        valid += inputFieldValidator.valideField(
+        valid += inputFieldValidator.validateField(
             inputVar: viewModel.editedSetQuantity,
             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetQuantityIsInvalid

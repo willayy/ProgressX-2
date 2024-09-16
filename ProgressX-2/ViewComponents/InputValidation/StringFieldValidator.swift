@@ -23,7 +23,7 @@ class StringFieldValidator: InputFieldValidator {
         super.init(emptyAllowed: emptyAllowed)
     }
     
-    override public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
+    override public func validateField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
         
         withAnimation {
             errorMessage.wrappedValue = ""

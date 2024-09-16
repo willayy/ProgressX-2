@@ -168,13 +168,13 @@ struct EditTemplateSessionView: View {
         let sessionNameValidator = StringFieldValidator()
         let sessionDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += sessionNameValidator.valideField(
+        valid += sessionNameValidator.validateField(
             inputVar: viewModel.editedSessionName,
             errorMessage: $viewModel.editedSessionNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedSessionIsInvalid
         )
         
-        valid += sessionDescValidator.valideField(
+        valid += sessionDescValidator.validateField(
             inputVar: viewModel.editedSessionDescription,
             errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedSessionDescIsInvalid

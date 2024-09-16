@@ -230,31 +230,31 @@ struct EditTemplateSetView: View {
         
         var valid = 0
         
-        valid += restTimeValidator.valideField(
+        valid += restTimeValidator.validateField(
             inputVar: viewModel.editedRestTime,
             errorMessage: $viewModel.editedRestTimeIsInvalidMsg,
             fieldInvalid: $viewModel.editedRestTimeIsInvalid
         )
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.editedSetLoad,
             errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.editedSetQuantity,
             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetQuantityIsInvalid
         )
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.editedSetName,
             errorMessage: $viewModel.editedSetNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetNameIsInvalid
         )
         
-        valid += descValidtor.valideField(
+        valid += descValidtor.validateField(
             inputVar: viewModel.editedSetDesc,
             errorMessage: $viewModel.editedSetDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetDescIsInvalid

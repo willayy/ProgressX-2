@@ -79,7 +79,7 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
         self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)
         
         // This is a special case for some rep based Sets.
-        if let baseInitialLoadOnPr = json["baseInitialLoadOnPr"] {
+        if let baseInitialLoadOnPr: Bool = json["baseInitialLoadOnPr"] as! Bool? {
             
             self.initiaLoadBasedOnPrHelper(context, json: json)
             
