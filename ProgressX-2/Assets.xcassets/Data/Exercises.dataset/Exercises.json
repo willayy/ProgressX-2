@@ -76,7 +76,7 @@
     
     {
         "type": "reps",
-        "name": "Push up",
+        "name": "Push-up",
         "description": "Classic bodyweight exercise targeting the chest and upper body.",
         "categories": [
             "Pectorials",
@@ -88,7 +88,7 @@
     
     {
         "type": "reps",
-        "name": "Sit up",
+        "name": "Sit-up",
         "description": "Classic bodyweight exercise targeting the abdominals.",
         "categories": [
             "Abs",
@@ -98,23 +98,13 @@
     
     {
         "type": "reps",
-        "name": "Chinup",
+        "name": "Chin-up",
         "description": "Classic bodyweight exercise targeting the upper back and arms",
         "categories": [
                 "Shoulders",
                 "Lats",
                 "Triceps",
                 "Biceps"
-        ]
-    },
-
-    {
-        "type": "reps",
-        "name": "Overhead press",
-        "description": "Classic upper body compound lift with a focus on shoulders.",
-        "categories": [
-            "Shoulders",
-            "Triceps"
         ]
     },
 
@@ -181,6 +171,17 @@
     {
         "type": "reps",
         "name": "Barbell row",
+        "description": "Classic upper body compound lift with a focus on the back.",
+        "categories": [
+            "Lats",
+            "Lower back",
+            "Biceps"
+        ]
+    },
+
+    {
+        "type": "reps",
+        "name": "Seated cable row",
         "description": "Classic upper body compound lift with a focus on the back.",
         "categories": [
             "Lats",
