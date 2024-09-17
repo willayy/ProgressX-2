@@ -15,12 +15,6 @@ struct CreateNewProfile4View: View {
         sortDescriptors: []
     ) private var exercises: FetchedResults<Exercise>
     
-    // Fetch all BodyEntries so the latest entry can be used as load for the AMRAP Pr's
-    @FetchRequest(
-        entity: BodyEntry.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \BodyEntry.achievedOnDate, ascending: true)]
-    ) private var bodyEntries: FetchedResults<BodyEntry>
-    
     // Fetch all PersonalRecords to ensure this View doesnt produce more than one set of PersonalRecords for the starting exercises. At this state in the app the only PersonalRecords are the ones created in this View.
     @FetchRequest(
         entity: PersonalRecord.entity(),
@@ -285,13 +279,16 @@ struct CreateNewProfile4View: View {
         Button {
             if validateInput() {
                 
-                viewModel.bodyWeight = bodyEntries.first?.bodyWeight
                 viewModel.saveEntry(viewContext: viewContext)
+                
                 viewModel.generateBasicRoutine(viewContext: viewContext)
                 
                 withAnimation {
+                    
                     viewRouter.startView = .None
+                    
                     viewRouter.rootView = .HomeView
+                    
                 }
             }
         } label: {

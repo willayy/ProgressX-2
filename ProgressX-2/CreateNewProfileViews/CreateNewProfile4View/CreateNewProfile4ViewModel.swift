@@ -257,8 +257,24 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
                     type: "onerepmax"
                 )
                 
+            case "Seated cable row":
+                
+                // Approximate max from barbell rows
+                let weightLoad = round((Double(barbellRow1RM)! * 1))
+                
+                _ = PersonalRecord(
+                    viewContext,
+                    exercise: exercise,
+                    weightLoad: weightLoad,
+                    quantity: 1,
+                    date: Date(),
+                    type: "onerepmax"
+                )
+                
             default:
+                
                 fatalError("An exercise with a name not in the switch statement appearead. This is probably the result of a typo.")
+                
             }
         }
     

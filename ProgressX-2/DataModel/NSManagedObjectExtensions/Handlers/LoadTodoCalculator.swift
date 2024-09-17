@@ -58,8 +58,6 @@ internal class LoadTodoCalculator {
             
             let computedLoad: Double = (latestBw?.bodyWeight ?? 0) * (templateSet.setLoad / 100)
             
-            let profile = CoreDataAccess.getProfile(context)!
-            
             return computedLoad
         }
     }

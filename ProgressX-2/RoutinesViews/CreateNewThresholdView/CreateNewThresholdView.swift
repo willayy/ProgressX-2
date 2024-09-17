@@ -27,19 +27,23 @@ struct CreateNewThresholdView: View {
                 .padding(.horizontal, 20)
                 .onAppear(perform: {
                     if exerciseType == "reps" {
+                        
                         viewModel.prSelection = "onerepmax"
+                        
                     } else if exerciseType == "time" {
+                        
                         viewModel.prSelection = "timemax"
+                        
                     }
                 })
             
             Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 .padding(.bottom, 20)
             
-            BoldSubHeadline(text: "Trigger bounds")
+            BoldSubHeadline(text: "Trigger range")
             
             HiddenLightSubHeadline(
-                title: "What is trigger bounds?",
+                title: "What is trigger range?",
                 text: "Thresholds have a bound range of quantity that you need to be within to trigger it. For example if you have a set with 10 reps and a lower / upper bound of 5 and 10 you will trigger the threshold if you complete 5 to 10 reps.",
                 alignment: .leading
             )
@@ -47,38 +51,63 @@ struct CreateNewThresholdView: View {
             
             if exerciseType == "reps" {
                 
-                IntegerTextField(
-                    placeHolder: "lower bound (reps)",
-                    numberText: $viewModel.lowerBound,
-                    markAsWrong: $viewModel.lowerBoundIsInvalid,
-                    errorMessage: $viewModel.lowerBoundIsInvalidMSg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    IntegerTextField(
+                        placeHolder: "lower bound (reps)",
+                        numberText: $viewModel.lowerBound,
+                        markAsWrong: $viewModel.lowerBoundIsInvalid,
+                        errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
-                IntegerTextField(
-                    placeHolder: "upper bound (reps)",
-                    numberText: $viewModel.upperBound,
-                    markAsWrong: $viewModel.upperBoundIsInvalid,
-                    errorMessage: $viewModel.upperBoundIsInvalidMSg
-                )
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    IntegerTextField(
+                        placeHolder: "upper bound (reps)",
+                        numberText: $viewModel.upperBound,
+                        markAsWrong: $viewModel.upperBoundIsInvalid,
+                        errorMessage: $viewModel.upperBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             } else if exerciseType == "time" {
                 
-                DecimalTextField(
-                    placeHolder: "lower bound (seconds)",
-                    numberText: $viewModel.lowerBound,
-                    markAsWrong: $viewModel.lowerBoundIsInvalid,
-                    errorMessage: $viewModel.lowerBoundIsInvalidMSg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    DecimalTextField(
+                        placeHolder: "lower bound (seconds)",
+                        numberText: $viewModel.lowerBound,
+                        markAsWrong: $viewModel.lowerBoundIsInvalid,
+                        errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
-                DecimalTextField(
-                    placeHolder: "upper bound (seconds)",
-                    numberText: $viewModel.upperBound,
-                    markAsWrong: $viewModel.upperBoundIsInvalid,
-                    errorMessage: $viewModel.upperBoundIsInvalidMSg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    DecimalTextField(
+                        placeHolder: "upper bound (seconds)",
+                        numberText: $viewModel.upperBound,
+                        markAsWrong: $viewModel.upperBoundIsInvalid,
+                        errorMessage: $viewModel.upperBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             }
