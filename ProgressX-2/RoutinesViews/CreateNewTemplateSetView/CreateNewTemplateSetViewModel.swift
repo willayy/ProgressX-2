@@ -47,15 +47,19 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // for load type selections
     var loadTypeSelections: [String] {
+        
         switch selectedExercise?.exerciseType {
+            
         case "reps":
             return ["Numerical",
-                    "Percentage of current 1RM PR load",
-                    "Percentage of current body weight"]
+                    "Percentage of 1RM PR",
+                    "Percentage of body weight"]
+            
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR load",
-                    "Percentage of current body weight"]
+                    "Percentage of TimeMax PR",
+                    "Percentage of body weight"]
+            
         default:
             return []
         }
@@ -63,13 +67,17 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // for quantity type selections
     var quantityTypeSelections: [String] {
+        
         switch selectedExercise?.exerciseType {
+            
         case "reps":
             return ["Numerical",
-                    "Percentage of current AMRAP PR reps"]
+                    "Percentage of AMRAP PR"]
+            
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR time"]
+                    "Percentage of TimeMax PR"]
+            
         default:
             return []
         }
@@ -77,34 +85,50 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // for the load placeholder
     public func loadPlaceholder(viewContext: NSManagedObjectContext) -> String {
+        
         switch selectedLoadType {
+            
         case "Numerical":
             let weightUnit = self.weightUnit(viewContext)
+            
             return "Load \(weightUnit)"
-        case "Percentage of current 1RM PR load":
+            
+        case "Percentage of 1RM PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR load":
+            
+        case "Percentage of TimeMax PR":
             return "Percentage"
-        case "Percentage of current body weight":
+            
+        case "Percentage of body weight":
             return "Percentage"
+            
         default:
             return "Select exercise first!"
+            
         }
     }
     
     // for the quantity placeholder
     var quantityPlaceholder: String {
+        
         switch selectedQuantityType {
+            
         case "Numerical":
             let exerciseType = selectedExercise?.exerciseType
+            
             if exerciseType == nil {return "Select exercise first!"}
+            
             return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR reps":
+            
+        case "Percentage of AMRAP PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR time":
+            
+        case "Percentage of TimeMax PR":
             return "Percentage"
+            
         default:
             return "Select exercise first!"
+            
         }
     }
     
@@ -112,10 +136,10 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
      the view to the correct core data property value */
     let typeMap: [String : String] = [
         "Numerical" : "numerical",
-        "Percentage of current 1RM PR load" : "maxperc",
-        "Percentage of current TimeMax PR load" : "maxperc",
-        "Percentage of current AMRAP PR reps" : "maxperc",
-        "Percentage of current body weight" : "bwperc"
+        "Percentage of 1RM PR" : "maxperc",
+        "Percentage of TimeMax PR" : "maxperc",
+        "Percentage of AMRAP PR" : "maxperc",
+        "Percentage of body weight" : "bwperc"
     ]
     
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
