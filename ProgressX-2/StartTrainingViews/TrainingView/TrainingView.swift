@@ -29,10 +29,12 @@ struct TrainingView: View {
             
             // MARK: Which set are you on status text
             Title2(
+                
                 text: viewModel.setsLeft(
                     selectedTrainingSession: selectedTrainingSession,
                     currentTrainingSet: currentTrainingSet
                 )
+                
             )
             .padding(.bottom, 20)
             
@@ -41,17 +43,28 @@ struct TrainingView: View {
             
             // MARK: Skip rest time button
             if timerViewModel.state == .active && !viewModel.timedSetActive {
+                
                 withAnimation {
+                    
                     Button {
+                        
                         timerViewModel.state = .cancelled
+                        
                         if viewModel.doneButtonText == "rest timer" {
+                            
                             viewModel.doneButtonEnabled.toggle()
+                            
                             viewModel.doneButtonText = "Start timed set"
+                            
                             viewModel.timedSetActive.toggle()
+                            
                         }
+                        
                     } label: {
+                        
                         Text("Skip rest")
                             .font(.title)
+                        
                     }
                     .padding(.bottom, 10)
                 }
@@ -68,9 +81,11 @@ struct TrainingView: View {
                     viewModel.presentPopup.toggle()
                     
                 }) {
+                    
                     Text(viewModel.doneButtonText)
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
@@ -83,18 +98,28 @@ struct TrainingView: View {
                 
                 // MARK: Set done button but for timed sets
                 Button(action:{
-                    if viewModel.doneButtonText == "Start timed set"{
+                    
+                    if viewModel.doneButtonText == "Start timed set" {
+                        
                         viewModel.startTimer(
                             timerViewModel: timerViewModel,
-                            seconds: Int(currentTrainingSet!.quantityTodo))
+                            seconds: Int(currentTrainingSet!.quantityTodo)
+                        )
+                        
                         viewModel.doneButtonText = "Done"
-                    } else if viewModel.doneButtonText == "Done"{
-                        viewModel.startRestTimerForTimedSet(timer: timerViewModel) 
+                        
+                    } else if viewModel.doneButtonText == "Done" {
+                        
+                        viewModel.startRestTimerForTimedSet(timer: timerViewModel)
+                        
                     }
+                    
                 }) {
+                    
                     Text(viewModel.doneButtonText)
                         .frame(width: 150, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
@@ -113,9 +138,13 @@ struct TrainingView: View {
             withAnimation {
                 
                 if exerciseType == "time"{
+                    
                     viewModel.doneButtonText = "Start timed set"
+                    
                     viewModel.timedSetActive = true
+                    
                 }
+                
                 viewModel.showAlert = true
                 
             }
@@ -139,10 +168,15 @@ struct TrainingView: View {
                 withAnimation {
                     
                     currentTrainingSet!.skip()
+                    
                     currentTrainingSet = selectedTrainingSession!.nextTrainingSet
+                    
                     viewModel.save(viewContext)
+                    
                     if currentTrainingSet == nil {
+                        
                         navPath.append(3)
+                        
                     }
                     
                 }

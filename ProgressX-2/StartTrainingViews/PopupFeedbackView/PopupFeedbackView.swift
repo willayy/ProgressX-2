@@ -85,7 +85,7 @@ struct PopupFeedbackView: View {
                 BoldTitle(text: viewModel.getDidntFinishSetTitle(exercise: exercise))
                     .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
+                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.formattedQuantityTodo!)")
                     .padding(.vertical, 5)
                                 
                 if exercise.exerciseType == "reps" {
