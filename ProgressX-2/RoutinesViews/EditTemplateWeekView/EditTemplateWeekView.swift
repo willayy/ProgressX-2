@@ -173,6 +173,7 @@ struct EditTemplateWeekView: View {
         var valid: Int = 0
         
         let weekNameValidator = StringFieldValidator()
+        
         let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += weekNameValidator.validateField(

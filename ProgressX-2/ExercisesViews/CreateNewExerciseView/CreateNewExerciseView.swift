@@ -202,7 +202,11 @@ struct CreateNewExerciseView: View {
 
         // Load is a always Double
         let loadFieldValidtor = DoubleFieldValidator(maxInputNumber: 10000)
-        let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: exercises.map {$0.exerciseName!})
+        
+        let usedNames = exercises.map {$0.exerciseName!}
+        
+        let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: usedNames)
+        
         let descFieldValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += nameFieldValidator.validateField(
@@ -218,7 +222,9 @@ struct CreateNewExerciseView: View {
         )
         
         if viewModel.addPr {
+            
             valid += loadFieldValidtor.validateField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
+            
             valid += quantityFieldValidtor.validateField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
         }
         
