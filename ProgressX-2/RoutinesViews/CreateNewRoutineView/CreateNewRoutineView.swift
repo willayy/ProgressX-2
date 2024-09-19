@@ -63,16 +63,23 @@ struct CreateNewRoutineView: View {
                 .padding(.bottom, 20)
                 
                 Button {
+                    
                     if validateInput() {
+                        
                         viewModel.saveEntry(viewContext: viewContext)
+                        
                         navPath.removeLast()
                     }
+                    
                 } label: {
+                    
                     Text("Create new routine")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)

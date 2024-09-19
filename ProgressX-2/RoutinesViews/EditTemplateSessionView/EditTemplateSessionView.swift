@@ -163,9 +163,11 @@ struct EditTemplateSessionView: View {
     }
     
     private func validateInput() -> Bool {
+        
         var valid: Int = 0
         
         let sessionNameValidator = StringFieldValidator()
+        
         let sessionDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += sessionNameValidator.validateField(
