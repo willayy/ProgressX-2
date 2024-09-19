@@ -186,7 +186,9 @@ struct CreateNewTemplateSetView: View {
                     /* Shared quantity input field variable but with different
                      InputFields depending on the exercise type*/
                     if viewModel.selectedExercise?.exerciseType == "reps" {
+                        
                         HStack {
+                            
                             IntegerTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
                                 numberText: $viewModel.newSetQuantity,
@@ -196,12 +198,17 @@ struct CreateNewTemplateSetView: View {
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
+                                
                                 Text("%")
+                                
                             }
                         }
                         .padding(.horizontal, 60)
+                        
                     } else {
+                        
                         HStack {
+                            
                             DecimalTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
                                 numberText: $viewModel.newSetQuantity,
@@ -211,39 +218,62 @@ struct CreateNewTemplateSetView: View {
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
+                                
                                 Text("%")
+                                
                             }
                         }
                         .padding(.horizontal, 60)
                     }
                     
                     Button {
+                        
                         if validateInput() {
+                            
                             viewModel.saveEntry(viewContext: viewContext)
+                            
                             selectedTemplateSet = viewModel.createdTemplateSet
+                            
                         }
+                        
                     } label: {
+                        
                         Text("Create new set")
                             .frame(height: 40)
                             .foregroundColor(Color("buttonTextColor"))
+                        
                         Image(systemName: "plus")
                             .foregroundColor(Color("buttonTextColor"))
+                        
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
                     .padding(.bottom, 10)
                     .alert(isPresented: $viewModel.showAddThresholds, content: {
+                        
                         Alert(
                             title: Text("Add Thresholds?"),
                             message: Text("Do you want to add some thresholds to this set?"),
                             primaryButton: .default(Text("Yes"), action: {
+                                
                                 navPath.append(8)
+                                
                             }),
                             secondaryButton: .cancel(Text("No"), action: {
+                                
                                 navPath.removeLast()
+                                
                             })
                         )
                     })
+                    
+                    if viewModel.showSetHasBeenSaved {
+                        
+                        SubmitAlert(message: "Set has already been created!", color: .blue, showAlertState: $viewModel.showSetHasBeenSaved)
+                            .padding(.top, 5)
+                        
+                    }
+                    
                 }
             }
         }
