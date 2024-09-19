@@ -139,7 +139,7 @@ struct EditExerciseView: View {
         
         let exerciseNameValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: checkStrings)
         
-        let exerciseDescValidator = StringFieldValidator()
+        let exerciseDescValidator = StringFieldValidator(emptyAllowed: true)
         
         valid += exerciseNameValidator.validateField(
             inputVar: viewModel.newName,
