@@ -45,6 +45,12 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     @Published public var selectedTemplateSession: TemplateSession? = nil
     @Published public var createdTemplateSet: TemplateSet? = nil
     
+    /* variable that keeps track of if the set has been saved,
+     without this its possible to create several identical sets
+     by goingback and forth between the add threshold view and this view. */
+    @Published public var newSetHasBeenSaved: Bool = false
+    @Published public var showSetHasBeenSaved: Bool = false
+    
     // for load type selections
     var loadTypeSelections: [String] {
         
@@ -149,39 +155,56 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
-                
-        let set = TemplateSet(
-            viewContext,
-            templateSession: selectedTemplateSession!,
-            name: newSetName, 
-            exercise: selectedExercise!,
-            loadType: typeMap[selectedLoadType]!,
-            load: Double(newSetLoad)!,
-            quantityType: typeMap[selectedQuantityType]!,
-            quantity: Double(newSetQuantity)!,
-            restTime: Double(restTime)!
-        )
         
-        let trainingSessions = selectedTemplateSession!.trainingSessions?.allObjects as! [TrainingSession]
-        
-        for session in trainingSessions {
+        if !newSetHasBeenSaved {
             
-            let _ = TrainingSet(
+            let set = TemplateSet(
                 viewContext,
-                trainingSession: session,
-                templateSet: set
+                templateSession: selectedTemplateSession!,
+                name: newSetName,
+                exercise: selectedExercise!,
+                loadType: typeMap[selectedLoadType]!,
+                load: Double(newSetLoad)!,
+                quantityType: typeMap[selectedQuantityType]!,
+                quantity: Double(newSetQuantity)!,
+                restTime: Double(restTime)!
             )
             
-        }
-        
-        self.save(viewContext)
-        
-        withAnimation {
+            let trainingSessions = selectedTemplateSession!.trainingSessions?.allObjects as! [TrainingSession]
             
-            showAddThresholds = true
+            for session in trainingSessions {
+                
+                let _ = TrainingSet(
+                    viewContext,
+                    trainingSession: session,
+                    templateSet: set
+                )
+                
+            }
+            
+            self.save(viewContext)
+            
+            withAnimation {
+                
+                showAddThresholds = true
+                
+                newSetHasBeenSaved = true
+                
+            }
+            
+            self.createdTemplateSet = set
+            
+            // The new set has been saved once
+            
+        } else {
+            
+            withAnimation {
+                
+                showSetHasBeenSaved = true
+                
+            }
             
         }
-        
-        self.createdTemplateSet = set
     }
+    
 }

@@ -25,21 +25,23 @@ struct TemplateSetListItem: View {
                     
                     Text(set.timePeriodName ?? "")
                     
+                    // Some of these properties are coalesced because else they will throw an error on object deletion.
+                    
                     (Text("Exercise: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setExerciseName!)"))
+                     + Text("\(set.setExerciseName ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Quantity: ")
                         .fontWeight(.bold)
-                     + Text("\(set.formattedSetQuantity!)"))
+                     + Text("\(set.formattedSetQuantity ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Load: ")
                         .fontWeight(.bold)
-                     + Text("\(set.formattedSetLoad!)"))
+                     + Text("\(set.formattedSetLoad ?? "")"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     

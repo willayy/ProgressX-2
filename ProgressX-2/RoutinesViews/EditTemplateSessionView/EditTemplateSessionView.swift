@@ -43,14 +43,18 @@ struct EditTemplateSessionView: View {
             
             // If description is empty replace with a red label.
             if selectedTemplateSession!.timePeriodDescription!.isEmpty {
+                
                 Text("No description.")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundStyle(.red)
                     .padding(.bottom, 20)
+                
             } else {
+                
                 LightSubHeadline(text: selectedTemplateSession!.timePeriodDescription!)
                     .padding(.bottom, 20)
+                
             }
             
             // Expandable hidden view that has functionality for changing name and description.
@@ -58,11 +62,15 @@ struct EditTemplateSessionView: View {
             ExpandingVStack(title: "Change session info") {
                 
                 if viewModel.showSessionChangedAlert {
+                    
                     SubmitAlert(message: "Successfully edited session!", color: .green, showAlertState: $viewModel.showSessionChangedAlert)
                         .padding(.top, 10)
+                    
                 } else if viewModel.showNoChangeAlert {
+                    
                     SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
                         .padding(.top, 10)
+                    
                 }
                 
                 BoldSubHeadline(text: "Edit session name")
@@ -110,15 +118,22 @@ struct EditTemplateSessionView: View {
                 .padding(.horizontal, 40)
                 
                 Button {
+                    
                     if validateInput() {
+                        
                         viewModel.saveEdits(entity: selectedTemplateSession!, viewContext: viewContext)
+                        
                     }
+                    
                 } label: {
+                    
                     Text("Save change")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "square.and.arrow.down")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.vertical, 10)
