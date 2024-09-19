@@ -16,6 +16,7 @@ struct TrainingView: View {
     @StateObject private var viewModel = TrainingViewModel()
     @StateObject public var timerViewModel = TimerViewModel()
     
+    
     @Binding var navPath: [Int]
     @Binding var selectedRoutine: Routine?
     @Binding var selectedTrainingSession: TrainingSession?
@@ -39,7 +40,13 @@ struct TrainingView: View {
             .padding(.bottom, 20)
             
             // MARK: The time progress view
-            progressView
+            // Only displays the timer if it is counting
+            if timerViewModel.state == .active {
+                withAnimation{
+                    progressView
+                }
+            }
+         
             
             // MARK: Skip rest time button
             if timerViewModel.state == .active && !viewModel.timedSetActive {
@@ -156,37 +163,36 @@ struct TrainingView: View {
             Alert(
                 title: Text("Ready to start your session?"),
                 message: Text("Press start to get going with your first set!"),
-                dismissButton: .default(Text("Start"))
+                dismissButton: .default(Text("Start")){
+                    viewModel.startSessionTimer()
+                }
             )
             
         }
         // MARK: Skip set toolbar item.
         .toolbar {
             
-            Button(action:{
-                
-                withAnimation {
-                    
-                    currentTrainingSet!.skip()
-                    
-                    currentTrainingSet = selectedTrainingSession!.nextTrainingSet
-                    
-                    viewModel.save(viewContext)
-                    
-                    if currentTrainingSet == nil {
-                        
-                        navPath.append(3)
-                        
-                    }
-                    
-                }
-                
-            }) {
-                
-                Text("Skip set")
-                
+            // Displays the total elapsed time of the Session
+            ToolbarItem(placement: .principal) {
+                Text(viewModel.secondsElapsed.asTimestamp)
             }
-        } 
+            
+            ToolbarItem{
+                Button(action:{
+                    withAnimation {
+                        currentTrainingSet!.skip()
+                        currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                        viewModel.save(viewContext)
+                        if currentTrainingSet == nil {
+                            viewModel.stopSessionTimer()
+                            navPath.append(3)
+                        }
+                    }
+                }) {
+                    Text("Skip set")
+                }
+        }
+        }
         // MARK: Set finished feedback view.
         .popover(isPresented: $viewModel.presentPopup, content: {
             
@@ -223,7 +229,7 @@ struct TrainingView: View {
                     
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
-                        
+                        viewModel.stopSessionTimer()
                         timerViewModel.state = .cancelled
                         
                         navPath.append(3)
@@ -238,12 +244,11 @@ struct TrainingView: View {
     var progressView: some View {
         
             ZStack {
-                
-                withAnimation {
+                    withAnimation {
                         CircleProgressView(progress: $timerViewModel.progress)
-                    
-                }
-                
+                    }
+
+                // display information about the current set
                 VStack {
                     Text(timerViewModel.secondsToCompletion.asTimestamp)
                         .font(.largeTitle)
@@ -254,6 +259,7 @@ struct TrainingView: View {
         .frame(width: 360, height: 255)
         .padding(.bottom, 20)
     }
+    
 }
     
 #Preview {

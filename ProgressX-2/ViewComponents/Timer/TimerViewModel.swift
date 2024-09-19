@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import Foundation
 
 final class TimerViewModel: ObservableObject {
     // Represents the different states the timer can be in
