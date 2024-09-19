@@ -44,7 +44,7 @@ extension CoreDataAccess {
                     "Deadlift",
                     "Push up",
                     "Sit up"]
-        fetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", args)
+        fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", args)
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count == args.count
     }

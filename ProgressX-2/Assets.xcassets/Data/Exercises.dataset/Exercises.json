@@ -23,8 +23,8 @@
         "description" : "Variation on the classic curl exercise",
         "categories": [
             "Biceps",
-            "Forearms"
-        ]	
+            "Lower arm front"
+        ]
     },
     
     {
@@ -101,10 +101,10 @@
         "name": "Chin-up",
         "description": "Classic bodyweight exercise targeting the upper back and arms",
         "categories": [
-                "Shoulders",
-                "Lats",
-                "Triceps",
-                "Biceps"
+            "Shoulders",
+            "Lats",
+            "Triceps",
+            "Biceps"
         ]
     },
 
@@ -187,6 +187,24 @@
             "Lats",
             "Lower back",
             "Biceps"
+        ]
+    },
+    
+    {
+        "type": "reps",
+        "name": "Face pull",
+        "description": "Classic isolation exercise for the shoulders",
+        "categories": [
+            "Shoulders"
+        ]
+    },
+    
+    {
+        "type": "reps",
+        "name": "Calf raise",
+        "description": "Classic isolation exercise for the shoulders",
+        "categories": [
+            "Calves"
         ]
     }
 

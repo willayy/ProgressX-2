@@ -76,7 +76,7 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
         
         self.loadType = (json["loadType"] as! String)
         
-        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)
+        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)!
         
         // This is a special case for some rep based Sets.
         if let _: Bool = json["baseInitialLoadOnPr"] as! Bool? {

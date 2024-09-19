@@ -16,7 +16,7 @@
                             
                             {
                                 "timePeriodName" : "Pull day",
-                                "timePeriodDescription" : "",
+                                "timePeriodDescription" : "A gym session containing exercises where you do a pulling movement.",
                                 "children" : [
                                     
                                     {
@@ -29,6 +29,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                             {
@@ -75,6 +76,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                             {
@@ -99,6 +101,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -112,6 +115,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -125,6 +129,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -149,6 +154,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -162,6 +168,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -170,11 +177,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                             {
@@ -194,11 +202,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -207,11 +216,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -220,11 +230,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -233,11 +244,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -246,11 +258,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -270,11 +283,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -283,11 +297,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -296,11 +311,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -309,11 +325,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -333,11 +350,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -346,11 +364,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -359,11 +378,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -375,6 +395,7 @@
                             {
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Push day",
+                                "timePeriodDescription" : "A gym session containing exercises where you do pushing movements",
                                 "children" : [
                                     
                                     {
@@ -387,6 +408,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -433,6 +455,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -446,6 +469,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -459,6 +483,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -472,6 +497,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -485,6 +511,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -509,6 +536,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -522,6 +550,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -535,6 +564,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -559,6 +589,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -572,6 +603,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -585,6 +617,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -609,6 +642,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -622,6 +656,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -635,6 +670,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -659,6 +695,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -672,6 +709,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -685,6 +723,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -709,6 +748,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -722,6 +762,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -735,6 +776,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -759,6 +801,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -772,6 +815,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -783,6 +827,7 @@
                             {
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Leg day",
+                                "timePeriodDescription" : "A gym sesssion containing exercises targeting the legs.",
                                 "children" : [
                                     
                                     {
@@ -795,6 +840,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -841,6 +887,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -854,6 +901,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -867,6 +915,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -891,6 +940,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -904,6 +954,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -917,6 +968,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -941,6 +993,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -954,6 +1007,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -967,6 +1021,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -991,6 +1046,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1004,6 +1060,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1012,11 +1069,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1036,11 +1094,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1049,11 +1108,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1062,11 +1122,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1075,11 +1136,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1091,6 +1153,7 @@
                             {
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Pull day",
+                                "timePeriodDescription" : "A gym session containing exercises where you do a pulling movement.",
                                 "children" : [
 
                                     {
@@ -1098,11 +1161,12 @@
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
                                         "baseInitialLoadOnPr" : true,
                                         "initialLoadMultiplier" : 0.75,
-                                        "exercise" : "barbell row",
+                                        "exercise" : "Barbell row",
                                         "setLoad" : 50,
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1144,11 +1208,12 @@
                                     {
                                         "timePeriodName" : "Barbell rows",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
+                                        "exercise" : "Barbell row",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1157,11 +1222,12 @@
                                     {
                                         "timePeriodName" : "Barbell rows",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
+                                        "exercise" : "Barbell row",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1170,11 +1236,12 @@
                                     {
                                         "timePeriodName" : "Barbell rows",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
+                                        "exercise" : "Barbell row",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1183,11 +1250,12 @@
                                     {
                                         "timePeriodName" : "Barbell rows",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "barbell row",
+                                        "exercise" : "Barbell row",
                                         "setLoad" : 75,
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1201,6 +1269,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                             {
@@ -1225,6 +1294,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1238,6 +1308,7 @@
                                         "setQuantity" : 8,
                                         "loadType" : "bwperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1251,6 +1322,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                             {
@@ -1275,6 +1347,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1288,6 +1361,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
                                             
                                         ]
@@ -1296,11 +1370,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 75,
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1320,11 +1395,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 5,
                                         "setQuantity" : 15,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1333,11 +1409,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 5,
                                         "setQuantity" : 15,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1346,11 +1423,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 5,
                                         "setQuantity" : 15,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1359,11 +1437,12 @@
                                     {
                                         "timePeriodName" : "Face pulls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Face pulls",
+                                        "exercise" : "Face pull",
                                         "setLoad" : 5,
                                         "setQuantity" : 15,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1372,11 +1451,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1396,11 +1476,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1409,11 +1490,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1422,11 +1504,12 @@
                                     {
                                         "timePeriodName" : "Hammer curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Hammer curls",
+                                        "exercise" : "Hammer curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1435,11 +1518,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1459,11 +1543,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1472,11 +1557,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1485,11 +1571,12 @@
                                     {
                                         "timePeriodName" : "Dumbbell curls",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "Dumbbell curls",
+                                        "exercise" : "Dumbbell curl",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1500,6 +1587,7 @@
                             {
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Push day",
+                                "timePeriodDescription" : "A gym session containing exercises where you do pushing movements",
                                 "children" : [
                                     
                                     {
@@ -1512,6 +1600,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1558,6 +1647,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1571,6 +1661,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1584,6 +1675,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1597,6 +1689,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1610,6 +1703,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1634,6 +1728,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1647,6 +1742,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1660,6 +1756,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1684,6 +1781,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1697,6 +1795,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1710,6 +1809,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1734,6 +1834,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1747,6 +1848,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1760,6 +1862,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1784,6 +1887,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1797,6 +1901,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1810,6 +1915,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1834,6 +1940,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1847,6 +1954,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1860,6 +1968,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1884,6 +1993,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1897,6 +2007,7 @@
                                         "setQuantity" : 15,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1908,6 +2019,7 @@
                             {
                                 "type" : "TemplateSession",
                                 "timePeriodName" : "Leg day",
+                                "timePeriodDescription" : "A gym session containing exercises targeting the legs",
                                 "children" : [
                                     
                                     {
@@ -1920,6 +2032,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "numerical",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -1966,6 +2079,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1979,6 +2093,7 @@
                                         "setQuantity" : 5,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -1992,6 +2107,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -2016,6 +2132,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2029,6 +2146,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2042,6 +2160,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -2066,6 +2185,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2079,6 +2199,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2092,6 +2213,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -2116,6 +2238,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2129,6 +2252,7 @@
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2137,11 +2261,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "This is a progression set, make sure to not skip it!",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                             {
@@ -2161,11 +2286,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2174,11 +2300,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2187,11 +2314,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]
@@ -2200,11 +2328,12 @@
                                     {
                                         "timePeriodName" : "Calf raises",
                                         "timePeriodDescription" : "",
-                                        "exercise" : "calf raise",
+                                        "exercise" : "Calf raise",
                                         "setLoad" : 75,
                                         "setQuantity" : 10,
                                         "loadType" : "maxperc",
                                         "quantityType" : "numerical",
+                                        "restTime" : 120,
                                         "children" : [
 
                                         ]

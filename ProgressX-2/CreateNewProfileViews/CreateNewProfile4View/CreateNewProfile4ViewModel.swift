@@ -271,6 +271,49 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
                     type: "onerepmax"
                 )
                 
+            case "Tricep pushdown":
+                
+                // Approximate max from overhead tricep extension
+                let weightLoad = round((Double(overheadTriExt1RM)! * 1.1))
+                
+                _ = PersonalRecord(
+                    viewContext,
+                    exercise: exercise,
+                    weightLoad: weightLoad,
+                    quantity: 1,
+                    date: Date(),
+                    type: "onerepmax"
+                )
+                
+            case "Face pull":
+                
+                // Approximate max from shoulder press.
+                let weightLoad = round(Double(shoulderPress1RM)! * 0.6)
+                
+                _ = PersonalRecord(
+                    viewContext,
+                    exercise: exercise,
+                    weightLoad: weightLoad,
+                    quantity: 1,
+                    date: Date(),
+                    type: "onerepmax"
+                )
+                
+            case "Calf raise":
+                
+                // Approximate max from Squat press.
+                let weightLoad = round(Double(squat1RM)! * 0.8)
+                
+                _ = PersonalRecord(
+                    viewContext,
+                    exercise: exercise,
+                    weightLoad: weightLoad,
+                    quantity: 1,
+                    date: Date(),
+                    type: "onerepmax"
+                )
+                
+                
             default:
                 
                 fatalError("An exercise with a name not in the switch statement appearead. This is probably the result of a typo.")

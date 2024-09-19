@@ -284,7 +284,7 @@ extension CoreDataAccess {
         let jsonArray = transformAsset(asset)
         
         // JSON Array contains a single object with an attribute that is an array of strings.
-        let names = jsonArray[0]["categoryName"] as! [String]
+        let names = jsonArray[0]["categoryNames"] as! [String]
         
         for name in names {
             _ = ExerciseCategory(

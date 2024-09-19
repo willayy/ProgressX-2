@@ -111,8 +111,11 @@ class CreateNewProfile1ViewModel: ViewModel {
         
         // Create basic exercies if they dont exist
         if !CoreDataAccess.basicExercisesExist(viewContext) {
+            
             CoreDataAccess.generateExerciseCategories(viewContext)
+            
             CoreDataAccess.generateStarterExerciseLibrary(viewContext)
+            
         }
         
         self.save(viewContext)

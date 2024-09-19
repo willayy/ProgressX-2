@@ -138,7 +138,7 @@ struct HomeView: View {
                             WeekBarChart(trainingSessions: profile.sessionsDoneThisWeek)
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
@@ -155,7 +155,7 @@ struct HomeView: View {
                             Last30DaysBarChart(trainingSessions: profile.sessionsDoneLast30Days)
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
