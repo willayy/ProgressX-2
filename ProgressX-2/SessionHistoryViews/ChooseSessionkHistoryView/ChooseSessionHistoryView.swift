@@ -5,15 +5,12 @@
 //  Created by lucas häyhänen on 2024-08-12.
 //
 
-import Foundation
-import SwiftUI
-import CoreData
 
-struct ChooseWeekHistoryView: View {
+import SwiftUI
+
+struct ChooseSessionkHistoryView: View {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @StateObject private var viewModel = ChooseWeekHistoryViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
+    @StateObject private var viewModel = ChooseSessionHistoryViewModel()
     
     @FetchRequest(
         entity: TrainingSession.entity(),
@@ -29,7 +26,7 @@ struct ChooseWeekHistoryView: View {
                 
                 VStackWithSideBarButton{
                     
-                    BoldTitle(text:"Completetd sessions")
+                    BoldTitle(text:"Completed sessions")
                     
                     LightSubHeadline(text: "Here you can choose a specific completed session to view your past workouts")
                         .padding(.vertical)
@@ -56,7 +53,7 @@ struct ChooseWeekHistoryView: View {
                     }.padding(.horizontal, 20)
                 }
             }
-        }, selectedTrainingSession: $viewModel.selectedTrainingSession)
+        }, selectedTrainingSession: $viewModel.selectedTrainingSession, selectedSet: $viewModel.selectedSet)
     }
 }
 
@@ -64,7 +61,7 @@ struct ChooseWeekHistoryView: View {
 
     let context = PersistenceController.previewViewContext
     
-    return ChooseWeekHistoryView()
+    return ChooseSessionkHistoryView()
         .environmentObject(ShowMenuController())
         .environment(\.managedObjectContext, context)
         

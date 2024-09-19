@@ -19,7 +19,7 @@ enum Route: String {
     case ProfileView = "ProfileView"
     case RoutineLibraryView = "RoutineLibraryView"
     case InfoHelp = "InfoHelp"
-    case ChooseWeekHistoryView = "ChooseWeekHistoryView"
+    case ChooseSessionHistoryView = "ChooseSessionHistoryView"
 }
 
 class ViewRouter: ObservableObject {

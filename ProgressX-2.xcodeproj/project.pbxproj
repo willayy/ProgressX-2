@@ -169,6 +169,9 @@
 		83F26D1A2C70C1E300C8EB82 /* HasChildren.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F26D192C70C1E300C8EB82 /* HasChildren.swift */; };
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
 		8F1307492C7C9E5900F9BB72 /* DisplayMusclesDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */; };
+		8F13074B2C95940400F9BB72 /* SetHistoryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074A2C95940300F9BB72 /* SetHistoryListItem.swift */; };
+		8F13074E2C95A99000F9BB72 /* SetHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */; };
+		8F1307502C95A9A100F9BB72 /* SetHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */; };
 		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
 		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
 		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
@@ -181,8 +184,8 @@
 		8F7F16212C51146D00F37C58 /* CircleProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16202C51146D00F37C58 /* CircleProgressView.swift */; };
 		8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162A2C51232E00F37C58 /* TimerExtension.swift */; };
 		8F7F162D2C51299700F37C58 /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F162C2C51299700F37C58 /* TimerViewModel.swift */; };
-		8F8417EE2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417ED2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift */; };
-		8F8417F02C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417EF2C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift */; };
+		8F8417EE2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417ED2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift */; };
+		8F8417F02C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417EF2C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift */; };
 		8F8417F42C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F32C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift */; };
 		8F8417F72C6CD9920003E76E /* SessionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F62C6CD9920003E76E /* SessionHistoryView.swift */; };
 		8F8417F92C6CD9AC0003E76E /* SessionHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8417F82C6CD9AC0003E76E /* SessionHistoryViewModel.swift */; };
@@ -368,6 +371,9 @@
 		83F26D192C70C1E300C8EB82 /* HasChildren.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasChildren.swift; sourceTree = "<group>"; };
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
 		8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMusclesDummy.swift; sourceTree = "<group>"; };
+		8F13074A2C95940300F9BB72 /* SetHistoryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryListItem.swift; sourceTree = "<group>"; };
+		8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryView.swift; sourceTree = "<group>"; };
+		8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryViewModel.swift; sourceTree = "<group>"; };
 		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
 		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
 		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
@@ -381,8 +387,8 @@
 		8F7F162A2C51232E00F37C58 /* TimerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerExtension.swift; sourceTree = "<group>"; };
 		8F7F162C2C51299700F37C58 /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewModel.swift; sourceTree = "<group>"; };
 		8F7F162F2C53A89300F37C58 /* TrainingSetInfoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSetInfoBox.swift; sourceTree = "<group>"; };
-		8F8417ED2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekHistoryView.swift; sourceTree = "<group>"; };
-		8F8417EF2C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseWeekHistoryViewModel.swift; sourceTree = "<group>"; };
+		8F8417ED2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionHistoryView.swift; sourceTree = "<group>"; };
+		8F8417EF2C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionHistoryViewModel.swift; sourceTree = "<group>"; };
 		8F8417F12C6A5ADD0003E76E /* SessionHistoryNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryNavigationController.swift; sourceTree = "<group>"; };
 		8F8417F32C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionHistoryListItem.swift; sourceTree = "<group>"; };
 		8F8417F62C6CD9920003E76E /* SessionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryView.swift; sourceTree = "<group>"; };
@@ -487,6 +493,7 @@
 				8F7F16132C49385A00F37C58 /* TrainingWeekListItem.swift */,
 				8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */,
 				8F8417F32C6CCC6D0003E76E /* TrainingSessionHistoryListItem.swift */,
+				8F13074A2C95940300F9BB72 /* SetHistoryListItem.swift */,
 			);
 			path = ListItems;
 			sourceTree = "<group>";
@@ -1064,6 +1071,15 @@
 			path = GeneralExerciseInfoBoxes;
 			sourceTree = "<group>";
 		};
+		8F13074C2C95A96000F9BB72 /* SetHistoryView */ = {
+			isa = PBXGroup;
+			children = (
+				8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */,
+				8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */,
+			);
+			name = SetHistoryView;
+			sourceTree = "<group>";
+		};
 		8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,19 +1137,20 @@
 			isa = PBXGroup;
 			children = (
 				8F8417F12C6A5ADD0003E76E /* SessionHistoryNavigationController.swift */,
-				8F8417EC2C6A4ABE0003E76E /* ChooseWeekHistoryView */,
+				8F8417EC2C6A4ABE0003E76E /* ChooseSessionkHistoryView */,
 				8F8417F52C6CD9530003E76E /* SessionHistoryView */,
+				8F13074C2C95A96000F9BB72 /* SetHistoryView */,
 			);
 			path = SessionHistoryViews;
 			sourceTree = "<group>";
 		};
-		8F8417EC2C6A4ABE0003E76E /* ChooseWeekHistoryView */ = {
+		8F8417EC2C6A4ABE0003E76E /* ChooseSessionkHistoryView */ = {
 			isa = PBXGroup;
 			children = (
-				8F8417ED2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift */,
-				8F8417EF2C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift */,
+				8F8417ED2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift */,
+				8F8417EF2C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift */,
 			);
-			path = ChooseWeekHistoryView;
+			path = ChooseSessionkHistoryView;
 			sourceTree = "<group>";
 		};
 		8F8417F52C6CD9530003E76E /* SessionHistoryView */ = {
@@ -1366,7 +1383,7 @@
 				83266E682C3818C500F5F6CB /* EditRoutineViewModel.swift in Sources */,
 				83D6850D2C3436B200FA78C6 /* (null) in Sources */,
 				8310D9292C0CA170004A5A3D /* PrListItem.swift in Sources */,
-				8F8417F02C6A4C360003E76E /* ChooseWeekHistoryViewModel.swift in Sources */,
+				8F8417F02C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift in Sources */,
 				8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */,
 				831F2C082C21938E007A7A8A /* TrainingWeek.swift in Sources */,
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
@@ -1390,7 +1407,7 @@
 				831F2C0C2C21D043007A7A8A /* SideBar.swift in Sources */,
 				83BD39592C400C9A008E09A0 /* SelectCategoriesList.swift in Sources */,
 				83266E812C3C0E2800F5F6CB /* CreateNewPersonalRecordViewModel.swift in Sources */,
-				8F8417EE2C6A4AEA0003E76E /* ChooseWeekHistoryView.swift in Sources */,
+				8F8417EE2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift in Sources */,
 				83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */,
 				831F2C1A2C230C07007A7A8A /* CreateNewRoutineView.swift in Sources */,
 				832214172BC938C400DF9C7A /* CreateNewProfile1View.swift in Sources */,
@@ -1401,6 +1418,7 @@
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
 				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
+				8F13074E2C95A99000F9BB72 /* SetHistoryView.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				83BAF9102C5B74F200EFC1C6 /* Generate.swift in Sources */,
 				831F2C302C24E54B007A7A8A /* TemplateSetListItem.swift in Sources */,
@@ -1448,6 +1466,7 @@
 				83D393732C3694AE003B0F5E /* MagnifiedThresholdView.swift in Sources */,
 				832213E42BC92D8E00DF9C7A /* ProgressX_2App.swift in Sources */,
 				83266E712C3AEF6900F5F6CB /* EditTemplateSetViewModel.swift in Sources */,
+				8F13074B2C95940400F9BB72 /* SetHistoryListItem.swift in Sources */,
 				831F2C1C2C23132F007A7A8A /* EditRoutineView.swift in Sources */,
 				83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */,
 				83BD396A2C47C872008E09A0 /* HomeViewNavigationController.swift in Sources */,
@@ -1469,6 +1488,7 @@
 				831F2BF52C20A74C007A7A8A /* TrainingSession.swift in Sources */,
 				83D684F92C2EC74900FA78C6 /* OrderableTimePeriod.swift in Sources */,
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
+				8F1307502C95A9A100F9BB72 /* SetHistoryViewModel.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */,
 				8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */,
