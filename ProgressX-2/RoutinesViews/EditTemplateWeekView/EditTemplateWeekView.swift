@@ -175,13 +175,13 @@ struct EditTemplateWeekView: View {
         let weekNameValidator = StringFieldValidator()
         let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += weekNameValidator.valideField(
+        valid += weekNameValidator.validateField(
             inputVar: viewModel.editedWeekName,
             errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedWeekIsInvalid
         )
         
-        valid += weekDescValidator.valideField(
+        valid += weekDescValidator.validateField(
             inputVar: viewModel.editedWeekDescription,
             errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedWeekDescIsInvalid
@@ -193,9 +193,9 @@ struct EditTemplateWeekView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = TemplateWeek.fetchRequest()
-    let weeks = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let weeks = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let week = weeks.first!
     

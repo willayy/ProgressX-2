@@ -53,9 +53,9 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         selectedExercise = entity.exercise!
         editedLoadType = loadTypeMap()[entity.loadType!]!
         editedQuantityType = quantityTypeMap()[entity.quantityType!]!
-        editedSetLoad = entity.setLoadString!
-        editedSetQuantity = entity.setQuantityString!
-        editedRestTime = entity.restTimeString
+        editedSetLoad = entity.formattedSetLoad!
+        editedSetQuantity = entity.formattedSetQuantity!
+        editedRestTime = entity.formattedRestTime
     }
     
     public func saveEdits(entity: TemplateSet, viewContext: NSManagedObjectContext) -> Void {
@@ -89,16 +89,7 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         }
         
         if editedSetPositionIndex != entity.positionIndex {
-            // Find the set with the same position index in the parent routine.
-            let setsInParentSession = entity.templateSession!.templateSets!.allObjects as! [TemplateSet]
-            let switchWithSet = setsInParentSession.first(
-                where: {
-                    $0.positionIndex == editedSetPositionIndex
-                }
-            )
-            // Switch position index with the set
-            switchWithSet!.positionIndex = entity.positionIndex
-            entity.positionIndex = editedSetPositionIndex
+            entity.switchPositionIndex(to: editedSetPositionIndex)
         }
         
         if Double(editedRestTime)! != entity.restTime {
@@ -106,6 +97,7 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         }
         
         if entity.hasChanges {
+            entity.propogateChanges()
             withAnimation { showSetChangedAlert = true }
             self.save(viewContext)
         } else {
@@ -114,64 +106,9 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
 
     }
     
-    /// Propogating changes made to the TemplateSet to all matching TrainingSets.
-    private func propogateChanges(_ viewContext: NSManagedObjectContext, selectedTemplateSet: TemplateSet) -> Void {
-        let changes = selectedTemplateSet.changedValues() // Get changes
-        let fetchRequest: NSFetchRequest<TrainingSet> = TrainingSet.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "templateSet == %@", selectedTemplateSet)
-        
-        // Fetch all incomplete sessions as these are the only ones affected
-        let trainingSets = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
-            .filter({!$0.isComplete})
-        
-        for trainingSet in trainingSets {
-            if let timePeriodName = changes["timePeriodName"] {
-                trainingSet.timePeriodName = (timePeriodName as! String)
-            }
-            
-            if let timePeriodDesc = changes["timePeriodDescription"] {
-                trainingSet.timePeriodName = timePeriodDesc as? String
-            }
-            
-            if let positionIndex = changes["positionIndex"] {
-                // Find the session with the same position index in the parent routine.
-                let setsInParentSession = trainingSet.trainingSession!.trainingSets!.allObjects as! [TrainingSet]
-                let switchWithSet = setsInParentSession.first(
-                    where: {
-                        $0.positionIndex == positionIndex as! Int64
-                    }
-                )
-                // Switch position index with the session
-                switchWithSet!.positionIndex = trainingSet.positionIndex
-                trainingSet.positionIndex = positionIndex as! Int64
-            }
-            
-            if let exercise = changes["exercise"] {
-                trainingSet.exercise = (exercise as! Exercise)
-            }
-            
-            if changes["setLoad"] != nil {
-                trainingSet.loadTodo = selectedTemplateSet.loadTodo!
-            }
-            
-            if changes["setQuantity"] != nil {
-                trainingSet.quantityTodo = selectedTemplateSet.quantityTodo!
-            }
-            
-            if let restTime = changes["restTime"] {
-                trainingSet.restTime = restTime as! Double
-            }
-        }
-    }
-    
     /// Find all the positionIndexes of the other set-children of this sets session.
-    public func positionIndexes(selectedTemplateSet: TemplateSet?) -> [Int64] {
-        let session = selectedTemplateSet!.templateSession!
-        let sets = session.templateSets!.allObjects as! [TemplateSet]
-        let positionIndexes = sets.map { set in
-            set.positionIndex
-        }
-        return positionIndexes
+    public func positionIndexes(selectedTemplateSet: TemplateSet) -> [Int64] {
+        return selectedTemplateSet.getPositionIndexes()
     }
     
     /// Func that returns load type selections.

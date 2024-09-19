@@ -95,7 +95,7 @@ struct RoutineLibraryView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return RoutineLibraryView()
         .environment(\.managedObjectContext, context)

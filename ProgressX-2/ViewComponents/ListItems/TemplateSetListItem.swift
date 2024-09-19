@@ -33,13 +33,13 @@ struct TemplateSetListItem: View {
                     
                     (Text("Quantity: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setQuantityString!)"))
+                     + Text("\(set.formattedSetQuantity!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
                     (Text("Load: ")
                         .fontWeight(.bold)
-                     + Text("\(set.setLoadString!)"))
+                     + Text("\(set.formattedSetLoad!)"))
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
@@ -93,8 +93,8 @@ struct TemplateSetListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(set.timePeriodName!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: set)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: set)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

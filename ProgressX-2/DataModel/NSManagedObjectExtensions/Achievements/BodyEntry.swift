@@ -41,13 +41,13 @@ extension BodyEntry {
         
     private var lengthUnit: String? {
         guard let context = self.managedObjectContext else { return nil }
-        guard let lengthUnit = PersistenceController.getLengthUnit(context) else { return nil }
+        guard let lengthUnit = CoreDataAccess.getLengthUnit(context) else { return nil }
         return lengthUnit
     }
     
     private var weightUnit: String? {
         guard let context = self.managedObjectContext else { return nil }
-        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         return weightUnit
     }
     

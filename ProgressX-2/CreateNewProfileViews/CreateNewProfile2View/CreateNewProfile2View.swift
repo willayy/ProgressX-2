@@ -48,7 +48,7 @@ struct CreateNewProfile2View: View {
     
 #Preview {
     @State var navPath = [Int]()
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     return CreateNewProfile2View(navPath: $navPath)
             .environmentObject(ViewRouter())
             .environment(\.managedObjectContext, context)

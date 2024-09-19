@@ -1,18 +1,22 @@
 [
-    "Abs",
-    "Biceps",
-    "Glutes",
-    "Calves",
-    "Chins",
-    "Hamstrings",
-    "Lats",
-    "Lower back",
-    "Lower arm back",
-    "Lower arm front",
-    "Obliques",
-    "Pectorials",
-    "Shoulders",
-    "Thighs",
-    "Traps",
-    "Triceps"
+    {
+        "categoryNames" : [
+            "Abs",
+            "Biceps",
+            "Glutes",
+            "Calves",
+            "Chins",
+            "Hamstrings",
+            "Lats",
+            "Lower back",
+            "Lower arm back",
+            "Lower arm front",
+            "Obliques",
+            "Pectorials",
+            "Shoulders",
+            "Thighs",
+            "Traps",
+            "Triceps"
+        ]
+    }
 ]

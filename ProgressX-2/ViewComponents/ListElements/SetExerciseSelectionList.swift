@@ -56,7 +56,7 @@ struct SetExerciseSelectionList: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     @State var selectedExercise: Exercise? = nil
     @State var searchWord: String = ""
     

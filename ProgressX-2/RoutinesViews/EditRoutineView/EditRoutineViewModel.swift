@@ -38,37 +38,41 @@ class EditRoutineViewModel: ViewModel, AddingViewModel, EditingViewModel, Defaul
         }
         
         if entity.hasChanges {
+            
             withAnimation {
                 showRoutineChangedAlert = true
             }
+            
             self.save(viewContext)
+            
         } else {
+            
             withAnimation {
                 showNoChangeAlert = true
             }
+            
         }
     }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
+        
         let templateWeek = TemplateWeek(
             viewContext,
             templateCycle: selectedTemplateCycle!
         )
-        
-        // Get all training cycles
-        let fetchRequest: NSFetchRequest<TrainingCycle> = TrainingCycle.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "templateCycle == %@", selectedTemplateCycle!)
+    
         // Only included incomplete trainingCycles as completed ones are irrelevant for this change
-        let trainingCycles = PersistenceController.fetch(viewContext, fetchRequest: fetchRequest)
-            .filter({ !$0.isComplete })
+        let trainingCycles = selectedTemplateCycle!.trainingCycles?.allObjects as! [TrainingCycle]
         
-        // Add training cycles to them
+        // Add weeks cycles to them
         for trainingCycle in trainingCycles {
+            
             let _ = TrainingWeek(
                 viewContext,
                 trainingCycle: trainingCycle,
                 templateWeek: templateWeek
             )
+            
         }
         
         self.save(viewContext)

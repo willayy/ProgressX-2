@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension TrainingSession: HasOrderable, HasCompleteable {
+extension TrainingSession: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     //MARK: Convenience init
     
@@ -28,13 +28,54 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         trainingWeek.addToTrainingSessions(self)
     }
     
-    // MARK: Extra Properties
+    // MARK: Protocol implementation
+        
+    internal typealias ParentType = TrainingWeek
     
-    public func getNextPositionIndex() -> Int64 {
+    internal typealias ChildrenType = TrainingSet
+    
+    // Protocol implementation
+    internal var children: [TrainingSet] {
+        return self.trainingSets!.allObjects as! [TrainingSet]
+    }
+    
+    // Protocol implementation
+    internal var parent: TrainingWeek {
+        return self.trainingWeek!
+    }
+    
+    // Protocol implementation
+    internal func getNextPositionIndex() -> Int64 {
         let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
         let max = sets.max {$0.positionIndex < $1.positionIndex}
         return Int64((max?.positionIndex ?? 0) + 1)
     }
+    
+    // Protocol implementation
+    internal func childrenAreComplete() -> Bool {
+        if self.trainingSets!.allObjects.isEmpty {
+            return false
+        } else {
+          return self.trainingSets!.allSatisfy {
+              trainingSet in
+                (trainingSet as! TrainingSet).isComplete
+            }
+        }
+    }
+    
+    // Protocol implementation
+    internal func getPositionIndexes() -> [Int64] {
+        let children = self.trainingSets!.allObjects as! [TrainingSet]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes
+    }
+    
+    // Protocol implementation
+    internal func hasCompleteableChildren() -> Bool {
+        return !self.trainingSets!.allObjects.isEmpty
+    }
+    
+    // MARK: Extra Properties
     
     /// Gets the completion date of a trainingSession as a weekday string (Mon,Tue,Wed,...,Sun)
     public var completedOnDayString: String? {
@@ -63,7 +104,8 @@ extension TrainingSession: HasOrderable, HasCompleteable {
         }
     }
     
-    public func getNextTrainingSet() -> TrainingSet? {
+    /// Gets the next trainingset of this session
+    public var nextTrainingSet: TrainingSet? {
         let allSets = self.trainingSets!.allObjects as! [TrainingSet]
         let orderedIncompleteSets: [TrainingSet] = allSets
             .filter { set in !set.isComplete }
@@ -73,51 +115,6 @@ extension TrainingSession: HasOrderable, HasCompleteable {
     
     // MARK: Validation
     
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validateIsComplete()
-        try validatePositionIndexes()
-    }
+    // No extra validation on this class extension
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validateIsComplete()
-        try validatePositionIndexes()
-    }
-    
-    internal func childrenAreComplete() -> Bool {
-        if self.trainingSets!.allObjects.isEmpty {
-            return false
-        } else {
-          return self.trainingSets!.allSatisfy {
-              trainingSet in
-                (trainingSet as! TrainingSet).isComplete
-            }
-        }
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sets: [TrainingSet] = self.trainingSets?.allObjects as! [TrainingSet]
-        let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty { throw ValidationNSErrors.positionIndexIsInvalid.toNSError()}
-    }
-    
-    private func validateIsComplete() throws {
-        // if session is complete and its relationship sets is empty throw an error
-        if self.isComplete && self.trainingSets!.allObjects.isEmpty {
-            throw ValidationNSErrors.sessionCompleteWithNoSets.toNSError()
-        }
-        
-        // If session is complete but it's sets arent throw an error
-        if self.isComplete && !self.childrenAreComplete() {
-            throw ValidationNSErrors.sessionCompleteWithUncompleteSets.toNSError()
-        }
-        
-        // If session is incomplete but its sets are completed
-        if !self.isComplete && self.childrenAreComplete() {
-            throw ValidationNSErrors.sessionIncompleteWithCompleteSets.toNSError()
-        }
-    }
 }

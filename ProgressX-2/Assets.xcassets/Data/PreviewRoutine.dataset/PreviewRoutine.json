@@ -1,0 +1,261 @@
+[
+    {
+        "timePeriodName" : "Preview routine",
+        "timePeriodDescription" : "A Routine generated in-memory for testing and the SwiftUI preview.",
+        "children" : [
+            
+            {
+                "timePeriodName" : "Template cycle",
+                "timePeriodDescription" : "The template cycle in the Preview routine.",
+                "children" : [
+                    
+                    {
+                        "timePeriodName" : "Week 1",
+                        "timePeriodDescription" : "The first week in the Preview routine.",
+                        "children" : [
+                            
+                            {
+                                "timePeriodName" : "Session 1",
+                                "timePeriodDescription" : "First session in the first week of the Preview routine.",
+                                "children" : [
+                                    
+                                    {
+                                        "timePeriodName" : "Set 1",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (reps)",
+                                        "loadType" : "numerical",
+                                        "setLoad" : 100,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 10,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : 2.5,
+                                                "flatLoadAdd" : 2,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 5,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    },
+                                    
+                                    {
+                                        "timePeriodName" : "Set 2",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (time)",
+                                        "loadType" : "numerical",
+                                        "setLoad" : 100,
+                                        "quantityType" : "maxperc",
+                                        "setQuantity" : 80,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "timemax",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : 2,
+                                                "upperBound" : 2,
+                                                "lowerBound" : 0,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    }
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "timePeriodName" : "Session 2",
+                                "timePeriodDescription" : "Second session in the first week of the Preview routine.",
+                                "children" : [
+                                    
+                                    {
+                                        "timePeriodName" : "Set 1",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (reps)",
+                                        "loadType" : "maxperc",
+                                        "setLoad" : 80,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 10,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "maxreps",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 5,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    },
+                                    
+                                    {
+                                        "timePeriodName" : "Set 2",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (time)",
+                                        "loadType" : "bwperc",
+                                        "setLoad" : 80,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 60,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "timemax",
+                                                "flatQuantityAdd" : 10,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 60,
+                                                "lowerBound" : 20,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    }
+                                    
+                                ]
+                            }
+                            
+                        ]
+                    },
+                    
+                    {
+                        "timePeriodName" : "Week 2",
+                        "timePeriodDescription" : "The second week in the Preview routine.",
+                        "children" : [
+                            
+                            {
+                                "timePeriodName" : "Session 1",
+                                "timePeriodDescription" : "First session in the second week of the Preview routine.",
+                                "children" : [
+                                    
+                                    {
+                                        "timePeriodName" : "Set 1",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (reps)",
+                                        "loadType" : "numerical",
+                                        "setLoad" : 95,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 15,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "onerepmax",
+                                                "flatQuantityAdd" : 2,
+                                                "flatLoadAdd" : 2,
+                                                "upperBound" : 15,
+                                                "lowerBound" : 2,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    },
+                                    
+                                    {
+                                        "timePeriodName" : "Set 2",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (time)",
+                                        "loadType" : "bwperc",
+                                        "setLoad" : 40,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 45,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "timemax",
+                                                "flatQuantityAdd" : 2,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 20,
+                                                "lowerBound" : 2,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    }
+                                    
+                                ]
+                            },
+                            
+                            {
+                                "timePeriodName" : "Session 2",
+                                "timePeriodDescription" : "Second session in the second week of the Preview routine.",
+                                "children" : [
+                                    
+                                    {
+                                        "timePeriodName" : "Set 1",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (reps)",
+                                        "loadType" : "bwperc",
+                                        "setLoad" : 70,
+                                        "quantityType" : "maxperc",
+                                        "setQuantity" : 40,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "maxreps",
+                                                "flatQuantityAdd" : null,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 10,
+                                                "lowerBound" : 2,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    },
+                                    
+                                    {
+                                        "timePeriodName" : "Set 2",
+                                        "timePeriodDescription" : "",
+                                        "exercise" : "testing exercise (time)",
+                                        "loadType" : "maxperc",
+                                        "setLoad" : 99,
+                                        "quantityType" : "numerical",
+                                        "setQuantity" : 100,
+                                        "restTime" : 180,
+                                        "children" : [
+                                            
+                                            {
+                                                "timePeriodName" : "Threshold 1",
+                                                "timePeriodDescription" : "",
+                                                "prType" : "timemax",
+                                                "flatQuantityAdd" : 10,
+                                                "flatLoadAdd" : null,
+                                                "upperBound" : 100,
+                                                "lowerBound" : 50,
+                                                "generatePr" : true
+                                            }
+                                            
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

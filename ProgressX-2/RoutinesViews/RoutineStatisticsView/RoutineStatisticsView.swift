@@ -10,10 +10,13 @@ import CoreData
 
 struct RoutineStatisticsView: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var selectedRoutine: Routine?
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
                 BoldTitle(text: "Statistics for ")
                     .padding(.horizontal, 20)
@@ -26,20 +29,22 @@ struct RoutineStatisticsView: View {
                     .padding(.vertical, 10)
                 
                 GroupBox {
+                    
                     VStack(alignment: .leading) {
+                        
                         (Text("Last session done: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.lastCompletedSession?.completionDateString! ?? "No sessions completed")"))
+                         + Text("\(selectedRoutine!.lastSessionDone?.formattedCompletionDate! ?? "No sessions completed")"))
                         .padding(.vertical, 10)
                         
-                        (Text("Sessions done this month: ")
+                        (Text("Sessions done the last 30 days: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.sessionsDoneThisMonth.count)"))
+                         + Text("\(selectedRoutine!.sessionsDoneLast30Days.count)"))
                         .padding(.bottom, 10)
                         
-                        (Text("Sessions done this week: ")
+                        (Text("Sessions done the last 7 days: ")
                             .fontWeight(.bold)
-                         + Text("\(selectedRoutine!.sessionsDoneThisWeek.count)"))
+                         + Text("\(selectedRoutine!.sessionsDoneLast7Days.count)"))
                         .padding(.vertical, 10)
                         
                         (Text("Total completed cycles: ")
@@ -56,14 +61,14 @@ struct RoutineStatisticsView: View {
                 
                 BoldSubHeadline(text: "Exercises in your routine")
                 
-                PieChart(data: selectedRoutine!.exerciseInRoutine)
+                PieChart(data: selectedRoutine!.exercises)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
                     .frame(height: 300)
                 
                 BoldSubHeadline(text: "Muscle groups targeted")
                 
-                PieChart(data: selectedRoutine!.categoriesInRoutine)
+                PieChart(data: selectedRoutine!.categories)
                     .padding(.horizontal, 20)
                     .padding(.bottom, 20)
                     .frame(height: 300)
@@ -74,11 +79,12 @@ struct RoutineStatisticsView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    
+    let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Routine> = Routine.fetchRequest()
     
-    let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var routine = results.first
     

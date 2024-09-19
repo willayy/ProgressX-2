@@ -30,35 +30,52 @@ struct TrainingView: View {
             
             // MARK: Which set are you on status text
             Title2(
+                
                 text: viewModel.setsLeft(
                     selectedTrainingSession: selectedTrainingSession,
                     currentTrainingSet: currentTrainingSet
                 )
+                
             )
             .padding(.bottom, 20)
             
             // MARK: The time progress view
             // Only displays the timer if it is counting
             if timerViewModel.state == .active {
-                withAnimation{
+                
+                withAnimation {
+                    
                     progressView
+                    
                 }
+                
             }
          
             
             // MARK: Skip rest time button
             if timerViewModel.state == .active && !viewModel.timedSetActive {
+                
                 withAnimation {
+                    
                     Button {
+                        
                         timerViewModel.state = .cancelled
+                        
                         if viewModel.doneButtonText == "rest timer" {
+                            
                             viewModel.doneButtonEnabled.toggle()
+                            
                             viewModel.doneButtonText = "Start timed set"
+                            
                             viewModel.timedSetActive.toggle()
+                            
                         }
+                        
                     } label: {
+                        
                         Text("Skip rest")
                             .font(.title)
+                        
                     }
                     .padding(.bottom, 10)
                 }
@@ -75,33 +92,47 @@ struct TrainingView: View {
                     viewModel.presentPopup.toggle()
                     
                 }) {
+                    
                     Text(viewModel.doneButtonText)
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
                 .disabled(!viewModel.doneButtonEnabled)
                 .onChange(of: (timerViewModel.state == .active), initial: false) {
+                    
                     viewModel.doneButtonEnabled.toggle()
+                    
                 }
                 
             } else if exerciseType == "time" {
                 
                 // MARK: Set done button but for timed sets
                 Button(action:{
-                    if viewModel.doneButtonText == "Start timed set"{
+                    
+                    if viewModel.doneButtonText == "Start timed set" {
+                        
                         viewModel.startTimer(
                             timerViewModel: timerViewModel,
-                            seconds: Int(currentTrainingSet!.quantityTodo))
+                            seconds: Int(currentTrainingSet!.quantityTodo)
+                        )
+                        
                         viewModel.doneButtonText = "Done"
-                    } else if viewModel.doneButtonText == "Done"{
-                        viewModel.startRestTimerForTimedSet(timer: timerViewModel) 
+                        
+                    } else if viewModel.doneButtonText == "Done" {
+                        
+                        viewModel.startRestTimerForTimedSet(timer: timerViewModel)
+                        
                     }
+                    
                 }) {
+                    
                     Text(viewModel.doneButtonText)
                         .frame(width: 150, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top, 10)
@@ -116,16 +147,25 @@ struct TrainingView: View {
         }
         // MARK: Task to show start session alert.
         .task {
+            
             withAnimation {
+                
                 if exerciseType == "time"{
+                    
                     viewModel.doneButtonText = "Start timed set"
+                    
                     viewModel.timedSetActive = true
+                    
                 }
+                
                 viewModel.showAlert = true
+                
             }
+            
         }
         // MARK: Start your new set alert.
         .alert(isPresented: $viewModel.showAlert) {
+            
             Alert(
                 title: Text("Ready to start your session?"),
                 message: Text("Press start to get going with your first set!"),
@@ -133,24 +173,35 @@ struct TrainingView: View {
                     viewModel.startSessionTimer()
                 }
             )
+            
         }
         // MARK: Skip set toolbar item.
         .toolbar {
             
             // Displays the total elapsed time of the Session
             ToolbarItem(placement: .principal) {
+                
                 Text(viewModel.secondsElapsed.asTimestamp)
             }
             
-            ToolbarItem{
-                Button(action:{
+            ToolbarItem {
+                
+                Button(action: {
+                    
                     withAnimation {
+                        
                         currentTrainingSet!.skip()
-                        currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                        
+                        currentTrainingSet = selectedTrainingSession!.nextTrainingSet
+                        
                         viewModel.save(viewContext)
+                        
                         if currentTrainingSet == nil {
+                            
                             viewModel.stopSessionTimer()
+                            
                             navPath.append(3)
+                            
                         }
                     }
                 }) {
@@ -168,26 +219,37 @@ struct TrainingView: View {
                 timeDone: $viewModel.quantityDoneOnTimedSet
             )
             .onDisappear(perform: {
+                
                 withAnimation {
+                    
                     viewModel.startTimer(
                         timerViewModel: timerViewModel,
                         seconds: Int(currentTrainingSet!.restTime)
                     )
+                    
                     viewModel.lastExercise = (currentTrainingSet?.exercise!.exerciseType!)!
                     
-                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    currentTrainingSet = selectedTrainingSession!.nextTrainingSet
                     
                     if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
+                        
                         viewModel.doneButtonEnabled.toggle()
+                        
                         viewModel.doneButtonText = "rest timer"
+                        
                     } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
+                        
                         viewModel.doneButtonText = "Done"
+                        
                     }
                     
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
+                        
                         viewModel.stopSessionTimer()
+                        
                         timerViewModel.state = .cancelled
+                        
                         navPath.append(3)
                         
                     }
@@ -199,16 +261,21 @@ struct TrainingView: View {
     var progressView: some View {
         
             ZStack {
+                
                     withAnimation {
+                        
                         CircleProgressView(progress: $timerViewModel.progress)
+                        
                     }
 
                 // display information about the current set
                 VStack {
+                    
                     Text(timerViewModel.secondsToCompletion.asTimestamp)
                         .font(.largeTitle)
                         .foregroundColor(.black)
-                }  
+                    
+                }
             }
         
         .frame(width: 360, height: 255)
@@ -218,9 +285,9 @@ struct TrainingView: View {
 }
     
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-    let trainingSessions = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let trainingSessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let trainingSession: TrainingSession? = trainingSessions.first
     let trainingSets = trainingSession?.trainingSets?.allObjects as! [TrainingSet]

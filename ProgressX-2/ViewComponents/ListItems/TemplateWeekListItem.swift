@@ -57,8 +57,8 @@ struct TemplateWeekListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(week.timePeriodName ?? "")?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: week)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: week)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

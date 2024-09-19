@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension TemplateSession: HasOrderable {
+extension TemplateSession: HasOrderable, HasChildren, HasParent, IsChangePropogator {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateWeek: TemplateWeek,
         name: String = "",
@@ -28,34 +28,93 @@ extension TemplateSession: HasOrderable {
         templateWeek.addToTemplateSessions(self)
     }
     
-    // MARK: Extra Properties
+    /// Initializer for a TemplateSession using JSON data
+    public convenience init(
+        _ context: NSManagedObjectContext,
+        templateWeek: TemplateWeek,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.templateWeek = templateWeek
+        templateWeek.addToTemplateSessions(self)
+        self.positionIndex = templateWeek.getNextPositionIndex()
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+    }
     
-    public func getNextPositionIndex() -> Int64 {
+    // MARK: Protocol implementation
+    
+    // Protocol implementation
+    internal var children: [TemplateSet] {
+        
+        return self.templateSets!.allObjects as! [TemplateSet]
+        
+    }
+    
+    // Protocol implementation
+    internal var parent: TemplateWeek {
+        
+        return self.templateWeek!
+        
+    }
+    
+    // Protocol implementation
+    internal func getNextPositionIndex() -> Int64 {
+        
         let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
+        
         let max = sets.max {$0.positionIndex < $1.positionIndex}
+        
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
-    // MARK: Validation
-    
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validatePositionIndexes()
+    // Protocol implementation
+    public func getPositionIndexes() -> [Int64] {
+        
+        let children = self.templateSets!.allObjects as! [TemplateSet]
+        
+        let positionIndexes = children.map { $0.positionIndex }
+        
+        return positionIndexes.sorted()
     }
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validatePositionIndexes()
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sets: [TemplateSet] = self.templateSets?.allObjects as! [TemplateSet]
-        let groupedBy = Dictionary(grouping: sets, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
+    // Protocol implementation
+    public func propogateChanges() -> Void {
+        
+        let trainingSessions = self.trainingSessions?.allObjects as! [TrainingSession]
+        
+        let changes = self.changedValues()
+        
+        // There should only be one active week with self as its templateWeek
+        for trainingSession in trainingSessions {
+            
+            if let timePeriodName = changes["timePeriodName"] {
+                
+                trainingSession.timePeriodName = timePeriodName as? String
+                
+            }
+            
+            if let timePeriodDescription = changes["timePeriodDescription"] {
+                
+                trainingSession.timePeriodDescription = timePeriodDescription as? String
+                
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                
+                trainingSession.switchPositionIndex(to: positionIndex as! Int64)
+                
+            }
+            
         }
     }
+    
+    // MARK: Extra Properties
+    
+    // No extra properties on this class extension
+    
+    // MARK: Validation
+    
+    // No extra validation on this class extension
     
 }

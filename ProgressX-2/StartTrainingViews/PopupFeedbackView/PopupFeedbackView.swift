@@ -85,7 +85,7 @@ struct PopupFeedbackView: View {
                 BoldTitle(text: viewModel.getDidntFinishSetTitle(exercise: exercise))
                     .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
+                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.formattedQuantityTodo!)")
                     .padding(.vertical, 5)
                                 
                 if exercise.exerciseType == "reps" {
@@ -164,7 +164,7 @@ struct PopupFeedbackView: View {
         if exercise.exerciseType == "reps" { inputFieldValidator = IntFieldValidator() }
         else { inputFieldValidator = DoubleFieldValidator() }
         
-        valid += inputFieldValidator.valideField(
+        valid += inputFieldValidator.validateField(
             inputVar: viewModel.editedSetQuantity,
             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetQuantityIsInvalid
@@ -176,9 +176,9 @@ struct PopupFeedbackView: View {
 }
 
 #Preview{
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = TrainingSet.fetchRequest()
-    let trainingSets = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let trainingSets = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var currentTrainingSet = trainingSets.first
     @State var popupBool: Bool = false

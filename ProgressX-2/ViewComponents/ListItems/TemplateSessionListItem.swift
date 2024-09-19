@@ -16,15 +16,20 @@ struct TemplateSessionListItem: View {
     @ObservedObject var session: TemplateSession
     
     var body: some View {
+        
         VStack(alignment: .leading, content: {
+            
             HStack {
+                
                 VStack(alignment: .leading) {
                     
                     Text(session.timePeriodName ?? "")
                     
-                    (Text("Sets: ")
+                    (
+                        Text("Sets: ")
                         .fontWeight(.bold)
-                     + Text("\(session.templateSets?.count ?? 0)"))
+                        + Text("\(session.templateSets?.count ?? 0)")
+                    )
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                     
@@ -36,31 +41,51 @@ struct TemplateSessionListItem: View {
                 
                 // MARK: Edit button
                 Button(action: {
+                    
                     selectedTemplateSession = session
+                    
                     navPath.append(5)
-                }) { Image(systemName: "pencil") }
+                    
+                }) {
+                    
+                    Image(systemName: "pencil")
+                    
+                }
                     .frame(width: 20)
                     .padding(.horizontal, 10)
                     .buttonStyle(BorderlessButtonStyle())
                 
                 // MARK: Delete button
                 Button(action: {
+                    
                     showDeleteAlert = true
-                }) { Image(systemName: "trash") }
+                    
+                }) {
+                    
+                    Image(systemName: "trash")
+                    
+                }
                     .frame(width: 20)
                     .padding(.horizontal, 10)
                     .buttonStyle(BorderlessButtonStyle())
                 // Shows an alert box
                     .alert(isPresented: $showDeleteAlert, content: {
+                        
                         Alert(
+                            
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete \(session.timePeriodName!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: session)
-                                PersistenceController.save(viewContext)
+                                
+                                CoreDataAccess.delete(viewContext, object: session)
+                                
+                                CoreDataAccess.save(viewContext)
+                                
                             },
                             secondaryButton: .cancel()
+                            
                         )
+                        
                     })
             }
         })

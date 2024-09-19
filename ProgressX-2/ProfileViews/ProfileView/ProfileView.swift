@@ -155,19 +155,19 @@ struct ProfileView: View {
         let StandardRestFieldValidator = DoubleFieldValidator()
         let heightFieldValidator = DoubleFieldValidator()
         
-        valid += userNameFieldValidator.valideField(
+        valid += userNameFieldValidator.validateField(
             inputVar: viewModel.userName,
             errorMessage: $viewModel.userNameIsInvalidMsg,
             fieldInvalid: $viewModel.userNameIsInvalid
         )
         
-        valid += StandardRestFieldValidator.valideField(
+        valid += StandardRestFieldValidator.validateField(
             inputVar: viewModel.standardRestTime,
             errorMessage: $viewModel.standardRestTimeIsInvalidMsg,
             fieldInvalid: $viewModel.standardRestTimeIsInvalid
         )
         
-        valid += heightFieldValidator.valideField(
+        valid += heightFieldValidator.validateField(
             inputVar: viewModel.height,
             errorMessage: $viewModel.heightIsInvalidMsg,
             fieldInvalid: $viewModel.heightIsInvalid
@@ -180,7 +180,7 @@ struct ProfileView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return ProfileView()
         .environment(\.managedObjectContext, context)

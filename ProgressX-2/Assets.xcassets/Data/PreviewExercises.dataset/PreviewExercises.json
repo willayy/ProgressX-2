@@ -1,0 +1,25 @@
+[
+    
+    {
+        "type": "reps",
+        "name": "testing exercise (reps)",
+        "description": "Rep based exercise used for preview debugging",
+        "categories": [
+            
+            "Category1"
+            
+        ]
+    },
+    
+    {
+        "type": "time",
+        "name": "testing exercise (time)",
+        "description": "Time based exercise used for preview debugging",
+        "categories": [
+            
+            "Category2"
+            
+        ]
+    }
+    
+]

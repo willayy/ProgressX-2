@@ -124,13 +124,13 @@ struct CreateNewPersonalRecord: View {
             quantityValidator = IntFieldValidator(maxInputNumber: 100000)
         }
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.prLoad,
             errorMessage: $viewModel.prLoadIsInvalidMsg,
             fieldInvalid: $viewModel.prLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.prQuantity,
             errorMessage: $viewModel.prQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.prQuantityIsInvalid
@@ -141,12 +141,12 @@ struct CreateNewPersonalRecord: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     fetchRequestRepBasedExercise.predicate = NSPredicate(format: "exerciseType == %@", "reps")
     
-    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
     
     @State var exercise: Exercise? = exerciseResults.first
     

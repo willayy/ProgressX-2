@@ -10,15 +10,21 @@ import SwiftUI
 struct MagnifiedTemplateSetView: View {
     
     @ObservedObject var set: TemplateSet
+    
     @Binding var navPath: [Int]
+    
     @Binding var selectedThreshold: SetThreshold?
     
     var body: some View {
         
         @FetchRequest(
+            
             entity: SetThreshold.entity(),
-            sortDescriptors: [NSSortDescriptor(keyPath: \SetThreshold.triggerQuantity, ascending: true)],
+            
+            sortDescriptors: [NSSortDescriptor(keyPath: \SetThreshold.lowerBound, ascending: true)],
+            
             predicate: NSPredicate(format: "templateSet == %@", set)
+            
         ) var thresholds: FetchedResults<SetThreshold>
         
         VStack(alignment: .leading, content: {
@@ -33,27 +39,35 @@ struct MagnifiedTemplateSetView: View {
                     .font(.subheadline)
             )
             
-            (Text("Exercise: ")
+            (
+                Text("Exercise: ")
                 .fontWeight(.bold)
-             + Text("\(set.setExerciseName!)"))
+                + Text("\(set.setExerciseName!)")
+            )
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
-            (Text("Quantity: ")
+            (
+                Text("Quantity: ")
                 .fontWeight(.bold)
-             + Text("\(set.setQuantityString!)"))
+                + Text("\(set.formattedSetQuantity!)")
+            )
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
-            (Text("Load: ")
+            (
+                Text("Load: ")
                 .fontWeight(.bold)
-             + Text("\(set.setLoadString!)"))
+                + Text("\(set.formattedSetLoad!)")
+            )
             .lineLimit(1)
             .minimumScaleFactor(0.6)
             
-            (Text("Thresholds: ")
+            (
+                Text("Thresholds: ")
                 .fontWeight(.bold)
-             + Text("\(set.thresholds?.count ?? 0)"))
+                + Text("\(set.thresholds?.count ?? 0)")
+            )
             .lineLimit(1)
             .minimumScaleFactor(0.6)
         })
@@ -62,13 +76,14 @@ struct MagnifiedTemplateSetView: View {
             height: 200,
             containerName: "this set",
             elementName: "thresholds",
-            data: _thresholds) { 
-                threshold in
+            data: _thresholds) { threshold in
+                
                 ThresholdListItem(
                     navPath: $navPath,
                     selectedThreshold: $selectedThreshold,
                     threshold: threshold
                 )
+                
             }
             .padding(.horizontal, 20)
     }

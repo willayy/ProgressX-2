@@ -77,8 +77,8 @@ struct PrListItem: View {
                             title: Text("Delete PR"),
                             message: Text("Are you sure you want to delete this Pr?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: pr)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: pr)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

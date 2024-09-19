@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension TemplateCycle: HasOrderable {
+extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         routine: Routine,
         name: String = "",
@@ -25,35 +25,58 @@ extension TemplateCycle: HasOrderable {
         self.timePeriodDescription = (description == "") ? "templateCycle created for: \(routineName)" : description
         routine.templateCycle = self
     }
-
-    // MARK: Extra properties
     
-    public func getNextPositionIndex() -> Int64 {
+    /// Initializer for a TemplateCycle using JSON data
+    public convenience init(
+        _ context: NSManagedObjectContext,
+        routine: Routine,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.routine = routine
+        routine.templateCycle = self
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+    }
+    
+    // MARK: Protocol implementation
+    
+    // Protocol implementation
+    internal var children: [TemplateWeek] {
+        return self.templateWeeks!.allObjects as! [TemplateWeek]
+    }
+    
+    // Protocol implementation
+    internal var parent: Routine {
+        return self.routine!
+    }
+    
+    // Protocol implementation
+    internal func getNextPositionIndex() -> Int64 {
+        
         let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
+        
         let max = weeks.max {$0.positionIndex < $1.positionIndex}
+        
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
+    // Protocol implementation
+    public func getPositionIndexes() -> [Int64] {
+        
+        let children = self.templateWeeks!.allObjects as! [TemplateWeek]
+        
+        let positionIndexes = children.map { $0.positionIndex }
+        
+        return positionIndexes.sorted()
+    }
+    
+    // MARK: Extra properties
+    
+    // No extra properties on this class extension.
+    
     // MARK: Validation
     
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validatePositionIndexes()
-        
-    }
+    // No extra validation on this class extension.
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validatePositionIndexes()
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let weeks: [TemplateWeek] = self.templateWeeks?.allObjects as! [TemplateWeek]
-        let groupedBy = Dictionary(grouping: weeks, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
-        }
-    }
 }

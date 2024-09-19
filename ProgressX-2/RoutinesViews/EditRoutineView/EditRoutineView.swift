@@ -175,13 +175,13 @@ struct EditRoutineView: View {
         
         let routineDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += routineNameValidator.valideField(
+        valid += routineNameValidator.validateField(
             inputVar: viewModel.editedRoutineName,
             errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineNameIsInvalid
         )
         
-        valid += routineDescValidator.valideField(
+        valid += routineDescValidator.validateField(
             inputVar: viewModel.editiedRoutineDescription,
             errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineDescIsInvalid
@@ -193,9 +193,9 @@ struct EditRoutineView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let routines = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let routine = routines.first!
     

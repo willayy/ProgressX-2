@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension TemplateWeek: HasOrderable {
+extension TemplateWeek: HasOrderable, HasChildren, HasParent, IsChangePropogator {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateCycle: TemplateCycle,
         name: String = "",
@@ -28,33 +28,93 @@ extension TemplateWeek: HasOrderable {
         templateCycle.addToTemplateWeeks(self)
     }
     
-    // MARK: Extra Properties
+    /// Initializer for a TemplateWeek using JSON data
+    public convenience init(
+        _ context: NSManagedObjectContext,
+        templateCycle: TemplateCycle,
+        json: [String : Any]
+    ) {
+        self.init(context: context)
+        self.templateCycle = templateCycle
+        templateCycle.addToTemplateWeeks(self)
+        self.positionIndex = templateCycle.getNextPositionIndex()
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+    }
     
-    public func getNextPositionIndex() -> Int64 {
+    // MARK: Protocol implementation
+    
+    // Protocol implementation
+    internal var children: [TemplateSession] {
+        
+        return self.templateSessions!.allObjects as! [TemplateSession]
+        
+    }
+    
+    // Protocol implementation
+    internal var parent: TemplateCycle {
+        
+        return self.templateCycle!
+        
+    }
+    
+    // Protocol implementation
+    internal func getNextPositionIndex() -> Int64 {
+        
         let sessions: [TemplateSession] = self.templateSessions?.allObjects as! [TemplateSession]
-        let max = sessions.max {$0.positionIndex < $1.positionIndex}
+        
+        let max = sessions.max { $0.positionIndex < $1.positionIndex }
+        
         return Int64((max?.positionIndex ?? 0) + 1)
     }
     
-    // MARK: Validation
-    
-    public override func validateForInsert() throws {
-        try super.validateForInsert()
-        try validatePositionIndexes()
+    // Protocol implementation
+    public func getPositionIndexes() -> [Int64] {
+        
+        let children = self.templateSessions!.allObjects as! [TemplateSession]
+        
+        let positionIndexes = children.map { $0.positionIndex }
+        
+        return positionIndexes.sorted()
     }
     
-    public override func validateForUpdate() throws {
-        try super.validateForUpdate()
-        try validatePositionIndexes()
-    }
-    
-    // Validate that children has valid positionIndexes (No duplicates)
-    private func validatePositionIndexes() throws {
-        let sessions: [TemplateSession] = self.templateSessions?.allObjects as! [TemplateSession]
-        let groupedBy = Dictionary(grouping: sessions, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
+    // Protocol implementation
+    public func propogateChanges() -> Void {
+        
+        let trainingWeeks = self.trainingWeeks?.allObjects as! [TrainingWeek]
+        
+        let changes = self.changedValues()
+        
+        // There should only be one active week with self as its templateWeek
+        for trainingWeek in trainingWeeks {
+            
+            if let timePeriodName = changes["timePeriodName"] {
+                
+                trainingWeek.timePeriodName = timePeriodName as? String
+                
+            }
+            
+            if let timePeriodDescription = changes["timePeriodDescription"] {
+                
+                trainingWeek.timePeriodDescription = timePeriodDescription as? String
+                
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                
+                trainingWeek.switchPositionIndex(to: positionIndex as! Int64)
+                
+            }
+            
         }
     }
+    
+    // MARK: Extra Properties
+    
+    // No Extra properties on this class extension.
+    
+    // MARK: Validation
+    
+    // No extra validation on this class extension.
+    
 }

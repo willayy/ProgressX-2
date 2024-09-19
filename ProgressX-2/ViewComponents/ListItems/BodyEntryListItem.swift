@@ -74,8 +74,8 @@ struct BodyEntryListItem: View {
                             title: Text("Delete Item"),
                             message: Text("Are you sure you want to delete weigh-in done at \(bodyEntry.dateString!)?"),
                             primaryButton: .destructive(Text("Delete")) {
-                                PersistenceController.delete(viewContext, object: bodyEntry)
-                                PersistenceController.save(viewContext)
+                                CoreDataAccess.delete(viewContext, object: bodyEntry)
+                                CoreDataAccess.save(viewContext)
                             },
                             secondaryButton: .cancel()
                         )

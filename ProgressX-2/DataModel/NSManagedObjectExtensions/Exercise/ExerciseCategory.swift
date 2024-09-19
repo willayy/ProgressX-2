@@ -12,6 +12,7 @@ extension ExerciseCategory {
     
     // MARK: Convenience init
     
+    /// This initializer sets up a ExerciseCategory NSManagedObject correctly by assigning all the necessary attributes.
     convenience init(
         _ context: NSManagedObjectContext,
         name: String
@@ -28,22 +29,25 @@ extension ExerciseCategory {
     
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
+        try validateCategoryNameIsUnique()
     }
     
     override public func validateForInsert() throws {
         try super.validateForInsert()
+        try validateCategoryNameIsUnique()
     }
     
-    private func validateName() throws {
-        let fetchRequest = ExerciseCategory.fetchRequest()
-        var results = PersistenceController.fetch(
-            self.managedObjectContext!,
-            fetchRequest: fetchRequest
-        )
-        results.removeAll {$0 === self}
-        let duplicates = results.filter { $0.categoryName! == self.categoryName }
-        if !duplicates.isEmpty {
+    /// Validates that the name of the category is unique.
+    private func validateCategoryNameIsUnique() throws {
+        
+        let context = self.managedObjectContext!
+        
+        let duplicatesDoesNotExist = CoreDataAccess.categoryNameIsUnique(context)
+        
+        if !duplicatesDoesNotExist {
+            
             throw ValidationNSErrors.exerciseCategoryNameIsInvalid.toNSError()
+            
         }
     }
     

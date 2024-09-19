@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension TemplateSet: HasOrderable {
+extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator {
     
     //MARK: Convenience init
     
-    convenience init(
+    public convenience init(
         _ context: NSManagedObjectContext,
         templateSession: TemplateSession,
         name: String = "",
@@ -25,26 +25,175 @@ extension TemplateSet: HasOrderable {
         restTime: Double
     ) {
         self.init(context: context)
+        
         self.templateSession = templateSession
+        
         self.exercise = exercise
+        
         let positionIndex = templateSession.getNextPositionIndex()
+        
         self.positionIndex = positionIndex
+        
         self.loadType = loadType
+        
         self.setLoad = load
+        
         self.quantityType = quantityType
+        
         self.setQuantity = quantity
+        
         self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
+        
         let exerciseName = exercise.exerciseName!
+        
         let sessionName = templateSession.timePeriodName!
+        
         self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        
         self.restTime = restTime
+        
         templateSession.addToTemplateSets(self)
     }
+    
+    /// Initializer for a TemplateSet using JSON data
+    public convenience init(
+        _ context: NSManagedObjectContext,
+        templateSession: TemplateSession,
+        json: [String : Any]
+    ) {
+        
+        self.init(context: context)
+        
+        self.templateSession = templateSession
+        
+        templateSession.addToTemplateSets(self)
+        
+        self.positionIndex = templateSession.getNextPositionIndex()
+        
+        self.timePeriodName = (json["timePeriodName"] as! String)
+        
+        self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+        
+        self.loadType = (json["loadType"] as! String)
+        
+        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)!
+        
+        // This is a special case for some rep based Sets.
+        if let _: Bool = json["baseInitialLoadOnPr"] as! Bool? {
+            
+            self.initiaLoadBasedOnPrHelper(context, json: json)
+            
+        } else {
+            
+            self.setLoad = (json["setLoad"] as! Double)
+            
+        }
+        
+        self.quantityType = (json["quantityType"] as! String)
+        
+        self.setQuantity = (json["setQuantity"] as! Double)
+        
+        self.restTime = (json["restTime"] as! Double)
+    }
+    
+    ///Helper for the initializer
+    private func initiaLoadBasedOnPrHelper(_ context: NSManagedObjectContext, json: [String : Any]) -> Void {
+        
+        let latestPr = CoreDataAccess.getLatestPersonalRecord(
+            context,
+            exercise: self.exercise!,
+            prType: "onerepmax"
+        )
+        
+        let loadOnLatestPr = latestPr!.weightLoad
+        
+        let multiplier = json["initialLoadMultiplier"] as! Double
+        
+        let computedLoad = loadOnLatestPr * multiplier
+        
+        // Round to smallest plate
+        let profile = CoreDataAccess.getProfile(context)
+        
+        // times two because you always add two weights for balance
+        let smallestPlate = profile!.smallestPlate * 2
+        
+        self.setLoad = (computedLoad / smallestPlate).rounded() * smallestPlate
+    }
+    
+    // MARK: Protocol implementation
+    
+    internal var children: [SetThreshold] {
+        return self.thresholds!.allObjects as! [SetThreshold]
+    }
+    
+    // Protocol implementation
+    internal var parent: TemplateSession {
+        return self.templateSession!
+    }
+    
+    // Protocol implementation
+    internal func getNextPositionIndex() -> Int64 {
+        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
+        let max = thresholds.max {$0.positionIndex < $1.positionIndex}
+        return Int64((max?.positionIndex ?? 0) + 1)
+    }
+    
+    // Protocol implementation
+    public func getPositionIndexes() -> [Int64] {
+        let children = self.thresholds!.allObjects as! [SetThreshold]
+        let positionIndexes = children.map { $0.positionIndex }
+        return positionIndexes.sorted()
+    }
+    
+    // Protocol implementation
+    public func propogateChanges() -> Void {
+        
+        let trainingSets = self.trainingSets?.allObjects as! [TrainingSet]
+        
+        let changes = self.changedValues()
+        
+        // There should only be one active week with self as its templateWeek
+        for trainingSet in trainingSets {
+            
+            if let timePeriodName = changes["timePeriodName"] {
+                trainingSet.timePeriodName = timePeriodName as? String
+            }
+            
+            if let timePeriodDescription = changes["timePeriodDescription"] {
+                trainingSet.timePeriodDescription = timePeriodDescription as? String
+            }
+            
+            if let positionIndex = changes["positionIndex"] {
+                trainingSet.switchPositionIndex(to: positionIndex as! Int64)
+            }
+            
+            if let exercise = changes["exercise"] {
+                trainingSet.exercise = (exercise as! Exercise)
+            }
+            
+            if let _ = changes["setLoad"] {
+                /* Here we use loadTodo instead of setLoad to ensure the training set gets the
+                 Correct computed load when the template set changes. */
+                trainingSet.loadTodo = self.loadTodo!
+            }
+            
+            if let _ = changes["setQuantity"] {
+                /* Here we use quantityTodo instead of setQuantity to ensure the training set gets the
+                 Correct computed quantity when the template set changes. */
+                trainingSet.quantityTodo = self.quantityTodo!
+            }
+            
+            if let restTime = changes["restTime"] {
+                trainingSet.restTime = restTime as! Double
+            }
+            
+        }
+    }
+
     
     // MARK: Extra properties
     
     /// Convience method for getting the name of the Exercise.
-    /// - Returns: The name of the sets exercise as a String.
     public var setExerciseName: String? {
         return self.exercise?.exerciseName
     }
@@ -52,65 +201,31 @@ extension TemplateSet: HasOrderable {
     /// Use this property as the single source of truth for the load, in kg's or lbs, to be done on this set. returns nil if loadType is not set, is invalid, context is not set or Profile doesnt exist.
     public var loadTodo: Double? {
         guard let loadType = self.loadType else { return nil }
-        guard let loadTypeEnum = LoadType(rawValue: loadType) else { return nil }
-        guard let context = self.managedObjectContext else { return nil }
-                
-        switch loadTypeEnum {
-        case .numerical:
-            return self.setLoad
-            
-        case .maxPercentage:
-            let exercise = self.exercise!
-            let prType = exercise.exerciseType == "reps" ? "onerepmax" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(
-                self.managedObjectContext!,
-                exercise: exercise,
-                prType: prType
-            )
-            // Compute the percentage
-            let computedLoad: Double = (latestPr?.weightLoad ?? 0) * (self.setLoad / 100)
-            // Round to smallest plate
-            let profile = PersistenceController.getProfile(context)
-            let smallestPlate = profile!.smallestPlate * 2 // times two because you always add two weights for balance
-            let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
-            return roundedLoad
-            
-        case .bodyWeightPercentage:
-            let latestBw = PersistenceController.getLatestBodyEntry(context)
-            let computedLoad: Double = (latestBw?.bodyWeight ?? 0) * (self.setLoad / 100)
-            guard let profile = PersistenceController.getProfile(context) else { return nil }
-            let smallestPlate = profile.smallestPlate * 2 // times two because you always add two weights for balance
-            let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
-            return roundedLoad
-        }
+        guard let _ = LoadType(rawValue: loadType) else { return nil }
+        guard let _ = self.managedObjectContext else { return nil }
+        
+        let calculator = LoadTodoCalculator(templateSet: self)
+        
+        return calculator.getLoadTodo()
     }
     
     /// Use this property as the single source of truth for the quantity, in reps or seconds, to be done on this set. Returns nil if quantityp is not set, is invalid or context is not set.
     public var quantityTodo: Double? {
         guard let quantityType = self.quantityType else { return nil }
-        guard let quantityTypeEnum = QuantityType(rawValue: quantityType) else { return nil }
-        guard let context = self.managedObjectContext else { return nil }
+        guard let _ = QuantityType(rawValue: quantityType) else { return nil }
+        guard let _ = self.managedObjectContext else { return nil }
         
-        switch quantityTypeEnum {
-        case .numerical:
-            return self.setQuantity
-            
-        case .maxPercentage:
-            let exercise = self.exercise!
-            let prType = exercise.exerciseType == "reps" ? "maxreps" : "timemax"
-            let latestPr = PersistenceController.getLatestPersonalRecord(context, exercise: exercise, prType: prType)
-            var computedQuantity: Double = (latestPr?.prQuantity ?? 0) * (self.setQuantity / 100)
-            if exercise.exerciseType! == "reps" { computedQuantity = floor(computedQuantity) }
-            return computedQuantity
-        }
+        let calculator = QuantityTodoCalculator(templateSet: self)
+        
+        return calculator.getQuantityTodo()
     }
     
     /// Use this property for printing the load to be done on a set. Returns nil if loadType, context, weightUnit is not set or if loadType is invalid.
-    public var setLoadString: String? {
+    public var formattedSetLoad: String? {
         guard let loadType = self.loadType else { return nil }
         guard let loadTypeEnum = LoadType(rawValue: loadType) else { return nil }
         guard let context = self.managedObjectContext else { return nil }
-        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         
         switch loadTypeEnum {
         case .numerical:
@@ -125,7 +240,7 @@ extension TemplateSet: HasOrderable {
     }
     
     /// Use this property for printing the quantity to be done on a set, returns nil if quantityType, exercise, exerciseType, is not set or is invalid.
-    public var setQuantityString: String? {
+    public var formattedSetQuantity: String? {
         guard let quantityType = self.quantityType else { return nil }
         guard let quantityTypeEnum = QuantityType(rawValue: quantityType) else { return nil }
         guard let exercise = self.exercise else { return nil }
@@ -145,40 +260,21 @@ extension TemplateSet: HasOrderable {
         }
     }
     
-    public var restTimeString: String {
+    /// Returns the templateSets rest time double attribute as a formatted string.
+    public var formattedRestTime: String {
         return String(format: "%.2f", self.restTime)
     }
         
-    /// Gets the next position index for the thresholds in this set
-    public func getNextPositionIndex() -> Int64 {
-        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
-        let max = thresholds.max {$0.positionIndex < $1.positionIndex}
-        return Int64((max?.positionIndex ?? 0) + 1)
-    }
-    
     // MARK: Validation
     
-    // Override validation
     override public func validateForUpdate() throws {
         try super.validateForUpdate()
         try validateQuantityTodo()
-        try validatePositionIndexes()
     }
     
-    // Override validation
     override public func validateForInsert() throws {
         try super.validateForInsert()
         try validateQuantityTodo()
-        try validatePositionIndexes()
-    }
-    
-    private func validatePositionIndexes() throws {
-        let thresholds: [SetThreshold] = self.thresholds?.allObjects as! [SetThreshold]
-        let groupedBy = Dictionary(grouping: thresholds, by: {$0.positionIndex})
-        let duplicates = groupedBy.filter { $1.count > 1 }
-        if !duplicates.isEmpty {
-            throw ValidationNSErrors.positionIndexIsInvalid.toNSError()
-        }
     }
     
     private func validateQuantityTodo() throws {

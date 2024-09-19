@@ -121,12 +121,18 @@ struct DecimalTextField: View {
                 }
             
             if bodyWeightButton {
+                
                 Button {
-                    let latestBodyEntry = PersistenceController.getLatestBodyEntry(viewContext)!
+                    
+                    let latestBodyEntry = CoreDataAccess.getLatestBodyEntry(viewContext)!
+                    
                     numberText = String(format: "%.2f", latestBodyEntry.bodyWeight)
+                    
                 } label: {
+                    
                     Text("BW")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
             }
@@ -136,7 +142,7 @@ struct DecimalTextField: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     @State var inputValue: String = ""
     @State var valueIsInvalid: Bool = false
     @State var valueIsInvalidMsg: String = ""

@@ -212,37 +212,37 @@ struct CreateNewProfile3View: View {
         var valid: Int = 0
         let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 1000)
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.chestCirc,
             errorMessage: $viewModel.chestCircIsInvalidMsg,
             fieldInvalid: $viewModel.chestCircIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.waistCirc,
             errorMessage: $viewModel.waistCircIsInvalidMsg,
             fieldInvalid: $viewModel.waistCircIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.thighCirc,
             errorMessage: $viewModel.thighCircIsInvalidMsg,
             fieldInvalid: $viewModel.thighCircIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.calfCirc,
             errorMessage: $viewModel.calfCircIsInvalidMsg,
             fieldInvalid: $viewModel.calfCircIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.upperArmCirc,
             errorMessage: $viewModel.upperArmCircIsInvalidMsg,
             fieldInvalid: $viewModel.upperArmCircIsInvalid
         )
         
-        valid += doubleFieldValidator.valideField(
+        valid += doubleFieldValidator.validateField(
             inputVar: viewModel.lowerArmCirc,
             errorMessage: $viewModel.lowerArmCircIsInvalidMsg,
             fieldInvalid: $viewModel.lowerArmCircIsInvalid
@@ -254,7 +254,7 @@ struct CreateNewProfile3View: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     @State var navPath = [Int]()
     

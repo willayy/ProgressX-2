@@ -26,12 +26,15 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
+        
         HomeViewNavigationController(
             navPath: $viewModel.navPath,
             profile: $viewModel.selectedProfile,
             selectedBodyEntry: $viewModel.selectedBodyEntry,
             content: {
+                
             ScrollView {
+                
                 VStackWithSideBarButton {
                     
                     let profile: Profile = profiles.first!
@@ -45,11 +48,12 @@ struct HomeView: View {
                     
                     // MARK: General information
                     GroupBox {
+                        
                         VStack(alignment: .leading) {
                             
                             (Text("Last session done: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.lastCompletedSession?.completionDateString ?? "No sessions completed.")"))
+                             + Text("\(profile.lastSessionDone?.formattedCompletionDate ?? "No sessions completed.")"))
                             .padding(.vertical, 5)
                             
                             (Text("Last routine trained: ")
@@ -63,18 +67,23 @@ struct HomeView: View {
                             .padding(.vertical, 5)
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 5)
                     
                     // MARK: Current weight and weigh in
                     GroupBox {
+                        
                         VStack(alignment: .center) {
                             
-                            (Text("Current weight: ")
+                            let weightUnit = viewModel.weightUnit(viewContext)
+                            
+                            (
+                                Text("Current weight: ")
                                 .fontWeight(.bold)
-                             + Text("\(String(format: "%.2f", profile.lastWeighIn?.bodyWeight ?? 0)) \(viewModel.weightUnit(viewContext))"))
+                                + Text("\(String(format: "%.2f", profile.lastWeighIn?.bodyWeight ?? 0)) \(weightUnit)")
+                            )
                             .padding(.vertical, 10)
                             
                             BodyEntryChart(bodyEntryData: bodyEntries.map({$0}))
@@ -82,8 +91,11 @@ struct HomeView: View {
                                 .padding(.bottom, 5)
                             
                             Button {
+                                
                                 viewModel.navPath.append(1)
+                                
                             } label: {
+                                
                                 Text("Weigh in")
                                     .frame(maxWidth: .infinity)
                                     .padding(.bottom, 5)
@@ -91,6 +103,7 @@ struct HomeView: View {
                                 
                                 Image(systemName: "plus")
                                     .foregroundColor(Color("buttonTextColor"))
+                                
                             }
                             .buttonStyle(BorderedProminentButtonStyle())
                             
@@ -108,7 +121,7 @@ struct HomeView: View {
                             .buttonStyle(BorderedProminentButtonStyle())
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
@@ -119,13 +132,13 @@ struct HomeView: View {
                             
                             (Text("Sessions done this week: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.sessionsCompletedThisWeek.count)"))
+                             + Text("\(profile.sessionsDoneThisWeek.count)"))
                             .padding(.vertical, 10)
                             
-                            WeekBarChart(trainingSessions: profile.sessionsCompletedThisWeek)
+                            WeekBarChart(trainingSessions: profile.sessionsDoneThisWeek)
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
@@ -136,13 +149,13 @@ struct HomeView: View {
                             
                             (Text("Sessions done last 30 days: ")
                                 .fontWeight(.bold)
-                             + Text("\(profile.sessionsCompletedLast30days.count)"))
+                             + Text("\(profile.sessionsDoneLast30Days.count)"))
                             .padding(.vertical, 10)
                             
-                            Last30DaysBarChart(trainingSessions: profile.sessionsCompletedLast30days)
+                            Last30DaysBarChart(trainingSessions: profile.sessionsDoneLast30Days)
                             
                         }
-                        .frame(width: 300)
+                        .frame(maxWidth: .infinity)
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
@@ -154,7 +167,7 @@ struct HomeView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return HomeView()
         .environment(\.managedObjectContext, context)

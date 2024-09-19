@@ -12,6 +12,7 @@ extension Exercise {
     
     // MARK: Convenience initializer
     
+    /// This initializer sets up an Exercise NSManagedObject correctly by assigning all the necessary attributes.
     convenience init(
         _ context: NSManagedObjectContext,
         name: String,
@@ -26,49 +27,53 @@ extension Exercise {
     
     // MARK: Extra Properties
     
-    // Returns the string names of all exercise categories
-    public var categoryString: String? {
-        
-        guard let categories: [ExerciseCategory] = self.categories?.allObjects as? [ExerciseCategory] else {
-            return nil
-        }
-        let categoryStrings: [String] = categories.map { $0.categoryName! }
+    /// Returns a concatenated string with all the categories.
+    public var formattedCategories: String? {
+        let categories: [ExerciseCategory] = self.categories!.allObjects as! [ExerciseCategory]
+        let categoryNames: [String] = categories.map { $0.categoryName! }
         var categoryString: String = ""
-        for category in categoryStrings {
-            categoryString += category
-            if !(categoryStrings.last == category) {
+        
+        for name in categoryNames {
+            categoryString += name
+            // If the name is the last one in the list of category names dont put a comma to separate
+            if !(name == categoryNames.last) {
                 categoryString += ", "
             }
         }
+        
         return categoryString
     }
     
+    /// Gets the latest PR achieved on this exercise
     public var latestPr: PersonalRecord? {
         let personalRecords = (self.personalRecords!.allObjects as! [PersonalRecord])
-            .sorted(by: {$0.achievedOnDate! > $1.achievedOnDate!})
-        return personalRecords.first
+        let latestPr = personalRecords.min(by: {$0.achievedOnDate! < $1.achievedOnDate!})
+        return latestPr
     }
+    
+    // MARK: Protocol implementation
+    
+    // No protocol implemenation in this class extension
     
     // MARK: Validation
     
     public override func validateForInsert() throws {
         try super.validateForInsert()
-        try validateExerciseName()
+        try validateExerciseNameIsUnique()
     }
     
     public override func validateForUpdate() throws {
         try super.validateForInsert()
-        try validateExerciseName()
+        try validateExerciseNameIsUnique()
     }
     
-    // Checks that no Exercises has the same name
-    private func validateExerciseName() throws {
-        let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-        var results = PersistenceController.fetch(self.managedObjectContext!, fetchRequest: fetchRequest)
-        // Removing the self instance, this might be unnecessary
-        results.removeAll { $0 === self }
-        let duplicates = results.filter { $0.exerciseName! == self.exerciseName }
-        if !duplicates.isEmpty { throw ValidationNSErrors.exerciseNameIsInvalid.toNSError() }
+    /// Checks that the name of the exercise is unique
+    private func validateExerciseNameIsUnique() throws {
+        let context = self.managedObjectContext!
+        let duplicatesDoesNotExist = CoreDataAccess.exerciseNameIsUnique(context)
+        if !duplicatesDoesNotExist {
+            throw ValidationNSErrors.exerciseNameIsInvalid.toNSError()
+        }
     }
     
 }

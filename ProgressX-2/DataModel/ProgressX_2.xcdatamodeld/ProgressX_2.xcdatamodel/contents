@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23E224" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Achievement" representedClassName="Achievement" isAbstract="YES" syncable="YES" codeGenerationType="class">
         <attribute name="achievedOnDate" attributeType="Date" minDateTimeInterval="-31626060" usesScalarValueType="NO"/>
     </entity>
@@ -28,7 +28,7 @@
         <relationship name="templateSets" toMany="YES" deletionRule="Cascade" destinationEntity="TemplateSet" inverseName="exercise" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="ExerciseCategory" representedClassName="ExerciseCategory" syncable="YES" codeGenerationType="class">
-        <attribute name="categoryName" optional="YES" attributeType="String" regularExpressionString="^(Abs|Biceps|Glutes|Calves|Chins|Hamstrings|Lats|Lower back|Lower arm back|Lower arm front|Obliques|Pectorials|Shoulders|Thighs|Traps|Triceps)$"/>
+        <attribute name="categoryName" optional="YES" attributeType="String"/>
         <relationship name="exercise" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="categories" inverseEntity="Exercise"/>
     </entity>
     <entity name="OrderableTimePeriod" representedClassName="OrderableTimePeriod" isAbstract="YES" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">
@@ -59,8 +59,9 @@
         <attribute name="flatLoadAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="flatQuantityAdd" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
         <attribute name="generatePr" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="lowerBound" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="prType" optional="YES" attributeType="String" regularExpressionString="^(timemax|maxreps|onerepmax)$"/>
-        <attribute name="triggerQuantity" attributeType="Double" minValueString="0" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="upperBound" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="templateSet" maxCount="1" deletionRule="Nullify" destinationEntity="TemplateSet" inverseName="thresholds" inverseEntity="TemplateSet"/>
     </entity>
     <entity name="TemplateCycle" representedClassName="TemplateCycle" parentEntity="TimePeriod" syncable="YES" codeGenerationType="class">

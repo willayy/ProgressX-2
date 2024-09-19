@@ -41,15 +41,21 @@ struct Last30DaysBarChart: View {
     }
     
     var body: some View {
+        
         GroupBox {
+            
             ScrollView(.horizontal) {
+                
                 Chart {
+                    
                     ForEach(last30DaysData) { data in
+                        
                         BarMark(
                             x: .value("Day", data.day),
                             y: .value("Value", data.sessions)
                         )
                         .foregroundStyle(.blue)
+                        
                     }
                 }
                 .padding(.horizontal, 10)
@@ -61,11 +67,8 @@ struct Last30DaysBarChart: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
-    let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
-    let results = PersistenceController.fetch(context, fetchRequest: fetchRequest)
-    let profile = results.first!
-    let sessions = profile.sessionsCompletedLast30days
+    let context = PersistenceController.previewViewContext
+    let sessions = CoreDataAccess.getAllSessionsDoneLast30days(context)
     
     return Last30DaysBarChart(trainingSessions: sessions)
         .padding()

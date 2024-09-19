@@ -27,42 +27,87 @@ struct CreateNewThresholdView: View {
                 .padding(.horizontal, 20)
                 .onAppear(perform: {
                     if exerciseType == "reps" {
+                        
                         viewModel.prSelection = "onerepmax"
+                        
                     } else if exerciseType == "time" {
+                        
                         viewModel.prSelection = "timemax"
+                        
                     }
                 })
             
             Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 .padding(.bottom, 20)
             
-            BoldSubHeadline(text: "Trigger quantity")
+            BoldSubHeadline(text: "Trigger range")
             
             HiddenLightSubHeadline(
-                title: "What is trigger quantity?",
-                text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR.",
+                title: "What is trigger range?",
+                text: "Thresholds have a bound range of quantity that you need to be within to trigger it. For example if you have a set with 10 reps and a lower / upper bound of 5 and 10 you will trigger the threshold if you complete 5 to 10 reps.",
                 alignment: .leading
             )
             .padding(.horizontal, 20)
             
             if exerciseType == "reps" {
                 
-                IntegerTextField(
-                    placeHolder: "Triggered at (reps)",
-                    numberText: $viewModel.triggerQuantity,
-                    markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                    errorMessage: $viewModel.triggerQuantityIsInvalidMSg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    IntegerTextField(
+                        placeHolder: "lower bound (reps)",
+                        numberText: $viewModel.lowerBound,
+                        markAsWrong: $viewModel.lowerBoundIsInvalid,
+                        errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                    )
+                    
+                }
+                .padding(.horizontal, 60)
+                
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    IntegerTextField(
+                        placeHolder: "upper bound (reps)",
+                        numberText: $viewModel.upperBound,
+                        markAsWrong: $viewModel.upperBoundIsInvalid,
+                        errorMessage: $viewModel.upperBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             } else if exerciseType == "time" {
                 
-                DecimalTextField(
-                    placeHolder: "Triggered at (seconds)",
-                    numberText: $viewModel.triggerQuantity,
-                    markAsWrong: $viewModel.triggerQuantityIsInvalid,
-                    errorMessage: $viewModel.triggerQuantityIsInvalidMSg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    DecimalTextField(
+                        placeHolder: "lower bound (seconds)",
+                        numberText: $viewModel.lowerBound,
+                        markAsWrong: $viewModel.lowerBoundIsInvalid,
+                        errorMessage: $viewModel.lowerBoundIsInvalidMSg
+                    )
+                    
+                }
+                .padding(.horizontal, 60)
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    DecimalTextField(
+                        placeHolder: "upper bound (seconds)",
+                        numberText: $viewModel.upperBound,
+                        markAsWrong: $viewModel.upperBoundIsInvalid,
+                        errorMessage: $viewModel.upperBoundIsInvalidMSg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             }
@@ -105,7 +150,7 @@ struct CreateNewThresholdView: View {
                 
             }
             
-            BoldSubHeadline(text: "Change set load")
+            BoldSubHeadline(text: "Change set load on trigger?")
                 .padding(.top, 20)
             
             if loadType == "numerical" {
@@ -135,7 +180,7 @@ struct CreateNewThresholdView: View {
                 
             }
             
-            BoldSubHeadline(text: "Change set quantity")
+            BoldSubHeadline(text: "Change set quantity on trigger?")
                 .padding(.top, 20)
             
             if quantityType == "numerical" {
@@ -214,29 +259,41 @@ struct CreateNewThresholdView: View {
         let triggerQuantityFieldValidator: InputFieldValidator
         
         if exerciseType == "reps" {
+            
             flatQuantityAddFieldValidator = IntFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = IntFieldValidator(maxInputNumber: 100000)
+            
         } else {
+            
             flatQuantityAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = DoubleFieldValidator(maxInputNumber: 100000)
+            
         }
         
-        valid += flatLoadAddFieldValidator.valideField(
+        valid += flatLoadAddFieldValidator.validateField(
             inputVar: viewModel.flatLoadAdd,
             errorMessage: $viewModel.flatLoadAddIsInvalidMsg,
             fieldInvalid: $viewModel.flatLoadAddIsInvalid
         )
         
-        valid += flatQuantityAddFieldValidator.valideField(
+        valid += flatQuantityAddFieldValidator.validateField(
             inputVar: viewModel.flatQuantityAdd,
             errorMessage: $viewModel.flatQuantityAddIsInvalidMsg,
             fieldInvalid: $viewModel.flatQuantityAddIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
-            inputVar: viewModel.triggerQuantity,
-            errorMessage: $viewModel.triggerQuantityIsInvalidMSg,
-            fieldInvalid: $viewModel.triggerQuantityIsInvalid
+        valid += triggerQuantityFieldValidator.validateField(
+            inputVar: viewModel.lowerBound,
+            errorMessage: $viewModel.lowerBoundIsInvalidMSg,
+            fieldInvalid: $viewModel.lowerBoundIsInvalid
+        )
+        
+        valid += triggerQuantityFieldValidator.validateField(
+            inputVar: viewModel.upperBound,
+            errorMessage: $viewModel.upperBoundIsInvalidMSg,
+            fieldInvalid: $viewModel.upperBoundIsInvalid
         )
         
         return valid == 0
@@ -246,9 +303,9 @@ struct CreateNewThresholdView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchReqeust: NSFetchRequest = TemplateSet.fetchRequest()
-    let templateSets = PersistenceController.fetch(context, fetchRequest: fetchReqeust)
+    let templateSets = CoreDataAccess.fetch(context, fetchRequest: fetchReqeust)
     
     @State var selectedTemplateSet: TemplateSet? = templateSets.first
     

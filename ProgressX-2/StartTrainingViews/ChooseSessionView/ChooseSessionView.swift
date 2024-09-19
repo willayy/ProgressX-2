@@ -57,16 +57,16 @@ struct ChooseSessionView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     @State var navPath: [Int] = [Int]()
     
     let trainingWeekFetchRequest: NSFetchRequest = TrainingWeek.fetchRequest()
-    let trainingWeeks = PersistenceController.fetch(context, fetchRequest: trainingWeekFetchRequest)
+    let trainingWeeks = CoreDataAccess.fetch(context, fetchRequest: trainingWeekFetchRequest)
     @State var selectedTrainingWeek: TrainingWeek? = trainingWeeks.first
     
     let trainingSessionFetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-    let trainingSessions = PersistenceController.fetch(context, fetchRequest: trainingSessionFetchRequest)
+    let trainingSessions = CoreDataAccess.fetch(context, fetchRequest: trainingSessionFetchRequest)
     @State var selectedTrainingSession: TrainingSession? = trainingSessions.first
     
     @State var currentTrainingSet: TrainingSet? = nil

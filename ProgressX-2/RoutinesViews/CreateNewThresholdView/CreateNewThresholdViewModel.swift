@@ -10,9 +10,13 @@ import CoreData
 
 class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     
-    @Published public var triggerQuantity: String = ""
-    @Published public var triggerQuantityIsInvalid: Bool = false
-    @Published public var triggerQuantityIsInvalidMSg: String = ""
+    @Published public var upperBound: String = ""
+    @Published public var upperBoundIsInvalid: Bool = false
+    @Published public var upperBoundIsInvalidMSg: String = ""
+    
+    @Published public var lowerBound: String = ""
+    @Published public var lowerBoundIsInvalid: Bool = false
+    @Published public var lowerBoundIsInvalidMSg: String = ""
     
     @Published public var flatLoadAdd: String = ""
     @Published public var flatLoadAddIsInvalid: Bool = false
@@ -47,21 +51,30 @@ class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         
         let inputFlatLoadAdd: NSNumber? = {
+            
             if flatLoadAdd.isEmpty { return nil }
+            
             else if Double(flatLoadAdd) == 0 { return nil }
+            
             else { return NSNumber(value: Double(flatLoadAdd)!) }
+            
         }()
         
         let inputFlatQuantityAdd: NSNumber? = {
+            
             if flatQuantityAdd.isEmpty { return nil }
+            
             else if Double(flatQuantityAdd) == 0 { return nil }
+            
             else { return NSNumber(value: Double(flatQuantityAdd)!) }
+            
         }()
         
         let _ = SetThreshold(
             viewContext,
             templateSet: selectedTemplateSet!,
-            triggeredAt: Double(triggerQuantity)!,
+            upperBound: Double(upperBound)!,
+            lowerBound: Double(lowerBound)!,
             generatesPr: addPrSelection,
             prType: addPrSelection ? prSelection : nil,
             flatLoadAdd: inputFlatLoadAdd,

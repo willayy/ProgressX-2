@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-extension PersistenceController {
+class CoreDataAccess {
     
     /// Executing a NSFetchRequests of type T
     /// - Parameters:

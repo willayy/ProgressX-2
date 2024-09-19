@@ -14,15 +14,15 @@ class ViewModel: ObservableObject {
     // @Environment(\.managedObjectContext) private var viewContext
     
     public func weightUnit(_ context: NSManagedObjectContext) -> String {
-        return PersistenceController.getWeightUnit(context)!
+        return CoreDataAccess.getWeightUnit(context)!
     }
     
     public func lengthUnit(_ context: NSManagedObjectContext) -> String {
-        return PersistenceController.getLengthUnit(context)!
+        return CoreDataAccess.getLengthUnit(context)!
     }
     
     public func save(_ context: NSManagedObjectContext) -> Void {
-        PersistenceController.save(context)
+        CoreDataAccess.save(context)
     }
     
 }

@@ -1,0 +1,10 @@
+[
+    {
+        "profileUserName" : "TestProfile",
+        "gender" : "male",
+        "height" : 187,
+        "isMetric" : 1,
+        "smallestPlate" : 1.25,
+        "birthDay" : 946684801
+    }
+]

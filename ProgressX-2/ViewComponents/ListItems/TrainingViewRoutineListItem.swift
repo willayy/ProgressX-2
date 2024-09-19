@@ -22,43 +22,62 @@ struct TrainingViewRoutineListItem: View {
             
             VStack(alignment: .leading) {
                 
-                Text(routine.timePeriodName ?? "")
+                let routineName = routine.timePeriodName ?? "Not available"
+                let routineCreationDate = routine.formattedCreatedOnDate ?? "Not available"
+                let completedCycles = String(routine.completedCycles?.count ?? 0)
+                let currentCycle = routine.nextTrainingCycle
+                let totalNumberOfWeeks = String(currentCycle?.children.count ?? 0)
+                let currentWeek = currentCycle?.nextTrainingWeek
+                let currentWeekName = currentWeek?.timePeriodName ?? "Not available"
+                let currentSession = currentWeek?.nextTrainingSession
+                let currentSessionName = currentSession?.timePeriodName ?? "Not available"
+                let routineProgress = currentCycle?.progress ?? 0
                 
-                (Text("Created: ")
+                Text(routineName)
+                
+                (
+                    Text("Created: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.creationDateString ?? "")"))
+                    + Text(routineCreationDate)
+                )
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Completed cycles: ")
+                (
+                    Text("Completed cycles: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.completedCycles!.count)"))
+                    + Text(completedCycles)
+                )
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Total weeks: ")
+                (
+                    Text("Total weeks: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.weeksInRoutine.count)"))
+                    + Text(totalNumberOfWeeks)
+                )
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Current week: ")
+                (
+                    Text("Current week: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.getNextWeek()?.timePeriodName! ?? "")"))
+                    + Text(currentWeekName)
+                )
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
                 
-                (Text("Next session: ")
+                (
+                    Text("Next session: ")
                     .fontWeight(.bold)
-                 + Text("\(routine.getNextSession()?.timePeriodName! ?? "")"))
+                    + Text(currentSessionName)
+                )
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
-                
-                let progress = routine.getNextTrainingCycle()?.getProgress() ?? 0
                 
                 ProgressBar(
                     height: 5,
-                    progress: progress
+                    progress: routineProgress
                 )
                 
             }
@@ -76,11 +95,12 @@ struct TrainingViewRoutineListItem: View {
                 .buttonStyle(BorderlessButtonStyle())
             
             Button(action: {
+                
                 selectedRoutine = routine
-                let nextCycle = routine.getNextTrainingCycle()!
-                let nextWeek = nextCycle.getNextTrainingWeek()
-                let nextSession = nextWeek?.getNextTrainingSession()
-                let currentSet = nextSession?.getNextTrainingSet()
+                let nextCycle = routine.nextTrainingCycle
+                let nextWeek = nextCycle?.nextTrainingWeek
+                let nextSession = nextWeek?.nextTrainingSession
+                let currentSet = nextSession?.nextTrainingSet
                 
                 // There exists a next week/session/set
                 // This should probably have some feedback for the user as well.
@@ -89,6 +109,7 @@ struct TrainingViewRoutineListItem: View {
                     currentTrainingSet = currentSet
                     navPath.append(2)
                 }
+                
             }) { Image(systemName: "figure.run" ) }
                 .frame(width: 20)
                 .padding(.horizontal, 10)

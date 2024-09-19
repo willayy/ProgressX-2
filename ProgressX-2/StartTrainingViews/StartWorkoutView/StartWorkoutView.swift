@@ -48,6 +48,7 @@ struct StartWorkoutView: View {
                     
                     BoldTitle(text: "Routines")
                     
+                    
                     HiddenLightSubHeadline(
                         title: "How do i start training?",
                         text: "By pressing the icon of a running man you will automatically start the next session in the order of the routine. If you want more control you can click the calender icon and select precisely which session you want to do.",
@@ -90,7 +91,7 @@ struct StartWorkoutView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     return StartWorkoutView()
         .environmentObject(ShowMenuController())

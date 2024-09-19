@@ -118,43 +118,43 @@ struct WeighInView: View {
         let bodyWeightValidator = DoubleFieldValidator(maxInputNumber: 1000)
         let bodyMeasurementValidator = DoubleFieldValidator(emptyAllowed: true, maxInputNumber: 1000)
         
-        valid += bodyWeightValidator.valideField(
+        valid += bodyWeightValidator.validateField(
             inputVar: viewModel.bodyWeight,
             errorMessage: $viewModel.bodyWeightIsInvalidMsg,
             fieldInvalid: $viewModel.bodyWeightIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.chestCirc,
             errorMessage: $viewModel.chestCircIsInvalidMsg,
             fieldInvalid: $viewModel.chestCircIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.upperArmCirc,
             errorMessage: $viewModel.upperArmCircIsInvalidMsg,
             fieldInvalid: $viewModel.upperArmCircIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.lowerArmCirc,
             errorMessage: $viewModel.lowerArmIsInvalidMsg,
             fieldInvalid: $viewModel.lowerArmIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.waistCirc,
             errorMessage: $viewModel.waistCircIsInvalidMsg,
             fieldInvalid: $viewModel.waistCircIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.thighCirc,
             errorMessage: $viewModel.thighCircIsInvalidMsg,
             fieldInvalid: $viewModel.thighCircIsInvalid
         )
         
-        valid += bodyMeasurementValidator.valideField(
+        valid += bodyMeasurementValidator.validateField(
             inputVar: viewModel.calfCirc,
             errorMessage: $viewModel.calfCircIsInvalidMsg,
             fieldInvalid: $viewModel.calfCircIsInvalid
@@ -168,7 +168,7 @@ struct WeighInView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     @State var navPath: [Int] = [Int]()
     
     return WeighInView(

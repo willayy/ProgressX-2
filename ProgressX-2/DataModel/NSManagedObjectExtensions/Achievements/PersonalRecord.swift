@@ -64,7 +64,7 @@ extension PersonalRecord {
     /// Returns the formatted load of a personal record as a string, returns nil if context or weight unit (Profile) is not set.
     public var loadString: String? {
         guard let context = self.managedObjectContext else { return nil }
-        guard let weightUnit = PersistenceController.getWeightUnit(context) else { return nil }
+        guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         return String(format: "%.2f", self.weightLoad) + " \(weightUnit)"
     }
     

@@ -141,13 +141,13 @@ struct EditExerciseView: View {
         
         let exerciseDescValidator = StringFieldValidator()
         
-        valid += exerciseNameValidator.valideField(
+        valid += exerciseNameValidator.validateField(
             inputVar: viewModel.newName,
             errorMessage: $viewModel.newNameIsInvalidMsg,
             fieldInvalid: $viewModel.newNameIsInvalid
         )
         
-        valid += exerciseDescValidator.valideField(
+        valid += exerciseDescValidator.validateField(
             inputVar: viewModel.newDesc,
             errorMessage: $viewModel.newDescIsInvalidMsg,
             fieldInvalid: $viewModel.newDescIsInvalid
@@ -158,11 +158,11 @@ struct EditExerciseView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
+    let exerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequestRepBasedExercise)
     
     @State var ex: Exercise? = exerciseResults.first
     

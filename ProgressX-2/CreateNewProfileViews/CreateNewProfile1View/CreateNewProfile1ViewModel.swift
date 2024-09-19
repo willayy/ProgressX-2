@@ -76,10 +76,10 @@ class CreateNewProfile1ViewModel: ViewModel {
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         
         // If the profile exists, delete the profile.
-        if PersistenceController.profileExists(viewContext) {
-            let profile = PersistenceController.getProfile(viewContext)
-            PersistenceController.delete(viewContext, object: profile!)
-            PersistenceController.save(viewContext)
+        if CoreDataAccess.profileExists(viewContext) {
+            let profile = CoreDataAccess.getProfile(viewContext)
+            CoreDataAccess.delete(viewContext, object: profile!)
+            CoreDataAccess.save(viewContext)
         }
         
         // Transform input values into values that can be used in the datamodel.
@@ -110,9 +110,12 @@ class CreateNewProfile1ViewModel: ViewModel {
         )
         
         // Create basic exercies if they dont exist
-        if !PersistenceController.basicExercisesExist(viewContext) {
-            PersistenceController.generateBasicExerciseCategories(viewContext)
-            PersistenceController.generateBasicExerciseLibrary(viewContext)
+        if !CoreDataAccess.basicExercisesExist(viewContext) {
+            
+            CoreDataAccess.generateExerciseCategories(viewContext)
+            
+            CoreDataAccess.generateStarterExerciseLibrary(viewContext)
+            
         }
         
         self.save(viewContext)

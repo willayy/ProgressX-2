@@ -163,16 +163,16 @@ struct EditPrView: View {
         var valid: Int = 0
         let loadFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
         let quantityFieldValidator: InputFieldValidator = {
-            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(minInputNumber: 100000))
+            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(maxInputNumber: 100000))
         }()
         
-        valid += loadFieldValidator.valideField(
+        valid += loadFieldValidator.validateField(
             inputVar: viewModel.editedWeightLoad,
             errorMessage: $viewModel.editedWeightLoadInvalidMsg,
             fieldInvalid: $viewModel.editedWeightLoadInvalid
         )
         
-        valid += quantityFieldValidator.valideField(
+        valid += quantityFieldValidator.validateField(
             inputVar: viewModel.editedQuantity,
             errorMessage: $viewModel.editedQuantityInvalidMsg,
             fieldInvalid: $viewModel.editedQuantityInvalid
@@ -183,11 +183,11 @@ struct EditPrView: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
     
-    let exerciseResults: [Exercise] = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let exerciseResults: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var exercise: Exercise? = exerciseResults.first
     

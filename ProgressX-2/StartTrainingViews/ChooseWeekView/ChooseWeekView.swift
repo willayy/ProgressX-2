@@ -18,7 +18,7 @@ struct ChooseWeekView: View {
     
     var body: some View {
         
-        let currentCycle = selectedRoutine!.getNextTrainingCycle()!
+        let currentCycle = selectedRoutine!.nextTrainingCycle!
         
         @FetchRequest(
             entity: TrainingWeek.entity(),
@@ -58,9 +58,9 @@ struct ChooseWeekView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
+    let routines = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let routine = routines.first!
     

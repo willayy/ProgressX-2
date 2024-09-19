@@ -13,14 +13,11 @@ import CoreData
 
 final class DataModelTests: XCTestCase {
    
-    var context: NSManagedObjectContext = PersistenceController.preview.container.viewContext
+    var context: NSManagedObjectContext = PersistenceController.previewViewContext
     
     // MARK: SETUP
     override func setUpWithError() throws {
-        // Set up a full in-memory enviroment for the tests
-        PersistenceController.generateBasicExerciseCategories(context)
-        PersistenceController.generateBasicExerciseLibrary(context)
-        PersistenceController.generateBasicRoutine(context)
+        // In memory profile, routine, and exercises should already be set up by PersistenceController.
     }
 
     // MARK: TEAR DOWN
@@ -29,48 +26,190 @@ final class DataModelTests: XCTestCase {
         context.rollback()
     }
     
-    func testProfile() {
-        #warning("TODO: Implement")
+    private func getPreviewRoutine() -> Routine {
+        
+        let routineFetchRequest: NSFetchRequest = Routine.fetchRequest()
+        
+        routineFetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", "Preview routine")
+        
+        let routineResults = CoreDataAccess.fetch(context, fetchRequest: routineFetchRequest)
+        
+        let routine = routineResults.first!
+        
+        return routine
     }
     
-    func testExercise() {
-        #warning("TODO: Implement")
-    }
-    
-    func testExerciseCategory() {
-        #warning("TODO: Implement")
+    func testCascadeCompletion() {
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let sessions = CoreDataAccess.getAllTrainingSessionsIn(routine: previewRoutine, context)
+        
+        let session = sessions.first!
+        
+        let sets = session.children
+        
+        for set in sets { set.complete() }
+        
+        // Test if completing sets cascades to session
+        XCTAssertTrue(session.isComplete)
+        
+        /* Complete all sessions in the routine, if you where to try to save this you would get an error
+         but since we arent saving and cascading completion works anyway its fine*/
+        for session in sessions { session.complete() }
+        
+        let trainingCycle = previewRoutine.children.first!
+        
+        XCTAssertTrue(trainingCycle.isComplete)
+        
     }
     
     func testOrderableTimePeriod() {
-        #warning("TODO: Implement")
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let templateCycles: TemplateCycle? = previewRoutine.templateCycle
+        
+        let templateWeeks: [TemplateWeek] = templateCycles.flatMap { $0.children }!
+        
+        let templateSessions: [TemplateSession] = templateWeeks.flatMap { $0.children }
+        
+        let templateSets: [TemplateSet] = templateSessions.flatMap { $0.children }
+        
+        // Try to switch around every template time period in the routine to 1, in the end it should be able to save.
+        
+        for templateWeek in templateWeeks {
+            templateWeek.switchPositionIndex(to: 1)
+        }
+        
+        for templateSession in templateSessions {
+            templateSession.switchPositionIndex(to: 1)
+        }
+        
+        for templateSet in templateSets {
+            templateSet.switchPositionIndex(to: 1)
+        }
+        
+        CoreDataAccess.save(context)
+        
     }
     
-    func testCompleteableTimePeriod() {
-        #warning("TODO: Implement")
+    func testPropogateChanges() {
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        let trainingCycles = previewRoutine.children
+        
+        let templateCycle = previewRoutine.templateCycle!
+        
+        // Get template and training weeks.
+        
+        let trainingWeeks = trainingCycles.first!.children
+        
+        let templateWeeks = templateCycle.children
+        
+        var renameCounter = 1
+        
+        // Rename all weeks.
+        
+        for templateWeek in templateWeeks {
+            
+            templateWeek.timePeriodName = "Renamed week \(renameCounter)"
+            
+            templateWeek.propogateChanges()
+            
+            renameCounter += 1
+            
+        }
+        
+        // Check that all weeks has been renamed, this is not very rigourous but it works for now.
+        
+        for trainingWeek in trainingWeeks {
+            
+            XCTAssertTrue(trainingWeek.timePeriodName!.contains("Renamed week"))
+            
+        }
+        
     }
     
-    func testRoutine() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateCycle() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateWeek() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateSession() {
-        #warning("TODO: Implement")
-    }
-    
-    func testTemplateSet() {
-        #warning("TODO: Implement")
+    /// Helper method for testSetThreshold
+    private func templateSetData(templateSets: [TemplateSet]) -> [[String : Any]] {
+        
+        var templateSetsData: [[String : Any]] = []
+        
+        for templateSet in templateSets {
+            
+            let templateSetData: [String : Any] = [
+                "index" : templateSet.positionIndex,
+                "loadTodo" : templateSet.loadTodo!,
+                "quantityTodo" : templateSet.quantityTodo!
+            ]
+            
+            templateSetsData.append(templateSetData)
+            
+        }
+        
+        return templateSetsData
+        
     }
     
     func testSetThreshold() {
-        #warning("TODO: Implement")
+        
+        let previewRoutine = getPreviewRoutine()
+        
+        // Get all training sessions in routine
+        let trainingSessionsInRoutine = CoreDataAccess.getAllTrainingSessionsIn(routine: previewRoutine, context)
+        
+        // Map all template session
+        let templateSessionsInRoutine: [TemplateSession] = trainingSessionsInRoutine.map { $0.templateSession! }
+        
+        let templateSets: [TemplateSet] = templateSessionsInRoutine.flatMap { $0.children }
+        
+        // Save all template set data to an array of dictionaries so we can compare before and after threshold effects.
+        let templateSetDataBefore = templateSetData(templateSets: templateSets)
+        
+        // Get all trainingSets
+        let trainingSets: [TrainingSet] = trainingSessionsInRoutine.flatMap { $0.children }
+        
+        // Complete all training sets
+        for trainingSet in trainingSets {
+            
+            trainingSet.loadDone = trainingSet.loadTodo
+            
+            trainingSet.quantityDone = trainingSet.quantityTodo
+            
+            trainingSet.complete()
+            
+        }
+        
+        let templateSetDataAfter = templateSetData(templateSets: templateSets)
+        
+        var setDifferences = 0
+        
+        // Compare the data before and after completing the sets to see that progression got applied by thresholds.
+        for templateSetData in templateSetDataAfter {
+            
+            let positionIndex = templateSetData["index"] as! Int64
+            
+            let beforeData = templateSetDataBefore.first { ($0["index"] as! Int64) == positionIndex }!
+            
+            let loadBefore = beforeData["loadTodo"] as! Double
+            
+            let loadAfter = templateSetData["loadTodo"] as! Double
+            
+            let quantityBefore = beforeData["quantityTodo"] as! Double
+            
+            let quantityAfter = templateSetData["quantityTodo"] as! Double
+            
+            if quantityBefore != quantityAfter { setDifferences += 1 }
+            
+            if loadBefore != loadAfter { setDifferences += 1 }
+                        
+        }
+        
+        // For the preview routine we know that the difference between the sets after completion should amount to.
+        XCTAssertEqual(setDifferences, 14)
+        
     }
         
 }

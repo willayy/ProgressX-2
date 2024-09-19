@@ -39,7 +39,7 @@ struct TrainingSessionListItem: View {
                 // MARK: Edit button
                 Button(action: {
                     selectedTrainingSession = trainingSession
-                    currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                    currentTrainingSet = selectedTrainingSession!.nextTrainingSet
                     navPath.append(2)
                 }) { Image(systemName: "figure.run") }
                     .frame(width: 20)

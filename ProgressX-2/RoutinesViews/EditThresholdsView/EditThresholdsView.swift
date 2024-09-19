@@ -52,31 +52,76 @@ struct EditThresholdsView: View {
                 .padding(.top, 10)
             }
             
-            BoldSubHeadline(text: "Edit the trigger quantity of the threshold")
+            BoldSubHeadline(text: "Edit the trigger range of the threshold")
                 .padding(.top, 20)
             
             HiddenLightSubHeadline(
-                title: "What is trigger quantity?",
-                text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                title: "What is trigger range?",
+                text: "The trigger range is the range of quantity you need to do on this set for this thresholds to trigger. When the threshold triggers the actions you define below will change the set"
             )
             .padding(.horizontal, 20)
             
             if exerciseType == "reps" {
-                IntegerTextField(
-                    placeHolder: "New quantity (reps)",
-                    numberText: $viewModel.editedTriggerQuantity,
-                    markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                    errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
-                )
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                                        
+                    IntegerTextField(
+                        placeHolder: "lower bound (reps)",
+                        numberText: $viewModel.editedLowerBound,
+                        markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                        errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    IntegerTextField(
+                        placeHolder: "upper bound (reps)",
+                        numberText: $viewModel.editedUpperBound,
+                        markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                        errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                    )
+                    
+                }
+                .padding(.horizontal, 60)
+                
             } else {
-                DecimalTextField(
-                    placeHolder: "New quantity (seconds)",
-                    numberText: $viewModel.editedTriggerQuantity,
-                    markAsWrong: $viewModel.editedTriggerQuantityIsInvalid,
-                    errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg
-                )
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    DecimalTextField(
+                        placeHolder: "lower bound (seconds)",
+                        numberText: $viewModel.editedLowerBound,
+                        markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                        errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
+                    )
+                    
+                    
+                }
                 .padding(.horizontal, 60)
+                
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    DecimalTextField(
+                        placeHolder: "upper bound (seconds)",
+                        numberText: $viewModel.editedUpperBound,
+                        markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                        errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                    )
+                    
+                }
+                .padding(.horizontal, 60)
+                
             }
             
             BoldSubHeadline(text: "Modify PR generation")
@@ -146,8 +191,8 @@ struct EditThresholdsView: View {
             if quantityType == "numerical" {
                 
                 HiddenLightSubHeadline(
-                    title: "What does change set quantity mean?",
-                    text: "Change quantity means that when this threshold is triggered the quantity of the set will be changed with the flat amount you input. This input is optional and it can be negative."
+                    title: "What is trigger quantity?",
+                    text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR. If you have several thresholds only the highest completed one is the one that will be triggered."
                 )
                 .padding(.horizontal, 20)
                 
@@ -215,29 +260,41 @@ struct EditThresholdsView: View {
         let triggerQuantityFieldValidator: InputFieldValidator
         
         if exerciseType == "reps" {
+            
             flatQuantityAddFieldValidator = IntFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = IntFieldValidator(maxInputNumber: 100000)
+            
         } else {
+            
             flatQuantityAddFieldValidator = DoubleFieldValidator(emptyAllowed: true)
+            
             triggerQuantityFieldValidator = DoubleFieldValidator(maxInputNumber: 100000)
+            
         }
         
-        valid += flatLoadAddFieldValidator.valideField(
+        valid += flatLoadAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatLoadAdd,
             errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatLoadAddIsInvalid
         )
         
-        valid += flatQuantityAddFieldValidator.valideField(
+        valid += flatQuantityAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatQuantityAdd,
             errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatQuantityAddIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
-            inputVar: viewModel.editedTriggerQuantity,
-            errorMessage: $viewModel.editedTriggerQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.editedTriggerQuantityIsInvalid
+        valid += triggerQuantityFieldValidator.validateField(
+            inputVar: viewModel.editedLowerBound,
+            errorMessage: $viewModel.editedLowerBoundIsInvalidMsg,
+            fieldInvalid: $viewModel.editedLowerBoundIsInvalid
+        )
+        
+        valid += triggerQuantityFieldValidator.validateField(
+            inputVar: viewModel.editedUpperBound,
+            errorMessage: $viewModel.editedUpperBoundIsInvalidMsg,
+            fieldInvalid: $viewModel.editedUpperBoundIsInvalid
         )
         
         return valid == 0
@@ -247,9 +304,9 @@ struct EditThresholdsView: View {
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
     let fetchRequest: NSFetchRequest<SetThreshold> = SetThreshold.fetchRequest()
-    let thresholds = PersistenceController.fetch(
+    let thresholds = CoreDataAccess.fetch(
         context,
         fetchRequest: fetchRequest
     )

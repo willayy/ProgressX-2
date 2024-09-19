@@ -12,6 +12,7 @@ import CoreData
 struct TrainingSetInfoBox: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var currentTrainingSet: TrainingSet?
 
     var body: some View {
@@ -48,18 +49,25 @@ struct TrainingSetInfoBox: View {
                                 .bold()
                                 .multilineTextAlignment(.leading)
                                 .padding(.leading)
+                            
                             Spacer()
                             
-                            let latestBodyEntry = PersistenceController.getLatestBodyEntry(viewContext)!
+                            let latestBodyEntry = CoreDataAccess.getLatestBodyEntry(viewContext)!
+                            
                             let bodyWeight = latestBodyEntry.bodyWeight
+                            
                             if currentTrainingSet!.loadTodo == bodyWeight {
-                                Text("Bodyweight (\(currentTrainingSet!.loadTodo))")
+                                
+                                Text("Bodyweight (\(currentTrainingSet!.formattedLoadTodo))")
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
+                                
                             } else {
-                                Text(currentTrainingSet!.loadTodoString)
+                                
+                                Text(currentTrainingSet!.formattedLoadTodo)
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
+                                
                             }
                         }
                         
@@ -72,7 +80,7 @@ struct TrainingSetInfoBox: View {
                             
                             Spacer()
                             
-                            Text(currentTrainingSet!.quantityTodoString!)
+                            Text(currentTrainingSet!.formattedQuantityTodo!)
                                 .multilineTextAlignment(.trailing)
                                 .padding(.trailing)
                         }
@@ -125,26 +133,15 @@ struct TrainingSetInfoBox: View {
 }
 
 #Preview {
-    let context = PersistenceController.preview.container.viewContext
-    let fetchRequest: NSFetchRequest = Routine.fetchRequest()
-    let routines = PersistenceController.fetch(context, fetchRequest: fetchRequest)
     
-    let routine = routines.first!
+    let context = PersistenceController.previewViewContext
     
-    @State var navPath: [Int] = [Int]()
-    @State var selectedRoutine: Routine? = routine
-    let allTrainingCycles = routine.trainingCycles!.allObjects as! [TrainingCycle]
-    @State var selectedTrainingCycle: TrainingCycle? = allTrainingCycles.first!
+    let fetchRequest: NSFetchRequest = TrainingSet.fetchRequest()
     
-    let allTrainingWeeks = selectedTrainingCycle?.trainingWeeks!.allObjects as! [TrainingWeek]
-    @State var selectedTrainingWeek: TrainingWeek? = allTrainingWeeks.first!
+    let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
-    let allTrainingSessions = selectedTrainingWeek?.trainingSessions!.allObjects as! [TrainingSession]
-    @State var selectedTrainingSession: TrainingSession? = allTrainingSessions.first(where: {$0.timePeriodName == "Session 1"})
-    
-    @State var allTrainingSets = selectedTrainingSession?.trainingSets!.allObjects as! [TrainingSet]
-    
-    @State var currentTrainingSet = allTrainingSets.first
+    @State var currentTrainingSet = results.first
     
     return TrainingSetInfoBox(currentTrainingSet: $currentTrainingSet)
+        .environment(\.managedObjectContext, context)
 }

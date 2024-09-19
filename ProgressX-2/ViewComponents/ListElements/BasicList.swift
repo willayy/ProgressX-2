@@ -41,7 +41,7 @@ struct BasicList<T: NSManagedObject, Content: View>: View where T: Identifiable 
 
 #Preview {
     
-    let context = PersistenceController.preview.container.viewContext
+    let context = PersistenceController.previewViewContext
 
     @FetchRequest(
         entity: Exercise.entity(),
