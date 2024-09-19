@@ -42,9 +42,13 @@ struct TrainingView: View {
             // MARK: The time progress view
             // Only displays the timer if it is counting
             if timerViewModel.state == .active {
-                withAnimation{
+                
+                withAnimation {
+                    
                     progressView
+                    
                 }
+                
             }
          
             
@@ -98,7 +102,9 @@ struct TrainingView: View {
                 .padding(.top, 10)
                 .disabled(!viewModel.doneButtonEnabled)
                 .onChange(of: (timerViewModel.state == .active), initial: false) {
+                    
                     viewModel.doneButtonEnabled.toggle()
+                    
                 }
                 
             } else if exerciseType == "time" {
@@ -174,18 +180,28 @@ struct TrainingView: View {
             
             // Displays the total elapsed time of the Session
             ToolbarItem(placement: .principal) {
+                
                 Text(viewModel.secondsElapsed.asTimestamp)
             }
             
-            ToolbarItem{
-                Button(action:{
+            ToolbarItem {
+                
+                Button(action: {
+                    
                     withAnimation {
+                        
                         currentTrainingSet!.skip()
-                        currentTrainingSet = selectedTrainingSession!.getNextTrainingSet()
+                        
+                        currentTrainingSet = selectedTrainingSession!.nextTrainingSet
+                        
                         viewModel.save(viewContext)
+                        
                         if currentTrainingSet == nil {
+                            
                             viewModel.stopSessionTimer()
+                            
                             navPath.append(3)
+                            
                         }
                     }
                 }) {
@@ -229,11 +245,12 @@ struct TrainingView: View {
                     
                     // if no more sets go to finish screen.
                     if currentTrainingSet == nil {
+                        
                         viewModel.stopSessionTimer()
+                        
                         timerViewModel.state = .cancelled
                         
                         navPath.append(3)
-                        
                         
                     }
                 }
@@ -244,16 +261,21 @@ struct TrainingView: View {
     var progressView: some View {
         
             ZStack {
+                
                     withAnimation {
+                        
                         CircleProgressView(progress: $timerViewModel.progress)
+                        
                     }
 
                 // display information about the current set
                 VStack {
+                    
                     Text(timerViewModel.secondsToCompletion.asTimestamp)
                         .font(.largeTitle)
                         .foregroundColor(.black)
-                }  
+                    
+                }
             }
         
         .frame(width: 360, height: 255)
