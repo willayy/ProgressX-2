@@ -40,36 +40,53 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     typealias T = Profile
     
     // Segments for segment picker
-    let unitSegments: [String : Bool] = [
-        "Metric" : true,
-        "Imperial" : false
-    ]
+    let unitSegments: KeyValueList<String, Bool> = KeyValueList([
+        ("Metric",true),
+        ("Imperial",false)
+    ])
     
-    let genderSegments: [String : String] = [
-        "Male" : "male",
-        "Female" : "female"
-    ]
+    let genderSegments: KeyValueList<String, String> = KeyValueList([
+        ("Male","male"),
+        ("Female","female")
+    ])
     
     var smallestPlateSegments: [String] {
+        
         if selectedUnitSegment {
+            
             return ["1.25 kg's", "2.5 kg's", "5 kg's", "10 kg's"]
+            
         } else {
+            
             return ["2.5 lbs", "5 lbs", "10 lbs"]
+            
         }
     }
     
     public func setViewStartValues(entity: Profile) -> Void {
+        
         self.standardRestTime = String(format: "%.2f", entity.standardRestTime)
+        
         self.selectedUnitSegment = selectedUnitSegment
+        
         self.height = String(format: "%.2f", entity.userHeight)
+        
         self.birthDay = entity.birthDay!
+        
         self.userName = entity.profileUserName!
+        
         self.selectedGenderSegment = selectedGenderSegment
+        
         self.selectedSmallestPlate = {
+            
             if entity.isMetric {
+                
                 return "\(entity.smallestPlate) kg's"
+                
             } else {
+                
                 return "\(entity.smallestPlate) lbs"
+                
             }
         }()
     }
@@ -77,23 +94,33 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     public func saveEdits(entity: Profile, viewContext: NSManagedObjectContext) -> Void {
                 
         if userName != entity.profileUserName {
+            
             entity.profileUserName = userName
+            
         }
         
         if entity.isMetric != selectedUnitSegment {
+            
             entity.isMetric = selectedUnitSegment
+            
         }
         
         if entity.gender != selectedGenderSegment {
+            
             entity.gender = selectedGenderSegment
+            
         }
         
         if entity.userHeight != Double(height)! {
+            
             entity.userHeight = Double(height)!
+            
         }
         
         if entity.standardRestTime != Double(standardRestTime)! {
+            
             entity.standardRestTime = Double(standardRestTime)!
+            
         }
         
         let smallestPlate = {
@@ -104,14 +131,21 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
         }()
         
         if entity.smallestPlate != smallestPlate {
+            
             entity.smallestPlate = smallestPlate
+            
         }
         
         if entity.hasChanges {
+            
             withAnimation { showProfileChangedAlert = true }
+            
             self.save(viewContext)
+            
         } else {
+            
             withAnimation { showNoChangeAlert = true }
+            
         }
         
     }

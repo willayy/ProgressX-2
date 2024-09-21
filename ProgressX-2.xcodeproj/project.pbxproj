@@ -161,6 +161,7 @@
 		83D6850B2C33309800FA78C6 /* ThresholdListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */; };
 		83D6850D2C3436B200FA78C6 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		83D6850F2C35957600FA78C6 /* StringSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D6850E2C35957600FA78C6 /* StringSelectionList.swift */; };
+		83E4C13B2C9ED93700E8F553 /* KeyValueList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E4C13A2C9ED93700E8F553 /* KeyValueList.swift */; };
 		83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */; };
 		83EE6EE62C1F351500FF17C1 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */; };
 		83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */; };
@@ -363,6 +364,7 @@
 		83D685072C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedTemplateSetView.swift; sourceTree = "<group>"; };
 		83D6850A2C33309800FA78C6 /* ThresholdListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdListItem.swift; sourceTree = "<group>"; };
 		83D6850E2C35957600FA78C6 /* StringSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringSelectionList.swift; sourceTree = "<group>"; };
+		83E4C13A2C9ED93700E8F553 /* KeyValueList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueList.swift; sourceTree = "<group>"; };
 		83EE6EE32C1F351500FF17C1 /* MockLaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockLaunchScreen.swift; sourceTree = "<group>"; };
 		83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		83F110B82C1CC9600068953B /* CreateNewProfile4View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile4View.swift; sourceTree = "<group>"; };
@@ -630,6 +632,7 @@
 				8310D9182C036806004A5A3D /* ChartElements */,
 				832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */,
 				831F2C1E2C231E40007A7A8A /* SearchBar.swift */,
+				83E4C13A2C9ED93700E8F553 /* KeyValueList.swift */,
 				83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */,
 				8354CA272C63AE2000E3EA98 /* ProgressBar.swift */,
 				8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */,
@@ -1505,6 +1508,7 @@
 				8FAFE5642C60D6E500143223 /* TrainingSetFinishedViewModel.swift in Sources */,
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,
+				83E4C13B2C9ED93700E8F553 /* KeyValueList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

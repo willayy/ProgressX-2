@@ -17,10 +17,10 @@ struct StatisticsView: View {
     @Binding var newPrType: String?
     @State private var displayedPrType = "onerepmax"
     
-    private let prSegments: [String : String] = [
-        "AMRAP" : "maxreps",
-        "1RM" : "onerepmax"
-    ]
+    private let prSegments: KeyValueList<String, String> = KeyValueList([
+        ("AMRAP", "maxreps"),
+        ("1RM", "onerepmax")
+    ])
     
     var body: some View {
         ScrollView {

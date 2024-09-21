@@ -42,41 +42,52 @@ class CreateNewExerciseViewModel: ViewModel, AddingViewModel {
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     
     // Segment picker options
-    public let exerciseTypeOptions: [String : String] = [
-        "Rep based" : "reps",
-        "Time based" : "time"
-    ]
+    public let exerciseTypeOptions: KeyValueList<String, String> = KeyValueList([
+        ("Rep based", "reps"),
+        ("Time based", "time")
+    ])
     
-    public let addPrOptions: [String : Bool] = [
-        "Yes" : true,
-        "No" : false
-    ]
+    public let addPrOptions: KeyValueList<String, Bool> = KeyValueList([
+        ("Yes",true),
+        ("No",false)
+    ])
    
-    public let timeBasedPrOptions: [String : String] = [
-        "Time-Max" : "timemax"
-    ]
+    public let timeBasedPrOptions: KeyValueList<String, String> = KeyValueList([
+        ("Time-Max","timemax")
+    ])
     
-    public let repBasedPrOptions: [String : String] = [
-        "1RM" : "onerepmax",
-        "AMRAP" : "maxreps"
-    ]
+    public let repBasedPrOptions: KeyValueList<String, String> = KeyValueList([
+        ("1RM","onerepmax"),
+        ("AMRAP","maxreps")
+    ])
     
     public func prTypeChanged() -> Void {
+        
         if selectedTypeOfPr == "onerepmax" {
+            
             // else if "1RM" set to reps 1
             enteredPrQuantity = "1"
+            
         } else {
+            
             enteredPrQuantity = ""
+            
         }
+        
     }
     
     public func exerciseTypeChanged() -> Void {
+        
         if selectedTypeOfExercise == "time" {
+            
             // Set the PR selector to the first time based pr option key
-            selectedTypeOfPr = timeBasedPrOptions.values.first!
+            selectedTypeOfPr = timeBasedPrOptions.keys.first!
+            
         } else if selectedTypeOfExercise == "reps" {
+            
             // Set the PR selector to the first rep based pr option key
-            selectedTypeOfPr = repBasedPrOptions.values.first!
+            selectedTypeOfPr = repBasedPrOptions.keys.first!
+            
         }
     }
     
