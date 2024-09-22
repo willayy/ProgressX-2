@@ -229,7 +229,7 @@ extension CoreDataAccess {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         // Pick the session with the smallest completion date.
-        let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! < $1.completedOnDate! })
+        let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! > $1.completedOnDate! })
         return lastCompleteSession
     }
     
