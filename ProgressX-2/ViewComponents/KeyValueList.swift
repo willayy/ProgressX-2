@@ -8,7 +8,7 @@
 import Foundation
 
 /// A list of keyvalue pairs represented by tuples, this is like an ordered dictinary without the speed of a dictionary.
-class KeyValueList<K: Equatable,V>: Sequence {
+public class KeyValueList<K: Equatable,V>: Sequence {
     
     // Underlying datastructure
     private let keyValuePairs: [(K,V)]
@@ -21,8 +21,12 @@ class KeyValueList<K: Equatable,V>: Sequence {
     }
     
     // Sequence compliance
-    func makeIterator() -> Array<(K,V)>.Iterator {
+    public func makeIterator() -> Array<(K,V)>.Iterator {
         return keyValuePairs.makeIterator()
+    }
+    
+    public var isEmpty: Bool {
+        return keyValuePairs.isEmpty
     }
     
     // Keys accessor

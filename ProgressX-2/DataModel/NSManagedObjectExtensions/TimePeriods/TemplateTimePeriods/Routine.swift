@@ -55,13 +55,13 @@ extension Routine: HasOrderable, HasChildren, HasCompleteable {
     }
     
     /// The exercises used in this routine.
-    public var exercises: [String : Int] {
+    public var exercises: KeyValueList<String,Int> {
         let context = self.managedObjectContext!
         return CoreDataAccess.getAllExercisesIn(routine: self, context)
     }
     
     /// All categories on exercises used in this routine.
-    public var categories: [String : Int] {
+    public var categories: KeyValueList<String,Int> {
         let context = self.managedObjectContext!
         return CoreDataAccess.getCategoriesIn(routine: self, context)
     }

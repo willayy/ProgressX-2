@@ -106,11 +106,35 @@ extension TrainingSession: HasOrderable, HasCompleteable, HasParent, HasChildren
     
     /// Gets the next trainingset of this session
     public var nextTrainingSet: TrainingSet? {
-        let allSets = self.trainingSets!.allObjects as! [TrainingSet]
-        let orderedIncompleteSets: [TrainingSet] = allSets
+        
+        let allOrderedIncompleteSets = (self.trainingSets!.allObjects as! [TrainingSet])
             .filter { set in !set.isComplete }
             .sorted(by: { $0.positionIndex < $1.positionIndex })
-        return orderedIncompleteSets.first
+        
+        return allOrderedIncompleteSets.first
+    }
+    
+    public var setsCompletionData: KeyValueList<String, Int> {
+        
+        let allSets = (self.trainingSets!.allObjects as! [TrainingSet])
+        
+        let fullyCompletedSets = allSets
+            .filter { $0.quantityDone >= $0.quantityTodo }
+        
+        let partiallyCompletedSets = allSets
+            .filter { $0.quantityDone < $0.quantityTodo && $0.quantityDone != 0 }
+        
+        let skippedSets = allSets
+            .filter { $0.quantityDone == 0}
+        
+        let kvPairs = [
+            ("Fully completed sets", fullyCompletedSets.count),
+            ("Partially completed sets", partiallyCompletedSets.count),
+            ("Skipped sets", skippedSets.count)
+        ]
+        
+        return KeyValueList(kvPairs)
+        
     }
     
     // MARK: Validation
