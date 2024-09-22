@@ -43,20 +43,19 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     
     @Published public var prSelection: String = ""
     
-    public let addPrSegments: [String : Bool] = [
-        "Add PR" : true,
-        "Don't add PR" : false
-    ]
+    public let addPrSegments: KeyValueList<String, Bool> = KeyValueList([
+        ("Add PR", true),
+        ("Don't add PR", false)
+    ])
     
-    public let addRepPrSegments: [String : String] = [
-        "1RM" : "onerepmax",
-        "AMRAP" : "maxreps"
-    ]
+    public let addRepPrSegments: KeyValueList<String, String> = KeyValueList([
+        ("1RM", "onerepmax"),
+        ("AMRAP", "maxreps")
+    ])
     
-    public let addTimePrSegments: [String : String] = [
-        "Time-max" : "timemax"
-    ]
-    
+    public let addTimePrSegments: KeyValueList<String, String> = KeyValueList([
+        ("Time-max", "timemax")
+    ])
     
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
