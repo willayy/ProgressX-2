@@ -178,7 +178,7 @@ struct InfoHelpView: View {
                                 .padding(.top, 20)
                             
                             LightSubHeadline(
-                                text: "In ProgressX a personal record isn't necessarily be the best one you have ever done. Personal records are used to keep track of progress as a whole, with both ups and downs. If set up correctly personal records will be generated automatically as you train, but you can also add them manually on exercises via the the Exercise library tab",
+                                text: "In ProgressX a personal record isn't necessarily the best record you have ever done. Personal records are used to keep track of progress as a whole, with both ups and downs. If set up correctly personal records will be generated automatically as you train, but you can also add them manually on exercises via the the Exercise library tab",
                                 alignment: .leading
                             )
                             .padding(.horizontal, 10)
