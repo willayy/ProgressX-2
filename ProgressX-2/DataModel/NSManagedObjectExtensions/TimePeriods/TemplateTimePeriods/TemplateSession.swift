@@ -47,7 +47,8 @@ extension TemplateSession: HasOrderable, HasChildren, HasParent, IsChangePropoga
     // Protocol implementation
     internal var children: [TemplateSet] {
         
-        return self.templateSets!.allObjects as! [TemplateSet]
+        return (self.templateSets!.allObjects as! [TemplateSet])
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
         
     }
     

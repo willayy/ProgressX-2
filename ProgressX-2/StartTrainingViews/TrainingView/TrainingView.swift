@@ -13,16 +13,22 @@ import Foundation
 struct TrainingView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @StateObject private var viewModel = TrainingViewModel()
+    
     @StateObject public var timerViewModel = TimerViewModel()
     
-    
     @Binding var navPath: [Int]
+    
     @Binding var selectedRoutine: Routine?
+    
     @Binding var selectedTrainingSession: TrainingSession?
+    
     @Binding var currentTrainingSet: TrainingSet?
     
     var body: some View {
+        
+        let nextSet = viewModel.getNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
     
         let exerciseType = currentTrainingSet?.exercise!.exerciseType!
         
@@ -50,7 +56,7 @@ struct TrainingView: View {
                 }
                 
             }
-         
+            
             
             // MARK: Skip rest time button
             if timerViewModel.state == .active && !viewModel.timedSetActive {
@@ -83,6 +89,28 @@ struct TrainingView: View {
             
             // MARK: The information box about the set
             TrainingSetInfoBox(currentTrainingSet: $currentTrainingSet)
+            
+            BoldSubHeadline(text: "Next set coming up")
+                .padding(.top, 10)
+            
+            Text(nextSet?.timePeriodName ?? "This is the last set")
+                .font(.subheadline)
+            
+            if nextSet != nil {
+                    
+                GroupBox {
+                    
+                    VStack(alignment: .leading, spacing: 5) {
+                        
+                        LightSubHeadline(text: "Load: \(nextSet!.formattedLoadTodo)")
+                        
+                        LightSubHeadline(text: "Quantity: \(nextSet!.formattedQuantityTodo!)")
+                        
+                    }
+                    
+                }
+                
+            }
             
             if exerciseType == "reps" {
                 
@@ -205,9 +233,11 @@ struct TrainingView: View {
                         }
                     }
                 }) {
+                    
                     Text("Skip set")
+                    
                 }
-        }
+            }
         }
         // MARK: Set finished feedback view.
         .popover(isPresented: $viewModel.presentPopup, content: {

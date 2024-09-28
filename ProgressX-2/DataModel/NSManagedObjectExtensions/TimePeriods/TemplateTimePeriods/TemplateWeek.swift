@@ -47,7 +47,8 @@ extension TemplateWeek: HasOrderable, HasChildren, HasParent, IsChangePropogator
     // Protocol implementation
     internal var children: [TemplateSession] {
         
-        return self.templateSessions!.allObjects as! [TemplateSession]
+        return (self.templateSessions!.allObjects as! [TemplateSession])
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
         
     }
     

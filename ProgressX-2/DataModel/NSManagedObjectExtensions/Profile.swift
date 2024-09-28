@@ -127,9 +127,9 @@ extension Profile {
         
         let context = self.managedObjectContext!
         
-        let noDuplicates = CoreDataAccess.noDuplicateProfilesExists(context)
+        let duplicates = CoreDataAccess.duplicateProfilesExists(context)
         
-        if !noDuplicates {
+        if duplicates {
             
             throw ValidationNSErrors.duplicateProfilesExists.toNSError()
             
