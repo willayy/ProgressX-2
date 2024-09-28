@@ -35,7 +35,8 @@ extension TrainingWeek: HasOrderable, HasCompleteable, HasParent, HasChildren {
     
     // Protocol implementation
     internal var children: [TrainingSession] {
-        return self.trainingSessions!.allObjects as! [TrainingSession]
+        return (self.trainingSessions!.allObjects as! [TrainingSession])
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
     }
     
     // Protocol implementation

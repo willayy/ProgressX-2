@@ -43,7 +43,8 @@ extension TemplateCycle: HasOrderable, HasChildren, HasParent {
     
     // Protocol implementation
     internal var children: [TemplateWeek] {
-        return self.templateWeeks!.allObjects as! [TemplateWeek]
+        return (self.templateWeeks!.allObjects as! [TemplateWeek])
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
     }
     
     // Protocol implementation

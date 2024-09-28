@@ -84,13 +84,32 @@ class TrainingViewModel: ViewModel {
         
     }
     
-    func startSessionTimer() {
+    public func getNextSetAfterThis(session: TrainingSession, currSet: TrainingSet) -> TrainingSet? {
+        
+        let uncompletedSets = session.children
+            .filter { !$0.isComplete }
+        
+        let setAfterThis: TrainingSet? = uncompletedSets[1]
+        
+        if setAfterThis == nil || setAfterThis == currSet {
+            
+            return nil
+            
+        } else {
+            
+            return setAfterThis
+            
+        }
+        
+    }
+    
+    public func startSessionTimer() {
             timerForSessionLength = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 self.secondsElapsed += 1
             }
         }
     
-    func stopSessionTimer() {
+    public func stopSessionTimer() {
             timerForSessionLength.invalidate()
             secondsElapsed = 0
         }
