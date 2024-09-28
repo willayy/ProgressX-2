@@ -25,19 +25,33 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
         restTime: Double
     ) {
         self.init(context: context)
+        
         self.templateSession = templateSession
+        
         self.exercise = exercise
+        
         let positionIndex = templateSession.getNextPositionIndex()
+        
         self.positionIndex = positionIndex
+        
         self.loadType = loadType
+        
         self.setLoad = load
+        
         self.quantityType = quantityType
+        
         self.setQuantity = quantity
+        
         self.timePeriodName = (name == "") ? "Set \(positionIndex)" : name
+        
         let exerciseName = exercise.exerciseName!
+        
         let sessionName = templateSession.timePeriodName!
+        
         self.timePeriodDescription = (description == "") ? "\(exerciseName) set in \(sessionName)" : description
+        
         self.restTime = restTime
+        
         templateSession.addToTemplateSets(self)
     }
     
@@ -47,18 +61,63 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
         templateSession: TemplateSession,
         json: [String : Any]
     ) {
+        
         self.init(context: context)
+        
         self.templateSession = templateSession
+        
         templateSession.addToTemplateSets(self)
+        
         self.positionIndex = templateSession.getNextPositionIndex()
+        
         self.timePeriodName = (json["timePeriodName"] as! String)
+        
         self.timePeriodDescription = (json["timePeriodDescription"] as! String)
+        
         self.loadType = (json["loadType"] as! String)
-        self.setLoad = (json["setLoad"] as! Double)
+        
+        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)!
+        
+        // This is a special case for some rep based Sets.
+        if let _: Bool = json["baseInitialLoadOnPr"] as! Bool? {
+            
+            self.initiaLoadBasedOnPrHelper(context, json: json)
+            
+        } else {
+            
+            self.setLoad = (json["setLoad"] as! Double)
+            
+        }
+        
         self.quantityType = (json["quantityType"] as! String)
+        
         self.setQuantity = (json["setQuantity"] as! Double)
+        
         self.restTime = (json["restTime"] as! Double)
-        self.exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)
+    }
+    
+    ///Helper for the initializer
+    private func initiaLoadBasedOnPrHelper(_ context: NSManagedObjectContext, json: [String : Any]) -> Void {
+        
+        let latestPr = CoreDataAccess.getLatestPersonalRecord(
+            context,
+            exercise: self.exercise!,
+            prType: "onerepmax"
+        )
+        
+        let loadOnLatestPr = latestPr!.weightLoad
+        
+        let multiplier = json["initialLoadMultiplier"] as! Double
+        
+        let computedLoad = loadOnLatestPr * multiplier
+        
+        // Round to smallest plate
+        let profile = CoreDataAccess.getProfile(context)
+        
+        // times two because you always add two weights for balance
+        let smallestPlate = profile!.smallestPlate * 2
+        
+        self.setLoad = (computedLoad / smallestPlate).rounded() * smallestPlate
     }
     
     // MARK: Protocol implementation

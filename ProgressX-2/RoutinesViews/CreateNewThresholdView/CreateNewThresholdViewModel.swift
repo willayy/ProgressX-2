@@ -31,22 +31,23 @@ class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     
     // Seg picker selections
     @Published public var addPrSelection: Bool = false
+    
     @Published public var prSelection: String = ""
     
     // Seg picker options
-    public let addPrSegments: [String : Bool] = [
-        "Add PR" : true,
-        "Don't add PR" : false
-    ]
+    public let addPrSegments: KeyValueList<String, Bool> = KeyValueList([
+        ("Add PR", true),
+        ("Don't add PR", false)
+    ])
     
-    public let repPrSegments: [String : String] = [
-        "1RM" : "onerepmax",
-        "AMRAP" : "maxreps"
-    ]
+    public let repPrSegments: KeyValueList<String, String> = KeyValueList([
+        ("1RM", "onerepmax"),
+        ("AMRAP", "maxreps")
+    ])
     
-    public let timePrSegments: [String : String] = [
-        "Time-max" : "timemax"
-    ]
+    public let timePrSegments: KeyValueList<String, String> = KeyValueList([
+        ("Time-max", "timemax")
+    ])
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         

@@ -166,13 +166,13 @@ struct EditPrView: View {
             return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(maxInputNumber: 100000))
         }()
         
-        valid += loadFieldValidator.valideField(
+        valid += loadFieldValidator.validateField(
             inputVar: viewModel.editedWeightLoad,
             errorMessage: $viewModel.editedWeightLoadInvalidMsg,
             fieldInvalid: $viewModel.editedWeightLoadInvalid
         )
         
-        valid += quantityFieldValidator.valideField(
+        valid += quantityFieldValidator.validateField(
             inputVar: viewModel.editedQuantity,
             errorMessage: $viewModel.editedQuantityInvalidMsg,
             fieldInvalid: $viewModel.editedQuantityInvalid

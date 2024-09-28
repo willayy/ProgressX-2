@@ -145,20 +145,46 @@ extension CoreDataAccess {
     }
     
     /// Gets all the exercises in the routine as a dictionary where the keys are the exercises and the values the frequency.
-    public static func getAllExercisesIn(routine: Routine, _ context: NSManagedObjectContext) -> [String : Int] {
+    public static func getAllExercisesIn(routine: Routine, _ context: NSManagedObjectContext) -> KeyValueList<String, Int> {
+        
         let allExercises: [Exercise] = getAllExercisesIn(routine: routine, context)
+        
+        // Turn into dictionary
         let exerciseDictionary = Dictionary(grouping: allExercises) { $0.exerciseName! }
             .mapValues { $0.count }
-        return exerciseDictionary
+        
+        // Make a sorted list of tuples
+        let listOfTuples = exerciseDictionary
+            .map { ($0.key, $0.value) }
+            .sorted { $0.0 < $1.0 }
+        
+        // Turn into KVList by mapping dictionary into a list of tuples,
+        let kvList = KeyValueList(listOfTuples)
+            
+        return kvList
     }
     
     /// Gets all the categories in the routine as a dictionary where the keys are the exercise-categories and the values the frequency.
-    public static func getCategoriesIn(routine: Routine, _ context: NSManagedObjectContext) -> [String : Int] {
+    public static func getCategoriesIn(routine: Routine, _ context: NSManagedObjectContext) -> KeyValueList<String, Int> {
+        
         let allExercises: [Exercise] = getAllExercisesIn(routine: routine, context)
+        
+        // Flatten into list of categories
         let allCategories = allExercises.flatMap { $0.categories! }
+        
+        // Turn into dict
         let categoryDictionary = Dictionary(grouping: (allCategories as! [ExerciseCategory])) { $0.categoryName! }
             .mapValues { $0.count }
-        return categoryDictionary
+        
+        // Make a sorted list of tuples
+        let listOfTuples = categoryDictionary
+            .map { ($0.key, $0.value) }
+            .sorted { $0.0 < $1.0 }
+        
+        // Turn into KVList by mapping dictionary into a list of tuples
+        let kvList = KeyValueList(listOfTuples)
+        
+        return kvList
     }
     
     /// Gets all trainingSessions, completed or not, in the for the whole profile, returns empty array if there are none.
@@ -203,7 +229,7 @@ extension CoreDataAccess {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
         // Pick the session with the smallest completion date.
-        let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! < $1.completedOnDate! })
+        let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! > $1.completedOnDate! })
         return lastCompleteSession
     }
     

@@ -44,18 +44,23 @@ struct SelectCategoriesList: View {
 
 #Preview {
     
-    @FetchRequest(
-        entity: ExerciseCategory.entity(),
-        sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
-    ) var categories: FetchedResults<ExerciseCategory>
+    let context = PersistenceController.previewViewContext
     
     @State var selectedCategories: Set<ExerciseCategory> = Set()
     
     return VStack {
+        
+        @FetchRequest(
+            entity: ExerciseCategory.entity(),
+            sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
+        ) var categories: FetchedResults<ExerciseCategory>
+        
         SelectCategoriesList(
             selectedCategories: $selectedCategories,
             categories: _categories
         )
+        
         .padding(.horizontal, 20)
     }
+    .environment(\.managedObjectContext, context)
 }

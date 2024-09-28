@@ -63,16 +63,23 @@ struct CreateNewRoutineView: View {
                 .padding(.bottom, 20)
                 
                 Button {
+                    
                     if validateInput() {
+                        
                         viewModel.saveEntry(viewContext: viewContext)
+                        
                         navPath.removeLast()
                     }
+                    
                 } label: {
+                    
                     Text("Create new routine")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.bottom, 10)
@@ -92,13 +99,13 @@ struct CreateNewRoutineView: View {
         
         let descValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.newRoutineName,
             errorMessage: $viewModel.newRoutineNameIsInvalidMsg,
             fieldInvalid: $viewModel.newRoutineNameIsInvalid
         )
         
-        valid += descValidator.valideField(
+        valid += descValidator.validateField(
             inputVar: viewModel.newRoutineDesc,
             errorMessage: $viewModel.newRoutineDescIsInvalidMsg,
             fieldInvalid: $viewModel.newRoutineDescIsInvalid

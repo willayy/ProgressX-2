@@ -186,7 +186,9 @@ struct CreateNewTemplateSetView: View {
                     /* Shared quantity input field variable but with different
                      InputFields depending on the exercise type*/
                     if viewModel.selectedExercise?.exerciseType == "reps" {
+                        
                         HStack {
+                            
                             IntegerTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
                                 numberText: $viewModel.newSetQuantity,
@@ -196,12 +198,17 @@ struct CreateNewTemplateSetView: View {
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
+                                
                                 Text("%")
+                                
                             }
                         }
                         .padding(.horizontal, 60)
+                        
                     } else {
+                        
                         HStack {
+                            
                             DecimalTextField(
                                 placeHolder: viewModel.quantityPlaceholder,
                                 numberText: $viewModel.newSetQuantity,
@@ -211,83 +218,112 @@ struct CreateNewTemplateSetView: View {
                             .padding(.top, 5)
                             
                             if viewModel.quantityPlaceholder == "Percentage" {
+                                
                                 Text("%")
+                                
                             }
                         }
                         .padding(.horizontal, 60)
                     }
                     
                     Button {
+                        
                         if validateInput() {
+                            
                             viewModel.saveEntry(viewContext: viewContext)
+                            
                             selectedTemplateSet = viewModel.createdTemplateSet
+                            
                         }
+                        
                     } label: {
+                        
                         Text("Create new set")
                             .frame(height: 40)
                             .foregroundColor(Color("buttonTextColor"))
+                        
                         Image(systemName: "plus")
                             .foregroundColor(Color("buttonTextColor"))
+                        
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.top, 20)
                     .padding(.bottom, 10)
                     .alert(isPresented: $viewModel.showAddThresholds, content: {
+                        
                         Alert(
                             title: Text("Add Thresholds?"),
                             message: Text("Do you want to add some thresholds to this set?"),
                             primaryButton: .default(Text("Yes"), action: {
+                                
                                 navPath.append(8)
+                                
                             }),
                             secondaryButton: .cancel(Text("No"), action: {
+                                
                                 navPath.removeLast()
+                                
                             })
                         )
                     })
+                    
+                    if viewModel.showSetHasBeenSaved {
+                        
+                        SubmitAlert(message: "Set has already been created!", color: .blue, showAlertState: $viewModel.showSetHasBeenSaved)
+                            .padding(.top, 5)
+                        
+                    }
+                    
                 }
             }
         }
     }
     
     private func validateInput() -> Bool {
+        
         let exerciseType = viewModel.selectedExercise!.exerciseType
+        
         let quantityValidator: InputFieldValidator
         
         if exerciseType == "reps" { quantityValidator = IntFieldValidator(maxInputNumber: 100000)}
+        
         else { quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)}
         
         let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
+        
         let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
+        
         let nameValidator = StringFieldValidator()
+        
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         
         var valid = 0
         
-        valid += restTimeValidator.valideField(
+        valid += restTimeValidator.validateField(
             inputVar: viewModel.restTime,
             errorMessage: $viewModel.restTimeIsInvalidMsg,
             fieldInvalid: $viewModel.restTimeIsInvalid
         )
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.newSetLoad,
             errorMessage: $viewModel.newSetLoadIsInvalidMsg,
             fieldInvalid: $viewModel.newSetLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.newSetQuantity,
             errorMessage: $viewModel.newSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.newSetQuantityIsInvalid
         )
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.newSetName,
             errorMessage: $viewModel.newSetNameIsInvalidMsg,
             fieldInvalid: $viewModel.newSetNameIsInvalid
         )
         
-        valid += descValidtor.valideField(
+        valid += descValidtor.validateField(
             inputVar: viewModel.newSetDesc,
             errorMessage: $viewModel.newSetDescIsInvalidMsg,
             fieldInvalid: $viewModel.newSetDescIsInvalid

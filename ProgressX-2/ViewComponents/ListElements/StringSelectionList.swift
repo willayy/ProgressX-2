@@ -13,13 +13,21 @@ struct StringSelectionList: View {
     let selections: [String]
     
     var body: some View {
+        
         GroupBox {
+            
             DisclosureGroup(selected) {
+                
                 ForEach(selections, id: \.self) { type in
+                    
                     Button {
+                        
                         selected = type
+                        
                     } label: {
+                        
                         Text(type)
+                        
                     }
                     .padding(2)
                 }

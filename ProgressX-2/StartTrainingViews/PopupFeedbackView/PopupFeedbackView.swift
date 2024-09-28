@@ -85,7 +85,7 @@ struct PopupFeedbackView: View {
                 BoldTitle(text: viewModel.getDidntFinishSetTitle(exercise: exercise))
                     .padding(.horizontal, 20)
                 
-                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.quantityTodoString!)")
+                LightSubHeadline(text: "Out of a total \(currentTrainingSet!.formattedQuantityTodo!)")
                     .padding(.vertical, 5)
                                 
                 if exercise.exerciseType == "reps" {
@@ -164,7 +164,7 @@ struct PopupFeedbackView: View {
         if exercise.exerciseType == "reps" { inputFieldValidator = IntFieldValidator() }
         else { inputFieldValidator = DoubleFieldValidator() }
         
-        valid += inputFieldValidator.valideField(
+        valid += inputFieldValidator.validateField(
             inputVar: viewModel.editedSetQuantity,
             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetQuantityIsInvalid

@@ -38,19 +38,23 @@ struct EditExerciseView: View {
                 })
             
             if viewModel.exerciseEditedAlert {
+                
                 SubmitAlert(
                     message: "Succesfully edited Exercise!",
                     color: .green,
                     showAlertState: $viewModel.exerciseEditedAlert
                 )
                 .padding(.top, 10)
+                
             } else if viewModel.noChangeAlert {
+                
                 SubmitAlert(
                     message: "No changes to Exercise",
                     color: .blue,
                     showAlertState: $viewModel.noChangeAlert
                 )
                 .padding(.top, 10)
+                
             }
             
             BoldSubHeadline(text: "Description: ")
@@ -139,15 +143,15 @@ struct EditExerciseView: View {
         
         let exerciseNameValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: checkStrings)
         
-        let exerciseDescValidator = StringFieldValidator()
+        let exerciseDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += exerciseNameValidator.valideField(
+        valid += exerciseNameValidator.validateField(
             inputVar: viewModel.newName,
             errorMessage: $viewModel.newNameIsInvalidMsg,
             fieldInvalid: $viewModel.newNameIsInvalid
         )
         
-        valid += exerciseDescValidator.valideField(
+        valid += exerciseDescValidator.validateField(
             inputVar: viewModel.newDesc,
             errorMessage: $viewModel.newDescIsInvalidMsg,
             fieldInvalid: $viewModel.newDescIsInvalid

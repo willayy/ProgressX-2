@@ -148,14 +148,20 @@ struct EditRoutineView: View {
         }
             
             Button {
+                
                 viewModel.selectedTemplateCycle = selectedTemplateCycle!
+                
                 viewModel.saveEntry(viewContext: viewContext)
+                
             } label: {
+                
                 Text("Add new Week")
                     .frame(height: 40)
                     .foregroundColor(Color("buttonTextColor"))
+                
                 Image(systemName: "plus")
                     .foregroundColor(Color("buttonTextColor"))
+                
             }
             .buttonStyle(BorderedProminentButtonStyle())
             .padding(.vertical, 20)
@@ -166,6 +172,7 @@ struct EditRoutineView: View {
         
         // Get all routine names and remove the selected routines name
         var checkStrings = routines.map {$0.timePeriodName!}
+        
         checkStrings.removeAll(where: {$0 == selectedRoutine!.timePeriodName})
         
         let routineNameValidator = StringFieldValidator(
@@ -175,13 +182,13 @@ struct EditRoutineView: View {
         
         let routineDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += routineNameValidator.valideField(
+        valid += routineNameValidator.validateField(
             inputVar: viewModel.editedRoutineName,
             errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineNameIsInvalid
         )
         
-        valid += routineDescValidator.valideField(
+        valid += routineDescValidator.validateField(
             inputVar: viewModel.editiedRoutineDescription,
             errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedRoutineDescIsInvalid

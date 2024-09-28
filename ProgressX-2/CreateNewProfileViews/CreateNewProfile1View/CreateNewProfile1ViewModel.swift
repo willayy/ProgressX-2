@@ -38,15 +38,15 @@ class CreateNewProfile1ViewModel: ViewModel {
     @Published public var selectedGenderSegment: String = "male"
     
     // Seg picker options
-    public let unitSegments: [String : Bool] = [
-        "Metric" : true,
-        "Imperial" : false
-    ]
+    public let unitSegments: KeyValueList<String, Bool> = KeyValueList([
+        ("Metric", true),
+        ("Imperial", false)
+    ])
     
-    public let genderSegments: [String : String] = [
-        "Male" : "male",
-        "Female" : "female"
-    ]
+    public let genderSegments: KeyValueList<String, String> = KeyValueList([
+        ("Male", "male"),
+        ("Female", "female")
+    ])
     
     public override func lengthUnit(_ context: NSManagedObjectContext) -> String {
         (self.selectedUnitSegment) ? "cm" : "ft"
@@ -111,8 +111,11 @@ class CreateNewProfile1ViewModel: ViewModel {
         
         // Create basic exercies if they dont exist
         if !CoreDataAccess.basicExercisesExist(viewContext) {
+            
             CoreDataAccess.generateExerciseCategories(viewContext)
+            
             CoreDataAccess.generateStarterExerciseLibrary(viewContext)
+            
         }
         
         self.save(viewContext)

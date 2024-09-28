@@ -142,6 +142,39 @@ extension CoreDataAccess {
         }
     }
     
+    /// Generates PersonalRecords for the in-memory database.
+    /// - Parameter context: NSManagedObjectContext
+    /// - Returns: Void
+    public static func generatePreviewPersonalRecords(_ context: NSManagedObjectContext) -> Void {
+        
+        let asset = getAsset("PreviewPersonalRecords")
+        
+        let jsonArray = transformAsset(asset)
+        
+        /* Just use this offset instead of relying on dates in the JSON, 
+         it becomes less data that we need to write by hand
+         and in the end it's just for the preview anyway */
+        var dateOffset = 1000000
+        
+        for json in jsonArray {
+            
+            let exercise = CoreDataAccess.getExercise(context, name: json["exercise"] as! String)!
+            
+            _ = PersonalRecord(
+                context,
+                exercise: exercise,
+                weightLoad: json["load"] as! Double,
+                quantity: json["quantity"] as! Double,
+                date: Date() - TimeInterval(dateOffset),
+                type: json["prType"] as! String
+            )
+            
+            dateOffset += 1000000
+            
+        }
+        
+    }
+    
     /// Generates exercises for the in-memory database.
     /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
@@ -209,40 +242,6 @@ extension CoreDataAccess {
         
     }
     
-    /// Generates personal records for the in-memory database.
-    /// - Parameter context: NSManagedObjectContext
-    /// - Returns: Void
-    public static func generatePreviewPersonalRecords(_ context: NSManagedObjectContext) -> Void {
-        
-        let asset = getAsset("PreviewPersonalRecords")
-        
-        let jsonArray = transformAsset(asset)
-        
-        for json in jsonArray {
-            
-            let exerciseName = json["exerciseName"] as! String
-            
-            let fetchRequest = Exercise.fetchRequest()
-            
-            fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", exerciseName)
-            
-            let results = fetch(context, fetchRequest: fetchRequest)
-            
-            let exercise = results.first!
-            
-            _ = PersonalRecord(
-                context,
-                exercise: exercise,
-                weightLoad: json["weightLoad"] as! Double,
-                quantity: json["quantity"] as! Double,
-                date: Date(timeIntervalSince1970: TimeInterval((json["date"] as! Int))),
-                type: json["type"] as! String
-            )
-            
-        }
-        
-    }
-    
     /// Generates a routines for the in-memory database.
     /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
@@ -285,7 +284,7 @@ extension CoreDataAccess {
         let jsonArray = transformAsset(asset)
         
         // JSON Array contains a single object with an attribute that is an array of strings.
-        let names = jsonArray[0]["categoryName"] as! [String]
+        let names = jsonArray[0]["categoryNames"] as! [String]
         
         for name in names {
             _ = ExerciseCategory(
@@ -299,7 +298,28 @@ extension CoreDataAccess {
     /// - Parameter context: NSManagedObjectContext
     /// - Returns: Void
     public static func generateStarterRoutines(_ context: NSManagedObjectContext) -> Void {
-        #warning("TODO: Implement")
+        
+        /* MARK: WARNING,
+        when adding new routine assets here make sure to also add them
+        in the basicRoutinesExists(_ context: NSManagedObjectContext) function
+        in CoreDataAccessors/Checkers.swift */
+        
+        // Fill this list with routine assets
+        let assets = [
+            getAsset("Metallicdpas-PPL-Routine")
+        ]
+        
+        // Transform every asset into a routine
+        for asset in assets {
+            
+            let jsonArray = transformAsset(asset)
+            
+            let jsonRoutine = jsonArray.first!
+            
+            generateRoutine(jsonDict: jsonRoutine, context)
+            
+        }
+        
     }
         
 }

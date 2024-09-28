@@ -29,12 +29,18 @@ struct SessionHistoryView: View {
         
         @FetchRequest(
             entity: TrainingSet.entity(),
-            sortDescriptors: [],
-            predicate: NSCompoundPredicate(type: .and, subpredicates: [NSPredicate(format: "trainingSession == %@", selectedTrainingSession!),
-                                                                       NSPredicate(format: "trainingSession.isComplete == %@", NSNumber(booleanLiteral: true))])
+            sortDescriptors: [NSSortDescriptor(keyPath: \TrainingSet.positionIndex, ascending: true)],
+            predicate: NSCompoundPredicate(
+                type: .and,
+                subpredicates: [
+                    NSPredicate(format: "trainingSession == %@", selectedTrainingSession!),
+                    NSPredicate(format: "trainingSession.isComplete == %@", NSNumber(booleanLiteral: true))
+                ]
+            )
         ) var allTrainingSets: FetchedResults<TrainingSet>
         
-        ScrollView{
+        ScrollView {
+            
             BoldTitle(text: (selectedTrainingSession?.timePeriodName)!)
                 .padding(.horizontal, 20)
             
@@ -42,8 +48,7 @@ struct SessionHistoryView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 20)
             
-            
-            PieChart(data: SetsForChart(sets: viewModel.selectedTrainingSets))
+            PieChart(data: selectedTrainingSession!.setsCompletionData)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
                 .frame(height: 300)

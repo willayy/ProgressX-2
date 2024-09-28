@@ -45,17 +45,27 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     @Published public var selectedTemplateSession: TemplateSession? = nil
     @Published public var createdTemplateSet: TemplateSet? = nil
     
+    /* variable that keeps track of if the set has been saved,
+     without this its possible to create several identical sets
+     by goingback and forth between the add threshold view and this view. */
+    @Published public var newSetHasBeenSaved: Bool = false
+    @Published public var showSetHasBeenSaved: Bool = false
+    
     // for load type selections
     var loadTypeSelections: [String] {
+        
         switch selectedExercise?.exerciseType {
+            
         case "reps":
             return ["Numerical",
-                    "Percentage of current 1RM PR load",
-                    "Percentage of current body weight"]
+                    "Percentage of 1RM PR",
+                    "Percentage of body weight"]
+            
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR load",
-                    "Percentage of current body weight"]
+                    "Percentage of TimeMax PR",
+                    "Percentage of body weight"]
+            
         default:
             return []
         }
@@ -63,13 +73,17 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // for quantity type selections
     var quantityTypeSelections: [String] {
+        
         switch selectedExercise?.exerciseType {
+            
         case "reps":
             return ["Numerical",
-                    "Percentage of current AMRAP PR reps"]
+                    "Percentage of AMRAP PR"]
+            
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR time"]
+                    "Percentage of TimeMax PR"]
+            
         default:
             return []
         }
@@ -77,34 +91,50 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // for the load placeholder
     public func loadPlaceholder(viewContext: NSManagedObjectContext) -> String {
+        
         switch selectedLoadType {
+            
         case "Numerical":
             let weightUnit = self.weightUnit(viewContext)
+            
             return "Load \(weightUnit)"
-        case "Percentage of current 1RM PR load":
+            
+        case "Percentage of 1RM PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR load":
+            
+        case "Percentage of TimeMax PR":
             return "Percentage"
-        case "Percentage of current body weight":
+            
+        case "Percentage of body weight":
             return "Percentage"
+            
         default:
             return "Select exercise first!"
+            
         }
     }
     
     // for the quantity placeholder
     var quantityPlaceholder: String {
+        
         switch selectedQuantityType {
+            
         case "Numerical":
             let exerciseType = selectedExercise?.exerciseType
+            
             if exerciseType == nil {return "Select exercise first!"}
+            
             return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR reps":
+            
+        case "Percentage of AMRAP PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR time":
+            
+        case "Percentage of TimeMax PR":
             return "Percentage"
+            
         default:
             return "Select exercise first!"
+            
         }
     }
     
@@ -112,10 +142,10 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
      the view to the correct core data property value */
     let typeMap: [String : String] = [
         "Numerical" : "numerical",
-        "Percentage of current 1RM PR load" : "maxperc",
-        "Percentage of current TimeMax PR load" : "maxperc",
-        "Percentage of current AMRAP PR reps" : "maxperc",
-        "Percentage of current body weight" : "bwperc"
+        "Percentage of 1RM PR" : "maxperc",
+        "Percentage of TimeMax PR" : "maxperc",
+        "Percentage of AMRAP PR" : "maxperc",
+        "Percentage of body weight" : "bwperc"
     ]
     
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
@@ -125,39 +155,56 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
-                
-        let set = TemplateSet(
-            viewContext,
-            templateSession: selectedTemplateSession!,
-            name: newSetName, 
-            exercise: selectedExercise!,
-            loadType: typeMap[selectedLoadType]!,
-            load: Double(newSetLoad)!,
-            quantityType: typeMap[selectedQuantityType]!,
-            quantity: Double(newSetQuantity)!,
-            restTime: Double(restTime)!
-        )
         
-        let trainingSessions = selectedTemplateSession!.trainingSessions?.allObjects as! [TrainingSession]
-        
-        for session in trainingSessions {
+        if !newSetHasBeenSaved {
             
-            let _ = TrainingSet(
+            let set = TemplateSet(
                 viewContext,
-                trainingSession: session,
-                templateSet: set
+                templateSession: selectedTemplateSession!,
+                name: newSetName,
+                exercise: selectedExercise!,
+                loadType: typeMap[selectedLoadType]!,
+                load: Double(newSetLoad)!,
+                quantityType: typeMap[selectedQuantityType]!,
+                quantity: Double(newSetQuantity)!,
+                restTime: Double(restTime)!
             )
             
-        }
-        
-        self.save(viewContext)
-        
-        withAnimation {
+            let trainingSessions = selectedTemplateSession!.trainingSessions?.allObjects as! [TrainingSession]
             
-            showAddThresholds = true
+            for session in trainingSessions {
+                
+                let _ = TrainingSet(
+                    viewContext,
+                    trainingSession: session,
+                    templateSet: set
+                )
+                
+            }
+            
+            self.save(viewContext)
+            
+            withAnimation {
+                
+                showAddThresholds = true
+                
+                newSetHasBeenSaved = true
+                
+            }
+            
+            self.createdTemplateSet = set
+            
+            // The new set has been saved once
+            
+        } else {
+            
+            withAnimation {
+                
+                showSetHasBeenSaved = true
+                
+            }
             
         }
-        
-        self.createdTemplateSet = set
     }
+    
 }

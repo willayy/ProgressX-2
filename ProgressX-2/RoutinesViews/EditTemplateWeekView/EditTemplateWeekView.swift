@@ -173,15 +173,16 @@ struct EditTemplateWeekView: View {
         var valid: Int = 0
         
         let weekNameValidator = StringFieldValidator()
+        
         let weekDescValidator = StringFieldValidator(emptyAllowed: true)
         
-        valid += weekNameValidator.valideField(
+        valid += weekNameValidator.validateField(
             inputVar: viewModel.editedWeekName,
             errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedWeekIsInvalid
         )
         
-        valid += weekDescValidator.valideField(
+        valid += weekDescValidator.validateField(
             inputVar: viewModel.editedWeekDescription,
             errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedWeekDescIsInvalid

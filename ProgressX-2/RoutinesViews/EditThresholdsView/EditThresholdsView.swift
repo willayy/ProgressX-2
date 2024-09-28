@@ -52,49 +52,74 @@ struct EditThresholdsView: View {
                 .padding(.top, 10)
             }
             
-            BoldSubHeadline(text: "Edit the trigger quantity of the threshold")
+            BoldSubHeadline(text: "Edit the trigger range of the threshold")
                 .padding(.top, 20)
             
             HiddenLightSubHeadline(
-                title: "What is trigger quantity?",
-                text: "The trigger quantity is the quanity you need to do on your set for this thresholds to trigger. When the threshold triggers the actions you defines below will change your set and/or add a PR."
+                title: "What is trigger range?",
+                text: "The trigger range is the range of quantity you need to do on this set for this thresholds to trigger. When the threshold triggers the actions you define below will change the set"
             )
             .padding(.horizontal, 20)
             
             if exerciseType == "reps" {
                 
-                IntegerTextField(
-                    placeHolder: "New lower bound (reps)",
-                    numberText: $viewModel.editedLowerBound,
-                    markAsWrong: $viewModel.editedLowerBoundIsInvalid,
-                    errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                                        
+                    IntegerTextField(
+                        placeHolder: "lower bound (reps)",
+                        numberText: $viewModel.editedLowerBound,
+                        markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                        errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
-                IntegerTextField(
-                    placeHolder: "New upper bound (reps)",
-                    numberText: $viewModel.editedUpperBound,
-                    markAsWrong: $viewModel.editedUpperBoundIsInvalid,
-                    errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    IntegerTextField(
+                        placeHolder: "upper bound (reps)",
+                        numberText: $viewModel.editedUpperBound,
+                        markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                        errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             } else {
                 
-                DecimalTextField(
-                    placeHolder: "New lower bound (seconds)",
-                    numberText: $viewModel.editedLowerBound,
-                    markAsWrong: $viewModel.editedLowerBoundIsInvalid,
-                    errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "From")
+                    
+                    DecimalTextField(
+                        placeHolder: "lower bound (seconds)",
+                        numberText: $viewModel.editedLowerBound,
+                        markAsWrong: $viewModel.editedLowerBoundIsInvalid,
+                        errorMessage: $viewModel.editedLowerBoundIsInvalidMsg
+                    )
+                    
+                    
+                }
                 .padding(.horizontal, 60)
                 
-                DecimalTextField(
-                    placeHolder: "New upper bound (seconds)",
-                    numberText: $viewModel.editedUpperBound,
-                    markAsWrong: $viewModel.editedUpperBoundIsInvalid,
-                    errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
-                )
+                HStack {
+                    
+                    LightSubHeadline(text: "To")
+                    
+                    DecimalTextField(
+                        placeHolder: "upper bound (seconds)",
+                        numberText: $viewModel.editedUpperBound,
+                        markAsWrong: $viewModel.editedUpperBoundIsInvalid,
+                        errorMessage: $viewModel.editedUpperBoundIsInvalidMsg
+                    )
+                    
+                }
                 .padding(.horizontal, 60)
                 
             }
@@ -248,25 +273,25 @@ struct EditThresholdsView: View {
             
         }
         
-        valid += flatLoadAddFieldValidator.valideField(
+        valid += flatLoadAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatLoadAdd,
             errorMessage: $viewModel.editedFlatLoadAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatLoadAddIsInvalid
         )
         
-        valid += flatQuantityAddFieldValidator.valideField(
+        valid += flatQuantityAddFieldValidator.validateField(
             inputVar: viewModel.editedFlatQuantityAdd,
             errorMessage: $viewModel.editedFlatQuantityAddIsInvalidMsg,
             fieldInvalid: $viewModel.editedFlatQuantityAddIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.editedLowerBound,
             errorMessage: $viewModel.editedLowerBoundIsInvalidMsg,
             fieldInvalid: $viewModel.editedLowerBoundIsInvalid
         )
         
-        valid += triggerQuantityFieldValidator.valideField(
+        valid += triggerQuantityFieldValidator.validateField(
             inputVar: viewModel.editedUpperBound,
             errorMessage: $viewModel.editedUpperBoundIsInvalidMsg,
             fieldInvalid: $viewModel.editedUpperBoundIsInvalid

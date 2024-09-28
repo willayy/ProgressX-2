@@ -116,12 +116,12 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current 1RM PR",
-                    "Percentage of current body weight"]
+                    "Percentage of 1RM PR",
+                    "Percentage of body weight"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR",
-                    "Percentage of current body weight"]
+                    "Percentage of TimeMax PR",
+                    "Percentage of body weight"]
         default:
             return []
         }
@@ -132,10 +132,10 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         switch selectedExercise?.exerciseType {
         case "reps":
             return ["Numerical",
-                    "Percentage of current AMRAP PR"]
+                    "Percentage of AMRAP PR"]
         case "time":
             return ["Numerical",
-                    "Percentage of current TimeMax PR"]
+                    "Percentage of TimeMax PR"]
         default:
             return []
         }
@@ -146,12 +146,12 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         if selectedExercise?.exerciseType == "reps" {
             return [
                 "numerical" : "Numerical",
-                "maxperc" : "Percentage of current 1RM PR",
-                "bwperc" : "Percentage of current body weight"
+                "maxperc" : "Percentage of 1RM PR",
+                "bwperc" : "Percentage of body weight"
             ]
         } else {
             return [
-                "maxperc" : "Percentage of current TimeMax PR" ,
+                "maxperc" : "Percentage of TimeMax PR" ,
                 "numerical" : "Numerical"
             ]
         }
@@ -162,11 +162,11 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         if selectedExercise?.exerciseType == "reps" {
             return [
                 "numerical" : "Numerical",
-                "maxperc" : "Percentage of current AMRAP PR"
+                "maxperc" : "Percentage of AMRAP PR"
             ]
         } else {
             return [
-                "maxperc" : "Percentage of current TimeMax PR" ,
+                "maxperc" : "Percentage of TimeMax PR" ,
                 "numerical" : "Numerical"
             ]
         }
@@ -178,11 +178,11 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
         case "Numerical":
             let weightUnit = self.weightUnit(viewContext)
             return "Load \(weightUnit)"
-        case "Percentage of current 1RM PR":
+        case "Percentage of 1RM PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of TimeMax PR":
             return "Percentage"
-        case "Percentage of current body weight":
+        case "Percentage of body weight":
             return "Percentage"
         default:
             return "Select exercise first!"
@@ -196,9 +196,9 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
             let exerciseType = selectedExercise?.exerciseType
             if exerciseType == nil {return "Select exercise first!"}
             return exerciseType == "reps" ? "Reps" : "Seconds"
-        case "Percentage of current AMRAP PR":
+        case "Percentage of AMRAP PR":
             return "Percentage"
-        case "Percentage of current TimeMax PR":
+        case "Percentage of TimeMax PR":
             return "Percentage"
         default:
             return "Select exercise first!"
@@ -209,9 +209,9 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
      the view to the correct core data property value */
     let typeMap: [String : String] = [
         "Numerical" : "numerical",
-        "Percentage of current 1RM PR" : "maxperc",
-        "Percentage of current TimeMax PR" : "maxperc",
-        "Percentage of current AMRAP PR" : "maxperc",
-        "Percentage of current body weight" : "bwperc"
+        "Percentage of 1RM PR" : "maxperc",
+        "Percentage of TimeMax PR" : "maxperc",
+        "Percentage of AMRAP PR" : "maxperc",
+        "Percentage of body weight" : "bwperc"
     ]
 }

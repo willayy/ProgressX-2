@@ -215,46 +215,56 @@ struct EditTemplateSetView: View {
     }
     
     private func validateInput() -> Bool {
+        
         let exerciseType = viewModel.selectedExercise!.exerciseType
+        
         let quantityValidator: InputFieldValidator
         
         if exerciseType == "reps" {
+            
             quantityValidator = IntFieldValidator(maxInputNumber: 100000)
+            
         } else {
+            
             quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
+            
         }
+        
         let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
+        
         let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
+        
         let nameValidator = StringFieldValidator()
+        
         let descValidtor = StringFieldValidator(emptyAllowed: true)
         
         var valid = 0
         
-        valid += restTimeValidator.valideField(
+        valid += restTimeValidator.validateField(
             inputVar: viewModel.editedRestTime,
             errorMessage: $viewModel.editedRestTimeIsInvalidMsg,
             fieldInvalid: $viewModel.editedRestTimeIsInvalid
         )
         
-        valid += loadValidator.valideField(
+        valid += loadValidator.validateField(
             inputVar: viewModel.editedSetLoad,
             errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetLoadIsInvalid
         )
         
-        valid += quantityValidator.valideField(
+        valid += quantityValidator.validateField(
             inputVar: viewModel.editedSetQuantity,
             errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetQuantityIsInvalid
         )
         
-        valid += nameValidator.valideField(
+        valid += nameValidator.validateField(
             inputVar: viewModel.editedSetName,
             errorMessage: $viewModel.editedSetNameIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetNameIsInvalid
         )
         
-        valid += descValidtor.valideField(
+        valid += descValidtor.validateField(
             inputVar: viewModel.editedSetDesc,
             errorMessage: $viewModel.editedSetDescIsInvalidMsg,
             fieldInvalid: $viewModel.editedSetDescIsInvalid

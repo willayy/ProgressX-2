@@ -11,13 +11,22 @@ import CoreData
 /// Extensions that has functions who check if things exists or are in a certain state within the CoreData model.
 extension CoreDataAccess {
     
-    /// Checks if a Profile exists. That is, is there more than 0 Profiles saved to the persistent store.
+    /// Checks if a Profile exists. That is, is there exactly one Profile saved to the persistent store.
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
     /// - Returns: Yes if profile exists, No if it doesnt.
     public static func profileExists(_ context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count == 1
+    }
+    
+    /// Checks if more than one Profile exists. That is, is there more than 1 Profiles saved to the persistent store.
+    /// - Parameter context: A NSManagedObjectContext from a peristent container.
+    /// - Returns: Yes if profile duplicates exists, No if it doesnt.
+    public static func noDuplicateProfilesExists(_ context: NSManagedObjectContext) -> Bool {
+        let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
+        let fetchResult = fetch(context, fetchRequest: fetchRequest)
+        return fetchResult.count > 1
     }
     
     /// Checks if the basic routine has been generated.
@@ -44,7 +53,7 @@ extension CoreDataAccess {
                     "Deadlift",
                     "Push up",
                     "Sit up"]
-        fetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", args)
+        fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", args)
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count == args.count
     }

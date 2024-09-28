@@ -38,7 +38,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -51,7 +51,7 @@
                                         "loadType" : "numerical",
                                         "setLoad" : 100,
                                         "quantityType" : "maxperc",
-                                        "setQuantity" : 0.8,
+                                        "setQuantity" : 80,
                                         "restTime" : 180,
                                         "children" : [
                                             
@@ -63,7 +63,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 2,
                                                 "lowerBound" : 0,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -82,7 +82,7 @@
                                         "timePeriodDescription" : "",
                                         "exercise" : "testing exercise (reps)",
                                         "loadType" : "maxperc",
-                                        "setLoad" : 0.8,
+                                        "setLoad" : 80,
                                         "quantityType" : "numerical",
                                         "setQuantity" : 10,
                                         "restTime" : 180,
@@ -96,7 +96,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 5,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -107,7 +107,7 @@
                                         "timePeriodDescription" : "",
                                         "exercise" : "testing exercise (time)",
                                         "loadType" : "bwperc",
-                                        "setLoad" : 0.8,
+                                        "setLoad" : 80,
                                         "quantityType" : "numerical",
                                         "setQuantity" : 60,
                                         "restTime" : 180,
@@ -121,7 +121,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 60,
                                                 "lowerBound" : 20,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -162,7 +162,7 @@
                                                 "flatLoadAdd" : 2,
                                                 "upperBound" : 15,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -173,7 +173,7 @@
                                         "timePeriodDescription" : "",
                                         "exercise" : "testing exercise (time)",
                                         "loadType" : "bwperc",
-                                        "setLoad" : 0.4,
+                                        "setLoad" : 40,
                                         "quantityType" : "numerical",
                                         "setQuantity" : 45,
                                         "restTime" : 180,
@@ -187,7 +187,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 20,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -206,9 +206,9 @@
                                         "timePeriodDescription" : "",
                                         "exercise" : "testing exercise (reps)",
                                         "loadType" : "bwperc",
-                                        "setLoad" : 0.7,
+                                        "setLoad" : 70,
                                         "quantityType" : "maxperc",
-                                        "setQuantity" : 0.4,
+                                        "setQuantity" : 40,
                                         "restTime" : 180,
                                         "children" : [
                                             
@@ -220,7 +220,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 10,
                                                 "lowerBound" : 2,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]
@@ -231,7 +231,7 @@
                                         "timePeriodDescription" : "",
                                         "exercise" : "testing exercise (time)",
                                         "loadType" : "maxperc",
-                                        "setLoad" : 0.99,
+                                        "setLoad" : 99,
                                         "quantityType" : "numerical",
                                         "setQuantity" : 100,
                                         "restTime" : 180,
@@ -245,7 +245,7 @@
                                                 "flatLoadAdd" : null,
                                                 "upperBound" : 100,
                                                 "lowerBound" : 50,
-                                                "generatePr" : 1
+                                                "generatePr" : true
                                             }
                                             
                                         ]

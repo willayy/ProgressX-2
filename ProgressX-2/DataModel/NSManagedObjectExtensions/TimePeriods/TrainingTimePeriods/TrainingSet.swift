@@ -51,21 +51,21 @@ extension TrainingSet: HasParent {
     }
     
     /// Uset his property to print the load todo on a set.
-    public var loadTodoString: String {
+    public var formattedLoadTodo: String {
         let context = self.managedObjectContext!
         let weightUnit = CoreDataAccess.getWeightUnit(context)!
         return "\(String(format: "%.2f", self.loadTodo)) \(weightUnit)"
     }
     
     /// Use this to property to print the load done on a set.
-    public var loadDoneString: String {
+    public var formattedLoadDoneString: String {
         let context = self.managedObjectContext!
         let weightUnit = CoreDataAccess.getWeightUnit(context)!
         return "\(String(format: "%.2f", self.loadDone)) \(weightUnit)"
     }
     
     /// Use this to property to print the quantity todo on a set. Returns nil if exercise type is not not set or is invalid
-    public var quantityTodoString: String? {
+    public var formattedQuantityTodo: String? {
         guard let exerciseType = self.exercise?.exerciseType else { return nil }
         guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         
@@ -78,7 +78,7 @@ extension TrainingSet: HasParent {
     }
     
     /// Use this to property to print the quantity done on a set. Returns nil if exercise type is not not set or is invalid
-    public var quantityDoneString: String? {
+    public var formattedQuantityDone: String? {
         guard let exerciseType = self.exercise?.exerciseType else { return nil }
         guard let type: ExerciseType = ExerciseType(rawValue: exerciseType) else { return nil }
         

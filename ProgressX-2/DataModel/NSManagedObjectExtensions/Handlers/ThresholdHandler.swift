@@ -14,7 +14,8 @@ internal class ThresholdHandler {
     
     internal init(thresholds: [SetThreshold]) {
         
-        self.thresholds = thresholds
+        // sort in ascending order by upperBound value.
+        self.thresholds = thresholds.sorted { $0.upperBound < $1.upperBound}
         
     }
     

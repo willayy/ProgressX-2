@@ -132,6 +132,27 @@ final class DataModelTests: XCTestCase {
         
     }
     
+    /// Helper method for testSetThreshold
+    private func templateSetData(templateSets: [TemplateSet]) -> [[String : Any]] {
+        
+        var templateSetsData: [[String : Any]] = []
+        
+        for templateSet in templateSets {
+            
+            let templateSetData: [String : Any] = [
+                "index" : templateSet.positionIndex,
+                "loadTodo" : templateSet.loadTodo!,
+                "quantityTodo" : templateSet.quantityTodo!
+            ]
+            
+            templateSetsData.append(templateSetData)
+            
+        }
+        
+        return templateSetsData
+        
+    }
+    
     func testSetThreshold() {
         
         let previewRoutine = getPreviewRoutine()
@@ -142,8 +163,52 @@ final class DataModelTests: XCTestCase {
         // Map all template session
         let templateSessionsInRoutine: [TemplateSession] = trainingSessionsInRoutine.map { $0.templateSession! }
         
+        let templateSets: [TemplateSet] = templateSessionsInRoutine.flatMap { $0.children }
+        
+        // Save all template set data to an array of dictionaries so we can compare before and after threshold effects.
+        let templateSetDataBefore = templateSetData(templateSets: templateSets)
+        
         // Get all trainingSets
         let trainingSets: [TrainingSet] = trainingSessionsInRoutine.flatMap { $0.children }
+        
+        // Complete all training sets
+        for trainingSet in trainingSets {
+            
+            trainingSet.loadDone = trainingSet.loadTodo
+            
+            trainingSet.quantityDone = trainingSet.quantityTodo
+            
+            trainingSet.complete()
+            
+        }
+        
+        let templateSetDataAfter = templateSetData(templateSets: templateSets)
+        
+        var setDifferences = 0
+        
+        // Compare the data before and after completing the sets to see that progression got applied by thresholds.
+        for templateSetData in templateSetDataAfter {
+            
+            let positionIndex = templateSetData["index"] as! Int64
+            
+            let beforeData = templateSetDataBefore.first { ($0["index"] as! Int64) == positionIndex }!
+            
+            let loadBefore = beforeData["loadTodo"] as! Double
+            
+            let loadAfter = templateSetData["loadTodo"] as! Double
+            
+            let quantityBefore = beforeData["quantityTodo"] as! Double
+            
+            let quantityAfter = templateSetData["quantityTodo"] as! Double
+            
+            if quantityBefore != quantityAfter { setDifferences += 1 }
+            
+            if loadBefore != loadAfter { setDifferences += 1 }
+                        
+        }
+        
+        // For the preview routine we know that the difference between the sets after completion should amount to.
+        XCTAssertEqual(setDifferences, 14)
         
     }
         

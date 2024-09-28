@@ -24,7 +24,7 @@ class InputFieldValidator {
     ///   - errorMessage: The error message state
     ///   - fieldInvalid: The field invalid state
     /// - Returns: 1 or 0 (Int)
-    public func valideField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
+    public func validateField(inputVar: String, errorMessage: Binding<String>, fieldInvalid: Binding<Bool>) -> Int {
         fatalError("This must be overrided in InputFieldValidator subclasses")
     }
     

@@ -65,6 +65,4 @@ struct ChooseSessionkHistoryView: View {
         .environmentObject(ShowMenuController())
         .environment(\.managedObjectContext, context)
         
-
-        
 }
