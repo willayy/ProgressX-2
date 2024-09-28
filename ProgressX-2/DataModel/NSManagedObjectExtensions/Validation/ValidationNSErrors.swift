@@ -18,6 +18,8 @@ enum ValidationNSErrors: Int {
     
     // MARK: Profile
     case profileNameIsInvalid = 9998
+    case duplicateProfilesExists = 9971
+
     
     // MARK: Exercise
     case exerciseNameIsInvalid = 9996
@@ -205,6 +207,13 @@ enum ValidationNSErrors: Int {
                     "The cycle must have one and one only cycle that is 'inactive' " +
                     "and has isComplete set to false."
             ]
+            
+        case .duplicateProfilesExists:
+            return [
+                NSLocalizedDescriptionKey:
+                    "There are more than 1 profiles saved to the context"
+            ]
+            
         }
     }
     

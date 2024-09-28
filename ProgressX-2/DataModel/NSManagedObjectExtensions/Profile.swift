@@ -95,6 +95,8 @@ extension Profile {
         
         try validateProfileNameIsUnique()
         
+        try validateProfileIsUniqe()
+        
     }
     
     public override func validateForUpdate() throws {
@@ -102,6 +104,8 @@ extension Profile {
         try super.validateForInsert()
         
         try validateProfileNameIsUnique()
+        
+        try validateProfileIsUniqe()
         
     }
     
@@ -117,6 +121,20 @@ extension Profile {
             throw ValidationNSErrors.profileNameIsInvalid.toNSError()
             
         }
+    }
+    
+    private func validateProfileIsUniqe() throws {
+        
+        let context = self.managedObjectContext!
+        
+        let noDuplicates = CoreDataAccess.noDuplicateProfilesExists(context)
+        
+        if !noDuplicates {
+            
+            throw ValidationNSErrors.duplicateProfilesExists.toNSError()
+            
+        }
+        
     }
     
 }
