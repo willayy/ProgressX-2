@@ -53,7 +53,7 @@ struct ChooseSessionkHistoryView: View {
                     }.padding(.horizontal, 20)
                 }
             }
-        }, selectedTrainingSession: $viewModel.selectedTrainingSession, selectedSet: $viewModel.selectedSet)
+        }, selectedTrainingSession: $viewModel.selectedTrainingSession, selectedTrainingSet: $viewModel.selectedTrainingSet)
     }
 }
 

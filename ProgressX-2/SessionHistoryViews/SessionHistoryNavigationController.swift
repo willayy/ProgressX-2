@@ -15,19 +15,17 @@ struct SessionHistoryNavigationController<Content: View>: View  {
     private var content: Content
     @Binding var navPath: [Int]
     @Binding var selectedTrainingSession: TrainingSession?
-    @Binding var selectedSet: TrainingSet?
-    
-    
+    @Binding var selectedTrainingSet: TrainingSet?
     
     init(
         navPath: Binding<[Int]>,
         @ViewBuilder content: () -> Content,
         selectedTrainingSession: Binding<TrainingSession?>,
-        selectedSet: Binding<TrainingSet?>
+        selectedTrainingSet: Binding<TrainingSet?>
     ) {
         self._navPath = navPath
         self._selectedTrainingSession = selectedTrainingSession
-        self._selectedSet = selectedSet
+        self._selectedTrainingSet = selectedTrainingSet
         self.content = content()
     }
     
@@ -38,10 +36,11 @@ struct SessionHistoryNavigationController<Content: View>: View  {
             }.navigationDestination(for: Int.self) { selection in
             
                 if selection == 1 {
-                    SessionHistoryView(navPath: $navPath, selectedTrainingSession: $selectedTrainingSession)
+                    
+                    SessionHistoryView(navPath: $navPath, selectedTrainingSession: $selectedTrainingSession, selectedTrainingSet: $selectedTrainingSet)
                     
                 } else if selection == 2 {
-                    SetHistoryView(navPath: $navPath, selectedSet: $selectedSet)
+                    
                 }
             }
         }

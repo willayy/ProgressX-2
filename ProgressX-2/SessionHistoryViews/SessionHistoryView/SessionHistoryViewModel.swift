@@ -10,6 +10,11 @@ import Foundation
 class SessionHistoryViewModel: ObservableObject{
     
     @Published var selectedTrainingSession: TrainingSession? = nil
-    @Published var selectedTrainingSet: TrainingSet? = nil
+    @Published public var selectedCategories: Set<ExerciseCategory> = Set()
+    @Published public var selectedTrainingSets: [TrainingSet] = []
     
 }
+
+
+
+

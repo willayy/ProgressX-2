@@ -11,7 +11,7 @@ class ChooseSessionHistoryViewModel: ObservableObject {
     
     @Published var navPath: [Int] = [Int]()
     @Published var selectedTrainingSession: TrainingSession? = nil
-    @Published var selectedSet: TrainingSet? = nil
+    @Published var selectedTrainingSet: TrainingSet? = nil
     @Published var searchText: String = ""
     
 }
