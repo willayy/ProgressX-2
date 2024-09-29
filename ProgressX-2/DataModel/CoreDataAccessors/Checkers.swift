@@ -23,7 +23,7 @@ extension CoreDataAccess {
     /// Checks if more than one Profile exists. That is, is there more than 1 Profiles saved to the persistent store.
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
     /// - Returns: Yes if profile duplicates exists, No if it doesnt.
-    public static func noDuplicateProfilesExists(_ context: NSManagedObjectContext) -> Bool {
+    public static func duplicateProfilesExists(_ context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count > 1

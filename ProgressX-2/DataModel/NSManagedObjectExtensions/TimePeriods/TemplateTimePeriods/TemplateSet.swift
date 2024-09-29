@@ -123,7 +123,8 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
     // MARK: Protocol implementation
     
     internal var children: [SetThreshold] {
-        return self.thresholds!.allObjects as! [SetThreshold]
+        return (self.thresholds!.allObjects as! [SetThreshold])
+            .sorted(by: { $0.positionIndex < $1.positionIndex })
     }
     
     // Protocol implementation

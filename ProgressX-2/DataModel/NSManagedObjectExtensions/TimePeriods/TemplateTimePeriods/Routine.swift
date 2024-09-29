@@ -125,13 +125,19 @@ extension Routine: HasOrderable, HasChildren, HasCompleteable {
     
     // Protocol implementation
     func childrenAreComplete() -> Bool {
+        
         if self.trainingCycles!.allObjects.isEmpty {
+            
             return false
+            
         } else {
-          return self.trainingCycles!.allSatisfy {
-              trainingCycle in
-                (trainingCycle as! TrainingCycle).isComplete
+            
+            return self.trainingCycles!.allSatisfy {
+
+                ($0 as! TrainingCycle).isComplete
+              
             }
+            
         }
     }
     
@@ -143,14 +149,20 @@ extension Routine: HasOrderable, HasChildren, HasCompleteable {
     // MARK: Validation
     
     override public func validateForInsert() throws {
+        
         try super.validateForInsert()
+        
         try validateRoutineName()
+        
         try validateTrainingCycles()
     }
     
     override public func validateForUpdate() throws {
+        
         try super.validateForUpdate()
+        
         try validateRoutineName()
+        
         try validateTrainingCycles()
     }
     
