@@ -171,8 +171,6 @@
 		83FBF1E12C15BDAE004D0E2A /* InMemoryInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */; };
 		8F1307492C7C9E5900F9BB72 /* DisplayMusclesDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */; };
 		8F13074B2C95940400F9BB72 /* SetHistoryListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074A2C95940300F9BB72 /* SetHistoryListItem.swift */; };
-		8F13074E2C95A99000F9BB72 /* SetHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */; };
-		8F1307502C95A9A100F9BB72 /* SetHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */; };
 		8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */; };
 		8F7ABD7A2C57A47F00BEEE9A /* PopupFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */; };
 		8F7F16072C47F5FB00F37C58 /* StartWorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */; };
@@ -374,8 +372,6 @@
 		83FBF1E02C15BDAE004D0E2A /* InMemoryInit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryInit.swift; sourceTree = "<group>"; };
 		8F1307482C7C9E5900F9BB72 /* DisplayMusclesDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayMusclesDummy.swift; sourceTree = "<group>"; };
 		8F13074A2C95940300F9BB72 /* SetHistoryListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryListItem.swift; sourceTree = "<group>"; };
-		8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryView.swift; sourceTree = "<group>"; };
-		8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetHistoryViewModel.swift; sourceTree = "<group>"; };
 		8F7ABD772C5793F800BEEE9A /* PopupFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackView.swift; sourceTree = "<group>"; };
 		8F7ABD792C57A47F00BEEE9A /* PopupFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupFeedbackViewModel.swift; sourceTree = "<group>"; };
 		8F7F16062C47F5FB00F37C58 /* StartWorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartWorkoutViewModel.swift; sourceTree = "<group>"; };
@@ -1077,8 +1073,6 @@
 		8F13074C2C95A96000F9BB72 /* SetHistoryView */ = {
 			isa = PBXGroup;
 			children = (
-				8F13074D2C95A99000F9BB72 /* SetHistoryView.swift */,
-				8F13074F2C95A9A100F9BB72 /* SetHistoryViewModel.swift */,
 			);
 			name = SetHistoryView;
 			sourceTree = "<group>";
@@ -1421,7 +1415,6 @@
 				8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */,
 				83D684F62C2E064500FA78C6 /* Profile.swift in Sources */,
 				83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */,
-				8F13074E2C95A99000F9BB72 /* SetHistoryView.swift in Sources */,
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				83BAF9102C5B74F200EFC1C6 /* Generate.swift in Sources */,
 				831F2C302C24E54B007A7A8A /* TemplateSetListItem.swift in Sources */,
@@ -1491,7 +1484,6 @@
 				831F2BF52C20A74C007A7A8A /* TrainingSession.swift in Sources */,
 				83D684F92C2EC74900FA78C6 /* OrderableTimePeriod.swift in Sources */,
 				831F2C252C242777007A7A8A /* SearchableList.swift in Sources */,
-				8F1307502C95A9A100F9BB72 /* SetHistoryViewModel.swift in Sources */,
 				8310D9152C000437004A5A3D /* PrList.swift in Sources */,
 				83BD39712C47EB93008E09A0 /* WeighInViewModel.swift in Sources */,
 				8F7F160F2C4928E300F37C58 /* ChooseWeekView.swift in Sources */,

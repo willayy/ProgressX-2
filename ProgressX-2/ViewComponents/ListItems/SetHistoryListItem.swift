@@ -10,8 +10,8 @@ import SwiftUI
 
 struct SetHistoryListItem: View {
     
+    @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedTrainingSet: TrainingSet?
     @ObservedObject var set: TrainingSet
     
     
@@ -27,21 +27,16 @@ struct SetHistoryListItem: View {
                     .fontWeight(.bold)
                 + Text(String(set.positionIndex))
                 
+                Text("Exercise: ")
+                    .fontWeight(.bold)
+                + Text(String((set.exercise?.exerciseName)!))
+                
                 (Text("Status: ")
                     .fontWeight(.bold)
                  + Text("\(status(set: set))"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             }
-            Spacer()
-            
-            Button(action: {
-                selectedTrainingSet = set
-                navPath.append(2)
-            }) { Image(systemName: "align.vertical.bottom.fill") }
-                .frame(width: 20)
-                .padding(.horizontal, 10)
-                .buttonStyle(BorderlessButtonStyle())
         }
     }
     

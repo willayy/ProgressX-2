@@ -16,6 +16,11 @@ struct SessionHistoryView: View {
     @StateObject private var viewModel = SessionHistoryViewModel()
     @Binding var selectedTrainingSession: TrainingSession?
     
+    @FetchRequest(
+        entity: ExerciseCategory.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \ExerciseCategory.categoryName, ascending: false)]
+    ) private var categories: FetchedResults<ExerciseCategory>
+    
     var body: some View {
         
         @FetchRequest(
@@ -44,6 +49,15 @@ struct SessionHistoryView: View {
                 .padding(.bottom, 20)
                 .frame(height: 300)
             
+            BoldSubHeadline(text: "Sets in " + (selectedTrainingSession?.timePeriodName ?? ""))
+            
+            HiddenLightSubHeadline(
+                title: "What is shown in this list?",
+                text: ("This is a list of all the sets in your completed in this session with their name, exercise, order preformed in session and the status of it's completion.")
+            )
+                .padding(.bottom, 10)
+                .padding(.horizontal, 20)
+            
             BasicList(
                 height: 400,
                 containerName: "",
@@ -51,34 +65,46 @@ struct SessionHistoryView: View {
                 data: _allTrainingSets)
             { set in
                 SetHistoryListItem(
-                    navPath: $navPath,
-                    selectedTrainingSet: $viewModel.selectedTrainingSet,
-                    set: set
-                )
-            }
-            .padding(.horizontal, 20)
-        }
+                    navPath: $navPath, set: set)
+            
+                }.padding(.horizontal, 20)
+                .padding(.bottom, 20)
+            
+            BoldSubHeadline(text: "Targeted muscles")
+            
+            HiddenLightSubHeadline(title: "What is targeted muscles?", text: "The muscles targeted in this sessions are shown on this muscle dummy.")
+                .padding(.bottom, 10)
+                .padding(.horizontal, 20)
+            
+            DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories , categories: _categories)
+
+        }.onAppear(perform: {
+            
+            viewModel.assignTrainingSetsFrom(selectedTrainingSession!)
+            
+            viewModel.assignCategoriesUsedIn(selectedTrainingSession!)
+            
+        })
     }
 }
 
 #Preview {
     
-    @State var navPath = [Int]()
-    
     let context = PersistenceController.previewViewContext
     
-    let request: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+    @State var navPath: [Int] = [Int]()
     
-    let results = CoreDataAccess.fetch(context, fetchRequest: request)
+    let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
     
-    @State var trainingSession = results.first
+    let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
+    @State var selectedTrainingSession: TrainingSession? = results.first
+        
     return SessionHistoryView(
         navPath: $navPath,
-        selectedTrainingSession: $trainingSession
+        selectedTrainingSession: $selectedTrainingSession
     )
+    .environmentObject(ShowMenuController())
     .environment(\.managedObjectContext, context)
-
-    
     
 }
