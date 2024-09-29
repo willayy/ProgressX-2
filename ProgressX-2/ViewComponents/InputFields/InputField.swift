@@ -75,17 +75,22 @@ struct InputField: View {
                 .animation(Animation.default.repeatCount(1).speed(2), value: self.shouldShake)
                 
             if markAsWrong {
+                
                 Text(errorMessage)
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundColor(.red)
+                
             }
             
         }
     }
     
+    /// Hides keyboard in a kind of janky way, this might cause bugs...
     private func hideKeyboard() {
+        
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        
     }
     
 }
