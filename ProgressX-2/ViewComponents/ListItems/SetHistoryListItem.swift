@@ -12,7 +12,6 @@ struct SetHistoryListItem: View {
     
     @Environment(\.managedObjectContext) private var viewContext
     @Binding var navPath: [Int]
-    @Binding var selectedTrainingSet: TrainingSet?
     @ObservedObject var set: TrainingSet
     
     

@@ -15,7 +15,6 @@ struct SessionHistoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject private var viewModel = SessionHistoryViewModel()
     @Binding var selectedTrainingSession: TrainingSession?
-    @Binding var selectedTrainingSet: TrainingSet?
     
     @FetchRequest(
         entity: ExerciseCategory.entity(),
@@ -23,9 +22,6 @@ struct SessionHistoryView: View {
     ) private var categories: FetchedResults<ExerciseCategory>
     
     var body: some View {
-        
-        
-      
         
         @FetchRequest(
             entity: TrainingSet.entity(),
@@ -55,7 +51,10 @@ struct SessionHistoryView: View {
             
             BoldSubHeadline(text: "Sets in " + (selectedTrainingSession?.timePeriodName ?? ""))
             
-            LightSubHeadline(text: ("This is a list of all the sets in your completed session with their name, exercise, order preformed in session and status of their completion."))
+            HiddenLightSubHeadline(
+                title: "What is shown in this list?",
+                text: ("This is a list of all the sets in your completed in this session with their name, exercise, order preformed in session and the status of it's completion.")
+            )
                 .padding(.bottom, 10)
                 .padding(.horizontal, 20)
             
@@ -66,57 +65,46 @@ struct SessionHistoryView: View {
                 data: _allTrainingSets)
             { set in
                 SetHistoryListItem(
-                    navPath: $navPath, selectedTrainingSet: $selectedTrainingSet, set: set)
+                    navPath: $navPath, set: set)
             
                 }.padding(.horizontal, 20)
                 .padding(.bottom, 20)
             
             BoldSubHeadline(text: "Targeted muscles")
             
-            LightSubHeadline(text: ("This dummy displays what muscle groups your workout targeted"))
+            HiddenLightSubHeadline(title: "What is targeted muscles?", text: "The muscles targeted in this sessions are shown on this muscle dummy.")
                 .padding(.bottom, 10)
                 .padding(.horizontal, 20)
             
             DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories , categories: _categories)
 
         }.onAppear(perform: {
-            fillSett()
-            exercisecategorys()
+            
+            viewModel.assignTrainingSetsFrom(selectedTrainingSession!)
+            
+            viewModel.assignCategoriesUsedIn(selectedTrainingSession!)
+            
         })
     }
-    
-    
-    public func fillSett() -> Void{
-        viewModel.selectedTrainingSets = selectedTrainingSession?.trainingSets?.allObjects as! [TrainingSet]
-    }
-    
-    public func exercisecategorys() -> Void {
-        var displayset: Set<ExerciseCategory> = Set()
-        for set in viewModel.selectedTrainingSets{
-                var categories = set.exercise?.categories?.allObjects as! [ExerciseCategory]
-                for category in categories{
-                    displayset.insert(category)
-                }
-            }
-        viewModel.selectedCategories = displayset
-        }
-    
-    
-    }
+}
 
-    public func SetsForChart(sets: [TrainingSet]) -> [String:Int]{
-        var colection:[String:Int] = ["Completed full set":0, "Completed with less reps": 0, "Skipped set": 0]
-        for trainingset in sets{
-            if trainingset.quantityDone < trainingset.quantityTodo && trainingset.quantityDone > 0{
-                colection["Completed with less reps"]! += 1
-            } else if trainingset.quantityDone == trainingset.quantityTodo {
-                colection["Completed full set"]! += 1
-            } else {
-                colection["Skipped set"]! += 1
-            }
-        }
+#Preview {
+    
+    let context = PersistenceController.previewViewContext
+    
+    @State var navPath: [Int] = [Int]()
+    
+    let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+    
+    let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
+    
+    @State var selectedTrainingSession: TrainingSession? = results.first
         
-        return colection
-    }
-
-
+    return SessionHistoryView(
+        navPath: $navPath,
+        selectedTrainingSession: $selectedTrainingSession
+    )
+    .environmentObject(ShowMenuController())
+    .environment(\.managedObjectContext, context)
+    
+}

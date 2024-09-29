@@ -20,17 +20,19 @@ struct ChooseSessionkHistoryView: View {
     
     var body: some View {
         
-        SessionHistoryNavigationController(navPath: $viewModel.navPath, content: {
+        SessionHistoryNavigationController(navPath: $viewModel.navPath,
+                                           selectedTrainingSession: $viewModel.selectedTrainingSession,
+                                           content: {
             
-            ScrollView{
+            ScrollView {
                 
                 VStackWithSideBarButton{
                     
                     BoldTitle(text:"Completed sessions")
                     
                     LightSubHeadline(text: "Here you can choose a specific completed session to view your past workouts")
-                        .padding(.vertical)
-                        .padding(.horizontal)
+                        .padding(.bottom, 10)
+                        .padding(.horizontal, 20)
                     
                     // MARK: Search bar
                     SearchBar(
@@ -53,7 +55,7 @@ struct ChooseSessionkHistoryView: View {
                     }.padding(.horizontal, 20)
                 }
             }
-        }, selectedTrainingSession: $viewModel.selectedTrainingSession, selectedTrainingSet: $viewModel.selectedTrainingSet)
+        })
     }
 }
 
