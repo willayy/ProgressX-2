@@ -5,48 +5,38 @@
 //  Created by William Norland on 2024-09-29.
 //
 
-public class DecimalIF: InputFieldVariant {
+import SwiftUI
+
+public class DecimalIF: NumericInputFieldVariant {
     
-    static private let allowedChars: Set<Character> = [
-        "0",
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        ".",
-        ","
-    ]
-    
-    private let max: Double
-    
-    private let min: Double
-    
-    init(min: Double, max: Double, optional: Bool) {
+    public init(
         
-        self.max = max
-        self.min = min
+        min: Double,
+        max: Double,
+        bwButton: Bool,
+        allowNeg: Bool,
+        optional: Bool
+        
+    ) {
         
         super.init(
-            allowedChars: DecimalIF.allowedChars,
-            keyBoardType: .numbersAndPunctuation,
             minScaleFactor: 0.75,
             maxChars: 7,
-            allowEmpty: optional
+            allowEmpty: optional,
+            bwButton: bwButton,
+            allowNegatives: allowNeg,
+            max: max,
+            min: min
         )
         
     }
     
-    override public func filterInput(_ new: String) -> String {
+    override internal func filterInput(_ new: String) -> String {
         
         // Filter out non allowed characters
-        var filtered = new.filter {
-            allowedChars.contains($0)
-        }
+        var filtered = new
+            .replacingOccurrences(of: ",", with: ".")
+            .filter { allowedChars.contains($0) }
         
         // Ensure first char isnt a dot, last char is handled in submit
         if filtered.first == "." {
@@ -54,12 +44,12 @@ public class DecimalIF: InputFieldVariant {
         }
         
         // Ensure that number isnt longer than max chars
-        if new.count > maxChars {
+        if filtered.count > maxChars {
             filtered.removeLast()
         }
         
         // Ensure minus is only at the beginning
-        if new.contains("-") && new.first != "-" {
+        if filtered.contains("-") && filtered.first != "-" {
             filtered.removeAll(where: { $0 == "-" })
         }
         
@@ -73,28 +63,25 @@ public class DecimalIF: InputFieldVariant {
         }
         
         return filtered
+            
     }
     
-    override public func onChange(_ new: String) -> String {
-        
-        // Always convert , to .
-        return new.replacingOccurrences(of: ",", with: ".")
-        
-    }
-    
-    override public func isValid(_ new: String) -> Bool {
+    override internal func dynamicValidation(_ filtered: String) -> Bool {
         
         // Reset error message
         self.errorMessage = ""
         
-        if new.isEmpty && self.allowEmpty {
+        // if the field is empty let it pass the dynamic validation
+        if filtered.isEmpty {
+            
             return true
+            
         }
         
         // Check that input is a number
-        guard let numericalValue: Double = Double(new) else {
+        guard let numericalValue: Double = Double(filtered) else {
             
-            self.errorMessage = "Entered value is not a valid number"
+            withAnimation { self.errorMessage = "Entered value is not a valid number" }
             
             return false
             
@@ -103,7 +90,7 @@ public class DecimalIF: InputFieldVariant {
         // Check that input isn't too big
         if numericalValue > self.max {
             
-            self.errorMessage = "Entered value is too big"
+            withAnimation { self.errorMessage = "Entered value is too big" }
             
             return false
             
@@ -112,12 +99,14 @@ public class DecimalIF: InputFieldVariant {
         // CHeck that input isn't too small.
         if numericalValue < self.min {
             
-            self.errorMessage = "Entered value is too small"
+            withAnimation { self.errorMessage = "Entered value is too small" }
+            
+            return false
             
         }
         
         return true
-                
+        
     }
     
 }

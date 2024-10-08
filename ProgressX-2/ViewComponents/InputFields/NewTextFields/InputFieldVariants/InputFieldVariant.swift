@@ -10,15 +10,15 @@ import SwiftUI
 /// Baseclass for all TextFieldVariants
 public class InputFieldVariant: ObservableObject {
     
-    public let allowedChars: Set<Character>
+    internal let allowedChars: Set<Character>
     
-    public let keyBoardType: UIKeyboardType
+    internal let keyBoardType: UIKeyboardType
     
-    public let minScaleFactor: Double
+    internal let minScaleFactor: Double
     
-    public let maxChars: Int
+    internal let maxChars: Int
     
-    public let allowEmpty: Bool
+    internal let allowEmpty: Bool
     
     @Published public var errorMessage: String = ""
     
@@ -30,15 +30,11 @@ public class InputFieldVariant: ObservableObject {
         self.allowEmpty = allowEmpty
     }
     
-    public func filterInput(_ new: String) -> String {
+    internal func filterInput(_ new: String) -> String {
         fatalError("Dont instantiate the InputValidator base class!")
     }
     
-    public func isValid(_ new: String) -> Bool {
-        fatalError("Dont instantiate the InputValidator base class!")
-    }
-    
-    public func onChange(_ new: String) -> String {
+    internal func dynamicValidation(_ filtered: String) -> Bool {
         fatalError("Dont instantiate the InputValidator base class!")
     }
     

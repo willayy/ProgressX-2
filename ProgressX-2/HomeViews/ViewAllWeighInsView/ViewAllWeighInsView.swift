@@ -19,18 +19,10 @@ struct ViewAllWeighInsView: View {
     @Binding var navPath: [Int]
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
-                
-                @State var valid = false
-                @State var text = ""
-                
-                InputField2(
-                    placeHolder: "Test input field",
-                    text: $text,
-                    valid: $valid,
-                    variant: DecimalIF(min: 0, max: 1000, optional: false)
-                )
                 
                 BoldTitle(text: "Weigh-in's")
                     .padding(.horizontal, 20)

@@ -80,6 +80,13 @@
 		83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E832C3C153700F5F6CB /* EditPrViewModel.swift */; };
 		83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */; };
 		83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */; };
+		832B9CEF2CB431E800750A01 /* MinusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CEE2CB431E800750A01 /* MinusButton.swift */; };
+		832B9CF12CB4329F00750A01 /* NumericInputFieldVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */; };
+		832B9CF32CB4399100750A01 /* BwButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF22CB4399100750A01 /* BwButton.swift */; };
+		832B9CF72CB43B5400750A01 /* IntegerIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF62CB43B5400750A01 /* IntegerIF.swift */; };
+		832B9CF92CB43B6300750A01 /* TextIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF82CB43B6300750A01 /* TextIF.swift */; };
+		832B9CFB2CB55B0200750A01 /* GlobalInputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */; };
+		832B9CFE2CB571BF00750A01 /* LargeTextInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CFD2CB571BF00750A01 /* LargeTextInputField.swift */; };
 		8351A9B12C612D6000405ABB /* ChooseSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B02C612D6000405ABB /* ChooseSessionView.swift */; };
 		8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */; };
 		8354CA282C63AE2000E3EA98 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354CA272C63AE2000E3EA98 /* ProgressBar.swift */; };
@@ -288,6 +295,13 @@
 		83266E832C3C153700F5F6CB /* EditPrViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrViewModel.swift; sourceTree = "<group>"; };
 		83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdViewModel.swift; sourceTree = "<group>"; };
 		83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsViewModel.swift; sourceTree = "<group>"; };
+		832B9CEE2CB431E800750A01 /* MinusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinusButton.swift; sourceTree = "<group>"; };
+		832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericInputFieldVariant.swift; sourceTree = "<group>"; };
+		832B9CF22CB4399100750A01 /* BwButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BwButton.swift; sourceTree = "<group>"; };
+		832B9CF62CB43B5400750A01 /* IntegerIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerIF.swift; sourceTree = "<group>"; };
+		832B9CF82CB43B6300750A01 /* TextIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextIF.swift; sourceTree = "<group>"; };
+		832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalInputFieldValidator.swift; sourceTree = "<group>"; };
+		832B9CFD2CB571BF00750A01 /* LargeTextInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTextInputField.swift; sourceTree = "<group>"; };
 		8351A9B02C612D6000405ABB /* ChooseSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionView.swift; sourceTree = "<group>"; };
 		8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionListItem.swift; sourceTree = "<group>"; };
 		8354CA272C63AE2000E3EA98 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -803,6 +817,36 @@
 			path = Effects;
 			sourceTree = "<group>";
 		};
+		832B9CF42CB4399500750A01 /* InputFieldComponents */ = {
+			isa = PBXGroup;
+			children = (
+				83CF0C382CA9A292006F4E53 /* ErrorMessage.swift */,
+				832B9CEE2CB431E800750A01 /* MinusButton.swift */,
+				832B9CF22CB4399100750A01 /* BwButton.swift */,
+			);
+			path = InputFieldComponents;
+			sourceTree = "<group>";
+		};
+		832B9CF52CB439A400750A01 /* InputFieldVariants */ = {
+			isa = PBXGroup;
+			children = (
+				830D16872CAF188E00092EF6 /* InputFieldVariant.swift */,
+				832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */,
+				83CF0C362CA99BCC006F4E53 /* DecimalIF.swift */,
+				832B9CF62CB43B5400750A01 /* IntegerIF.swift */,
+				832B9CF82CB43B6300750A01 /* TextIF.swift */,
+			);
+			path = InputFieldVariants;
+			sourceTree = "<group>";
+		};
+		832B9CFC2CB56DE200750A01 /* InputFieldValidation */ = {
+			isa = PBXGroup;
+			children = (
+				832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */,
+			);
+			path = InputFieldValidation;
+			sourceTree = "<group>";
+		};
 		833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1069,10 +1113,11 @@
 		83CF0C352CA99BB5006F4E53 /* NewTextFields */ = {
 			isa = PBXGroup;
 			children = (
-				830D16872CAF188E00092EF6 /* InputFieldVariant.swift */,
-				83CF0C362CA99BCC006F4E53 /* DecimalIF.swift */,
-				83CF0C382CA9A292006F4E53 /* ErrorMessage.swift */,
+				832B9CFC2CB56DE200750A01 /* InputFieldValidation */,
+				832B9CF52CB439A400750A01 /* InputFieldVariants */,
+				832B9CF42CB4399500750A01 /* InputFieldComponents */,
 				830D16892CAF190A00092EF6 /* InputField2.swift */,
+				832B9CFD2CB571BF00750A01 /* LargeTextInputField.swift */,
 			);
 			path = NewTextFields;
 			sourceTree = "<group>";
@@ -1376,6 +1421,7 @@
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
 				8F7F16092C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift in Sources */,
+				832B9CEF2CB431E800750A01 /* MinusButton.swift in Sources */,
 				83B013A72C5BB9A000059E42 /* inputLongTextField.swift in Sources */,
 				831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */,
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
@@ -1389,11 +1435,13 @@
 				8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */,
 				83266E7B2C3BF9D400F5F6CB /* EditExerciseViewModel.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
+				832B9CF92CB43B6300750A01 /* TextIF.swift in Sources */,
 				83ACDB422BE57E8500BE9FE2 /* IntegerTextField.swift in Sources */,
 				83BD39782C4925F7008E09A0 /* BodyEntryListItem.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
 				8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */,
 				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
+				832B9CF32CB4399100750A01 /* BwButton.swift in Sources */,
 				832214282BD65A0E00DF9C7A /* DecimalTextField.swift in Sources */,
 				8FAFE5622C60D6D300143223 /* TrainingSetFinishedView.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
@@ -1408,6 +1456,8 @@
 				83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */,
 				8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
+				832B9CF72CB43B5400750A01 /* IntegerIF.swift in Sources */,
+				832B9CFB2CB55B0200750A01 /* GlobalInputFieldValidator.swift in Sources */,
 				83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */,
 				8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
@@ -1459,8 +1509,10 @@
 				831657732C53CB93003F895F /* InfoHelpNavigationController.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */,
 				830D16882CAF188E00092EF6 /* InputFieldVariant.swift in Sources */,
+				832B9CF12CB4329F00750A01 /* NumericInputFieldVariant.swift in Sources */,
 				83B013B42C5CDEBB00059E42 /* AddingViewModel.swift in Sources */,
 				8364860F2C372589006EB0C0 /* TemplateSet.swift in Sources */,
+				832B9CFE2CB571BF00750A01 /* LargeTextInputField.swift in Sources */,
 				83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */,
 				83266E782C3BF8DC00F5F6CB /* ExerciseLibraryViewModel.swift in Sources */,
 				83D6850F2C35957600FA78C6 /* StringSelectionList.swift in Sources */,
