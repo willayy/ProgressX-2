@@ -104,7 +104,9 @@ struct TrainingViewRoutineListItem: View {
                 
                 // There exists a next week/session/set
                 // This should probably have some feedback for the user as well.
+                
                 if currentSet != nil {
+                    
                     selectedSession = nextSession
                     currentTrainingSet = currentSet
                     navPath.append(2)
