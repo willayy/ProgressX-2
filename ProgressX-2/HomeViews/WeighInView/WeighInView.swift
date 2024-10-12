@@ -53,7 +53,8 @@ struct WeighInView: View {
                 text: $viewModel.chestCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
@@ -64,7 +65,8 @@ struct WeighInView: View {
                 text: $viewModel.upperArmCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
@@ -75,7 +77,8 @@ struct WeighInView: View {
                 text: $viewModel.lowerArmCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
@@ -86,7 +89,8 @@ struct WeighInView: View {
                 text: $viewModel.waistCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
@@ -97,7 +101,8 @@ struct WeighInView: View {
                 text: $viewModel.thighCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
@@ -108,7 +113,8 @@ struct WeighInView: View {
                 text: $viewModel.calfCirc,
                 variant: DecimalIF(
                     min: 0,
-                    max: 1000
+                    max: 1000,
+                    optional: true
                 )
             )
             .padding(.horizontal, 60)
