@@ -26,17 +26,6 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     @Published public var showNoChangeAlert: Bool = false
     @Published public var showProfileChangedAlert: Bool = false
     
-    // Ivalid input variables
-    @Published public var userNameIsInvalid: Bool = false
-    @Published public var heightIsInvalid: Bool = false
-    @Published public var weightIsInvalid: Bool = false
-    @Published public var standardRestTimeIsInvalid: Bool = false
-    
-    // Error message variables
-    @Published public var userNameIsInvalidMsg: String = ""
-    @Published public var heightIsInvalidMsg: String = ""
-    @Published public var standardRestTimeIsInvalidMsg: String = ""
-    
     typealias T = Profile
     
     // Segments for segment picker

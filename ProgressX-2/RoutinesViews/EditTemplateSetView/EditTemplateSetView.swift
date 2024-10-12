@@ -11,9 +11,13 @@ import CoreData
 struct EditTemplateSetView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var navPath: [Int]
+    
     @Binding var selectedTemplateSet: TemplateSet?
+    
     @StateObject private var viewModel = EditTemplateSetViewModel()
+    
     @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
@@ -28,47 +32,51 @@ struct EditTemplateSetView: View {
             Title2(text: "\(selectedTemplateSet!.timePeriodName!)")
                 .padding(.bottom, 10)
             
+            // MARK: Submission alert state
             if viewModel.showSetChangedAlert {
+                
                 SubmitAlert(
                     message: "Successfully edited set!",
                     color: .green,
                     showAlertState: $viewModel.showSetChangedAlert
                 )
                 .padding(.top, 10)
+                
             } else if viewModel.showNoChangeAlert {
+                
                 SubmitAlert(
                     message: "No change!",
                     color: .blue,
                     showAlertState: $viewModel.showNoChangeAlert
                 )
                 .padding(.top, 10)
+                
             }
             
+            // MARK: Set name
             BoldSubHeadline(text: "Edit set name")
             
-            InputTextField(
+            InputField(
                 placeHolder: "Set name",
                 text: $viewModel.editedSetName,
-                markAsWrong: $viewModel.editedSetNameIsInvalid,
-                errorMessage: $viewModel.editedSetNameIsInvalidMsg,
-                maxChars: 25
+                variant: TextIF()
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 5)
             
+            // MARK: Set description
             BoldSubHeadline(text: "Edit set description")
             
-            inputLongTextField(
+            LargeInputField(
                 placeHolder: "Set description",
                 text: $viewModel.editedSetDesc,
-                markAsWrong: $viewModel.editedSetDescIsInvalid,
-                errorMessage: $viewModel.editedSetDescIsInvalidMsg,
-                maxChars: 200
+                variant: TextIF(allowEmpty: false)
             )
             .frame(height: 150)
             .padding(.horizontal, 60)
             .padding(.bottom, 20)
             
+            // MARK: Set thresholds
             BoldSubHeadline(text: "Edit or add thresholds for this set")
                 .padding(.horizontal, 10)
             
@@ -81,6 +89,7 @@ struct EditTemplateSetView: View {
             .buttonStyle(BorderedProminentButtonStyle())
             .padding(.bottom, 20)
             
+            // MARK: Set position in session
             BoldSubHeadline(text: "Edit position of this set in its session")
             
             HiddenLightSubHeadline(
@@ -99,6 +108,7 @@ struct EditTemplateSetView: View {
             .padding(.bottom, 20)
             .padding(.horizontal, 50)
             
+            // MARK: Set exercise
             BoldSubHeadline(text: "Edit the exercise of the set")
             
             SetExerciseSelectionList(
@@ -110,11 +120,10 @@ struct EditTemplateSetView: View {
             
             BoldSubHeadline(text: "Edit the rest time of the set")
             
-            DecimalTextField(
+            InputField(
                 placeHolder: "Rest time",
-                numberText: $viewModel.editedRestTime,
-                markAsWrong: $viewModel.editedRestTimeIsInvalid,
-                errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
+                text: $viewModel.editedRestTime,
+                variant: DecimalIF(min: 0, max: 6000)
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 20)
@@ -144,133 +153,78 @@ struct EditTemplateSetView: View {
             .padding(.bottom, 20)
             .padding(.horizontal, 50)
             
+            // MARK: Load of the template set
             BoldSubHeadline(text: "Edit the load of the set")
             
             HStack {
-                DecimalTextField(
+                
+                InputField(
                     placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
-                    numberText: $viewModel.editedSetLoad,
-                    markAsWrong: $viewModel.editedSetLoadIsInvalid,
-                    errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
-                    bodyWeightButton: addBodyWeightButton
+                    text: $viewModel.editedSetLoad,
+                    variant: DecimalIF(
+                        min: 0,
+                        max: 10000,
+                        bwButton: true
+                    )
                 )
                 
                 if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
+                    
                     Text("%")
+                    
                 }
+                
             }
             .padding(.horizontal, 60)
             
+            // MARK: The quantity of the set
             BoldSubHeadline(text: "Edit the quantity of the set")
                 .padding(.top, 5)
             
-            if viewModel.selectedExercise?.exerciseType == "reps" {
-                HStack {
-                    IntegerTextField(
-                        placeHolder: viewModel.quantityPlaceholder(),
-                        numberText: $viewModel.editedSetQuantity,
-                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
-                    )
-                    
-                    if viewModel.quantityPlaceholder() == "Percentage" {
-                        Text("%")
-                    }
+            let exerciseType = viewModel.selectedExercise?.exerciseType
+            
+            let variant = exerciseType == "reps" ? IntegerIF(min: 0, max: 100000) : DecimalIF(min: 0, max: 100000)
+            
+            HStack {
+                
+                InputField(
+                    placeHolder: viewModel.quantityPlaceholder(),
+                    text: $viewModel.editedSetQuantity,
+                    variant: variant
+                )
+                
+                if viewModel.quantityPlaceholder() == "Percentage" {
+                    Text("%")
                 }
-                .padding(.horizontal, 60)
-            } else {
-                HStack {
-                    DecimalTextField(
-                        placeHolder: viewModel.quantityPlaceholder(),
-                        numberText: $viewModel.editedSetQuantity,
-                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg
-                    )
-                    .padding(.top, 5)
-                    
-                    if viewModel.quantityPlaceholder() == "Percentage" {
-                        Text("%")
-                    }
-                }
-                .padding(.horizontal, 60)
+                
             }
+            .padding(.horizontal, 60)
             
         }
-                
+        
+        // MARK: Save changes
         Button {
-            if validateInput() {
+            
+            if GlobalInputFieldValidator.allFieldsValid() {
+                
                 viewModel.saveEdits(entity: selectedTemplateSet!, viewContext: viewContext)
+                
             }
+            
         } label: {
+            
             Text("Save changes")
                 .frame(height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
             Image(systemName: "square.and.arrow.down")
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.top, 20)
         .padding(.bottom, 10)
                             
-    }
-    
-    private func validateInput() -> Bool {
-        
-        let exerciseType = viewModel.selectedExercise!.exerciseType
-        
-        let quantityValidator: InputFieldValidator
-        
-        if exerciseType == "reps" {
-            
-            quantityValidator = IntFieldValidator(maxInputNumber: 100000)
-            
-        } else {
-            
-            quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
-            
-        }
-        
-        let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
-        
-        let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
-        
-        let nameValidator = StringFieldValidator()
-        
-        let descValidtor = StringFieldValidator(emptyAllowed: true)
-        
-        var valid = 0
-        
-        valid += restTimeValidator.validateField(
-            inputVar: viewModel.editedRestTime,
-            errorMessage: $viewModel.editedRestTimeIsInvalidMsg,
-            fieldInvalid: $viewModel.editedRestTimeIsInvalid
-        )
-        
-        valid += loadValidator.validateField(
-            inputVar: viewModel.editedSetLoad,
-            errorMessage: $viewModel.editedSetLoadIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSetLoadIsInvalid
-        )
-        
-        valid += quantityValidator.validateField(
-            inputVar: viewModel.editedSetQuantity,
-            errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSetQuantityIsInvalid
-        )
-        
-        valid += nameValidator.validateField(
-            inputVar: viewModel.editedSetName,
-            errorMessage: $viewModel.editedSetNameIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSetNameIsInvalid
-        )
-        
-        valid += descValidtor.validateField(
-            inputVar: viewModel.editedSetDesc,
-            errorMessage: $viewModel.editedSetDescIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSetDescIsInvalid
-        )
-        
-        return valid == 0
     }
     
 }

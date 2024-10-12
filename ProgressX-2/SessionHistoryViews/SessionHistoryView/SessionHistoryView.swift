@@ -62,13 +62,15 @@ struct SessionHistoryView: View {
                 height: 400,
                 containerName: "",
                 elementName: "Sets",
-                data: _allTrainingSets)
-            { set in
+                data: _allTrainingSets
+            ) { set in
                 SetHistoryListItem(
-                    navPath: $navPath, set: set)
-            
-                }.padding(.horizontal, 20)
-                .padding(.bottom, 20)
+                    navPath: $navPath,
+                    set: set
+                )
+            }
+            .padding(.horizontal, 20)
+            .padding(.bottom, 20)
             
             BoldSubHeadline(text: "Targeted muscles")
             

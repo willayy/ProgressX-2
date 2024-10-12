@@ -20,16 +20,6 @@ class CreateNewProfile1ViewModel: ViewModel {
     @Published public var weight: String = ""
     @Published public var height: String = ""
     
-    // Input variables are invalid states
-    @Published public var userNameIsInvalid = false
-    @Published public var heightIsInvalid = false
-    @Published public var weightIsInvalid = false
-    
-    // Input variables invalid messages
-    @Published public var userNameIsInvalidMsg = ""
-    @Published public var heightIsInvalidMsg = ""
-    @Published public var weightIsInvalidMsg = ""
-    
     // StringSelectionList selection
     @Published public var smallestPlateSelection: String = "1.25 kg's"
     

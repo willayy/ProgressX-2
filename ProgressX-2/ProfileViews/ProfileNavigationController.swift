@@ -12,12 +12,23 @@ struct ProfileNavigationController<Content: View>: View {
     private var content: Content
     
     init(@ViewBuilder content: () -> Content) {
+        
         self.content = content()
+        
     }
     
     var body: some View {
+        
         NavigationStack {
-            content
+            
+            InputFieldForm {
+                
+                content
+                
+            }
+            
         }
+        
     }
+    
 }

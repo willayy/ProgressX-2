@@ -29,25 +29,32 @@ struct EditPrView: View {
                 
                 Title2(text: "\(exercise!.exerciseName!)")
                 
+                // MARK: Submission alert states.
                 if viewModel.prEditedAlert {
+                    
                     SubmitAlert(
                         message: "Succesfully edited PR!",
                         color: .green,
                         showAlertState: $viewModel.prEditedAlert
                     )
                     .padding(.top, 10)
+                    
                 }
                 
                 if viewModel.noChangeAlert {
+                    
                     SubmitAlert(
                         message: "No changes to PR",
                         color: .blue,
                         showAlertState: $viewModel.noChangeAlert
                     )
                     .padding(.top, 10)
+                    
                 }
                 
+                // MARK: Information about the PR.
                 GroupBox {
+                    
                     VStack(alignment: .leading) {
                         
                         (Text("Type: ")
@@ -95,6 +102,7 @@ struct EditPrView: View {
                 .padding(.top, 10)
                 .padding(.bottom, 20)
                 
+                // MARK: Edit the date of the PR
                 BoldSubHeadline(text: "Edit date")
                 
                 DatePicker("", selection: $viewModel.editedDate, displayedComponents: .date)
@@ -102,84 +110,62 @@ struct EditPrView: View {
                     .labelsHidden()
                     .padding(.bottom, 10)
                 
+                // MARK: Edit the load of the PR
                 BoldSubHeadline(text: "Edit load")
                     .padding(.top, 10)
                 
-                DecimalTextField(
+                InputField(
                     placeHolder: "Load",
-                    numberText: $viewModel.editedWeightLoad,
-                    markAsWrong: $viewModel.editedWeightLoadInvalid,
-                    errorMessage: $viewModel.editedWeightLoadInvalidMsg,
-                    bodyWeightButton: true
+                    text: $viewModel.editedWeightLoad,
+                    variant: DecimalIF(min: 0, max: 10000)
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
-                if editingPr!.prType == "maxreps" {
-                    
-                    BoldSubHeadline(text: "Edit reps")
-                    
-                    IntegerTextField(
-                        placeHolder: "Reps",
-                        numberText: $viewModel.editedQuantity,
-                        markAsWrong: $viewModel.editedQuantityInvalid,
-                        errorMessage: $viewModel.editedQuantityInvalidMsg
-                    )
-                    .padding(.horizontal, 60)
-                    .padding(.bottom, 10)
-                } else if editingPr!.prType == "timemax" {
-                    
-                    BoldSubHeadline(text: "Edit time")
-                    
-                    DecimalTextField(
-                        placeHolder: "Time", 
-                        numberText: $viewModel.editedQuantity,
-                        markAsWrong: $viewModel.editedQuantityInvalid,
-                        errorMessage: $viewModel.editedQuantityInvalidMsg
-                    )
-                    .padding(.horizontal, 60)
-                    .padding(.bottom, 10)
-                }
+                // MARK: Choose PR quantity
+                // Declare variables for the PR's quantities inputField
+                let prType = editingPr!.prType!
                 
+                let quantityFieldVariant: InputFieldVariant = viewModel.getInputFieldVariant(fromPrType: prType)
+                
+                let quantityFieldPlaceHolder: String = viewModel.getInputFieldPlaceholder(fromPrType: prType)
+                
+                InputField(
+                    placeHolder: quantityFieldPlaceHolder,
+                    text: $viewModel.editedQuantity,
+                    variant: quantityFieldVariant
+                )
+                .padding(.horizontal, 60)
+                .padding(.bottom, 10)
+                
+                // MARK: Save changes button
                 Button(action: {
-                    if validateInput() {
+                    
+                    if GlobalInputFieldValidator.allFieldsValid() {
+                        
                         viewModel.saveEdits(entity: editingPr!, viewContext: viewContext)
+                        
                     }
+                    
                 }) {
+                    
                     Text("Save changes")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "square.and.arrow.down")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.vertical, 20)
                 
             }
+            
         }
+        
     }
     
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        let loadFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
-        let quantityFieldValidator: InputFieldValidator = {
-            return (editingPr!.prType == "timemax" ? DoubleFieldValidator(maxInputNumber: 100000) : IntFieldValidator(maxInputNumber: 100000))
-        }()
-        
-        valid += loadFieldValidator.validateField(
-            inputVar: viewModel.editedWeightLoad,
-            errorMessage: $viewModel.editedWeightLoadInvalidMsg,
-            fieldInvalid: $viewModel.editedWeightLoadInvalid
-        )
-        
-        valid += quantityFieldValidator.validateField(
-            inputVar: viewModel.editedQuantity,
-            errorMessage: $viewModel.editedQuantityInvalidMsg,
-            fieldInvalid: $viewModel.editedQuantityInvalid
-        )
-        
-        return valid == 0
-    }
 }
 
 #Preview {

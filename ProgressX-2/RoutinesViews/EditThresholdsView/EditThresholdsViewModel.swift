@@ -13,27 +13,11 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
     
     @Published public var editedLowerBound: String = ""
     
-    @Published public var editedLowerBoundIsInvalid: Bool = false
-    
-    @Published public var editedLowerBoundIsInvalidMsg: String = ""
-    
     @Published public var editedUpperBound: String = ""
-    
-    @Published public var editedUpperBoundIsInvalid: Bool = false
-    
-    @Published public var editedUpperBoundIsInvalidMsg: String = ""
     
     @Published public var editedFlatLoadAdd: String = ""
     
-    @Published public var editedFlatLoadAddIsInvalid: Bool = false
-    
-    @Published public var editedFlatLoadAddIsInvalidMsg: String = ""
-    
     @Published public var editedFlatQuantityAdd: String = ""
-    
-    @Published public var editedFlatQuantityAddIsInvalid: Bool = false
-    
-    @Published public var editedFlatQuantityAddIsInvalidMsg: String = ""
     
     @Published public var showNoChangeAlert: Bool = false
     
@@ -87,6 +71,14 @@ class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewMode
             
         }
     
+    }
+    
+    public func getPlaceHolderUnit(fromExerciseType: String) -> String {
+        return fromExerciseType == "reps" ? "reps" : "seconds"
+    }
+    
+    public func getTriggerRangeInputFieldVariant(fromExerciseType: String, min: Double, max: Double) -> InputFieldVariant {
+        return fromExerciseType == "reps" ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
     }
     
     public func saveEdits(entity: SetThreshold, viewContext: NSManagedObjectContext) -> Void {

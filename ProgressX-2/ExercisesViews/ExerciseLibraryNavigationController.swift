@@ -30,49 +30,61 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
     }
     
     var body: some View {
+        
         NavigationStack(path: $navPath) {
-            VStack {
-                content
-            }
-            .navigationDestination(for: Int.self) { selection in
-                if selection == 1 {
+            
+            InputFieldForm {
+                
+                VStack {
                     
-                    CreateNewExerciseView(
-                        navPath: $navPath
-                    )
-                    
-                } else if selection == 2 {
-                    
-                    EditExerciseView(
-                        selectedExercise: $selectedExercise
-                    )
-                    
-                } else if selection == 3 {
-                    
-                    StatisticsView(
-                        exercise: $selectedExercise,
-                        navPath: $navPath,
-                        editingPr: $editingPr,
-                        newPrType: $newPrType
-                    )
-                    
-                } else if selection == 4 {
-                    
-                    EditPrView(
-                        editingPr: $editingPr,
-                        exercise: $selectedExercise
-                    )
-                    
-                } else if selection == 5 {
-                    
-                    CreateNewPersonalRecord(
-                        prType: $newPrType, 
-                        navPath: $navPath,
-                        selectedExercise: $selectedExercise
-                    )
+                    content
                     
                 }
+                .navigationDestination(for: Int.self) { selection in
+                    if selection == 1 {
+                        
+                        CreateNewExerciseView(
+                            navPath: $navPath
+                        )
+                        
+                    } else if selection == 2 {
+                        
+                        EditExerciseView(
+                            selectedExercise: $selectedExercise
+                        )
+                        
+                    } else if selection == 3 {
+                        
+                        StatisticsView(
+                            exercise: $selectedExercise,
+                            navPath: $navPath,
+                            editingPr: $editingPr,
+                            newPrType: $newPrType
+                        )
+                        
+                    } else if selection == 4 {
+                        
+                        EditPrView(
+                            editingPr: $editingPr,
+                            exercise: $selectedExercise
+                        )
+                        
+                    } else if selection == 5 {
+                        
+                        CreateNewPersonalRecord(
+                            prType: $newPrType,
+                            navPath: $navPath,
+                            selectedExercise: $selectedExercise
+                        )
+                        
+                    }
+                    
+                }
+                
             }
+            
         }
+        
     }
+    
 }

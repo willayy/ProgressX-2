@@ -17,6 +17,7 @@ struct ProfileView: View {
     ) private var profiles: FetchedResults<Profile>
     
     @StateObject private var viewModel = ProfileViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -38,35 +39,40 @@ struct ProfileView: View {
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
                     
+                    // MARK: Submit alert states
                     if viewModel.showProfileChangedAlert {
+                        
                         SubmitAlert(
                             message: "Profile changes succesfully saved!",
                             color: .green,
                             showAlertState: $viewModel.showProfileChangedAlert
                         )
                         .padding(.top, 10)
+                        
                     } else if viewModel.showNoChangeAlert {
+                        
                         SubmitAlert(
                             message: "No change!",
                             color: .blue,
                             showAlertState: $viewModel.showNoChangeAlert
                         )
                         .padding(.top, 10)
+                        
                     }
                     
+                    // MARK: Edit username
                     BoldSubHeadline(text: "Change username")
                         .padding(.top, 10)
-                    
-                    InputTextField(
+                
+                    InputField(
                         placeHolder: "Username",
                         text: $viewModel.userName,
-                        markAsWrong: $viewModel.userNameIsInvalid,
-                        errorMessage: $viewModel.userNameIsInvalidMsg,
-                        maxChars: 25
+                        variant: TextIF()
                     )
                     .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
+                    // MARK: Edit birthday
                     BoldSubHeadline(text: "Change birth date")
                     
                     DatePicker(
@@ -78,17 +84,21 @@ struct ProfileView: View {
                     .labelsHidden()
                     .padding(.bottom, 10)
                     
+                    // MARK: Edit default rest-time
                     BoldSubHeadline(text: "Change default rest-time (seconds)")
                     
-                    DecimalTextField(
+                    InputField(
                         placeHolder: "Default rest-time",
-                        numberText: $viewModel.standardRestTime,
-                        markAsWrong: $viewModel.standardRestTimeIsInvalid,
-                        errorMessage: $viewModel.standardRestTimeIsInvalidMsg
+                        text: $viewModel.standardRestTime,
+                        variant: DecimalIF(
+                            min: 0,
+                            max: 6000
+                        )
                     )
                     .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
+                    // MARK: Edit units
                     BoldSubHeadline(text: "Change weight and length units")
                     
                     BooleanSegPicker(
@@ -98,6 +108,7 @@ struct ProfileView: View {
                     .padding(.horizontal, 55)
                     .padding(.bottom, 10)
                     
+                    // MARK: Edit smallest plate
                     BoldSubHeadline(text: "Change smallest plate")
                     
                     StringSelectionList(
@@ -107,17 +118,21 @@ struct ProfileView: View {
                     .padding(.bottom, 10)
                     .padding(.horizontal, 55)
                     
+                    // MARK: Edit height
                     BoldSubHeadline(text: "Change height")
                     
-                    DecimalTextField(
+                    InputField(
                         placeHolder: "Height",
-                        numberText: $viewModel.height,
-                        markAsWrong: $viewModel.heightIsInvalid,
-                        errorMessage: $viewModel.heightIsInvalidMsg
+                        text: $viewModel.height,
+                        variant: DecimalIF(
+                            min: 0,
+                            max: 1000
+                        )
                     )
                     .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
+                    // MARK: Edit gender
                     BoldSubHeadline(text: "Gender")
                     
                     BasicSegPicker(
@@ -129,57 +144,37 @@ struct ProfileView: View {
                     
                 }
             }
+            
+            // MARK: Save changes button
+            Button {
+                
+                if GlobalInputFieldValidator.allFieldsValid() {
                     
-            Button(action: {
-                if validateInput() {
                     viewModel.saveEdits(entity: profiles.first!, viewContext: viewContext)
+                    
                 }
-            })
-            {
+                
+            } label: {
+                
                 Text("Save changes")
                     .frame(height: 40)
                     .foregroundColor(Color("buttonTextColor"))
+                
                 Image(systemName: "square.and.arrow.down")
                     .foregroundColor(Color("buttonTextColor"))
+                
             }
             .padding(.vertical, 20)
             .buttonStyle(BorderedProminentButtonStyle())
             
         }
-    }
-    
-    private func validateInput() -> Bool {
-        
-        var valid: Int = 0
-        let userNameFieldValidator = StringFieldValidator()
-        let StandardRestFieldValidator = DoubleFieldValidator()
-        let heightFieldValidator = DoubleFieldValidator()
-        
-        valid += userNameFieldValidator.validateField(
-            inputVar: viewModel.userName,
-            errorMessage: $viewModel.userNameIsInvalidMsg,
-            fieldInvalid: $viewModel.userNameIsInvalid
-        )
-        
-        valid += StandardRestFieldValidator.validateField(
-            inputVar: viewModel.standardRestTime,
-            errorMessage: $viewModel.standardRestTimeIsInvalidMsg,
-            fieldInvalid: $viewModel.standardRestTimeIsInvalid
-        )
-        
-        valid += heightFieldValidator.validateField(
-            inputVar: viewModel.height,
-            errorMessage: $viewModel.heightIsInvalidMsg,
-            fieldInvalid: $viewModel.heightIsInvalid
-        )
-        
-        return valid == 0
         
     }
     
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
     
     return ProfileView()

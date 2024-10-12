@@ -22,30 +22,6 @@ class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
     @Published var chinupsAmrap = ""
     @Published var pushupsAmrap = ""
     @Published var situpsAmrap = ""
-
-    // Valid states for inputfields
-    @Published var benchPress1RMIsInvalid = false
-    @Published var squat1RMIsInvalid = false
-    @Published var deadLift1RMIsInvalid = false
-    @Published var shoulderPress1RMIsInvalid = false
-    @Published var barbellRow1RMIsInvalid = false
-    @Published var overheadTriExt1RMIsInvalid = false
-    @Published var dumbbellCurl1RMIsInvalid = false
-    @Published var chinupsAmrapIsInvalid = false
-    @Published var situpsAmrapIsInvalid = false
-    @Published var pushupsAmrapIsInvalid = false
-
-    // Error messages for inputfields
-    @Published var benchPress1RMIsInvalidMsg = ""
-    @Published var squat1RMIsInvalidMsg = ""
-    @Published var deadLift1RMIsInvalidMsg = ""
-    @Published var shoulderPress1RMIsInvalidMsg = ""
-    @Published var barbellRow1RMIsInvalidMsg = ""
-    @Published var overheadTriExt1RMIsInvalidMsg = ""
-    @Published var dumbbellCurl1RMIsInvalidMsg = ""
-    @Published var chinupsAmrapIsInvalidMsg = ""
-    @Published var situpsAmrapIsInvalidMsg = ""
-    @Published var pushupsAmrapIsInvalidMsg = ""
     
     // Constants specific to elements in this view
     let minScaleFactor: Double = 0.05

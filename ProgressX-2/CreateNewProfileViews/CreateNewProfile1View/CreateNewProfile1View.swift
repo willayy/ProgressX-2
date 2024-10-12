@@ -16,7 +16,9 @@ struct CreateNewProfile1View: View {
     ) private var profiles: FetchedResults<Profile>
     
     @EnvironmentObject var viewRouter: ViewRouter
+    
     @StateObject private var viewModel = CreateNewProfile1ViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -35,19 +37,20 @@ struct CreateNewProfile1View: View {
                         LightSubHeadline(text: "To use ProgressX you need to create a profile, this profile and all its data will be stored locally only.")
                             .padding(.horizontal, 20)
                         
+                        // MARK: User username
                         BoldSubHeadline(text: "Username")
                             .padding(.top, 10)
                         
-                        InputTextField(
-                            placeHolder: "Enter username...",
+                        InputField(
+                            placeHolder: "username",
                             text: $viewModel.userName,
-                            markAsWrong: $viewModel.userNameIsInvalid,
-                            errorMessage: $viewModel.userNameIsInvalidMsg,
-                            maxChars: 25
+                            variant: TextIF(
+                                allowEmpty: false
+                            )
                         )
                         .padding(.horizontal, 60)
                         
-                        
+                        // MARK: User birthday
                         BoldSubHeadline(text: "Birthday")
                             .padding(.top, 10)
                         
@@ -56,6 +59,7 @@ struct CreateNewProfile1View: View {
                             .labelsHidden()
                             .padding(-3)
                         
+                        // MARK: User unit preferences
                         BoldSubHeadline(text: "Metric or imperial units?")
                             .padding(.top, 10)
                         
@@ -65,6 +69,7 @@ struct CreateNewProfile1View: View {
                         )
                         .padding(.horizontal, 55)
                         
+                        // MARK: User's smallest available plate
                         BoldSubHeadline(text: "What is your smallest available plate?")
                             .padding(.top, 10)
                         
@@ -76,35 +81,44 @@ struct CreateNewProfile1View: View {
                         .onChange(
                             of: viewModel.selectedUnitSegment,
                             initial: false, {
+                                
                                 viewModel.smallestPlateSelection = viewModel.smallestPlateSegments.first!
+                                
                             }
                         )
                         
+                        // MARK: User weight
                         BoldSubHeadline(text: "What is your current weight?")
                             .padding(.top, 10)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.weight,
-                            markAsWrong: $viewModel.weightIsInvalid,
-                            errorMessage: $viewModel.weightIsInvalidMsg
+                            text: $viewModel.weight,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 10000
+                            )
                         )
                         .padding(.horizontal, 60)
                         
+                        // MARK: User Height
                         BoldSubHeadline(text:"What is your current Height")
                             .padding(.top, 10)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.height,
-                            markAsWrong: $viewModel.heightIsInvalid,
-                            errorMessage: $viewModel.heightIsInvalidMsg
+                            text: $viewModel.height,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000
+                            )
                         )
                         .padding(.horizontal, 60)
                         
                         BoldSubHeadline(text: "What is your (biological) gender")
                             .padding(.top, 10)
                         
+                        // MARK: User Gender
                         BasicSegPicker(
                             selectedSegment: $viewModel.selectedGenderSegment,
                             segments: viewModel.genderSegments
@@ -115,53 +129,37 @@ struct CreateNewProfile1View: View {
                 }
                     
                 Button {
-                    if validateInput() {
+                    
+                    if GlobalInputFieldValidator.allFieldsValid() {
+                        
                         viewModel.saveEntry(viewContext: viewContext)
+                        
                         viewModel.navPath.append(1)
+                        
                     }
+                    
                 } label: {
+                    
                     Text("Continue")
                         .frame(width: 100, height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(.borderedProminent)
                 .padding(.vertical, 20)
         })
+        
     }
     
-    // Validates input
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        let heightValidator = DoubleFieldValidator(maxInputNumber: 1000)
-        let weightValidator = DoubleFieldValidator(maxInputNumber: 1000)
-        let stringFieldValidator = StringFieldValidator()
-        
-        valid += heightValidator.validateField(
-            inputVar: viewModel.height,
-            errorMessage: $viewModel.heightIsInvalidMsg,
-            fieldInvalid: $viewModel.heightIsInvalid
-        )
-        
-        valid += weightValidator.validateField(
-            inputVar: viewModel.weight,
-            errorMessage: $viewModel.weightIsInvalidMsg,
-            fieldInvalid: $viewModel.weightIsInvalid
-        )
-        
-        valid += stringFieldValidator.validateField(
-            inputVar: viewModel.userName,
-            errorMessage: $viewModel.userNameIsInvalidMsg,
-            fieldInvalid: $viewModel.userNameIsInvalid
-        )
-        
-        return valid == 0
-    }
 }
     
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
+    
     return CreateNewProfile1View()
         .environmentObject(ViewRouter())
         .environment(\.managedObjectContext, context)
+    
 }

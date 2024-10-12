@@ -27,35 +27,45 @@ struct HomeViewNavigationController<Content: View>: View {
     }
     
     var body: some View {
+        
         NavigationStack(path: $navPath) {
-            VStack {
-                content
-            }
-            .navigationDestination(for: Int.self) { selection in
-                if selection == 1 {
-    
-                    //MARK: WeighInView
-                    WeighInView(
-                        navPath: $navPath
-                    )
-                    
-                } else if selection == 2 {
-                    
-                    //MARK: View bodyEntries
-                    ViewAllWeighInsView(
-                        selectedBodyEntry: $selectedBodyEntry,
-                        navPath: $navPath
-                    )
-                    
-                } else if selection == 3 {
-                    
-                    //MARK: Edit bodyEntry
-                    EditWeighInView(
-                        selectedBodyEntry: $selectedBodyEntry
-                    )
+            
+            InputFieldForm {
+                
+                VStack {
+                    content
+                }
+                .navigationDestination(for: Int.self) { selection in
+                    if selection == 1 {
+                        
+                        //MARK: WeighInView
+                        WeighInView(
+                            navPath: $navPath
+                        )
+                        
+                    } else if selection == 2 {
+                        
+                        //MARK: View bodyEntries
+                        ViewAllWeighInsView(
+                            selectedBodyEntry: $selectedBodyEntry,
+                            navPath: $navPath
+                        )
+                        
+                    } else if selection == 3 {
+                        
+                        //MARK: Edit bodyEntry
+                        EditWeighInView(
+                            selectedBodyEntry: $selectedBodyEntry
+                        )
+                        
+                    }
                     
                 }
+                
             }
+            
         }
+        
     }
+    
 }

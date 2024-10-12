@@ -1,18 +1,13 @@
 //
-//  InputField.swift
+//  LargeInputField.swift
 //  ProgressX-2
 //
-//  Created by William Norland on 2024-10-03.
+//  Created by William Norland on 2024-10-08.
 //
 
 import SwiftUI
-import Combine
 
-/// An input restricting, self validating view component based on the TextField.
-struct InputField: View {
-    
-    // Default access id
-    public let accessId: String = ""
+struct LargeInputField: View {
     
     public let placeHolder: String
     
@@ -28,17 +23,27 @@ struct InputField: View {
     
     var body: some View {
         
-        HStack {
+        ZStack {
             
-            // Include minusbutton if included in variant.
-            if includeMinusButton { MinusButton(text: $text) }
+            // Placeholder for TextEditor
+            if text.isEmpty {
+                Text(placeHolder)
+                    .fontWeight(.light)
+                    .foregroundStyle(.gray.opacity(0.75))
+                    .zIndex(1)
+            }
             
-            TextField(placeHolder, text: $text)
-            // Access id for the UI-tests
-            .accessibilityIdentifier(accessId)
+            TextEditor(text: $text)
             .frame(maxWidth: .infinity)
-            // Textfield visual style.
-            .textFieldStyle(RoundedBorderTextFieldStyle())
+            // Texteditor visual style.
+            .background(Color.white)
+            .cornerRadius(5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray.opacity(0.20), lineWidth: 1)
+            )
+            .font(.subheadline)
+            .foregroundColor(.primary)
             // The minimum scale factor of the textfield text.
             .minimumScaleFactor(0.75)
             // The keyboard type
@@ -66,9 +71,6 @@ struct InputField: View {
                 GlobalInputFieldValidator.addToValidationList(fieldValues)
             })
             
-            // Include BwButton if included in variant.
-            if includeBwButton { BwButton(text: $text) }
-            
         }
         
         // If the textfield contians valid input...
@@ -83,7 +85,7 @@ struct InputField: View {
     
 }
 
-extension InputField {
+extension LargeInputField {
     
     /// Checks if the InputFieldVariant is numeric
     private var variantIsNumeric: Bool {
@@ -181,9 +183,7 @@ extension InputField {
     
 }
 
-private struct InputFieldTestView: View {
-    
-    let context = PersistenceController.previewViewContext
+private struct LargeTextInputFieldTestView: View {
     
     @State var valid: Bool = true
     
@@ -193,27 +193,24 @@ private struct InputFieldTestView: View {
         
         VStack {
             
-            InputField(
-                placeHolder: "Write something here",
+            LargeInputField(
+                placeHolder: "Big text area",
                 text: $text,
-                variant: DecimalIF(
-                    min: 0,
-                    max: 10000,
-                    bwButton: true,
-                    allowNeg: true,
-                    optional: false
+                variant: TextIF(
+                    allowEmpty: false
                 )
             )
-            .padding(.horizontal, 20)
-        
+            .padding(.horizontal, 50)
+            .padding(.vertical, 300)
+            
         }
-        .environment(\.managedObjectContext, context)
         
     }
+    
 }
 
 #Preview {
     
-    return InputFieldTestView()
+    return LargeTextInputFieldTestView()
     
 }

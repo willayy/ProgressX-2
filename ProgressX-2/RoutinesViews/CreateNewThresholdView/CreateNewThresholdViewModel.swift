@@ -11,20 +11,12 @@ import CoreData
 class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     
     @Published public var upperBound: String = ""
-    @Published public var upperBoundIsInvalid: Bool = false
-    @Published public var upperBoundIsInvalidMSg: String = ""
     
     @Published public var lowerBound: String = ""
-    @Published public var lowerBoundIsInvalid: Bool = false
-    @Published public var lowerBoundIsInvalidMSg: String = ""
     
     @Published public var flatLoadAdd: String = ""
-    @Published public var flatLoadAddIsInvalid: Bool = false
-    @Published public var flatLoadAddIsInvalidMsg: String = ""
     
     @Published public var flatQuantityAdd: String = ""
-    @Published public var flatQuantityAddIsInvalid: Bool = false
-    @Published public var flatQuantityAddIsInvalidMsg: String = ""
     
     // Variable for saveEntry
     @Published public var selectedTemplateSet: TemplateSet? = nil
@@ -48,6 +40,14 @@ class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
     public let timePrSegments: KeyValueList<String, String> = KeyValueList([
         ("Time-max", "timemax")
     ])
+    
+    public func getPlaceHolderUnit(fromExerciseType: String) -> String {
+        return fromExerciseType == "reps" ? "reps" : "seconds"
+    }
+    
+    public func getTriggerRangeInputFieldVariant(fromExerciseType: String, min: Double, max: Double) -> InputFieldVariant {
+        return fromExerciseType == "reps" ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
+    }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         

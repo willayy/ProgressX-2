@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830D16882CAF188E00092EF6 /* InputFieldVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D16872CAF188E00092EF6 /* InputFieldVariant.swift */; };
+		830D168A2CAF190A00092EF6 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830D16892CAF190A00092EF6 /* InputField.swift */; };
 		8310D90B2BFA2139004A5A3D /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D90A2BFA2139004A5A3D /* StatisticsView.swift */; };
 		8310D90D2BFA3419004A5A3D /* LightSubHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D90C2BFA3419004A5A3D /* LightSubHeadline.swift */; };
 		8310D90F2BFA3425004A5A3D /* BoldSubHeadline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310D90E2BFA3425004A5A3D /* BoldSubHeadline.swift */; };
@@ -57,9 +59,7 @@
 		832213F02BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 832213EE2BC92D9000DF9C7A /* ProgressX_2.xcdatamodeld */; };
 		832214152BC937F800DF9C7A /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 832214142BC937F800DF9C7A /* README.md */; };
 		832214172BC938C400DF9C7A /* CreateNewProfile1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214162BC938C400DF9C7A /* CreateNewProfile1View.swift */; };
-		832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214232BD4300B00DF9C7A /* InputTextField.swift */; };
 		832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */; };
-		832214282BD65A0E00DF9C7A /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832214272BD65A0E00DF9C7A /* DecimalTextField.swift */; };
 		8322142C2BD669C000DF9C7A /* CreateNewProfile2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142B2BD669C000DF9C7A /* CreateNewProfile2View.swift */; };
 		8322142E2BD6BF7200DF9C7A /* CreateNewProfile3View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142D2BD6BF7200DF9C7A /* CreateNewProfile3View.swift */; };
 		832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */; };
@@ -78,13 +78,16 @@
 		83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E832C3C153700F5F6CB /* EditPrViewModel.swift */; };
 		83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */; };
 		83266E8D2C3D58A800F5F6CB /* EditThresholdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */; };
+		832B9CEF2CB431E800750A01 /* MinusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CEE2CB431E800750A01 /* MinusButton.swift */; };
+		832B9CF12CB4329F00750A01 /* NumericInputFieldVariant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */; };
+		832B9CF32CB4399100750A01 /* BwButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF22CB4399100750A01 /* BwButton.swift */; };
+		832B9CF72CB43B5400750A01 /* IntegerIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF62CB43B5400750A01 /* IntegerIF.swift */; };
+		832B9CF92CB43B6300750A01 /* TextIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CF82CB43B6300750A01 /* TextIF.swift */; };
+		832B9CFB2CB55B0200750A01 /* GlobalInputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */; };
+		832B9CFE2CB571BF00750A01 /* LargeInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 832B9CFD2CB571BF00750A01 /* LargeInputField.swift */; };
 		8351A9B12C612D6000405ABB /* ChooseSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B02C612D6000405ABB /* ChooseSessionView.swift */; };
 		8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */; };
 		8354CA282C63AE2000E3EA98 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8354CA272C63AE2000E3EA98 /* ProgressBar.swift */; };
-		8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */; };
-		8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */; };
-		8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */; };
-		8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */; };
 		8359F97D2C1C63F5004BA421 /* BodyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F97C2C1C63F5004BA421 /* BodyEntry.swift */; };
 		8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359F97E2C1C64BE004BA421 /* Achievement.swift */; };
 		83618BB92C7F56C0001D401E /* ThresholdHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83618BB82C7F56C0001D401E /* ThresholdHandler.swift */; };
@@ -109,12 +112,9 @@
 		8364860B2C372513006EB0C0 /* TemplateWeek.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364860A2C372513006EB0C0 /* TemplateWeek.swift */; };
 		8364860D2C372544006EB0C0 /* TemplateSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364860C2C372544006EB0C0 /* TemplateSession.swift */; };
 		8364860F2C372589006EB0C0 /* TemplateSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8364860E2C372589006EB0C0 /* TemplateSet.swift */; };
-		8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8386FC532BDD0CBE005E34F9 /* InputField.swift */; };
-		83ACDB422BE57E8500BE9FE2 /* IntegerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83ACDB412BE57E8500BE9FE2 /* IntegerTextField.swift */; };
 		83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */; };
 		83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */; };
 		83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */; };
-		83B013A72C5BB9A000059E42 /* inputLongTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013A62C5BB9A000059E42 /* inputLongTextField.swift */; };
 		83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */; };
 		83B013AB2C5BBDA900059E42 /* InputErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */; };
 		83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */; };
@@ -147,6 +147,8 @@
 		83BD39892C4AA76C008E09A0 /* ExpandingVStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */; };
 		83C188412C0F701300826E3A /* GeneralInfoRepsExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */; };
 		83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C76F812C17020F0051D8FB /* PersonalRecord.swift */; };
+		83CF0C372CA99BCC006F4E53 /* DecimalIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CF0C362CA99BCC006F4E53 /* DecimalIF.swift */; };
+		83CF0C392CA9A292006F4E53 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CF0C382CA9A292006F4E53 /* ErrorMessage.swift */; };
 		83D393712C35B725003B0F5E /* IntSelectionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D393702C35B725003B0F5E /* IntSelectionList.swift */; };
 		83D393732C3694AE003B0F5E /* MagnifiedThresholdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D393722C3694AE003B0F5E /* MagnifiedThresholdView.swift */; };
 		83D684F02C2DFEDF00FA78C6 /* HasOrderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */; };
@@ -209,6 +211,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		830D16872CAF188E00092EF6 /* InputFieldVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldVariant.swift; sourceTree = "<group>"; };
+		830D16892CAF190A00092EF6 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		8310D90A2BFA2139004A5A3D /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		8310D90C2BFA3419004A5A3D /* LightSubHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightSubHeadline.swift; sourceTree = "<group>"; };
 		8310D90E2BFA3425004A5A3D /* BoldSubHeadline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoldSubHeadline.swift; sourceTree = "<group>"; };
@@ -261,9 +265,7 @@
 		832213F52BC92D9000DF9C7A /* ProgressX-2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ProgressX-2Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832214142BC937F800DF9C7A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		832214162BC938C400DF9C7A /* CreateNewProfile1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile1View.swift; sourceTree = "<group>"; };
-		832214232BD4300B00DF9C7A /* InputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTextField.swift; sourceTree = "<group>"; };
 		832214252BD64C2E00DF9C7A /* BasicSegPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicSegPicker.swift; sourceTree = "<group>"; };
-		832214272BD65A0E00DF9C7A /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		8322142B2BD669C000DF9C7A /* CreateNewProfile2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile2View.swift; sourceTree = "<group>"; };
 		8322142D2BD6BF7200DF9C7A /* CreateNewProfile3View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewProfile3View.swift; sourceTree = "<group>"; };
 		8322142F2BD6D3DE00DF9C7A /* ViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRouter.swift; sourceTree = "<group>"; };
@@ -282,13 +284,16 @@
 		83266E832C3C153700F5F6CB /* EditPrViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPrViewModel.swift; sourceTree = "<group>"; };
 		83266E892C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewThresholdViewModel.swift; sourceTree = "<group>"; };
 		83266E8C2C3D58A800F5F6CB /* EditThresholdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditThresholdsViewModel.swift; sourceTree = "<group>"; };
+		832B9CEE2CB431E800750A01 /* MinusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinusButton.swift; sourceTree = "<group>"; };
+		832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericInputFieldVariant.swift; sourceTree = "<group>"; };
+		832B9CF22CB4399100750A01 /* BwButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BwButton.swift; sourceTree = "<group>"; };
+		832B9CF62CB43B5400750A01 /* IntegerIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerIF.swift; sourceTree = "<group>"; };
+		832B9CF82CB43B6300750A01 /* TextIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextIF.swift; sourceTree = "<group>"; };
+		832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalInputFieldValidator.swift; sourceTree = "<group>"; };
+		832B9CFD2CB571BF00750A01 /* LargeInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeInputField.swift; sourceTree = "<group>"; };
 		8351A9B02C612D6000405ABB /* ChooseSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseSessionView.swift; sourceTree = "<group>"; };
 		8351A9B22C61318B00405ABB /* TrainingSessionListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSessionListItem.swift; sourceTree = "<group>"; };
 		8354CA272C63AE2000E3EA98 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
-		8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputFieldValidator.swift; sourceTree = "<group>"; };
-		8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntFieldValidator.swift; sourceTree = "<group>"; };
-		8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleFieldValidator.swift; sourceTree = "<group>"; };
-		8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringFieldValidator.swift; sourceTree = "<group>"; };
 		8359F97C2C1C63F5004BA421 /* BodyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyEntry.swift; sourceTree = "<group>"; };
 		8359F97E2C1C64BE004BA421 /* Achievement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 		83618BB82C7F56C0001D401E /* ThresholdHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdHandler.swift; sourceTree = "<group>"; };
@@ -311,12 +316,9 @@
 		8364860C2C372544006EB0C0 /* TemplateSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSession.swift; sourceTree = "<group>"; };
 		8364860E2C372589006EB0C0 /* TemplateSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateSet.swift; sourceTree = "<group>"; };
 		83814EB82C6770CC0099A4DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8386FC532BDD0CBE005E34F9 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
-		83ACDB412BE57E8500BE9FE2 /* IntegerTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegerTextField.swift; sourceTree = "<group>"; };
 		83AD4A922BF4136000A2E180 /* ExerciseLibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseLibraryView.swift; sourceTree = "<group>"; };
 		83AD4A962BF63A4000A2E180 /* CreateNewExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewExerciseView.swift; sourceTree = "<group>"; };
 		83AD4A982BF63BB300A2E180 /* EditExerciseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditExerciseView.swift; sourceTree = "<group>"; };
-		83B013A62C5BB9A000059E42 /* inputLongTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = inputLongTextField.swift; sourceTree = "<group>"; };
 		83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorGeometryEffect.swift; sourceTree = "<group>"; };
 		83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputErrorViewModifier.swift; sourceTree = "<group>"; };
 		83B013AC2C5BDB2D00059E42 /* SavingErrorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavingErrorText.swift; sourceTree = "<group>"; };
@@ -349,6 +351,8 @@
 		83BD39882C4AA76C008E09A0 /* ExpandingVStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandingVStack.swift; sourceTree = "<group>"; };
 		83C188402C0F701300826E3A /* GeneralInfoRepsExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralInfoRepsExercise.swift; sourceTree = "<group>"; };
 		83C76F812C17020F0051D8FB /* PersonalRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalRecord.swift; sourceTree = "<group>"; };
+		83CF0C362CA99BCC006F4E53 /* DecimalIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalIF.swift; sourceTree = "<group>"; };
+		83CF0C382CA9A292006F4E53 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		83D393702C35B725003B0F5E /* IntSelectionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntSelectionList.swift; sourceTree = "<group>"; };
 		83D393722C3694AE003B0F5E /* MagnifiedThresholdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifiedThresholdView.swift; sourceTree = "<group>"; };
 		83D684EF2C2DFEDF00FA78C6 /* HasOrderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HasOrderable.swift; sourceTree = "<group>"; };
@@ -451,13 +455,12 @@
 		8310D9192C036814004A5A3D /* InputFields */ = {
 			isa = PBXGroup;
 			children = (
-				83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */,
-				83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */,
-				8386FC532BDD0CBE005E34F9 /* InputField.swift */,
-				832214272BD65A0E00DF9C7A /* DecimalTextField.swift */,
-				83ACDB412BE57E8500BE9FE2 /* IntegerTextField.swift */,
-				832214232BD4300B00DF9C7A /* InputTextField.swift */,
-				83B013A62C5BB9A000059E42 /* inputLongTextField.swift */,
+				832B9CED2CAF236400750A01 /* InputFieldEffects */,
+				832B9CFC2CB56DE200750A01 /* InputFieldValidation */,
+				832B9CF52CB439A400750A01 /* InputFieldVariants */,
+				832B9CF42CB4399500750A01 /* InputFieldComponents */,
+				830D16892CAF190A00092EF6 /* InputField.swift */,
+				832B9CFD2CB571BF00750A01 /* LargeInputField.swift */,
 			);
 			path = InputFields;
 			sourceTree = "<group>";
@@ -620,7 +623,6 @@
 				831F2C1D2C231D3B007A7A8A /* ListElements */,
 				8F8B9F042C2195E30072A39D /* SideBarComponents */,
 				83F110BA2C1F25E50068953B /* SubmitAlerts */,
-				8359F97B2C1B2489004BA421 /* InputValidation */,
 				83FBF1932C14564E004D0E2A /* GeneralExerciseInfoBoxes */,
 				8310D9272C0CA13D004A5A3D /* ListItems */,
 				8310D91A2C036835004A5A3D /* TextElements */,
@@ -778,6 +780,45 @@
 			path = EditThresholdsView;
 			sourceTree = "<group>";
 		};
+		832B9CED2CAF236400750A01 /* InputFieldEffects */ = {
+			isa = PBXGroup;
+			children = (
+				83B013A82C5BBD3900059E42 /* InputErrorGeometryEffect.swift */,
+				83B013AA2C5BBDA900059E42 /* InputErrorViewModifier.swift */,
+			);
+			path = InputFieldEffects;
+			sourceTree = "<group>";
+		};
+		832B9CF42CB4399500750A01 /* InputFieldComponents */ = {
+			isa = PBXGroup;
+			children = (
+				83CF0C382CA9A292006F4E53 /* ErrorMessage.swift */,
+				832B9CEE2CB431E800750A01 /* MinusButton.swift */,
+				832B9CF22CB4399100750A01 /* BwButton.swift */,
+			);
+			path = InputFieldComponents;
+			sourceTree = "<group>";
+		};
+		832B9CF52CB439A400750A01 /* InputFieldVariants */ = {
+			isa = PBXGroup;
+			children = (
+				830D16872CAF188E00092EF6 /* InputFieldVariant.swift */,
+				832B9CF02CB4329F00750A01 /* NumericInputFieldVariant.swift */,
+				83CF0C362CA99BCC006F4E53 /* DecimalIF.swift */,
+				832B9CF62CB43B5400750A01 /* IntegerIF.swift */,
+				832B9CF82CB43B6300750A01 /* TextIF.swift */,
+			);
+			path = InputFieldVariants;
+			sourceTree = "<group>";
+		};
+		832B9CFC2CB56DE200750A01 /* InputFieldValidation */ = {
+			isa = PBXGroup;
+			children = (
+				832B9CFA2CB55B0200750A01 /* GlobalInputFieldValidator.swift */,
+			);
+			path = InputFieldValidation;
+			sourceTree = "<group>";
+		};
 		833CCD552C3D6AB200B53C97 /* TemplateTimePeriods */ = {
 			isa = PBXGroup;
 			children = (
@@ -818,17 +859,6 @@
 				8351A9B02C612D6000405ABB /* ChooseSessionView.swift */,
 			);
 			path = ChooseSessionView;
-			sourceTree = "<group>";
-		};
-		8359F97B2C1B2489004BA421 /* InputValidation */ = {
-			isa = PBXGroup;
-			children = (
-				8359F9732C1AF9AC004BA421 /* InputFieldValidator.swift */,
-				8359F9752C1B1D28004BA421 /* IntFieldValidator.swift */,
-				8359F9772C1B1D3F004BA421 /* DoubleFieldValidator.swift */,
-				8359F9792C1B1D4A004BA421 /* StringFieldValidator.swift */,
-			);
-			path = InputValidation;
 			sourceTree = "<group>";
 		};
 		83618BBE2C8096E5001D401E /* Protocols */ = {
@@ -1327,7 +1357,6 @@
 				8364860D2C372544006EB0C0 /* TemplateSession.swift in Sources */,
 				83618BC32C809757001D401E /* QuantityTodoCalculator.swift in Sources */,
 				836485EF2C36CACA006EB0C0 /* ThresholdsView.swift in Sources */,
-				8359F9782C1B1D3F004BA421 /* DoubleFieldValidator.swift in Sources */,
 				836486042C36F1B0006EB0C0 /* RoutineLibraryViewModel.swift in Sources */,
 				836485ED2C36C668006EB0C0 /* CreateNewProfileNavigationController.swift in Sources */,
 				8F7F16212C51146D00F37C58 /* CircleProgressView.swift in Sources */,
@@ -1335,12 +1364,11 @@
 				832213ED2BC92D9000DF9C7A /* Persistence.swift in Sources */,
 				8F7F162B2C51232E00F37C58 /* TimerExtension.swift in Sources */,
 				8FF9C9C62C3FE67D00E3D95A /* StartWorkoutView.swift in Sources */,
-				8359F9762C1B1D28004BA421 /* IntFieldValidator.swift in Sources */,
 				83D685042C32AEA900FA78C6 /* CreateNewTemplateSetView.swift in Sources */,
 				83AD4A972BF63A4000A2E180 /* CreateNewExerciseView.swift in Sources */,
 				832214262BD64C2E00DF9C7A /* BasicSegPicker.swift in Sources */,
 				8F7F16092C47F9DA00F37C58 /* TrainingViewRoutineListItem.swift in Sources */,
-				83B013A72C5BB9A000059E42 /* inputLongTextField.swift in Sources */,
+				832B9CEF2CB431E800750A01 /* MinusButton.swift in Sources */,
 				831F2C102C22F029007A7A8A /* RoutineLibraryView.swift in Sources */,
 				83266E842C3C153700F5F6CB /* EditPrViewModel.swift in Sources */,
 				8310D9112BFA3436004A5A3D /* BoldTitle.swift in Sources */,
@@ -1353,25 +1381,25 @@
 				8F7F16142C49385A00F37C58 /* TrainingWeekListItem.swift in Sources */,
 				83266E7B2C3BF9D400F5F6CB /* EditExerciseViewModel.swift in Sources */,
 				8310D9132C0001D5004A5A3D /* SingleChart.swift in Sources */,
-				83ACDB422BE57E8500BE9FE2 /* IntegerTextField.swift in Sources */,
+				832B9CF92CB43B6300750A01 /* TextIF.swift in Sources */,
 				83BD39782C4925F7008E09A0 /* BodyEntryListItem.swift in Sources */,
 				832214302BD6D3DE00DF9C7A /* ViewRouter.swift in Sources */,
 				8F7ABD782C5793F800BEEE9A /* PopupFeedbackView.swift in Sources */,
 				831F2C2B2C24A2F4007A7A8A /* TemplateWeekListItem.swift in Sources */,
-				832214282BD65A0E00DF9C7A /* DecimalTextField.swift in Sources */,
+				832B9CF32CB4399100750A01 /* BwButton.swift in Sources */,
 				8FAFE5622C60D6D300143223 /* TrainingSetFinishedView.swift in Sources */,
 				8F8B9F062C21975B0072A39D /* SideBarBuilder.swift in Sources */,
 				8F7F16182C4948D100F37C58 /* TrainingView.swift in Sources */,
-				8359F97A2C1B1D4A004BA421 /* StringFieldValidator.swift in Sources */,
 				83BD395B2C401F6E008E09A0 /* MagnifiedExerciseView.swift in Sources */,
 				83266E6E2C38269F00F5F6CB /* EditTemplateSessionViewModel.swift in Sources */,
 				83618BBD2C8094C2001D401E /* IsChangePropogator.swift in Sources */,
 				836486012C36E946006EB0C0 /* CreateNewProfile4ViewModel.swift in Sources */,
-				832214242BD4300B00DF9C7A /* InputTextField.swift in Sources */,
 				8310D9222C08D463004A5A3D /* DoubleChart.swift in Sources */,
 				83B013A92C5BBD3900059E42 /* InputErrorGeometryEffect.swift in Sources */,
 				8351A9B32C61318B00405ABB /* TrainingSessionListItem.swift in Sources */,
 				83C76F822C17020F0051D8FB /* PersonalRecord.swift in Sources */,
+				832B9CF72CB43B5400750A01 /* IntegerIF.swift in Sources */,
+				832B9CFB2CB55B0200750A01 /* GlobalInputFieldValidator.swift in Sources */,
 				83BD397A2C49297B008E09A0 /* MagnifiedBodyEntryView.swift in Sources */,
 				8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */,
 				831F2C182C2305F9007A7A8A /* RoutineListItem.swift in Sources */,
@@ -1386,7 +1414,6 @@
 				831F2C382C288D66007A7A8A /* RoutineStatisticsView.swift in Sources */,
 				83266E7E2C3C09E300F5F6CB /* CreateNewExerciseViewModel.swift in Sources */,
 				83D684FE2C327FBB00FA78C6 /* SetThreshold.swift in Sources */,
-				8386FC542BDD0CBE005E34F9 /* InputField.swift in Sources */,
 				83BAF9122C5B756900EFC1C6 /* CoreDataAccess.swift in Sources */,
 				83B013AD2C5BDB2D00059E42 /* SavingErrorText.swift in Sources */,
 				83BD39682C47C78E008E09A0 /* HomeViewModel.swift in Sources */,
@@ -1418,12 +1445,14 @@
 				8310D9322C0E0617004A5A3D /* EditPrView.swift in Sources */,
 				83BAF9102C5B74F200EFC1C6 /* Generate.swift in Sources */,
 				831F2C302C24E54B007A7A8A /* TemplateSetListItem.swift in Sources */,
-				8359F9742C1AF9AC004BA421 /* InputFieldValidator.swift in Sources */,
 				831F2C322C24E8F1007A7A8A /* DataModelEnums.swift in Sources */,
 				831657732C53CB93003F895F /* InfoHelpNavigationController.swift in Sources */,
 				83F110B92C1CC9600068953B /* CreateNewProfile4View.swift in Sources */,
+				830D16882CAF188E00092EF6 /* InputFieldVariant.swift in Sources */,
+				832B9CF12CB4329F00750A01 /* NumericInputFieldVariant.swift in Sources */,
 				83B013B42C5CDEBB00059E42 /* AddingViewModel.swift in Sources */,
 				8364860F2C372589006EB0C0 /* TemplateSet.swift in Sources */,
+				832B9CFE2CB571BF00750A01 /* LargeInputField.swift in Sources */,
 				83D684F22C2E04E900FA78C6 /* Exercise.swift in Sources */,
 				83266E782C3BF8DC00F5F6CB /* ExerciseLibraryViewModel.swift in Sources */,
 				83D6850F2C35957600FA78C6 /* StringSelectionList.swift in Sources */,
@@ -1467,6 +1496,7 @@
 				83266E8A2C3C282B00F5F6CB /* CreateNewThresholdViewModel.swift in Sources */,
 				83BD396A2C47C872008E09A0 /* HomeViewNavigationController.swift in Sources */,
 				83BD39572C3EF2DE008E09A0 /* ExerciseCategory.swift in Sources */,
+				83CF0C392CA9A292006F4E53 /* ErrorMessage.swift in Sources */,
 				83AD4A932BF4136000A2E180 /* ExerciseLibraryView.swift in Sources */,
 				83EE6EE52C1F351500FF17C1 /* MockLaunchScreen.swift in Sources */,
 				83D685082C332DCF00FA78C6 /* MagnifiedTemplateSetView.swift in Sources */,
@@ -1493,6 +1523,7 @@
 				83266E612C37EEE000F5F6CB /* SideBarView.swift in Sources */,
 				831F2C1F2C231E40007A7A8A /* SearchBar.swift in Sources */,
 				83AD4A992BF63BB300A2E180 /* EditExerciseView.swift in Sources */,
+				83CF0C372CA99BCC006F4E53 /* DecimalIF.swift in Sources */,
 				83BD39812C4947A5008E09A0 /* EditWeighInViewModel.swift in Sources */,
 				8F1307492C7C9E5900F9BB72 /* DisplayMusclesDummy.swift in Sources */,
 				836485F32C36D0B2006EB0C0 /* RoutineLibraryNavigationController.swift in Sources */,
@@ -1501,6 +1532,7 @@
 				8F8B9F0C2C21A44D0072A39D /* SideBarButton.swift in Sources */,
 				8359F97F2C1C64BE004BA421 /* Achievement.swift in Sources */,
 				83E4C13B2C9ED93700E8F553 /* KeyValueList.swift in Sources */,
+				830D168A2CAF190A00092EF6 /* InputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

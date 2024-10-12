@@ -12,11 +12,8 @@ import SwiftUI
 class CreateNewRoutineViewModel: ViewModel, AddingViewModel {
     
     @Published var newRoutineName: String = ""
-    @Published var newRoutineNameIsInvalid: Bool = false
-    @Published var newRoutineNameIsInvalidMsg: String = ""
+    
     @Published var newRoutineDesc: String = ""
-    @Published var newRoutineDescIsInvalid: Bool = false
-    @Published var newRoutineDescIsInvalidMsg: String = ""
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
         

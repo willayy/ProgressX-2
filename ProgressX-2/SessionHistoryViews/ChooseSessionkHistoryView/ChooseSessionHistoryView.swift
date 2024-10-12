@@ -50,13 +50,20 @@ struct ChooseSessionkHistoryView: View {
                     { session in
                         TrainingSessionHistoryListItem(
                             navPath: $viewModel.navPath,
-                            selectedTrainingSession: $viewModel.selectedTrainingSession, session: session
+                            selectedTrainingSession: $viewModel.selectedTrainingSession,
+                            session: session
                         )
-                    }.padding(.horizontal, 20)
+                    }
+                    .padding(.horizontal, 20)
+                    
                 }
+                
             }
+            
         })
+        
     }
+    
 }
 
 #Preview {

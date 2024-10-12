@@ -10,7 +10,7 @@ import CoreData
 
 struct EditRoutineView: View {
     
-    // To check for already taken routine names
+    // To check for already taken routine names when trying to edit the routine.
     @FetchRequest(
         entity: Routine.entity(),
         sortDescriptors: []
@@ -46,42 +46,52 @@ struct EditRoutineView: View {
             BoldSubHeadline(text: "Description:")
                 .padding(.horizontal, 20)
             
-            // Show red label if description is missing.
+            // Show red label if the routine has no description
             if selectedRoutine!.timePeriodDescription!.isEmpty {
+                
                 Text("No description.")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundStyle(.red)
                     .padding(.bottom, 20)
+                
             } else {
+                
                 LightSubHeadline(text: selectedRoutine!.timePeriodDescription!)
                     .padding(.bottom, 20)
+                
             }
             
+            // Expanding VSTACK containing an UI to edit the routine information
             ExpandingVStack(title: "Change routine information") {
                 
+                // MARK: Submission alert states
                 if viewModel.showRoutineChangedAlert {
+                    
                     SubmitAlert(message: "Successfully edited routine!", color: .green, showAlertState: $viewModel.showRoutineChangedAlert)
                         .padding(.top, 10)
+                    
                 } else if viewModel.showNoChangeAlert {
+                    
                     SubmitAlert(message: "No change!", color: .blue, showAlertState: $viewModel.showNoChangeAlert)
                         .padding(.top, 10)
+                    
                 }
                 
+                // MARK: Edit routine name
                 BoldSubHeadline(text: "Edit routine name")
                     .padding(.horizontal, 60)
                     .padding(.top, 10)
                 
-                InputTextField(
+                InputField(
                     placeHolder: "Routine name",
                     text: $viewModel.editedRoutineName,
-                    markAsWrong: $viewModel.editedRoutineNameIsInvalid,
-                    errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
-                    maxChars: 25
+                    variant: TextIF()
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
+                // MARK: Edit description
                 BoldSubHeadline(text: "Edit routine description")
                 
                 HiddenLightSubHeadline(
@@ -91,29 +101,35 @@ struct EditRoutineView: View {
                 )
                 .padding(.horizontal, 20)
                 
-                inputLongTextField(
+                LargeInputField(
                     placeHolder: "Routine description",
-                    text: $viewModel.editiedRoutineDescription,
-                    markAsWrong: $viewModel.editedRoutineDescIsInvalid,
-                    errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
-                    maxChars: 200
+                    text: $viewModel.editedRoutineDescription,
+                    variant: TextIF(allowEmpty: true)
                 )
                 .frame(height: 150)
                 .padding(.horizontal, 60)
                 
+                // MARK: Save changes in routine button
                 Button {
-                    if validateInput() {
+                    
+                    if GlobalInputFieldValidator.allFieldsValid() {
+                        
                         viewModel.saveEdits(
                             entity: selectedRoutine!,
                             viewContext: viewContext
                         )
+                        
                     }
+                    
                 } label: {
+                    
                     Text("Save change")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "square.and.arrow.down")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.vertical, 10)
@@ -121,6 +137,7 @@ struct EditRoutineView: View {
             }
             .padding(.horizontal, 20)
             
+            // MARK: List of all weeks in the routine
             BoldSubHeadline(text: "Current Weeks in this routine")
                 .padding(.top, 20)
             
@@ -130,6 +147,7 @@ struct EditRoutineView: View {
             )
             .padding(.horizontal, 20)
             
+            // The actual list of weeks
             BasicList(
                 height: 400,
                 containerName: "this Routine",
@@ -141,12 +159,11 @@ struct EditRoutineView: View {
                     selectedTemplateWeek: $selectedTemplateWeek,
                     week: week
                 )
-                .environment(\.managedObjectContext, viewContext)
             }
             .padding(.horizontal, 20)
             
         }
-            
+            // MARK: Add new week button
             Button {
                 
                 viewModel.selectedTemplateCycle = selectedTemplateCycle!
@@ -167,48 +184,24 @@ struct EditRoutineView: View {
             .padding(.vertical, 20)
     }
     
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        
-        // Get all routine names and remove the selected routines name
-        var checkStrings = routines.map {$0.timePeriodName!}
-        
-        checkStrings.removeAll(where: {$0 == selectedRoutine!.timePeriodName})
-        
-        let routineNameValidator = StringFieldValidator(
-            duplicatesAllowed: false,
-            checkStrings: checkStrings
-        )
-        
-        let routineDescValidator = StringFieldValidator(emptyAllowed: true)
-        
-        valid += routineNameValidator.validateField(
-            inputVar: viewModel.editedRoutineName,
-            errorMessage: $viewModel.editedRoutineNameIsInvalidMsg,
-            fieldInvalid: $viewModel.editedRoutineNameIsInvalid
-        )
-        
-        valid += routineDescValidator.validateField(
-            inputVar: viewModel.editiedRoutineDescription,
-            errorMessage: $viewModel.editedRoutineDescIsInvalidMsg,
-            fieldInvalid: $viewModel.editedRoutineDescIsInvalid
-        )
-
-        return valid == 0
-    }
-    
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
+    
     let fetchRequest: NSFetchRequest = Routine.fetchRequest()
+    
     let routines = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let routine = routines.first!
     
     @State var navPath: [Int] = [Int]()
+    
     @State var selectedRoutine: Routine? = routine
+    
     @State var selectedTemplateCycle: TemplateCycle? = routine.templateCycle
+    
     @State var selectedTemplateWeek: TemplateWeek? = nil
     
     return EditRoutineView(

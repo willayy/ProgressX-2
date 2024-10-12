@@ -23,7 +23,9 @@ struct EditExerciseView: View {
     ) private var categories: FetchedResults<ExerciseCategory>
     
     @Binding var selectedExercise: Exercise?
+    
     @StateObject private var viewModel = EditExerciseViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -32,11 +34,21 @@ struct EditExerciseView: View {
                 
             BoldTitle(text: "Editing")
             
+            // Code that is triggered when the view appears.
             Title2(text: "\(selectedExercise!.exerciseName!)")
                 .onAppear(perform: {
+                    
                     viewModel.setViewStartValues(entity: selectedExercise!)
+                    
+                    #warning("Put this in the view model when the view model types are removed")
+                    for category in selectedExercise!.categories! {
+                        
+                        viewModel.selectedCategories.insert(category as! ExerciseCategory)
+                    }
+                    
                 })
             
+            // MARK: Submission alert state
             if viewModel.exerciseEditedAlert {
                 
                 SubmitAlert(
@@ -57,48 +69,51 @@ struct EditExerciseView: View {
                 
             }
             
+            // MARK: Dynamic label showing the exercises description in the title
             BoldSubHeadline(text: "Description: ")
                 .padding(.top, 10)
             
-            // if description is empty show a red label instead
             if selectedExercise!.exerciseDesc!.isEmpty {
+                
                 Text("No description.")
                     .font(.subheadline)
                     .fontWeight(.light)
                     .foregroundStyle(.red)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
+                
             } else {
+                
                 LightSubHeadline(text: selectedExercise!.exerciseDesc!)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 20)
+                
             }
             
+            // MARK: Edit exercise name
             BoldSubHeadline(text: "Edit exercise name")
             
-            InputTextField(
+            InputField(
                 placeHolder: "Exercise name",
                 text: $viewModel.newName,
-                markAsWrong: $viewModel.newNameIsInvalid,
-                errorMessage: $viewModel.newNameIsInvalidMsg,
-                maxChars: 30
+                variant: TextIF()
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Edit exercise description
             BoldSubHeadline(text: "Edit exercise description")
             
-            inputLongTextField(
-                placeHolder: "Exercise description",
+            LargeInputField(
+                placeHolder: "No exercise description",
                 text: $viewModel.newDesc,
-                markAsWrong: $viewModel.newDescIsInvalid,
-                errorMessage: $viewModel.newDescIsInvalidMsg,
-                maxChars: 200
+                variant: TextIF(allowEmpty: true)
             )
             .frame(height: 150)
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Edit exercise categories
             BoldSubHeadline(text: "Edit exercise categories")
             
             SelectCategoriesList(
@@ -106,62 +121,39 @@ struct EditExerciseView: View {
                 categories: _categories
             )
             .padding(.horizontal, 40)
-            .onAppear(perform: {
-                for category in selectedExercise!.categories! {
-                    viewModel.selectedCategories.insert(category as! ExerciseCategory)
-                }
-            })
 
             DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories, categories: _categories)
        
         }
 
-            
-                
         // MARK: Handle an edit of an exercise
         Button(action: {
-            if validateInput() {
+            
+            if GlobalInputFieldValidator.allFieldsValid() {
+                
                 viewModel.saveEdits(entity: selectedExercise!, viewContext: viewContext)
+                
             }
+            
         }) {
+            
             Text("Save changes")
                 .frame(height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
             Image(systemName: "square.and.arrow.down")
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.vertical, 20)
 
     }
         
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        
-        var checkStrings = exercises.map { $0.exerciseName! }
-        checkStrings.removeAll {$0 == selectedExercise!.exerciseName!}
-        
-        let exerciseNameValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: checkStrings)
-        
-        let exerciseDescValidator = StringFieldValidator(emptyAllowed: true)
-        
-        valid += exerciseNameValidator.validateField(
-            inputVar: viewModel.newName,
-            errorMessage: $viewModel.newNameIsInvalidMsg,
-            fieldInvalid: $viewModel.newNameIsInvalid
-        )
-        
-        valid += exerciseDescValidator.validateField(
-            inputVar: viewModel.newDesc,
-            errorMessage: $viewModel.newDescIsInvalidMsg,
-            fieldInvalid: $viewModel.newDescIsInvalid
-        )
-        
-        return valid == 0
-    }
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
     
     let fetchRequestRepBasedExercise: NSFetchRequest<Exercise> = Exercise.fetchRequest()

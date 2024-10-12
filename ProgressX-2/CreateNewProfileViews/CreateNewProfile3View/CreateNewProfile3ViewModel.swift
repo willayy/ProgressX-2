@@ -19,22 +19,6 @@ class CreateNewProfile3ViewModel: ViewModel, AddingViewModel {
     @Published public var upperArmCirc = ""
     @Published public var lowerArmCirc = ""
     
-    // Inputfield invalid states
-    @Published public var chestCircIsInvalid = false
-    @Published public var waistCircIsInvalid = false
-    @Published public var thighCircIsInvalid = false
-    @Published public var calfCircIsInvalid = false
-    @Published public var upperArmCircIsInvalid = false
-    @Published public var lowerArmCircIsInvalid = false
-    
-    // Inputfield errormessage states
-    @Published public var chestCircIsInvalidMsg = ""
-    @Published public var waistCircIsInvalidMsg = ""
-    @Published public var thighCircIsInvalidMsg = ""
-    @Published public var calfCircIsInvalidMsg = ""
-    @Published public var upperArmCircIsInvalidMsg = ""
-    @Published public var lowerArmCircIsInvalidMsg = ""
-    
     // Variable needed for saveEntry
     @Published public var firstBodyEntry: BodyEntry? = nil
     

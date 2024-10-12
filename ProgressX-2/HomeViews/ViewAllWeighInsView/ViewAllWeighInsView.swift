@@ -19,8 +19,11 @@ struct ViewAllWeighInsView: View {
     @Binding var navPath: [Int]
     
     var body: some View {
+        
         ScrollView {
+            
             VStack {
+                
                 BoldTitle(text: "Weigh-in's")
                     .padding(.horizontal, 20)
                 

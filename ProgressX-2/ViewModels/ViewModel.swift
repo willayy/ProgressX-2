@@ -10,9 +10,7 @@ import CoreData
 import SwiftUI
 
 class ViewModel: ObservableObject {
-    
-    // @Environment(\.managedObjectContext) private var viewContext
-    
+        
     public func weightUnit(_ context: NSManagedObjectContext) -> String {
         return CoreDataAccess.getWeightUnit(context)!
     }

@@ -14,18 +14,14 @@ class EditRoutineViewModel: ViewModel, AddingViewModel, EditingViewModel, Defaul
     @Published public var showRoutineChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
     @Published public var editedRoutineName: String = ""
-    @Published public var editedRoutineNameIsInvalid: Bool = false
-    @Published public var editedRoutineNameIsInvalidMsg: String = ""
-    @Published public var editiedRoutineDescription: String = ""
-    @Published public var editedRoutineDescIsInvalid: Bool = false
-    @Published public var editedRoutineDescIsInvalidMsg: String = ""
+    @Published public var editedRoutineDescription: String = ""
     @Published public var selectedTemplateCycle: TemplateCycle? = nil
     
     typealias T = Routine
     
     public func setViewStartValues(entity: Routine) -> Void {
         editedRoutineName = entity.timePeriodName!
-        editiedRoutineDescription = entity.timePeriodDescription!
+        editedRoutineDescription = entity.timePeriodDescription!
     }
     
     public func saveEdits(entity: Routine, viewContext: NSManagedObjectContext) -> Void {
@@ -33,8 +29,8 @@ class EditRoutineViewModel: ViewModel, AddingViewModel, EditingViewModel, Defaul
             entity.timePeriodName = editedRoutineName
         }
         
-        if entity.timePeriodDescription != editiedRoutineDescription {
-            entity.timePeriodDescription = editiedRoutineDescription
+        if entity.timePeriodDescription != editedRoutineDescription {
+            entity.timePeriodDescription = editedRoutineDescription
         }
         
         if entity.hasChanges {

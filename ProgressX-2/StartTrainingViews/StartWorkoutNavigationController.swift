@@ -35,46 +35,54 @@ struct StartWorkoutNavigationController<Content: View>: View {
     }
     
     var body: some View {
+        
         NavigationStack(path: $navPath) {
-            VStack {
-                content
-            }
-            .navigationDestination(for: Int.self) { selection in
+            
+            InputFieldForm {
                 
-                if selection == 1 {
+                VStack {
+                    content
+                }
+                .navigationDestination(for: Int.self) { selection in
                     
-                    ChooseWeekView(
-                        navPath: $navPath,
-                        selectedRoutine: $selectedRoutine,
-                        selectedTrainingWeek: $selectedTrainingWeek
-                    )
-                    
-                } else if selection == 2 {
-                    
-                    TrainingView(
-                        navPath: $navPath,
-                        selectedRoutine: $selectedRoutine, 
-                        selectedTrainingSession: $selectedTrainingSession,
-                        currentTrainingSet: $currentTrainingSet
-                    )
-                    
-                } else if selection == 3 {
-                    
-                    TrainingSetFinishedView()
-                    
-                } else if selection == 4 {
-                    
-                    ChooseSessionView(
-                        navPath: $navPath,
-                        selectedTrainingWeek: $selectedTrainingWeek,
-                        selectedTrainingSession: $selectedTrainingSession, 
-                        currentTrainingSet: $currentTrainingSet
-                    )
+                    if selection == 1 {
+                        
+                        ChooseWeekView(
+                            navPath: $navPath,
+                            selectedRoutine: $selectedRoutine,
+                            selectedTrainingWeek: $selectedTrainingWeek
+                        )
+                        
+                    } else if selection == 2 {
+                        
+                        TrainingView(
+                            navPath: $navPath,
+                            selectedRoutine: $selectedRoutine,
+                            selectedTrainingSession: $selectedTrainingSession,
+                            currentTrainingSet: $currentTrainingSet
+                        )
+                        
+                    } else if selection == 3 {
+                        
+                        TrainingSetFinishedView()
+                        
+                    } else if selection == 4 {
+                        
+                        ChooseSessionView(
+                            navPath: $navPath,
+                            selectedTrainingWeek: $selectedTrainingWeek,
+                            selectedTrainingSession: $selectedTrainingSession,
+                            currentTrainingSet: $currentTrainingSet
+                        )
+                        
+                    }
                     
                 }
+                
             }
-
+            
         }
+        
     }
     
 }
