@@ -61,7 +61,11 @@ struct CreateNewPersonalRecord: View {
                 InputField(
                     placeHolder: "Load",
                     text: $viewModel.prLoad,
-                    variant: DecimalIF(min: 0, max: 10000)
+                    variant: DecimalIF(
+                        min: 0,
+                        max: 10000,
+                        bwButton: true
+                    )
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
