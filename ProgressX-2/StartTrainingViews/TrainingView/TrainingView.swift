@@ -26,9 +26,9 @@ struct TrainingView: View {
     
     @Binding var currentTrainingSet: TrainingSet?
     
+    
+    
     var body: some View {
-        
-        let nextSet = viewModel.getNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
     
         let exerciseType = currentTrainingSet?.exercise!.exerciseType!
         
@@ -93,18 +93,18 @@ struct TrainingView: View {
             BoldSubHeadline(text: "Next set coming up")
                 .padding(.top, 10)
             
-            Text(nextSet?.timePeriodName ?? "This is the last set")
+            Text(viewModel.nextTrainingSet?.timePeriodName ?? "This is the last set")
                 .font(.subheadline)
             
-            if nextSet != nil {
+            if viewModel.nextTrainingSet != nil {
                     
                 GroupBox {
                     
                     VStack(alignment: .leading, spacing: 5) {
                         
-                        LightSubHeadline(text: "Load: \(nextSet!.formattedLoadTodo)")
+                        LightSubHeadline(text: "Load: \( viewModel.nextTrainingSet!.formattedLoadTodo)")
                         
-                        LightSubHeadline(text: "Quantity: \(nextSet!.formattedQuantityTodo!)")
+                        LightSubHeadline(text: "Quantity: \(viewModel.nextTrainingSet!.formattedQuantityTodo!)")
                         
                     }
                     
@@ -169,6 +169,10 @@ struct TrainingView: View {
                 
         }
         .onAppear {
+            
+            if currentTrainingSet != nil{
+                viewModel.getNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
+            }
             NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
                 viewModel.updateStatesWhenTimerStops(trainingSet: currentTrainingSet!)
             }
