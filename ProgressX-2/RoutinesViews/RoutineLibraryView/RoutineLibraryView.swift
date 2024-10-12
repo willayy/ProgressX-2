@@ -79,13 +79,18 @@ struct RoutineLibraryView: View {
                         
                 // MARK: Add new Routine button
                 Button {
+                    
                     viewModel.navPath.append(1)
+                    
                 } label: {
+                    
                     Text("Add new Routine")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.vertical, 20)
