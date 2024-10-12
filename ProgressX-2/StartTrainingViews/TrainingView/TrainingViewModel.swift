@@ -21,6 +21,7 @@ class TrainingViewModel: ViewModel {
     @Published public var timedSetActive: Bool = false
     @Published public var lastExercise: String = ""
     @Published public var secondsElapsed: Int = 0
+    @Published public var nextTrainingSet: TrainingSet? = nil
     
     var timerForSessionLength: Timer = Timer()
     
@@ -84,20 +85,24 @@ class TrainingViewModel: ViewModel {
         
     }
     
-    public func getNextSetAfterThis(session: TrainingSession, currSet: TrainingSet) -> TrainingSet? {
+    
+    
+    public func getNextSetAfterThis(session: TrainingSession, currSet: TrainingSet) -> Void {
         
         let uncompletedSets = session.children
             .filter { !$0.isComplete }
         
+        if uncompletedSets.count < 2 {
+            nextTrainingSet = nil
+        }
         let setAfterThis: TrainingSet? = uncompletedSets[1]
         
         if setAfterThis == nil || setAfterThis == currSet {
             
-            return nil
+            nextTrainingSet = nil
             
         } else {
-            
-            return setAfterThis
+            nextTrainingSet = setAfterThis
             
         }
         
