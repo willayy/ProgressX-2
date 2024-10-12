@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class WeighInViewModel: ViewModel, AddingViewModel {
+class WeighInViewModel: ViewModel {
     
     // Input variables
     @Published public var bodyWeight: String = ""

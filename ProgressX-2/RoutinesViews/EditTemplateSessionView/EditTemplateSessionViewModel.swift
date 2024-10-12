@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
+class EditTemplateSessionViewModel: ViewModel {
     
     @Published public var showSessionChangedAlert: Bool = false
     

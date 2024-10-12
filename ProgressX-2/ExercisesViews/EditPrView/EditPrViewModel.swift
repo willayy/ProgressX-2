@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditPrViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditPrViewModel: ViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()

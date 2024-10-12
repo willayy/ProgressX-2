@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditRoutineViewModel: ViewModel, AddingViewModel, EditingViewModel, DefaultValueViewModel {
+class EditRoutineViewModel: ViewModel {
     
     @Published public var showRoutineChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false

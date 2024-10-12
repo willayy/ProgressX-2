@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditWeighInViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditWeighInViewModel: ViewModel {
     
     // Submission alert variables
     @Published public var bodyEntryEditedAlert: Bool = false

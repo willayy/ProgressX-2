@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditTemplateSetViewModel: ViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""

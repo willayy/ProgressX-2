@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditThresholdsViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditThresholdsViewModel: ViewModel {
     
     @Published public var editedLowerBound: String = ""
     

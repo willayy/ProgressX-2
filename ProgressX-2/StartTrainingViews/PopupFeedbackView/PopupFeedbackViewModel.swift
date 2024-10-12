@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: ViewModel, AddingViewModel, DefaultValueViewModel {
+class PopupFeedbackViewModel: ViewModel {
 
     @Published var showDidntFinishAllReps = false
     @Published var editedSetQuantity: String = ""

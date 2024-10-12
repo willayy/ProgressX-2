@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class ProfileViewModel: ViewModel {
     
     // Segmented picker variables
     @Published public var selectedUnitSegment: Bool = true

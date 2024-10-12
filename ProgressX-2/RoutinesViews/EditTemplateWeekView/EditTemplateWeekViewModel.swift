@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
+class EditTemplateWeekViewModel: ViewModel {
     
     @Published public var showWeekChangedAlert: Bool = false
     @Published public var showNoChangeAlert: Bool = false
