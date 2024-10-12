@@ -31,16 +31,25 @@ struct SessionHistoryNavigationController<Content: View>: View  {
         
         NavigationStack(path: $navPath) {
             
-            VStack {
-                content
-            }.navigationDestination(for: Int.self) { selection in
-            
-                if selection == 1 {
+            InputFieldForm {
+                
+                VStack {
+                    content
+                }
+                .navigationDestination(for: Int.self) { selection in
                     
-                    SessionHistoryView(navPath: $navPath, selectedTrainingSession: $selectedTrainingSession)
+                    if selection == 1 {
+                        
+                        SessionHistoryView(navPath: $navPath, selectedTrainingSession: $selectedTrainingSession)
+                        
+                    }
                     
-                } 
+                }
+                
             }
+            
         }
+        
     }
+    
 }

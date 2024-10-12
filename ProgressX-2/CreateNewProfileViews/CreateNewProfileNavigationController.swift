@@ -19,25 +19,34 @@ struct CreateNewProfileNavigationController<Content: View>: View {
     }
     
     var body: some View {
+        
         NavigationStack(path: $navPath) {
-            VStack {
-                content
-            }
-            .navigationDestination(for: Int.self) { selection in
-                if selection == 1 {
-                    
-                    CreateNewProfile2View(navPath: $navPath)
-                    
-                } else if selection == 2 {
-                    
-                    CreateNewProfile3View(navPath: $navPath)
-                    
-                } else if selection == 3 {
-                    
-                    CreateNewProfile4View(navPath: $navPath)
+            
+            InputFieldForm {
+                
+                VStack {
+                    content
                 }
+                .navigationDestination(for: Int.self) { selection in
+                    if selection == 1 {
+                        
+                        CreateNewProfile2View(navPath: $navPath)
+                        
+                    } else if selection == 2 {
+                        
+                        CreateNewProfile3View(navPath: $navPath)
+                        
+                    } else if selection == 3 {
+                        
+                        CreateNewProfile4View(navPath: $navPath)
+                    }
+                }
+                
             }
+            
         }
+        
     }
+    
 }
 

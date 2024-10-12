@@ -62,7 +62,7 @@ class GlobalInputFieldValidator {
     
 }
 
-struct GlobalAppearView<Content: View>: View {
+struct InputFieldForm<Content: View>: View {
     let content: Content
     
     init(@ViewBuilder content: () -> Content) {
