@@ -44,9 +44,7 @@ class EditTemplateSetViewModel: ViewModel {
     @Published var showNoChangeAlert: Bool = false
     
     @Published var showSetChangedAlert: Bool = false
-    
-    typealias T = TemplateSet
-    
+        
     public func setViewStartValues(entity: TemplateSet) -> Void {
         editedSetName = entity.timePeriodName!
         editedSetDesc = entity.timePeriodDescription!

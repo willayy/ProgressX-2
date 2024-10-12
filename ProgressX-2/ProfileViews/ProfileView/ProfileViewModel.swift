@@ -13,20 +13,24 @@ class ProfileViewModel: ViewModel {
     
     // Segmented picker variables
     @Published public var selectedUnitSegment: Bool = true
+    
     @Published public var selectedGenderSegment: String = "male"
     
     // Input variables
     @Published public var userName: String = ""
+    
     @Published public var birthDay: Date = Date()
+    
     @Published public var height: String = ""
+    
     @Published public var standardRestTime: String = ""
+    
     @Published public var selectedSmallestPlate: String = ""
     
     // Submission alert states
     @Published public var showNoChangeAlert: Bool = false
-    @Published public var showProfileChangedAlert: Bool = false
     
-    typealias T = Profile
+    @Published public var showProfileChangedAlert: Bool = false
     
     // Segments for segment picker
     let unitSegments: KeyValueList<String, Bool> = KeyValueList([

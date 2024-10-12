@@ -12,13 +12,15 @@ import SwiftUI
 class EditRoutineViewModel: ViewModel {
     
     @Published public var showRoutineChangedAlert: Bool = false
+    
     @Published public var showNoChangeAlert: Bool = false
+    
     @Published public var editedRoutineName: String = ""
+    
     @Published public var editedRoutineDescription: String = ""
+    
     @Published public var selectedTemplateCycle: TemplateCycle? = nil
-    
-    typealias T = Routine
-    
+        
     public func setViewStartValues(entity: Routine) -> Void {
         editedRoutineName = entity.timePeriodName!
         editedRoutineDescription = entity.timePeriodDescription!

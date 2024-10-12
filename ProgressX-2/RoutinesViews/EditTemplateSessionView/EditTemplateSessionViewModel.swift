@@ -20,9 +20,7 @@ class EditTemplateSessionViewModel: ViewModel {
     @Published public var editedSessionDescription: String = ""
     
     @Published public var editedPositionIndex: Int64 = 0
-    
-    typealias T = TemplateSession
-    
+        
     public func positionIndexes(selectedTemplateSession: TemplateSession) -> [Int64] {
         selectedTemplateSession.getPositionIndexes()
     }

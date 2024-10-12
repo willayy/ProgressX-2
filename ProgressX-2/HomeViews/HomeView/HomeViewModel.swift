@@ -10,7 +10,9 @@ import Foundation
 class HomeViewModel: ViewModel {
     
     @Published public var navPath: [Int] = [Int]()
+    
     @Published public var selectedProfile: Profile? = nil
+    
     @Published public var selectedBodyEntry: BodyEntry? = nil
     
 }

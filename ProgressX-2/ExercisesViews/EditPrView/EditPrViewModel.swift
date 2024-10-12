@@ -13,19 +13,16 @@ class EditPrViewModel: ViewModel {
     
     // Input field vars
     @Published public var editedDate: Date = Date()
+    
     @Published public var editedQuantity: String = ""
+    
     @Published public var editedWeightLoad: String = ""
-    @Published public var editedQuantityInvalid: Bool = false
-    @Published public var editedWeightLoadInvalid: Bool = false
-    @Published public var editedQuantityInvalidMsg: String = ""
-    @Published public var editedWeightLoadInvalidMsg: String = ""
     
     // Alert vars
     @Published public var prEditedAlert: Bool = false
+    
     @Published public var noChangeAlert: Bool = false
-    
-    typealias T = PersonalRecord
-    
+        
     public func setViewStartValues(entity: PersonalRecord) -> Void {
         
         editedDate = entity.achievedOnDate!

@@ -13,29 +13,46 @@ class EditWeighInViewModel: ViewModel {
     
     // Submission alert variables
     @Published public var bodyEntryEditedAlert: Bool = false
+    
     @Published public var noChangeAlert: Bool = false
     
     // Input variables
     @Published public var editedDate: Date = Date()
+    
     @Published public var editedBodyWeight: String = ""
+    
     @Published public var editedChestCirc: String = ""
+    
     @Published public var editedWaistCirc: String = ""
+    
     @Published public var editedUpperArmCirc: String = ""
+    
     @Published public var editedLowerArmCirc: String = ""
+    
     @Published public var editedThighCirc: String = ""
+    
     @Published public var editedCalfCirc: String = ""
 
     typealias T = BodyEntry
     
     public func setViewStartValues(entity: BodyEntry) -> Void {
+        
         editedDate = entity.achievedOnDate!
+        
         editedBodyWeight = String(format: "%.2f", entity.bodyWeight)
+        
         editedChestCirc = (entity.chestCirc == nil) ? "" : String(describing: entity.chestCirc!)
+        
         editedUpperArmCirc = (entity.uprArmCirc == nil) ? "" : String(describing: entity.uprArmCirc!)
+        
         editedLowerArmCirc = (entity.lwrArmCirc == nil) ? "" : String(describing: entity.lwrArmCirc!)
+        
         editedWaistCirc = (entity.waistCirc == nil) ? "" : String(describing: entity.waistCirc!)
+        
         editedThighCirc = (entity.thighCirc == nil) ? "" : String(describing: entity.thighCirc!)
+        
         editedCalfCirc = (entity.calfCirc == nil) ? "" : String(describing: entity.calfCirc!)
+        
     }
     
     public func saveEdits(entity: BodyEntry, viewContext: NSManagedObjectContext) -> Void {
