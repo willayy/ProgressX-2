@@ -11,6 +11,9 @@ import Combine
 /// An input restricting, self validating view component based on the TextField.
 struct InputField: View {
     
+    // Default access id
+    public let accessId: String = ""
+    
     public let placeHolder: String
     
     @Binding public var text: String
@@ -31,6 +34,8 @@ struct InputField: View {
             if includeMinusButton { MinusButton(text: $text) }
             
             TextField(placeHolder, text: $text)
+            // Access id for the UI-tests
+            .accessibilityIdentifier(accessId)
             .frame(maxWidth: .infinity)
             // Textfield visual style.
             .textFieldStyle(RoundedBorderTextFieldStyle())
