@@ -38,7 +38,7 @@ struct TrainingSessionHistoryListItem: View {
             Button(action: {
                 selectedTrainingSession = session
                 navPath.append(1)
-            }) { Image(systemName: "figure.run") }
+            }) { Image(systemName: "calendar.badge.checkmark") }
                 .frame(width: 20)
                 .padding(.horizontal, 10)
                 .buttonStyle(BorderlessButtonStyle())
