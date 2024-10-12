@@ -11,10 +11,15 @@ import CoreData
 struct EditTemplateSessionView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @StateObject private var viewModel = EditTemplateSessionViewModel()
+    
     @Binding var navPath: [Int]
+    
     @Binding var selectedTemplateSet: TemplateSet?
+    
     @Binding var selectedTemplateSession: TemplateSession?
+    
     @Binding var selectedThreshold: SetThreshold?
     
     var body: some View {
@@ -76,12 +81,10 @@ struct EditTemplateSessionView: View {
                 BoldSubHeadline(text: "Edit session name")
                     .padding(.top, 10)
                 
-                InputTextField(
+                InputField(
                     placeHolder: "Session name",
                     text: $viewModel.editedSessionName,
-                    markAsWrong: $viewModel.editedSessionIsInvalid,
-                    errorMessage: $viewModel.editedSessionNameIsInvalidMsg,
-                    maxChars: 25
+                    variant: TextIF()
                 )
                 .padding(.horizontal, 60)
                 
@@ -95,12 +98,10 @@ struct EditTemplateSessionView: View {
                 )
                 .padding(.horizontal, 20)
                 
-                inputLongTextField(
+                LargeInputField(
                     placeHolder: "Session description",
                     text: $viewModel.editedSessionDescription,
-                    markAsWrong: $viewModel.editedSessionDescIsInvalid,
-                    errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
-                    maxChars: 200
+                    variant: TextIF(allowEmpty: false)
                 )
                 .frame(height: 150)
                 .padding(.horizontal, 60)
@@ -117,9 +118,10 @@ struct EditTemplateSessionView: View {
                 .backgroundStyle(.white)
                 .padding(.horizontal, 40)
                 
+                // MARK: Save change button
                 Button {
                     
-                    if validateInput() {
+                    if GlobalInputFieldValidator.allFieldsValid() {
                         
                         viewModel.saveEdits(entity: selectedTemplateSession!, viewContext: viewContext)
                         
@@ -162,55 +164,45 @@ struct EditTemplateSessionView: View {
             .padding(.horizontal, 20)
             
         }
-            
+        
+        // MARK: Add new set button
         Button {
+            
             navPath.append(7)
+            
         } label: {
+            
             Text("Add new set")
                 .frame(height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
             Image(systemName: "plus")
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.vertical, 20)
     
     }
     
-    private func validateInput() -> Bool {
-        
-        var valid: Int = 0
-        
-        let sessionNameValidator = StringFieldValidator()
-        
-        let sessionDescValidator = StringFieldValidator(emptyAllowed: true)
-        
-        valid += sessionNameValidator.validateField(
-            inputVar: viewModel.editedSessionName,
-            errorMessage: $viewModel.editedSessionNameIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSessionIsInvalid
-        )
-        
-        valid += sessionDescValidator.validateField(
-            inputVar: viewModel.editedSessionDescription,
-            errorMessage: $viewModel.editedSessionDescIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSessionDescIsInvalid
-        )
-
-        return valid == 0
-    }
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
+    
     let fetchRequest: NSFetchRequest = TemplateSession.fetchRequest()
+    
     let sessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let session = sessions.first!
     
     @State var navPath: [Int] = [Int]()
+    
     @State var selectedTemplateSession: TemplateSession? = session
+    
     @State var selectedTemplateSet: TemplateSet? = nil
+    
     @State var selectedThreshold: SetThreshold? = nil
     
     return EditTemplateSessionView(
@@ -220,4 +212,5 @@ struct EditTemplateSessionView: View {
         selectedThreshold: $selectedThreshold
     )
     .environment(\.managedObjectContext, context)
+    
 }

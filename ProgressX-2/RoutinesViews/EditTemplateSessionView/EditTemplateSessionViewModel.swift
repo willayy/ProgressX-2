@@ -12,13 +12,13 @@ import SwiftUI
 class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
     
     @Published public var showSessionChangedAlert: Bool = false
+    
     @Published public var showNoChangeAlert: Bool = false
+    
     @Published public var editedSessionName: String = ""
-    @Published public var editedSessionIsInvalid: Bool = false
-    @Published public var editedSessionNameIsInvalidMsg: String = ""
+    
     @Published public var editedSessionDescription: String = ""
-    @Published public var editedSessionDescIsInvalid: Bool = false
-    @Published public var editedSessionDescIsInvalidMsg: String = ""
+    
     @Published public var editedPositionIndex: Int64 = 0
     
     typealias T = TemplateSession

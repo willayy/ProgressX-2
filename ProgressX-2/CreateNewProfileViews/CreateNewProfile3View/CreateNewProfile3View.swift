@@ -59,11 +59,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.chestCirc,
-                            markAsWrong: $viewModel.chestCircIsInvalid,
-                            errorMessage: $viewModel.chestCircIsInvalidMsg
+                            text: $viewModel.chestCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                         
                     }
@@ -79,11 +82,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.waistCirc,
-                            markAsWrong: $viewModel.waistCircIsInvalid,
-                            errorMessage: $viewModel.waistCircIsInvalidMsg
+                            text: $viewModel.waistCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                         
                     }
@@ -99,11 +105,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.thighCirc,
-                            markAsWrong: $viewModel.thighCircIsInvalid,
-                            errorMessage: $viewModel.thighCircIsInvalidMsg
+                            text: $viewModel.thighCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                         
                     }
@@ -119,11 +128,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.calfCirc,
-                            markAsWrong: $viewModel.calfCircIsInvalid,
-                            errorMessage: $viewModel.calfCircIsInvalidMsg
+                            text: $viewModel.calfCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                         
                     }
@@ -139,11 +151,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.lowerArmCirc,
-                            markAsWrong: $viewModel.lowerArmCircIsInvalid,
-                            errorMessage: $viewModel.lowerArmCircIsInvalidMsg
+                            text: $viewModel.lowerArmCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                 
                     }
@@ -159,11 +174,14 @@ struct CreateNewProfile3View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.lengthUnit(viewContext),
-                            numberText: $viewModel.upperArmCirc,
-                            markAsWrong: $viewModel.upperArmCircIsInvalid,
-                            errorMessage: $viewModel.upperArmCircIsInvalidMsg
+                            text: $viewModel.upperArmCirc,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 1000,
+                                optional: true
+                            )
                         )
                         
                     }
@@ -176,24 +194,37 @@ struct CreateNewProfile3View: View {
         
         HStack {
             
+            // MARK: Skip this segment button
             Button {
+                
                 navPath.append(3)
+                
             } label: {
+                
                 Text("Skip this")
                     .frame(width: 100, height: 40)
                     .foregroundColor(Color("buttonTextColor"))
+                
             }
             .buttonStyle(.borderedProminent)
             .padding(.vertical, 20)
             .tint(.red.opacity(0.9))
             
+            // MARK: Continue (after providing input) button
             Button {
-                if validateInput() {
+                
+                if GlobalInputFieldValidator.allFieldsValid() {
+                    
                     viewModel.firstBodyEntry = bodyEntries.first
+                    
                     viewModel.saveEntry(viewContext: viewContext)
+                    
                     navPath.append(3)
+                    
                 }
+                
             } label: {
+                
                 Text("Continue")
                     .frame(width: 80, height: 40)
                     .foregroundColor(Color("buttonTextColor"))
@@ -205,55 +236,13 @@ struct CreateNewProfile3View: View {
             .padding(.vertical, 20)
             
         }
-    }
-    
-    // Function for validtaing input fields, in the future, remake InputFieldvalidator to an object that has a set min/max etc and make the inputFields tagged so it can decide itself
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 1000)
         
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.chestCirc,
-            errorMessage: $viewModel.chestCircIsInvalidMsg,
-            fieldInvalid: $viewModel.chestCircIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.waistCirc,
-            errorMessage: $viewModel.waistCircIsInvalidMsg,
-            fieldInvalid: $viewModel.waistCircIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.thighCirc,
-            errorMessage: $viewModel.thighCircIsInvalidMsg,
-            fieldInvalid: $viewModel.thighCircIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.calfCirc,
-            errorMessage: $viewModel.calfCircIsInvalidMsg,
-            fieldInvalid: $viewModel.calfCircIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.upperArmCirc,
-            errorMessage: $viewModel.upperArmCircIsInvalidMsg,
-            fieldInvalid: $viewModel.upperArmCircIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.lowerArmCirc,
-            errorMessage: $viewModel.lowerArmCircIsInvalidMsg,
-            fieldInvalid: $viewModel.lowerArmCircIsInvalid
-        )
-        
-        return valid == 0
     }
     
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
     
     @State var navPath = [Int]()

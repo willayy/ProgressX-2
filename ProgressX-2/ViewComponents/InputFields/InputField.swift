@@ -1,19 +1,21 @@
 //
-//  LargeTextInputField.swift
+//  InputField.swift
 //  ProgressX-2
 //
-//  Created by William Norland on 2024-10-08.
+//  Created by William Norland on 2024-10-03.
 //
 
 import SwiftUI
+import Combine
 
-struct LargeTextInputField: View {
+/// An input restricting, self validating view component based on the TextField.
+struct InputField: View {
     
     public let placeHolder: String
     
     @Binding public var text: String
     
-    @Binding public var valid: Bool
+    @State private var valid: Bool = true
     
     @FocusState private var isTextFieldFocused
     
@@ -23,27 +25,15 @@ struct LargeTextInputField: View {
     
     var body: some View {
         
-        ZStack {
+        HStack {
             
-            // Placeholder for TextEditor
-            if text.isEmpty {
-                Text(placeHolder)
-                    .fontWeight(.light)
-                    .foregroundStyle(.gray.opacity(0.75))
-                    .zIndex(1)
-            }
+            // Include minusbutton if included in variant.
+            if includeMinusButton { MinusButton(text: $text) }
             
-            TextEditor(text: $text)
+            TextField(placeHolder, text: $text)
             .frame(maxWidth: .infinity)
-            // Texteditor visual style.
-            .background(Color.white)
-            .cornerRadius(5)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.gray.opacity(0.20), lineWidth: 1)
-            )
-            .font(.subheadline)
-            .foregroundColor(.primary)
+            // Textfield visual style.
+            .textFieldStyle(RoundedBorderTextFieldStyle())
             // The minimum scale factor of the textfield text.
             .minimumScaleFactor(0.75)
             // The keyboard type
@@ -66,13 +56,13 @@ struct LargeTextInputField: View {
                 self.dynamicValidation(self.text)
             }
             .onAppear(perform: {
-                // if variant doesnt allow empty fields
-                if !self.variant.allowEmpty {
-                    // Add the field to the Global validator
-                    let fieldValues = ($text, $valid, $variant.errorMessage)
-                    GlobalInputFieldValidator.addToValidationList(fieldValues)
-                }
+                // Add the field to the Global validator
+                let fieldValues = ($text, $valid, $variant.errorMessage, variant.allowEmpty)
+                GlobalInputFieldValidator.addToValidationList(fieldValues)
             })
+            
+            // Include BwButton if included in variant.
+            if includeBwButton { BwButton(text: $text) }
             
         }
         
@@ -88,7 +78,7 @@ struct LargeTextInputField: View {
     
 }
 
-extension LargeTextInputField {
+extension InputField {
     
     /// Checks if the InputFieldVariant is numeric
     private var variantIsNumeric: Bool {
@@ -186,7 +176,9 @@ extension LargeTextInputField {
     
 }
 
-private struct LargeTextInputFieldTestView: View {
+private struct InputFieldTestView: View {
+    
+    let context = PersistenceController.previewViewContext
     
     @State var valid: Bool = true
     
@@ -196,23 +188,27 @@ private struct LargeTextInputFieldTestView: View {
         
         VStack {
             
-            LargeTextInputField(
-                placeHolder: "Big text area",
+            InputField(
+                placeHolder: "Write something here",
                 text: $text,
-                valid: $valid,
-                variant: TextIF(
-                    allowEmpty: false
+                variant: DecimalIF(
+                    min: 0,
+                    max: 10000,
+                    bwButton: true,
+                    allowNeg: true,
+                    optional: false
                 )
             )
-            .padding(.horizontal, 50)
-            .padding(.vertical, 300)
-            
+            .padding(.horizontal, 20)
+        
         }
+        .environment(\.managedObjectContext, context)
+        
     }
 }
 
 #Preview {
     
-    return LargeTextInputFieldTestView()
+    return InputFieldTestView()
     
 }

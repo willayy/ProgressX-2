@@ -19,14 +19,6 @@ class EditExerciseViewModel: ViewModel, EditingViewModel, DefaultValueViewModel 
     @Published public var newName: String = ""
     @Published public var newDesc: String = ""
     
-    // Input error
-    @Published public var newNameIsInvalid: Bool = false
-    @Published public var newDescIsInvalid: Bool = false
-    
-    // Input error message
-    @Published public var newNameIsInvalidMsg: String = ""
-    @Published public var newDescIsInvalidMsg: String = ""
-    
     // Set variable for categories
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     

@@ -22,7 +22,9 @@ struct CreateNewExerciseView: View {
     ) private var categories: FetchedResults<ExerciseCategory>
         
     @StateObject private var viewModel = CreateNewExerciseViewModel()
+    
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding public var navPath: [Int]
     
     var body: some View {
@@ -32,27 +34,25 @@ struct CreateNewExerciseView: View {
             BoldTitle(text: "Create new exercise")
                 .padding(.horizontal, 20)
             
+            // MARK: The name of the exercise
             BoldSubHeadline(text: "Exercise name")
                 .padding(.top, 10)
             
-            InputTextField(
+            InputField(
                 placeHolder: "Exercise name",
                 text: $viewModel.enteredExerciseName,
-                markAsWrong: $viewModel.enteredExerciseNameIsInvalid,
-                errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg,
-                maxChars: 25
+                variant: TextIF()
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: The description of the exercise
             BoldSubHeadline(text: "Exercise description")
             
-            inputLongTextField(
+            LargeInputField(
                 placeHolder: "Exercise description",
                 text: $viewModel.enteredExerciseDesc,
-                markAsWrong: $viewModel.enteredExerciseDescIsInvalid,
-                errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg,
-                maxChars: 200
+                variant: TextIF(allowEmpty: true)
             )
             .frame(height: 150)
             .padding(.horizontal, 60)
@@ -105,43 +105,54 @@ struct CreateNewExerciseView: View {
                     
                 }
                 
-                DecimalTextField(
+                // MARK: PR load
+                InputField(
                     placeHolder: "Load (\(viewModel.weightUnit(viewContext))",
-                    numberText: $viewModel.enteredPrWeigtLoad,
-                    markAsWrong: $viewModel.enteredPrWeigtLoadIsInvalid,
-                    errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg,
-                    bodyWeightButton: true
+                    text: $viewModel.enteredPrWeigtLoad,
+                    variant: DecimalIF(
+                        min: 0,
+                        max: 10000,
+                        bwButton: true
+                    )
                 )
                 .padding(.horizontal, 60)
                 
                 if viewModel.selectedTypeOfExercise == "time" {
                     
-                    DecimalTextField(
+                    InputField(
                         placeHolder: "PR time in seconds",
-                        numberText: $viewModel.enteredPrQuantity,
-                        markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                        errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
+                        text: $viewModel.enteredPrQuantity,
+                        variant: DecimalIF(
+                            min: 0,
+                            max: 100000
+                        )
                     )
                     .padding(.horizontal, 60)
                     
                 } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
                     
-                    IntegerTextField(
-                        placeHolder: "Reps",
-                        numberText: $viewModel.enteredPrQuantity,
-                        markAsWrong: $viewModel.enteredPrQuantityIsInvalid,
-                        errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg
+                    InputField(
+                        placeHolder: "PR reps",
+                        text: $viewModel.enteredPrQuantity,
+                        variant: IntegerIF(
+                            min: 0,
+                            max: 100000
+                        )
                     )
                     .padding(.horizontal, 60)
                     
                 } else {
                     
                     GroupBox {
+                        
                         LightSubHeadline(text: "Automatically set to 1 for 1RM")
                             .frame(maxWidth: .infinity)
+                        
                     }
                     .padding(.horizontal, 60)
+                    
                 }
+                
             }
             
             BoldSubHeadline(text: "Add muscle categories to this exercise?")
@@ -154,82 +165,46 @@ struct CreateNewExerciseView: View {
             .padding(.horizontal, 40)
             
             DisplayMusclesDummy(selectedMuscles: $viewModel.selectedCategories, categories: _categories)
-
             
         }
-                
+            
+        
+            // MARK: Create new exercise button
             Button(action: {
-                if validateInput() {
+                
+                if GlobalInputFieldValidator.allFieldsValid() {
                     
                     viewModel.saveEntry(viewContext: viewContext)
+                    
                     navPath.removeLast()
                     
                 }
+                
             }) {
+                
                 Text("Create new exercise")
                     .frame(height: 40)
                     .foregroundColor(Color("buttonTextColor"))
                 
                 Image(systemName: "plus")
                     .foregroundColor(Color("buttonTextColor"))
+                
             }
             .buttonStyle(BorderedProminentButtonStyle())
             .padding(.vertical, 20)
             .onChange(of: viewModel.selectedTypeOfPr, initial: true, {
+                
                 viewModel.prTypeChanged()
+                
             })
             .onChange(of: viewModel.selectedTypeOfExercise, initial: true, {
+                
                 viewModel.exerciseTypeChanged()
+                
             })
         
     }
     
-    /// Validates input, marks textfields that are filled incorrectly.
-    /// - Returns: True if input is  valid and false if not
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        
-        // Quantity can be either Double or Int
-        let quantityFieldValidtor: InputFieldValidator
-        
-        // Depemnding on the the exercise
-        if viewModel.selectedTypeOfExercise == "Reps" {
-            quantityFieldValidtor = IntFieldValidator(maxInputNumber: 100000)
-        } else {
-            // This is the case when exercise is Time
-            quantityFieldValidtor = DoubleFieldValidator(maxInputNumber: 100000)
-        }
-
-        // Load is a always Double
-        let loadFieldValidtor = DoubleFieldValidator(maxInputNumber: 10000)
-        
-        let usedNames = exercises.map {$0.exerciseName!}
-        
-        let nameFieldValidator = StringFieldValidator(duplicatesAllowed: false, checkStrings: usedNames)
-        
-        let descFieldValidator = StringFieldValidator(emptyAllowed: true)
-        
-        valid += nameFieldValidator.validateField(
-            inputVar: viewModel.enteredExerciseName,
-            errorMessage: $viewModel.enteredExerciseNameIsInvalidMsg ,
-            fieldInvalid: $viewModel.enteredExerciseNameIsInvalid
-        )
-        
-        valid += descFieldValidator.validateField(
-            inputVar: viewModel.enteredExerciseDesc,
-            errorMessage: $viewModel.enteredExerciseDescIsInvalidMsg ,
-            fieldInvalid: $viewModel.enteredExerciseDescIsInvalid
-        )
-        
-        if viewModel.addPr {
-            
-            valid += loadFieldValidtor.validateField(inputVar: viewModel.enteredPrWeigtLoad, errorMessage: $viewModel.enteredPrWeigtLoadIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrWeigtLoadIsInvalid)
-            
-            valid += quantityFieldValidtor.validateField(inputVar: viewModel.enteredPrQuantity, errorMessage: $viewModel.enteredPrQuantityIsInvalidMsg ,fieldInvalid: $viewModel.enteredPrQuantityIsInvalid)
-        }
-        
-        return valid == 0
-    }
 }
 
 #Preview {

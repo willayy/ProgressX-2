@@ -17,9 +17,13 @@ struct CreateNewPersonalRecord: View {
     ) private var bodyEntries: FetchedResults<BodyEntry>
     
     @Binding var prType: String? // The selection of the segmented picker
+    
     @Binding var navPath: [Int]
+    
     @Binding var selectedExercise: Exercise? // Exercise for the PR
+    
     @Environment(\.managedObjectContext) private var viewContext
+    
     @StateObject private var viewModel = CreateNewPersonalRecordViewModel()
     
     var body: some View {
@@ -43,6 +47,7 @@ struct CreateNewPersonalRecord: View {
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
                 
+                // MARK: Choose PR date
                 BoldSubHeadline(text: "Choose a date for the PR")
                 
                 DatePicker("", selection: $viewModel.prDate, displayedComponents: .date)
@@ -50,94 +55,66 @@ struct CreateNewPersonalRecord: View {
                     .labelsHidden()
                     .padding(.bottom, 20)
                 
+                // MARK: Choose PR load
                 BoldSubHeadline(text: "Choose a load for the PR")
                 
-                DecimalTextField(
-                    placeHolder: "Load", 
-                    numberText: $viewModel.prLoad,
-                    markAsWrong: $viewModel.prLoadIsInvalid,
-                    errorMessage: $viewModel.prLoadIsInvalidMsg,
-                    bodyWeightButton: true
+                InputField(
+                    placeHolder: "Load",
+                    text: $viewModel.prLoad,
+                    variant: DecimalIF(min: 0, max: 10000)
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
-                .onAppear(perform: {
-                    if prType == "onerepmax" {
-                        viewModel.prQuantity = "1"
-                    }
-                })
-                    
-                if prType == "maxreps" {
-                    IntegerTextField(
-                        placeHolder: "Reps", 
-                        numberText: $viewModel.prQuantity,
-                        markAsWrong: $viewModel.prQuantityIsInvalid,
-                        errorMessage: $viewModel.prQuantityIsInvalidMsg
-                    )
-                    .padding(.horizontal, 60)
-                }
+                .onAppear(perform: { viewModel.setPrQuantity(basedOn: prType!) })
                 
-                else if prType == "timemax" {
-                    DecimalTextField(
-                        placeHolder: "Seconds", 
-                        numberText: $viewModel.prQuantity,
-                        markAsWrong: $viewModel.prQuantityIsInvalid,
-                        errorMessage: $viewModel.prQuantityIsInvalidMsg
-                    )
-                    .padding(.horizontal, 60)
-                }
+                // MARK: Choose PR quantity
+                // Declare variables for the PR's quantities inputField
+                let quantityFieldVariant: InputFieldVariant = viewModel.getInputFieldVariant(fromPrType: prType!)
+                
+                let quantityFieldPlaceHolder: String = viewModel.getInputFieldPlaceholder(fromPrType: prType!)
+                
+                InputField(
+                    placeHolder: quantityFieldPlaceHolder,
+                    text: $viewModel.prQuantity,
+                    variant: quantityFieldVariant
+                )
+                .padding(.horizontal, 60)
                 
                 // MARK: Handle the creation of a PR
                 Button(action: {
-                    if validateInput() {
+                    
+                    if GlobalInputFieldValidator.allFieldsValid() {
+                        
                         viewModel.selectedExercise = selectedExercise!
+                        
                         viewModel.selectedPrType = prType!
+                        
                         viewModel.saveEntry(viewContext: viewContext)
+                        
                         navPath.removeLast()
+                        
                     }
+                    
                 }) {
+                    
                     Text("Create new PR")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .padding(.vertical, 20)
                 .buttonStyle(BorderedProminentButtonStyle())
                 
             }
             .frame(maxWidth: .infinity)
+            
         }
+        
     }
     
-    private func validateInput() -> Bool {
-        
-        var valid: Int = 0
-        
-        var quantityValidator: InputFieldValidator
-        
-        let loadValidator: InputFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
-        
-        if prType == "timemax" {
-            quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)
-        } else {
-            quantityValidator = IntFieldValidator(maxInputNumber: 100000)
-        }
-        
-        valid += loadValidator.validateField(
-            inputVar: viewModel.prLoad,
-            errorMessage: $viewModel.prLoadIsInvalidMsg,
-            fieldInvalid: $viewModel.prLoadIsInvalid
-        )
-        
-        valid += quantityValidator.validateField(
-            inputVar: viewModel.prQuantity,
-            errorMessage: $viewModel.prQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.prQuantityIsInvalid
-        )
-        
-        return valid == 0
-    }
 }
 
 #Preview {

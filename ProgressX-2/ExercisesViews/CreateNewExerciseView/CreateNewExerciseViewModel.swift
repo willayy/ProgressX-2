@@ -26,18 +26,6 @@ class CreateNewExerciseViewModel: ViewModel, AddingViewModel {
     @Published public var selectedTypeOfPr: String = "onerepmax"
     @Published public var addPr: Bool = false
     
-    // Invalid input error
-    @Published public var enteredExerciseNameIsInvalid: Bool = false
-    @Published public var enteredExerciseDescIsInvalid: Bool = false
-    @Published public var enteredPrQuantityIsInvalid: Bool = false
-    @Published public var enteredPrWeigtLoadIsInvalid: Bool = false
-    
-    // Invalid input messages
-    @Published public var enteredExerciseNameIsInvalidMsg: String = ""
-    @Published public var enteredExerciseDescIsInvalidMsg: String = ""
-    @Published public var enteredPrQuantityIsInvalidMsg: String = ""
-    @Published public var enteredPrWeigtLoadIsInvalidMsg: String = ""
-    
     // Category set
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
     

@@ -13,42 +13,45 @@ class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
     
     // The Name of the set (good default is provided)
     @Published public var newSetName: String = "Set "
-    @Published public var newSetNameIsInvalid: Bool = false
-    @Published public var newSetNameIsInvalidMsg: String = ""
+    
     // The Description of the set (Optional)
     @Published public var newSetDesc: String = ""
-    @Published public var newSetDescIsInvalid: Bool = false
-    @Published public var newSetDescIsInvalidMsg: String = ""
+    
     // The Load of the set
     @Published public var newSetLoad: String = ""
-    @Published public var newSetLoadIsInvalid: Bool = false
-    @Published public var newSetLoadIsInvalidMsg: String = ""
+    
     // The Quantity of the set
     @Published public var newSetQuantity: String = ""
-    @Published public var newSetQuantityIsInvalid: Bool = false
-    @Published public var newSetQuantityIsInvalidMsg: String = ""
+    
     // The rest time
     @Published public var restTime: String = ""
-    @Published public var restTimeIsInvalid: Bool = false
-    @Published public var restTimeIsInvalidMsg: String = ""
+    
     // The exercise of the set
     @Published public var selectedExercise: Exercise? = nil
+    
     @Published public var searchWord: String = ""
+    
     // Selection of load types
     @Published public var selectedLoadType: String = "Select exercise first!"
+    
     // Selection of quantity types
     @Published public var selectedQuantityType: String = "Select exercise first!"
+    
     // State that tracks if an exercises has been selected
     @Published public var exerciseHasBeenSelected: Bool = false
+    
     // State that decides if the view should navigate to the add thresholds view
     @Published public var showAddThresholds: Bool = false
+    
     @Published public var selectedTemplateSession: TemplateSession? = nil
+    
     @Published public var createdTemplateSet: TemplateSet? = nil
     
     /* variable that keeps track of if the set has been saved,
      without this its possible to create several identical sets
      by goingback and forth between the add threshold view and this view. */
     @Published public var newSetHasBeenSaved: Bool = false
+    
     @Published public var showSetHasBeenSaved: Bool = false
     
     // for load type selections

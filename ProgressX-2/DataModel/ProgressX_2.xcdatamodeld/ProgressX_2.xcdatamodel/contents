@@ -46,7 +46,7 @@
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>
         <attribute name="smallestPlate" attributeType="Double" minValueString="1" maxValueString="200" defaultValueString="2.5" usesScalarValueType="YES"/>
-        <attribute name="standardRestTime" attributeType="Double" minValueString="0" defaultValueString="240" usesScalarValueType="YES"/>
+        <attribute name="standardRestTime" attributeType="Double" minValueString="0" maxValueString="6000" defaultValueString="240" usesScalarValueType="YES"/>
         <attribute name="userHeight" attributeType="Double" minValueString="0" maxValueString="1000" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="bodyEntries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BodyEntry" inverseName="profile" inverseEntity="BodyEntry"/>
     </entity>
@@ -77,7 +77,7 @@
     <entity name="TemplateSet" representedClassName="TemplateSet" parentEntity="OrderableTimePeriod" syncable="YES" codeGenerationType="class">
         <attribute name="loadType" attributeType="String" regularExpressionString="^(numerical|maxperc|bwperc)$"/>
         <attribute name="quantityType" attributeType="String" regularExpressionString="^(numerical|maxperc)$"/>
-        <attribute name="restTime" attributeType="Double" minValueString="0" maxValueString="600" usesScalarValueType="YES"/>
+        <attribute name="restTime" attributeType="Double" minValueString="0" maxValueString="6000" usesScalarValueType="YES"/>
         <attribute name="setLoad" attributeType="Double" minValueString="0" maxValueString="10000" usesScalarValueType="YES"/>
         <attribute name="setQuantity" attributeType="Double" minValueString="0" maxValueString="100000" usesScalarValueType="YES"/>
         <relationship name="exercise" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="templateSets" inverseEntity="Exercise"/>

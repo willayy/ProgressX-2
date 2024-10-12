@@ -11,9 +11,13 @@ import CoreData
 struct EditTemplateWeekView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var navPath: [Int]
+    
     @Binding var selectedTemplateWeek: TemplateWeek?
+    
     @Binding var selectedTemplateSession: TemplateSession?
+    
     @StateObject private var viewModel = EditTemplateWeekViewModel()
     
     var body: some View {
@@ -40,43 +44,50 @@ struct EditTemplateWeekView: View {
                 
                 // If description is empty replace with a red label.
                 if selectedTemplateWeek!.timePeriodDescription!.isEmpty {
+                    
                     Text("No description.")
                         .font(.subheadline)
                         .fontWeight(.light)
                         .foregroundStyle(.red)
                         .padding(.bottom, 20)
+                    
                 } else {
+                    
                     LightSubHeadline(text: selectedTemplateWeek!.timePeriodDescription!)
                         .padding(.bottom, 20)
+                    
                 }
                 
                 // Expandable hidden view that has functionality for changing name and description.
                 ExpandingVStack(title: "Change week information") {
                     
+                    // MARK: Submission Alert state.
                     if viewModel.showWeekChangedAlert {
+                        
                         SubmitAlert(
                             message: "Successfully edited week!",
                             color: .green,
                             showAlertState: $viewModel.showWeekChangedAlert
                         )
                         .padding(.top, 10)
+                        
                     } else if viewModel.showNoChangeAlert {
+                        
                         SubmitAlert(
                             message: "No change!",
                             color: .blue,
                             showAlertState: $viewModel.showNoChangeAlert
                         )
                         .padding(.top, 10)
+                        
                     }
                     
                     BoldSubHeadline(text: "Edit week name")
                     
-                    InputTextField(
+                    InputField(
                         placeHolder: "Week name",
                         text: $viewModel.editedWeekName,
-                        markAsWrong: $viewModel.editedWeekIsInvalid,
-                        errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
-                        maxChars: 25
+                        variant: TextIF()
                     )
                     .padding(.horizontal, 60)
                     
@@ -90,12 +101,10 @@ struct EditTemplateWeekView: View {
                     )
                     .padding(.horizontal, 20)
                     
-                    inputLongTextField(
+                    LargeInputField(
                         placeHolder: "New week description",
                         text: $viewModel.editedWeekDescription,
-                        markAsWrong: $viewModel.editedWeekDescIsInvalid,
-                        errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
-                        maxChars: 25
+                        variant: TextIF(allowEmpty: true)
                     )
                     .frame(height: 150)
                     .padding(.horizontal, 60)
@@ -110,16 +119,24 @@ struct EditTemplateWeekView: View {
                     .backgroundStyle(.white)
                     .padding(.horizontal, 40)
                     
+                    // MARK: Save changes button.
                     Button {
-                        if validateInput() {
+                        
+                        if GlobalInputFieldValidator.allFieldsValid() {
+                            
                             viewModel.saveEdits(entity: selectedTemplateWeek!, viewContext: viewContext)
+                            
                         }
+                        
                     } label: {
+                        
                         Text("Save change")
                             .frame(height: 40)
                             .foregroundColor(Color("buttonTextColor"))
+                        
                         Image(systemName: "square.and.arrow.down")
                             .foregroundColor(Color("buttonTextColor"))
+                        
                     }
                     .buttonStyle(BorderedProminentButtonStyle())
                     .padding(.vertical, 10)
@@ -137,6 +154,7 @@ struct EditTemplateWeekView: View {
                 )
                 .padding(.horizontal, 20)
                 
+                // MARK: Sessions in the week.
                 BasicList(
                     height: 400,
                     containerName: "this week",
@@ -148,60 +166,49 @@ struct EditTemplateWeekView: View {
                         selectedTemplateSession: $selectedTemplateSession,
                         session: session
                     )
-                    .environment(\.managedObjectContext, viewContext)
                 }
                 .padding(.horizontal, 20)
                 
             }
                 
+                // MARK: Add new session.
                 Button {
+                    
                     viewModel.selectedTemplateWeek = selectedTemplateWeek!
+                    
                     viewModel.saveEntry(viewContext: viewContext)
+                    
                 } label: {
+                    
                     Text("Add new Session")
                         .frame(height: 40)
                         .foregroundColor(Color("buttonTextColor"))
+                    
                     Image(systemName: "plus")
                         .foregroundColor(Color("buttonTextColor"))
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.vertical, 20)
             
         }
     
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        
-        let weekNameValidator = StringFieldValidator()
-        
-        let weekDescValidator = StringFieldValidator(emptyAllowed: true)
-        
-        valid += weekNameValidator.validateField(
-            inputVar: viewModel.editedWeekName,
-            errorMessage: $viewModel.editedWeekNameIsInvalidMsg,
-            fieldInvalid: $viewModel.editedWeekIsInvalid
-        )
-        
-        valid += weekDescValidator.validateField(
-            inputVar: viewModel.editedWeekDescription,
-            errorMessage: $viewModel.editedWeekDescIsInvalidMsg,
-            fieldInvalid: $viewModel.editedWeekDescIsInvalid
-        )
-
-        return valid == 0
-    }
-    
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
+    
     let fetchRequest: NSFetchRequest = TemplateWeek.fetchRequest()
+    
     let weeks = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     let week = weeks.first!
     
     @State var navPath: [Int] = [Int]()
+    
     @State var selectedTemplateWeek: TemplateWeek? = week
+    
     @State var selectedTemplateSession: TemplateSession? = nil
     
     return EditTemplateWeekView(
@@ -210,4 +217,5 @@ struct EditTemplateWeekView: View {
         selectedTemplateSession: $selectedTemplateSession
     )
     .environment(\.managedObjectContext, context)
+    
 }

@@ -15,8 +15,11 @@ struct PopupFeedbackView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @Binding var selectedRoutine: Routine?
+    
     @Binding var currentTrainingSet: TrainingSet?
+    
     @Binding var presentPopup: Bool
+    
     @Binding var timeDone: Double?
     
     var body: some View {
@@ -41,11 +44,15 @@ struct PopupFeedbackView: View {
                     
                     // MARK: No i did not complete all sets button.
                     Button(action:{
+                        
                         viewModel.showDidntFinishAllReps.toggle()
+                        
                     }) {
+                        
                         Text("NO")
                             .bold()
                             .frame(width: 120, height: 55)
+                        
                     }
                     .tint(.red)
                     .buttonStyle(BorderedProminentButtonStyle())
@@ -87,41 +94,36 @@ struct PopupFeedbackView: View {
                 
                 LightSubHeadline(text: "Out of a total \(currentTrainingSet!.formattedQuantityTodo!)")
                     .padding(.vertical, 5)
-                                
-                if exercise.exerciseType == "reps" {
+                
+                // Variables for the inputfield
+                let exerciseType = exercise.exerciseType
+                
+                let placeHolder = exerciseType == "reps" ? "Reps" : "Secoonds"
+                
+                let variant = exerciseType == "reps" ? IntegerIF(min: 0, max: 100000) : DecimalIF(min: 0, max: 100000)
+                
+                InputField(
+                    placeHolder: placeHolder,
+                    text: $viewModel.editedSetQuantity,
+                    variant: variant
+                )
+                .padding(.horizontal, 60)
+                .padding(.top, 5)
+                .onAppear(perform: {
                     
-                    IntegerTextField(
-                        placeHolder: "Reps",
-                        numberText: $viewModel.editedSetQuantity,
-                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
-                        allowNegatives: false
-                    )
-                    .padding(.horizontal, 60)
-                    .padding(.top, 5)
-                    
-                } else if exercise.exerciseType == "time" {
-                    
-                    DecimalTextField(
-                        placeHolder: "Seconds",
-                        numberText: $viewModel.editedSetQuantity,
-                        markAsWrong: $viewModel.editedSetQuantityIsInvalid,
-                        errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
-                        allowNegatives: false
-                    )
-                    .padding(.horizontal, 60)
-                    .padding(.top, 5)
-                    .onAppear(perform: {
+                    if exerciseType == "reps" {
+                        
                         // Take time done from trainingView
                         viewModel.editedSetQuantity = String(format: "%.2f", timeDone!)
-                    })
-
-                }
+                        
+                    }
+                    
+                })
                 
                 // MARK: Button for when the reps actually done on the set are entered.
                 Button(action:{
                     
-                    if validateInput() {
+                    if GlobalInputFieldValidator.allFieldsValid() {
                         
                         let quantityDone = Double(viewModel.editedSetQuantity)!
                         
@@ -142,47 +144,40 @@ struct PopupFeedbackView: View {
                     }
                     
                 }) {
+                    
                     Text("Done")
                         .bold()
                         .frame(width: 120, height: 40)
+                    
                 }
                 .buttonStyle(BorderedProminentButtonStyle())
                 .padding(.top)
+                
             }
+            
         }
         .onAppear(perform: {
             viewModel.setViewStartValues(entity: currentTrainingSet!)
         })
-    }
-    
-    private func validateInput() -> Bool {
         
-        var valid: Int = 0
-        let exercise = currentTrainingSet!.exercise!
-        let inputFieldValidator: InputFieldValidator
-        
-        if exercise.exerciseType == "reps" { inputFieldValidator = IntFieldValidator() }
-        else { inputFieldValidator = DoubleFieldValidator() }
-        
-        valid += inputFieldValidator.validateField(
-            inputVar: viewModel.editedSetQuantity,
-            errorMessage: $viewModel.editedSetQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.editedSetQuantityIsInvalid
-        )
-        
-        return valid == 0
     }
     
 }
 
 #Preview{
+    
     let context = PersistenceController.previewViewContext
+    
     let fetchRequest: NSFetchRequest = TrainingSet.fetchRequest()
+    
     let trainingSets = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
     
     @State var currentTrainingSet = trainingSets.first
+    
     @State var popupBool: Bool = false
+    
     @State var routine: Routine? = nil
+    
     @State var timeDone: Double? = 5
     
     return PopupFeedbackView(
@@ -192,4 +187,5 @@ struct PopupFeedbackView: View {
         timeDone: $timeDone
     )
     .environment(\.managedObjectContext, context)
+    
 }

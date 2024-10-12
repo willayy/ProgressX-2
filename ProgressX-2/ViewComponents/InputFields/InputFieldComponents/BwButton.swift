@@ -17,9 +17,9 @@ struct BwButton: View {
             
             Button {
                 
-                let latestBodyEntry = CoreDataAccess.getLatestBodyEntry(viewContext)!
+                let latestBodyEntry = CoreDataAccess.getLatestBodyEntry(viewContext)
                 
-                let latestBodyWeight = String(format: "%.2f", latestBodyEntry.bodyWeight)
+                let latestBodyWeight = String(format: "%.2f", latestBodyEntry?.bodyWeight ?? 0)
                 
                 if latestBodyWeight == text {
                     

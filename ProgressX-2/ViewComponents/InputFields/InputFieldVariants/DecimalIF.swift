@@ -13,9 +13,9 @@ public class DecimalIF: NumericInputFieldVariant {
         
         min: Double,
         max: Double,
-        bwButton: Bool,
-        allowNeg: Bool,
-        optional: Bool
+        bwButton: Bool = false,
+        allowNeg: Bool = false,
+        optional: Bool = false
         
     ) {
         

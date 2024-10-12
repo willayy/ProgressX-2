@@ -11,10 +11,10 @@ public class IntegerIF: NumericInputFieldVariant {
     
     public init(
         
-        max: Int,
         min: Int,
-        allowNeg: Bool,
-        optional: Bool
+        max: Int,
+        allowNeg: Bool = false,
+        optional: Bool = false
         
     ) {
         

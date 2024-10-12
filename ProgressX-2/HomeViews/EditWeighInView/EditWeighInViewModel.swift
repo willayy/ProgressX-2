@@ -25,24 +25,6 @@ class EditWeighInViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     @Published public var editedThighCirc: String = ""
     @Published public var editedCalfCirc: String = ""
 
-    // Invalid input variables
-    @Published public var editedBodyWeightIsInvalid: Bool = false
-    @Published public var editedChestCircIsInvalid: Bool = false
-    @Published public var editedWaistCircIsInvalid: Bool = false
-    @Published public var editedUpperArmCircIsInvalid: Bool = false
-    @Published public var editedLowerArmIsInvalid: Bool = false
-    @Published public var editedThighCircIsInvalid: Bool = false
-    @Published public var editedCalfCircIsInvalid: Bool = false
-
-    // Invalid input message variables
-    @Published public var editedBodyWeightIsInvalidMsg: String = ""
-    @Published public var editedChestCircIsInvalidMsg: String = ""
-    @Published public var editedWaistCircIsInvalidMsg: String = ""
-    @Published public var editedUpperArmCircIsInvalidMsg: String = ""
-    @Published public var editedLowerArmIsInvalidMsg: String = ""
-    @Published public var editedThighCircIsInvalidMsg: String = ""
-    @Published public var editedCalfCircIsInvalidMsg: String = ""
-    
     typealias T = BodyEntry
     
     public func setViewStartValues(entity: BodyEntry) -> Void {

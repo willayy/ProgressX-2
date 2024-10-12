@@ -50,7 +50,7 @@ struct CreateNewProfile4View: View {
                     .padding(.horizontal, 20)
                     .minimumScaleFactor(viewModel.minScaleFactor);
                 
-                // Inputs for PR's
+                // MARK: Inputs for 1RM PR's
                 VStack(alignment: .center, spacing: 10) {
                     
                     Text("One rep max's")
@@ -69,11 +69,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.benchPress1RM,
-                            markAsWrong: $viewModel.benchPress1RMIsInvalid,
-                            errorMessage: $viewModel.benchPress1RMIsInvalidMsg
+                            text: $viewModel.benchPress1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -89,11 +91,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.shoulderPress1RM,
-                            markAsWrong: $viewModel.shoulderPress1RMIsInvalid,
-                            errorMessage: $viewModel.shoulderPress1RMIsInvalidMsg
+                            text: $viewModel.shoulderPress1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -109,11 +113,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.squat1RM,
-                            markAsWrong: $viewModel.squat1RMIsInvalid,
-                            errorMessage: $viewModel.squat1RMIsInvalidMsg
+                            text: $viewModel.squat1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -129,11 +135,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.deadLift1RM,
-                            markAsWrong: $viewModel.deadLift1RMIsInvalid,
-                            errorMessage: $viewModel.deadLift1RMIsInvalidMsg
+                            text: $viewModel.deadLift1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -149,11 +157,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.barbellRow1RM,
-                            markAsWrong: $viewModel.barbellRow1RMIsInvalid,
-                            errorMessage: $viewModel.barbellRow1RMIsInvalidMsg
+                            text: $viewModel.barbellRow1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -169,11 +179,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.overheadTriExt1RM,
-                            markAsWrong: $viewModel.overheadTriExt1RMIsInvalid,
-                            errorMessage: $viewModel.overheadTriExt1RMIsInvalidMsg
+                            text: $viewModel.overheadTriExt1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -189,11 +201,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        DecimalTextField(
+                        InputField(
                             placeHolder: viewModel.weightUnit(viewContext),
-                            numberText: $viewModel.dumbbellCurl1RM,
-                            markAsWrong: $viewModel.dumbbellCurl1RMIsInvalid,
-                            errorMessage: $viewModel.dumbbellCurl1RMIsInvalidMsg
+                            text: $viewModel.dumbbellCurl1RM,
+                            variant: DecimalIF(
+                                min: 1,
+                                max: 10000
+                            )
                         )
                         
                     }
@@ -202,6 +216,7 @@ struct CreateNewProfile4View: View {
                 .padding(.horizontal, 55)
                 .padding(.top, 20)
                 
+                // MARK: Inputs for AMRAP PR's
                 VStack(alignment: .center, spacing: 10) {
                     
                     Text("AMRAP's")
@@ -220,11 +235,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        IntegerTextField(
+                        InputField(
                             placeHolder: "reps",
-                            numberText: $viewModel.pushupsAmrap,
-                            markAsWrong: $viewModel.pushupsAmrapIsInvalid,
-                            errorMessage: $viewModel.pushupsAmrapIsInvalidMsg
+                            text: $viewModel.pushupsAmrap,
+                            variant: IntegerIF(
+                                min: 1,
+                                max: 100000
+                            )
                         )
                         
                     }
@@ -240,11 +257,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        IntegerTextField(
+                        InputField(
                             placeHolder: "reps",
-                            numberText: $viewModel.situpsAmrap,
-                            markAsWrong: $viewModel.situpsAmrapIsInvalid,
-                            errorMessage: $viewModel.situpsAmrapIsInvalidMsg
+                            text: $viewModel.situpsAmrap,
+                            variant: IntegerIF(
+                                min: 1,
+                                max: 100000
+                            )
                         )
                         
                     }
@@ -260,11 +279,13 @@ struct CreateNewProfile4View: View {
                         
                         Spacer(minLength: 50)
                         
-                        IntegerTextField(
+                        InputField(
                             placeHolder: "reps",
-                            numberText: $viewModel.chinupsAmrap,
-                            markAsWrong: $viewModel.chinupsAmrapIsInvalid,
-                            errorMessage: $viewModel.chinupsAmrapIsInvalidMsg
+                            text: $viewModel.chinupsAmrap,
+                            variant: IntegerIF(
+                                min: 1,
+                                max: 100000
+                            )
                         )
                         
                     }
@@ -274,10 +295,13 @@ struct CreateNewProfile4View: View {
                 .padding(.top, 20)
                 
             }
+            
         }
-                
+              
+        // MARK: Finish onboarding button
         Button {
-            if validateInput() {
+            
+            if GlobalInputFieldValidator.allFieldsValid() {
                 
                 viewModel.saveEntry(viewContext: viewContext)
                 
@@ -290,88 +314,25 @@ struct CreateNewProfile4View: View {
                     viewRouter.rootView = .HomeView
                     
                 }
+                
             }
+            
         } label: {
+            
             Text("Finish")
                 .frame(width: 100, height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(.borderedProminent)
         .padding(.vertical, 20)
+        
     }
     
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        let doubleFieldValidator = DoubleFieldValidator(maxInputNumber: 10000)
-        let intFieldValidator = IntFieldValidator(maxInputNumber: 100000)
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.benchPress1RM,
-            errorMessage: $viewModel.benchPress1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.benchPress1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.squat1RM,
-            errorMessage: $viewModel.squat1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.squat1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.deadLift1RM,
-            errorMessage: $viewModel.deadLift1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.deadLift1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.barbellRow1RM,
-            errorMessage: $viewModel.barbellRow1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.barbellRow1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.dumbbellCurl1RM,
-            errorMessage: $viewModel.dumbbellCurl1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.dumbbellCurl1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.shoulderPress1RM,
-            errorMessage: $viewModel.shoulderPress1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.shoulderPress1RMIsInvalid
-        )
-        
-        valid += doubleFieldValidator.validateField(
-            inputVar: viewModel.overheadTriExt1RM,
-            errorMessage: $viewModel.overheadTriExt1RMIsInvalidMsg,
-            fieldInvalid: $viewModel.overheadTriExt1RMIsInvalid
-        )
-        
-        // Validation for the AMRAP entries
-        
-        valid += intFieldValidator.validateField(
-            inputVar: viewModel.pushupsAmrap,
-            errorMessage: $viewModel.pushupsAmrapIsInvalidMsg,
-            fieldInvalid: $viewModel.pushupsAmrapIsInvalid
-        )
-        
-        valid += intFieldValidator.validateField(
-            inputVar: viewModel.situpsAmrap,
-            errorMessage: $viewModel.situpsAmrapIsInvalidMsg,
-            fieldInvalid: $viewModel.situpsAmrapIsInvalid
-        )
-        
-        valid += intFieldValidator.validateField(
-            inputVar: viewModel.chinupsAmrap,
-            errorMessage: $viewModel.chinupsAmrapIsInvalidMsg,
-            fieldInvalid: $viewModel.chinupsAmrapIsInvalid
-        )
-        
-        return valid == 0
-    }
 }
 
 #Preview {
+    
     let context = PersistenceController.previewViewContext
     
     @State var navPath = [Int]()

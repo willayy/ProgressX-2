@@ -13,35 +13,36 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""
-    @Published var editedSetNameIsInvalid: Bool = false
-    @Published var editedSetNameIsInvalidMsg: String = ""
+    
     // The Description of the set (Optional)
     @Published var editedSetDesc: String = ""
-    @Published var editedSetDescIsInvalid: Bool = false
-    @Published var editedSetDescIsInvalidMsg: String = ""
+    
     // The Load of the set
     @Published var editedSetLoad: String = ""
-    @Published var editedSetLoadIsInvalid: Bool = false
-    @Published var editedSetLoadIsInvalidMsg: String = ""
+    
     // The Quantity of the set
     @Published var editedSetQuantity: String = ""
-    @Published var editedSetQuantityIsInvalid: Bool = false
-    @Published var editedSetQuantityIsInvalidMsg: String = ""
+    
     // The rest time of the set
     @Published var editedRestTime: String = ""
-    @Published var editedRestTimeIsInvalid: Bool = false
-    @Published var editedRestTimeIsInvalidMsg: String = ""
+    
     // The PositionIndex of the set
     @Published var editedSetPositionIndex: Int64 = 0
+    
     // The load type of the set
     @Published var editedLoadType: String = ""
+    
     // The quantity type of the set
     @Published var editedQuantityType: String = ""
+    
     // Edit the exercise of the set
     @Published var searchWord: String = ""
+    
     @Published var selectedExercise: Exercise? = nil
+    
     // Change alert states
     @Published var showNoChangeAlert: Bool = false
+    
     @Published var showSetChangedAlert: Bool = false
     
     typealias T = TemplateSet

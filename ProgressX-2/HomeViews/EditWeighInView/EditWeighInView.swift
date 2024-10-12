@@ -26,22 +26,28 @@ struct EditWeighInView: View {
             
             Title2(text: "\(selectedBodyEntry!.dateString!)")
             
+            // MARK: Submission alert states
             if viewModel.bodyEntryEditedAlert {
+                
                 SubmitAlert(
                     message: "Successfully edited weigh-in!",
                     color: .green,
                     showAlertState: $viewModel.bodyEntryEditedAlert
                 )
                 .padding(.top, 10)
+                
             } else if viewModel.noChangeAlert {
+                
                 SubmitAlert(
                     message: "No change!",
                     color: .blue,
                     showAlertState: $viewModel.noChangeAlert
                 )
                 .padding(.top, 10)
+                
             }
             
+            // MARK: Date
             BoldSubHeadline(text: "Edit date")
                 .padding(.top, 20)
             
@@ -50,101 +56,135 @@ struct EditWeighInView: View {
                 .labelsHidden()
                 .padding(.bottom, 10)
             
+            // MARK: Bodyweight
             BoldSubHeadline(text: "Edit bodyweight")
             
-            DecimalTextField(
-                placeHolder: "Bodyweight (\(viewModel.weightUnit(viewContext))",
-                numberText: $viewModel.editedBodyWeight,
-                markAsWrong: $viewModel.editedBodyWeightIsInvalid,
-                errorMessage: $viewModel.editedBodyWeightIsInvalidMsg
+            let weightUnit = viewModel.weightUnit(viewContext)
+            
+            InputField(
+                placeHolder: "Bodyweight (\(weightUnit))",
+                text: $viewModel.editedBodyWeight,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Body measurements
             BoldSubHeadline(text: "Edit body measurements")
                 .padding(.bottom, 10)
             
+            // MARK: Chest circumference
             LightSubHeadline(text: "Chest circumference")
             
-            DecimalTextField(
-                placeHolder: "Chest circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedChestCirc,
-                markAsWrong: $viewModel.editedChestCircIsInvalid,
-                errorMessage: $viewModel.editedChestCircIsInvalidMsg
+            let lengthUnit = viewModel.lengthUnit(viewContext)
+            
+            InputField(
+                placeHolder: "Chestcircumference (\(lengthUnit))",
+                text: $viewModel.editedChestCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Upper arm circumference
             LightSubHeadline(text: "Upper arm circumference")
             
-            DecimalTextField(
-                placeHolder: "Upper arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedUpperArmCirc,
-                markAsWrong: $viewModel.editedUpperArmCircIsInvalid,
-                errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg
+            InputField(
+                placeHolder: "Upper arm circumference (\(lengthUnit))",
+                text: $viewModel.editedUpperArmCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Lower arm circumference
             LightSubHeadline(text: "Lower arm circumference")
             
-            DecimalTextField(
-                placeHolder: "Lower arm circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedLowerArmCirc,
-                markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                errorMessage: $viewModel.editedLowerArmIsInvalidMsg
+            InputField(
+                placeHolder: "Lower arm circumference (\(lengthUnit))",
+                text: $viewModel.editedLowerArmCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Waist circumference
             LightSubHeadline(text: "Waist circumference")
             
-            DecimalTextField(
-                placeHolder: "Waist circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedWaistCirc,
-                markAsWrong: $viewModel.editedWaistCircIsInvalid,
-                errorMessage: $viewModel.editedWaistCircIsInvalidMsg
+            InputField(
+                placeHolder: "Waist circumference (\(lengthUnit))",
+                text: $viewModel.editedWaistCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Thigh circumference
             LightSubHeadline(text: "Thigh circumference")
             
-            DecimalTextField(
-                placeHolder: "Thigh circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedThighCirc,
-                markAsWrong: $viewModel.editedThighCircIsInvalid,
-                errorMessage: $viewModel.editedThighCircIsInvalidMsg
+            InputField(
+                placeHolder: "Thigh circumference (\(lengthUnit))",
+                text: $viewModel.editedThighCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 10)
             
+            // MARK: Calf circumference
             LightSubHeadline(text: "Calf circumference")
             
-            DecimalTextField(
-                placeHolder: "Calf circumference (\(viewModel.lengthUnit(viewContext)))",
-                numberText: $viewModel.editedCalfCirc,
-                markAsWrong: $viewModel.editedCalfCircIsInvalid,
-                errorMessage: $viewModel.editedCalfCircIsInvalidMsg
+            InputField(
+                placeHolder: "Calf circumference (\(lengthUnit))",
+                text: $viewModel.editedCalfCirc,
+                variant: DecimalIF(
+                    min: 0,
+                    max: 1000
+                )
             )
             .padding(.horizontal, 60)
             .padding(.bottom, 20)
             
         }
-            
+        
+        // MARK: Save changes button
         Button {
-            if validateInput() {
+            
+            if GlobalInputFieldValidator.allFieldsValid() {
+                
                 viewModel.saveEdits(
                     entity: selectedBodyEntry!,
                     viewContext: viewContext
                 )
+                
             }
+            
         } label: {
+            
             Text("Save changes")
                 .frame(height: 40)
                 .foregroundColor(Color("buttonTextColor"))
+            
             Image(systemName: "square.and.arrow.down")
                 .foregroundColor(Color("buttonTextColor"))
+            
         }
         .buttonStyle(BorderedProminentButtonStyle())
         .padding(.top, 20)
@@ -152,65 +192,16 @@ struct EditWeighInView: View {
     
     }
     
-    private func validateInput() -> Bool {
-        var valid: Int = 0
-        
-        let bodyWeightValidator = DoubleFieldValidator(maxInputNumber: 1000)
-        let bodyMeasurementValidator = DoubleFieldValidator(emptyAllowed: true, maxInputNumber: 1000)
-        
-        valid += bodyWeightValidator.validateField(
-            inputVar: viewModel.editedBodyWeight,
-            errorMessage: $viewModel.editedBodyWeightIsInvalidMsg,
-            fieldInvalid: $viewModel.editedBodyWeightIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedChestCirc,
-            errorMessage: $viewModel.editedChestCircIsInvalidMsg,
-            fieldInvalid: $viewModel.editedChestCircIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedUpperArmCirc,
-            errorMessage: $viewModel.editedUpperArmCircIsInvalidMsg,
-            fieldInvalid: $viewModel.editedUpperArmCircIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedLowerArmCirc,
-            errorMessage: $viewModel.editedLowerArmIsInvalidMsg,
-            fieldInvalid: $viewModel.editedLowerArmIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedWaistCirc,
-            errorMessage: $viewModel.editedWaistCircIsInvalidMsg,
-            fieldInvalid: $viewModel.editedWaistCircIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedThighCirc,
-            errorMessage: $viewModel.editedThighCircIsInvalidMsg,
-            fieldInvalid: $viewModel.editedThighCircIsInvalid
-        )
-        
-        valid += bodyMeasurementValidator.validateField(
-            inputVar: viewModel.editedCalfCirc,
-            errorMessage: $viewModel.editedCalfCircIsInvalidMsg,
-            fieldInvalid: $viewModel.editedCalfCircIsInvalid
-        )
-        
-        return valid == 0
-        
-    }
-    
 }
 
 #Preview {
     
     let context = PersistenceController.previewViewContext
+    
     let fetchRequest: NSFetchRequest<BodyEntry> = BodyEntry.fetchRequest()
+    
     let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
+    
     @State var selectedBodyEntry: BodyEntry? = results.first!
     
     return EditWeighInView(

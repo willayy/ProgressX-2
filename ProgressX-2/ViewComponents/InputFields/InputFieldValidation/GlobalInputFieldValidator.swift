@@ -12,21 +12,21 @@ import SwiftUI
 class GlobalInputFieldValidator {
     
     // All fields checked by the validator
-    private static var fields: [(Binding<String>, Binding<Bool>, Binding<String>)] = []
+    private static var fields: [(Binding<String>, Binding<Bool>, Binding<String>, Bool)] = []
     
     /// Called on InputFields appearing
-    public static func addToValidationList(_ field: (Binding<String>, Binding<Bool>, Binding<String>)) -> Void  {
+    public static func addToValidationList(_ field: (Binding<String>, Binding<Bool>, Binding<String>, Bool)) -> Void  {
         
         GlobalInputFieldValidator.fields.append(field)
         
     }
     
     /// Call to staticly validate all fields ina view
-    public static func staticValidate() -> Void {
+    private static func staticValidate() -> Void {
         
         for field in fields {
             
-            if field.0.wrappedValue.isEmpty {
+            if !field.3 && field.0.wrappedValue.isEmpty {
                 
                 withAnimation {
                     
@@ -42,6 +42,17 @@ class GlobalInputFieldValidator {
         
     }
     
+    /// Check if all fields are valid
+    public static func allFieldsValid() -> Bool {
+        
+        // perform static validaton
+        GlobalInputFieldValidator.staticValidate()
+        
+        // Return true if all fiedls are valid
+        return fields.allSatisfy { $0.1.wrappedValue }
+        
+    }
+    
     /// Resets the validaton list
     public static func resetValidationList() -> Void {
         
@@ -51,17 +62,17 @@ class GlobalInputFieldValidator {
     
 }
 
-extension View {
+struct GlobalAppearView<Content: View>: View {
+    let content: Content
     
-    /// A view which calls this modifier will resest the validationList every time it loads
-    func inputFieldForm() -> some View {
-        
-        self.onAppear(perform: {
-            
-            GlobalInputFieldValidator.resetValidationList()
-            
-        })
-        
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
     }
     
+    var body: some View {
+        content
+            .onAppear {
+                GlobalInputFieldValidator.resetValidationList()
+            }
+    }
 }

@@ -11,10 +11,15 @@ import CoreData
 struct CreateNewTemplateSetView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
+    
     @Binding var navPath: [Int]
+    
     @StateObject private var viewModel = CreateNewTemplateSetViewModel()
+    
     @Binding var selectedTemplateSession: TemplateSession?
+    
     @Binding var selectedTemplateSet: TemplateSet?
+    
     @State private var addBodyWeightButton: Bool = false
     
     var body: some View {
@@ -40,24 +45,20 @@ struct CreateNewTemplateSetView: View {
                 
                 BoldSubHeadline(text: "Set name")
                 
-                InputTextField(
+                InputField(
                     placeHolder: "Set name",
                     text: $viewModel.newSetName,
-                    markAsWrong: $viewModel.newSetNameIsInvalid,
-                    errorMessage: $viewModel.newSetNameIsInvalidMsg,
-                    maxChars: 25
+                    variant: TextIF()
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 5)
                 
                 BoldSubHeadline(text: "Set description")
                 
-                inputLongTextField(
+                LargeInputField(
                     placeHolder: "Set description",
                     text: $viewModel.newSetDesc,
-                    markAsWrong: $viewModel.newSetDescIsInvalid,
-                    errorMessage: $viewModel.newSetDescIsInvalidMsg,
-                    maxChars: 200
+                    variant: TextIF(allowEmpty: true)
                 )
                 .frame(height: 150)
                 .padding(.horizontal, 60)
@@ -85,36 +86,44 @@ struct CreateNewTemplateSetView: View {
             
                 if viewModel.exerciseHasBeenSelected {
                     
+                    // MARK: Set rest time
                     BoldSubHeadline(text: "Choose the rest time after this set")
                         .padding(.top, 20)
                     
                     LightSubHeadline(text: "In seconds")
                         .padding(.bottom, 5)
                     
-                    DecimalTextField(
+                    InputField(
                         placeHolder: "Rest time",
-                        numberText: $viewModel.restTime,
-                        markAsWrong: $viewModel.restTimeIsInvalid,
-                        errorMessage: $viewModel.restTimeIsInvalidMsg
+                        text: $viewModel.restTime,
+                        variant: DecimalIF(
+                            min: 0,
+                            max: 6000
+                        )
                     )
                     .padding(.horizontal, 60)
                     
+                    // MARK: Set load type
                     BoldSubHeadline(text: "Choose load type")
                         .padding(.top, 20)
                         .padding(.bottom, 5)
                     
                     if viewModel.selectedLoadType == "Numerical" {
+                        
                         HiddenLightSubHeadline(
                             title: "What is Numerical load?",
                             text: "Numerical load type means that the load will be a numerical value like 100 kg's or 200 lbs"
                         )
                         .padding(.horizontal, 20)
+                        
                     } else {
+                        
                         HiddenLightSubHeadline(
                             title: "What is Percentage load?",
                             text: "Percentage load type means that the load will be a percentage value like, 90% of my current 1RM PR on this exercise or 110% of my current bodyweight"
                         )
                         .padding(.horizontal, 20)
+                        
                     }
                     
                     // MARK: Menu for selecting load type
@@ -168,12 +177,14 @@ struct CreateNewTemplateSetView: View {
                     
                     // MARK: Load inputfield
                     HStack {
-                        DecimalTextField(
+                        
+                        InputField(
                             placeHolder: viewModel.loadPlaceholder(viewContext: viewContext),
-                            numberText: $viewModel.newSetLoad,
-                            markAsWrong: $viewModel.newSetLoadIsInvalid,
-                            errorMessage: $viewModel.newSetLoadIsInvalidMsg,
-                            bodyWeightButton: addBodyWeightButton
+                            text: $viewModel.newSetLoad,
+                            variant: DecimalIF(
+                                min: 0,
+                                max: 10000
+                            )
                         )
                         
                         if viewModel.loadPlaceholder(viewContext: viewContext) == "Percentage" {
@@ -182,53 +193,34 @@ struct CreateNewTemplateSetView: View {
                     }
                     .padding(.horizontal, 60)
                     
+                    let exerciseType = viewModel.selectedExercise!.exerciseType
+                    
+                    let variant = exerciseType == "reps" ? IntegerIF(min: 0, max: 100000) : DecimalIF(min: 0, max: 100000)
+                    
                     // MARK: Quantity
                     /* Shared quantity input field variable but with different
                      InputFields depending on the exercise type*/
-                    if viewModel.selectedExercise?.exerciseType == "reps" {
+                    HStack {
                         
-                        HStack {
+                        InputField(
+                            placeHolder: viewModel.quantityPlaceholder,
+                            text: $viewModel.newSetQuantity,
+                            variant: variant
+                        )
+                        .padding(.top, 5)
+                        
+                        if viewModel.quantityPlaceholder == "Percentage" {
                             
-                            IntegerTextField(
-                                placeHolder: viewModel.quantityPlaceholder,
-                                numberText: $viewModel.newSetQuantity,
-                                markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                errorMessage: $viewModel.newSetQuantityIsInvalidMsg
-                            )
-                            .padding(.top, 5)
+                            Text("%")
                             
-                            if viewModel.quantityPlaceholder == "Percentage" {
-                                
-                                Text("%")
-                                
-                            }
                         }
-                        .padding(.horizontal, 60)
-                        
-                    } else {
-                        
-                        HStack {
-                            
-                            DecimalTextField(
-                                placeHolder: viewModel.quantityPlaceholder,
-                                numberText: $viewModel.newSetQuantity,
-                                markAsWrong: $viewModel.newSetQuantityIsInvalid,
-                                errorMessage: $viewModel.newSetQuantityIsInvalidMsg
-                            )
-                            .padding(.top, 5)
-                            
-                            if viewModel.quantityPlaceholder == "Percentage" {
-                                
-                                Text("%")
-                                
-                            }
-                        }
-                        .padding(.horizontal, 60)
                     }
-                    
+                    .padding(.horizontal, 60)
+                        
+                    // MARK: Create new set button
                     Button {
                         
-                        if validateInput() {
+                        if GlobalInputFieldValidator.allFieldsValid() {
                             
                             viewModel.saveEntry(viewContext: viewContext)
                             
@@ -275,62 +267,13 @@ struct CreateNewTemplateSetView: View {
                     }
                     
                 }
+                
             }
+            
         }
+        
     }
     
-    private func validateInput() -> Bool {
-        
-        let exerciseType = viewModel.selectedExercise!.exerciseType
-        
-        let quantityValidator: InputFieldValidator
-        
-        if exerciseType == "reps" { quantityValidator = IntFieldValidator(maxInputNumber: 100000)}
-        
-        else { quantityValidator = DoubleFieldValidator(maxInputNumber: 100000)}
-        
-        let loadValidator = DoubleFieldValidator(maxInputNumber: 10000)
-        
-        let restTimeValidator = DoubleFieldValidator(maxInputNumber: 600)
-        
-        let nameValidator = StringFieldValidator()
-        
-        let descValidtor = StringFieldValidator(emptyAllowed: true)
-        
-        var valid = 0
-        
-        valid += restTimeValidator.validateField(
-            inputVar: viewModel.restTime,
-            errorMessage: $viewModel.restTimeIsInvalidMsg,
-            fieldInvalid: $viewModel.restTimeIsInvalid
-        )
-        
-        valid += loadValidator.validateField(
-            inputVar: viewModel.newSetLoad,
-            errorMessage: $viewModel.newSetLoadIsInvalidMsg,
-            fieldInvalid: $viewModel.newSetLoadIsInvalid
-        )
-        
-        valid += quantityValidator.validateField(
-            inputVar: viewModel.newSetQuantity,
-            errorMessage: $viewModel.newSetQuantityIsInvalidMsg,
-            fieldInvalid: $viewModel.newSetQuantityIsInvalid
-        )
-        
-        valid += nameValidator.validateField(
-            inputVar: viewModel.newSetName,
-            errorMessage: $viewModel.newSetNameIsInvalidMsg,
-            fieldInvalid: $viewModel.newSetNameIsInvalid
-        )
-        
-        valid += descValidtor.validateField(
-            inputVar: viewModel.newSetDesc,
-            errorMessage: $viewModel.newSetDescIsInvalidMsg,
-            fieldInvalid: $viewModel.newSetDescIsInvalid
-        )
-        
-        return valid == 0
-    }
 }
 
 #Preview {

@@ -20,7 +20,7 @@ class TextIF: InputFieldVariant {
     ]
 
     
-    public init(allowEmpty: Bool) {
+    public init(allowEmpty: Bool = false) {
         super.init(
             allowedChars: TextIF.allowedChars,
             keyBoardType: .default,
