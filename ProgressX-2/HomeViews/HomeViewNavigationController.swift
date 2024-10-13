@@ -25,9 +25,7 @@ struct HomeViewNavigationController: View {
                     
                     // MARK: The root view of the Home hierarchy
                     HomeView(
-                        navPath: $navPath,
-                        profile: $selectedProfile,
-                        selectedBodyEntry: $selectedBodyEntry
+                        navPath: $navPath
                     )
                     
                 }

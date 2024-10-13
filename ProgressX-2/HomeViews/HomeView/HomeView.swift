@@ -26,10 +26,6 @@ struct HomeView: View {
     
     @Binding public var navPath: [Int]
     
-    @Binding public var profile: Profile?
-    
-    @Binding public var selectedBodyEntry: BodyEntry?
-    
     // This is only needed to get access to weightUnit methods
     @StateObject private var viewModel = HomeViewModel()
     
@@ -181,15 +177,9 @@ struct HomeView: View {
     
     @State var navPath: [Int] = [Int]()
     
-    @State var selectedProfile: Profile? = nil
-    
-    @State var selectedBodyEntry: BodyEntry? = nil
-    
     return HomeView(
-        navPath: $navPath,
-        profile: $selectedProfile,
-        selectedBodyEntry: $selectedBodyEntry
+        navPath: $navPath
     )
-        .environment(\.managedObjectContext, context)
-        .environmentObject(ShowMenuController())
+    .environment(\.managedObjectContext, context)
+    .environmentObject(ShowMenuController())
 }
