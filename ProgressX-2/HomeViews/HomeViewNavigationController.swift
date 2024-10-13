@@ -7,24 +7,13 @@
 
 import SwiftUI
 
-struct HomeViewNavigationController<Content: View>: View {
+struct HomeViewNavigationController: View {
     
-    private var content: Content
-    @Binding var navPath: [Int]
-    @Binding var profile: Profile?
-    @Binding var selectedBodyEntry: BodyEntry?
+    @State private var navPath: [Int] = [Int]()
     
-    init(
-        navPath: Binding<[Int]>,
-        profile: Binding<Profile?>,
-        selectedBodyEntry: Binding<BodyEntry?>,
-        @ViewBuilder content: () -> Content
-    ) {
-        self._navPath = navPath
-        self._profile = profile
-        self._selectedBodyEntry = selectedBodyEntry
-        self.content = content()
-    }
+    @State private var selectedProfile: Profile? = nil
+    
+    @State private var selectedBodyEntry: BodyEntry? = nil
     
     var body: some View {
         
@@ -33,7 +22,14 @@ struct HomeViewNavigationController<Content: View>: View {
             InputFieldForm {
                 
                 VStack {
-                    content
+                    
+                    // MARK: The root view of the Home hierarchy
+                    HomeView(
+                        navPath: $navPath,
+                        profile: $selectedProfile,
+                        selectedBodyEntry: $selectedBodyEntry
+                    )
+                    
                 }
                 .navigationDestination(for: Int.self) { selection in
                     if selection == 1 {

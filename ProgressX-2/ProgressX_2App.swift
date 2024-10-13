@@ -48,7 +48,7 @@ struct ProgressX_2App: App {
                     
                     switch (viewRouter.rootView) {
                         case .HomeView:
-                            HomeView()
+                            HomeViewNavigationController()
                             
                         case .StartWorkoutView:
                             StartWorkoutView()
