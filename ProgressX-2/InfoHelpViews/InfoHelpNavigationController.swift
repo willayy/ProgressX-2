@@ -7,17 +7,20 @@
 
 import SwiftUI
 
-struct InfoHelpNavigationController<Content: View>: View {
-        
-    private var content: Content
-
-    init(@ViewBuilder content: () -> Content) {
-        self.content = content()
-    }
+struct InfoHelpNavigationController: View {
     
     var body: some View {
+        
         NavigationStack {
-            content
+            
+            VStack {
+                
+                InfoHelpView()
+                
+            }
+            
         }
+        
     }
+    
 }

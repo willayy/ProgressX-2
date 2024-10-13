@@ -66,7 +66,7 @@ struct ProgressX_2App: App {
                             ChooseSessionkHistoryView()
                             
                         case .InfoHelp:
-                            InfoHelpView()
+                            InfoHelpNavigationController()
                     }
                 }
                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))
