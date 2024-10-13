@@ -7,27 +7,15 @@
 
 import SwiftUI
 
-struct ExerciseLibraryNavigationController<Content: View>: View {
+struct ExerciseLibraryNavigationController: View {
     
-    private var content: Content
-    @Binding var navPath: [Int]
-    @Binding var selectedExercise: Exercise?
-    @Binding var editingPr: PersonalRecord?
-    @Binding var newPrType: String?
+    @State private var navPath: [Int] = [Int]()
     
-    init(
-        navPath: Binding<[Int]>,
-        selectedExercise: Binding<Exercise?>,
-        editingPr: Binding<PersonalRecord?>,
-        newPrType: Binding<String?>,
-        @ViewBuilder content: () -> Content
-    ) {
-        self._navPath = navPath
-        self._selectedExercise = selectedExercise
-        self._editingPr = editingPr
-        self._newPrType = newPrType
-        self.content = content()
-    }
+    @State private var selectedExercise: Exercise? = nil
+    
+    @State private var editingPr: PersonalRecord? = nil
+    
+    @State private var newPrType: String? = nil
     
     var body: some View {
         
@@ -37,10 +25,14 @@ struct ExerciseLibraryNavigationController<Content: View>: View {
                 
                 VStack {
                     
-                    content
+                    ExerciseLibraryView(
+                        navPath: $navPath,
+                        selectedExercise: $selectedExercise
+                    )
                     
                 }
                 .navigationDestination(for: Int.self) { selection in
+                    
                     if selection == 1 {
                         
                         CreateNewExerciseView(
