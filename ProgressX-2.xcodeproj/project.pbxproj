@@ -1258,6 +1258,7 @@
 				832213F12BC92D9000DF9C7A /* Sources */,
 				832213F22BC92D9000DF9C7A /* Frameworks */,
 				832213F32BC92D9000DF9C7A /* Resources */,
+				831C91712CC415B40049C0B9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1331,6 +1332,24 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		831C916E2CC3EBBE0049C0B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# UNCOMMENT TO ENABLE SWIFTLINT\n# if [[ \"$(uname -m)\" == arm64 ]]\n# then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n# fi\n#\n# if command -v swiftlint >/dev/null 2>&1\n# then\n#    swiftlint\n# else\n#   echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\n#fi\n";
+		};
+		831C91712CC415B40049C0B9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
