@@ -87,21 +87,24 @@ class TrainingViewModel: ViewModel {
     
     
     
-    public func getNextSetAfterThis(session: TrainingSession, currSet: TrainingSet) -> Void {
+    public func setNextSetAfterThis(session: TrainingSession, currSet: TrainingSet) -> Void {
         
         let uncompletedSets = session.children
             .filter { !$0.isComplete }
         
         if uncompletedSets.count < 2 {
             nextTrainingSet = nil
+            return
         }
+        
         let setAfterThis: TrainingSet? = uncompletedSets[1]
         
-        if setAfterThis == nil || setAfterThis == currSet {
+        if setAfterThis == currSet {
             
             nextTrainingSet = nil
             
         } else {
+            
             nextTrainingSet = setAfterThis
             
         }

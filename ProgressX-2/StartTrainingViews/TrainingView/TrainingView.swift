@@ -26,8 +26,6 @@ struct TrainingView: View {
     
     @Binding var currentTrainingSet: TrainingSet?
     
-    
-    
     var body: some View {
     
         let exerciseType = currentTrainingSet?.exercise!.exerciseType!
@@ -84,7 +82,9 @@ struct TrainingView: View {
                         
                     }
                     .padding(.bottom, 10)
+                    
                 }
+                
             }
             
             // MARK: The information box about the set
@@ -171,7 +171,7 @@ struct TrainingView: View {
         .onAppear {
             
             if currentTrainingSet != nil{
-                viewModel.getNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
+                viewModel.setNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
             }
             NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
                 viewModel.updateStatesWhenTimerStops(trainingSet: currentTrainingSet!)

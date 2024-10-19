@@ -51,7 +51,7 @@ struct ProgressX_2App: App {
                             HomeViewNavigationController()
                             
                         case .StartWorkoutView:
-                            StartWorkoutView()
+                            StartWorkoutNavigationController()
                             
                         case .ExerciseLibraryView:
                             ExerciseLibraryNavigationController()

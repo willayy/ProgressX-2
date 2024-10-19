@@ -10,10 +10,16 @@ import CoreData
 
 
 struct StartWorkoutView: View {
-    
-    @EnvironmentObject var viewRouter: ViewRouter
+        
     @StateObject private var viewModel = StartWorkoutViewModel()
-    @Environment(\.managedObjectContext) private var viewContext
+        
+    @Binding var navPath: [Int]
+    
+    @Binding var selectedRoutine: Routine?
+    
+    @Binding var selectedTrainingSession: TrainingSession?
+    
+    @Binding var currentTrainingSet: TrainingSet?
     
     @FetchRequest(
         entity: Routine.entity(),
@@ -33,59 +39,52 @@ struct StartWorkoutView: View {
     @State private var showMenu: Bool = false
     
     var body: some View {
-        
-    StartWorkoutNavigationController(
-        navPath: $viewModel.navPath,
-        selectedRoutine: $viewModel.selectedRoutine,
-        selectedTrainingWeek: $viewModel.selectedTrainingWeek,
-        selectedTrainingSession: $viewModel.selectedTrainingSession,
-        currentTrainingSet: $viewModel.currentTrainingSet,
-        content: {
             
-            ScrollView {
+        ScrollView {
+            
+            VStackWithSideBarButton {
                 
-                VStackWithSideBarButton {
-                    
-                    BoldTitle(text: "Routines")
-                    
-                    
-                    HiddenLightSubHeadline(
-                        title: "How do i start training?",
-                        text: "By pressing the icon of a running man you will automatically start the next session in the order of the routine. If you want more control you can click the calender icon and select precisely which session you want to do.",
-                        alignment: .leading
+                BoldTitle(text: "Routines")
+                
+                HiddenLightSubHeadline(
+                    title: "How do i start training?",
+                    text: "By pressing the icon of a running man you will automatically start the next session in the order of the routine. If you want more control you can click the calender icon and select precisely which session you want to do.",
+                    alignment: .leading
+                )
+                .padding(.horizontal, 20)
+                .padding(.bottom)
+                
+                // MARK: Search bar
+                SearchBar(
+                    searchAttribute: "timePeriodName",
+                    searchText: $viewModel.searchText,
+                    fetchRequest: _searchedRoutines
+                )
+                .padding(.horizontal, 20)
+                
+                // MARK: List
+                SearchableList(
+                    height: 500,
+                    containerName: "Routine Library",
+                    elementName: "Routines",
+                    allData: _allRoutines,
+                    searchedData: _searchedRoutines
+                ) { routine in
+                    TrainingViewRoutineListItem(
+                        navPath: $navPath,
+                        selectedRoutine: $selectedRoutine,
+                        selectedSession: $selectedTrainingSession,
+                        currentTrainingSet: $currentTrainingSet,
+                        routine: routine
                     )
-                    .padding(.horizontal, 20)
-                    .padding(.bottom)
-                    
-                    // MARK: Search bar
-                    SearchBar(
-                        searchAttribute: "timePeriodName",
-                        searchText: $viewModel.searchText,
-                        fetchRequest: _searchedRoutines
-                    )
-                    .padding(.horizontal, 20)
-                    
-                    // MARK: List
-                    SearchableList(
-                        height: 500,
-                        containerName: "Routine Library",
-                        elementName: "Routines",
-                        allData: _allRoutines,
-                        searchedData: _searchedRoutines
-                    ) { routine in
-                        TrainingViewRoutineListItem(
-                            navPath: $viewModel.navPath,
-                            selectedRoutine: $viewModel.selectedRoutine,
-                            selectedSession: $viewModel.selectedTrainingSession,
-                            currentTrainingSet: $viewModel.currentTrainingSet,
-                            routine: routine
-                        )
-                    }.padding(.horizontal, 20)
-                    
-                }
+                }.padding(.horizontal, 20)
+                
             }
-        })
+            
+        }
+        
     }
+    
 }
     
 
@@ -93,7 +92,18 @@ struct StartWorkoutView: View {
     
     let context = PersistenceController.previewViewContext
     
-    return StartWorkoutView()
-        .environmentObject(ShowMenuController())
-        .environment(\.managedObjectContext, context)
+    @State var navPath: [Int] = [Int]()
+    @State var selectedRoutine: Routine? = nil
+    @State var selectedTrainingSession: TrainingSession? = nil
+    @State var currentTrainingSet: TrainingSet? = nil
+    
+    return StartWorkoutView(
+        navPath: $navPath,
+        selectedRoutine: $selectedRoutine,
+        selectedTrainingSession: $selectedTrainingSession,
+        currentTrainingSet: $currentTrainingSet
+    )
+    .environmentObject(ShowMenuController())
+    .environment(\.managedObjectContext, context)
+    
 }

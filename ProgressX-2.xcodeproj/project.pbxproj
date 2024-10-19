@@ -28,6 +28,7 @@
 		831657752C53CCC5003F895F /* VStackWithSideBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */; };
 		831657792C5798C5003F895F /* SideBarEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831657782C5798C5003F895F /* SideBarEnums.swift */; };
 		8316577B2C57997A003F895F /* ShowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316577A2C57997A003F895F /* ShowMenuController.swift */; };
+		831C91702CC3EC860049C0B9 /* .swiftlint in Resources */ = {isa = PBXBuildFile; fileRef = 831C916F2CC3EC860049C0B9 /* .swiftlint */; };
 		831F2BDD2C204C98007A7A8A /* CreateNewPersonalRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */; };
 		831F2BF12C209FB1007A7A8A /* CompletableTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */; };
 		831F2BF32C20A0CA007A7A8A /* TrainingSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */; };
@@ -228,6 +229,7 @@
 		831657742C53CCC5003F895F /* VStackWithSideBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VStackWithSideBarButton.swift; sourceTree = "<group>"; };
 		831657782C5798C5003F895F /* SideBarEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarEnums.swift; sourceTree = "<group>"; };
 		8316577A2C57997A003F895F /* ShowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowMenuController.swift; sourceTree = "<group>"; };
+		831C916F2CC3EC860049C0B9 /* .swiftlint */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint; sourceTree = "<group>"; };
 		831F2BDC2C204C98007A7A8A /* CreateNewPersonalRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewPersonalRecordView.swift; sourceTree = "<group>"; };
 		831F2BF02C209FB1007A7A8A /* CompletableTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletableTimePeriod.swift; sourceTree = "<group>"; };
 		831F2BF22C20A0CA007A7A8A /* TrainingSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingSet.swift; sourceTree = "<group>"; };
@@ -572,6 +574,7 @@
 				83EE6EE42C1F351500FF17C1 /* Launch Screen.storyboard */,
 				83814EB82C6770CC0099A4DE /* Info.plist */,
 				832213E72BC92D9000DF9C7A /* Assets.xcassets */,
+				831C916F2CC3EC860049C0B9 /* .swiftlint */,
 				832213E92BC92D9000DF9C7A /* Preview Content */,
 			);
 			path = "ProgressX-2";
@@ -1237,6 +1240,7 @@
 				832213DC2BC92D8E00DF9C7A /* Sources */,
 				832213DD2BC92D8E00DF9C7A /* Frameworks */,
 				832213DE2BC92D8E00DF9C7A /* Resources */,
+				831C916E2CC3EBBE0049C0B9 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1310,6 +1314,7 @@
 			files = (
 				832214152BC937F800DF9C7A /* README.md in Resources */,
 				832213EB2BC92D9000DF9C7A /* Preview Assets.xcassets in Resources */,
+				831C91702CC3EC860049C0B9 /* .swiftlint in Resources */,
 				83EE6EE62C1F351500FF17C1 /* Launch Screen.storyboard in Resources */,
 				832213E82BC92D9000DF9C7A /* Assets.xcassets in Resources */,
 			);
@@ -1323,6 +1328,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		831C916E2CC3EBBE0049C0B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# UNCOMMENT TO ENABLE SWIFTLINT\n# if [[ \"$(uname -m)\" == arm64 ]]\n# then\n#     export PATH=\"/opt/homebrew/bin:$PATH\"\n# fi\n#\n# if command -v swiftlint >/dev/null 2>&1\n# then\n#    swiftlint\n# else\n#   echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\n#fi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		832213DC2BC92D8E00DF9C7A /* Sources */ = {
@@ -1666,6 +1692,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
 				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1712,6 +1739,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ProgressX-2/Preview Content\"";
 				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1753,6 +1781,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
@@ -1778,6 +1807,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3Y4QR7Z9AN;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MARKETING_VERSION = 1.0;
