@@ -60,7 +60,7 @@ struct ProgressX_2App: App {
                             ProfileNavigationController()
                             
                         case .RoutineLibraryView:
-                            RoutineLibraryView()
+                            RoutineLibraryNavigationController()
                         
                         case .ChooseSessionHistoryView:
                             SessionHistoryNavigationController()

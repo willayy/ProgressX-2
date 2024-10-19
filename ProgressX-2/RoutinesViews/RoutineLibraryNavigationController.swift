@@ -7,36 +7,15 @@
 
 import SwiftUI
 
-struct RoutineLibraryNavigationController<Content: View>: View {
+struct RoutineLibraryNavigationController: View {
     
-    private var content: Content
-    @Binding var navPath: [Int]
-    @Binding var selectedRoutine: Routine?
-    @Binding var selectedTemplateCycle: TemplateCycle?
-    @Binding var selectedTemplateWeek: TemplateWeek?
-    @Binding var selectedTemplateSession: TemplateSession?
-    @Binding var selectedTemplateSet: TemplateSet?
-    @Binding var selectedThreshold: SetThreshold?
-    
-    init(
-        navPath: Binding<[Int]>,
-        selectedRoutine: Binding<Routine?>,
-        selectedTemplateCycle: Binding<TemplateCycle?>,
-        selectedTemplateWeek: Binding<TemplateWeek?>,
-        selectedTemplateSession: Binding<TemplateSession?>,
-        selectedTemplateSet: Binding<TemplateSet?>,
-        selectedThreshold: Binding<SetThreshold?>,
-        @ViewBuilder content: () -> Content
-    ) {
-        self._navPath = navPath
-        self._selectedRoutine = selectedRoutine
-        self._selectedTemplateCycle = selectedTemplateCycle
-        self._selectedTemplateWeek = selectedTemplateWeek
-        self._selectedTemplateSession = selectedTemplateSession
-        self._selectedTemplateSet = selectedTemplateSet
-        self._selectedThreshold = selectedThreshold
-        self.content = content()
-    }
+    @State private var navPath: [Int] = [Int]()
+    @State private var selectedRoutine: Routine? = nil
+    @State private var selectedTemplateCycle: TemplateCycle? = nil
+    @State private var selectedTemplateWeek: TemplateWeek? = nil
+    @State private var selectedTemplateSession: TemplateSession? = nil
+    @State private var selectedTemplateSet: TemplateSet? = nil
+    @State private var selectedThreshold: SetThreshold? = nil
     
     var body: some View {
         
@@ -46,7 +25,12 @@ struct RoutineLibraryNavigationController<Content: View>: View {
                 
                 VStack {
                     
-                    content
+                    // MARK: All routines created
+                    RoutineLibraryView(
+                        selectedRoutine: $selectedRoutine,
+                        selectedTemplateCycle: $selectedTemplateCycle,
+                        navPath: $navPath
+                    )
                     
                 }
                 .navigationDestination(for: Int.self) { selection in
