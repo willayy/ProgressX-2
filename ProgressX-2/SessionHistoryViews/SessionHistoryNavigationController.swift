@@ -7,25 +7,11 @@
 
 import SwiftUI
 
-struct SessionHistoryNavigationController<Content: View>: View  {
+struct SessionHistoryNavigationController: View  {
     
-    @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
+    @State private var navPath: [Int] = [Int]()
     
-    private var content: Content
-    @Binding var navPath: [Int]
-    @Binding var selectedTrainingSession: TrainingSession?
-    
-    init(
-        navPath: Binding<[Int]>,
-        selectedTrainingSession: Binding<TrainingSession?>,
-        @ViewBuilder content: () -> Content
-
-    ) {
-        self._navPath = navPath
-        self._selectedTrainingSession = selectedTrainingSession
-        self.content = content()
-    }
+    @State private var selectedTrainingSession: TrainingSession? = nil
     
     var body: some View {
         
@@ -34,13 +20,20 @@ struct SessionHistoryNavigationController<Content: View>: View  {
             InputFieldForm {
                 
                 VStack {
-                    content
+                    
+                    ChooseSessionHistoryView(
+                        navPath: $navPath, 
+                        selectedTrainingSession: $selectedTrainingSession
+                    )
+                    
                 }
                 .navigationDestination(for: Int.self) { selection in
                     
                     if selection == 1 {
                         
-                        SessionHistoryView(navPath: $navPath, selectedTrainingSession: $selectedTrainingSession)
+                        SessionHistoryView(
+                            selectedTrainingSession: $selectedTrainingSession
+                        )
                         
                     }
                     

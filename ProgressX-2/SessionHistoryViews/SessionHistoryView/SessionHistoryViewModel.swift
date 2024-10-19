@@ -11,6 +11,7 @@ class SessionHistoryViewModel: ObservableObject{
     
    
     @Published public var selectedCategories: Set<ExerciseCategory> = Set()
+    
     @Published public var selectedTrainingSets: [TrainingSet] = []
     
     /// Assign all trainingsets from the trainingSession to the viewmodel.

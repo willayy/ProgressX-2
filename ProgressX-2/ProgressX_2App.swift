@@ -63,7 +63,7 @@ struct ProgressX_2App: App {
                             RoutineLibraryView()
                         
                         case .ChooseSessionHistoryView:
-                            ChooseSessionkHistoryView()
+                            SessionHistoryNavigationController()
                             
                         case .InfoHelp:
                             InfoHelpNavigationController()

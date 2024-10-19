@@ -1089,13 +1089,6 @@
 			path = GeneralExerciseInfoBoxes;
 			sourceTree = "<group>";
 		};
-		8F13074C2C95A96000F9BB72 /* SetHistoryView */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SetHistoryView;
-			sourceTree = "<group>";
-		};
 		8F7ABD762C5793D700BEEE9A /* PopupFeedbackView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1153,20 +1146,19 @@
 			isa = PBXGroup;
 			children = (
 				8F8417F12C6A5ADD0003E76E /* SessionHistoryNavigationController.swift */,
-				8F8417EC2C6A4ABE0003E76E /* ChooseSessionkHistoryView */,
+				8F8417EC2C6A4ABE0003E76E /* ChooseSessionHistoryView */,
 				8F8417F52C6CD9530003E76E /* SessionHistoryView */,
-				8F13074C2C95A96000F9BB72 /* SetHistoryView */,
 			);
 			path = SessionHistoryViews;
 			sourceTree = "<group>";
 		};
-		8F8417EC2C6A4ABE0003E76E /* ChooseSessionkHistoryView */ = {
+		8F8417EC2C6A4ABE0003E76E /* ChooseSessionHistoryView */ = {
 			isa = PBXGroup;
 			children = (
 				8F8417ED2C6A4AEA0003E76E /* ChooseSessionHistoryView.swift */,
 				8F8417EF2C6A4C360003E76E /* ChooseSessionHistoryViewModel.swift */,
 			);
-			path = ChooseSessionkHistoryView;
+			path = ChooseSessionHistoryView;
 			sourceTree = "<group>";
 		};
 		8F8417F52C6CD9530003E76E /* SessionHistoryView */ = {

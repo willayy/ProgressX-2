@@ -10,10 +10,9 @@ import SwiftUI
 import CoreData
 
 struct SessionHistoryView: View {
-    
-    @Binding var navPath: [Int]
-    @Environment(\.managedObjectContext) private var viewContext
+            
     @StateObject private var viewModel = SessionHistoryViewModel()
+    
     @Binding var selectedTrainingSession: TrainingSession?
     
     @FetchRequest(
@@ -65,7 +64,6 @@ struct SessionHistoryView: View {
                 data: _allTrainingSets
             ) { set in
                 SetHistoryListItem(
-                    navPath: $navPath,
                     set: set
                 )
             }
@@ -74,7 +72,7 @@ struct SessionHistoryView: View {
             
             BoldSubHeadline(text: "Targeted muscles")
             
-            HiddenLightSubHeadline(title: "What is targeted muscles?", text: "The muscles targeted in this sessions are shown on this muscle dummy.")
+            HiddenLightSubHeadline(title: "What is targeted muscles?", text: "The muscles targeted in this training session are shown on this muscle dummy.")
                 .padding(.bottom, 10)
                 .padding(.horizontal, 20)
             
@@ -93,9 +91,7 @@ struct SessionHistoryView: View {
 #Preview {
     
     let context = PersistenceController.previewViewContext
-    
-    @State var navPath: [Int] = [Int]()
-    
+        
     let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
     
     let results = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
@@ -103,7 +99,6 @@ struct SessionHistoryView: View {
     @State var selectedTrainingSession: TrainingSession? = results.first
         
     return SessionHistoryView(
-        navPath: $navPath,
         selectedTrainingSession: $selectedTrainingSession
     )
     .environmentObject(ShowMenuController())
