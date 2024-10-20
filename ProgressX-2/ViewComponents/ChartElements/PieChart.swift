@@ -57,17 +57,22 @@ struct PieChart: View {
                                 Text("\(Int(Double(element.value) / Double(totalValue) * 100))%")
                                     .font(.caption)
                                     .foregroundColor(.white)
+                                    .minimumScaleFactor(0.5)
                                 
                             }
                             
                         }
-                    
+
                 }
-                .chartLegend(position: .leading)
                 .frame(maxWidth: .infinity)
+                .chartLegend(position: .bottom)
+                
             }
+            
         }
+        
     }
+    
 }
 
 #Preview {
