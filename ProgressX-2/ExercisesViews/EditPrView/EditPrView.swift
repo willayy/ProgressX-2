@@ -117,7 +117,11 @@ struct EditPrView: View {
                 InputField(
                     placeHolder: "Load",
                     text: $viewModel.editedWeightLoad,
-                    variant: DecimalIF(min: 0, max: 10000)
+                    variant: DecimalIF(
+                        min: 0,
+                        max: 10000,
+                        bwButton: true
+                    )
                 )
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
