@@ -7,24 +7,20 @@
 
 import SwiftUI
 
-struct ProfileNavigationController<Content: View>: View {
-    
-    private var content: Content
-    
-    init(@ViewBuilder content: () -> Content) {
+struct ProfileNavigationController: View {
         
-        self.content = content()
-        
-    }
-    
     var body: some View {
         
         NavigationStack {
             
             InputFieldForm {
                 
-                content
-                
+                VStack {
+                    
+                    ProfileView()
+                    
+                }
+                    
             }
             
         }

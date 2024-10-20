@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class CreateNewThresholdViewModel: ViewModel, AddingViewModel {
+class CreateNewThresholdViewModel: ViewModel {
     
     @Published public var upperBound: String = ""
     

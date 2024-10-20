@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewTemplateSetViewModel: ViewModel, AddingViewModel {
+class CreateNewTemplateSetViewModel: ViewModel {
     
     // The Name of the set (good default is provided)
     @Published public var newSetName: String = "Set "

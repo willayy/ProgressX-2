@@ -175,9 +175,9 @@ struct EditWeighInView: View {
             
             if GlobalInputFieldValidator.allFieldsValid() {
                 
-                viewModel.saveEdits(
-                    entity: selectedBodyEntry!,
-                    viewContext: viewContext
+                viewModel.saveBodyEntryEdit(
+                    bodyEntry: selectedBodyEntry!,
+                    context: viewContext
                 )
                 
             }

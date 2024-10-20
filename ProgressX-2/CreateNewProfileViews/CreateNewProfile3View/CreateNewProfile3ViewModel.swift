@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewProfile3ViewModel: ViewModel, AddingViewModel {
+class CreateNewProfile3ViewModel: ViewModel {
     
     // Inputfield value states
     @Published public var chestCirc = ""

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewRoutineViewModel: ViewModel, AddingViewModel {
+class CreateNewRoutineViewModel: ViewModel {
     
     @Published var newRoutineName: String = ""
     

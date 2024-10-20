@@ -40,12 +40,6 @@ struct EditExerciseView: View {
                     
                     viewModel.setViewStartValues(entity: selectedExercise!)
                     
-                    #warning("Put this in the view model when the view model types are removed")
-                    for category in selectedExercise!.categories! {
-                        
-                        viewModel.selectedCategories.insert(category as! ExerciseCategory)
-                    }
-                    
                 })
             
             // MARK: Submission alert state

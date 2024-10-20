@@ -126,7 +126,7 @@ struct WeighInView: View {
             
             if GlobalInputFieldValidator.allFieldsValid() {
                 
-                viewModel.saveEntry(viewContext: viewContext)
+                viewModel.saveNewWeighIn(context: viewContext)
                 
                 navPath.removeLast()
                 

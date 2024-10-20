@@ -48,25 +48,25 @@ struct ProgressX_2App: App {
                     
                     switch (viewRouter.rootView) {
                         case .HomeView:
-                            HomeView()
+                            HomeViewNavigationController()
                             
                         case .StartWorkoutView:
-                            StartWorkoutView()
+                            StartWorkoutNavigationController()
                             
                         case .ExerciseLibraryView:
-                            ExerciseLibraryView()
+                            ExerciseLibraryNavigationController()
                             
                         case .ProfileView:
-                            ProfileView()
+                            ProfileNavigationController()
                             
                         case .RoutineLibraryView:
-                            RoutineLibraryView()
+                            RoutineLibraryNavigationController()
                         
                         case .ChooseSessionHistoryView:
-                            ChooseSessionkHistoryView()
+                            SessionHistoryNavigationController()
                             
                         case .InfoHelp:
-                            InfoHelpView()
+                            InfoHelpNavigationController()
                     }
                 }
                 .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.5)))

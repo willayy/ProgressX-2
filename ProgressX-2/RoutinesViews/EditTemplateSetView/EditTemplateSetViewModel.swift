@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditTemplateSetViewModel: ViewModel {
     
     // The Name of the set (good default is provided)
     @Published var editedSetName: String = ""
@@ -44,9 +44,7 @@ class EditTemplateSetViewModel: ViewModel, EditingViewModel, DefaultValueViewMod
     @Published var showNoChangeAlert: Bool = false
     
     @Published var showSetChangedAlert: Bool = false
-    
-    typealias T = TemplateSet
-    
+        
     public func setViewStartValues(entity: TemplateSet) -> Void {
         editedSetName = entity.timePeriodName!
         editedSetDesc = entity.timePeriodDescription!

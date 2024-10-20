@@ -7,32 +7,13 @@
 
 import SwiftUI
 
-struct StartWorkoutNavigationController<Content: View>: View {
+struct StartWorkoutNavigationController: View {
     
-    public var content: Content
-    @EnvironmentObject var viewRouter: ViewRouter
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
-    @Binding var selectedRoutine: Routine?
-    @Binding var selectedTrainingWeek: TrainingWeek?
-    @Binding var selectedTrainingSession: TrainingSession?
-    @Binding var currentTrainingSet: TrainingSet?
-    
-    init(
-        navPath: Binding<[Int]>,
-        selectedRoutine: Binding<Routine?>,
-        selectedTrainingWeek: Binding<TrainingWeek?>,
-        selectedTrainingSession: Binding<TrainingSession?>,
-        currentTrainingSet: Binding<TrainingSet?>,
-        @ViewBuilder content: () -> Content
-    ) {
-        self._navPath = navPath
-        self._selectedRoutine = selectedRoutine
-        self._selectedTrainingWeek = selectedTrainingWeek
-        self._selectedTrainingSession = selectedTrainingSession
-        self._currentTrainingSet = currentTrainingSet
-        self.content = content()
-    }
+    @State private var navPath: [Int] = [Int]()
+    @State private var selectedRoutine: Routine? = nil
+    @State private var selectedTrainingWeek: TrainingWeek? = nil
+    @State private var selectedTrainingSession: TrainingSession? = nil
+    @State private var currentTrainingSet: TrainingSet? = nil
     
     var body: some View {
         
@@ -41,7 +22,14 @@ struct StartWorkoutNavigationController<Content: View>: View {
             InputFieldForm {
                 
                 VStack {
-                    content
+                    
+                    StartWorkoutView(
+                        navPath: $navPath,
+                        selectedRoutine: $selectedRoutine,
+                        selectedTrainingSession: $selectedTrainingSession,
+                        currentTrainingSet: $currentTrainingSet
+                    )
+                    
                 }
                 .navigationDestination(for: Int.self) { selection in
                     

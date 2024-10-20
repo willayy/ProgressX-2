@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewExerciseViewModel: ViewModel, AddingViewModel {
+class CreateNewExerciseViewModel: ViewModel {
     
     // Get the viewcontext from the enviorment
     @Environment(\.managedObjectContext) private var viewContext

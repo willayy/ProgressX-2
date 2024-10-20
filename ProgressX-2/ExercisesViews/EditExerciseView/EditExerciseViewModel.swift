@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditExerciseViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
+class EditExerciseViewModel: ViewModel {
     
     // Submission alert variables
     @Published public var exerciseEditedAlert: Bool = false
@@ -25,8 +25,16 @@ class EditExerciseViewModel: ViewModel, EditingViewModel, DefaultValueViewModel 
     typealias T = Exercise
     
     public func setViewStartValues(entity: Exercise) -> Void {
+        
         newName = entity.exerciseName ?? ""
+        
         newDesc = entity.exerciseDesc ?? ""
+        
+        for category in entity.categories! {
+            
+            selectedCategories.insert(category as! ExerciseCategory)
+        }
+        
     }
     
     public func saveEdits(entity: Exercise, viewContext: NSManagedObjectContext) -> Void {

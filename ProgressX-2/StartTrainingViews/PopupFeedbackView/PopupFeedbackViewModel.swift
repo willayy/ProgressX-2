@@ -9,14 +9,11 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class PopupFeedbackViewModel: ViewModel, AddingViewModel, DefaultValueViewModel {
+class PopupFeedbackViewModel: ViewModel {
 
     @Published var showDidntFinishAllReps = false
-    @Published var editedSetQuantity: String = ""
-    @Published var editedSetQuantityIsInvalid: Bool = false
-    @Published var editedSetQuantityIsInvalidMsg: String = ""
     
-    typealias T = TrainingSet
+    @Published var editedSetQuantity: String = ""
     
     public func setViewStartValues(entity: TrainingSet) -> Void {
         editedSetQuantity = String(format: "%.0f", entity.quantityTodo)

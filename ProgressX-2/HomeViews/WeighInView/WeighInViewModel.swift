@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class WeighInViewModel: ViewModel, AddingViewModel {
+class WeighInViewModel: ViewModel {
     
     // Input variables
     @Published public var bodyWeight: String = ""
@@ -20,29 +20,12 @@ class WeighInViewModel: ViewModel, AddingViewModel {
     @Published public var thighCirc: String = ""
     @Published public var calfCirc: String = ""
     
-    // Input invalid variables
-    @Published public var bodyWeightIsInvalid: Bool = false
-    @Published public var chestCircIsInvalid: Bool = false
-    @Published public var waistCircIsInvalid: Bool = false
-    @Published public var upperArmCircIsInvalid: Bool = false
-    @Published public var lowerArmIsInvalid: Bool = false
-    @Published public var thighCircIsInvalid: Bool = false
-    @Published public var calfCircIsInvalid: Bool = false
-
-    // Error message variables
-    @Published public var bodyWeightIsInvalidMsg: String = ""
-    @Published public var chestCircIsInvalidMsg: String = ""
-    @Published public var waistCircIsInvalidMsg: String = ""
-    @Published public var upperArmCircIsInvalidMsg: String = ""
-    @Published public var lowerArmIsInvalidMsg: String = ""
-    @Published public var thighCircIsInvalidMsg: String = ""
-    @Published public var calfCircIsInvalidMsg: String = ""
-    
-    public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
+    /// Saves a new weigh in
+    public func saveNewWeighIn(context: NSManagedObjectContext) -> Void {
         
         // Get the profile.
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
-        let results: [Profile] = CoreDataAccess.fetch(viewContext, fetchRequest: fetchRequest)
+        let results: [Profile] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
         let profile: Profile = results.first!
         
         // Convert input strings to optional NSNumbers.
@@ -55,7 +38,7 @@ class WeighInViewModel: ViewModel, AddingViewModel {
 
         // Create the bodyEntry.
         let _ = BodyEntry(
-            viewContext,
+            context,
             profile: profile,
             bodyWeight: Double(bodyWeight)!,
             date: Date(), chestCircumference: chestCirc,
@@ -66,7 +49,7 @@ class WeighInViewModel: ViewModel, AddingViewModel {
             calfCircumference: calfCirc
         )
         
-        self.save(viewContext)
+        self.save(context)
         
     }
 }

@@ -9,21 +9,20 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class EditTemplateWeekViewModel: ViewModel, EditingViewModel, AddingViewModel, DefaultValueViewModel {
+class EditTemplateWeekViewModel: ViewModel {
     
     @Published public var showWeekChangedAlert: Bool = false
+    
     @Published public var showNoChangeAlert: Bool = false
+    
     @Published public var editedWeekName: String = ""
-    @Published public var editedWeekIsInvalid: Bool = false
-    @Published public var editedWeekNameIsInvalidMsg: String = ""
+    
     @Published public var editedWeekDescription: String = ""
-    @Published public var editedWeekDescIsInvalid: Bool = false
-    @Published public var editedWeekDescIsInvalidMsg: String = ""
+    
     @Published public var editedPositionIndex: Int64 = 0
+    
     @Published public var selectedTemplateWeek: TemplateWeek? = nil
-    
-    typealias T = TemplateWeek
-    
+        
     /// Get the positionIndexes for all weeks in this Routine
     public func positionIndexes(selectedTemplateWeek: TemplateWeek) -> [Int64] {
         return selectedTemplateWeek.getPositionIndexes()

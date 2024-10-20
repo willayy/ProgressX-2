@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
+class EditTemplateSessionViewModel: ViewModel {
     
     @Published public var showSessionChangedAlert: Bool = false
     
@@ -20,9 +20,7 @@ class EditTemplateSessionViewModel: ViewModel, EditingViewModel {
     @Published public var editedSessionDescription: String = ""
     
     @Published public var editedPositionIndex: Int64 = 0
-    
-    typealias T = TemplateSession
-    
+        
     public func positionIndexes(selectedTemplateSession: TemplateSession) -> [Int64] {
         selectedTemplateSession.getPositionIndexes()
     }

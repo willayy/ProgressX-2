@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class CreateNewProfile4ViewModel: ViewModel, AddingViewModel {
+class CreateNewProfile4ViewModel: ViewModel {
     
     // Values for input fields
     @Published var benchPress1RM = ""

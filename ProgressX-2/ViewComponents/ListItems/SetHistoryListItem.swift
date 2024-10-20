@@ -10,13 +10,12 @@ import SwiftUI
 
 struct SetHistoryListItem: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
-    @Binding var navPath: [Int]
     @ObservedObject var set: TrainingSet
     
-    
     var body: some View {
+        
         HStack{
+            
             VStack(alignment: .leading) {
                 
                 Text("Set name: ")
@@ -36,10 +35,12 @@ struct SetHistoryListItem: View {
                  + Text("\(status(set: set))"))
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
+                
             }
+            
         }
+        
     }
-    
     
     public func status(set:TrainingSet) -> String {
         if  set.quantityDone > 0{

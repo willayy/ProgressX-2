@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 import SwiftUI
 
-class CreateNewPersonalRecordViewModel: ViewModel, AddingViewModel {
+class CreateNewPersonalRecordViewModel: ViewModel {
     
     // Date picker value
     @Published public var prDate: Date = Date()
