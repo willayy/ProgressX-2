@@ -28,13 +28,17 @@ class SessionHistoryViewModel: ObservableObject{
         
         for set in self.selectedTrainingSets {
             
-            let exercise = set.exercise!
-            
-            let categories = exercise.categories?.allObjects as! [ExerciseCategory]
-            
-            for category in categories{
+            if set.quantityDone != 0 {
                 
-                displayset.insert(category)
+                let exercise = set.exercise!
+                
+                let categories = exercise.categories?.allObjects as! [ExerciseCategory]
+                
+                for category in categories{
+                    
+                    displayset.insert(category)
+                    
+                }
                 
             }
             
