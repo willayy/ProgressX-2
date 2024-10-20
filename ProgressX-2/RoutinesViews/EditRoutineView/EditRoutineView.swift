@@ -59,6 +59,7 @@ struct EditRoutineView: View {
                 
                 LightSubHeadline(text: selectedRoutine!.timePeriodDescription!)
                     .padding(.bottom, 20)
+                    .padding(.horizontal, 20)
                 
             }
             
