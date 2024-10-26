@@ -9,19 +9,37 @@ import SwiftUI
 
 struct IntSelectionList: View {
 
-    @Binding var selected: Int64
-    let selections: [Int64]
+    @Binding private var selected: Int64
+    
+    private let selections: [Int64]
+    
+    init(selected: Binding<Int64>, selections: [Int64]) {
+        
+        self._selected = selected
+        
+        self.selections = selections.sorted()
+        
+    }
     
     var body: some View {
+        
         GroupBox {
+            
             DisclosureGroup(String(selected)) {
+                
                 ForEach(selections, id: \.self) { int in
+                    
                     Button {
+                        
                         selected = int
+                        
                     } label: {
+                        
                         Text(String(int))
+                        
                     }
                     .padding(2)
+                    
                 }
             }
         }
