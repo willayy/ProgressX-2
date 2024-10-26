@@ -9,8 +9,17 @@ import SwiftUI
 
 struct StringSelectionList: View {
     
-    @Binding var selected: String
-    let selections: [String]
+    @Binding private var selected: String
+    
+    private let selections: [String]
+    
+    init(selected: Binding<String>, selections: [String]) {
+        
+        self._selected = selected
+        
+        self.selections = selections.sorted()
+        
+    }
     
     var body: some View {
         
