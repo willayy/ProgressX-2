@@ -13,6 +13,11 @@ public class KeyValueList<K: Equatable,V>: Sequence {
     // Underlying datastructure
     private let keyValuePairs: [(K,V)]
     
+    // Get the count of the underlying DS
+    public var count: Int {
+        return keyValuePairs.count
+    }
+    
     // Init making KVList immutable
     init(_ keyValuePairs: [(K,V)] = []) {
         

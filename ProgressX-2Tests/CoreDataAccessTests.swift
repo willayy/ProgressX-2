@@ -45,7 +45,7 @@ final class CoreDataAccessTests: XCTestCase {
         
         XCTAssertEqual(categoriesInPreviewRoutine.count, 2)
         
-        let categoryNames = categoriesInPreviewRoutine.map { $0.key }
+        let categoryNames = categoriesInPreviewRoutine.map { $0.0 }
         
         // The preview routine should currently contain Category1 and Category2, nothing more.
         
