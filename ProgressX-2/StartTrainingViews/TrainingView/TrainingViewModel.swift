@@ -92,8 +92,9 @@ class TrainingViewModel: ViewModel {
         let uncompletedSets = session.children
             .filter { !$0.isComplete }
         
-        if uncompletedSets.count < 2 {
+        if uncompletedSets.count == 1 {
             nextTrainingSet = nil
+            return
         }
         let setAfterThis: TrainingSet? = uncompletedSets[1]
         

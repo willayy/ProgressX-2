@@ -9,6 +9,7 @@
 import SwiftUI
 import CoreData
 import Foundation
+import AudioToolbox
 
 struct TrainingView: View {
     
@@ -26,9 +27,14 @@ struct TrainingView: View {
     
     @Binding var currentTrainingSet: TrainingSet?
     
-    
+    @FetchRequest(
+        entity: Profile.entity(),
+        sortDescriptors: []
+    ) private var profiles: FetchedResults<Profile>
     
     var body: some View {
+        
+        
     
         let exerciseType = currentTrainingSet?.exercise!.exerciseType!
         
@@ -174,7 +180,11 @@ struct TrainingView: View {
                 viewModel.getNextSetAfterThis(session: selectedTrainingSession!, currSet: currentTrainingSet!)
             }
             NotificationCenter.default.addObserver(forName: TimerViewModel.timerDidFinishNotification, object: nil, queue: .main) { _ in
-                viewModel.updateStatesWhenTimerStops(trainingSet: currentTrainingSet!)
+                if currentTrainingSet != nil{
+                    viewModel.updateStatesWhenTimerStops(trainingSet: currentTrainingSet!)}
+                if profiles.first!.notificationSound {
+                    AudioServicesPlaySystemSound(1032)
+                }
             }
         }
         // MARK: Task to show start session alert.

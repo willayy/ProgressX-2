@@ -36,6 +36,7 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
     @Published public var userNameIsInvalidMsg: String = ""
     @Published public var heightIsInvalidMsg: String = ""
     @Published public var standardRestTimeIsInvalidMsg: String = ""
+    @Published public var notificationSound: Bool = true
     
     typealias T = Profile
     
@@ -76,6 +77,8 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
         self.userName = entity.profileUserName!
         
         self.selectedGenderSegment = selectedGenderSegment
+        
+        self.notificationSound = entity.notificationSound
         
         self.selectedSmallestPlate = {
             
@@ -122,6 +125,8 @@ class ProfileViewModel: ViewModel, EditingViewModel, DefaultValueViewModel {
             entity.standardRestTime = Double(standardRestTime)!
             
         }
+        
+        entity.notificationSound = notificationSound
         
         let smallestPlate = {
             let numericalValue: String = self.selectedSmallestPlate

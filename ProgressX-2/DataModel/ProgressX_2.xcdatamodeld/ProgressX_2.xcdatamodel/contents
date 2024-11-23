@@ -44,6 +44,7 @@
         <attribute name="birthDay" attributeType="Date" minDateTimeInterval="-3155763660" usesScalarValueType="NO"/>
         <attribute name="gender" attributeType="String" regularExpressionString="^(male|female)$"/>
         <attribute name="isMetric" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="notificationSound" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="profileUserName" attributeType="String" minValueString="0" maxValueString="50" defaultValueString=""/>
         <attribute name="smallestPlate" attributeType="Double" minValueString="1" maxValueString="200" defaultValueString="2.5" usesScalarValueType="YES"/>
         <attribute name="standardRestTime" attributeType="Double" minValueString="0" defaultValueString="240" usesScalarValueType="YES"/>

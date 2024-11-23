@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import CoreData
+import AudioToolbox
 
 struct ProfileView: View {
     
@@ -38,6 +39,12 @@ struct ProfileView: View {
                     LightSubHeadline(text: "Here you can change/update the settings of your current profile")
                         .padding(.horizontal, 20)
                     
+                    Button(action: {
+                        AudioServicesPlaySystemSound(1046)
+                    })
+                    {
+                        Text("press")
+                    }
                     if viewModel.showProfileChangedAlert {
                         SubmitAlert(
                             message: "Profile changes succesfully saved!",
@@ -89,6 +96,15 @@ struct ProfileView: View {
                     .padding(.horizontal, 60)
                     .padding(.bottom, 10)
                     
+                    Toggle(isOn: $viewModel.notificationSound) {
+                        Text("Workout timer notification")            .foregroundColor(Color("textColor"))
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.horizontal, 55)
+                    .padding(.bottom, 10)
+                    
                     BoldSubHeadline(text: "Change weight and length units")
                     
                     BooleanSegPicker(
@@ -125,7 +141,7 @@ struct ProfileView: View {
                         segments: viewModel.genderSegments
                     )
                     .padding(.horizontal, 55)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 15)
                     
                 }
             }
