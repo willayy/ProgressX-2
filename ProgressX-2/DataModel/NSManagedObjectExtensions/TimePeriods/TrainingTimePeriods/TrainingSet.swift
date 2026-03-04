@@ -53,14 +53,14 @@ extension TrainingSet: HasParent {
     /// Uset his property to print the load todo on a set.
     public var formattedLoadTodo: String {
         let context = self.managedObjectContext!
-        let weightUnit = CoreDataAccess.getWeightUnit(context)!
+        let weightUnit = CoreDataAccess.getWeightUnit(context) ?? ""
         return "\(String(format: "%.2f", self.loadTodo)) \(weightUnit)"
     }
     
     /// Use this to property to print the load done on a set.
     public var formattedLoadDoneString: String {
         let context = self.managedObjectContext!
-        let weightUnit = CoreDataAccess.getWeightUnit(context)!
+        let weightUnit = CoreDataAccess.getWeightUnit(context) ?? ""
         return "\(String(format: "%.2f", self.loadDone)) \(weightUnit)"
     }
     

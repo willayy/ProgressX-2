@@ -35,7 +35,7 @@ extension CoreDataAccess {
     public static func basicRoutinesExists(_ context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest = Routine.fetchRequest()
         let args = ["Metallicdpas PPL"]
-        fetchRequest.predicate = NSPredicate(format: "timePeriodName == %@", args)
+        fetchRequest.predicate = NSPredicate(format: "timePeriodName IN %@", args)
         let results = fetch(context, fetchRequest: fetchRequest)
         return results.count == args.count
     }
@@ -46,14 +46,14 @@ extension CoreDataAccess {
     public static func basicExercisesExist(_ context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
         let args = ["Tricep pushdown",
-                    "Bicep curls",
+                    "Dumbbell curl",
                     "Bench press",
                     "Squat",
                     "Shoulder press",
                     "Deadlift",
-                    "Push up",
-                    "Sit up"]
-        fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", args)
+                    "Push-up",
+                    "Sit-up"]
+        fetchRequest.predicate = NSPredicate(format: "exerciseName IN %@", args)
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
         return fetchResult.count == args.count
     }

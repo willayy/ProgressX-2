@@ -105,17 +105,24 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
             prType: "onerepmax"
         )
         
-        let loadOnLatestPr = latestPr!.weightLoad
+        guard let loadOnLatestPr = latestPr?.weightLoad else {
+            // Fall back to the static setLoad value when no PR exists yet.
+            self.setLoad = json["setLoad"] as! Double
+            return
+        }
         
         let multiplier = json["initialLoadMultiplier"] as! Double
         
         let computedLoad = loadOnLatestPr * multiplier
         
         // Round to smallest plate
-        let profile = CoreDataAccess.getProfile(context)
+        guard let profile = CoreDataAccess.getProfile(context) else {
+            self.setLoad = computedLoad
+            return
+        }
         
         // times two because you always add two weights for balance
-        let smallestPlate = profile!.smallestPlate * 2
+        let smallestPlate = profile.smallestPlate * 2
         
         self.setLoad = (computedLoad / smallestPlate).rounded() * smallestPlate
     }
