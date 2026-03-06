@@ -43,10 +43,10 @@ internal class LoadTodoCalculator {
             let computedLoad: Double = (latestPr?.weightLoad ?? 0) * (templateSet.setLoad / 100)
             
             // Round to smallest plate
-            let profile = CoreDataAccess.getProfile(context)
+            guard let profile = CoreDataAccess.getProfile(context) else { return computedLoad }
             
             // times two because you always add two weights for balance
-            let smallestPlate = profile!.smallestPlate * 2
+            let smallestPlate = profile.smallestPlate * 2
             
             let roundedLoad: Double = (computedLoad / smallestPlate).rounded() * smallestPlate
             

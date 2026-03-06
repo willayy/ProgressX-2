@@ -101,7 +101,7 @@ extension Profile {
     
     public override func validateForUpdate() throws {
         
-        try super.validateForInsert()
+        try super.validateForUpdate()
         
         try validateProfileNameIsUnique()
         
