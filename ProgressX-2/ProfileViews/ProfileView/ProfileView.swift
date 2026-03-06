@@ -96,6 +96,13 @@ struct ProfileView: View {
                 .padding(.horizontal, 60)
                 .padding(.bottom, 10)
                 
+                // MARK: Notification sound toggle
+                Toggle(isOn: $viewModel.notificationSound) {
+                    BoldSubHeadline(text: "Workout timer notification")
+                }
+                .padding(.horizontal, 55)
+                .padding(.bottom, 10)
+                
                 // MARK: Edit units
                 BoldSubHeadline(text: "Change weight and length units")
                 
