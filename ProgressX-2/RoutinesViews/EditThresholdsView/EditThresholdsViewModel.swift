@@ -43,31 +43,31 @@ class EditThresholdsViewModel: ViewModel {
     
     public func setViewStartValues(entity: SetThreshold) -> Void {
         
-        editedFlatLoadAdd = String(format: "%.2f", entity.flatLoadAdd?.doubleValue ?? "")
+        self.editedFlatLoadAdd = String(format: "%.2f", entity.flatLoadAdd?.doubleValue ?? "")
         
-        addPrSelection = entity.generatePr
+        self.addPrSelection = entity.generatePr
                 
         let exerciseType = entity.templateSet!.exercise!.exerciseType
         
         if exerciseType == "reps" {
             
-            prSelection = entity.prType ?? "onerepmax"
+            self.prSelection = entity.prType ?? "onerepmax"
             
-            editedLowerBound = String(format: "%.0f", entity.lowerBound)
+            self.editedLowerBound = String(format: "%.0f", entity.lowerBound)
             
-            editedUpperBound = String(format: "%.0f", entity.upperBound)
+            self.editedUpperBound = String(format: "%.0f", entity.upperBound)
             
-            editedFlatQuantityAdd = String(format: "%.0f", entity.flatQuantityAdd?.doubleValue ?? "")
+            self.editedFlatQuantityAdd = String(format: "%.0f", entity.flatQuantityAdd?.doubleValue ?? "")
             
         } else if exerciseType == "time" {
             
-            prSelection = entity.prType ?? "timemax"
+            self.prSelection = entity.prType ?? "timemax"
             
-            editedLowerBound = String(format: "%.0f", entity.lowerBound)
+            self.editedLowerBound = String(format: "%.0f", entity.lowerBound)
             
-            editedUpperBound = String(format: "%.0f", entity.upperBound)
+            self.editedUpperBound = String(format: "%.0f", entity.upperBound)
             
-            editedFlatQuantityAdd = String(format: "%.2f", entity.flatQuantityAdd?.doubleValue ?? "")
+            self.editedFlatQuantityAdd = String(format: "%.2f", entity.flatQuantityAdd?.doubleValue ?? "")
             
         }
     
@@ -143,13 +143,13 @@ class EditThresholdsViewModel: ViewModel {
         
         if entity.hasChanges {
             
-            withAnimation { showThresholdChangedAlert = true }
+            withAnimation { self.showThresholdChangedAlert = true }
             
             self.save(viewContext)
             
         } else {
             
-            withAnimation { showNoChangeAlert = true }
+            withAnimation { self.showNoChangeAlert = true }
             
         }
     }

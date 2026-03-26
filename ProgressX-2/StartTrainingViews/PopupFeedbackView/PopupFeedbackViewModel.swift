@@ -16,7 +16,7 @@ class PopupFeedbackViewModel: ViewModel {
     @Published var editedSetQuantity: String = ""
     
     public func setViewStartValues(entity: TrainingSet) -> Void {
-        editedSetQuantity = String(format: "%.0f", entity.quantityTodo)
+        self.editedSetQuantity = String(format: "%.0f", entity.quantityTodo)
     }
     
     public func getPopupWindowTitle(exercise: Exercise) -> String {

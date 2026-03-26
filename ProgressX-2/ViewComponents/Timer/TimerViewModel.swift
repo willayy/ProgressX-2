@@ -17,8 +17,8 @@ final class TimerViewModel: ObservableObject {
         case cancelled
     }
     
-    @Published public var StartWorcoutNotification: Bool = false
-    @Published public var Donebutton: Bool = false
+    @Published public var startWorkoutNotification: Bool = false
+    @Published public var doneButton: Bool = false
 
     // MARK: Private Properties
     private var timer = Timer()

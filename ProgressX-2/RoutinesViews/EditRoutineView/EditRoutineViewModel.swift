@@ -22,23 +22,23 @@ class EditRoutineViewModel: ViewModel {
     @Published public var selectedTemplateCycle: TemplateCycle? = nil
         
     public func setViewStartValues(entity: Routine) -> Void {
-        editedRoutineName = entity.timePeriodName!
-        editedRoutineDescription = entity.timePeriodDescription!
+        self.editedRoutineName = entity.timePeriodName!
+        self.editedRoutineDescription = entity.timePeriodDescription!
     }
     
     public func saveEdits(entity: Routine, viewContext: NSManagedObjectContext) -> Void {
-        if entity.timePeriodName != editedRoutineName {
-            entity.timePeriodName = editedRoutineName
+        if entity.timePeriodName != self.editedRoutineName {
+            entity.timePeriodName = self.editedRoutineName
         }
         
-        if entity.timePeriodDescription != editedRoutineDescription {
-            entity.timePeriodDescription = editedRoutineDescription
+        if entity.timePeriodDescription != self.editedRoutineDescription {
+            entity.timePeriodDescription = self.editedRoutineDescription
         }
         
         if entity.hasChanges {
             
             withAnimation {
-                showRoutineChangedAlert = true
+                self.showRoutineChangedAlert = true
             }
             
             self.save(viewContext)
@@ -46,7 +46,7 @@ class EditRoutineViewModel: ViewModel {
         } else {
             
             withAnimation {
-                showNoChangeAlert = true
+                self.showNoChangeAlert = true
             }
             
         }

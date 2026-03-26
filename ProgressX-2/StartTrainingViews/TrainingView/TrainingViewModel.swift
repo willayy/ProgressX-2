@@ -42,7 +42,7 @@ class TrainingViewModel: ViewModel {
     }
     
     public func setLastExercise(exercise: String){
-        lastExercise = exercise
+        self.lastExercise = exercise
     }
     
     public func timerStateChangeOnTimedSet(timerViewModel: TimerViewModel) -> Void {
@@ -50,13 +50,13 @@ class TrainingViewModel: ViewModel {
         if timerViewModel.state == .active {
             
             withAnimation {
-                doneButtonText = "Done"
+                self.doneButtonText = "Done"
             }
             
         } else if timerViewModel.state == .cancelled {
 
             withAnimation {
-                doneButtonText = "Start timed set"
+                self.doneButtonText = "Start timed set"
             }
             
         }
@@ -76,12 +76,12 @@ class TrainingViewModel: ViewModel {
     }
     
     public func startRestTimerForTimedSet(timer: TimerViewModel) {
-        quantityDoneOnTimedSet = Double(timer.selectedSecondsAmount)
-        presentPopup.toggle()
+        self.quantityDoneOnTimedSet = Double(timer.selectedSecondsAmount)
+        self.presentPopup.toggle()
         timer.state = .cancelled
-        doneButtonText = "rest timer"
-        timedSetActive.toggle()
-        doneButtonEnabled.toggle()
+        self.doneButtonText = "rest timer"
+        self.timedSetActive.toggle()
+        self.doneButtonEnabled.toggle()
         
     }
     
@@ -93,7 +93,7 @@ class TrainingViewModel: ViewModel {
             .filter { !$0.isComplete }
         
         if uncompletedSets.count < 2 {
-            nextTrainingSet = nil
+            self.nextTrainingSet = nil
             return
         }
         
@@ -101,43 +101,43 @@ class TrainingViewModel: ViewModel {
         
         if setAfterThis == currSet {
             
-            nextTrainingSet = nil
+            self.nextTrainingSet = nil
             
         } else {
             
-            nextTrainingSet = setAfterThis
+            self.nextTrainingSet = setAfterThis
             
         }
         
     }
     
     public func startSessionTimer() {
-            timerForSessionLength = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            self.timerForSessionLength = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 self.secondsElapsed += 1
             }
         }
     
     public func stopSessionTimer() {
-            timerForSessionLength.invalidate()
-            secondsElapsed = 0
+            self.timerForSessionLength.invalidate()
+            self.secondsElapsed = 0
         }
     
     public func updateStatesWhenTimerStops(trainingSet: TrainingSet){
         
-       if trainingSet.exercise!.exerciseType! == "time" && lastExercise == "reps" {
-           doneButtonText = "Start timed set"
-           timedSetActive = true
-           doneButtonEnabled.toggle()
-       } else if trainingSet.exercise!.exerciseType! == "reps" && lastExercise == "time" {
-           timedSetActive = false
-       } else if trainingSet.exercise?.exerciseType! == "time" && doneButtonText == "rest timer"{
-           doneButtonEnabled.toggle()
-           timedSetActive = true
-           doneButtonText = "Start timed set"
+       if trainingSet.exercise!.exerciseType! == "time" && self.lastExercise == "reps" {
+           self.doneButtonText = "Start timed set"
+           self.timedSetActive = true
+           self.doneButtonEnabled.toggle()
+       } else if trainingSet.exercise!.exerciseType! == "reps" && self.lastExercise == "time" {
+           self.timedSetActive = false
+       } else if trainingSet.exercise?.exerciseType! == "time" && self.doneButtonText == "rest timer"{
+           self.doneButtonEnabled.toggle()
+           self.timedSetActive = true
+           self.doneButtonText = "Start timed set"
        }
-       if doneButtonText == "Start rest timer"{
-           doneButtonEnabled.toggle()
-           doneButtonText = "Start timed set"
+       if self.doneButtonText == "Start rest timer"{
+           self.doneButtonEnabled.toggle()
+           self.doneButtonText = "Start timed set"
        }
     }
 }

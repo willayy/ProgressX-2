@@ -26,13 +26,13 @@ class EditExerciseViewModel: ViewModel {
     
     public func setViewStartValues(entity: Exercise) -> Void {
         
-        newName = entity.exerciseName ?? ""
+        self.newName = entity.exerciseName ?? ""
         
-        newDesc = entity.exerciseDesc ?? ""
+        self.newDesc = entity.exerciseDesc ?? ""
         
         for category in entity.categories! {
             
-            selectedCategories.insert(category as! ExerciseCategory)
+            self.selectedCategories.insert(category as! ExerciseCategory)
         }
         
     }
@@ -43,27 +43,27 @@ class EditExerciseViewModel: ViewModel {
             for category in entity.categories! {
                 entity.removeFromCategories(category as! ExerciseCategory)
             }
-            for category in selectedCategories {
+            for category in self.selectedCategories {
                 entity.addToCategories(category)
             }
         }
         
-        if newName != entity.exerciseName {
-            entity.exerciseName = newName
+        if self.newName != entity.exerciseName {
+            entity.exerciseName = self.newName
         }
         
-        if newDesc != entity.exerciseDesc {
-            entity.exerciseDesc = newDesc
+        if self.newDesc != entity.exerciseDesc {
+            entity.exerciseDesc = self.newDesc
         }
         
         if entity.hasChanges {
             withAnimation {
-                exerciseEditedAlert = true
+                self.exerciseEditedAlert = true
             }
             self.save(viewContext)
         } else {
             withAnimation {
-                noChangeAlert = true
+                self.noChangeAlert = true
             }
         }
         

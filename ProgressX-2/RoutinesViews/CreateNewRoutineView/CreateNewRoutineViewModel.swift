@@ -38,8 +38,8 @@ class CreateNewRoutineViewModel: ViewModel {
         
         // reset fields
         withAnimation {
-            newRoutineName = ""
-            newRoutineDesc = ""
+            self.newRoutineName = ""
+            self.newRoutineDesc = ""
         }
         
         // Save and continue

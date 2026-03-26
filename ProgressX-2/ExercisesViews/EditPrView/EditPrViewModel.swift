@@ -25,33 +25,33 @@ class EditPrViewModel: ViewModel {
         
     public func setViewStartValues(entity: PersonalRecord) -> Void {
         
-        editedDate = entity.achievedOnDate!
+        self.editedDate = entity.achievedOnDate!
         
-        editedWeightLoad = String(format: "%.2f", entity.weightLoad)
+        self.editedWeightLoad = String(format: "%.2f", entity.weightLoad)
         
-        editedQuantity = String(Int(entity.prQuantity))
+        self.editedQuantity = String(Int(entity.prQuantity))
         
     }
     
     public func saveEdits(entity: PersonalRecord, viewContext: NSManagedObjectContext) -> Void {
         
         if entity.weightLoad != Double(editedWeightLoad) {
-            entity.weightLoad = Double(editedWeightLoad)!
+            entity.weightLoad = Double(self.editedWeightLoad)!
         }
             
         if entity.prQuantity != Double(editedQuantity) {
-            entity.prQuantity = Double(editedQuantity)!
+            entity.prQuantity = Double(self.editedQuantity)!
         }
             
-        if entity.achievedOnDate != editedDate {
-            entity.achievedOnDate = editedDate
+        if entity.achievedOnDate != self.editedDate {
+            entity.achievedOnDate = self.editedDate
         }
         
         if entity.hasChanges {
             
             withAnimation {
                 
-                prEditedAlert = true
+                self.prEditedAlert = true
                 
             }
             
@@ -61,7 +61,7 @@ class EditPrViewModel: ViewModel {
             
             withAnimation {
                 
-                noChangeAlert = true
+                self.noChangeAlert = true
                 
             }
             

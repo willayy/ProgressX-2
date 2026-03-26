@@ -138,13 +138,13 @@ class ProfileViewModel: ViewModel {
         
         if entity.hasChanges {
             
-            withAnimation { showProfileChangedAlert = true }
+            withAnimation { self.showProfileChangedAlert = true }
             
             self.save(viewContext)
             
         } else {
             
-            withAnimation { showNoChangeAlert = true }
+            withAnimation { self.showNoChangeAlert = true }
             
         }
         

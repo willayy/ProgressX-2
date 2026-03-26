@@ -46,15 +46,15 @@ class EditTemplateSetViewModel: ViewModel {
     @Published var showSetChangedAlert: Bool = false
         
     public func setViewStartValues(entity: TemplateSet) -> Void {
-        editedSetName = entity.timePeriodName!
-        editedSetDesc = entity.timePeriodDescription!
-        editedSetPositionIndex = entity.positionIndex
-        selectedExercise = entity.exercise!
-        editedLoadType = loadTypeMap()[entity.loadType!]!
-        editedQuantityType = quantityTypeMap()[entity.quantityType!]!
-        editedSetLoad = entity.formattedSetLoad!
-        editedSetQuantity = entity.formattedSetQuantity!
-        editedRestTime = entity.formattedRestTime
+        self.editedSetName = entity.timePeriodName!
+        self.editedSetDesc = entity.timePeriodDescription!
+        self.editedSetPositionIndex = entity.positionIndex
+        self.selectedExercise = entity.exercise!
+        self.editedLoadType = self.loadTypeMap()[entity.loadType!]!
+        self.editedQuantityType = self.quantityTypeMap()[entity.quantityType!]!
+        self.editedSetLoad = entity.formattedSetLoad!
+        self.editedSetQuantity = entity.formattedSetQuantity!
+        self.editedRestTime = entity.formattedRestTime
     }
     
     public func saveEdits(entity: TemplateSet, viewContext: NSManagedObjectContext) -> Void {
@@ -97,10 +97,10 @@ class EditTemplateSetViewModel: ViewModel {
         
         if entity.hasChanges {
             entity.propogateChanges()
-            withAnimation { showSetChangedAlert = true }
+            withAnimation { self.showSetChangedAlert = true }
             self.save(viewContext)
         } else {
-            withAnimation { showNoChangeAlert = true }
+            withAnimation { self.showNoChangeAlert = true }
         }
 
     }
