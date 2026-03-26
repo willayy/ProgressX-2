@@ -32,6 +32,9 @@ class ProfileViewModel: ViewModel {
     
     @Published public var showProfileChangedAlert: Bool = false
     
+    // Notification sound setting
+    @Published public var notificationSound: Bool = true
+    
     // Segments for segment picker
     let unitSegments: KeyValueList<String, Bool> = KeyValueList([
         ("Metric",true),
@@ -69,6 +72,8 @@ class ProfileViewModel: ViewModel {
         self.userName = entity.profileUserName!
         
         self.selectedGenderSegment = selectedGenderSegment
+        
+        self.notificationSound = entity.notificationSound
         
         self.selectedSmallestPlate = {
             
@@ -115,6 +120,8 @@ class ProfileViewModel: ViewModel {
             entity.standardRestTime = Double(standardRestTime)!
             
         }
+        
+        entity.notificationSound = notificationSound
         
         let smallestPlate = {
             let numericalValue: String = self.selectedSmallestPlate
