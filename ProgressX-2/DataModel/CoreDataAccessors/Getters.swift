@@ -20,7 +20,7 @@ extension CoreDataAccess {
         let fetchRequest: NSFetchRequest = Exercise.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "exerciseName == %@", name)
         let results = fetch(context, fetchRequest: fetchRequest)
-        return results.first ?? nil
+        return results.first
     }
     
     /// Gets the Profile if one is created.
@@ -38,20 +38,18 @@ extension CoreDataAccess {
     public static func getWeightUnit(_ context: NSManagedObjectContext) -> String? {
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
-        let profile: Profile? = fetchResult.first
-        if profile == nil {return nil}
-        else {return profile!.isMetric ? "kg's" : "lbs"}
+        guard let profile = fetchResult.first else { return nil }
+        return profile.isMetric ? "kg's" : "lbs"
     }
     
     /// Gets the lengthUnit set on the Profile
     /// - Parameter context: A NSManagedObjectContext from a peristent container.
-    /// - Returns: kg's or lbs if Profile has been created nil otherwise.
+    /// - Returns: cm or ft if Profile has been created, nil otherwise.
     public static func getLengthUnit(_ context: NSManagedObjectContext) -> String? {
         let fetchRequest: NSFetchRequest<Profile> = Profile.fetchRequest()
         let fetchResult = fetch(context, fetchRequest: fetchRequest)
-        let profile: Profile? = fetchResult.first
-        if profile == nil {return nil}
-        else {return profile!.isMetric ? "cm" : "ft"}
+        guard let profile = fetchResult.first else { return nil }
+        return profile.isMetric ? "cm" : "ft"
     }
     
     /// Gets the latest PersonalRecord achieved on some exercise..
@@ -112,7 +110,7 @@ extension CoreDataAccess {
     /// Gets all exercises of the routine.
     public static func getAllExercisesIn(routine: Routine, _ context: NSManagedObjectContext) -> [Exercise] {
         let allTemplateSets: [TemplateSet] = getAllTemplateSetsIn(routine: routine, context)
-        let allExercises = allTemplateSets.map { $0.exercise! }
+        let allExercises = allTemplateSets.compactMap { $0.exercise }
         return allExercises
     }
         
@@ -173,7 +171,7 @@ extension CoreDataAccess {
         let allCategories = allExercises.flatMap { $0.categories! }
         
         // Turn into dict
-        let categoryDictionary = Dictionary(grouping: (allCategories as! [ExerciseCategory])) { $0.categoryName! }
+        let categoryDictionary = Dictionary(grouping: allCategories.compactMap { $0 as? ExerciseCategory }) { $0.categoryName! }
             .mapValues { $0.count }
         
         // Make a sorted list of tuples
@@ -219,7 +217,7 @@ extension CoreDataAccess {
         let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek)
         // unsafely unwrapping .completedOnDate because sessions are filtered.
         let sessionCompletedThisWeek = completedSessions.filter {
-            $0.completedOnDate! > startOfWeek && $0.completedOnDate! <= endOfWeek!
+            $0.completedOnDate! >= startOfWeek && $0.completedOnDate! <= endOfWeek!
         }
         return sessionCompletedThisWeek
     }
@@ -228,8 +226,8 @@ extension CoreDataAccess {
     public static func getLastSessionDone(_ context: NSManagedObjectContext) -> TrainingSession? {
         let allSessions: [TrainingSession] = getAllTrainingSessions(context)
         let completedSessions: [TrainingSession] = allSessions.filter { $0.isComplete }
-        // Pick the session with the smallest completion date.
-        let lastCompleteSession = completedSessions.min(by: { $0.completedOnDate! > $1.completedOnDate! })
+        // Pick the session with the largest (most recent) completion date.
+        let lastCompleteSession = completedSessions.max(by: { $0.completedOnDate! < $1.completedOnDate! })
         return lastCompleteSession
     }
     
@@ -259,7 +257,6 @@ extension CoreDataAccess {
     public static func getAllTrainingSessionsIn(trainingWeek: TrainingWeek, _ context: NSManagedObjectContext) -> [TrainingSession] {
         let fetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trainingWeek == %@", trainingWeek)
-        let context = context
         let sessions = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
         return sessions
     }

@@ -86,11 +86,11 @@ extension SetThreshold: HasParent {
     
     /// FlatLoadAdd value formatted as a String
     public var formattedFlatLoadAdd: String? {
-        guard let flatQuantityAdd = self.flatQuantityAdd else { return nil }
+        guard let flatLoadAdd = self.flatLoadAdd else { return nil }
         guard let context = self.managedObjectContext else { return nil }
         guard let weightUnit = CoreDataAccess.getWeightUnit(context) else { return nil }
         
-        return String(format: "%.2f", flatQuantityAdd) + " \(weightUnit)"
+        return String(format: "%.2f", flatLoadAdd) + " \(weightUnit)"
     }
     
     /// flatQuantityAdd value formatted as a String
@@ -157,7 +157,7 @@ extension SetThreshold: HasParent {
         
         let templateSet = self.templateSet!
         
-        let flatLoadAdd: Double = self.flatQuantityAdd?.doubleValue ?? 0
+        let flatLoadAdd: Double = self.flatLoadAdd?.doubleValue ?? 0
         
         templateSet.setLoad += flatLoadAdd
         
@@ -255,7 +255,7 @@ extension SetThreshold: HasParent {
         
         let isPrRepBased = (self.templateSet!.exercise!.exerciseType == "reps")
         
-        if !isLowerBoundInteger && !isUpperBoundInteger && isPrRepBased {
+        if (!isLowerBoundInteger || !isUpperBoundInteger) && isPrRepBased {
             
             throw ValidationNSErrors.triggerQuantityIsInvalid.toNSError()
             

@@ -12,11 +12,11 @@ import SwiftUI
 class ViewModel: ObservableObject {
         
     public func weightUnit(_ context: NSManagedObjectContext) -> String {
-        return CoreDataAccess.getWeightUnit(context)!
+        return CoreDataAccess.getWeightUnit(context) ?? ""
     }
     
     public func lengthUnit(_ context: NSManagedObjectContext) -> String {
-        return CoreDataAccess.getLengthUnit(context)!
+        return CoreDataAccess.getLengthUnit(context) ?? ""
     }
     
     public func save(_ context: NSManagedObjectContext) -> Void {

@@ -49,7 +49,7 @@ struct SingleChart: View {
     var body: some View {
         
         // Get the weightUnit
-        let weightUnit: String = CoreDataAccess.getWeightUnit(viewContext)!
+        let weightUnit: String = CoreDataAccess.getWeightUnit(viewContext) ?? ""
         
         (Text(set)
             .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)

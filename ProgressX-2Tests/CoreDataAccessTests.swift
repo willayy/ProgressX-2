@@ -121,4 +121,76 @@ final class CoreDataAccessTests: XCTestCase {
         XCTAssertEqual(sessionsInTrainingWeek.count, 2)
     }
     
+    func testGetLastSessionDone() {
+        
+        // No sessions completed yet – should return nil.
+        XCTAssertNil(CoreDataAccess.getLastSessionDone(context))
+        
+        let sessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
+        
+        XCTAssertFalse(sessions.isEmpty, "Preview data should contain at least two sessions")
+        
+        let olderDate = Date(timeIntervalSince1970: 1_000_000)
+        let newerDate = Date(timeIntervalSince1970: 2_000_000)
+        
+        // Complete two sessions at different dates.
+        sessions[0].complete(onDate: olderDate)
+        sessions[1].complete(onDate: newerDate)
+        
+        // getLastSessionDone should return the session with the most recent (newer) date.
+        let last = CoreDataAccess.getLastSessionDone(context)
+        XCTAssertNotNil(last)
+        XCTAssertEqual(last?.completedOnDate, newerDate)
+    }
+    
+    func testGetAllSessionsDoneThisWeek() {
+        
+        let calendar = Calendar.current
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
+        
+        let sessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
+        
+        XCTAssertTrue(sessions.count >= 2, "Preview data should contain at least two sessions")
+        
+        // No sessions completed yet.
+        XCTAssertTrue(CoreDataAccess.getAllSessionsDoneThisWeek(context).isEmpty)
+        
+        // Complete sessions[0] exactly on the start of the week (boundary test).
+        sessions[0].complete(onDate: startOfWeek)
+        
+        let sessionsThisWeekAfterBoundary = CoreDataAccess.getAllSessionsDoneThisWeek(context)
+        XCTAssertFalse(sessionsThisWeekAfterBoundary.isEmpty, "A session completed exactly on the start of the week should be included")
+        
+        // Complete sessions[1] in the distant past – it should not appear in this week's results.
+        sessions[1].complete(onDate: Date(timeIntervalSince1970: 100))
+        
+        let sessionsThisWeekAfterDistantCompletion = CoreDataAccess.getAllSessionsDoneThisWeek(context)
+        // sessions[0] (at startOfWeek) should still be included; sessions[1] (in the distant past) should not.
+        XCTAssertFalse(sessionsThisWeekAfterDistantCompletion.isEmpty, "Boundary session should still be counted")
+        XCTAssertEqual(sessionsThisWeekAfterDistantCompletion.count, 1, "Only the boundary session should be counted")
+    }
+    
+    func testBasicExercisesExistAndBasicRoutinesExist() {
+        
+        // The preview context does not contain the live starter exercises or routines,
+        // so both checkers should return false for the preview data.
+        XCTAssertFalse(CoreDataAccess.basicExercisesExist(context))
+        XCTAssertFalse(CoreDataAccess.basicRoutinesExists(context))
+        
+        // Generate the starter data.
+        CoreDataAccess.generateExerciseCategories(context)
+        CoreDataAccess.generateStarterExerciseLibrary(context)
+        
+        // Now the basic exercises should be found.
+        XCTAssertTrue(CoreDataAccess.basicExercisesExist(context))
+        
+        // Generate the starter routine.
+        CoreDataAccess.generateStarterRoutines(context)
+        
+        // Now the basic routine should be found.
+        XCTAssertTrue(CoreDataAccess.basicRoutinesExists(context))
+    }
+    
 }

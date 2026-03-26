@@ -47,7 +47,7 @@ extension Exercise {
     /// Gets the latest PR achieved on this exercise
     public var latestPr: PersonalRecord? {
         let personalRecords = (self.personalRecords!.allObjects as! [PersonalRecord])
-        let latestPr = personalRecords.min(by: {$0.achievedOnDate! < $1.achievedOnDate!})
+        let latestPr = personalRecords.max(by: {$0.achievedOnDate! < $1.achievedOnDate!})
         return latestPr
     }
     
@@ -63,7 +63,7 @@ extension Exercise {
     }
     
     public override func validateForUpdate() throws {
-        try super.validateForInsert()
+        try super.validateForUpdate()
         try validateExerciseNameIsUnique()
     }
     
