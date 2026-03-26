@@ -54,48 +54,57 @@ final class CoreDataAccessTests: XCTestCase {
         XCTAssertTrue(categoryNames.contains { $0 == "Category2" })
     }
     
-    func testSessionsDoneLast30DaysIn() {
+    func testGetSessionsDoneLast30DaysIn() {
         
         let routine = getPreviewRoutine()
         
         var sessionsDoneLast30Days = CoreDataAccess.getSessionsDoneLast30DaysIn(routine: routine, context)
         
-        // This is another method but its so similiar its tested with testSessionsDoneLast30DaysIn.
-        var allSessionsDoneLast30Days = CoreDataAccess.getAllSessionsDoneLast30days(context)
-        
-        // Nothing completed so this should be true
+        // Nothing completed so this should be empty.
         XCTAssertTrue(sessionsDoneLast30Days.isEmpty)
         
-        // Try to fetch a session, all sessions in the context are part of the Preview routine so we dont need to be picky with a predicate.
+        // Fetch a session from the context.
         let sessionFetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
-        
         let sessionResults = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
-        
         let session = sessionResults.first!
         
-        // Test completing the sessions
+        // Complete the session today – it should appear in the last-30-days results.
         session.complete()
         
         sessionsDoneLast30Days = CoreDataAccess.getSessionsDoneLast30DaysIn(routine: routine, context)
+        XCTAssertFalse(sessionsDoneLast30Days.isEmpty, "A session completed today should appear in the last-30-days results")
         
-        allSessionsDoneLast30Days = CoreDataAccess.getAllSessionsDoneLast30days(context)
-        
-        // These should be false
-        XCTAssertFalse(sessionsDoneLast30Days.isEmpty)
-        
-        XCTAssertFalse(allSessionsDoneLast30Days.isEmpty)
-        
-        // Now test completing it in 1970
+        // Complete the same session in 1970 – it should no longer appear.
         session.complete(onDate: Date(timeIntervalSince1970: 100))
         
         sessionsDoneLast30Days = CoreDataAccess.getSessionsDoneLast30DaysIn(routine: routine, context)
+        XCTAssertTrue(sessionsDoneLast30Days.isEmpty, "A session completed in 1970 should not appear in the last-30-days results")
+        
+    }
+    
+    func testGetAllSessionsDoneLast30Days() {
+        
+        var allSessionsDoneLast30Days = CoreDataAccess.getAllSessionsDoneLast30days(context)
+        
+        // Nothing completed so this should be empty.
+        XCTAssertTrue(allSessionsDoneLast30Days.isEmpty)
+        
+        // Fetch a session from the context.
+        let sessionFetchRequest: NSFetchRequest = TrainingSession.fetchRequest()
+        let sessionResults = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
+        let session = sessionResults.first!
+        
+        // Complete the session today – it should appear in the last-30-days results.
+        session.complete()
         
         allSessionsDoneLast30Days = CoreDataAccess.getAllSessionsDoneLast30days(context)
+        XCTAssertFalse(allSessionsDoneLast30Days.isEmpty, "A session completed today should appear in the all-routines last-30-days results")
         
-        // This should be true since it's to long ago
-        XCTAssertTrue(sessionsDoneLast30Days.isEmpty)
+        // Complete the same session in 1970 – it should no longer appear.
+        session.complete(onDate: Date(timeIntervalSince1970: 100))
         
-        XCTAssertTrue(allSessionsDoneLast30Days.isEmpty)
+        allSessionsDoneLast30Days = CoreDataAccess.getAllSessionsDoneLast30days(context)
+        XCTAssertTrue(allSessionsDoneLast30Days.isEmpty, "A session completed in 1970 should not appear in the all-routines last-30-days results")
         
     }
     
@@ -191,6 +200,58 @@ final class CoreDataAccessTests: XCTestCase {
         
         // Now the basic routine should be found.
         XCTAssertTrue(CoreDataAccess.basicRoutinesExists(context))
+    }
+    
+    func testGetLastSessionDoneIn() {
+        
+        let routine = getPreviewRoutine()
+        
+        // No sessions completed yet – should return nil.
+        XCTAssertNil(CoreDataAccess.getLastSessionDoneIn(routine: routine, context), "getLastSessionDoneIn should return nil when no sessions have been completed")
+        
+        let sessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
+        
+        XCTAssertTrue(sessions.count >= 2, "Preview data should contain at least two sessions")
+        
+        let olderDate = Date(timeIntervalSince1970: 1_000_000)
+        let newerDate = Date(timeIntervalSince1970: 2_000_000)
+        
+        // Complete two sessions at different dates.
+        sessions[0].complete(onDate: olderDate)
+        sessions[1].complete(onDate: newerDate)
+        
+        // getLastSessionDoneIn should return the session with the most recent (newer) date.
+        let last = CoreDataAccess.getLastSessionDoneIn(routine: routine, context)
+        XCTAssertNotNil(last, "getLastSessionDoneIn should return a session after completions are recorded")
+        XCTAssertEqual(last?.completedOnDate, newerDate, "getLastSessionDoneIn should return the most recently completed session")
+    }
+    
+    func testGetSessionsDoneLast7DaysIn() {
+        
+        let routine = getPreviewRoutine()
+        
+        // No sessions completed yet – should be empty.
+        XCTAssertTrue(CoreDataAccess.getSessionsDoneLast7DaysIn(routine: routine, context).isEmpty, "No sessions should be in the last-7-days results before any completions")
+        
+        let sessionFetchRequest: NSFetchRequest<TrainingSession> = TrainingSession.fetchRequest()
+        let sessions = CoreDataAccess.fetch(context, fetchRequest: sessionFetchRequest)
+        
+        XCTAssertTrue(sessions.count >= 2, "Preview data should contain at least two sessions")
+        
+        // Complete a session today – it should appear in the last-7-days results.
+        sessions[0].complete()
+        
+        let sessionsLast7DaysAfterCompletion = CoreDataAccess.getSessionsDoneLast7DaysIn(routine: routine, context)
+        XCTAssertFalse(sessionsLast7DaysAfterCompletion.isEmpty, "A session completed today should appear in the last-7-days results")
+        XCTAssertEqual(sessionsLast7DaysAfterCompletion.count, 1)
+        
+        // Complete a second session in the distant past – it should not appear.
+        sessions[1].complete(onDate: Date(timeIntervalSince1970: 100))
+        
+        let sessionsLast7DaysAfterDistantCompletion = CoreDataAccess.getSessionsDoneLast7DaysIn(routine: routine, context)
+        XCTAssertEqual(sessionsLast7DaysAfterDistantCompletion.count, 1, "Only the recently completed session should be in the last-7-days results")
+        
     }
     
 }

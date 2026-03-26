@@ -49,18 +49,31 @@ final class DataModelTests: XCTestCase {
         
         let sets = session.children
         
-        for set in sets { set.complete() }
+        // Session should not be complete before any sets are done.
+        XCTAssertFalse(session.isComplete, "Session should not be complete before any sets are done")
         
-        // Test if completing sets cascades to session
-        XCTAssertTrue(session.isComplete)
+        // Complete all sets except the last one – session should still be incomplete.
+        for set in sets.dropLast() { set.complete() }
+        XCTAssertFalse(session.isComplete, "Session should not be complete until every set is done")
         
-        /* Complete all sessions in the routine, if you where to try to save this you would get an error
-         but since we arent saving and cascading completion works anyway its fine*/
-        for session in sessions { session.complete() }
+        // Complete the last set – cascade should now mark the session as complete.
+        sets.last!.complete()
+        XCTAssertTrue(session.isComplete, "Session should be complete after all its sets are done")
+        
+        // Complete all remaining sessions in the routine so we can check higher-level cascades.
+        // Note: saving is intentionally skipped here because completing sessions without their
+        // sets triggers a validation error; the cascade logic itself is what is being verified.
+        for remainingSession in sessions where !remainingSession.isComplete {
+            remainingSession.complete()
+        }
         
         let trainingCycle = previewRoutine.children.first!
         
-        XCTAssertTrue(trainingCycle.isComplete)
+        // All sessions are complete, so the training weeks and cycle should cascade to complete.
+        for trainingWeek in trainingCycle.children {
+            XCTAssertTrue(trainingWeek.isComplete, "TrainingWeek should be complete after all its sessions are done")
+        }
+        XCTAssertTrue(trainingCycle.isComplete, "TrainingCycle should be complete after all its weeks are done")
         
     }
     
@@ -76,11 +89,31 @@ final class DataModelTests: XCTestCase {
         
         let templateSets: [TemplateSet] = templateSessions.flatMap { $0.children }
         
-        // Try to switch around every template time period in the routine to 1, in the end it should be able to save.
+        // Capture the original positions before any switches so we can verify changes.
+        let originalWeekPositions = templateWeeks.map { $0.positionIndex }
         
+        // Switch the last template week to position 1 (index 0 equivalent) and verify the swap.
+        if templateWeeks.count >= 2 {
+            let lastWeek = templateWeeks.last!
+            let firstWeek = templateWeeks.first!
+            let firstWeekOriginalPosition = firstWeek.positionIndex
+            let lastWeekOriginalPosition = lastWeek.positionIndex
+            
+            lastWeek.switchPositionIndex(to: firstWeekOriginalPosition)
+            
+            // The swap should have exchanged the two position indexes.
+            XCTAssertEqual(lastWeek.positionIndex, firstWeekOriginalPosition, "Last week should now hold the first week's original position")
+            XCTAssertEqual(firstWeek.positionIndex, lastWeekOriginalPosition, "First week should now hold the last week's original position after the swap")
+        }
+        
+        // Switch all template time periods to position 1 and verify the sorted positions
+        // remain the same set of values (no duplicates or missing indexes).
         for templateWeek in templateWeeks {
             templateWeek.switchPositionIndex(to: 1)
         }
+        
+        let finalWeekPositions = templateWeeks.map { $0.positionIndex }.sorted()
+        XCTAssertEqual(finalWeekPositions, originalWeekPositions.sorted(), "Position index values should be preserved (same set) after all switches")
         
         for templateSession in templateSessions {
             templateSession.switchPositionIndex(to: 1)
@@ -90,11 +123,13 @@ final class DataModelTests: XCTestCase {
             templateSet.switchPositionIndex(to: 1)
         }
         
+        // After all switches the context must be saveable without validation errors (no duplicate position indexes).
         CoreDataAccess.save(context)
+        XCTAssertFalse(context.hasChanges, "Context should have no pending changes after a successful save")
         
     }
     
-    func testPropogateChanges() {
+    func testPropogateChanges() throws {
         
         let previewRoutine = getPreviewRoutine()
         
@@ -110,7 +145,7 @@ final class DataModelTests: XCTestCase {
         
         var renameCounter = 1
         
-        // Rename all weeks.
+        // Rename all template weeks and propagate to training weeks.
         
         for templateWeek in templateWeeks {
             
@@ -122,11 +157,13 @@ final class DataModelTests: XCTestCase {
             
         }
         
-        // Check that all weeks has been renamed, this is not very rigourous but it works for now.
+        // Each training week should carry the exact same name as the template week it belongs to.
         
         for trainingWeek in trainingWeeks {
             
-            XCTAssertTrue(trainingWeek.timePeriodName!.contains("Renamed week"))
+            let templateWeek = try XCTUnwrap(trainingWeek.templateWeek, "Training week should have an associated template week")
+            
+            XCTAssertEqual(trainingWeek.timePeriodName, templateWeek.timePeriodName, "Training week name should exactly match its template week name after propagation")
             
         }
         
@@ -207,7 +244,10 @@ final class DataModelTests: XCTestCase {
                         
         }
         
-        // For the preview routine we know that the difference between the sets after completion should amount to.
+        // The preview routine has 8 training sets (2 weeks × 2 sessions × 2 sets). Completing each set
+        // triggers its threshold, which may increment loadTodo, quantityTodo, or both. For the current
+        // preview data, 15 out of the 16 possible (8 sets × 2 values) quantities change after completion,
+        // confirming that the threshold system is applied correctly for every set.
         XCTAssertEqual(setDifferences, 15)
         
     }

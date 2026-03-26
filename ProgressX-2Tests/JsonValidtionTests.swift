@@ -33,6 +33,9 @@ final class JsonValidtionTests: XCTestCase {
         // Map Exercise names
         let exerciseNames = results.map { $0.exerciseName }
         
+        // The preview data should contain exactly two exercises.
+        XCTAssertEqual(results.count, 2, "Preview data should generate exactly 2 exercises")
+        
         XCTAssertTrue(exerciseNames.contains { $0 == "testing exercise (reps)" })
         
         XCTAssertTrue(exerciseNames.contains { $0 == "testing exercise (time)" })
@@ -49,6 +52,9 @@ final class JsonValidtionTests: XCTestCase {
         
         // Map Category names
         let categoryNames = results.map { $0.categoryName }
+        
+        // The preview data should contain exactly 5 categories.
+        XCTAssertEqual(results.count, 5, "Preview data should generate exactly 5 exercise categories")
         
         // Check that all preview categories are generated correctly
         XCTAssertTrue(categoryNames.contains { $0 == "Category1" })
@@ -85,12 +91,9 @@ final class JsonValidtionTests: XCTestCase {
         
         let templateCycle = previewRoutine.templateCycle!
         
-        /* 
-         MARK: This checks if the template TimePeriods has been generated but it does not
-         MARK: check if the training TimePeriods have been generated
-        */
+        // MARK: Template TimePeriod checks
         
-        // Check htat the template cycle has two weeks.
+        // Check that the template cycle has two weeks.
         XCTAssertEqual(templateCycle.children.count, 2)
         
         // Get the first two template weeks.
@@ -120,6 +123,29 @@ final class JsonValidtionTests: XCTestCase {
         XCTAssertEqual(templateSession21.children.count, 2)
         
         XCTAssertEqual(templateSession22.children.count, 2)
+        
+        // MARK: Training TimePeriod checks
+        
+        let trainingCycle = previewRoutine.children[0]
+        
+        // Check that the training cycle has two weeks.
+        XCTAssertEqual(trainingCycle.children.count, 2, "Training cycle should have two training weeks")
+        
+        let trainingWeek1 = trainingCycle.children[0]
+        
+        let trainingWeek2 = trainingCycle.children[1]
+        
+        // Check that each training week has two sessions.
+        XCTAssertEqual(trainingWeek1.children.count, 2, "First training week should have two sessions")
+        
+        XCTAssertEqual(trainingWeek2.children.count, 2, "Second training week should have two sessions")
+        
+        // Check that each training session has two sets.
+        for trainingWeek in [trainingWeek1, trainingWeek2] {
+            for trainingSession in trainingWeek.children {
+                XCTAssertEqual(trainingSession.children.count, 2, "Each training session should have two sets")
+            }
+        }
         
     }
     
