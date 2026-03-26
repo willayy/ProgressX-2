@@ -118,7 +118,7 @@ struct TrainingView: View {
                 
             }
             
-            if exerciseType == "reps" {
+            if exerciseType == ExerciseType.Reps.rawValue {
                 
                 // MARK: Set done button but for rep
                 Button(action:{
@@ -141,7 +141,7 @@ struct TrainingView: View {
                     
                 }
                 
-            } else if exerciseType == "time" {
+            } else if exerciseType == ExerciseType.Time.rawValue {
                 
                 // MARK: Set done button but for timed sets
                 Button(action:{
@@ -191,7 +191,7 @@ struct TrainingView: View {
             
             withAnimation {
                 
-                if exerciseType == "time"{
+                if exerciseType == ExerciseType.Time.rawValue{
                     
                     viewModel.doneButtonText = "Start timed set"
                     
@@ -274,13 +274,13 @@ struct TrainingView: View {
                     
                     currentTrainingSet = selectedTrainingSession!.nextTrainingSet
                     
-                    if currentTrainingSet?.exercise!.exerciseType! == "time" && viewModel.lastExercise == "reps" {
+                    if currentTrainingSet?.exercise!.exerciseType! == ExerciseType.Time.rawValue && viewModel.lastExercise == ExerciseType.Reps.rawValue {
                         
                         viewModel.doneButtonEnabled.toggle()
                         
                         viewModel.doneButtonText = "rest timer"
                         
-                    } else if currentTrainingSet?.exercise!.exerciseType! == "reps" && viewModel.lastExercise == "time" {
+                    } else if currentTrainingSet?.exercise!.exerciseType! == ExerciseType.Reps.rawValue && viewModel.lastExercise == ExerciseType.Time.rawValue {
                         
                         viewModel.doneButtonText = "Done"
                         

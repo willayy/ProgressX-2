@@ -33,20 +33,20 @@ class CreateNewThresholdViewModel: ViewModel {
     ])
     
     public let repPrSegments: KeyValueList<String, String> = KeyValueList([
-        ("1RM", "onerepmax"),
-        ("AMRAP", "maxreps")
+        ("1RM", PersonalRecordType.OneRepMax.rawValue),
+        ("AMRAP", PersonalRecordType.MaxReps.rawValue)
     ])
     
     public let timePrSegments: KeyValueList<String, String> = KeyValueList([
-        ("Time-max", "timemax")
+        ("Time-max", PersonalRecordType.TimeMax.rawValue)
     ])
     
     public func getPlaceHolderUnit(fromExerciseType: String) -> String {
-        return fromExerciseType == "reps" ? "reps" : "seconds"
+        return fromExerciseType == ExerciseType.Reps.rawValue ? "reps" : "seconds"
     }
     
     public func getTriggerRangeInputFieldVariant(fromExerciseType: String, min: Double, max: Double) -> InputFieldVariant {
-        return fromExerciseType == "reps" ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
+        return fromExerciseType == ExerciseType.Reps.rawValue ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
     }
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {

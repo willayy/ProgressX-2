@@ -97,19 +97,19 @@ struct TrainingSetInfoBox: View {
                             let pr = currentTrainingSet?.exercise?.latestPr
                             let prType = pr?.prType
                             
-                            if prType == "maxreps" {
+                            if prType == PersonalRecordType.MaxReps.rawValue {
                                 
                                 Text("\(pr!.quantityString!) (AMRAP)")
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
                                 
-                            } else if prType == "onerepmax" {
+                            } else if prType == PersonalRecordType.OneRepMax.rawValue {
                                 
                                 Text("\(pr!.loadString!) (1RM)")
                                     .multilineTextAlignment(.trailing)
                                     .padding(.trailing)
                                 
-                            } else if prType == "timemax" {
+                            } else if prType == PersonalRecordType.TimeMax.rawValue {
                                 
                                 Text("\(pr!.quantityString!) (Time-max)")
                                     .multilineTextAlignment(.trailing)

@@ -22,8 +22,8 @@ class CreateNewExerciseViewModel: ViewModel {
     @Published public var enteredPrWeigtLoad: String = ""
     
     // Segment picker choices
-    @Published public var selectedTypeOfExercise: String = "reps"
-    @Published public var selectedTypeOfPr: String = "onerepmax"
+    @Published public var selectedTypeOfExercise: String = ExerciseType.Reps.rawValue
+    @Published public var selectedTypeOfPr: String = PersonalRecordType.OneRepMax.rawValue
     @Published public var addPr: Bool = false
     
     // Category set
@@ -31,8 +31,8 @@ class CreateNewExerciseViewModel: ViewModel {
     
     // Segment picker options
     public let exerciseTypeOptions: KeyValueList<String, String> = KeyValueList([
-        ("Rep based", "reps"),
-        ("Time based", "time")
+        ("Rep based", ExerciseType.Reps.rawValue),
+        ("Time based", ExerciseType.Time.rawValue)
     ])
     
     public let addPrOptions: KeyValueList<String, Bool> = KeyValueList([
@@ -41,17 +41,17 @@ class CreateNewExerciseViewModel: ViewModel {
     ])
    
     public let timeBasedPrOptions: KeyValueList<String, String> = KeyValueList([
-        ("Time-Max","timemax")
+        ("Time-Max", PersonalRecordType.TimeMax.rawValue)
     ])
     
     public let repBasedPrOptions: KeyValueList<String, String> = KeyValueList([
-        ("1RM","onerepmax"),
-        ("AMRAP","maxreps")
+        ("1RM", PersonalRecordType.OneRepMax.rawValue),
+        ("AMRAP", PersonalRecordType.MaxReps.rawValue)
     ])
     
     public func prTypeChanged() -> Void {
         
-        if selectedTypeOfPr == "onerepmax" {
+        if selectedTypeOfPr == PersonalRecordType.OneRepMax.rawValue {
             
             // else if "1RM" set to reps 1
             enteredPrQuantity = "1"
@@ -66,12 +66,12 @@ class CreateNewExerciseViewModel: ViewModel {
     
     public func exerciseTypeChanged() -> Void {
         
-        if selectedTypeOfExercise == "time" {
+        if selectedTypeOfExercise == ExerciseType.Time.rawValue {
             
             // Set the PR selector to the first time based pr option key
             selectedTypeOfPr = timeBasedPrOptions.keys.first!
             
-        } else if selectedTypeOfExercise == "reps" {
+        } else if selectedTypeOfExercise == ExerciseType.Reps.rawValue {
             
             // Set the PR selector to the first rep based pr option key
             selectedTypeOfPr = repBasedPrOptions.keys.first!

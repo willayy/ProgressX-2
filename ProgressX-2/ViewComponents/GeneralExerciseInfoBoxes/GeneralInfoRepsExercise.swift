@@ -23,7 +23,7 @@ struct GeneralInfoRepsExercise: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSPredicate(format: "exercise == %@", exercise!),
-                NSPredicate(format: "prType == %@", "maxreps")
+                NSPredicate(format: "prType == %@", PersonalRecordType.MaxReps.rawValue)
             ])
         )
         self._oneRepMaxPersonalRecords = FetchRequest<PersonalRecord>(
@@ -31,7 +31,7 @@ struct GeneralInfoRepsExercise: View {
             sortDescriptors: [NSSortDescriptor(keyPath: \PersonalRecord.achievedOnDate, ascending: true)],
             predicate: NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSPredicate(format: "exercise == %@", exercise!),
-                NSPredicate(format: "prType == %@", "onerepmax")
+                NSPredicate(format: "prType == %@", PersonalRecordType.OneRepMax.rawValue)
             ])
         )
     }
@@ -69,7 +69,7 @@ struct GeneralInfoRepsExercise: View {
             
             VStack(alignment: .leading) {
                 
-                if selection == "onerepmax" {
+                if selection == PersonalRecordType.OneRepMax.rawValue {
                     
                     Text("Total 1RM pr's recorded: ")
                         .font(.subheadline)
@@ -119,7 +119,7 @@ struct GeneralInfoRepsExercise: View {
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                         .foregroundStyle(.blue)
                     
-                } else if selection == "maxreps" {
+                } else if selection == PersonalRecordType.MaxReps.rawValue {
                     
                     (Text("Total AMRAP pr's recorded: ")
                         .font(.subheadline)
@@ -180,12 +180,12 @@ struct GeneralInfoRepsExercise: View {
     let context = PersistenceController.previewViewContext
     
     let fetchRequest: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-    fetchRequest.predicate = NSPredicate(format: "exerciseType == %@", "reps")
+    fetchRequest.predicate = NSPredicate(format: "exerciseType == %@", ExerciseType.Reps.rawValue)
     
     let exerciseResult: [Exercise] = CoreDataAccess.fetch(context, fetchRequest: fetchRequest)
 
     let exercise: Exercise = exerciseResult.first!
     
-    return GeneralInfoRepsExercise(exercise: exercise, selection: "onerepmax")
+    return GeneralInfoRepsExercise(exercise: exercise, selection: PersonalRecordType.OneRepMax.rawValue)
         .environment(\.managedObjectContext, context)
 }

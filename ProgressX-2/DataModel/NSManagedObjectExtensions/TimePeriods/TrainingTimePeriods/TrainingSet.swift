@@ -108,7 +108,7 @@ extension TrainingSet: HasParent {
 
     private func validateQuantityTodo() throws {
         let isQuantityTodoInteger = (floor(self.quantityTodo) == self.quantityTodo)
-        let isPrRepBased = (self.exercise!.exerciseType == "reps")
+        let isPrRepBased = (self.exercise!.exerciseType == ExerciseType.Reps.rawValue)
         if !isQuantityTodoInteger && isPrRepBased {
             throw ValidationNSErrors.quantityTodoIsInvalid.toNSError()
         }
@@ -116,7 +116,7 @@ extension TrainingSet: HasParent {
     
     private func validateQuantityDone() throws {
         let isQuantityDoneInteger = (floor(self.quantityDone) == self.quantityDone)
-        let isPrRepBased = (self.exercise!.exerciseType == "reps")
+        let isPrRepBased = (self.exercise!.exerciseType == ExerciseType.Reps.rawValue)
         if !isQuantityDoneInteger && isPrRepBased {
             throw ValidationNSErrors.quantityDoneIsInvalid.toNSError()
         }

@@ -124,13 +124,13 @@ class TrainingViewModel: ViewModel {
     
     public func updateStatesWhenTimerStops(trainingSet: TrainingSet){
         
-       if trainingSet.exercise!.exerciseType! == "time" && lastExercise == "reps" {
+       if trainingSet.exercise!.exerciseType! == ExerciseType.Time.rawValue && lastExercise == ExerciseType.Reps.rawValue {
            doneButtonText = "Start timed set"
            timedSetActive = true
            doneButtonEnabled.toggle()
-       } else if trainingSet.exercise!.exerciseType! == "reps" && lastExercise == "time" {
+       } else if trainingSet.exercise!.exerciseType! == ExerciseType.Reps.rawValue && lastExercise == ExerciseType.Time.rawValue {
            timedSetActive = false
-       } else if trainingSet.exercise?.exerciseType! == "time" && doneButtonText == "rest timer"{
+       } else if trainingSet.exercise?.exerciseType! == ExerciseType.Time.rawValue && doneButtonText == "rest timer"{
            doneButtonEnabled.toggle()
            timedSetActive = true
            doneButtonText = "Start timed set"
