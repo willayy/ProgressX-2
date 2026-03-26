@@ -35,21 +35,21 @@ class EditWeighInViewModel: ViewModel {
     
     public func setViewStartValues(entity: BodyEntry) -> Void {
         
-        editedDate = entity.achievedOnDate!
+        self.editedDate = entity.achievedOnDate!
         
-        editedBodyWeight = String(format: "%.2f", entity.bodyWeight)
+        self.editedBodyWeight = String(format: "%.2f", entity.bodyWeight)
         
-        editedChestCirc = (entity.chestCirc == nil) ? "" : String(describing: entity.chestCirc!)
+        self.editedChestCirc = (entity.chestCirc == nil) ? "" : String(describing: entity.chestCirc!)
         
-        editedUpperArmCirc = (entity.uprArmCirc == nil) ? "" : String(describing: entity.uprArmCirc!)
+        self.editedUpperArmCirc = (entity.uprArmCirc == nil) ? "" : String(describing: entity.uprArmCirc!)
         
-        editedLowerArmCirc = (entity.lwrArmCirc == nil) ? "" : String(describing: entity.lwrArmCirc!)
+        self.editedLowerArmCirc = (entity.lwrArmCirc == nil) ? "" : String(describing: entity.lwrArmCirc!)
         
-        editedWaistCirc = (entity.waistCirc == nil) ? "" : String(describing: entity.waistCirc!)
+        self.editedWaistCirc = (entity.waistCirc == nil) ? "" : String(describing: entity.waistCirc!)
         
-        editedThighCirc = (entity.thighCirc == nil) ? "" : String(describing: entity.thighCirc!)
+        self.editedThighCirc = (entity.thighCirc == nil) ? "" : String(describing: entity.thighCirc!)
         
-        editedCalfCirc = (entity.calfCirc == nil) ? "" : String(describing: entity.calfCirc!)
+        self.editedCalfCirc = (entity.calfCirc == nil) ? "" : String(describing: entity.calfCirc!)
         
     }
     
@@ -95,13 +95,13 @@ class EditWeighInViewModel: ViewModel {
         
         if bodyEntry.hasChanges {
             
-            withAnimation { bodyEntryEditedAlert = true }
+            withAnimation { self.bodyEntryEditedAlert = true }
             
             self.save(context)
             
         } else {
             
-            withAnimation { noChangeAlert = true }
+            withAnimation { self.noChangeAlert = true }
             
         }
         

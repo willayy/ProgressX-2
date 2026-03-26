@@ -51,14 +51,14 @@ class CreateNewExerciseViewModel: ViewModel {
     
     public func prTypeChanged() -> Void {
         
-        if selectedTypeOfPr == "onerepmax" {
+        if self.selectedTypeOfPr == "onerepmax" {
             
             // else if "1RM" set to reps 1
-            enteredPrQuantity = "1"
+            self.enteredPrQuantity = "1"
             
         } else {
             
-            enteredPrQuantity = ""
+            self.enteredPrQuantity = ""
             
         }
         
@@ -66,15 +66,15 @@ class CreateNewExerciseViewModel: ViewModel {
     
     public func exerciseTypeChanged() -> Void {
         
-        if selectedTypeOfExercise == "time" {
+        if self.selectedTypeOfExercise == "time" {
             
             // Set the PR selector to the first time based pr option key
-            selectedTypeOfPr = timeBasedPrOptions.keys.first!
+            self.selectedTypeOfPr = self.timeBasedPrOptions.keys.first!
             
-        } else if selectedTypeOfExercise == "reps" {
+        } else if self.selectedTypeOfExercise == "reps" {
             
             // Set the PR selector to the first rep based pr option key
-            selectedTypeOfPr = repBasedPrOptions.keys.first!
+            self.selectedTypeOfPr = self.repBasedPrOptions.keys.first!
             
         }
     }

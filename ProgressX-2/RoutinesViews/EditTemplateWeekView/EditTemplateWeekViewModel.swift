@@ -29,29 +29,29 @@ class EditTemplateWeekViewModel: ViewModel {
     }
     
     public func setViewStartValues(entity: TemplateWeek) {
-        editedWeekName = entity.timePeriodName!
-        editedWeekDescription = entity.timePeriodDescription!
-        editedPositionIndex = entity.positionIndex
+        self.editedWeekName = entity.timePeriodName!
+        self.editedWeekDescription = entity.timePeriodDescription!
+        self.editedPositionIndex = entity.positionIndex
     }
     
     /// Saves changes made to template and propogates them forwars to all matching TrainingSessions.
     public func saveEdits(entity: TemplateWeek, viewContext: NSManagedObjectContext) -> Void {
         
-        if entity.timePeriodName != editedWeekName {
+        if entity.timePeriodName != self.editedWeekName {
             
-            entity.timePeriodName = editedWeekName
-            
-        }
-        
-        if entity.timePeriodDescription != editedWeekDescription {
-            
-            entity.timePeriodDescription = editedWeekDescription
+            entity.timePeriodName = self.editedWeekName
             
         }
         
-        if entity.positionIndex != editedPositionIndex {
+        if entity.timePeriodDescription != self.editedWeekDescription {
             
-            entity.switchPositionIndex(to: editedPositionIndex)
+            entity.timePeriodDescription = self.editedWeekDescription
+            
+        }
+        
+        if entity.positionIndex != self.editedPositionIndex {
+            
+            entity.switchPositionIndex(to: self.editedPositionIndex)
             
         }
         
@@ -62,7 +62,7 @@ class EditTemplateWeekViewModel: ViewModel {
             
             withAnimation {
                 
-                showWeekChangedAlert = true
+                self.showWeekChangedAlert = true
                 
             }
             
@@ -72,7 +72,7 @@ class EditTemplateWeekViewModel: ViewModel {
             
             withAnimation {
                 
-                showNoChangeAlert = true
+                self.showNoChangeAlert = true
                 
             }
             

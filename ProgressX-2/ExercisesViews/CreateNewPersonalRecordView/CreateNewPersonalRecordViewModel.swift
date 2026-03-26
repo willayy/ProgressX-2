@@ -43,11 +43,11 @@ class CreateNewPersonalRecordViewModel: ViewModel {
         // Reset the view state with an animation
         withAnimation {
             
-            prDate = Date()
+            self.prDate = Date()
             
-            prLoad = ""
+            self.prLoad = ""
             
-            prQuantity = ""
+            self.prQuantity = ""
             
         }
         

@@ -66,11 +66,7 @@ extension CoreDataAccess {
         let results = fetch(context, fetchRequest: fetchRequest)
         let profileNames = results.map { $0.profileUserName }
         let profileNameSet = Set(profileNames)
-        if profileNames.count != profileNameSet.count {
-            return false
-        } else {
-            return true
-        }
+        return profileNames.count == profileNameSet.count
     }
     
     /// Checks if there exists duplicate names among the exercises saved.
@@ -81,11 +77,7 @@ extension CoreDataAccess {
         let results = fetch(context, fetchRequest: fetchRequest)
         let exerciseNames = results.map { $0.exerciseName }
         let exerciseNameSet = Set(exerciseNames)
-        if exerciseNames.count != exerciseNameSet.count {
-            return false
-        } else {
-            return true
-        }
+        return exerciseNames.count == exerciseNameSet.count
     }
     
     /// Checks if there exists duplicate names among the categories saved.
@@ -96,11 +88,7 @@ extension CoreDataAccess {
         let results = fetch(context, fetchRequest: fetchRequest)
         let categoryNames = results.map { $0.categoryName }
         let categoryNameSet = Set(categoryNames)
-        if categoryNames.count != categoryNameSet.count {
-            return false
-        } else {
-            return true
-        }
+        return categoryNames.count == categoryNameSet.count
     }
     
     /// Checks if there exists duplicate names among the routines saved.
@@ -111,11 +99,7 @@ extension CoreDataAccess {
         let results = fetch(context, fetchRequest: fetchRequest)
         let routineNames = results.map { $0.timePeriodName }
         let routineNameSet = Set(routineNames)
-        if routineNames.count != routineNameSet.count {
-            return false
-        } else {
-            return true
-        }
+        return routineNames.count == routineNameSet.count
     }
     
 }

@@ -87,47 +87,17 @@ extension InputField {
     
     /// Checks if the InputFieldVariant is numeric
     private var variantIsNumeric: Bool {
-        
-        if variant is NumericInputFieldVariant {
-            
-            return true
-            
-        } else {
-            
-            return false
-            
-        }
-        
+        return self.variant is NumericInputFieldVariant
     }
     
     /// Returns true if variant is numeric and bwButton is true.
     private var includeBwButton: Bool {
-        
-        if variantIsNumeric {
-            
-            return (variant as! NumericInputFieldVariant).bwButton
-            
-        } else {
-            
-            return false
-            
-        }
-        
+        return self.variantIsNumeric ? (self.variant as! NumericInputFieldVariant).bwButton : false
     }
     
     /// Returns true if variant is numeric and allowNegatives is true.
     private var includeMinusButton: Bool {
-        
-        if variantIsNumeric {
-            
-            return (variant as! NumericInputFieldVariant).allowNegatives
-            
-        } else {
-            
-            return false
-            
-        }
-        
+        return self.variantIsNumeric ? (self.variant as! NumericInputFieldVariant).allowNegatives : false
     }
     
     /// Calls the variant objecst filter method and filters the new input

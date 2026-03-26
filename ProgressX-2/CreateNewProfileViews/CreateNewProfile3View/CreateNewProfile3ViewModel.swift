@@ -28,13 +28,13 @@ class CreateNewProfile3ViewModel: ViewModel {
     let textWidth: Double = 200
     
     public func saveEntry(viewContext: NSManagedObjectContext) -> Void {
-        let firstBodyEntry = firstBodyEntry!
-        firstBodyEntry.chestCirc = NSNumber(value: Double(chestCirc)!)
-        firstBodyEntry.waistCirc = NSNumber(value: Double(waistCirc)!)
-        firstBodyEntry.thighCirc = NSNumber(value: Double(thighCirc)!)
-        firstBodyEntry.calfCirc = NSNumber(value: Double(calfCirc)!)
-        firstBodyEntry.uprArmCirc = NSNumber(value: Double(upperArmCirc)!)
-        firstBodyEntry.lwrArmCirc = NSNumber(value: Double(lowerArmCirc)!)
+        let bodyEntry = self.firstBodyEntry!
+        bodyEntry.chestCirc = NSNumber(value: Double(self.chestCirc)!)
+        bodyEntry.waistCirc = NSNumber(value: Double(self.waistCirc)!)
+        bodyEntry.thighCirc = NSNumber(value: Double(self.thighCirc)!)
+        bodyEntry.calfCirc = NSNumber(value: Double(self.calfCirc)!)
+        bodyEntry.uprArmCirc = NSNumber(value: Double(self.upperArmCirc)!)
+        bodyEntry.lwrArmCirc = NSNumber(value: Double(self.lowerArmCirc)!)
         self.save(viewContext)
     }
 }

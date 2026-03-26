@@ -26,23 +26,23 @@ class EditTemplateSessionViewModel: ViewModel {
     }
     
     public func setViewStartValues(entity: TemplateSession) -> Void {
-        editedSessionName = entity.timePeriodName!
-        editedSessionDescription = entity.timePeriodDescription!
-        editedPositionIndex = entity.positionIndex
+        self.editedSessionName = entity.timePeriodName!
+        self.editedSessionDescription = entity.timePeriodDescription!
+        self.editedPositionIndex = entity.positionIndex
     }
     
     public func saveEdits(entity: TemplateSession, viewContext: NSManagedObjectContext) -> Void {
         
-        if entity.timePeriodName != editedSessionName {
-            entity.timePeriodName = editedSessionName
+        if entity.timePeriodName != self.editedSessionName {
+            entity.timePeriodName = self.editedSessionName
         }
         
-        if entity.timePeriodDescription != editedSessionDescription {
-            entity.timePeriodDescription = editedSessionDescription
+        if entity.timePeriodDescription != self.editedSessionDescription {
+            entity.timePeriodDescription = self.editedSessionDescription
         }
         
-        if entity.positionIndex != editedPositionIndex {
-            entity.switchPositionIndex(to: editedPositionIndex)
+        if entity.positionIndex != self.editedPositionIndex {
+            entity.switchPositionIndex(to: self.editedPositionIndex)
         }
         
         if entity.hasChanges {
@@ -50,13 +50,13 @@ class EditTemplateSessionViewModel: ViewModel {
             // Propogate changes to matching TrainingSessions.
             entity.propogateChanges()
             
-            withAnimation { showSessionChangedAlert = true }
+            withAnimation { self.showSessionChangedAlert = true }
             
             self.save(viewContext)
             
         } else {
             
-            withAnimation { showNoChangeAlert = true }
+            withAnimation { self.showNoChangeAlert = true }
             
         }
     }

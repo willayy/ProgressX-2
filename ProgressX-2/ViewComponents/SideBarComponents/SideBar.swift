@@ -77,9 +77,9 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
         .onChange(of: showMenuController.showMenu, initial: true) { oldValue, newValue in
             withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                 if newValue {
-                    showSideBar()
+                    self.showSideBar()
                 } else {
-                    reset()
+                    self.reset()
                 }
             }
             
@@ -96,22 +96,22 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
                 
                     // can open new view deep in hierarcy. this disables that
                 
-                if !showMenuController.showMenu{
+                if !self.showMenuController.showMenu{
                     guard value.startLocation.x < 100 else {return}
                 } else {
                     guard value.startLocation.x > 10 else {return}
                 }
-                    let translationX = isDragging ? max(min(value.translation.width + lastoffsetX, sideMenuWidth), 0) : 0
-                    offsetX = translationX
-                    calculateProgress()
+                    let translationX = self.isDragging ? max(min(value.translation.width + self.lastoffsetX, self.sideMenuWidth), 0) : 0
+                    self.offsetX = translationX
+                    self.calculateProgress()
             }.onEnded { value in
                 withAnimation(.snappy(duration: 0.3, extraBounce: 0)) {
                     let velocityX = value.velocity.width / 8
-                    let total = velocityX + offsetX
-                    if total > (sideMenuWidth * 0.5){
-                        showSideBar()
+                    let total = velocityX + self.offsetX
+                    if total > (self.sideMenuWidth * 0.5){
+                        self.showSideBar()
                     } else {
-                        reset()
+                        self.reset()
                     }
                     
                 }
@@ -121,23 +121,23 @@ struct SideBar<Content: View, MenuView: View, Backgroud: View>: View {
     
     //Show side bar
     func showSideBar(){
-        offsetX = sideMenuWidth
-        lastoffsetX = offsetX
-        showMenuController.showMenu = true
-        calculateProgress()
+        self.offsetX = self.sideMenuWidth
+        self.lastoffsetX = self.offsetX
+        self.showMenuController.showMenu = true
+        self.calculateProgress()
     }
     
     //Reset to initial state
     func reset() {
-        offsetX = 0
-        lastoffsetX = 0
-        showMenuController.showMenu = false
-        calculateProgress()
+        self.offsetX = 0
+        self.lastoffsetX = 0
+        self.showMenuController.showMenu = false
+        self.calculateProgress()
     }
     
     //Convert progress into serier of progress converging from 1-0
     func calculateProgress(){
-        progress = max(min(offsetX / sideMenuWidth, 1), 0)
+        self.progress = max(min(self.offsetX / self.sideMenuWidth, 1), 0)
     }
     
 }

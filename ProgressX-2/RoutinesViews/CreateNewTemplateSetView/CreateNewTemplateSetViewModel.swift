@@ -189,9 +189,9 @@ class CreateNewTemplateSetViewModel: ViewModel {
             
             withAnimation {
                 
-                showAddThresholds = true
+                self.showAddThresholds = true
                 
-                newSetHasBeenSaved = true
+                self.newSetHasBeenSaved = true
                 
             }
             
@@ -203,7 +203,7 @@ class CreateNewTemplateSetViewModel: ViewModel {
             
             withAnimation {
                 
-                showSetHasBeenSaved = true
+                self.showSetHasBeenSaved = true
                 
             }
             
