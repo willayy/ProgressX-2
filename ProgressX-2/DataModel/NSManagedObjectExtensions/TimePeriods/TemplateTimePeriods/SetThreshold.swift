@@ -189,7 +189,7 @@ extension SetThreshold: HasParent {
             let computedLoad: Double = {
                 
                 // if onerepmax pr and load done isnt 1 use Brzyckis formula to approximate
-                if self.prType! == "onerepmax" && loadDone != 1 {
+                if self.prType! == PersonalRecordType.OneRepMax.rawValue && loadDone != 1 {
                     
                     return (loadDone / (1.0278 - (0.0278 * quantityDone)))
                     
@@ -203,7 +203,7 @@ extension SetThreshold: HasParent {
             let computedQuantity: Double = {
                 
                 // If prType is onerepmax always set quantityDone to 1
-                if self.prType! == "onerepmax" {
+                if self.prType! == PersonalRecordType.OneRepMax.rawValue {
                     
                     return 1
                     
@@ -253,7 +253,7 @@ extension SetThreshold: HasParent {
         
         let isLowerBoundInteger = (floor(self.lowerBound) == self.lowerBound)
         
-        let isPrRepBased = (self.templateSet!.exercise!.exerciseType == "reps")
+        let isPrRepBased = (self.templateSet!.exercise!.exerciseType == ExerciseType.Reps.rawValue)
         
         if (!isLowerBoundInteger || !isUpperBoundInteger) && isPrRepBased {
             
@@ -265,9 +265,9 @@ extension SetThreshold: HasParent {
     // Makes sure that the thresholds sets exercise matches its pr type.
     private func validatePrTypeMatch() throws {
         let prToExerciseTypeMap = [
-            "onerepmax" : "reps",
-            "maxreps" : "reps",
-            "timemax" : "time"
+            PersonalRecordType.OneRepMax.rawValue : ExerciseType.Reps.rawValue,
+            PersonalRecordType.MaxReps.rawValue : ExerciseType.Reps.rawValue,
+            PersonalRecordType.TimeMax.rawValue : ExerciseType.Time.rawValue
         ]
         
         if self.prType == nil {
@@ -292,14 +292,14 @@ extension SetThreshold: HasParent {
     
     private func validateFlatLoadAdd() throws {
         let set = self.templateSet!
-        if set.loadType != "numerical" && self.flatLoadAdd != nil {
+        if set.loadType != LoadType.numerical.rawValue && self.flatLoadAdd != nil {
             throw ValidationNSErrors.flatLoadAddIsInvalid.toNSError()
         }
     }
     
     private func validateFlatQuantityAdd() throws {
         let set = self.templateSet!
-        if set.quantityType != "numerical" && self.flatQuantityAdd != nil {
+        if set.quantityType != QuantityType.numerical.rawValue && self.flatQuantityAdd != nil {
             throw ValidationNSErrors.flatQuantityAddIsInvalid.toNSError()
         }
     }

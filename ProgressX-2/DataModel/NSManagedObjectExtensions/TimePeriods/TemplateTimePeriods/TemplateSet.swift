@@ -102,7 +102,7 @@ extension TemplateSet: HasOrderable, HasParent, HasChildren, IsChangePropogator 
         let latestPr = CoreDataAccess.getLatestPersonalRecord(
             context,
             exercise: self.exercise!,
-            prType: "onerepmax"
+            prType: PersonalRecordType.OneRepMax.rawValue
         )
         
         guard let loadOnLatestPr = latestPr?.weightLoad else {

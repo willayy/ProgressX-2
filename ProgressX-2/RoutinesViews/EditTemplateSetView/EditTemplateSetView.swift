@@ -183,7 +183,7 @@ struct EditTemplateSetView: View {
             
             let exerciseType = viewModel.selectedExercise?.exerciseType
             
-            let variant = exerciseType == "reps" ? IntegerIF(min: 0, max: 100000) : DecimalIF(min: 0, max: 100000)
+            let variant = exerciseType == ExerciseType.Reps.rawValue ? IntegerIF(min: 0, max: 100000) : DecimalIF(min: 0, max: 100000)
             
             HStack {
                 

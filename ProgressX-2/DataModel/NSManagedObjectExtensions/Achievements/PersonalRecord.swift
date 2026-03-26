@@ -87,7 +87,7 @@ extension PersonalRecord {
     // Func that validates that the quantity of a PersonalRecord needs to be a valid Integer if the PersonalRecord is repbased.
     private func validateQuantity() throws {
         let isQuantityInteger = (floor(self.prQuantity) == self.prQuantity)
-        let isPrRepBased = (self.prType == "onerepmax" || self.prType == "maxreps")
+        let isPrRepBased = (self.prType == PersonalRecordType.OneRepMax.rawValue || self.prType == PersonalRecordType.MaxReps.rawValue)
 
         if !isQuantityInteger && isPrRepBased {
             throw ValidationNSErrors.prQuantityIsInvalid.toNSError()
@@ -98,9 +98,9 @@ extension PersonalRecord {
     related Exercises object (exercise relationship) */
     private func validatePrType() throws {
         let prToExerciseTypeMap = [
-            "onerepmax" : "reps",
-            "maxreps" : "reps",
-            "timemax" : "time"
+            PersonalRecordType.OneRepMax.rawValue : ExerciseType.Reps.rawValue,
+            PersonalRecordType.MaxReps.rawValue : ExerciseType.Reps.rawValue,
+            PersonalRecordType.TimeMax.rawValue : ExerciseType.Time.rawValue
         ]
         
         /* If a PersonalRecord has a relationship to an exercise that does not have

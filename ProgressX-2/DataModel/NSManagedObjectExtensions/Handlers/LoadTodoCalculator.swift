@@ -31,7 +31,7 @@ internal class LoadTodoCalculator {
             
             let exercise = templateSet.exercise!
             
-            let prType = exercise.exerciseType == "reps" ? "onerepmax" : "timemax"
+            let prType = exercise.exerciseType == ExerciseType.Reps.rawValue ? PersonalRecordType.OneRepMax.rawValue : PersonalRecordType.TimeMax.rawValue
             
             let latestPr = CoreDataAccess.getLatestPersonalRecord(
                 context,

@@ -56,7 +56,7 @@ class CreateNewPersonalRecordViewModel: ViewModel {
     /// Sets the quantity fo the PR based on what the prType is
     public func setPrQuantity(basedOn: String) -> Void {
         
-        if basedOn == "onerepmax" {
+        if basedOn == PersonalRecordType.OneRepMax.rawValue {
             
             self.prQuantity = "1"
             
@@ -68,14 +68,14 @@ class CreateNewPersonalRecordViewModel: ViewModel {
     public func getInputFieldVariant(fromPrType: String) -> InputFieldVariant {
         
         // Check which type the PR should be
-        if fromPrType == "maxreps" {
+        if fromPrType == PersonalRecordType.MaxReps.rawValue {
             
             return IntegerIF(min: 0, max: 100000)
             
             
         }
         
-        else if fromPrType == "timemax" {
+        else if fromPrType == PersonalRecordType.TimeMax.rawValue {
             
             return DecimalIF(min: 0, max: 100000)
 
@@ -90,13 +90,13 @@ class CreateNewPersonalRecordViewModel: ViewModel {
     public func getInputFieldPlaceholder(fromPrType: String) -> String {
         
         // Check which type the PlaceHolder should be
-        if fromPrType == "maxreps" {
+        if fromPrType == PersonalRecordType.MaxReps.rawValue {
             
             return "Reps"
             
         }
         
-        else if fromPrType == "timemax" {
+        else if fromPrType == PersonalRecordType.TimeMax.rawValue {
             
             return "Seconds"
 

@@ -94,7 +94,7 @@ struct CreateNewExerciseView: View {
             if viewModel.addPr {
                 
                 // If rep exercise add segmented picker to chose AMRAP pr or 1RM pr
-                if viewModel.selectedTypeOfExercise == "reps" {
+                if viewModel.selectedTypeOfExercise == ExerciseType.Reps.rawValue {
                     
                     BasicSegPicker(
                         selectedSegment: $viewModel.selectedTypeOfPr,
@@ -117,7 +117,7 @@ struct CreateNewExerciseView: View {
                 )
                 .padding(.horizontal, 60)
                 
-                if viewModel.selectedTypeOfExercise == "time" {
+                if viewModel.selectedTypeOfExercise == ExerciseType.Time.rawValue {
                     
                     InputField(
                         placeHolder: "PR time in seconds",
@@ -129,7 +129,7 @@ struct CreateNewExerciseView: View {
                     )
                     .padding(.horizontal, 60)
                     
-                } else if viewModel.selectedTypeOfExercise == "reps" && viewModel.selectedTypeOfPr == "maxreps" {
+                } else if viewModel.selectedTypeOfExercise == ExerciseType.Reps.rawValue && viewModel.selectedTypeOfPr == PersonalRecordType.MaxReps.rawValue {
                     
                     InputField(
                         placeHolder: "PR reps",

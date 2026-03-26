@@ -31,13 +31,13 @@ struct CreateNewThresholdView: View {
             BoldTitle(text: "Add a new threshold to")
                 .padding(.horizontal, 20)
                 .onAppear(perform: {
-                    if exerciseType == "reps" {
+                    if exerciseType == ExerciseType.Reps.rawValue {
                         
-                        viewModel.prSelection = "onerepmax"
+                        viewModel.prSelection = PersonalRecordType.OneRepMax.rawValue
                         
-                    } else if exerciseType == "time" {
+                    } else if exerciseType == ExerciseType.Time.rawValue {
                         
-                        viewModel.prSelection = "timemax"
+                        viewModel.prSelection = PersonalRecordType.TimeMax.rawValue
                         
                     }
                 })
@@ -110,7 +110,7 @@ struct CreateNewThresholdView: View {
             )
             .padding(.horizontal, 40)
             
-            let segments = exerciseType == "reps" ? viewModel.repPrSegments : viewModel.timePrSegments
+            let segments = exerciseType == ExerciseType.Reps.rawValue ? viewModel.repPrSegments : viewModel.timePrSegments
             
             // If exercise is rep-based add option to select AMRAP or 1RM pr else only timeMax PR is allowed.
             BasicSegPicker(
@@ -124,7 +124,7 @@ struct CreateNewThresholdView: View {
             BoldSubHeadline(text: "Change set load on trigger?")
                 .padding(.top, 20)
             
-            if loadType == "numerical" {
+            if loadType == LoadType.numerical.rawValue {
                 
                 HiddenLightSubHeadline(
                     title: "What does change load mean?",
@@ -158,7 +158,7 @@ struct CreateNewThresholdView: View {
             BoldSubHeadline(text: "Change set quantity on trigger?")
                 .padding(.top, 20)
             
-            if quantityType == "numerical" {
+            if quantityType == QuantityType.numerical.rawValue {
                 
                 HiddenLightSubHeadline(
                     title: "What does change quantity mean?",

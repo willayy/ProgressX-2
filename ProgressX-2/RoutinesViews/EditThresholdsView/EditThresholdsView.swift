@@ -126,7 +126,7 @@ struct EditThresholdsView: View {
             )
             .padding(.horizontal, 40)
             
-            let segments = exerciseType == "reps" ? viewModel.addRepPrSegments : viewModel.addTimePrSegments
+            let segments = exerciseType == ExerciseType.Reps.rawValue ? viewModel.addRepPrSegments : viewModel.addTimePrSegments
             
             // If exercise is rep-based add option to select AMRAP or 1RM pr else only timeMax PR is allowed.
             BasicSegPicker(
@@ -140,7 +140,7 @@ struct EditThresholdsView: View {
             BoldSubHeadline(text: "Edit set load change")
                 .padding(.top, 20)
             
-            if loadType == "numerical" {
+            if loadType == LoadType.numerical.rawValue {
                 
                 HiddenLightSubHeadline(
                     title: "What does change set load mean?",
@@ -168,7 +168,7 @@ struct EditThresholdsView: View {
             BoldSubHeadline(text: "Edit set quantity change")
                 .padding(.top, 20)
             
-            if quantityType == "numerical" {
+            if quantityType == QuantityType.numerical.rawValue {
                 
                 HiddenLightSubHeadline(
                     title: "What is trigger quantity?",

@@ -50,7 +50,7 @@ struct DoubleChart: View {
         let weightUnit: String = CoreDataAccess.getWeightUnit(viewContext) ?? ""
         // Infer the quantity unit from the personal records, if not possible set to unknown.
         let quantityUnit: String = {
-            if exercise.exerciseType == "reps" {
+            if exercise.exerciseType == ExerciseType.Reps.rawValue {
                 return "reps"
             } else {
                 return "seconds"

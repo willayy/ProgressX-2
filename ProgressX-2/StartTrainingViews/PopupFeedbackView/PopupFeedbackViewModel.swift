@@ -20,9 +20,9 @@ class PopupFeedbackViewModel: ViewModel {
     }
     
     public func getPopupWindowTitle(exercise: Exercise) -> String {
-        if exercise.exerciseType! == "reps" {
+        if exercise.exerciseType! == ExerciseType.Reps.rawValue {
             return "Did you complete all your reps"
-        } else if exercise.exerciseType! == "time" {
+        } else if exercise.exerciseType! == ExerciseType.Time.rawValue {
             return "Did you complete the full training time"
         } else {
             return ""
@@ -30,9 +30,9 @@ class PopupFeedbackViewModel: ViewModel {
     }
     
     public func getDidntFinishSetTitle(exercise: Exercise) -> String {
-        if exercise.exerciseType! == "reps" {
+        if exercise.exerciseType! == ExerciseType.Reps.rawValue {
             return "How many reps did you do?"
-        } else if exercise.exerciseType! == "time" {
+        } else if exercise.exerciseType! == ExerciseType.Time.rawValue {
             return "How many seconds did you manage to do?"
         } else {
             return ""

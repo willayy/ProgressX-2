@@ -55,7 +55,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: Double(benchPress1RM)!,
                         quantity: 1,
                         date: Date(),
-                        type: "onerepmax"
+                        type: PersonalRecordType.OneRepMax.rawValue
                     )
                 
             case "Squat":
@@ -65,7 +65,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: Double(squat1RM)!,
                         quantity: 1,
                         date: Date(),
-                        type: "onerepmax"
+                        type: PersonalRecordType.OneRepMax.rawValue
                     )
                 
             case "Deadlift":
@@ -75,7 +75,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: Double(deadLift1RM)!,
                         quantity: 1,
                         date: Date(),
-                        type: "onerepmax"
+                        type: PersonalRecordType.OneRepMax.rawValue
                     )
                 
             case "Shoulder press":
@@ -85,7 +85,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: Double(shoulderPress1RM)!,
                         quantity: 1,
                         date: Date(),
-                        type: "onerepmax"
+                        type: PersonalRecordType.OneRepMax.rawValue
                     )
                 
             case "Sit-up":
@@ -95,7 +95,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: bodyWeight,
                         quantity: Double(situpsAmrap)!,
                         date: Date(),
-                        type: "maxreps"
+                        type: PersonalRecordType.MaxReps.rawValue
                     )
                 
             case "Push-up":
@@ -105,7 +105,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                         weightLoad: bodyWeight,
                         quantity: Double(pushupsAmrap)!,
                         date: Date(),
-                        type: "maxreps"
+                        type: PersonalRecordType.MaxReps.rawValue
                     )
                 
             case "Chin-up":
@@ -115,7 +115,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: bodyWeight,
                     quantity: Double(chinupsAmrap)!,
                     date: Date(),
-                    type: "maxreps"
+                    type: PersonalRecordType.MaxReps.rawValue
                 )
                 
             case "Leg curl":
@@ -129,7 +129,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Leg press":
@@ -143,7 +143,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Dumbbell curl":
@@ -154,7 +154,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: Double(dumbbellCurl1RM)!,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Hammer curl":
@@ -167,7 +167,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: Double(dumbbellCurl1RM)!,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Romanian deadlift":
@@ -180,7 +180,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Overhead tricep extension":
@@ -191,7 +191,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: Double(overheadTriExt1RM)!,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Lateral raise":
@@ -205,7 +205,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Incline dumbbell press":
@@ -219,7 +219,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Barbell row":
@@ -230,7 +230,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: Double(barbellRow1RM)!,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Seated cable row":
@@ -244,7 +244,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Tricep pushdown":
@@ -258,7 +258,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Face pull":
@@ -272,7 +272,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
             case "Calf raise":
@@ -286,7 +286,7 @@ class CreateNewProfile4ViewModel: ViewModel {
                     weightLoad: weightLoad,
                     quantity: 1,
                     date: Date(),
-                    type: "onerepmax"
+                    type: PersonalRecordType.OneRepMax.rawValue
                 )
                 
                 

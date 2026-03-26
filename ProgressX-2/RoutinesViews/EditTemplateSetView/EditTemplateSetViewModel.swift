@@ -113,11 +113,11 @@ class EditTemplateSetViewModel: ViewModel {
     /// Func that returns load type selections.
     public func loadTypeSelections() -> [String] {
         switch selectedExercise?.exerciseType {
-        case "reps":
+        case ExerciseType.Reps.rawValue:
             return ["Numerical",
                     "Percentage of 1RM PR",
                     "Percentage of body weight"]
-        case "time":
+        case ExerciseType.Time.rawValue:
             return ["Numerical",
                     "Percentage of TimeMax PR",
                     "Percentage of body weight"]
@@ -129,10 +129,10 @@ class EditTemplateSetViewModel: ViewModel {
     /// Func that returns quantity type selections.
     public func quantityTypeSelections() -> [String] {
         switch selectedExercise?.exerciseType {
-        case "reps":
+        case ExerciseType.Reps.rawValue:
             return ["Numerical",
                     "Percentage of AMRAP PR"]
-        case "time":
+        case ExerciseType.Time.rawValue:
             return ["Numerical",
                     "Percentage of TimeMax PR"]
         default:
@@ -142,31 +142,31 @@ class EditTemplateSetViewModel: ViewModel {
     
     /// Func that returns map that maps NSManagedObject attributes to the correct display value.
     public func loadTypeMap() -> [String : String] {
-        if selectedExercise?.exerciseType == "reps" {
+        if selectedExercise?.exerciseType == ExerciseType.Reps.rawValue {
             return [
-                "numerical" : "Numerical",
-                "maxperc" : "Percentage of 1RM PR",
-                "bwperc" : "Percentage of body weight"
+                LoadType.numerical.rawValue : "Numerical",
+                LoadType.maxPercentage.rawValue : "Percentage of 1RM PR",
+                LoadType.bodyWeightPercentage.rawValue : "Percentage of body weight"
             ]
         } else {
             return [
-                "maxperc" : "Percentage of TimeMax PR" ,
-                "numerical" : "Numerical"
+                LoadType.maxPercentage.rawValue : "Percentage of TimeMax PR" ,
+                LoadType.numerical.rawValue : "Numerical"
             ]
         }
     }
     
     /// Func that returns map that maps NSManagedObject attributes to the correct display value.
     public func quantityTypeMap() -> [String : String] {
-        if selectedExercise?.exerciseType == "reps" {
+        if selectedExercise?.exerciseType == ExerciseType.Reps.rawValue {
             return [
-                "numerical" : "Numerical",
-                "maxperc" : "Percentage of AMRAP PR"
+                QuantityType.numerical.rawValue : "Numerical",
+                QuantityType.maxPercentage.rawValue : "Percentage of AMRAP PR"
             ]
         } else {
             return [
-                "maxperc" : "Percentage of TimeMax PR" ,
-                "numerical" : "Numerical"
+                QuantityType.maxPercentage.rawValue : "Percentage of TimeMax PR" ,
+                QuantityType.numerical.rawValue : "Numerical"
             ]
         }
     }
@@ -194,7 +194,7 @@ class EditTemplateSetViewModel: ViewModel {
         case "Numerical":
             let exerciseType = selectedExercise?.exerciseType
             if exerciseType == nil {return "Select exercise first!"}
-            return exerciseType == "reps" ? "Reps" : "Seconds"
+            return exerciseType == ExerciseType.Reps.rawValue ? "Reps" : "Seconds"
         case "Percentage of AMRAP PR":
             return "Percentage"
         case "Percentage of TimeMax PR":
@@ -207,10 +207,10 @@ class EditTemplateSetViewModel: ViewModel {
     /* This dictionary maps the entered value from
      the view to the correct core data property value */
     let typeMap: [String : String] = [
-        "Numerical" : "numerical",
-        "Percentage of 1RM PR" : "maxperc",
-        "Percentage of TimeMax PR" : "maxperc",
-        "Percentage of AMRAP PR" : "maxperc",
-        "Percentage of body weight" : "bwperc"
+        "Numerical" : LoadType.numerical.rawValue,
+        "Percentage of 1RM PR" : LoadType.maxPercentage.rawValue,
+        "Percentage of TimeMax PR" : LoadType.maxPercentage.rawValue,
+        "Percentage of AMRAP PR" : QuantityType.maxPercentage.rawValue,
+        "Percentage of body weight" : LoadType.bodyWeightPercentage.rawValue
     ]
 }

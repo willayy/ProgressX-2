@@ -33,12 +33,12 @@ class EditThresholdsViewModel: ViewModel {
     ])
     
     public let addRepPrSegments: KeyValueList<String, String> = KeyValueList([
-        ("1RM", "onerepmax"),
-        ("AMRAP", "maxreps")
+        ("1RM", PersonalRecordType.OneRepMax.rawValue),
+        ("AMRAP", PersonalRecordType.MaxReps.rawValue)
     ])
     
     public let addTimePrSegments: KeyValueList<String, String> = KeyValueList([
-        ("Time-max", "timemax")
+        ("Time-max", PersonalRecordType.TimeMax.rawValue)
     ])
     
     public func setViewStartValues(entity: SetThreshold) -> Void {
@@ -49,9 +49,9 @@ class EditThresholdsViewModel: ViewModel {
                 
         let exerciseType = entity.templateSet!.exercise!.exerciseType
         
-        if exerciseType == "reps" {
+        if exerciseType == ExerciseType.Reps.rawValue {
             
-            prSelection = entity.prType ?? "onerepmax"
+            prSelection = entity.prType ?? PersonalRecordType.OneRepMax.rawValue
             
             editedLowerBound = String(format: "%.0f", entity.lowerBound)
             
@@ -59,9 +59,9 @@ class EditThresholdsViewModel: ViewModel {
             
             editedFlatQuantityAdd = String(format: "%.0f", entity.flatQuantityAdd?.doubleValue ?? "")
             
-        } else if exerciseType == "time" {
+        } else if exerciseType == ExerciseType.Time.rawValue {
             
-            prSelection = entity.prType ?? "timemax"
+            prSelection = entity.prType ?? PersonalRecordType.TimeMax.rawValue
             
             editedLowerBound = String(format: "%.0f", entity.lowerBound)
             
@@ -74,11 +74,11 @@ class EditThresholdsViewModel: ViewModel {
     }
     
     public func getPlaceHolderUnit(fromExerciseType: String) -> String {
-        return fromExerciseType == "reps" ? "reps" : "seconds"
+        return fromExerciseType == ExerciseType.Reps.rawValue ? "reps" : "seconds"
     }
     
     public func getTriggerRangeInputFieldVariant(fromExerciseType: String, min: Double, max: Double) -> InputFieldVariant {
-        return fromExerciseType == "reps" ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
+        return fromExerciseType == ExerciseType.Reps.rawValue ? IntegerIF(min: Int(min), max: Int(max)) : DecimalIF(min: min, max: max)
     }
     
     public func saveEdits(entity: SetThreshold, viewContext: NSManagedObjectContext) -> Void {

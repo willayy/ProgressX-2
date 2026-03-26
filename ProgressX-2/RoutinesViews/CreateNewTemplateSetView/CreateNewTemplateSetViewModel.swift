@@ -59,12 +59,12 @@ class CreateNewTemplateSetViewModel: ViewModel {
         
         switch selectedExercise?.exerciseType {
             
-        case "reps":
+        case ExerciseType.Reps.rawValue:
             return ["Numerical",
                     "Percentage of 1RM PR",
                     "Percentage of body weight"]
             
-        case "time":
+        case ExerciseType.Time.rawValue:
             return ["Numerical",
                     "Percentage of TimeMax PR",
                     "Percentage of body weight"]
@@ -79,11 +79,11 @@ class CreateNewTemplateSetViewModel: ViewModel {
         
         switch selectedExercise?.exerciseType {
             
-        case "reps":
+        case ExerciseType.Reps.rawValue:
             return ["Numerical",
                     "Percentage of AMRAP PR"]
             
-        case "time":
+        case ExerciseType.Time.rawValue:
             return ["Numerical",
                     "Percentage of TimeMax PR"]
             
@@ -127,7 +127,7 @@ class CreateNewTemplateSetViewModel: ViewModel {
             
             if exerciseType == nil {return "Select exercise first!"}
             
-            return exerciseType == "reps" ? "Reps" : "Seconds"
+            return exerciseType == ExerciseType.Reps.rawValue ? "Reps" : "Seconds"
             
         case "Percentage of AMRAP PR":
             return "Percentage"
@@ -144,11 +144,11 @@ class CreateNewTemplateSetViewModel: ViewModel {
     /* This dictionary maps the entered value from
      the view to the correct core data property value */
     let typeMap: [String : String] = [
-        "Numerical" : "numerical",
-        "Percentage of 1RM PR" : "maxperc",
-        "Percentage of TimeMax PR" : "maxperc",
-        "Percentage of AMRAP PR" : "maxperc",
-        "Percentage of body weight" : "bwperc"
+        "Numerical" : LoadType.numerical.rawValue,
+        "Percentage of 1RM PR" : LoadType.maxPercentage.rawValue,
+        "Percentage of TimeMax PR" : LoadType.maxPercentage.rawValue,
+        "Percentage of AMRAP PR" : QuantityType.maxPercentage.rawValue,
+        "Percentage of body weight" : LoadType.bodyWeightPercentage.rawValue
     ]
     
     public func setViewStartValues(viewContext: NSManagedObjectContext) -> Void {
